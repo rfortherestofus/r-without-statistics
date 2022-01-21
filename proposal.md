@@ -1,6 +1,4 @@
-R Without Statistics Book Proposal
-
-{{TOC}}
+# R Without Statistics Book Proposal
 
 Since R was invented in 1993, it has become a widely used programming language for statistical analysis. From academia to the tech world and beyond, R is used for a wide range of statistical analysis. 
 
@@ -22,60 +20,60 @@ Each chapter will, using a consistent format, cover one novel way of using R. Re
 
 Below is an outline of the R Without Statistics. While I have not yet confirmed that the subjects would be open to being interviewed, I have relationships with most of them and am confident they would accept my offer. 
 
-# Outline
+## Outline
 
 R Without Statistics will have an introduction, followed by three sections (illuminate, communicate, automate), and a conclusion.
 
-## Introduction
+### Introduction
 
 Through an interview with data visualization practitioner [Chris Knox](https://twitter.com/vizowl), the introduction will start with the story of how the government of New Zealand used R in order to develop its remarkably successful COVID-19 policies. 
 
-## Illuminate
+### Illuminate
 
 This section will focus on ways to illuminate results making data visualization, maps, and tables with R. 
 
-### Chapter 1: Use General Principles of High-Quality Data Viz in R
+#### Chapter 1: Use General Principles of High-Quality Data Viz in R
 
 Chapter 1 will talk about applying general principles of high-quality static data viz when working with ggplot. Through an interview with [Cédric Scherer](https://www.cedricscherer.com) and [Georgios Karamanis](https://karaman.is) focusing on [their piece in Scientific America about climate change driving drought](https://www.scientificamerican.com/article/climate-change-drives-escalating-drought/), we’ll pull out general principles of data visualization and how to apply them in R. 
 
 ![](https://static.scientificamerican.com/sciam/assets/Image/2021/XXsaw1121Gsci31_d.png)
 
-### Chapter 2: Develop a Custom Theme to Keep Your Data Viz Consistent
+#### Chapter 2: Develop a Custom Theme to Keep Your Data Viz Consistent
 
 Chapter 2 will discuss the benefits of making a custom ggplot theme. I’m hoping to connect with the developers of the [`bbplot` package](https://github.com/bbc/bbplot) (if I'm unsuccessful in connecting with them, I have alternatives in mind). This package is used by the BBC to ensure their figures all follow organizational style requirements. We’ll discuss ways that having a custom theme can improve the data viz that organizations produce.
 
 ![](https://github.com/bbc/bbplot/raw/master/chart_examples/bbplot_example_plots.png)
 
-### Chapter 3: R is a Full-Fledged Map-Making Tool
+#### Chapter 3: R is a Full-Fledged Map-Making Tool
 
 Chapter 3 will focus on making maps with R. In recent years, R has become a full-fledged GIS tool, as powerful as any other GIS product on the market. I'll interview Abdoul Madjid about [his maps of the evolution of COVID-19 in the United States throughout 2021](https://twitter.com/issa_madjid/status/1458199645801357318).
 
 ![](https://github.com/AbdoulMa/TidyTuesday/raw/main/2022_w1/tidytuesday_2022_w1.png)
 
 
-### Chapter 4: Make Tables That Look Good and Share Results Effectively
+#### Chapter 4: Make Tables That Look Good and Share Results Effectively
 
 Chapter 4 will explore ways to make high-quality tables. Tables are often used, but their design is too often ignored. This chapter will consist of an interview with Tom Mock, who has done a [series of blog posts on making high-quality tables](https://themockup.blog/#category:tables). I'll focus in particular on his post [10+ Guidelines for Better Tables in R](https://themockup.blog/posts/2020-09-04-10-table-rules-in-r/). This post takes an [article by Jon Schwabish on table design principles](https://www.cambridge.org/core/journals/journal-of-benefit-cost-analysis/article/abs/ten-guidelines-for-better-tables/74C6FD9FEB12038A52A95B9FBCA05A12) and shows how to implement them in R.
 
-## Communicate
+### Communicate
 
 Moving beyond individual design elements, the second section of the book will focus on ways to communicate results. 
 
-### Chapter 5: Use RMarkdown Instead to Communicate Efficiently and Accurately
+#### Chapter 5: Use RMarkdown Instead to Communicate Efficiently and Accurately
 
 Many people start using R as a direct replacement for other tools. But R can do more than simply run analyses that you might do in Excel, SPSS, or some other tool. [One of R's unique differentiators is RMarkdown](https://rfortherestofus.com/2019/03/r-killer-feature-rmarkdown/). RMarkdown allows you to combine code and text. While this may not sound impressive, this combination allows you to automate reporting. Instead of having to, say, run analyses in SPSS, generate charts in Excel, and then write reports in Word, we can do all of our work in R — and rerun our code at any point to regenerate reports.
 
 In this chapter, I'll interview [Alison Hill](https://www.apreshill.com/about/). Alison has written and spoken extensively about the range of things you can do with RMarkdown. We'll discuss the benefits of RMarkdown and some of the unique ways you can use it.
 
-### Chapter 6: Use RMarkdown to Instantly Generate Hundreds of Reports 
+#### Chapter 6: Use RMarkdown to Instantly Generate Hundreds of Reports 
 
 RMarkdown is useful if you're producing a single report. It's especially useful when you're producing multiple reports. The process of parameterized reporting allows you to do this. In this chapter, I'll interview Aaron Williams, data scientist at the Urban Institute, about [how the prominent organization uses parameterized to create state-level reports](https://urban-institute.medium.com/iterated-fact-sheets-with-r-markdown-d685eb4eafce).
 
-### Chapter 7: Create Beautiful Presentations with RMarkdown
+#### Chapter 7: Create Beautiful Presentations with RMarkdown
 
 The beauty of RMarkdown is that you can create one document and then export it to multiple formats. One format is presentations. In this chapter, I'll interview Silvia Canelón about how to make slides using the `xaringan` package. Building on Silvia's 2020 talk [Sharing Your Work with xaringan](https://spcanelon.github.io/xaringan-basics-and-beyond/index.html), the interview will discuss how to make slides in R and how you can, with a few small tweaks, make a set of slides that follow your organization's branding guidelines.
 
-### Chapter 8: Share Results Online
+#### Chapter 8: Share Results Online
 
 When the COVID-19 pandemic hit, many R users created tools to monitor its spread. One of these was Matt Herman. Based just north of New York City, he developed a [COVID-19 dashboard for Westchester County](https://westchester-covid.mattherman.info). 
 
@@ -88,7 +86,7 @@ The book [Automate the Boring Stuff with Python](https://automatetheboringstuff.
 
 This section of the book will show some common ways that you can automate tasks using R. It will provide some specific examples using automated programming interfaces (aka APIs): automating Census data collection and pulling in survey data as it comes in. And it will also discuss some general automation techniques: developing your own functions and collecting these functions in a custom package. 
 
-### Chapter 9: Access Up to Date Census Data with the `tidycensus` Package
+#### Chapter 9: Access Up to Date Census Data with the `tidycensus` Package
 
 My work often involves analyzing Census data. Before I switched to R, I would access data by going to the Census Bureau website, downloading data files, and then analyzing them in Excel. Every time I needed a new bit of data, I had to repeat this process. 
 
@@ -96,13 +94,13 @@ With R, it's different: the `tidycensus` package makes it possible to access Cen
 
 In this chapter, I'll interview [Kyle Walker](https://walker-data.com), one of the developers of the [`tidycensus` package](https://walker-data.com/tidycensus/). I'll ask him about the background for its development and how it is used today.
 
-### Chapter 10: Pull in Survey Results as Soon as They Come In
+#### Chapter 10: Pull in Survey Results as Soon as They Come In
 
 If you do survey research, it is often a chore to work with the data that comes from them. You often have to download the data from your survey platform before working with it in Excel, SPSS, etc. Doing this once isn't the end of the world, but, as usually happens, you often have to repeat the process when new surveys come in. R helps us avoid this issue.
 
 There are packages that allow R users to connect directly to data collected by surveys. One of these is the [`qualtRics` package](https://docs.ropensci.org/qualtRics/). This package allows you to connect directly to the Qualtrics survey platform, pulling in new data each time you run the code. I'll interview package maintainer Julia Silge to discuss the benefits of using the `qualtRics` package to automate the process of accessing survey data.
 
-### Chapter 11: Stop Copying and Pasting Code by Creating Your Own Functions
+#### Chapter 11: Stop Copying and Pasting Code by Creating Your Own Functions
 
 This chapter will be slightly different from the others. Rather than focus on the work of one R user, it will be a round-up of the work of many R users. 
 
@@ -115,7 +113,7 @@ For this chapter, I'll interview multiple people about some of the most powerful
 
 Each interview will discuss the problem that led to the function's creation and a demonstration of how to use it. 
 
-### Chapter 12: Bundle Your Functions Together in Your Own R Package
+#### Chapter 12: Bundle Your Functions Together in Your Own R Package
 
 For many R users, making their own functions is the first step to automating their work. Having these functions is great to avoid copying and pasting code. But what happens when you need to use a function in multiple projects? Unfortunately, for many people, this means a return to copying and pasting, taking code used to make functions from one project to another. As with all copying and pasting of code, this is both inefficient and has the potential to lead to errors. 
 
@@ -123,7 +121,7 @@ What is a better solution? Bundling functions into a custom package. This allows
 
 [Garrick Aden-Buie and Travis Gerke did just this when they worked at the Moffett Cancer Center](https://slides.garrickadenbuie.com/build-your-own-universe/part-two.html#1). I'll interview them about the set of internal packages they made, discussing how doing so improved the work of the organization.  
 
-## Conclusion
+### Conclusion
 
 When people evaluate tools, they often focus on their functionality: what types of analyses can they do with them, how hard they are to learn, etc. Missing from this evaluation is a key part of what makes R special: [its uniquely supportive community](https://rfortherestofus.com/2019/04/curb-cuts-universal-design-welcoming-r-community/). 
 
