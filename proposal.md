@@ -2,7 +2,7 @@
 
 Since R was invented in 1993, it has become a widely used programming language for statistical analysis. From academia to the tech world and beyond, R is used for a wide range of statistical analysis. 
 
-The ubiquity of R in the world of statistics leads many to assume that it is only useful to those who do complex statistical work. But as R has grown in popularity, the number of ways it can be used has grown as well. In addition to statistical analysis, R is used today for:
+R's ubiquity in the world of statistics leads many to assume that it is only useful to those who do complex statistical work. But as R has grown in popularity, the number of ways it can be used has grown as well. Today, R is used for:
 
 - Data visualization
 - Map making
@@ -16,9 +16,13 @@ The idea that R is only for statistical analysis is outdated and inaccurate. But
 
 R Without Statistics will show ways that R can be used beyond complex statistical analysis. Readers will learn about a range of uses for R, many of which they have likely never even considered. 
 
-Each chapter will, using a consistent format, cover one novel way of using R. Readers will first be introduced to an R user who has done something novel and learn how using R in this way transformed their work. Following this, there will be code samples that demonstrate exactly how the R user did the thing they are being profiled for. Finally, there will be a summary, with lessons learned from this novel way of using R.
+Each chapter will, using a consistent format, cover one novel way of using R. 
 
-Below is an outline of the R Without Statistics. While I have not yet confirmed that the subjects would be open to being interviewed, I have relationships with most of them and am confident they would accept my offer. 
+1. Readers will first be introduced to an R user who has done something novel and learn how using R in this way transformed their work. 
+2. Following this, there will be code samples that demonstrate exactly how the R user did the thing they are being profiled for. 
+3. Finally, there will be a summary, with lessons learned from this novel way of using R.
+
+Below is an outline of the R Without Statistics. While I have not yet confirmed with all of the subjects about their willingness to be interviewed, I have relationships with most of them and am confident they would accept my offer. 
 
 ## Outline
 
@@ -61,17 +65,19 @@ Moving beyond individual design elements, the second section of the book will fo
 
 #### Chapter 5: Use RMarkdown Instead to Communicate Efficiently and Accurately
 
-Many people start using R as a direct replacement for other tools. But R can do more than simply run analyses that you might do in Excel, SPSS, or some other tool. [One of R's unique differentiators is RMarkdown](https://rfortherestofus.com/2019/03/r-killer-feature-rmarkdown/). RMarkdown allows you to combine code and text. While this may not sound impressive, this combination allows you to automate reporting. Instead of having to, say, run analyses in SPSS, generate charts in Excel, and then write reports in Word, we can do all of our work in R — and rerun our code at any point to regenerate reports.
+Many people start using R as a direct replacement for other tools. But R can do more than simply run analyses that you might do in Excel, SPSS, or some other tool. 
+
+[One of R's unique differentiators is RMarkdown](https://rfortherestofus.com/2019/03/r-killer-feature-rmarkdown/). RMarkdown allows you to combine code and text. While this may not sound impressive, this combination allows you to automate reporting. Instead of having to, say, run analyses in SPSS, generate charts in Excel, and then write reports in Word, we can do all of our work in R — and rerun our code at any point to regenerate reports. 
 
 In this chapter, I'll interview [Alison Hill](https://www.apreshill.com/about/). Alison has written and spoken extensively about the range of things you can do with RMarkdown. We'll discuss the benefits of RMarkdown and some of the unique ways you can use it.
 
 #### Chapter 6: Use RMarkdown to Instantly Generate Hundreds of Reports 
 
-RMarkdown is useful if you're producing a single report. It's especially useful when you're producing multiple reports. The process of parameterized reporting allows you to do this. In this chapter, I'll interview Aaron Williams, data scientist at the Urban Institute, about [how the prominent organization uses parameterized to create state-level reports](https://urban-institute.medium.com/iterated-fact-sheets-with-r-markdown-d685eb4eafce).
+RMarkdown is useful if you're producing a single report. It's especially useful when you're producing multiple reports. The process of parameterized reporting allows you to do this. In this chapter, I'll interview [Aaron Williams](https://twitter.com/awunderground), data scientist at the Urban Institute, about [how the prominent organization uses parameterized to create state-level reports](https://urban-institute.medium.com/iterated-fact-sheets-with-r-markdown-d685eb4eafce).
 
 #### Chapter 7: Create Beautiful Presentations with RMarkdown
 
-The beauty of RMarkdown is that you can create one document and then export it to multiple formats. One format is presentations. In this chapter, I'll interview Silvia Canelón about how to make slides using the `xaringan` package. Building on Silvia's 2020 talk [Sharing Your Work with xaringan](https://spcanelon.github.io/xaringan-basics-and-beyond/index.html), the interview will discuss how to make slides in R and how you can, with a few small tweaks, make a set of slides that follow your organization's branding guidelines.
+The beauty of RMarkdown is that you can create one document and then export it to multiple formats. One format is presentations. In this chapter, I'll interview [Silvia Canelón](https://www.silviacanelon.com) about how to make slides using the `xaringan` package. Building on Silvia's 2020 talk [Sharing Your Work with xaringan](https://spcanelon.github.io/xaringan-basics-and-beyond/index.html), the interview will discuss how to make slides in R and how you can, with a few small tweaks, make a set of slides that follow your organization's branding guidelines.
 
 #### Chapter 8: Share Results Online
 
@@ -84,7 +90,7 @@ This dashboard, made with the `distill`, `plotly`, `leaflet`, and `DT` packages,
 
 The book [Automate the Boring Stuff with Python](https://automatetheboringstuff.com) has sold over 285,000 copies. It's so popular because it teaches people to avoid tedious tasks through programming. R can do the same — and it's one of the most compelling reasons to learn to use it. 
 
-This section of the book will show some common ways that you can automate tasks using R. It will provide some specific examples using automated programming interfaces (aka APIs): automating Census data collection and pulling in survey data as it comes in. And it will also discuss some general automation techniques: developing your own functions and collecting these functions in a custom package. 
+This section of the book will show examples of ways that you can automate tasks using R. It will provide some specific examples using automated programming interfaces (aka APIs): automating Census data collection and pulling in survey data as it comes in. And it will also discuss some general automation techniques: developing your own functions and collecting these functions in a custom package. 
 
 #### Chapter 9: Access Up to Date Census Data with the `tidycensus` Package
 
@@ -106,7 +112,7 @@ This chapter will be slightly different from the others. Rather than focus on th
 
 For this chapter, I'll interview multiple people about some of the most powerful functions they've created. These include functions that do things like: 
 
-- Automatically pulling in and formatting race/ethnicity data from the American Community Survey
+- Automatically pulling in and formatting race/ethnicity data from the American Community Survey (a function I have created for my own work)
 - [Automating the process of cleaning messy data from Survey Monkey](https://twitter.com/dgkeyes/status/1319713697174941696)
 - [Calculating the percent of grouped observations](https://twitter.com/markjrieke/status/1475894900084330501)
 - [Automatically viewing snippets of data in Excel](https://twitter.com/brodriguesco/status/1447468259725434886)
@@ -127,6 +133,56 @@ When people evaluate tools, they often focus on their functionality: what types 
 
 In the conclusion to the book, I'll discuss why the R community is not just a nice add-on. Learning new tools always has challenges. Being able to find people to provide help is as key to new users successfully learning a new tool as are any of its functionalities. R is worth learning not only because it is a powerful tool, but also because, whenever you run into problems, there is a community ready, willing, and able to support you. 
 
+# Audience
+
+This book has two main audiences:
+
+1. **Active R users who can learn new ways to use R.** In running R for the Rest of Us, I've constantly been struck by how often people I see using R in quite complex ways are not familiar with some of the "simpler" uses for R that R Without Statistics will cover. Displaying what's possible and offering clear guidance on how to implement these uses will serve these users.
+
+2. **Users of other tools considering switching to R.** Most books on R (rightly) assume the reader is already using this tool. But there is a whole group of potential users of Excel, SPSS, SAS, Stata, and other tools who are considering switching to R. Having a book that explains not just *how* to use R, but also *why* R is worth learning is valuable for this audience. 
+
+# Competitive Books
+
+Because this book is a novel approach to talking about R, there is no direct competitor. However, there is a model for this type of book — and it shows its potential.
+
+[Automate the Boring Stuff with Python](https://automatetheboringstuff.com) has sold over 285,000 copies. R Without Statistics will take a similar approach, focusing on "simpler" uses that show the power of R for a wide variety of users.
+
+There are some competitive books on specific topics covered in R Without Statistics, listed below. 
+
+## Data Visualization
+
+- Kieran Healy's [Data Visualization: A Practical Introduction](https://socviz.co)
+- Claus Wilke's [Fundamentals of Data Visualization](https://clauswilke.com/dataviz/)
+- The upcoming third edition of [ggplot2: Elegant Graphics for Data Analysis by Hadley Wickham, Danielle Navarro, and Thomas Lin Pedersen](https://ggplot2-book.org)
+- Cédric Scherer's upcoming book on ggplot
+
+## Mapping
+
+- [Geocomputation with R](https://geocompr.robinlovelace.net) by Robin Lovelace, Jakub Nowosad, and Jannes Muenchow
+
+## RMarkdown
+
+- [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/) by Yihui Xie, J. J. Allaire, and Garrett Grolemund
+- [R Markdown Cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/) by Yihui Xie, Christophe Dervieux, Emily Riederer
+
+## tidycensus
+
+- [Analyzing US Census Data: Methods, Maps, and Models in R](https://walker-data.com/census-r/) by Kyle Walker
+
+## Functions and Packages
+
+- [R for Data Science](https://r4ds.had.co.nz) by Hadley Wickham and Garrett Grollemund
+- [Advanced R](https://adv-r.hadley.nz/functions.html) by Hadley Wickham
+- [R Packages](https://r-pkgs.org) by Hadley Wickham and Jenny Bryan
+
+# Market
+
+The market for this book is extremely large. 
+
+While the Tiobe rankings of language popularity have their critics, [the fact that R is in 12th place](https://www.tiobe.com/tiobe-index/) give an indication of its broad popularity. With millions of users around the world, R is extremely widely used. 
+
+There are also millions of potential R users this book can serve. Users of Excel, SPSS, SAS, Stata, and other tools for working with data can find value in learning what R is capable of. 
+
 # About the Author
 
 David Keyes is founder and CEO of [R for the Rest of Us](https://rfortherestofus.com). Since starting R for the Rest of Us in 2019, David has helped thousands of users who don't think of themselves as programmers learn to use R. David is uniquely skilled in explaining complex technical concepts in simple ways. 
@@ -134,7 +190,9 @@ David Keyes is founder and CEO of [R for the Rest of Us](https://rfortherestofus
 David's skill at communicating complex technical concepts comes from his extensive writing experience. In addition to dozens of articles on the [R for the Rest of Us blog](https://rfortherestofus.com/blog/), David has: 
 
 1. Written a [Washington Post op-ed on inequality in the education system](https://www.washingtonpost.com/wp-dyn/content/article/2007/04/08/AR2007040800925.html)
+
 2. Founded and written articles for [XI Quarterly](https://drive.google.com/file/d/0BzA6GcmEs1BZbFBfLXh6RzJ0M2s/view?usp=sharing&resourcekey=0-ck-nTlCstjJW1vI2xcZsKg), a magazine about soccer in North America
+
 3. Completed a [200+ page dissertation on immigration and youth sports](https://drive.google.com/file/d/0BzA6GcmEs1BZeTktdE9IZEYwckE/view?usp=sharing&resourcekey=0-_a3CWF6jJXWOvJa5d1F9hQ)
 
-David also has extensive marketing experience that will serve this book well. Having founded R for the Rest of Us from scratch, David has become one of the leading figures in the R community. With over 12,000 Twitter followers, an email list of close to 3,000 subscribers, and personal connections with nearly all of the most prominent figures in the R community, David has the tools to create and market a highly successful book. 
+David also has extensive marketing experience that will serve this book well. Having founded R for the Rest of Us from scratch, David has become one of the leading figures in the R community. With over 12,000 Twitter followers (plus over 5,000 on his personal account), an email list of close to 3,000 subscribers, and personal connections with nearly all of the most prominent figures in the R community, David has the tools to create and market a highly successful book. 
