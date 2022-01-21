@@ -1,4 +1,6 @@
-# R Without Statistics Book Proposal
+R Without Statistics Book Proposal
+
+{{TOC}}
 
 Since R was invented in 1993, it has become a widely used programming language for statistical analysis. From academia to the tech world and beyond, R is used for a wide range of statistical analysis. 
 
@@ -46,9 +48,10 @@ Chapter 2 will discuss the benefits of making a custom ggplot theme. I’m hopin
 
 ### Chapter 3: R is a Full-Fledged Map-Making Tool
 
-Chapter 3 will focus on making maps with R. In recent years, R has become a full-fledged GIS tool, as powerful as any other GIS product on the market. I'll interview Abdoul Madjid about [his maps of polio eradication in Africa over time](https://twitter.com/issa_madjid/status/1458199645801357318).
+Chapter 3 will focus on making maps with R. In recent years, R has become a full-fledged GIS tool, as powerful as any other GIS product on the market. I'll interview Abdoul Madjid about [his maps of the evolution of COVID-19 in the United States throughout 2021](https://twitter.com/issa_madjid/status/1458199645801357318).
 
-![](https://github.com/AbdoulMa/TidyTuesday/raw/main/2021_w46/tidytuesday_2021_w46.png)
+![](https://github.com/AbdoulMa/TidyTuesday/raw/main/2022_w1/tidytuesday_2022_w1.png)
+
 
 ### Chapter 4: Make Tables That Look Good and Share Results Effectively
 
@@ -74,8 +77,12 @@ The beauty of RMarkdown is that you can create one document and then export it t
 
 ### Chapter 8: Share Results Online
 
-TODO
+When the COVID-19 pandemic hit, many R users created tools to monitor its spread. One of these was Matt Herman. Based just north of New York City, he developed a [COVID-19 dashboard for Westchester County](https://westchester-covid.mattherman.info). 
 
+This dashboard, made with the `distill`, `plotly`, `leaflet`, and `DT` packages, shows the power of reporting online. While R can create high-quality static reports, it can also be used to make reports that live online. Doing so enables users to 
+
+- https://www.ahmadoudicko.com
+- https://www.youtube.com/watch?v=bqESMOn7EVY
 - Interview Education with R authors: https://ivelasq.rbind.io/blog/bookdown-manuscript/
 - https://laderast.github.io/edu/2021-03-19-an-introduction-to-distill/
 - API food map 
@@ -101,12 +108,17 @@ In this chapter, I'll interview [Kyle Walker](https://walker-data.com), one of t
 
 If you do survey research, it is often a chore to work with the data that comes from them. You often have to download the data from your survey platform before working with it in Excel, SPSS, etc. Doing this once isn't the end of the world, but, as usually happens, you often have to repeat the process when new surveys come in. R helps us avoid this issue.
 
-There are packages that allow R users to connect directly to data collected by surveys. One of these is the [`qualtRics` package](https://docs.ropensci.org/qualtRics/). This package allows you to connect directly to the Qualtrics survey platform, pulling in new data each time you run the code. [This is exactly what Matt Herman does](https://twitter.com/buddyherms/status/1453424024906833923). I'll interview him to discuss the benefits of using the `qualtRics` package to automate the process of accessing survey data.
+There are packages that allow R users to connect directly to data collected by surveys. One of these is the [`qualtRics` package](https://docs.ropensci.org/qualtRics/). This package allows you to connect directly to the Qualtrics survey platform, pulling in new data each time you run the code. I'll interview package maintainer Julia Silge to discuss the benefits of using the `qualtRics` package to automate the process of accessing survey data.
 
 ### Chapter 11: Stop Copying and Pasting Code by Creating Your Own Functions
 
-- Could do round-up of favorite functions with short sections on each
-- https://github.com/hrbrmstr/hrbrmisc
+Could do round-up of favorite functions with short sections on each
+
+- mash_colnames: https://twitter.com/dgkeyes/status/1319713697174941696
+- Start with my ACS race/ethnicity function
+- percent calculation: https://twitter.com/markjrieke/status/1475894900084330501
+- make_numeric(): https://github.com/hrbrmstr/hrbrmisc/blob/master/R/make.R
+- show_in_excel(): https://twitter.com/brodriguesco/status/1447468259725434886
 - https://twitter.com/dgkeyes/status/1475891826628259842
 
 ### Chapter 12: Bundle Your Functions Together in Your Own R Package
@@ -115,7 +127,7 @@ For many R users, making their own functions is the first step to automating the
 
 What is a better solution? Bundling functions into a custom package. This allows you to have access to functions across projects, allowing you to create code once and use it multiple times. 
 
-[Garrick Aden-Buie and Travis Geek did just this when they worked at the Moffett Cancer Center](https://slides.garrickadenbuie.com/build-your-own-universe/part-two.html#1). I'll interview them about the set of internal packages they made, discussing how doing so improved the work of the organization.  
+[Garrick Aden-Buie and Travis Gerke did just this when they worked at the Moffett Cancer Center](https://slides.garrickadenbuie.com/build-your-own-universe/part-two.html#1). I'll interview them about the set of internal packages they made, discussing how doing so improved the work of the organization.  
 
 ## Conclusion
 
