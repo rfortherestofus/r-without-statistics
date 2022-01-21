@@ -79,16 +79,8 @@ The beauty of RMarkdown is that you can create one document and then export it t
 
 When the COVID-19 pandemic hit, many R users created tools to monitor its spread. One of these was Matt Herman. Based just north of New York City, he developed a [COVID-19 dashboard for Westchester County](https://westchester-covid.mattherman.info). 
 
-This dashboard, made with the `distill`, `plotly`, `leaflet`, and `DT` packages, shows the power of reporting online. While R can create high-quality static reports, it can also be used to make reports that live online. Doing so enables users to 
+This dashboard, made with the `distill`, `plotly`, `leaflet`, and `DT` packages, shows the power of reporting online. While R can create high-quality static reports, it can also be used to make reports that live online. Doing so takes advantage of interactive capabilities that only online reporting offers. It also makes it possible to automatically update data in real time, something the Westchester County dashboard does and which I will discuss with Matt. 
 
-- https://www.ahmadoudicko.com
-- https://www.youtube.com/watch?v=bqESMOn7EVY
-- Interview Education with R authors: https://ivelasq.rbind.io/blog/bookdown-manuscript/
-- https://laderast.github.io/edu/2021-03-19-an-introduction-to-distill/
-- API food map 
-- https://silvia.rbind.io/blog/ccd-sips/
-- https://westchester-covid.mattherman.info
-- https://stats.andrewheiss.com/who-cares-about-crackdowns/
 
 ## Automate
 
@@ -112,14 +104,16 @@ There are packages that allow R users to connect directly to data collected by s
 
 ### Chapter 11: Stop Copying and Pasting Code by Creating Your Own Functions
 
-Could do round-up of favorite functions with short sections on each
+This chapter will be slightly different from the others. Rather than focus on the work of one R user, it will be a round-up of the work of many R users. 
 
-- mash_colnames: https://twitter.com/dgkeyes/status/1319713697174941696
-- Start with my ACS race/ethnicity function
-- percent calculation: https://twitter.com/markjrieke/status/1475894900084330501
-- make_numeric(): https://github.com/hrbrmstr/hrbrmisc/blob/master/R/make.R
-- show_in_excel(): https://twitter.com/brodriguesco/status/1447468259725434886
-- https://twitter.com/dgkeyes/status/1475891826628259842
+For this chapter, I'll interview multiple people about some of the most powerful functions they've created. These include functions that do things like: 
+
+- Automatically pulling in and formatting race/ethnicity data from the American Community Survey
+- [Automating the process of cleaning messy data from Survey Monkey](https://twitter.com/dgkeyes/status/1319713697174941696)
+- [Calculating the percent of grouped observations](https://twitter.com/markjrieke/status/1475894900084330501)
+- [Automatically viewing snippets of data in Excel](https://twitter.com/brodriguesco/status/1447468259725434886)
+
+Each interview will discuss the problem that led to the function's creation and a demonstration of how to use it. 
 
 ### Chapter 12: Bundle Your Functions Together in Your Own R Package
 
@@ -137,7 +131,7 @@ In the conclusion to the book, I'll discuss why the R community is not just a ni
 
 # About the Author
 
-David Keyes is founder and CEO of R for the Rest of Us. Since starting R for the Rest of Us in 2019, David has helped thousands of users who don't think of themselves as programmers learn to use R. David is uniquely skilled in explaining complex technical concepts in simple ways. 
+David Keyes is founder and CEO of [R for the Rest of Us](https://rfortherestofus.com). Since starting R for the Rest of Us in 2019, David has helped thousands of users who don't think of themselves as programmers learn to use R. David is uniquely skilled in explaining complex technical concepts in simple ways. 
 
 David's skill at communicating complex technical concepts comes from his extensive writing experience. In addition to dozens of articles on the [R for the Rest of Us blog](https://rfortherestofus.com/blog/), David has: 
 
@@ -145,4 +139,4 @@ David's skill at communicating complex technical concepts comes from his extensi
 2. Founded and written articles for [XI Quarterly](https://drive.google.com/file/d/0BzA6GcmEs1BZbFBfLXh6RzJ0M2s/view?usp=sharing&resourcekey=0-ck-nTlCstjJW1vI2xcZsKg), a magazine about soccer in North America
 3. Completed a [200+ page dissertation on immigration and youth sports](https://drive.google.com/file/d/0BzA6GcmEs1BZeTktdE9IZEYwckE/view?usp=sharing&resourcekey=0-_a3CWF6jJXWOvJa5d1F9hQ)
 
-David also has extensive marketing experience that will serve this book well. Having founded R for the Rest of Us from scratch, David has become one of the leading figures in the R community. With over 12,000 Twitter followers, an email list of close to 3,000 subscribers, and personal connections with nearly all of the most prominent figures in the R community, David has the tools to create a highly successful book. 
+David also has extensive marketing experience that will serve this book well. Having founded R for the Rest of Us from scratch, David has become one of the leading figures in the R community. With over 12,000 Twitter followers, an email list of close to 3,000 subscribers, and personal connections with nearly all of the most prominent figures in the R community, David has the tools to create and market a highly successful book. 
