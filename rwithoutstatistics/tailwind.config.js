@@ -6,6 +6,11 @@ module.exports = {
     './content/**/*.md'
   ],
   theme: {
+    fontFamily: {
+      sans: ['IBM Plex Sans', 'sans-serif'],
+      serif: ['IBM Plex Serif', 'serif'],
+      mono: ['IBM Plex Mono', 'mono'],
+    },
     fontSize: {
       'xs': '.75rem',
       'sm': '.875rem',
@@ -22,5 +27,7 @@ module.exports = {
     },
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 }
