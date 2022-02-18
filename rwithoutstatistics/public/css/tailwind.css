@@ -734,6 +734,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
+.bg-yellow-400{
+  --tw-bg-opacity: 1;
+  background-color: rgb(250 204 21 / var(--tw-bg-opacity));
+}
 .px-2{
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -749,6 +753,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .text-5xl{
   font-size: 3rem;
+}
+.text-lg{
+  font-size: 1.125rem;
+}
+.text-xl{
+  font-size: 1.25rem;
 }
 .font-bold{
   font-weight: 700;
