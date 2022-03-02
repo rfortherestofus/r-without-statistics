@@ -703,6 +703,18 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-left: auto;
   margin-right: auto;
 }
+.mx-64{
+  margin-left: 16rem;
+  margin-right: 16rem;
+}
+.mx-2{
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+.mx-8{
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
 .mt-16{
   margin-top: 4rem;
 }
@@ -715,17 +727,8 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-screen{
   height: 100vh;
 }
-.w-32{
-  width: 8rem;
-}
 .w-24{
   width: 6rem;
-}
-.w-16{
-  width: 4rem;
-}
-.w-20{
-  width: 5rem;
 }
 .max-w-prose{
   max-width: 65ch;
@@ -733,10 +736,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .bg-white{
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-.bg-yellow-400{
-  --tw-bg-opacity: 1;
-  background-color: rgb(250 204 21 / var(--tw-bg-opacity));
 }
 .px-2{
   padding-left: 0.5rem;
@@ -757,9 +756,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-lg{
   font-size: 1.125rem;
 }
-.text-xl{
-  font-size: 1.25rem;
-}
 .font-bold{
   font-weight: 700;
 }
@@ -776,4 +772,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-gray-800{
   --tw-text-opacity: 1;
   color: rgb(31 41 55 / var(--tw-text-opacity));
+}
+@media (min-width: 640px){
+  .sm\:mx-0{
+    margin-left: 0px;
+    margin-right: 0px;
+  }
 }
