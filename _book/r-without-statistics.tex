@@ -1,0 +1,207 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{book}
+\title{R Without Statistics}
+\author{David Keyes}
+\date{}
+
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={R Without Statistics},
+  pdfauthor={David Keyes},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage[]{natbib}
+\bibliographystyle{apalike}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+\hypertarget{about-the-book}{%
+\chapter*{About the Book}\label{about-the-book}}
+\addcontentsline{toc}{chapter}{About the Book}
+
+This is the in-progress version of \emph{R Without Statistics}, a forthcoming book from \href{https://www.nostarch.com/}{No Starch Press}.
+
+Since R was invented in 1993, it has become a widely used programming language for statistical analysis. From academia to the tech world and beyond, R is used for a wide range of statistical analysis.
+
+R's ubiquity in the world of statistics leads many to assume that it is only useful to those who do complex statistical work. But as R has grown in popularity, the number of ways it can be used has grown as well. Today, R is used for:
+
+\begin{itemize}
+\item
+  Data visualization
+\item
+  Map making
+\item
+  Sharing results through reports, slides, and websites
+\item
+  Automating processes
+\item
+  And much more!
+\end{itemize}
+
+The idea that R is only for statistical analysis is outdated and inaccurate. But, without a single book that demonstrates the power of R for non-statistical purposes, this perception persists.
+
+\textbf{Enter R Without Statistics.}
+
+R Without Statistics will show ways that R can be used beyond complex statistical analysis. Readers will learn about a range of uses for R, many of which they have likely never even considered.~
+
+Each chapter will, using a consistent format, cover one novel way of using R.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Readers will first be introduced to an R user who has done something novel and learn how using R in this way transformed their work.
+\item
+  Following this, there will be code samples that demonstrate exactly how the R user did the thing they are being profiled for.
+\item
+  Finally, there will be a summary, with lessons learned from this novel way of using R.
+\end{enumerate}
+
+Written by David Keyes, Founder and CEO of~\href{https://rfortherestofus.com/}{R for the Rest of Us}, R Without Statistics will be published by \href{https://nostarch.com/}{No Starch Press}.
+
+\hypertarget{part-introduction}{%
+\part*{Introduction}\label{part-introduction}}
+\addcontentsline{toc}{part}{Introduction}
+
+\hypertarget{why-r-without-statistics}{%
+\chapter*{Why R Without Statistics?}\label{why-r-without-statistics}}
+\addcontentsline{toc}{chapter}{Why R Without Statistics?}
+
+\hypertarget{part-illuminate}{%
+\part*{Illuminate}\label{part-illuminate}}
+\addcontentsline{toc}{part}{Illuminate}
+
+\hypertarget{use-general-principles-of-high-quality-data-viz-in-r}{%
+\chapter*{Use General Principles of High-Quality Data Viz in R}\label{use-general-principles-of-high-quality-data-viz-in-r}}
+\addcontentsline{toc}{chapter}{Use General Principles of High-Quality Data Viz in R}
+
+\hypertarget{develop-a-custom-theme-to-keep-your-data-viz-consistent}{%
+\chapter*{Develop a Custom Theme to Keep Your Data Viz Consistent}\label{develop-a-custom-theme-to-keep-your-data-viz-consistent}}
+\addcontentsline{toc}{chapter}{Develop a Custom Theme to Keep Your Data Viz Consistent}
+
+\hypertarget{r-is-a-full-fledged-map-making-tool}{%
+\chapter*{R is a Full-Fledged Map-Making Tool}\label{r-is-a-full-fledged-map-making-tool}}
+\addcontentsline{toc}{chapter}{R is a Full-Fledged Map-Making Tool}
+
+\hypertarget{make-tables-that-look-good-and-share-results-effectively}{%
+\chapter*{Make Tables That Look Good and Share Results Effectively}\label{make-tables-that-look-good-and-share-results-effectively}}
+\addcontentsline{toc}{chapter}{Make Tables That Look Good and Share Results Effectively}
+
+\hypertarget{part-communicate}{%
+\part*{Communicate}\label{part-communicate}}
+\addcontentsline{toc}{part}{Communicate}
+
+\hypertarget{use-rmarkdown-to-communicate-accurately-and-efficiently}{%
+\chapter*{Use RMarkdown to Communicate Accurately and Efficiently}\label{use-rmarkdown-to-communicate-accurately-and-efficiently}}
+\addcontentsline{toc}{chapter}{Use RMarkdown to Communicate Accurately and Efficiently}
+
+\hypertarget{use-rmarkdown-to-instantly-generate-hundreds-of-reports}{%
+\chapter*{Use RMarkdown to Instantly Generate Hundreds of Reports}\label{use-rmarkdown-to-instantly-generate-hundreds-of-reports}}
+\addcontentsline{toc}{chapter}{Use RMarkdown to Instantly Generate Hundreds of Reports}
+
+\hypertarget{create-beautiful-presentations-with-rmarkdown}{%
+\chapter*{Create Beautiful Presentations with RMarkdown}\label{create-beautiful-presentations-with-rmarkdown}}
+\addcontentsline{toc}{chapter}{Create Beautiful Presentations with RMarkdown}
+
+\hypertarget{make-websites-to-share-results-online}{%
+\chapter*{Make Websites to Share Results Online}\label{make-websites-to-share-results-online}}
+\addcontentsline{toc}{chapter}{Make Websites to Share Results Online}
+
+\hypertarget{part-automate}{%
+\part*{Automate}\label{part-automate}}
+\addcontentsline{toc}{part}{Automate}
+
+\hypertarget{access-up-to-date-census-data-with-the-tidycensus-package}{%
+\chapter*{\texorpdfstring{Access Up to Date Census Data with the \texttt{tidycensus} Package}{Access Up to Date Census Data with the tidycensus Package}}\label{access-up-to-date-census-data-with-the-tidycensus-package}}
+\addcontentsline{toc}{chapter}{Access Up to Date Census Data with the \texttt{tidycensus} Package}
+
+\hypertarget{pull-in-survey-results-as-soon-as-they-come-in}{%
+\chapter*{Pull in Survey Results as Soon as They Come In}\label{pull-in-survey-results-as-soon-as-they-come-in}}
+\addcontentsline{toc}{chapter}{Pull in Survey Results as Soon as They Come In}
+
+\hypertarget{stop-copying-and-pasting-code-by-creating-your-own-functions}{%
+\chapter*{Stop Copying and Pasting Code by Creating Your Own Functions}\label{stop-copying-and-pasting-code-by-creating-your-own-functions}}
+\addcontentsline{toc}{chapter}{Stop Copying and Pasting Code by Creating Your Own Functions}
+
+\hypertarget{bundle-your-functions-together-in-your-own-r-package}{%
+\chapter*{Bundle Your Functions Together in Your Own R Package}\label{bundle-your-functions-together-in-your-own-r-package}}
+\addcontentsline{toc}{chapter}{Bundle Your Functions Together in Your Own R Package}
+
+\hypertarget{part-conclusion}{%
+\part*{Conclusion}\label{part-conclusion}}
+\addcontentsline{toc}{part}{Conclusion}
+
+\hypertarget{come-for-the-data-stay-for-the-community}{%
+\chapter*{Come for the Data, Stay for the Community}\label{come-for-the-data-stay-for-the-community}}
+\addcontentsline{toc}{chapter}{Come for the Data, Stay for the Community}
+
+\end{document}

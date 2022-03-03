@@ -28,4 +28,4 @@ Each chapter will, using a consistent format, cover one novel way of using R.
 
 3.  Finally, there will be a summary, with lessons learned from this novel way of using R.
 
-Written by David Keyes, Founder and CEO of [**R for the Rest of Us, R Without Statistics will be published by** ](https://rfortherestofus.com/)[**No Starch Press**](https://nostarch.com/).
+Written by David Keyes, Founder and CEO of [R for the Rest of Us](https://rfortherestofus.com/), R Without Statistics will be published by [No Starch Press](https://nostarch.com/).

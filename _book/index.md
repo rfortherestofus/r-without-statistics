@@ -1,57 +1,48 @@
 --- 
-title: "A Minimal Book Example"
-author: "John Doe"
-date: "2022-03-03"
+title: "R Without Statistics"
+author: "David Keyes"
+# date: "2022-03-03"
 site: bookdown::bookdown_site
 documentclass: book
-bibliography: [book.bib, packages.bib]
-# url: your book url like https://bookdown.org/yihui/bookdown
-# cover-image: path to the social sharing image like images/cover.jpg
+url: https://rwithoutstatistics.com
+cover-image: mock-cover.png
 description: |
-  This is a minimal example of using the bookdown package to write a book.
-  The HTML output format for this example is bookdown::bs4_book,
-  set in the _output.yml file.
+  Since R was invented in 1993, it has become a widely used programming language for statistical analysis. From academia to the tech world and beyond, R is used for a wide range of statistical analysis. R Without Statistics will show ways that R can be used beyond complex statistical analysis. Readers will learn about a range of uses for R, many of which they have likely never even considered.
 biblio-style: apalike
-csl: chicago-fullnote-bibliography.csl
 ---
 
-# About
+# About the Book {-}
 
-This is a _sample_ book written in **Markdown**. You can use anything that Pandoc's Markdown supports; for example, a math equation $a^2 + b^2 = c^2$.
+<img src="mock-cover.png" class="cover" width="250" height="328"/>This is the in-progress version of *R Without Statistics*, a forthcoming book from [No Starch Press](https://www.nostarch.com/).
 
-## Usage 
+<hr>
 
-Each **bookdown** chapter is an .Rmd file, and each .Rmd file can contain one (and only one) chapter. A chapter *must* start with a first-level heading: `# A good chapter`, and can contain one (and only one) first-level heading.
+Since R was invented in 1993, it has become a widely used programming language for statistical analysis. From academia to the tech world and beyond, R is used for a wide range of statistical analysis.
 
-Use second-level and higher headings within chapters like: `## A short section` or `### An even shorter section`.
+R's ubiquity in the world of statistics leads many to assume that it is only useful to those who do complex statistical work. But as R has grown in popularity, the number of ways it can be used has grown as well. Today, R is used for:
 
-The `index.Rmd` file is required, and is also your first book chapter. It will be the homepage when you render the book.
+-   Data visualization
 
-## Render book
+-   Map making
 
-You can render the HTML version of this example book without changing anything:
+-   Sharing results through reports, slides, and websites
 
-1. Find the **Build** pane in the RStudio IDE, and
+-   Automating processes
 
-1. Click on **Build Book**, then select your output format, or select "All formats" if you'd like to use multiple formats from the same book source files.
+-   And much more!
 
-Or build the book from the R console:
+The idea that R is only for statistical analysis is outdated and inaccurate. But, without a single book that demonstrates the power of R for non-statistical purposes, this perception persists.
 
+**Enter R Without Statistics.**
 
-```r
-bookdown::render_book()
-```
+R Without Statistics will show ways that R can be used beyond complex statistical analysis. Readers will learn about a range of uses for R, many of which they have likely never even considered. 
 
-To render this example to PDF as a `bookdown::pdf_book`, you'll need to install XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): <https://yihui.org/tinytex/>.
+Each chapter will, using a consistent format, cover one novel way of using R.
 
-## Preview book
+1.  Readers will first be introduced to an R user who has done something novel and learn how using R in this way transformed their work.
 
-As you work, you may start a local server to live preview this HTML book. This preview will update as you edit the book when you save individual .Rmd files. You can start the server in a work session by using the RStudio add-in "Preview book", or from the R console:
+2.  Following this, there will be code samples that demonstrate exactly how the R user did the thing they are being profiled for.
 
+3.  Finally, there will be a summary, with lessons learned from this novel way of using R.
 
-```r
-bookdown::serve_book()
-```
-
-
-
+Written by David Keyes, Founder and CEO of [R for the Rest of Us](https://rfortherestofus.com/), R Without Statistics will be published by [No Starch Press](https://nostarch.com/).
