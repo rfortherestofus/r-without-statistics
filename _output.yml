@@ -1,0 +1,10 @@
+bookdown::bs4_book:
+  css: bs4_style.css
+  theme:
+    primary: "#6cabdd"
+  repo: https://github.com/rfortherestofus/r-without-statistics
+bookdown::pdf_book:
+  latex_engine: xelatex
+  citation_package: natbib
+  keep_tex: yes
+bookdown::epub_book: default
