@@ -699,21 +699,13 @@ Ensure the default browser behavior of the `hidden` attribute.
 .prose > :where(:last-child):not(:where([class~="not-prose"] *)){
   margin-bottom: 0;
 }
-.mx-auto{
-  margin-left: auto;
-  margin-right: auto;
-}
-.mx-64{
-  margin-left: 16rem;
-  margin-right: 16rem;
-}
-.mx-2{
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
-}
 .mx-8{
   margin-left: 2rem;
   margin-right: 2rem;
+}
+.mx-auto{
+  margin-left: auto;
+  margin-right: auto;
 }
 .mt-16{
   margin-top: 4rem;
@@ -724,11 +716,26 @@ Ensure the default browser behavior of the `hidden` attribute.
 .mb-4{
   margin-bottom: 1rem;
 }
+.mt-4{
+  margin-top: 1rem;
+}
+.mt-6{
+  margin-top: 1.5rem;
+}
 .h-screen{
   height: 100vh;
 }
+.h-full{
+  height: 100%;
+}
 .w-24{
   width: 6rem;
+}
+.w-64{
+  width: 16rem;
+}
+.w-full{
+  width: 100%;
 }
 .max-w-prose{
   max-width: 65ch;
