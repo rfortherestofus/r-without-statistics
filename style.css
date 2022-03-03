@@ -20,7 +20,7 @@ border: none;
 img.cover {
 float: right;
 margin: 0 0 2rem 2rem;
-filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
+box-shadow: none;
 }
 
 .sidebar li.book-part {
