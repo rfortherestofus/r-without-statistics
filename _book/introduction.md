@@ -50,7 +50,7 @@ If I had done things this way when working on the Outdoor School project, I coul
 
 Using R won’t mean you’ll never make mistakes again (trust me, you will). But it will mean that you can easily spot your mistakes, make changes, and rerun your code to fix any issues. 
 
-I started learning R to avoid tedious pointing and clicking. But what I found was that R improved my work in ways I never expected. It’s not just that my wrists are less tired. I now have more confidence in the accuracy of my work. 
+I started learning R to avoid tedious pointing and clicking. But what I found was that R improved my work in ways I never expected. It’s not just that my wrists are less tired. I now have more confidence that my work is accurate. 
 
 ### My own uncertainty about the way I use R {-}
 
