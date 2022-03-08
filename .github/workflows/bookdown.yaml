@@ -33,6 +33,8 @@ jobs:
       - name: Install packages
         run: |
           R -e 'install.packages("renv")'
+          R -e 'install.packages("downlit")'
+          R -e 'install.packages("xml2")'
           R -e 'renv::restore()'
 
       - name: Build site
