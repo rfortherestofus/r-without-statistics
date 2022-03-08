@@ -2,17 +2,15 @@
 
 # Why R Without Statistics? {-}
 
-## How New Zealand Used R to Fought COVID with R
+## How New Zealand Used R to Fought COVID with R {-}
 
-## How I Came to Use R
+TODO
 
-### Consulting work
+## How I Came to Use R {-}
 
 My own relationship with R goes back to 2016. At the time, I was a consultant, helping non-profits, government agencies, and educational institutions to measure how effective their work is (a field known as [program evaluation](https://www.cdc.gov/evaluation/index.htm)). A lot of my work involved conducting surveys, analyzing the resulting the data, and sharing these results with clients. 
 
 The work itself was fine, but the tools I was using to do it were getting on my nerves. Well, one tool really: Excel. 
-
-### Bored with Excel
 
 Now look, this is not a place for an anti-Excel rant. Excel is a fine tool that has empowered millions to work with data in ways they would never have been able to without this tool. 
 
@@ -21,8 +19,6 @@ But, for me, Excel was tedious. The amount of pointing and clicking I had to do 
 No matter what I did, analyzing data and creating charts in Excel just involved a lot of repetitive pointing and clicking. 
 
 TODO: Add graph of clicks going up
-
-### Frustrated with Excel
 
 Endless pointing and clicking was just one problem I faced using Excel. Annoying though it was, it didn’t affect the quality of my work. Or so I thought until I recalled a project I had worked on a few years earlier. 
 
@@ -46,7 +42,7 @@ If I were to redo that project on Outdoor School with R, here’s what would be 
 2. Filter to only include districts with fifth or sixth graders
 3. Join the filtered data on school districts with my survey data
 
-TODO: Add pseudocode
+TODO: Add pseudocode to show this in R
 
 Code can be scary. Having to write code is one of the reasons many people never learn R. But code is just a list of things you want to do to your data. It may be written in a hard-to-parse syntax (though it quickly gets easier to make sense of it), but it’s just a set of steps. The same steps that we should write out when we’re working in Excel, but never do. 
 
@@ -56,21 +52,21 @@ Using R won’t mean you’ll never make mistakes again (trust me, you will). Bu
 
 I started learning R to avoid tedious pointing and clicking. But what I found was that R improved my work in ways I never expected. It’s not just that my wrists are less tired. I now have more confidence in the accuracy of my work. 
 
-### My own uncertainty about the way I use R
+### My own uncertainty about the way I use R {-}
 
 For the longest time, I felt TK about the way I use R. I use R, a tool designed for statistical analysis, but I don't use it for complex statistical analysis. I don't do machine learning. 
 
-### My background as an anthropologist
+### My background as an anthropologist {-}
 
-### Never used R in grad school
+### Never used R in grad school {-}
 
-### I use R for three main things: 
+### I use R for three main things: {-}
 
 1. descriptive stats
 2. data viz
 3. RMarkdown
 
-### But then I realized what people get most excited about is:
+### But then I realized what people get most excited about is: {-}
 
 Interview with Sharla (statistician who doesn't do complex stats)
 - Her rstudio::conf talk
@@ -87,28 +83,28 @@ Everyone needs to:
 2. Communicate
 3. Automate
 
-### Is R Just for Statistics?
+### Is R Just for Statistics? {-}
 
 It was a niche language by statisticians for statisticians, now it's used by millions for a huge range of purposes. 
 
-### So if R is a general purpose language, why use it versus any other language?
+### So if R is a general purpose language, why use it versus any other language? {-}
 
 Gives you data stuff first, then you can add on everything else
 
 Remove this section? Too defensive?
 
-## Book Overview
+## Book Overview {-}
 
-### How each chapter works
+### How each chapter works {-}
 
-### Broad scope of book
+### Broad scope of book {-}
 - I’ve tried to choose topics that are relevant to everyone, no matter what you do (e.g. art with R is cool but not everyone wants to do it)
 
-### Why didn’t you cover X topic? 
+### Why didn’t you cover X topic? {-} 
 - That’s a great idea, but I can’t cover everything!
 - The fact that R can do X is a great example of its versatility (please write your own book!)
 
-### Book title is not to be taken literally
+### Book title is not to be taken literally {-}
 
 Paul Jarvis Company of One 
 
