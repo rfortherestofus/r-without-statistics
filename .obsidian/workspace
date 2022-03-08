@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "schedule.md",
+            "file": "proposal.md",
             "mode": "source",
             "backlinks": false,
             "source": false
@@ -41,7 +41,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:#object",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -50,7 +50,8 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -74,17 +75,8 @@
                 "useHierarchy": true
               }
             }
-          },
-          {
-            "id": "ac8c8b3c40491436",
-            "type": "leaf",
-            "state": {
-              "type": "advanced-tables-toolbar",
-              "state": {}
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -92,10 +84,10 @@
   },
   "active": "b8fb30a1887873c2",
   "lastOpenFiles": [
+    "proposal.md",
     "schedule.md",
     "intro.md",
     "README.md",
-    "proposal.md",
     "mock-cover.png",
     "Fonts.md",
     "⭐ Weekly Priorities.md",
