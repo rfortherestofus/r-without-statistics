@@ -1,5 +1,3 @@
-// https://github.com/EmilHvitfeldt/bookdown-github-actions-netlify/blob/main/.github/workflows/bookdown.yaml
-
 on:
   push:
     branches: main
