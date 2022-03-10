@@ -54,7 +54,19 @@ I started learning R to avoid tedious pointing and clicking. But what I found wa
 
 ### My own uncertainty about the way I use R {-}
 
-For the longest time, I felt TK about the way I use R. I use R, a tool designed for statistical analysis, but I don't use it for complex statistical analysis. I don't do machine learning. 
+I used to feel ashamed about the way I use R. 
+
+I use R, a tool for statistical analysis, but I don't use it for complex statistical analysis. I don't do machine learning. I don’t know what a random forest is. I’ve never even run a regression in R. 
+
+[The only statistics in R are descriptive statistics](https://rfortherestofus.com/2018/12/descriptive-stats-r/). Counts, sums, averages: they are the statistics that I do in R. 
+
+For a long time, I felt like I wasn’t a “real” R user. Real R users, in my mind, used R for hardcore stats. I “only” used R for descriptive stats. 
+
+TODO: Does this fit? “It sometimes feels like I’m using a souped up Ferrari sports car to drive 20 miles an hour to the grocery store.” 
+
+But eventually I realized that this framing misses the point. R started out as a tool created by statisticians for other statisticians (TODO: Add link to R history article). But, over a quarter century since its creation, R can do much more than statistical analysis. 
+
+TODO: Remove next two sections? 
 
 ### My background as an anthropologist {-}
 
@@ -62,36 +74,39 @@ For the longest time, I felt TK about the way I use R. I use R, a tool designed 
 
 ### I use R for three main things: {-}
 
-1. descriptive stats
-2. data viz
-3. RMarkdown
+Here’s what I use R for today:
 
-### But then I realized what people get most excited about is: {-}
+1. **Data visualization**: making graphs, maps, and tables that look good and communicate effectively.
+1. **Reporting with RMarkdown**: moving away from the inefficiency and error-prone workflow of using multiple tools to create reports by instead doing it all in the one tool that I think of as [R’s killer feature](https://rfortherestofus.com/2019/03/r-killer-feature-rmarkdown/). 
+1. **Automating tedious practices**: Remember my Excel-burdened wrists? Since I moved to R I’ve found so many ways to automate tedious practices, from gathering data directly from the U.S. Census Bureau to pulling survey results in from Qualtrics and more. 
 
-Interview with Sharla (statistician who doesn't do complex stats)
-- Her rstudio::conf talk
-
-Data viz (illuminate)
-
-Websites (communicate)
-
-Workflow (i.e. automate)
-
-Everyone needs to:
+I think of my work in three buckets:
 
 1. Illuminate
 2. Communicate
 3. Automate
 
-### Is R Just for Statistics? {-}
+### But then I realized what people get most excited about is: {-}
 
-It was a niche language by statisticians for statisticians, now it's used by millions for a huge range of purposes. 
+The main reason I’ve come to accept that my way of using R is as valid as anyone else’s has come through realizing that more “sophisticated” R users are doing many of the same things I am. Sure, they may also be doing statistical analyses that I am not, but everyone who uses R needs to illuminate, communicate, and automate.  
 
-### So if R is a general purpose language, why use it versus any other language? {-}
+Canadian statistician Sharla Gelfand has [talked about how they used R to automate an annual report on nursing registration exams in Ontario](https://twitter.com/sharlagelfand/status/1135962094938009601). Sharla told me in 2019 that, despite being a statistician, [the most statistical thing they did was calculating a median](https://rfortherestofus.com/2019/09/my-r-journey-sharla-gelfand/).
 
-Gives you data stuff first, then you can add on everything else
+Take a look at the R community on Twitter (where users congregate under the #rstats hashtag). What gets people most excited is not the latest complex statistical analysis. [It’s tips and tricks on data wrangling](https://twitter.com/dgkeyes/status/1479473689225695234). 
 
-Remove this section? Too defensive?
+TODO: Switch examples below to focus on illuminate, communicate, and automate? 
+
+[Like how to rename 192 variables without writing 192 lines of code](https://twitter.com/PipingHotData/status/1497014703473704965). 
+
+[Or love letters to the `clean_names()` function from the `janitor` package, which takes messy variable names and makes them easy to work with in R](https://twitter.com/WeAreRLadies/status/1228049014601342976). 
+
+[Or oohing and aahing over the latest gorgeous data visualization](https://twitter.com/CedScherer/status/1220843943224578050) made as part of the Tidy Tuesday project.
+
+TODO: Add Cedric’s Spotify viz  
+
+No matter what else you do in R, you have to **illuminate** your findings and **communicate** your results. And, the more you use R, the more you’ll find yourself wanting to **automate** things you used to do manually (your wrists will thank you). 
+
+I realize now that the things that I use R for *are* the things that everyone uses R for. R was created for statistics. But today you can use R without statistics. 
 
 ## Book Overview {-}
 
@@ -106,5 +121,11 @@ Remove this section? Too defensive?
 
 ### Book title is not to be taken literally {-}
 
-Paul Jarvis Company of One 
+Pedants of the world (as one of you, I come in peace), I have a favor to ask. 
+
+This book is called R Without Statistics. But it’s not meant to be taken literally. 
+
+Of course it’s true that if you’re making a graph you’re using statistics. So, before you start typing an angry email to me, please know that R Without Statistics is a mindset rather than a literal statement. 
+
+We’re all using R with statistics already. Let’s also learn to use R without statistics. 
 

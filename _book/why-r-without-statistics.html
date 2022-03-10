@@ -108,7 +108,13 @@
 <div id="my-own-uncertainty-about-the-way-i-use-r" class="section level3 unnumbered">
 <h3>My own uncertainty about the way I use R<a class="anchor" aria-label="anchor" href="#my-own-uncertainty-about-the-way-i-use-r"><i class="fas fa-link"></i></a>
 </h3>
-<p>For the longest time, I felt TK about the way I use R. I use R, a tool designed for statistical analysis, but I don’t use it for complex statistical analysis. I don’t do machine learning.</p>
+<p>I used to feel ashamed about the way I use R.</p>
+<p>I use R, a tool for statistical analysis, but I don’t use it for complex statistical analysis. I don’t do machine learning. I don’t know what a random forest is. I’ve never even run a regression in R.</p>
+<p><a href="https://rfortherestofus.com/2018/12/descriptive-stats-r/">The only statistics in R are descriptive statistics</a>. Counts, sums, averages: they are the statistics that I do in R.</p>
+<p>For a long time, I felt like I wasn’t a “real” R user. Real R users, in my mind, used R for hardcore stats. I “only” used R for descriptive stats.</p>
+<p>TODO: Does this fit? “It sometimes feels like I’m using a souped up Ferrari sports car to drive 20 miles an hour to the grocery store.”</p>
+<p>But eventually I realized that this framing misses the point. R started out as a tool created by statisticians for other statisticians (TODO: Add link to R history article). But, over a quarter century since its creation, R can do much more than statistical analysis.</p>
+<p>TODO: Remove next two sections?</p>
 </div>
 <div id="my-background-as-an-anthropologist" class="section level3 unnumbered">
 <h3>My background as an anthropologist<a class="anchor" aria-label="anchor" href="#my-background-as-an-anthropologist"><i class="fas fa-link"></i></a>
@@ -121,37 +127,35 @@
 <div id="i-use-r-for-three-main-things" class="section level3 unnumbered">
 <h3>I use R for three main things:<a class="anchor" aria-label="anchor" href="#i-use-r-for-three-main-things"><i class="fas fa-link"></i></a>
 </h3>
+<p>Here’s what I use R for today:</p>
 <ol style="list-style-type: decimal">
-<li>descriptive stats</li>
-<li>data viz</li>
-<li>RMarkdown</li>
+<li>
+<strong>Data visualization</strong>: making graphs, maps, and tables that look good and communicate effectively.</li>
+<li>
+<strong>Reporting with RMarkdown</strong>: moving away from the inefficiency and error-prone workflow of using multiple tools to create reports by instead doing it all in the one tool that I think of as <a href="https://rfortherestofus.com/2019/03/r-killer-feature-rmarkdown/">R’s killer feature</a>.</li>
+<li>
+<strong>Automating tedious practices</strong>: Remember my Excel-burdened wrists? Since I moved to R I’ve found so many ways to automate tedious practices, from gathering data directly from the U.S. Census Bureau to pulling survey results in from Qualtrics and more.</li>
 </ol>
-</div>
-<div id="but-then-i-realized-what-people-get-most-excited-about-is" class="section level3 unnumbered">
-<h3>But then I realized what people get most excited about is:<a class="anchor" aria-label="anchor" href="#but-then-i-realized-what-people-get-most-excited-about-is"><i class="fas fa-link"></i></a>
-</h3>
-<p>Interview with Sharla (statistician who doesn’t do complex stats)
-- Her rstudio::conf talk</p>
-<p>Data viz (illuminate)</p>
-<p>Websites (communicate)</p>
-<p>Workflow (i.e. automate)</p>
-<p>Everyone needs to:</p>
+<p>I think of my work in three buckets:</p>
 <ol style="list-style-type: decimal">
 <li>Illuminate</li>
 <li>Communicate</li>
 <li>Automate</li>
 </ol>
 </div>
-<div id="is-r-just-for-statistics" class="section level3 unnumbered">
-<h3>Is R Just for Statistics?<a class="anchor" aria-label="anchor" href="#is-r-just-for-statistics"><i class="fas fa-link"></i></a>
+<div id="but-then-i-realized-what-people-get-most-excited-about-is" class="section level3 unnumbered">
+<h3>But then I realized what people get most excited about is:<a class="anchor" aria-label="anchor" href="#but-then-i-realized-what-people-get-most-excited-about-is"><i class="fas fa-link"></i></a>
 </h3>
-<p>It was a niche language by statisticians for statisticians, now it’s used by millions for a huge range of purposes.</p>
-</div>
-<div id="so-if-r-is-a-general-purpose-language-why-use-it-versus-any-other-language" class="section level3 unnumbered">
-<h3>So if R is a general purpose language, why use it versus any other language?<a class="anchor" aria-label="anchor" href="#so-if-r-is-a-general-purpose-language-why-use-it-versus-any-other-language"><i class="fas fa-link"></i></a>
-</h3>
-<p>Gives you data stuff first, then you can add on everything else</p>
-<p>Remove this section? Too defensive?</p>
+<p>The main reason I’ve come to accept that my way of using R is as valid as anyone else’s has come through realizing that more “sophisticated” R users are doing many of the same things I am. Sure, they may also be doing statistical analyses that I am not, but everyone who uses R needs to illuminate, communicate, and automate.</p>
+<p>Canadian statistician Sharla Gelfand has <a href="https://twitter.com/sharlagelfand/status/1135962094938009601">talked about how they used R to automate an annual report on nursing registration exams in Ontario</a>. Sharla told me in 2019 that, despite being a statistician, <a href="https://rfortherestofus.com/2019/09/my-r-journey-sharla-gelfand/">the most statistical thing they did was calculating a median</a>.</p>
+<p>Take a look at the R community on Twitter (where users congregate under the #rstats hashtag). What gets people most excited is not the latest complex statistical analysis. <a href="https://twitter.com/dgkeyes/status/1479473689225695234">It’s tips and tricks on data wrangling</a>.</p>
+<p>TODO: Switch examples below to focus on illuminate, communicate, and automate?</p>
+<p><a href="https://twitter.com/PipingHotData/status/1497014703473704965">Like how to rename 192 variables without writing 192 lines of code</a>.</p>
+<p><a href="https://twitter.com/WeAreRLadies/status/1228049014601342976">Or love letters to the <code>clean_names()</code> function from the <code>janitor</code> package, which takes messy variable names and makes them easy to work with in R</a>.</p>
+<p><a href="https://twitter.com/CedScherer/status/1220843943224578050">Or oohing and aahing over the latest gorgeous data visualization</a> made as part of the Tidy Tuesday project.</p>
+<p>TODO: Add Cedric’s Spotify viz</p>
+<p>No matter what else you do in R, you have to <strong>illuminate</strong> your findings and <strong>communicate</strong> your results. And, the more you use R, the more you’ll find yourself wanting to <strong>automate</strong> things you used to do manually (your wrists will thank you).</p>
+<p>I realize now that the things that I use R for <em>are</em> the things that everyone uses R for. R was created for statistics. But today you can use R without statistics.</p>
 </div>
 </div>
 <div id="book-overview" class="section level2 unnumbered">
@@ -179,7 +183,10 @@
 <div id="book-title-is-not-to-be-taken-literally" class="section level3 unnumbered">
 <h3>Book title is not to be taken literally<a class="anchor" aria-label="anchor" href="#book-title-is-not-to-be-taken-literally"><i class="fas fa-link"></i></a>
 </h3>
-<p>Paul Jarvis Company of One</p>
+<p>Pedants of the world (as one of you, I come in peace), I have a favor to ask.</p>
+<p>This book is called R Without Statistics. But it’s not meant to be taken literally.</p>
+<p>Of course it’s true that if you’re making a graph you’re using statistics. So, before you start typing an angry email to me, please know that R Without Statistics is a mindset rather than a literal statement.</p>
+<p>We’re all using R with statistics already. Let’s also learn to use R without statistics.</p>
 
 </div>
 </div>
@@ -202,8 +209,6 @@
 <li><a class="nav-link" href="#never-used-r-in-grad-school">Never used R in grad school</a></li>
 <li><a class="nav-link" href="#i-use-r-for-three-main-things">I use R for three main things:</a></li>
 <li><a class="nav-link" href="#but-then-i-realized-what-people-get-most-excited-about-is">But then I realized what people get most excited about is:</a></li>
-<li><a class="nav-link" href="#is-r-just-for-statistics">Is R Just for Statistics?</a></li>
-<li><a class="nav-link" href="#so-if-r-is-a-general-purpose-language-why-use-it-versus-any-other-language">So if R is a general purpose language, why use it versus any other language?</a></li>
 </ul>
 </li>
 <li>
