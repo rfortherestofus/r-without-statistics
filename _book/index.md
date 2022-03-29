@@ -35,7 +35,7 @@ The idea that R is only for statistical analysis is outdated and inaccurate. But
 
 **Enter R Without Statistics.**
 
-R Without Statistics will show ways that R can be used beyond complex statistical analysis. Readers will learn about a range of uses for R, many of which they have likely never even considered. 
+R Without Statistics will show ways that R can be used beyond complex statistical analysis. Readers will learn about a range of uses for R, many of which they have likely never even considered.
 
 Each chapter will, using a consistent format, cover one novel way of using R.
 

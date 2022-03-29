@@ -41,6 +41,46 @@
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \usepackage{longtable,booktabs,array}
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
@@ -112,7 +152,7 @@ The idea that R is only for statistical analysis is outdated and inaccurate. But
 
 \textbf{Enter R Without Statistics.}
 
-R Without Statistics will show ways that R can be used beyond complex statistical analysis. Readers will learn about a range of uses for R, many of which they have likely never even considered.~
+R Without Statistics will show ways that R can be used beyond complex statistical analysis. Readers will learn about a range of uses for R, many of which they have likely never even considered.
 
 Each chapter will, using a consistent format, cover one novel way of using R.
 
@@ -127,6 +167,27 @@ Each chapter will, using a consistent format, cover one novel way of using R.
 \end{enumerate}
 
 Written by David Keyes, Founder and CEO of~\href{https://rfortherestofus.com/}{R for the Rest of Us}, R Without Statistics will be published by \href{https://nostarch.com/}{No Starch Press}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\CommentTok{\#\textgreater{} {-}{-} Attaching packages {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-} tidyverse 1.3.1 {-}{-}}
+\CommentTok{\#\textgreater{} v ggplot2 3.3.5     v purrr   0.3.4}
+\CommentTok{\#\textgreater{} v tibble  3.1.6     v dplyr   1.0.8}
+\CommentTok{\#\textgreater{} v tidyr   1.2.0     v stringr 1.4.0}
+\CommentTok{\#\textgreater{} v readr   2.1.2     v forcats 0.5.1}
+\CommentTok{\#\textgreater{} {-}{-} Conflicts {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-} tidyverse\_conflicts() {-}{-}}
+\CommentTok{\#\textgreater{} x dplyr::filter() masks stats::filter()}
+\CommentTok{\#\textgreater{} x dplyr::lag()    masks stats::lag()}
+\FunctionTok{library}\NormalTok{(readxl)}
+\FunctionTok{library}\NormalTok{(janitor)}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Attaching package: \textquotesingle{}janitor\textquotesingle{}}
+\CommentTok{\#\textgreater{} The following objects are masked from \textquotesingle{}package:stats\textquotesingle{}:}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{}     chisq.test, fisher.test}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{part-introduction}{%
 \part*{Introduction}\label{part-introduction}}
@@ -154,9 +215,9 @@ Now look, this is not a place for an anti-Excel rant. Excel is a fine tool that 
 
 But, for me, Excel was tedious. The amount of pointing and clicking I had to do when working with the amount of data I had got old fast. Each time I would conduct a survey, I'd know that it would yield an avalanche of data and that my wrists would end up exhausted from hours of pointing and clicking.
 
-No matter what I did, analyzing data and creating charts in Excel just involved a lot of repetitive pointing and clicking.
+No matter what I did, analyzing data and creating charts in Excel just involved a lot of repetitive pointing and clicking. Kind of like this:
 
-TODO: Add graph of clicks going up with ggrough
+\includegraphics{introduction_files/figure-latex/unnamed-chunk-2-1.pdf}
 
 Endless pointing and clicking was just one problem I faced using Excel. Annoying though it was, it didn't affect the quality of my work. Or so I thought until I recalled a project I had worked on a few years earlier.
 
@@ -172,26 +233,51 @@ The reality is, we're human. We all make mistakes. And without a straightforward
 
 The good news is that it's ok. There's a solution. And that solution is R.
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
 If I were to redo that project on Outdoor School with R, here's what I'd do differently. Rather than watching points and clicks disappear into the ether, I'd write code that would serve as a record of everything I did. This code would:
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  Download data on all school districts
-\item
-  Filter to only include districts with fifth or sixth graders
-\item
-  Join the filtered data on school districts with my survey data
-\end{enumerate}
+Download data on all school districts:
 
-TODO: Add pseudocode to show this in R
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Download the data directly from the Oregon Department of Education website}
+\FunctionTok{download.file}\NormalTok{(}\AttributeTok{url =} \StringTok{"https://www.oregon.gov/ode/educator{-}resources/assessment/Documents/TestResults2019/pagr\_schools\_ela\_tot\_raceethnicity\_1819.xlsx"}\NormalTok{,}
+              \AttributeTok{destfile =} \StringTok{"data/pagr\_schools\_ela\_tot\_raceethnicity\_1819.xlsx"}\NormalTok{)}
 
-Code can be scary. Having to write code is one of the reasons many people never learn R. But code is just a list of things you want to do to your data. It may be written in a hard-to-parse syntax (though it gets easier over time), but it's just a set of steps. The same steps that we should write out when we're working in Excel, but never do.
+\CommentTok{\# Import the downloaded data and use the \textasciigrave{}clean\_names()\textasciigrave{} function to make the variable names easy to work with}
+\NormalTok{oregon\_schools }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"data/pagr\_schools\_ela\_tot\_raceethnicity\_1819.xlsx"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{clean\_names}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
-TODO: Show code as step of steps
+Filter to only include districts with fifth or sixth graders:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Start with the oregon\_schools data from above}
+\NormalTok{oregon\_schools\_fifth\_sixth\_grade }\OtherTok{\textless{}{-}}\NormalTok{ oregon\_schools }\SpecialCharTok{\%\textgreater{}\%} 
+  
+  \CommentTok{\# Only keep schools with fifth or sixth graders}
+  \FunctionTok{filter}\NormalTok{(grade\_level }\SpecialCharTok{==} \StringTok{"Grade 5"} \SpecialCharTok{|}\NormalTok{ grade\_level }\SpecialCharTok{==} \StringTok{"Grade 6"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  
+  \CommentTok{\# Only keep the variables we need}
+  \FunctionTok{select}\NormalTok{(district\_id}\SpecialCharTok{:}\NormalTok{school) }\SpecialCharTok{\%\textgreater{}\%} 
+  
+  \CommentTok{\# There are multiple observations of the same school, just keep one of each}
+  \FunctionTok{distinct}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+Join the filtered data on school districts with my survey data:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Use the school\_id variable to join the survey data with the oregon\_schools\_fifth\_sixth\_grade from above }
+\FunctionTok{left\_join}\NormalTok{(survey\_data, oregon\_schools\_fifth\_sixth\_grade,}
+          \AttributeTok{by =} \StringTok{"school\_id"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Code can be scary. Having to write code is one of the reasons many people never learn R. But code is just a list of things you want to do to your data. It may be written in a hard-to-parse syntax (though it gets easier over time), but it's just a set of steps. The same steps that we should write out when we're working in Excel, but never do. Rather than having a separate document with my steps written down (the one that never gets written), I can see my steps in my code. See that line that says filter. Guess what it's doing? Yep, it's filtering!
 
 If I had done things this way when working on the Outdoor School project, I could have looked back at any point to make sure what I thought was happening to my data was in fact happening. That nagging sensation I had near the end of the project that I may have made a mistake in one of my early points or clicks? It never would come up because I could just review my code to make sure it did what I thought it did. And if it didn't, I could rewrite and rerun my code to get updated results.
 

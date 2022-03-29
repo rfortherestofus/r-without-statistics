@@ -1,3 +1,26 @@
+
+```r
+library(tidyverse)
+#> ── Attaching packages ─────────────────── tidyverse 1.3.1 ──
+#> ✓ ggplot2 3.3.5     ✓ purrr   0.3.4
+#> ✓ tibble  3.1.6     ✓ dplyr   1.0.8
+#> ✓ tidyr   1.2.0     ✓ stringr 1.4.0
+#> ✓ readr   2.1.2     ✓ forcats 0.5.1
+#> ── Conflicts ────────────────────── tidyverse_conflicts() ──
+#> x dplyr::filter() masks stats::filter()
+#> x dplyr::lag()    masks stats::lag()
+library(readxl)
+library(janitor)
+#> 
+#> Attaching package: 'janitor'
+#> The following objects are masked from 'package:stats':
+#> 
+#>     chisq.test, fisher.test
+library(knitr)
+library(tweetrmd)
+```
+
+
 # (PART\*) Introduction {-}
 
 # Why R Without Statistics? {-}
@@ -16,9 +39,10 @@ Now look, this is not a place for an anti-Excel rant. Excel is a fine tool that 
 
 But, for me, Excel was tedious. The amount of pointing and clicking I had to do when working with the amount of data I had got old fast. Each time I would conduct a survey, I'd know that it would yield an avalanche of data and that my wrists would end up exhausted from hours of pointing and clicking. 
 
-No matter what I did, analyzing data and creating charts in Excel just involved a lot of repetitive pointing and clicking. 
+No matter what I did, analyzing data and creating charts in Excel just involved a lot of repetitive pointing and clicking. Kind of like this:
 
-TODO: Add graph of clicks going up with ggrough
+<img src="introduction_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+
 
 Endless pointing and clicking was just one problem I faced using Excel. Annoying though it was, it didn't affect the quality of my work. Or so I thought until I recalled a project I had worked on a few years earlier. 
 
@@ -34,19 +58,51 @@ The reality is, we're human. We all make mistakes. And without a straightforward
 
 The good news is that it's ok. There's a solution. And that solution is R. 
 
-* * * 
-
 If I were to redo that project on Outdoor School with R, here's what I'd do differently. Rather than watching points and clicks disappear into the ether, I'd write code that would serve as a record of everything I did. This code would: 
 
-1. Download data on all school districts
-2. Filter to only include districts with fifth or sixth graders
-3. Join the filtered data on school districts with my survey data
+Download data on all school districts:
 
-TODO: Add pseudocode to show this in R
 
-Code can be scary. Having to write code is one of the reasons many people never learn R. But code is just a list of things you want to do to your data. It may be written in a hard-to-parse syntax (though it gets easier over time), but it's just a set of steps. The same steps that we should write out when we're working in Excel, but never do. 
+```r
+# Download the data directly from the Oregon Department of Education website
+download.file(url = "https://www.oregon.gov/ode/educator-resources/assessment/Documents/TestResults2019/pagr_schools_ela_tot_raceethnicity_1819.xlsx",
+              destfile = "data/pagr_schools_ela_tot_raceethnicity_1819.xlsx")
 
-TODO: Show code as step of steps
+# Import the downloaded data and use the `clean_names()` function to make the variable names easy to work with
+oregon_schools <- read_excel("data/pagr_schools_ela_tot_raceethnicity_1819.xlsx") %>% 
+  clean_names()
+```
+
+
+Filter to only include districts with fifth or sixth graders:
+
+
+```r
+# Start with the oregon_schools data from above
+oregon_schools_fifth_sixth_grade <- oregon_schools %>% 
+  
+  # Only keep schools with fifth or sixth graders
+  filter(grade_level == "Grade 5" | grade_level == "Grade 6") %>% 
+  
+  # Only keep the variables we need
+  select(district_id:school) %>% 
+  
+  # There are multiple observations of the same school, just keep one of each
+  distinct()
+```
+
+
+Join the filtered data on school districts with my survey data:
+
+
+```r
+# Use the school_id variable to join the survey data with the oregon_schools_fifth_sixth_grade from above 
+left_join(survey_data, oregon_schools_fifth_sixth_grade,
+          by = "school_id")
+```
+
+
+Code can be scary. Having to write code is one of the reasons many people never learn R. But code is just a list of things you want to do to your data. It may be written in a hard-to-parse syntax (though it gets easier over time), but it's just a set of steps. The same steps that we should write out when we're working in Excel, but never do. Rather than having a separate document with my steps written down (the one that never gets written), I can see my steps in my code. See that line that says filter. Guess what it's doing? Yep, it's filtering!
 
 If I had done things this way when working on the Outdoor School project, I could have looked back at any point to make sure what I thought was happening to my data was in fact happening. That nagging sensation I had near the end of the project that I may have made a mistake in one of my early points or clicks? It never would come up because I could just review my code to make sure it did what I thought it did. And if it didn't, I could rewrite and rerun my code to get updated results. 
 
@@ -90,11 +146,29 @@ Take a look at the R community on Twitter (where users congregate under the #rst
 
 [Things like making illuminating data visualization](https://twitter.com/CedScherer/status/1220843943224578050) as part of the [Tidy Tuesday project](https://github.com/rfordatascience/tidytuesday).
 
-TODO: Add Cedric's Spotify viz 
+<div class="figure">
+<img src="https://raw.githubusercontent.com/Z3tt/TidyTuesday/master/plots/2020_04/2020_04_SpotifySongs.png" alt="Visualization by Cédric Scherer" width="100%" />
+<p class="caption">(\#fig:unnamed-chunk-6)Visualization by Cédric Scherer</p>
+</div>
+
 
 [Or video tutorials on how to communicate through effective presentations using R](https://twitter.com/spcanelon/status/1424932510065209348).
 
+
+```{=html}
+<blockquote class="twitter-tweet" data-width="550" data-lang="en" data-dnt="true" data-theme="light"><p lang="en" dir="ltr">📺 The video for our <a href="https://twitter.com/hashtag/xaringan?src=hash&amp;ref_src=twsrc%5Etfw">#xaringan</a> tutorial is now available! <a href="https://t.co/0CNOBtjam1">https://t.co/0CNOBtjam1</a><br>Huge thanks to the <a href="https://twitter.com/_useRconf?ref_src=twsrc%5Etfw">@_useRconf</a> team for magically editing it down to 1.5 hours. And to the 5 people who already gave the video a thumbs up, you deserve a thumbs up too 👍😉 <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="https://twitter.com/hashtag/useR2021?src=hash&amp;ref_src=twsrc%5Etfw">#useR2021</a> <a href="https://t.co/itvg01V14y">https://t.co/itvg01V14y</a> <a href="https://t.co/i7rCRwOBuZ">pic.twitter.com/i7rCRwOBuZ</a></p>&mdash; Silvia Canelón (@spcanelon) <a href="https://twitter.com/spcanelon/status/1424932510065209348?ref_src=twsrc%5Etfw">August 10, 2021</a></blockquote>
+
+```
+
+
 [Or love letters to the `clean_names()` function from the `janitor` package, which automates the process of making messy variable names easy to work with in R](https://twitter.com/WeAreRLadies/status/1228049014601342976). 
+
+
+```{=html}
+<blockquote class="twitter-tweet" data-width="550" data-lang="en" data-dnt="true" data-theme="light"><p lang="en" dir="ltr">An Ode to {janitor} by <a href="https://twitter.com/sfirke?ref_src=twsrc%5Etfw">@sfirke</a><a href="https://t.co/9h4ZRn8xzj">https://t.co/9h4ZRn8xzj</a><br><br>{janitor}, how do I love thee? Let me count the ways…<br><br>I love how you take headers with spaces and capitalization and all sorts of weirdness and make them into R-friendly names using `clean_names()`. <a href="https://t.co/G3OsZvvNIt">pic.twitter.com/G3OsZvvNIt</a></p>&mdash; We are R-Ladies (@WeAreRLadies) <a href="https://twitter.com/WeAreRLadies/status/1228049014601342976?ref_src=twsrc%5Etfw">February 13, 2020</a></blockquote>
+
+```
+
 
 No matter what else you do in R, you have to **illuminate** your findings and **communicate** your results. And, the more you use R, the more you'll find yourself wanting to **automate** things you used to do manually (your wrists will thank you). 
 

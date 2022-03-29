@@ -20,7 +20,7 @@
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.12/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="style.css">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/twitter-widget-0.0.1/widgets.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="style.css">
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -84,8 +84,8 @@
 <p>The work itself was fine, but the tools I was using to do it were getting on my nerves. Well, one tool really: Excel.</p>
 <p>Now look, this is not a place for an anti-Excel rant. Excel is a fine tool that has empowered millions to work with data in ways they would never have been able to otherwise.</p>
 <p>But, for me, Excel was tedious. The amount of pointing and clicking I had to do when working with the amount of data I had got old fast. Each time I would conduct a survey, I’d know that it would yield an avalanche of data and that my wrists would end up exhausted from hours of pointing and clicking.</p>
-<p>No matter what I did, analyzing data and creating charts in Excel just involved a lot of repetitive pointing and clicking.</p>
-<p>TODO: Add graph of clicks going up with ggrough</p>
+<p>No matter what I did, analyzing data and creating charts in Excel just involved a lot of repetitive pointing and clicking. Kind of like this:</p>
+<div class="inline-figure"><img src="introduction_files/figure-html/unnamed-chunk-2-1.png" width="672"></div>
 <p>Endless pointing and clicking was just one problem I faced using Excel. Annoying though it was, it didn’t affect the quality of my work. Or so I thought until I recalled a project I had worked on a few years earlier.</p>
 <p>In this project, I was looking at which school districts in the state of Oregon have <a href="https://oregonstate.app.box.com/s/83g5sjdm88xgqdxfze0ri7qo4uff5sj7">outdoor education programs known as Outdoor School</a>. As part of this project, I had to download data on all school districts throughout Oregon, filter to only include relevant districts with fifth or sixth graders (the ages Outdoor School takes place), and then merge this with data that I collected as part of a survey I conducted.</p>
 <p>I did the work in Excel, using a lot of (you guessed it!) pointing and clicking. The problem came when I was almost done with the project. I’ve blocked the details from my memory (as I’ve done with most things Excel-related), but what I do recall is that not being 100% certain I had done my filtering and joining correctly. And, to make it worse, I had no way to check my work. Why? Because all my pointing and clicking was ephemeral, gone in the ether as soon as I had completed it.</p>
@@ -93,16 +93,35 @@
 <p>Now, you may be reading this thinking: why didn’t you write down the steps you used in Excel so you could retrace them later? Sure, I could (and should) have done that. But let’s be honest: most of us don’t.</p>
 <p>The reality is, we’re human. We all make mistakes. And without a straightforward way to audit your work (and keeping a list of all of your Excel points and clicks in a separate document is not, in my view, straightforward), mistakes will happen. If you’ve used Excel to work with data, I guarantee you’ve made a mistake, just like me.</p>
 <p>The good news is that it’s ok. There’s a solution. And that solution is R.</p>
-<hr>
 <p>If I were to redo that project on Outdoor School with R, here’s what I’d do differently. Rather than watching points and clicks disappear into the ether, I’d write code that would serve as a record of everything I did. This code would:</p>
-<ol style="list-style-type: decimal">
-<li>Download data on all school districts</li>
-<li>Filter to only include districts with fifth or sixth graders</li>
-<li>Join the filtered data on school districts with my survey data</li>
-</ol>
-<p>TODO: Add pseudocode to show this in R</p>
-<p>Code can be scary. Having to write code is one of the reasons many people never learn R. But code is just a list of things you want to do to your data. It may be written in a hard-to-parse syntax (though it gets easier over time), but it’s just a set of steps. The same steps that we should write out when we’re working in Excel, but never do.</p>
-<p>TODO: Show code as step of steps</p>
+<p>Download data on all school districts:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Download the data directly from the Oregon Department of Education website</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span>url <span class="op">=</span> <span class="st">"https://www.oregon.gov/ode/educator-resources/assessment/Documents/TestResults2019/pagr_schools_ela_tot_raceethnicity_1819.xlsx"</span>,
+              destfile <span class="op">=</span> <span class="st">"data/pagr_schools_ela_tot_raceethnicity_1819.xlsx"</span><span class="op">)</span>
+
+<span class="co"># Import the downloaded data and use the `clean_names()` function to make the variable names easy to work with</span>
+<span class="va">oregon_schools</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"data/pagr_schools_ela_tot_raceethnicity_1819.xlsx"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/janitor/man/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/clean_names.html">clean_names</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p>Filter to only include districts with fifth or sixth graders:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Start with the oregon_schools data from above</span>
+<span class="va">oregon_schools_fifth_sixth_grade</span> <span class="op">&lt;-</span> <span class="va">oregon_schools</span> <span class="op"><a href="https://rdrr.io/pkg/janitor/man/pipe.html">%&gt;%</a></span> 
+  
+  <span class="co"># Only keep schools with fifth or sixth graders</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">grade_level</span> <span class="op">==</span> <span class="st">"Grade 5"</span> <span class="op">|</span> <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"Grade 6"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/janitor/man/pipe.html">%&gt;%</a></span> 
+  
+  <span class="co"># Only keep the variables we need</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">district_id</span><span class="op">:</span><span class="va">school</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/janitor/man/pipe.html">%&gt;%</a></span> 
+  
+  <span class="co"># There are multiple observations of the same school, just keep one of each</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p>Join the filtered data on school districts with my survey data:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Use the school_id variable to join the survey data with the oregon_schools_fifth_sixth_grade from above </span>
+<span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">survey_data</span>, <span class="va">oregon_schools_fifth_sixth_grade</span>,
+          by <span class="op">=</span> <span class="st">"school_id"</span><span class="op">)</span></code></pre></div>
+<p>Code can be scary. Having to write code is one of the reasons many people never learn R. But code is just a list of things you want to do to your data. It may be written in a hard-to-parse syntax (though it gets easier over time), but it’s just a set of steps. The same steps that we should write out when we’re working in Excel, but never do. Rather than having a separate document with my steps written down (the one that never gets written), I can see my steps in my code. See that line that says filter. Guess what it’s doing? Yep, it’s filtering!</p>
 <p>If I had done things this way when working on the Outdoor School project, I could have looked back at any point to make sure what I thought was happening to my data was in fact happening. That nagging sensation I had near the end of the project that I may have made a mistake in one of my early points or clicks? It never would come up because I could just review my code to make sure it did what I thought it did. And if it didn’t, I could rewrite and rerun my code to get updated results.</p>
 <p>Using R won’t mean you’ll never make mistakes again (trust me, you will). But it will mean that you can easily spot your mistakes, make changes, and fix any issues.</p>
 <p>I started learning R to avoid tedious pointing and clicking. But what I found was that R improved my work in ways I never expected. It’s not just that my wrists are less tired. I now have more confidence that my work is accurate.</p>
@@ -124,9 +143,22 @@
 <p>Canadian statistician Sharla Gelfand has <a href="https://twitter.com/sharlagelfand/status/1135962094938009601">talked about how they used R to automate an annual report on nursing registration exams in Ontario</a>. Sharla told me in 2019 that, despite being a statistician, <a href="https://rfortherestofus.com/2019/09/my-r-journey-sharla-gelfand/">the most statistical thing they did was calculating a median</a>.</p>
 <p>Take a look at the R community on Twitter (where users congregate under the #rstats hashtag). What gets people most excited is not the latest complex statistical analysis. <a href="https://twitter.com/dgkeyes/status/1479473689225695234">It’s tips and tricks on the foundational work that everyone who uses R needs to do</a>.</p>
 <p><a href="https://twitter.com/CedScherer/status/1220843943224578050">Things like making illuminating data visualization</a> as part of the <a href="https://github.com/rfordatascience/tidytuesday">Tidy Tuesday project</a>.</p>
-<p>TODO: Add Cedric’s Spotify viz</p>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-6"></span>
+<img src="https://raw.githubusercontent.com/Z3tt/TidyTuesday/master/plots/2020_04/2020_04_SpotifySongs.png" alt="Visualization by Cédric Scherer" width="100%"><p class="caption">
+Figure 1: Visualization by Cédric Scherer
+</p>
+</div>
 <p><a href="https://twitter.com/spcanelon/status/1424932510065209348">Or video tutorials on how to communicate through effective presentations using R</a>.</p>
+<blockquote class="twitter-tweet" data-width="550" data-lang="en" data-dnt="true" data-theme="light">
+<p lang="en" dir="ltr">📺 The video for our <a href="https://twitter.com/hashtag/xaringan?src=hash&amp;ref_src=twsrc%5Etfw">#xaringan</a> tutorial is now available! <a href="https://t.co/0CNOBtjam1">https://t.co/0CNOBtjam1</a><br>Huge thanks to the <a href="https://twitter.com/_useRconf?ref_src=twsrc%5Etfw">@_useRconf</a> team for magically editing it down to 1.5 hours. And to the 5 people who already gave the video a thumbs up, you deserve a thumbs up too 👍😉 <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="https://twitter.com/hashtag/useR2021?src=hash&amp;ref_src=twsrc%5Etfw">#useR2021</a> <a href="https://t.co/itvg01V14y">https://t.co/itvg01V14y</a> <a href="https://t.co/i7rCRwOBuZ">pic.twitter.com/i7rCRwOBuZ</a></p>— Silvia Canelón (@spcanelon) <a href="https://twitter.com/spcanelon/status/1424932510065209348?ref_src=twsrc%5Etfw">August 10, 2021</a>
+</blockquote>
+
 <p><a href="https://twitter.com/WeAreRLadies/status/1228049014601342976">Or love letters to the <code>clean_names()</code> function from the <code>janitor</code> package, which automates the process of making messy variable names easy to work with in R</a>.</p>
+<blockquote class="twitter-tweet" data-width="550" data-lang="en" data-dnt="true" data-theme="light">
+<p lang="en" dir="ltr">An Ode to {janitor} by <a href="https://twitter.com/sfirke?ref_src=twsrc%5Etfw">@sfirke</a><a href="https://t.co/9h4ZRn8xzj">https://t.co/9h4ZRn8xzj</a><br><br>{janitor}, how do I love thee? Let me count the ways…<br><br>I love how you take headers with spaces and capitalization and all sorts of weirdness and make them into R-friendly names using `clean_names()`. <a href="https://t.co/G3OsZvvNIt">pic.twitter.com/G3OsZvvNIt</a></p>— We are R-Ladies (@WeAreRLadies) <a href="https://twitter.com/WeAreRLadies/status/1228049014601342976?ref_src=twsrc%5Etfw">February 13, 2020</a>
+</blockquote>
+
 <p>No matter what else you do in R, you have to <strong>illuminate</strong> your findings and <strong>communicate</strong> your results. And, the more you use R, the more you’ll find yourself wanting to <strong>automate</strong> things you used to do manually (your wrists will thank you).</p>
 <p>I realize now that the things that I use R for <em>are</em> the things that everyone uses R for. R was created for statistics. But today people are just as likely to use R without statistics.</p>
 <p>Ten years ago, if you had told me I’d be writing a book on R, I’d have laughed. As someone with an extremely non-quantitative background (I did a PhD in anthropology) who never used R in graduate school, I never thought I’d be in a position to teach people about R. But here we find ourselves. And I’m excited to be your guide on this journey through the ways you can use R without statistics.</p>
