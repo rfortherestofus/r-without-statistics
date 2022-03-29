@@ -41,7 +41,7 @@ But, for me, Excel was tedious. The amount of pointing and clicking I had to do 
 
 No matter what I did, analyzing data and creating charts in Excel just involved a lot of repetitive pointing and clicking. Kind of like this:
 
-<img src="introduction_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+![](introduction_files/figure-epub3/unnamed-chunk-2-1.png)<!-- -->
 
 
 Endless pointing and clicking was just one problem I faced using Excel. Annoying though it was, it didn't affect the quality of my work. Or so I thought until I recalled a project I had worked on a few years earlier. 
@@ -144,30 +144,21 @@ Canadian statistician Sharla Gelfand has [talked about how they used R to automa
 
 Take a look at the R community on Twitter (where users congregate under the #rstats hashtag). What gets people most excited is not the latest complex statistical analysis. [It's tips and tricks on the foundational work that everyone who uses R needs to do](https://twitter.com/dgkeyes/status/1479473689225695234). 
 
-[Things like making illuminating data visualization](https://twitter.com/CedScherer/status/1220843943224578050) as part of the [Tidy Tuesday project](https://github.com/rfordatascience/tidytuesday).
+[Things like making illuminating data visualizations](https://twitter.com/CedScherer/status/1220843943224578050) as part of the [Tidy Tuesday project](https://github.com/rfordatascience/tidytuesday).
 
-<div class="figure">
-<img src="https://raw.githubusercontent.com/Z3tt/TidyTuesday/master/plots/2020_04/2020_04_SpotifySongs.png" alt="Visualization by Cédric Scherer" width="100%" />
-<p class="caption">(\#fig:unnamed-chunk-6)Visualization by Cédric Scherer</p>
-</div>
+
+
+
 
 
 [Or video tutorials on how to communicate through effective presentations using R](https://twitter.com/spcanelon/status/1424932510065209348).
 
 
-```{=html}
-<blockquote class="twitter-tweet" data-width="550" data-lang="en" data-dnt="true" data-theme="light"><p lang="en" dir="ltr">📺 The video for our <a href="https://twitter.com/hashtag/xaringan?src=hash&amp;ref_src=twsrc%5Etfw">#xaringan</a> tutorial is now available! <a href="https://t.co/0CNOBtjam1">https://t.co/0CNOBtjam1</a><br>Huge thanks to the <a href="https://twitter.com/_useRconf?ref_src=twsrc%5Etfw">@_useRconf</a> team for magically editing it down to 1.5 hours. And to the 5 people who already gave the video a thumbs up, you deserve a thumbs up too 👍😉 <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="https://twitter.com/hashtag/useR2021?src=hash&amp;ref_src=twsrc%5Etfw">#useR2021</a> <a href="https://t.co/itvg01V14y">https://t.co/itvg01V14y</a> <a href="https://t.co/i7rCRwOBuZ">pic.twitter.com/i7rCRwOBuZ</a></p>&mdash; Silvia Canelón (@spcanelon) <a href="https://twitter.com/spcanelon/status/1424932510065209348?ref_src=twsrc%5Etfw">August 10, 2021</a></blockquote>
-
-```
 
 
 [Or love letters to the `clean_names()` function from the `janitor` package, which automates the process of making messy variable names easy to work with in R](https://twitter.com/WeAreRLadies/status/1228049014601342976). 
 
 
-```{=html}
-<blockquote class="twitter-tweet" data-width="550" data-lang="en" data-dnt="true" data-theme="light"><p lang="en" dir="ltr">An Ode to {janitor} by <a href="https://twitter.com/sfirke?ref_src=twsrc%5Etfw">@sfirke</a><a href="https://t.co/9h4ZRn8xzj">https://t.co/9h4ZRn8xzj</a><br><br>{janitor}, how do I love thee? Let me count the ways…<br><br>I love how you take headers with spaces and capitalization and all sorts of weirdness and make them into R-friendly names using `clean_names()`. <a href="https://t.co/G3OsZvvNIt">pic.twitter.com/G3OsZvvNIt</a></p>&mdash; We are R-Ladies (@WeAreRLadies) <a href="https://twitter.com/WeAreRLadies/status/1228049014601342976?ref_src=twsrc%5Etfw">February 13, 2020</a></blockquote>
-
-```
 
 
 No matter what else you do in R, you have to **illuminate** your findings and **communicate** your results. And, the more you use R, the more you'll find yourself wanting to **automate** things you used to do manually (your wrists will thank you). 

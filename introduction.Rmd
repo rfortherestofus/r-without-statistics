@@ -141,23 +141,27 @@ Canadian statistician Sharla Gelfand has [talked about how they used R to automa
 
 Take a look at the R community on Twitter (where users congregate under the #rstats hashtag). What gets people most excited is not the latest complex statistical analysis. [It's tips and tricks on the foundational work that everyone who uses R needs to do](https://twitter.com/dgkeyes/status/1479473689225695234). 
 
-[Things like making illuminating data visualization](https://twitter.com/CedScherer/status/1220843943224578050) as part of the [Tidy Tuesday project](https://github.com/rfordatascience/tidytuesday).
+[Things like making illuminating data visualizations](https://twitter.com/CedScherer/status/1220843943224578050) as part of the [Tidy Tuesday project](https://github.com/rfordatascience/tidytuesday).
 
-```{r, out.width = '100%', echo = FALSE, fig.cap="Visualization by Cédric Scherer"}
+```{r, out.width = '100%', echo = FALSE, fig.cap="Visualization by Cédric Scherer", eval = FALSE}
 include_graphics('https://raw.githubusercontent.com/Z3tt/TidyTuesday/master/plots/2020_04/2020_04_SpotifySongs.png')
+```
+
+```{r echo = FALSE, eval = FALSE}
+tweet_embed("https://twitter.com/CedScherer/status/1220843943224578050")
 ```
 
 
 [Or video tutorials on how to communicate through effective presentations using R](https://twitter.com/spcanelon/status/1424932510065209348).
 
-```{r echo = FALSE}
+```{r echo = FALSE, eval = FALSE}
 tweet_embed("https://twitter.com/spcanelon/status/1424932510065209348")
 ```
 
 
 [Or love letters to the `clean_names()` function from the `janitor` package, which automates the process of making messy variable names easy to work with in R](https://twitter.com/WeAreRLadies/status/1228049014601342976). 
 
-```{r echo = FALSE}
+```{r echo = FALSE, eval = FALSE}
 tweet_embed("https://twitter.com/WeAreRLadies/status/1228049014601342976")
 ```
 
