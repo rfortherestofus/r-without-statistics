@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,700;1,400&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400&display=swap');
 
 body {
@@ -41,4 +41,25 @@ box-shadow: none;
 margin-top: 1rem;
 text-transform: uppercase;
 font-weight: 700;
+} 
+
+.section a {
+  color: #2f2d2a;
+  border-bottom: 1px solid #F8CE5D;
+  text-decoration: none;
+  -webkit-text-decoration: none;
+  -moz-text-decoration: none;
+  -ms-text-decoration: none;
+  -o-text-decoration:none;
+}
+
+.section a:hover {
+  color: #F8CE5D;
+  border-bottom: 2px solid #F8CE5D;
+  text-decoration: none;
+  -webkit-text-decoration: none;
+  -moz-text-decoration: none;
+  -ms-text-decoration: none;
+  -o-text-decoration:none;
+  transition: 0.3s;
 }

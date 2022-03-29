@@ -58,7 +58,7 @@ I used to feel ashamed about the way I use R.
 
 I use R, a tool for statistical analysis, but I don't use it for complex statistical analysis. I don't do machine learning. I don’t know what a random forest is. I’ve never even run a regression in R. 
 
-[The only statistics in R are descriptive statistics](https://rfortherestofus.com/2018/12/descriptive-stats-r/). Counts, sums, averages: they are the statistics that I do in R. 
+[The only statistics I do in R are descriptive statistics](https://rfortherestofus.com/2018/12/descriptive-stats-r/). Counts, sums, averages: they are the statistics that I do in R. 
 
 For a long time, I felt like I wasn’t a “real” R user. Real R users, in my mind, used R for hardcore stats. I “only” used R for descriptive stats. 
 
@@ -66,17 +66,11 @@ TODO: Does this fit? “It sometimes feels like I’m using a souped up Ferrari 
 
 But eventually I realized that this framing misses the point. R started out as a tool created by statisticians for other statisticians (TODO: Add link to R history article). But, over a quarter century since its creation, R can do much more than statistical analysis. 
 
-TODO: Remove next two sections? 
-
-### My background as an anthropologist {-}
-
-### Never used R in grad school {-}
-
 ### I use R for three main things: {-}
 
 Here’s what I use R for today:
 
-1. **Data visualization**: making graphs, maps, and tables that look good and communicate effectively.
+1. **Data visualization**: making graphs, maps, and tables that look good and communicate effectively. TODO: Add examples
 1. **Reporting with RMarkdown**: moving away from the inefficiency and error-prone workflow of using multiple tools to create reports by instead doing it all in the one tool that I think of as [R’s killer feature](https://rfortherestofus.com/2019/03/r-killer-feature-rmarkdown/). 
 1. **Automating tedious practices**: Remember my Excel-burdened wrists? Since I moved to R I’ve found so many ways to automate tedious practices, from gathering data directly from the U.S. Census Bureau to pulling survey results in from Qualtrics and more. 
 
@@ -106,18 +100,23 @@ TODO: Add Cedric’s Spotify viz
 
 No matter what else you do in R, you have to **illuminate** your findings and **communicate** your results. And, the more you use R, the more you’ll find yourself wanting to **automate** things you used to do manually (your wrists will thank you). 
 
-I realize now that the things that I use R for *are* the things that everyone uses R for. R was created for statistics. But today you can use R without statistics. 
+I realize now that the things that I use R for *are* the things that everyone uses R for. R was created for statistics. But today people are just as likely to use R without statistics. 
 
 ## Book Overview {-}
 
+This book shows the many ways that people use R without statistics. It’s not comprehensive (trust me: there are many ways people use R not covered here). But I hope the ideas inspire you to think about learning to use R (if you’re not yet an R user) or learning to use R in ways you hadn’t previously considered. 
+
 ### How each chapter works {-}
 
+Each chapter focuses on one novel use of R. You’ll begin by learning about a user or users who have transformed their work using R. You’ll learn about the problem R helped them to solve and the solution that R offered. We’ll dive into their code, picking it apart line by line in order to help you understand how they used R. Each chapter will conclude with a short summary, offering lessons you can take from this novel way of using R. 
+
 ### Broad scope of book {-}
-- I’ve tried to choose topics that are relevant to everyone, no matter what you do (e.g. art with R is cool but not everyone wants to do it)
+
+I’ve tried to choose topics for each chapter that are relevant to a broad audience. Things like data viz, report generation, and creating your own functions are things that anyone, no matter what you use R for, will find valuable. 
 
 ### Why didn’t you cover X topic? {-} 
-- That’s a great idea, but I can’t cover everything!
-- The fact that R can do X is a great example of its versatility (please write your own book!)
+
+There are some great topics that I thought to include but were just too narrow in their focus (for example, [the world of generative art made with R](TOOD Add link)). If, at any point while you’re reading this book, you think, “why didn’t he include X topic,” please know that X might be a great topic, but I can only cover so much. The fact that you’re able to come up with other ideas for things that R can do is a) fantastic and b) a further display of R’s versatility. I await your follow-up book highlighting the myriad other things R can do that I am unable to cover in this book!
 
 ### Book title is not to be taken literally {-}
 
@@ -129,3 +128,12 @@ Of course it’s true that if you’re making a graph you’re using statistics.
 
 We’re all using R with statistics already. Let’s also learn to use R without statistics. 
 
+## About me {-}
+
+Ten years ago, if you had told me I’d be writing a book on R, I’d have laughed. As someone with an extremely non-quantitative background (I did a PhD in anthropology) who never used R in graduate school, I never thought I’d be in a position to teach people about R. But here we find ourselves. And I’m excited to be your guide on this journey through the ways you can use R without statistics. 
+
+If I only used R for the things I thought “real” R users used it for, I wouldn’t be writing this book. But, instead of slogging away in the world of complex statistical analysis, far outside of my area of expertise, I have found a place for myself in the world of R. Expanding my conception of what R can do has enabled me to get more out of this tool. 
+
+### If I can use R, so can you {-}
+
+And here’s the thing: if I, a qualitatively-trained anthropologist whose most complex statistical use for R is calculating averages, can find value in R, so can you. No matter what your background or what you think about R right now, using R without statistics can transform how you work in the future. 

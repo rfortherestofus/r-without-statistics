@@ -4,10 +4,6 @@
 %
 \documentclass[
 ]{book}
-\title{R Without Statistics}
-\author{David Keyes}
-\date{}
-
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
 \usepackage{iftex}
@@ -77,6 +73,10 @@
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
+
+\title{R Without Statistics}
+\author{David Keyes}
+\date{}
 
 \begin{document}
 \maketitle
@@ -205,23 +205,13 @@ I used to feel ashamed about the way I use R.
 
 I use R, a tool for statistical analysis, but I don't use it for complex statistical analysis. I don't do machine learning. I don't know what a random forest is. I've never even run a regression in R.
 
-\href{https://rfortherestofus.com/2018/12/descriptive-stats-r/}{The only statistics in R are descriptive statistics}. Counts, sums, averages: they are the statistics that I do in R.
+\href{https://rfortherestofus.com/2018/12/descriptive-stats-r/}{The only statistics I do in R are descriptive statistics}. Counts, sums, averages: they are the statistics that I do in R.
 
 For a long time, I felt like I wasn't a ``real'' R user. Real R users, in my mind, used R for hardcore stats. I ``only'' used R for descriptive stats.
 
 TODO: Does this fit? ``It sometimes feels like I'm using a souped up Ferrari sports car to drive 20 miles an hour to the grocery store.''
 
 But eventually I realized that this framing misses the point. R started out as a tool created by statisticians for other statisticians (TODO: Add link to R history article). But, over a quarter century since its creation, R can do much more than statistical analysis.
-
-TODO: Remove next two sections?
-
-\hypertarget{my-background-as-an-anthropologist}{%
-\subsection*{My background as an anthropologist}\label{my-background-as-an-anthropologist}}
-\addcontentsline{toc}{subsection}{My background as an anthropologist}
-
-\hypertarget{never-used-r-in-grad-school}{%
-\subsection*{Never used R in grad school}\label{never-used-r-in-grad-school}}
-\addcontentsline{toc}{subsection}{Never used R in grad school}
 
 \hypertarget{i-use-r-for-three-main-things}{%
 \subsection*{I use R for three main things:}\label{i-use-r-for-three-main-things}}
@@ -233,7 +223,7 @@ Here's what I use R for today:
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  \textbf{Data visualization}: making graphs, maps, and tables that look good and communicate effectively.
+  \textbf{Data visualization}: making graphs, maps, and tables that look good and communicate effectively. TODO: Add examples
 \item
   \textbf{Reporting with RMarkdown}: moving away from the inefficiency and error-prone workflow of using multiple tools to create reports by instead doing it all in the one tool that I think of as \href{https://rfortherestofus.com/2019/03/r-killer-feature-rmarkdown/}{R's killer feature}.
 \item
@@ -275,37 +265,31 @@ TODO: Add Cedric's Spotify viz
 
 No matter what else you do in R, you have to \textbf{illuminate} your findings and \textbf{communicate} your results. And, the more you use R, the more you'll find yourself wanting to \textbf{automate} things you used to do manually (your wrists will thank you).
 
-I realize now that the things that I use R for \emph{are} the things that everyone uses R for. R was created for statistics. But today you can use R without statistics.
+I realize now that the things that I use R for \emph{are} the things that everyone uses R for. R was created for statistics. But today people are just as likely to use R without statistics.
 
 \hypertarget{book-overview}{%
 \section*{Book Overview}\label{book-overview}}
 \addcontentsline{toc}{section}{Book Overview}
 
+This book shows the many ways that people use R without statistics. It's not comprehensive (trust me: there are many ways people use R not covered here). But I hope the ideas inspire you to think about learning to use R (if you're not yet an R user) or learning to use R in ways you hadn't previously considered.
+
 \hypertarget{how-each-chapter-works}{%
 \subsection*{How each chapter works}\label{how-each-chapter-works}}
 \addcontentsline{toc}{subsection}{How each chapter works}
+
+Each chapter focuses on one novel use of R. You'll begin by learning about a user or users who have transformed their work using R. You'll learn about the problem R helped them to solve and the solution that R offered. We'll dive into their code, picking it apart line by line in order to help you understand how they used R. Each chapter will conclude with a short summary, offering lessons you can take from this novel way of using R.
 
 \hypertarget{broad-scope-of-book}{%
 \subsection*{Broad scope of book}\label{broad-scope-of-book}}
 \addcontentsline{toc}{subsection}{Broad scope of book}
 
-\begin{itemize}
-\tightlist
-\item
-  I've tried to choose topics that are relevant to everyone, no matter what you do (e.g.~art with R is cool but not everyone wants to do it)
-\end{itemize}
+I've tried to choose topics for each chapter that are relevant to a broad audience. Things like data viz, report generation, and creating your own functions are things that anyone, no matter what you use R for, will find valuable.
 
 \hypertarget{why-didnt-you-cover-x-topic}{%
 \subsection*{Why didn't you cover X topic?}\label{why-didnt-you-cover-x-topic}}
 \addcontentsline{toc}{subsection}{Why didn't you cover X topic?}
 
-\begin{itemize}
-\tightlist
-\item
-  That's a great idea, but I can't cover everything!
-\item
-  The fact that R can do X is a great example of its versatility (please write your own book!)
-\end{itemize}
+There are some great topics that I thought to include but were just too narrow in their focus (for example, \href{TOOD\%20Add\%20link}{the world of generative art made with R}). If, at any point while you're reading this book, you think, ``why didn't he include X topic,'' please know that X might be a great topic, but I can only cover so much. The fact that you're able to come up with other ideas for things that R can do is a) fantastic and b) a further display of R's versatility. I await your follow-up book highlighting the myriad other things R can do that I am unable to cover in this book!
 
 \hypertarget{book-title-is-not-to-be-taken-literally}{%
 \subsection*{Book title is not to be taken literally}\label{book-title-is-not-to-be-taken-literally}}
@@ -318,6 +302,20 @@ This book is called R Without Statistics. But it's not meant to be taken literal
 Of course it's true that if you're making a graph you're using statistics. So, before you start typing an angry email to me, please know that R Without Statistics is a mindset rather than a literal statement.
 
 We're all using R with statistics already. Let's also learn to use R without statistics.
+
+\hypertarget{about-me}{%
+\section*{About me}\label{about-me}}
+\addcontentsline{toc}{section}{About me}
+
+Ten years ago, if you had told me I'd be writing a book on R, I'd have laughed. As someone with an extremely non-quantitative background (I did a PhD in anthropology) who never used R in graduate school, I never thought I'd be in a position to teach people about R. But here we find ourselves. And I'm excited to be your guide on this journey through the ways you can use R without statistics.
+
+If I only used R for the things I thought ``real'' R users used it for, I wouldn't be writing this book. But, instead of slogging away in the world of complex statistical analysis, far outside of my area of expertise, I have found a place for myself in the world of R. Expanding my conception of what R can do has enabled me to get more out of this tool.
+
+\hypertarget{if-i-can-use-r-so-can-you}{%
+\subsection*{If I can use R, so can you}\label{if-i-can-use-r-so-can-you}}
+\addcontentsline{toc}{subsection}{If I can use R, so can you}
+
+And here's the thing: if I, a qualitatively-trained anthropologist whose most complex statistical use for R is calculating averages, can find value in R, so can you. No matter what your background or what you think about R right now, using R without statistics can transform how you work in the future.
 
 \hypertarget{part-illuminate}{%
 \part*{Illuminate}\label{part-illuminate}}
