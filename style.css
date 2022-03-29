@@ -45,21 +45,19 @@ font-weight: 700;
 
 .section a {
   color: #2f2d2a;
-  border-bottom: 1px solid #F8CE5D;
-  text-decoration: none;
-  -webkit-text-decoration: none;
-  -moz-text-decoration: none;
-  -ms-text-decoration: none;
-  -o-text-decoration:none;
+  text-decoration: underline;
+  -webkit-text-decoration: underline;
+  -moz-text-decoration: underline;
+  -ms-text-decoration: underline;
+  -o-text-decoration:underline;
 }
 
 .section a:hover {
   color: #F8CE5D;
-  border-bottom: 2px solid #F8CE5D;
-  text-decoration: none;
-  -webkit-text-decoration: none;
-  -moz-text-decoration: none;
-  -ms-text-decoration: none;
-  -o-text-decoration:none;
+  text-decoration: underline;
+  -webkit-text-decoration: underline;
+  -moz-text-decoration: underline;
+  -ms-text-decoration: underline;
+  -o-text-decoration:underline;
   transition: 0.3s;
 }
