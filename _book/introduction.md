@@ -1,24 +1,4 @@
 
-```r
-library(tidyverse)
-#> ── Attaching packages ─────────────────── tidyverse 1.3.1 ──
-#> ✓ ggplot2 3.3.5     ✓ purrr   0.3.4
-#> ✓ tibble  3.1.6     ✓ dplyr   1.0.8
-#> ✓ tidyr   1.2.0     ✓ stringr 1.4.0
-#> ✓ readr   2.1.2     ✓ forcats 0.5.1
-#> ── Conflicts ────────────────────── tidyverse_conflicts() ──
-#> x dplyr::filter() masks stats::filter()
-#> x dplyr::lag()    masks stats::lag()
-library(readxl)
-library(janitor)
-#> 
-#> Attaching package: 'janitor'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     chisq.test, fisher.test
-library(knitr)
-library(tweetrmd)
-```
 
 
 # (PART\*) Introduction {-}
@@ -63,43 +43,16 @@ If I were to redo that project on Outdoor School with R, here's what I'd do diff
 Download data on all school districts:
 
 
-```r
-# Download the data directly from the Oregon Department of Education website
-download.file(url = "https://www.oregon.gov/ode/educator-resources/assessment/Documents/TestResults2019/pagr_schools_ela_tot_raceethnicity_1819.xlsx",
-              destfile = "data/pagr_schools_ela_tot_raceethnicity_1819.xlsx")
-
-# Import the downloaded data and use the `clean_names()` function to make the variable names easy to work with
-oregon_schools <- read_excel("data/pagr_schools_ela_tot_raceethnicity_1819.xlsx") %>% 
-  clean_names()
-```
 
 
 Filter to only include districts with fifth or sixth graders:
 
 
-```r
-# Start with the oregon_schools data from above
-oregon_schools_fifth_sixth_grade <- oregon_schools %>% 
-  
-  # Only keep schools with fifth or sixth graders
-  filter(grade_level == "Grade 5" | grade_level == "Grade 6") %>% 
-  
-  # Only keep the variables we need
-  select(district_id:school) %>% 
-  
-  # There are multiple observations of the same school, just keep one of each
-  distinct()
-```
 
 
 Join the filtered data on school districts with my survey data:
 
 
-```r
-# Use the school_id variable to join the survey data with the oregon_schools_fifth_sixth_grade from above 
-left_join(survey_data, oregon_schools_fifth_sixth_grade,
-          by = "school_id")
-```
 
 
 Code can be scary. Having to write code is one of the reasons many people never learn R. But code is just a list of things you want to do to your data. It may be written in a hard-to-parse syntax (though it gets easier over time), but it's just a set of steps. The same steps that we should write out when we're working in Excel, but never do. Rather than having a separate document with my steps written down (the one that never gets written), I can see my steps in my code. See that line that says filter. Guess what it's doing? Yep, it's filtering!

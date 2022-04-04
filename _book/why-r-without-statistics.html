@@ -95,32 +95,8 @@
 <p>The good news is that it’s ok. There’s a solution. And that solution is R.</p>
 <p>If I were to redo that project on Outdoor School with R, here’s what I’d do differently. Rather than watching points and clicks disappear into the ether, I’d write code that would serve as a record of everything I did. This code would:</p>
 <p>Download data on all school districts:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Download the data directly from the Oregon Department of Education website</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span>url <span class="op">=</span> <span class="st">"https://www.oregon.gov/ode/educator-resources/assessment/Documents/TestResults2019/pagr_schools_ela_tot_raceethnicity_1819.xlsx"</span>,
-              destfile <span class="op">=</span> <span class="st">"data/pagr_schools_ela_tot_raceethnicity_1819.xlsx"</span><span class="op">)</span>
-
-<span class="co"># Import the downloaded data and use the `clean_names()` function to make the variable names easy to work with</span>
-<span class="va">oregon_schools</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"data/pagr_schools_ela_tot_raceethnicity_1819.xlsx"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/janitor/man/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://rdrr.io/pkg/janitor/man/clean_names.html">clean_names</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>Filter to only include districts with fifth or sixth graders:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Start with the oregon_schools data from above</span>
-<span class="va">oregon_schools_fifth_sixth_grade</span> <span class="op">&lt;-</span> <span class="va">oregon_schools</span> <span class="op"><a href="https://rdrr.io/pkg/janitor/man/pipe.html">%&gt;%</a></span> 
-  
-  <span class="co"># Only keep schools with fifth or sixth graders</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">grade_level</span> <span class="op">==</span> <span class="st">"Grade 5"</span> <span class="op">|</span> <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"Grade 6"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/janitor/man/pipe.html">%&gt;%</a></span> 
-  
-  <span class="co"># Only keep the variables we need</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">district_id</span><span class="op">:</span><span class="va">school</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/janitor/man/pipe.html">%&gt;%</a></span> 
-  
-  <span class="co"># There are multiple observations of the same school, just keep one of each</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>Join the filtered data on school districts with my survey data:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Use the school_id variable to join the survey data with the oregon_schools_fifth_sixth_grade from above </span>
-<span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">survey_data</span>, <span class="va">oregon_schools_fifth_sixth_grade</span>,
-          by <span class="op">=</span> <span class="st">"school_id"</span><span class="op">)</span></code></pre></div>
 <p>Code can be scary. Having to write code is one of the reasons many people never learn R. But code is just a list of things you want to do to your data. It may be written in a hard-to-parse syntax (though it gets easier over time), but it’s just a set of steps. The same steps that we should write out when we’re working in Excel, but never do. Rather than having a separate document with my steps written down (the one that never gets written), I can see my steps in my code. See that line that says filter. Guess what it’s doing? Yep, it’s filtering!</p>
 <p>If I had done things this way when working on the Outdoor School project, I could have looked back at any point to make sure what I thought was happening to my data was in fact happening. That nagging sensation I had near the end of the project that I may have made a mistake in one of my early points or clicks? It never would come up because I could just review my code to make sure it did what I thought it did. And if it didn’t, I could rewrite and rerun my code to get updated results.</p>
 <p>Using R won’t mean you’ll never make mistakes again (trust me, you will). But it will mean that you can easily spot your mistakes, make changes, and fix any issues.</p>
