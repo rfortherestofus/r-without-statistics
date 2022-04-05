@@ -4,7 +4,7 @@ author: "David Keyes"
 # date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
-url: https://rwithoutstatistics.com
+url: https://book.rwithoutstatistics.com
 cover-image: mock-cover.png
 description: |
   Since R was invented in 1993, it has become a widely used programming language for statistical analysis. From academia to the tech world and beyond, R is used for a wide range of statistical analysis. R Without Statistics will show ways that R can be used beyond complex statistical analysis. Readers will learn about a range of uses for R, many of which they have likely never even considered.
