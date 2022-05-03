@@ -85,11 +85,15 @@ TODO: Add examples
 
 **Communicate** by doing reporting with RMarkdown: moving away from the inefficiency and error-prone workflow of using multiple tools to create reports by instead doing it all in the one tool that I think of as [R's killer feature](https://rfortherestofus.com/2019/03/r-killer-feature-rmarkdown/). 
 
-TODO: Add some image
+TODO: Improve/explain graphics
+
+![](assets/non-r-workflow.png)
+
+![](assets/r-workflow.png)
 
 **Automate** tedious practices: Remember my Excel-burdened wrists? Since I moved to R I've found so many ways to automate tedious practices, from gathering data directly from the U.S. Census Bureau to pulling survey results in from Qualtrics and more.
 
-TODO: Add some image
+![](assets/qualtrics-workflow.png)
 
 The main reason I've come to accept that my way of using R is as valid as anyone else's has come through realizing that more "sophisticated" R users are doing many of the same things I am. Sure, they may also be doing statistical analyses that I am not, but everyone who uses R needs to illuminate, communicate, and automate.  
 

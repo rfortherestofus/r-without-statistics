@@ -210,11 +210,15 @@ TODO: Add examples
 
 \textbf{Communicate} by doing reporting with RMarkdown: moving away from the inefficiency and error-prone workflow of using multiple tools to create reports by instead doing it all in the one tool that I think of as \href{https://rfortherestofus.com/2019/03/r-killer-feature-rmarkdown/}{R's killer feature}.
 
-TODO: Add some image
+TODO: Improve/explain graphics
+
+\includegraphics{assets/non-r-workflow.png}
+
+\includegraphics{assets/r-workflow.png}
 
 \textbf{Automate} tedious practices: Remember my Excel-burdened wrists? Since I moved to R I've found so many ways to automate tedious practices, from gathering data directly from the U.S. Census Bureau to pulling survey results in from Qualtrics and more.
 
-TODO: Add some image
+\includegraphics{assets/qualtrics-workflow.png}
 
 The main reason I've come to accept that my way of using R is as valid as anyone else's has come through realizing that more ``sophisticated'' R users are doing many of the same things I am. Sure, they may also be doing statistical analyses that I am not, but everyone who uses R needs to illuminate, communicate, and automate.
 
@@ -273,6 +277,113 @@ We're all using R with statistics already. Let's also learn to use R without sta
 \chapter*{Use General Principles of High-Quality Data Viz in R}\label{use-general-principles-of-high-quality-data-viz-in-r}}
 \addcontentsline{toc}{chapter}{Use General Principles of High-Quality Data Viz in R}
 
+\hypertarget{interview-with-cedric-georgios}{%
+\section*{Interview with Cedric + Georgios}\label{interview-with-cedric-georgios}}
+\addcontentsline{toc}{section}{Interview with Cedric + Georgios}
+
+\hypertarget{sciam-piece}{%
+\subsection*{SciAm Piece}\label{sciam-piece}}
+\addcontentsline{toc}{subsection}{SciAm Piece}
+
+\hypertarget{intro}{%
+\subsubsection*{Intro}\label{intro}}
+\addcontentsline{toc}{subsubsection}{Intro}
+
+Hard to communicate drought extent
+
+\url{https://www.cbsnews.com/news/west-climate-change-water/}
+
+Droughts are an increasingly common fact of life. Those in drought-prone regions know that the last several decades have brought increasingly dry conditions, impacting agriculture, wildfires, and more.
+
+In spite of this, communicating the extent of drought conditions to the general public is a challenge. How do you show the increase in droughts in a way that accurately represents the data while is also compelling enough to have lay people take notice?
+
+This was the challenge that Cédric Scherer and Georgios Karamanis took on in November 2021. Commissioned by Scientific American to create a data visualization to highlight the extent to which droughts have become common, they turned to the ggplot2 package to provide them the tools to turn data on droughts into an impactful visualization.
+
+\hypertarget{show-viz}{%
+\subsubsection*{Show viz}\label{show-viz}}
+\addcontentsline{toc}{subsubsection}{Show viz}
+
+\hypertarget{why-its-a-good-viz}{%
+\subsubsection*{Why it's a good viz}\label{why-its-a-good-viz}}
+\addcontentsline{toc}{subsubsection}{Why it's a good viz}
+
+\begin{itemize}
+\tightlist
+\item
+  Shows pattern over time
+\item
+  Choice of chart (not line chart)
+\item
+  Small multiples
+\item
+  Well-chosen colors
+\end{itemize}
+
+\hypertarget{code-walkthrough}{%
+\subsection*{Code walkthrough}\label{code-walkthrough}}
+\addcontentsline{toc}{subsection}{Code walkthrough}
+
+\hypertarget{pattern-over-time}{%
+\subsubsection*{Pattern over time}\label{pattern-over-time}}
+\addcontentsline{toc}{subsubsection}{Pattern over time}
+
+\hypertarget{chart-choice}{%
+\subsubsection*{Chart choice}\label{chart-choice}}
+\addcontentsline{toc}{subsubsection}{Chart choice}
+
+\begin{itemize}
+\tightlist
+\item
+  Show how you could do it as a line chart
+\end{itemize}
+
+\hypertarget{small-multiples}{%
+\subsubsection*{Small multiples}\label{small-multiples}}
+\addcontentsline{toc}{subsubsection}{Small multiples}
+
+\hypertarget{colors}{%
+\subsubsection*{Colors}\label{colors}}
+\addcontentsline{toc}{subsubsection}{Colors}
+
+\hypertarget{post-processing}{%
+\subsubsection*{Post-processing}\label{post-processing}}
+\addcontentsline{toc}{subsubsection}{Post-processing}
+
+Don't do everything in R
+
+\hypertarget{design}{%
+\subsection*{Design}\label{design}}
+\addcontentsline{toc}{subsection}{Design}
+
+People think doing good design is an innate thing, but you can learn principles. From Refactoring UI: \url{https://show.rfor.us/cJQqWH}.
+
+\begin{itemize}
+\tightlist
+\item
+  Mention Will Chase grammar of graphics talk
+\end{itemize}
+
+\hypertarget{how-to-develop-sense-of-aesthetics-and-get-inspiration}{%
+\subsubsection*{How to develop sense of aesthetics and get inspiration}\label{how-to-develop-sense-of-aesthetics-and-get-inspiration}}
+\addcontentsline{toc}{subsubsection}{How to develop sense of aesthetics and get inspiration}
+
+Don't just look at data viz
+
+Where to look for data viz inspiration
+- Datawrapper
+- Flowing Data
+- Look at Stephanie Evergreen tweet
+- Andy Kirk roundups
+- Tidy Tuesday
+
+\hypertarget{why-r-is-especially-well-suited-for-high-quality-data-viz}{%
+\subsection*{Why R is especially well suited for high-quality data viz}\label{why-r-is-especially-well-suited-for-high-quality-data-viz}}
+\addcontentsline{toc}{subsection}{Why R is especially well suited for high-quality data viz}
+
+Use Tidy Tuesday as bridge to say that you can learn from others' viz work by looking at their code
+
+Talk about how Cedric and Georgios used Tidy Tuesday to build awareness of their work
+
 \hypertarget{develop-a-custom-theme-to-keep-your-data-viz-consistent}{%
 \chapter*{Develop a Custom Theme to Keep Your Data Viz Consistent}\label{develop-a-custom-theme-to-keep-your-data-viz-consistent}}
 \addcontentsline{toc}{chapter}{Develop a Custom Theme to Keep Your Data Viz Consistent}
@@ -296,6 +407,8 @@ We're all using R with statistics already. Let's also learn to use R without sta
 \hypertarget{use-rmarkdown-to-instantly-generate-hundreds-of-reports}{%
 \chapter*{Use RMarkdown to Instantly Generate Hundreds of Reports}\label{use-rmarkdown-to-instantly-generate-hundreds-of-reports}}
 \addcontentsline{toc}{chapter}{Use RMarkdown to Instantly Generate Hundreds of Reports}
+
+\url{https://urban-institute.medium.com/iterated-fact-sheets-with-r-markdown-d685eb4eafce}
 
 \url{https://urban-institute.medium.com/using-r-markdown-to-track-and-publish-state-data-d1291bfa1ec0}
 

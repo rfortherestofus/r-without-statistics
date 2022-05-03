@@ -24,6 +24,6 @@ rmd_files: [
   "qualtrics.Rmd",
   "functions.Rmd",
   "custom-packages.Rmd",
-  
+   
   "conclusion.Rmd"
   ]

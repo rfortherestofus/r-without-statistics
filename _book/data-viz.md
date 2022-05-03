@@ -2,3 +2,70 @@
 
 # Use General Principles of High-Quality Data Viz in R {-}
 
+## Interview with Cedric + Georgios {-}
+
+### SciAm Piece {-}
+
+#### Intro {-}
+
+Hard to communicate drought extent
+
+https://www.cbsnews.com/news/west-climate-change-water/
+
+Droughts are an increasingly common fact of life. Those in drought-prone regions know that the last several decades have brought increasingly dry conditions, impacting agriculture, wildfires, and more. 
+
+In spite of this, communicating the extent of drought conditions to the general public is a challenge. How do you show the increase in droughts in a way that accurately represents the data while is also compelling enough to have lay people take notice? 
+
+This was the challenge that Cédric Scherer and Georgios Karamanis took on in November 2021. Commissioned by Scientific American to create a data visualization to highlight the extent to which droughts have become common, they turned to the ggplot2 package to provide them the tools to turn data on droughts into an impactful visualization. 
+
+#### Show viz {-}
+
+
+
+
+#### Why it's a good viz {-}
+
+- Shows pattern over time
+- Choice of chart (not line chart)
+- Small multiples
+- Well-chosen colors
+
+### Code walkthrough {-}
+
+#### Pattern over time {-}
+
+#### Chart choice {-}
+
+- Show how you could do it as a line chart
+
+#### Small multiples {-}
+
+#### Colors {-}
+
+#### Post-processing {-}
+
+Don't do everything in R
+
+### Design {-}
+
+People think doing good design is an innate thing, but you can learn principles. From Refactoring UI: https://show.rfor.us/cJQqWH. 
+
+- Mention Will Chase grammar of graphics talk
+
+#### How to develop sense of aesthetics and get inspiration {-}
+
+Don't just look at data viz
+
+Where to look for data viz inspiration
+- Datawrapper
+- Flowing Data
+- Look at Stephanie Evergreen tweet
+- Andy Kirk roundups
+- Tidy Tuesday
+
+
+### Why R is especially well suited for high-quality data viz {-}
+
+Use Tidy Tuesday as bridge to say that you can learn from others' viz work by looking at their code
+
+Talk about how Cedric and Georgios used Tidy Tuesday to build awareness of their work
