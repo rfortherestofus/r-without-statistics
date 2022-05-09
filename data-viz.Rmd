@@ -10,6 +10,8 @@
 
 Hard to communicate drought extent
 
+> If I recall correctly, I was suggesting the climate + plant risk topic because I found a paper on that topic that looked interesting to me. It was during the period when the US heat dome phenomenon was prominently featured in all news and I initially thought we could create a visualization on that. When pitching it, I wrote to Jen "motivated by the heat dome phenomenon and more intense wildfires every year".
+
 https://www.cbsnews.com/news/west-climate-change-water/
 
 Droughts are an increasingly common fact of life. Those in drought-prone regions know that the last several decades have brought increasingly dry conditions, impacting agriculture, wildfires, and more. 

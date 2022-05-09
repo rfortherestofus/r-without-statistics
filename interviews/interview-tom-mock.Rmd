@@ -1,0 +1,554 @@
+---
+title: "Interview with Tom Mock"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(stringr)
+library(gt)
+tuesdata <- tidytuesdayR::tt_load(2020, "36")
+```
+
+# Your Background
+
+## When did you start using R?
+
+## Why did you switch to R? 
+
+## What changed when you moved to R? 
+
+## You've said that the most difficult thing when you were learning R was reading in data. Why was that? 
+
+## You now run Tidy Tuesday. In what ways would your learning journey have been different if Tidy Tuesday had existed when you were learning R? 
+
+# Tables
+
+## Why do you care so much about tables? 
+
+## What makes R well suited to making tables?
+
+## Talk about the table package landscape. Which packages do you find most useful? Why?
+
+# Code walkthrough
+
+```{r}
+country_sel <- c("China", "India", "United States", "Indonesia", "Mexico", "Pakistan")
+
+yield_data <- tuesdata$key_crop_yields %>% 
+  janitor::clean_names() %>% 
+  rename_with(~str_remove(., "_tonnes_per_hectare")) %>% 
+  select(entity:beans, -code) %>% 
+  pivot_longer(cols = wheat:beans, names_to = "crop", values_to = "yield") %>% 
+  rename(Country = entity)
+```
+## Offset heads from body
+
+```{r}
+potato_data <- yield_data %>% 
+  filter(Country %in% country_sel, crop == "potatoes", year %in% c(2013:2016)) %>% 
+  filter(crop == "potatoes") %>% 
+  pivot_wider(names_from = year, values_from = "yield")
+```
+
+### Poor example
+
+```{r}
+potato_tb <- potato_data %>% 
+  gt() %>% 
+  cols_hide(vars(crop)) %>% 
+  opt_table_lines(extent = "none") %>% 
+  fmt_number(
+    columns = 3:6,
+    decimals = 2
+  )
+
+potato_tb
+```
+
+### Improved example
+
+```{r}
+potato_tb %>% 
+  tab_style(
+    style = list(
+      cell_text(weight = "bold")
+    ),
+    locations = cells_column_labels(everything())
+  ) %>% 
+  opt_table_lines(extent = "default") %>%
+  tab_options(
+    column_labels.border.top.color = "white",
+    column_labels.border.top.width = px(3),
+    column_labels.border.bottom.color = "black",
+    table_body.hlines.color = "white",
+    table.border.bottom.color = "white",
+    table.border.bottom.width = px(3)
+  ) %>% tab_source_note(md("**Table**: @thomas_mock | **Data**: OurWorldInData.org<br>**Inspiration**: @jschwabish"))
+```
+
+
+## Use subtle dividers
+
+```{r}
+rule2_data <- yield_data %>% 
+  filter(Country %in% country_sel, crop == "potatoes", year %in% c(2007:2016)) %>% 
+  filter(crop == "potatoes") %>% 
+  select(-crop) %>% 
+  pivot_wider(names_from = year, values_from = "yield") %>% 
+  rowwise() %>% 
+  mutate(
+    avg_07_11 = mean(`2007`:`2011`),
+    .before = `2012`
+    ) %>% 
+  mutate(
+    avg_12_16 = mean(`2012`:`2016`)
+  ) %>% 
+  ungroup()
+```
+
+### Poor example
+
+```{r}
+rule2_data %>% 
+  gt(
+    rowname_col = "Country"
+  ) %>% 
+  cols_label(
+    avg_07_11 = "Avg.",
+    avg_12_16 = "Avg."
+  ) %>% 
+  cols_width(
+    1 ~ px(125)
+  ) %>% 
+  fmt_number(
+    columns = 2:last_col()
+  ) %>% 
+  tab_style(
+    style = cell_borders(
+      side = "all",
+      color = "grey",
+      weight = px(1),
+      style = "solid"
+    ),
+    locations = list(
+      cells_body(
+        everything()
+        ),
+      cells_column_labels(
+        everything()
+      )
+      )
+  ) %>% 
+  grand_summary_rows(
+    columns = 2:last_col(),
+    fns = list(
+      "Average" = ~mean(.)
+    ),
+    formatter = fmt_number
+  )
+
+
+```
+
+### Improved example
+
+```{r}
+# rule2_tab2 <- 
+  rule2_data %>% 
+  add_row(
+    rule2_data %>% 
+      summarize(
+        across(where(is.double), 
+               list(Average = mean),
+               .names = "{col}")
+      ) %>% 
+      mutate(Country = "Average")
+  ) %>% 
+  gt() %>% 
+  cols_label(
+    avg_07_11 = "Avg.",
+    avg_12_16 = "Avg."
+  ) %>%
+  fmt_number(
+    columns = 2:last_col()
+  ) %>% 
+  # tab_style(
+  #   style = cell_fill(
+  #     color = "lightgrey"
+  #   ),
+  #   locations = list(
+  #     cells_body(
+  #       columns = vars(avg_07_11, avg_12_16)
+  #       ),
+  #     cells_column_labels(
+  #       columns = vars(avg_07_11, avg_12_16)
+  #     )
+  #     )
+  # ) %>%
+  tab_style(
+    style = cell_borders(
+      sides = "top",
+      color = "black",
+      weight = px(2)
+    ),
+    locations = cells_body(
+      columns = everything(),
+      rows = Country == "Average"
+    )
+  ) %>% 
+  tab_style(
+    style = list(
+      cell_text(weight = "bold")
+    ),
+    locations = cells_column_labels(everything())
+  ) %>% 
+  tab_options(
+    column_labels.border.top.color = "black",
+    column_labels.border.top.width = px(3),
+    column_labels.border.bottom.color = "black"
+  )
+```
+
+
+
+## Alignment
+
+### Right align numbers and heads
+
+```{r}
+# Prep data
+rule3_data <- yield_data %>% 
+  filter(Country == "United States", year %in% c(2016)) %>% 
+  mutate(crop = str_to_title(crop)) %>% 
+  pivot_wider(names_from = year, values_from = "yield") %>% 
+  arrange(crop) %>% 
+  select(-Country, Crop = crop)
+```
+
+```{r}
+rule3_data %>% 
+  mutate(`Center align` = `2016`,
+             `Right align` = `2016`) %>%
+  rename(`Left align` = 2) %>% 
+  gt() %>% 
+  tab_style(
+    style = list(
+      cell_text(weight = "bold")
+    ),
+    locations = cells_column_labels(everything())
+  ) %>% 
+  fmt_number(
+    columns = 2:4
+  ) %>% 
+  cols_align(align = "left",
+             columns = 2) %>% 
+  cols_align(align = "center",
+             columns = 3) %>% 
+  cols_align(align = "right",
+             columns = 4) %>% 
+  tab_options(
+    column_labels.border.top.color = "white",
+    column_labels.border.top.width = px(3),
+    column_labels.border.bottom.color = "black",
+    table_body.hlines.color = "white",
+    table.border.bottom.color = "white",
+    table.border.bottom.width = px(3)
+  )
+```
+
+
+### Left align text and heads
+
+```{r}
+country_names <- c(
+  "British Virgin Islands",
+  "Cayman Islands",
+  "Democratic Republic of Congo",
+  "Luxembourg", 
+  "United States",
+  "Germany",
+  "New Zealand",
+  "Costa Rica",
+  "Peru"
+)
+
+tibble(
+  right = country_names,
+  center = country_names,
+  left = country_names
+) %>% 
+  gt()  %>% 
+  cols_align(align = "left",
+             columns = 3) %>% 
+  cols_align(align = "center",
+             columns = 2) %>% 
+  cols_align(align = "right",
+             columns = 1) %>% 
+  cols_width(
+    everything() ~ px(250)
+  ) %>% 
+  tab_options(
+    column_labels.border.top.color = "white",
+    column_labels.border.top.width = px(3),
+    column_labels.border.bottom.color = "black",
+    column_labels.font.weight = "bold",
+    table_body.hlines.color = "white",
+    table.border.bottom.color = "white",
+    table.border.bottom.width = px(3),
+    data_row.padding = px(3)
+  ) %>% 
+  cols_label(
+    right = md("Right aligned and<br>hard to read"),
+    center = md("Centered and<br>even harder to read"),
+    left = md("Left-aligned and<br>easiest to read")
+  ) %>% 
+  tab_source_note(md("**Table**: @thomas_mock | **Data**: OurWorldInData.org<br>**Inspiration**: @jschwabish"))
+```
+
+
+## Select appropriate level of precision
+
+```{r}
+yield_data %>% 
+  filter(Country %in% country_sel, crop == "potatoes", year %in% c(2016)) %>% 
+  select(Country, yield) %>% 
+  mutate(few = yield, right = yield) %>% 
+  gt() %>% 
+  fmt_number(
+    columns = vars(few),
+    decimals = 0
+  ) %>% 
+  fmt_number(
+    columns = vars(right),
+    decimals = 1
+  ) %>% 
+  cols_label(
+    yield = md("Too many<br>decimals"),
+    few = md("Too few<br>decimals"),
+    right = md("About<br>right")
+  ) %>% 
+  tab_source_note(md("**Table**: @thomas_mock | **Data**: OurWorldInData.org<br>**Inspiration**: @jschwabish"))
+```
+
+
+## Highlight outliers
+
+```{r}
+rule8_data <- yield_data %>% 
+  filter(Country %in% country_sel, crop == "potatoes", year %in% 2009:2017) %>% 
+  group_by(Country) %>% 
+  mutate(pct_change = (yield/lag(yield)-1)*100) %>% 
+  ungroup() %>% 
+  filter(between(year, 2010, 2016)) %>% 
+  select(Country, year, pct_change) %>% 
+  pivot_wider(names_from = year, values_from = pct_change)
+```
+
+```{r}
+rule8_tb <- rule8_data %>% 
+  gt() %>% 
+  fmt_number(2:last_col()) %>% 
+  cols_label(
+    Country = ""
+  ) %>% 
+  tab_style(
+    style = list(
+      cell_text(weight = "bold")
+    ),
+    locations = cells_column_labels(everything())
+  ) %>% 
+  tab_options(
+    column_labels.border.top.color = "white",
+    column_labels.border.top.width = px(3),
+    column_labels.border.bottom.color = "black",
+    column_labels.border.bottom.width = px(3),
+    table_body.hlines.color = "white",
+    table.border.bottom.color = "black",
+    table.border.bottom.width = px(3)
+  ) %>% 
+  cols_width(vars(Country) ~ px(125),
+             2:last_col() ~ px(75))
+```
+
+### Without highlighting
+
+```{r}
+rule8_tb %>% 
+  tab_source_note(md("**Table**: @thomas_mock | **Data**: OurWorldInData.org<br>**Inspiration**: @jschwabish"))
+```
+
+### With highlighting
+
+```{r}
+rule8_tb %>% 
+  tab_style(
+    style = cell_text(color = "red"),
+    locations = list(
+      cells_body(
+        columns = 2,
+        rows = `2010` < 0
+    ),
+    cells_body(
+      columns = 3,
+      rows = `2011` < 0
+    ),
+    cells_body(
+      columns = 4,
+      rows = `2012` < 0
+    ),
+    cells_body(
+      columns = 5,
+      rows = `2013` < 0
+    ),
+    cells_body(
+      columns = 6,
+      rows = `2014` < 0
+    ),
+    cells_body(
+      columns = 7,
+      rows = `2015` < 0
+    ),
+    cells_body(
+      columns = 8,
+      rows = `2016` < 0
+    )
+  )
+  ) %>% 
+  tab_source_note(md("**Table**: @thomas_mock | **Data**: OurWorldInData.org<br>**Inspiration**: @jschwabish"))
+```
+
+
+
+## Group similar data
+
+
+```{r}
+rule9_data <- yield_data %>% 
+  filter(Country %in% country_sel[-5], year %in% c(2015, 2016),
+         crop %in% c("wheat", "potatoes", "rice", "soybeans"),
+         !is.na(yield)) %>% 
+  pivot_wider(names_from = year, values_from = yield) %>% 
+  rowwise() %>% 
+  mutate(crop = str_to_title(crop),
+         pct_change = (`2016`/`2015`-1)*100) %>%
+  group_by(Country) %>% 
+  arrange(desc(`2015`)) %>% 
+  ungroup() 
+```
+
+### Bad example
+
+
+```{r}
+rule9_data %>% 
+  gt() %>% 
+  fmt_number(
+    columns = vars(`2015`, `2016`, pct_change)
+  ) %>% 
+  tab_spanner(columns = vars(`2015`, `2016`),
+              label = md("**Yield in Tonnes/Hectare**")) %>%  
+  cols_width(
+    vars(crop) ~ px(125),
+    vars(`2015`, `2016`, pct_change) ~ 100
+  ) %>% 
+  tab_source_note(md("**Table**: @thomas_mock | **Data**: OurWorldInData.org<br>**Inspiration**: @jschwabish"))
+```
+
+### gt native grouping
+
+```{r}
+rule9_data %>% 
+  gt(groupname_col = "Country") %>% 
+  tab_stubhead("label") %>% 
+  tab_options(
+    table.width = px(300)
+  ) %>% 
+  cols_label(
+    crop = "",
+    pct_change = md("Percent<br>Change")
+  ) %>% 
+  fmt_number(
+    columns = vars(`2015`, `2016`, pct_change)
+  ) %>% 
+  tab_style(
+    style = cell_text(color = "black", weight = "bold"),
+    locations = list(
+      cells_row_groups(),
+      cells_column_labels(everything())
+    )
+  ) %>% 
+  tab_spanner(columns = vars(`2015`, `2016`),
+              label = md("**Yield in Tonnes/Hectare**")) %>%  
+  cols_width(
+    vars(crop) ~ px(125),
+    vars(`2015`, `2016`, pct_change) ~ 100
+  ) %>% 
+  tab_options(
+    row_group.border.top.width = px(3),
+    row_group.border.top.color = "black",
+    row_group.border.bottom.color = "black",
+    table_body.hlines.color = "white",
+    table.border.top.color = "white",
+    table.border.top.width = px(3),
+    table.border.bottom.color = "white",
+    table.border.bottom.width = px(3),
+    column_labels.border.bottom.color = "black",
+    column_labels.border.bottom.width = px(2)
+  ) %>% 
+  tab_source_note(md("**Table**: @thomas_mock | **Data**: OurWorldInData.org<br>**Inspiration**: @jschwabish"))
+```
+### Remove duplicate data
+
+```{r}
+rule9_data %>% 
+  arrange(Country) %>% 
+  gt() %>% 
+  cols_label(
+    Country = "",
+    crop = "Crop",
+    pct_change = md("Percent<br>Change")
+  ) %>% 
+  tab_spanner(columns = vars(`2015`, `2016`),
+              label = md("**Yield in Tonnes/Hectare**")) %>% 
+  fmt_number(
+    columns = vars(`2015`, `2016`, pct_change)
+  ) %>% 
+  text_transform(
+    locations = cells_body(
+      columns = vars(Country),
+      rows = crop != "Potatoes"
+    ),
+    fn = function(x){
+      paste0("")
+    }
+  ) %>% 
+  tab_style(
+    style = cell_text(color = "black", weight = "bold"),
+    locations = list(
+      cells_row_groups(),
+      cells_column_labels(everything())
+    )
+  ) %>% 
+  cols_width(
+    vars(Country, crop) ~ px(125),
+    vars(`2015`, `2016`, pct_change) ~ 100
+  ) %>% 
+  tab_options(
+    column_labels.border.bottom.color = "black",
+    column_labels.border.bottom.width = px(2),
+    table_body.hlines.color = "white",
+    table.border.top.color = "white",
+    table.border.top.width = px(3),
+    table.border.bottom.color = "white",
+    table.border.bottom.width = px(3),
+  ) %>% 
+  tab_source_note(md("**Table**: @thomas_mock | **Data**: OurWorldInData.org<br>**Inspiration**: @jschwabish"))
+```
+
+
+
+# Wrap Up
+
+## You've develop `gtextras`. What needs does this package fill?

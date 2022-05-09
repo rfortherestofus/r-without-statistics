@@ -50,7 +50,7 @@ Chapter 2 will discuss the benefits of making a custom ggplot theme. I’m hopin
 
 #### Chapter 3: R is a Full-Fledged Map-Making Tool
 
-Chapter 3 will focus on making maps with R. In recent years, R has become a full-fledged GIS tool, as powerful as any other GIS product on the market. I'll interview Abdoul Madjid about [his maps of the evolution of COVID-19 in the United States throughout 2021](https://twitter.com/issa_madjid/status/1458199645801357318).
+Chapter 3 will focus on making maps with R. In recent years, R has become a full-fledged GIS tool, as powerful as any other GIS product on the market. I'll interview Abdoul Madjid about [his maps of the evolution of COVID-19 in the United States throughout 2021](https://twitter.com/issa_madjid/status/1478488379893420040).
 
 ![](https://github.com/AbdoulMa/TidyTuesday/raw/main/2022_w1/tidytuesday_2022_w1.png)
 
