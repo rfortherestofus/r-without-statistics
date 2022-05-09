@@ -155,8 +155,7 @@ rule2_data %>%
 ### Improved example
 
 ```{r}
-# rule2_tab2 <- 
-  rule2_data %>% 
+rule2_data %>% 
   add_row(
     rule2_data %>% 
       summarize(
