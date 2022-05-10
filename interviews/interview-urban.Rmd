@@ -11,8 +11,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Make sure people keep browser open after call
 
-
-
 # Background
 
 ## Articles
@@ -44,8 +42,7 @@ Safia Sayed is a research assistant in the Urban-Brookings Tax Policy Center. Sa
 
 https://www.urban.org/author/safia-sayed
 
-
-# Parameterized reporting at Urban
+# Interview Questions
 
 ## Talk me through the process of creating the COVID state budget reports. 
 
@@ -53,10 +50,8 @@ https://www.urban.org/author/safia-sayed
 
 ## What would producing these reports have looked like had you not used R? 
 
-# Code walkthrough
+## What is the overall process for creating parameterized reports? Do you do it all in a single Rmd file? Do you have a separate R script for rendering reports? 
 
-## What is the overall process for creating parameterized reports? 
+## Talk about how you embedded the the COVID state budget reports onto the Urban website. 
 
-Do you do it all in a single Rmd file? Do you have a separate R script for rendering reports? 
-
-## Hosting
+## Are there particular things you need to keep in mind when creating parameterized reports? 
