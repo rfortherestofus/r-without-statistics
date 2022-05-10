@@ -1,0 +1,62 @@
+---
+title: "Interview Urban Institute Parameterized Reporting"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Logistics
+
+Make sure people keep browser open after call
+
+
+
+# Background
+
+## Articles
+
+- https://urban-institute.medium.com/iterated-fact-sheets-with-r-markdown-d685eb4eafce (old article)
+- https://urban-institute.medium.com/using-r-markdown-to-track-and-publish-state-data-d1291bfa1ec0 (new article)
+
+## Bios
+
+### Aaron Williams
+
+Aaron R. Williams is a senior data scientist in the Income and Benefits Policy Center and Program on Retirement Policy at the Urban Institute, where he works on retirement policy, microsimulation models, data privacy, and data imputation methods. He has worked on Urban's Dynamic Simulation of Income (DYNASIM) microsimulation model, the Social Security Administration's Modeling Income in the Near Term (MINT) microsimulation model, and the Tax Policy Center's synthesis of individual tax records.
+
+Williams leads Urban’s R Users Group and assists researchers across Urban with projects that use R for data science, statistical analysis, data visualization, mapping, and automation.
+
+Previously, Williams worked at the Commonwealth Institute for Fiscal Analysis. He holds a BS in economics from Virginia Commonwealth University, a BA in music from Virginia Commonwealth University, and an MS in mathematics and statistics from Georgetown University.
+
+https://www.urban.org/author/aaron-r-williams
+
+### Livia Mucciolo
+
+Livia Mucciolo is a research assistant in the Urban-Brookings Tax Policy Center. She graduated magna cum laude from Brown University and holds a BA in economics and public health.
+
+https://www.urban.org/author/livia-mucciolo
+
+### Safia Sayed
+
+Safia Sayed is a research assistant in the Urban-Brookings Tax Policy Center. Sayed graduated with highest distinction and highest honors from the University of Michigan, where she holds a BA in economics.
+
+https://www.urban.org/author/safia-sayed
+
+
+# Parameterized reporting at Urban
+
+## Talk me through the process of creating the COVID state budget reports. 
+
+## How common is parameterized reporting at Urban?
+
+## What would producing these reports have looked like had you not used R? 
+
+# Code walkthrough
+
+## What is the overall process for creating parameterized reports? 
+
+Do you do it all in a single Rmd file? Do you have a separate R script for rendering reports? 
+
+## Hosting

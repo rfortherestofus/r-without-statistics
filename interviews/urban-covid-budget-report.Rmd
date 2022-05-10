@@ -1,0 +1,67 @@
+---
+title: "Urban Institute COVID Report"
+output: html_document
+params:
+  state: "Montana"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      warning = FALSE,
+                      message = FALSE)
+```
+
+```{r}
+library(tidyverse)
+library(urbnthemes)
+library(here)
+library(scales)
+
+set_urbn_defaults(style = "print")
+```
+
+# `r params$state`
+
+```{r}
+#CDC cases
+cases <- tibble(state.name) %>%
+  rbind("District of Columbia") %>%
+  left_join(read_csv(here("data", "united_states_covid19_cases_deaths_and_testing_by_state.csv"), skip = 2),
+            by = c("state.name" = "State/Territory")) %>%
+  select(total_cases = `Total Cases`, state.name,
+         cases_per_100000 = `Case Rate per 100000`) %>%
+  mutate(cases_per_100000 = parse_number(cases_per_100000)) %>% 
+  mutate(case_rank = rank(-cases_per_100000, ties.method = "min"))
+```
+
+```{r}
+state_text <- if_else(params$state == "District of Columbia", str_glue("the District of Columbia"), str_glue("state of {params$state}"))
+
+state_cases_per_100000 <- cases %>%
+  filter(state.name == params$state) %>% 
+  pull(cases_per_100000) %>% 
+  comma()
+
+state_cases_rank <- cases %>%
+  filter(state.name == params$state) %>% 
+  pull(case_rank)
+```
+
+In `r state_text`, there were `r state_cases_per_100000` cases per 100,000 people in the last seven days. This puts `r params$state` at number `r state_cases_rank` of 50 states and the District of Columbia. 
+
+
+```{r fig.height = 8}
+cases %>% 
+  mutate(highlight_state = if_else(state.name == params$state, "Y", "N")) %>% 
+  mutate(state.name = fct_reorder(state.name, cases_per_100000)) %>% 
+  ggplot(aes(x = cases_per_100000,
+             y = state.name,
+             fill = highlight_state)) +
+  geom_col() +
+  scale_x_continuous(labels = comma_format()) +
+  theme(legend.position = "none") +
+  labs(y = NULL,
+       x = "Cases per 100,000")
+```
+
+
