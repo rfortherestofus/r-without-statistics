@@ -13,6 +13,8 @@ tuesdata <- tidytuesdayR::tt_load(2020, "36")
 
 # Your Background
 
+Customer enablement lead at RStudio
+
 ## When did you start using R?
 
 ## Why did you switch to R? 
@@ -43,6 +45,7 @@ yield_data <- tuesdata$key_crop_yields %>%
   pivot_longer(cols = wheat:beans, names_to = "crop", values_to = "yield") %>% 
   rename(Country = entity)
 ```
+
 ## Offset heads from body
 
 ```{r}
@@ -67,6 +70,11 @@ potato_tb <- potato_data %>%
 potato_tb
 ```
 
+```{r}
+
+```
+
+
 ### Improved example
 
 ```{r}
@@ -85,7 +93,8 @@ potato_tb %>%
     table_body.hlines.color = "white",
     table.border.bottom.color = "white",
     table.border.bottom.width = px(3)
-  ) %>% tab_source_note(md("**Table**: @thomas_mock | **Data**: OurWorldInData.org<br>**Inspiration**: @jschwabish"))
+  ) %>% 
+  tab_source_note(md("**Table**: @thomas_mock | **Data**: OurWorldInData.org<br>**Inspiration**: @jschwabish"))
 ```
 
 
@@ -173,19 +182,19 @@ rule2_data %>%
   fmt_number(
     columns = 2:last_col()
   ) %>% 
-  # tab_style(
-  #   style = cell_fill(
-  #     color = "lightgrey"
-  #   ),
-  #   locations = list(
-  #     cells_body(
-  #       columns = vars(avg_07_11, avg_12_16)
-  #       ),
-  #     cells_column_labels(
-  #       columns = vars(avg_07_11, avg_12_16)
-  #     )
-  #     )
-  # ) %>%
+  tab_style(
+    style = cell_fill(
+      color = "lightgrey"
+    ),
+    locations = list(
+      cells_body(
+        columns = vars(avg_07_11, avg_12_16)
+        ),
+      cells_column_labels(
+        columns = vars(avg_07_11, avg_12_16)
+      )
+      )
+  ) %>%
   tab_style(
     style = cell_borders(
       sides = "top",
@@ -254,7 +263,8 @@ rule3_data %>%
     table_body.hlines.color = "white",
     table.border.bottom.color = "white",
     table.border.bottom.width = px(3)
-  )
+  ) %>% 
+  opt_table_font(font = "Courier New")
 ```
 
 
@@ -318,11 +328,11 @@ yield_data %>%
   fmt_number(
     columns = vars(few),
     decimals = 0
-  ) %>% 
+  ) %>%
   fmt_number(
     columns = vars(right),
     decimals = 1
-  ) %>% 
+  ) %>%
   cols_label(
     yield = md("Too many<br>decimals"),
     few = md("Too few<br>decimals"),
@@ -383,7 +393,10 @@ rule8_tb %>%
 ```{r}
 rule8_tb %>% 
   tab_style(
-    style = cell_text(color = "red"),
+    style = list(
+      cell_fill(color = "red"),
+      cell_text(color = "white")
+    ),
     locations = list(
       cells_body(
         columns = 2,
@@ -550,4 +563,4 @@ rule9_data %>%
 
 # Wrap Up
 
-## You've develop `gtextras`. What needs does this package fill?
+## You've developed `gtextras`. What needs does this package fill?
