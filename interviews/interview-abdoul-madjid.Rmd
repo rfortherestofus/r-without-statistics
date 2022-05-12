@@ -1,13 +1,19 @@
 ---
 title: "Interview with Abdoul Madjid"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+Abdoul Madjid works for First Eco, a smart business integration company. There he writes code in R and Python that helps to summarize news for their clients. On the side, he does amazing data viz, including making some great-looking maps. 
+
 # Background
+
+
 
 ## When did you start using R?
 
@@ -60,7 +66,16 @@ usa_states_geom <- albersusa::usa_sf() %>%
   sf::st_transform(albersusa::us_laea_proj) %>%
   select(name)
 
-covid_cases <- covid_data %>% 
+albersusa::usa_sf() %>% 
+  ggplot() +
+  geom_sf()
+
+albersusa::usa_sf() %>% 
+  sf::st_transform(albersusa::us_laea_proj) %>%
+  ggplot() +
+  geom_sf()
+
+covid_cases <- covid_data %>%
   group_by(state, fips) %>% 
   arrange(date) %>% 
   # DON'T USE DIFF - somedays data  are incoherent 
@@ -92,15 +107,24 @@ bg_color <- "#e5e4e2"
 font_family <- "Inter"
 caption <- "Incidence rates are calculated for 100,000 people in each state.
 Inspired from a graphic in the DIE ZEIT newspaper of November 18, 2021.
-Data from NY Times · Tidytuesday Week-1 2022 · Abdoul ISSA BIDA."
+Data from NY Times Tidytuesday Week-1 2022 Abdoul ISSA BIDA."
+
+usa_states_geom %>% 
+  left_join(covid_cases_rm, by = c("name" = "state")) %>% 
+  mutate(fancy_date = fct_inorder(format(date, "%b. %d"))) 
+
+covid_cases_rm %>% 
+  left_join(usa_states_geom, by = c("state" = "name"))
 
 # Plot 
-covid_evolution_plot <- usa_states_geom %>% 
+covid_evolution_plot <- usa_states_geom %>%
   left_join(covid_cases_rm, by = c("name" = "state")) %>% 
   mutate(fancy_date = fct_inorder(format(date, "%b. %d"))) %>% 
+  filter(lubridate::month(date) == 1) %>% 
+  filter(name == "Oregon") %>% 
   ggplot() + 
   geom_sf(aes(fill = incidence_rate), size = .05, color = "grey55") + 
-  facet_wrap(vars(fancy_date), strip.position = "bottom")+ 
+  facet_wrap(vars(fancy_date), strip.position = "bottom") + 
   colorspace::scale_fill_discrete_sequential(name = str_to_upper("COVID-19 Incidence Rate"),
                                              palette = "Rocket", rev = T, 
                                              guide = guide_legend(
@@ -108,8 +132,8 @@ covid_evolution_plot <- usa_states_geom %>%
                                                keyheight = unit(.75, "cm"),
                                                keywidth = unit(.75, "cm"),
                                                label.position = "right",
-                                               label.theme = element_text(family = font_family, size = rel(15), margin = margin(r = 15)),
-                                               title.theme = element_text(family = font_family, size = rel(18),margin = margin(b = .5, unit = "cm")),
+                                               label.theme = element_text(size = rel(15), margin = margin(r = 15)),
+                                               title.theme = element_text(size = rel(18),margin = margin(b = .5, unit = "cm")),
                                                title.position = "top",
                                                title.hjust = .5
                                              )) +
@@ -124,17 +148,24 @@ covid_evolution_plot <- usa_states_geom %>%
     plot.background = element_rect(fill = bg_color , color = NA)
   )
 
+ggsave(covid_evolution_plot,
+       file = "covid_evolution_plot.png")
+
 # Plot with title and Caption 
 (final_plot <- cowplot::ggdraw(covid_evolution_plot) + 
-  labs(title = "2021 · A pandemic year",
-       caption = caption) + 
-  theme(
-    plot.title = element_text(color = "#111111", family = font_family, size = rel(5), face = "bold", margin = margin(t = .5, b = .5, unit = 'cm')),
-    plot.caption = element_text(family = font_family, size = rel(1.25), hjust = .5, face = "bold", margin = margin(t = .25, b = .25, unit = 'cm')),
-    plot.background = element_rect(fill = bg_color, color = NA),
-    plot.margin = margin(t = .5, r= .5, b = .5, l=.5, unit = "cm"),
-    legend.box.spacing = unit(.5, "cm")
-  )
+    labs(title = "2021 · A pandemic year",
+         caption = caption) + 
+    theme(
+      plot.title = element_text(color = "#111111", family = font_family, size = rel(5), face = "bold", margin = margin(t = .5, b = .5, unit = 'cm')),
+      plot.caption = element_text(family = font_family, size = rel(1.25), hjust = .5, face = "bold", margin = margin(t = .25, b = .25, unit = 'cm')),
+      plot.background = element_rect(fill = bg_color, color = NA),
+      plot.margin = margin(t = .5, r= .5, b = .5, l=.5, unit = "cm"),
+      legend.box.spacing = unit(.5, "cm")
+    )
 )
+
+ggsave(final_plot,
+       file = "covid_evolution_plot_final.png")
+
 ```
 
