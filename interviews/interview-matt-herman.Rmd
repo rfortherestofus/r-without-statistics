@@ -1,0 +1,46 @@
+---
+title: "Interview with Matt Herman"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+https://westchester-covid.mattherman.info/
+
+# Background
+
+## When did you start using R?
+
+## Why did you switch to R? 
+
+## What changed when you moved to R?
+
+# Background on Westchester COVID website
+
+## Where did the idea to make this come from? 
+
+## What advantages does having a website like this made in R offer?
+
+## You used distill for this website. Any particular reason why you used this versus other options for making websites with R? 
+
+# Code walkthrough
+
+## Walk me through how this website works.
+
+- Overview of everything (data collection, analysis, viz, distill, hosting, automation)
+- Walk through all files/folders
+
+## How is the website hosted?
+
+- Talk about GH pages
+
+## Let's talk about how some of the dynamic text works. For example, how do you know on the home page whether to say the same number, more than, or fewer than in terms of deaths compared to last week?
+
+- https://github.com/mfherman/westchester-covid/blob/master/site/index.Rmd#L49-L53
+
+## Everything (data updates, website udpates, etc) seems to happen automatically. How does this work? 
+
+- Talk about GH actions
+
