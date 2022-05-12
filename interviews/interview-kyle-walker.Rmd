@@ -1,0 +1,134 @@
+---
+title: "Interview with Kyle Walker"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidycensus)
+library(tidyverse)
+library(janitor)
+```
+
+# Background
+
+## Tell me a bit about your background. 
+
+## What were you using before you used R? 
+
+## When and why did you start using R?
+
+## What changed when you moved to R? 
+
+# Background on tidycensus
+
+## Where did the idea for tidycensus come from. 
+
+## How did you work with Census data before you created tidycensus?
+
+## What need does tidycensus meet? 
+
+# Code walkthrough
+
+## See all variables
+
+```{r}
+census_2020_vars <- load_variables(2020, "pl")
+```
+
+## Work with Census data (Hispanic/Latino population by state)
+
+```{r}
+get_decennial(geography = "state", 
+              variables = "P2_002N",
+              year = 2020)
+```
+
+### Name your variables
+
+```{r}
+get_decennial(geography = "state", 
+              variables = c(hispanic_latino_population = "P2_002N"),
+              year = 2020)
+```
+
+### Calculate percentages 
+
+```{r}
+get_decennial(geography = "state", 
+              variables = c(hispanic_latino_population = "P2_002N",
+                            not_hispanic_latino_population = "P2_003N"),
+              year = 2020) %>% 
+  group_by(NAME) %>% 
+  mutate(pct = value / sum(value))  %>% 
+  ungroup() %>% 
+  filter(variable == "hispanic_latino_population") %>% 
+  arrange(desc(pct))
+```
+
+### Calculate percentages with a summary variable
+
+```{r}
+get_decennial(geography = "state", 
+              variables = c(hispanic_latino_population = "P2_002N"),
+              summary_var = "P2_001N",
+              year = 2020) %>% 
+  mutate(pct = value / summary_value) %>% 
+  arrange(desc(pct))
+```
+
+## ACS data (median age by state)
+
+```{r}
+get_acs(
+  geography = "state",
+  variables = "B01002_001",
+  year = 2020
+)
+```
+
+### Pipe directly into ggplot
+
+```{r}
+get_acs(
+  geography = "state",
+  variables = "B01002_001",
+  year = 2020
+) %>% 
+  ggplot(aes(x = estimate,
+             y = NAME)) +
+  geom_col()
+```
+
+## Get geospatial data
+
+```{r}
+get_acs(
+  geography = "state",
+  variables = "B01002_001",
+  year = 2020,
+  geometry = TRUE
+) 
+```
+
+### Map your results
+
+```{r}
+get_acs(
+  geography = "state",
+  variables = "B01002_001",
+  year = 2020,
+  geometry = TRUE
+) %>% 
+  filter(NAME != "Alaska" & NAME != "Hawaii" & NAME != "Puerto Rico") %>% 
+  ggplot(aes(fill = estimate)) +
+  geom_sf() +
+  scale_fill_viridis_c()
+```
+
+
