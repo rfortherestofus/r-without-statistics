@@ -125,7 +125,7 @@ get_acs(
   year = 2020,
   geometry = TRUE
 ) %>% 
-  filter(NAME != "Alaska" & NAME != "Hawaii" & NAME != "Puerto Rico") %>% 
+  tigris::shift_geometry() %>% 
   ggplot(aes(fill = estimate)) +
   geom_sf() +
   scale_fill_viridis_c()
