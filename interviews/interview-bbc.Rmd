@@ -1,0 +1,60 @@
+---
+title: "Interview with BBC folks"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Checklist on day of recording
+
+- Make sure people keep browser open after call
+- Get repo URL
+
+# Personal Backgrounds
+
+## When did you start using R?
+
+## What changed when you moved to R? 
+
+# Background on bbplot + BBC Visual and Data Journalism cookbook for R graphics
+
+## You've written about how, before you created bbplot, you had to bring in the design team to finish graphs created in R. Talk me through what that looked like for a single graph. 
+
+## The bbc_style() function doesn't give a lot of flexibility to make changes to it. Was this intentional? If so, why?
+
+## You've written that bbplot also spurred interest in others in learning R. What do you attribute this to? 
+
+# Code walkthrough
+
+## bbc_style()
+
+https://github.com/bbc/bbplot/blob/master/R/bbc_style.R
+
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+library(bbplot)
+
+penguins %>% 
+  count(island) %>% 
+  mutate(pct = n / sum(n)) %>% 
+  ggplot(aes(x = island,
+           y = pct,
+           fill = island)) +
+  geom_col() +
+  bbc_style()
+```
+
+# Wrapping up
+
+## What advice do you have for someone thinking about making a custom theme for their organization? 
+
+# DK Notes
+
+[How the BBC Visual and Data Journalism team works with graphics in R](https://medium.com/bbc-visual-and-data-journalism/how-the-bbc-visual-and-data-journalism-team-works-with-graphics-in-r-ed0b35693535)
+
+Examples of BBC plot using style
+https://www.bbc.com/news/science-environment-46459714
+![](https://ichef.bbci.co.uk/news/976/cpsprodpb/82BA/production/_121266433_beef_by_region_ws_640x3-nc.png)
