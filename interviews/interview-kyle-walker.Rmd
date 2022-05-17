@@ -17,6 +17,9 @@ library(janitor)
 
 # Background
 
+
+I am an Associate Professor of Geography and Director of the Center for Urban Studies at Texas Christian University
+
 ## Tell me a bit about your background. 
 
 ## What were you using before you used R? 
@@ -33,21 +36,47 @@ library(janitor)
 
 ## What need does tidycensus meet? 
 
+## Why tidycensus
+
 # Code walkthrough
 
 ## See all variables
 
 ```{r}
-census_2020_vars <- load_variables(2020, "pl")
+census_2020_vars <- load_variables(year = 2020, 
+                                   dataset = "pl")
+
+acs_2019_vars <- load_variables(year = 2019, 
+                                dataset = "acs5")
 ```
 
 ## Work with Census data (Hispanic/Latino population by state)
 
 ```{r}
-get_decennial(geography = "state", 
-              variables = "P2_002N",
-              year = 2020)
+hispanic_latino_2020 <- get_decennial(geography = "state", 
+                                      variables = "P2_002N",
+                                      year = 2020)
+
+
+
+
 ```
+
+```{r}
+get_decennial(geography = "state", 
+              variables = c("P2_001N", "P2_002N"),
+              year = 2020) %>% 
+  view()
+```
+
+```{r}
+get_decennial(geography = "state", 
+              variables = c("P2_001N", "P2_002N"),
+              output = "wide",
+              year = 2020) %>% 
+  view()
+```
+
 
 ### Name your variables
 
@@ -65,11 +94,19 @@ get_decennial(geography = "state",
                             not_hispanic_latino_population = "P2_003N"),
               year = 2020) %>% 
   group_by(NAME) %>% 
-  mutate(pct = value / sum(value))  %>% 
+  mutate(pct = value / sum(value)) %>% 
   ungroup() %>% 
   filter(variable == "hispanic_latino_population") %>% 
-  arrange(desc(pct))
+  arrange(desc(pct)) 
 ```
+
+```{r}
+get_decennial(geography = "county", 
+              variables = "P2_002N",
+              year = 2020) %>% 
+  arrange(desc(value))
+```
+
 
 ### Calculate percentages with a summary variable
 
@@ -86,9 +123,11 @@ get_decennial(geography = "state",
 
 ```{r}
 get_acs(
-  geography = "state",
+  geography = "tract",
+  state = "OR",
   variables = "B01002_001",
-  year = 2020
+  year = 2019,
+  survey = "acs5"
 )
 ```
 
@@ -125,7 +164,8 @@ get_acs(
   year = 2020,
   geometry = TRUE
 ) %>% 
-  tigris::shift_geometry() %>% 
+  # filter(NAME != "Alaska" & NAME != "Hawaii" & NAME != "Puerto Rico") %>% 
+  tigris::shift_geometry(preserve_area = FALSE) %>% 
   ggplot(aes(fill = estimate)) +
   geom_sf() +
   scale_fill_viridis_c()
