@@ -1,0 +1,72 @@
+---
+title: "Interview with Silvia Canelón"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# References
+
+Presentation: https://spcanelon.github.io/xaringan-basics-and-beyond/index.html
+
+Basics slides: https://spcanelon.github.io/xaringan-basics-and-beyond/slides/day-01-basics.html#1
+
+Basics slides code: https://github.com/spcanelon/xaringan-basics-and-beyond/blob/main/slides/day-01-basics.Rmd
+
+# Logistics
+
+Make sure people keep browser open after call
+
+# Background
+
+## When did you start using R?
+
+## Why did you switch to R? 
+
+## What were you using before? 
+
+## What changed when you moved to R? 
+
+# Background on xaringan
+
+## What was your introduction to xaringan? 
+
+## How did you make slides before switching to xaringan? 
+
+## What advantages does xaringan offer?
+
+## Talk about xaringan themes. What do they offer?
+
+# Code walkthrough
+
+Familiar markdown pieces (headings, bold, italics, etc)
+
+Unique syntax of xaringan (--- for new slides, -- for incremental slides, ??? for presenter notes)
+
+Aligning things
+
+Columns
+
+Background images
+
+Add tables
+
+Add plots
+
+Change fonts
+
+Custom CSS (colors and fonts)
+
+- I think it's easier to show this with xaringanthemer so let's do that
+
+
+# Wrap up
+
+# If people want to learn more about you and your work, where can they connect with you?
+
+# Associated packages
+
+- https://pkg.garrickadenbuie.com/xaringanthemer/
+- https://pkg.garrickadenbuie.com/xaringanExtra/#/
