@@ -1,17 +1,15 @@
 ---
-title: "Untitled"
+title: "Interview with Alison Hill"
 output: html_document
-date: '2022-05-27'
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-
 # Logistics
 
-Make sure people keep browser open after call
+Make sure people keep browser open after call so video can finalize uploading
 
 # Bio
 
