@@ -27,9 +27,9 @@ Alison Hill is the Director of Knowledge at Voltron Data. Prior to this role, sh
 
 # RMarkdown
 
-We'll work through the [slides](https://rmd4pharma.netlify.app/static/slides/01-rmd-anatomy.html) from your RMarkdown for Pharma talk.
+This section is based on the [slides](https://rmd4pharma.netlify.app/static/slides/01-rmd-anatomy.html) from your RMarkdown for Pharma talk.
 
-[Repo](https://github.com/apreshill/rmd4pharma/blob/master/static/mockpaper/01-eda.Rmd)
+[Repo](https://github.com/apreshill/rmd4pharma/)
 
 ## You talk about needing to change your mental model when working with RMarkdown. Explain this?
 
