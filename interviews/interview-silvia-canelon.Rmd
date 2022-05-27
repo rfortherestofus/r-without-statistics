@@ -21,6 +21,8 @@ Make sure people keep browser open after call
 
 # Background
 
+Silvia Canelón is a postdoc in biostats, epi, and informatics at UPenn
+
 ## When did you start using R?
 
 ## Why did you switch to R? 
@@ -28,6 +30,8 @@ Make sure people keep browser open after call
 ## What were you using before? 
 
 ## What changed when you moved to R? 
+
+## How you use R today?
 
 # Background on xaringan
 
@@ -37,7 +41,12 @@ Make sure people keep browser open after call
 
 ## What advantages does xaringan offer?
 
+- link to HTML
+- No having to place things
+- Accessibility
+
 ## Talk about xaringan themes. What do they offer?
+
 
 # Code walkthrough
 
