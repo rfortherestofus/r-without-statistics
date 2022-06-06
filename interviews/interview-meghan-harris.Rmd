@@ -1,0 +1,56 @@
+---
+title: "Interview with Meghan Harris"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+https://github.com/Meghansaha/Awesome_Survey_Example
+
+# Background
+
+https://www.thetidytrekker.com/about-me
+
+Meghan Harris is a Data Integration Specialist at the Primary Care Research Institute at the University at Buffalo. There, she brings together data from multiple sources to create insights that benefit people affected by Opioid Use Disorder. 
+
+When not creating slick data pipelines, Meghan also makes art using R, which she posts on Twitter at @meghansharris.
+
+## When did you start using R?
+
+## Why did you switch to R? 
+
+## What changed when you moved to R?
+
+# Background on working with data from Google Sheets
+
+## Explain to me the overall process for how you work with data in this way and how it varies from, say, getting a CSV download of data and working with that.
+
+## What are the main advantages of working with a package like `googlesheets4`? 
+
+## Are there any downsides when using an approach like this?
+
+# Code walkthrough
+
+## Walk through the code you created and show how each piece works.
+
+## You break your R script files into pieces. Why do you do this versus just having one R script file or Rmd file?
+
+## You have to do some reshaping of the data (see below). Talk about what you're doing here and why you do it.
+
+```
+#Comma separated values are parsed out to create different data frames===
+#Music Data===
+new_data_music <- new_data_mod2 %>%
+  select(-contains("game")) %>%
+  separate_rows(music_genres)
+```
+
+## Now that you've showed us how you created this code and how it works, talk through what happens when you need to update a report later on (e.g. when you get new data)?
+
+## Anything else I haven't asked that we should discuss.
+
+# Wrap up
+
+## Where can people learn more about your work and connect with you?
