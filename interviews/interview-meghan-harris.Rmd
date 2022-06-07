@@ -27,6 +27,8 @@ When not creating slick data pipelines, Meghan also makes art using R, which she
 
 ## Explain to me the overall process for how you work with data in this way and how it varies from, say, getting a CSV download of data and working with that.
 
+## API connection: define
+
 ## What are the main advantages of working with a package like `googlesheets4`? 
 
 ## Are there any downsides when using an approach like this?
