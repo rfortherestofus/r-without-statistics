@@ -11,6 +11,8 @@ https://westchester-covid.mattherman.info/
 
 # Background
 
+Data Scientist in Research Division at the Council of State Governments Justice Center 
+
 ## When did you start using R?
 
 ## Why did you switch to R? 
