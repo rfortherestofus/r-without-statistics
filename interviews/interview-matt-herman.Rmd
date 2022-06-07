@@ -38,6 +38,8 @@ Data Scientist in Research Division at the Council of State Governments Justice 
 
 - Talk about GH pages
 
+## FIgure widths
+
 ## Let's talk about how some of the dynamic text works. For example, how do you know on the home page whether to say the same number, more than, or fewer than in terms of deaths compared to last week?
 
 - https://github.com/mfherman/westchester-covid/blob/master/site/index.Rmd#L49-L53
