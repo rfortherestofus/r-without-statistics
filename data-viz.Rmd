@@ -2,72 +2,15 @@
 
 # Use General Principles of High-Quality Data Viz in R {-}
 
-## Interview with Cedric + Georgios {-}
+In 2021, [data from National Drought Mitigation Center showed that nearly all of the American West was in a drought](https://droughtmonitor.unl.edu/DmData/TimeSeries.aspx). By April of that year, [officials in Southern California declared a water emergency](https://www.cbsnews.com/news/west-climate-change-water/), citing unprecedented conditions. 
 
-### SciAm Piece {-}
+This wouldn't have come as news to those living in California and other Western states. In addition to the direct impact of drought (leading areas of California to implement water use restrictions), people could see the indirect impact of drought in increased wildfires. With forests dried out by years of drought conditions, wildfires became more frequent, filling skies in the West and beyond with smoke. 
 
-#### Intro {-}
+While people could see that drought conditions had increased, communicating the extent of this change remained challenging. How do you show the increase in droughts in a way that accurately represents the data while is also compelling enough to have lay people take notice? 
 
-Hard to communicate drought extent
+This was the challenge that Cédric Scherer and Georgios Karamanis took on in November 2021. Commissioned by Scientific American to create a data visualization to highlight the extent to which droughts in the United States have become common, they turned to the ggplot2 package to provide them the tools to turn data on droughts into an impactful visualization. 
 
-> If I recall correctly, I was suggesting the climate + plant risk topic because I found a paper on that topic that looked interesting to me. It was during the period when the US heat dome phenomenon was prominently featured in all news and I initially thought we could create a visualization on that. When pitching it, I wrote to Jen "motivated by the heat dome phenomenon and more intense wildfires every year".
+They used data from National Drought Center
 
-https://www.cbsnews.com/news/west-climate-change-water/
+## How piece came about
 
-Droughts are an increasingly common fact of life. Those in drought-prone regions know that the last several decades have brought increasingly dry conditions, impacting agriculture, wildfires, and more. 
-
-In spite of this, communicating the extent of drought conditions to the general public is a challenge. How do you show the increase in droughts in a way that accurately represents the data while is also compelling enough to have lay people take notice? 
-
-This was the challenge that Cédric Scherer and Georgios Karamanis took on in November 2021. Commissioned by Scientific American to create a data visualization to highlight the extent to which droughts have become common, they turned to the ggplot2 package to provide them the tools to turn data on droughts into an impactful visualization. 
-
-#### Show viz {-}
-
-
-
-
-#### Why it's a good viz {-}
-
-- Shows pattern over time
-- Choice of chart (not line chart)
-- Small multiples
-- Well-chosen colors
-
-### Code walkthrough {-}
-
-#### Pattern over time {-}
-
-#### Chart choice {-}
-
-- Show how you could do it as a line chart
-
-#### Small multiples {-}
-
-#### Colors {-}
-
-#### Post-processing {-}
-
-Don't do everything in R
-
-### Design {-}
-
-People think doing good design is an innate thing, but you can learn principles. From Refactoring UI: https://show.rfor.us/cJQqWH. 
-
-- Mention Will Chase grammar of graphics talk
-
-#### How to develop sense of aesthetics and get inspiration {-}
-
-Don't just look at data viz
-
-Where to look for data viz inspiration
-- Datawrapper
-- Flowing Data
-- Look at Stephanie Evergreen tweet
-- Andy Kirk roundups
-- Tidy Tuesday
-
-
-### Why R is especially well suited for high-quality data viz {-}
-
-Use Tidy Tuesday as bridge to say that you can learn from others' viz work by looking at their code
-
-Talk about how Cedric and Georgios used Tidy Tuesday to build awareness of their work
