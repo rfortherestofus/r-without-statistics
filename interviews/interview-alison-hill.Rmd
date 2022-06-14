@@ -19,6 +19,8 @@ Alison Hill is the Director of Knowledge at Voltron Data. Prior to this role, sh
 
 ## When did you start using R? What switched for you when you did so?
 
+## How do you define RMarkdown?
+
 ## You, more than anyone I know, are really interested in RMarkdown. Why? 
 
 ## RMarkdown is often referred to as a form of literate programming. What does literate programming mean and what is the value of it?  
