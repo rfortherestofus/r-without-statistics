@@ -2,15 +2,27 @@
 
 # Use General Principles of High-Quality Data Viz in R {-}
 
-In 2021, [data from National Drought Mitigation Center showed that nearly all of the American West was in a drought](https://droughtmonitor.unl.edu/DmData/TimeSeries.aspx). By April of that year, [officials in Southern California declared a water emergency](https://www.cbsnews.com/news/west-climate-change-water/), citing unprecedented conditions. 
+In the spring of 2021, [nearly all of the American West was in a drought](https://droughtmonitor.unl.edu/DmData/TimeSeries.aspx). In April of that year, [officials in Southern California declared a water emergency](https://www.cbsnews.com/news/west-climate-change-water/), citing unprecedented conditions. 
 
-This wouldn't have come as news to those living in California and other Western states. In addition to the direct impact of drought (leading areas of California to implement water use restrictions), people could see the indirect impact of drought in increased wildfires. With forests dried out by years of drought conditions, wildfires became more frequent, filling skies in the West and beyond with smoke. 
+This wouldn't have come as news to those living in California and other Western states. In addition to the direct impact of drought (leading areas of California to implement water use restrictions), people could see the indirect impact of drought in increased wildfires. With forests dried out by years of drought conditions, wildfires became more frequent, filling skies in the West with smoke. 
 
-While people could see that drought conditions had increased, communicating the extent of this change remained challenging. How do you show the increase in droughts in a way that accurately represents the data while is also compelling enough to have lay people take notice? 
+While more and more people are able to see the increase in drought conditions, communicating the extent of this change remains a challenge. How can we show the data in a way that accurately represents the data while is also compelling enough to have lay people take notice? 
 
-This was the challenge that Cédric Scherer and Georgios Karamanis took on in November 2021. Commissioned by Scientific American to create a data visualization to highlight the extent to which droughts in the United States have become common, they turned to the ggplot2 package to provide them the tools to turn data on droughts into an impactful visualization. 
+This was the challenge that freelance data visualization designers Cédric Scherer and Georgios Karamanis took on in November 2021. Commissioned by the magazine Scientific American to create a data visualization to highlight the extent to which droughts in the United States have become common, they turned to the ggplot2 package to turn what could be (pardon the pun) dry data on droughts into a set of impactful data visualizations. 
 
-They used data from National Drought Center
+There was nothing unique about the data that Cédric and Georgios used. It was the same data from National Drought Center that news stories reported on. But what these two information designers did was present the data in a way that it both grabs attention and communicates clearly the scale of the phenomenon. Let's take a look at how they made their visualization. 
 
-## How piece came about
+![](https://raw.githubusercontent.com/gkaramanis/drought_viz_sciam-shared/main/readme-img/sciam-online.png.webp)
+
+## Close read of data viz
+
+### Shows pattern over time
+
+### Choice of chart (not line chart)
+
+Show how you could do it as a line chart
+
+### Small multiples
+
+### Well-chosen colors
 
