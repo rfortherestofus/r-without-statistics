@@ -1,3 +1,8 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
 # (PART\*) Illuminate {-}
 
 # Use General Principles of High-Quality Data Viz in R {-}
@@ -6,23 +11,258 @@ In the spring of 2021, [nearly all of the American West was in a drought](https:
 
 This wouldn't have come as news to those living in California and other Western states. In addition to the direct impact of drought (leading areas of California to implement water use restrictions), people could see the indirect impact of drought in increased wildfires. With forests dried out by years of drought conditions, wildfires became more frequent, filling skies in the West with smoke. 
 
+TODO: Add personal story
+
 While more and more people are able to see the increase in drought conditions, communicating the extent of this change remains a challenge. How can we show the data in a way that accurately represents the data while is also compelling enough to have lay people take notice? 
 
-This was the challenge that freelance data visualization designers Cédric Scherer and Georgios Karamanis took on in November 2021. Commissioned by the magazine Scientific American to create a data visualization to highlight the extent to which droughts in the United States have become common, they turned to the ggplot2 package to turn what could be (pardon the pun) dry data on droughts into a set of impactful data visualizations. 
+This was the challenge that freelance data visualization designers Cédric Scherer and Georgios Karamanis took on in November 2021. Commissioned by the magazine Scientific American to create a data visualization that would highlight the extent to which droughts in the United States have become common, they turned to the ggplot2 package to turn what could be (pardon the pun) dry data on droughts into a set of impactful data visualizations. 
 
-There was nothing unique about the data that Cédric and Georgios used. It was the same data from National Drought Center that news stories reported on. But what these two information designers did was present the data in a way that it both grabs attention and communicates clearly the scale of the phenomenon. Let's take a look at how they made their visualization. 
+There was nothing unique about the data that Cédric and Georgios used. It was the same data from the National Drought Center that news organizations used in their stories. But what these two information designers did was present the data in a way that it both grabs attention and communicates clearly the scale of the phenomenon. 
 
-![](https://raw.githubusercontent.com/gkaramanis/drought_viz_sciam-shared/main/readme-img/sciam-online.png.webp)
+![](https://github.com/gkaramanis/drought_viz_sciam-shared/raw/main/pitch/drought_bars_facet_var.svg)
+
+Let's take a look at how they made their visualization. 
 
 ## Close read of data viz
 
+TODO: Add something about how there was post-production so my viz is slightly different (e.g. missing 0% and 100% on y axis text). 
+
+Looking at the visualization as a whole, what we see is a chart broken down in multiple ways:
+
+1. The x axis is used to show the week in a single year. 
+2. The y axis shows the percentage of each region at different drought levels. 
+3. Color is used to show the drought levels in each region. 
+4. The chart uses small multiples so that what appears to be one large chart is actually make up of many individual charts. 
+
+To show how the chart works, let's look at one year (2000) for one region (Southeast). 
+
+```{r}
+library(tidyverse)
+library(lubridate)
+library(sf)
+library(albersusa)
+library(colorspace)
+library(shades)
+
+## Color palette hubs
+greys <- c(0, 60, 40, 60, 0, 40, 60, 0)
+pal1 <- paste0("grey", greys)
+
+## Set up hubs map
+hub_northwest <- c("AK", "OR", "ID", "WA")
+hub_california <- "CA"
+hub_southwest <- c("AZ", "HI", "NM", "NV", "UT")
+hub_northern_plains <- c("CO", "MT", "ND", "NE", "SD", "WY")
+hub_southern_plains <- c("KS", "OK", "TX")
+hub_midwest <- c("IL", "IN", "MN", "IA", "MI", "MO", "OH", "WI")
+hub_southeast <- c("AL", "AR", "LA", "MS", "TN", "KY", "GA", "NC", "FL", "GA", "SC", "VA")
+hub_northeast <- c("CT", "DE", "ME", "MA", "MD", "NH", "NJ", "NY", "PA", "RI", "VT", "WV")
+
+hubs_order <- c("Northwest", "California", "Southwest", "Northern Plains", 
+                "Southern Plains", "Midwest", "Southeast", "Northeast")
+
+
+## Read in DroughMonitor hub data
+dm_perc_cat_hubs_raw <- rio::import(here::here("data", "dm_export_20000101_20210909_perc_cat_hubs.json"))
+
+## Wrangle
+dm_perc_cat_hubs <-
+  dm_perc_cat_hubs_raw %>%
+  ## Remove Northern Forest as it combines Midwest + Northeast
+  filter(Name != "Northern Forests\\n") %>%
+  ## Remove Carribean which shows no distinct drought patterns anyway
+  filter(Name != "Caribbean") %>%
+  mutate(
+    across(c(MapDate, ValidStart, ValidEnd), as_date),
+    across(None:D4, ~as.numeric(.x) / 100),
+    Name = stringr::str_remove(Name, "\\\\n"),
+    Name = str_replace(Name, "Nothern", "Northern")
+  ) %>%
+  rename("date" = "MapDate", "hub" = "Name") %>%
+  pivot_longer(
+    cols = c(None:D4),
+    names_to = "category",
+    values_to = "percentage"
+  ) %>%
+  filter(category != "None") %>%
+  mutate(category = factor(category)) %>%
+  dplyr::select(-ValidStart, -ValidEnd, -StatisticFormatID) %>%
+  mutate(
+    year = year(date),
+    week = week(date),
+    hub = factor(hub, levels = hubs_order, labels = hubs_order)
+  ) %>%
+  group_by(year) %>%
+  mutate(max_week = max(week)) %>% ## for var
+  ungroup() %>% 
+  filter(percentage > 0)
+```
+
+```{r}
+dm_perc_cat_hubs %>% 
+  filter(year == 2000) %>% 
+  filter(hub == "Southeast") %>% 
+  ggplot(aes(x = week, y = percentage)) +
+  geom_rect(aes(xmin = .5, 
+                xmax = max_week + .5,
+                ymin = -0.005, 
+                ymax = 1),
+    fill = "#f4f4f9", 
+    color = NA, 
+    size = 0.4, 
+    show.legend = FALSE  #9d9ca7, 99a4be, 8696bd
+  ) + 
+  geom_col(
+    aes(fill = category, 
+        fill = after_scale(addmix(darken(fill, .05, space = "HLS"), "#d8005a", .15)), 
+        color = after_scale(darken(fill, .2, space = "HLS"))),
+    width = .9, size = 0.12
+  ) + 
+  # facet_grid(rows = vars(year), cols = vars(hub), switch = "y") +
+  coord_cartesian(clip = "off") +
+  scale_x_continuous(expand = c(.02, .02), guide = "none", name = NULL) +
+  scale_y_continuous(expand = c(0, 0), position = "right", labels = NULL, name = NULL) + 
+  scale_fill_viridis_d(
+    option = "rocket", name = "Category:", 
+    direction = -1, begin = .17, end = .97,
+    labels = c("Abnormally Dry", "Moderate Drought", "Severe Drought", 
+               "Extreme Drought", "Exceptional Drought")
+  ) +
+  guides(fill = guide_legend(override.aes = list(size = 1))) +
+  theme_light(base_size = 18, base_family = "Roboto") +
+  theme(
+    axis.title = element_text(size = 14, color = "black"),
+    axis.text = element_text(family = "Roboto Mono", size = 11),
+    axis.line.x = element_blank(),
+    axis.line.y = element_line(color = "black", size = .2),
+    axis.ticks.y = element_line(color = "black", size = .2),
+    axis.ticks.length.y = unit(2, "mm"),
+    legend.position = "none",
+    legend.title = element_text(color = "#2DAADA", size = 18, face = "bold"),
+    legend.text = element_text(color = "#2DAADA", size = 16),
+    strip.text.x = element_text(size = 16, hjust = .5, face = "plain", color = "black", margin = margin(t = 20, b = 5)),
+    strip.text.y.left = element_text(size = 18, angle = 0, vjust = .5, face = "plain", color = "black"),
+    strip.background = element_rect(fill = "transparent", color = "transparent"),
+    panel.grid.minor = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.spacing.x = unit(0.3, "lines"),
+    panel.spacing.y = unit(0.25, "lines"),
+    panel.background = element_rect(fill = "transparent", color = "transparent"),
+    panel.border = element_rect(color = "transparent", size = 0),
+    plot.background = element_rect(fill = "transparent", color = "transparent", size = .4),
+    plot.margin = margin(rep(18, 4))
+  )
+```
+
+Looking at this simplified version, we can see the structure of the chart much more clearly. The bars for each week are visible, with each color indicating a different drought level. While the weeks in the first half of the year have very low percentages in the exceptional drought level, the darkest color begins to appear in the second half of the year as a higher percentage of the region enters this category. 
+
+To understand how the code that creates this chart works, let's recreate a simplified version of it. In this code, we take our `dm_perc_cat_hubs` data frame, filter it to only include 2000 data from Southeast, and then pipe this into ggplot. In the `ggplot()` function, we do what's called setting our aesthetic properties by telling R to put week on the x axis, percentage on the y axis, and use the category variable (i.e. drought level) for our fill. This last piece sets the color of the bars that are created when we use `geom_col()` to create a bar chart. 
+
+```{r}
+dm_perc_cat_hubs %>% 
+  
+  # Filter to only use 2000 data
+  filter(year == 2000) %>% 
+  
+  # Filter to only use Southeast data
+  filter(hub == "Southeast") %>%
+  
+  # Pipe our data into ggplot, with week on the x axis and percentage on the y axis
+  ggplot(aes(x = week, 
+             y = percentage,
+             fill = category)) +
+  
+  geom_col()
+```
+
+
+The visualization that Cédric and Georgios ended up making is a stacked bar chart
+Set of stacked bars
+
 ### Shows pattern over time
+
+The goal of the piece is to show, [as the final article in Scientific American puts it](https://www.scientificamerican.com/article/climate-change-drives-escalating-drought/), that "the past two decades have seen some of the most extreme dry periods in U.S. history." To demonstrate this trend, Cédric and Georgios  used longitudinal data. After a bit of data wrangling, the data ended up looking like this: 
+
+TODO: Add image: https://show.rfor.us/IDq8ug
+
+The variables in this data are:
+
+- **date**: start date of the week of the observation
+- **hub**: region
+- **category**: level of drought (D0 = lowest level of drought; D5 = highest level) TODO: check that my interpretation is correct
+- **percentage**: percentage of that region that is in that category of drought
+- **year**: observation year
+- **week**: week number (i.e. first week is week 1)
+- **max_week**: TODO check what it means
+
+With the data ready, Cédric and Georgios began the process of plotting. 
 
 ### Choice of chart (not line chart)
 
 Show how you could do it as a line chart
 
+```{r}
+dm_perc_cat_hubs %>% 
+  filter(year == 2000) %>% 
+  filter(hub == "Southeast") %>% 
+  ggplot(aes(x = week, y = percentage)) +
+  geom_rect(aes(xmin = .5, 
+                xmax = max_week + .5,
+                ymin = -0.005, 
+                ymax = 1),
+    fill = "#f4f4f9", 
+    color = NA, 
+    size = 0.4, 
+    show.legend = FALSE  #9d9ca7, 99a4be, 8696bd
+  ) + 
+  geom_line(
+    aes(fill = category, 
+        fill = after_scale(addmix(darken(fill, .05, space = "HLS"), "#d8005a", .15)), 
+        color = after_scale(darken(fill, .2, space = "HLS"))),
+    width = .9, size = 0.12
+  ) + 
+  # facet_grid(rows = vars(year), cols = vars(hub), switch = "y") +
+  coord_cartesian(clip = "off") +
+  scale_x_continuous(expand = c(.02, .02), guide = "none", name = NULL) +
+  scale_y_continuous(expand = c(0, 0), position = "right", labels = NULL, name = NULL) + 
+  scale_fill_viridis_d(
+    option = "rocket", name = "Category:", 
+    direction = -1, begin = .17, end = .97,
+    labels = c("Abnormally Dry", "Moderate Drought", "Severe Drought", 
+               "Extreme Drought", "Exceptional Drought")
+  ) +
+  guides(fill = guide_legend(override.aes = list(size = 1))) +
+  theme_light(base_size = 18, base_family = "Roboto") +
+  theme(
+    axis.title = element_text(size = 14, color = "black"),
+    axis.text = element_text(family = "Roboto Mono", size = 11),
+    axis.line.x = element_blank(),
+    axis.line.y = element_line(color = "black", size = .2),
+    axis.ticks.y = element_line(color = "black", size = .2),
+    axis.ticks.length.y = unit(2, "mm"),
+    legend.position = "none",
+    legend.title = element_text(color = "#2DAADA", size = 18, face = "bold"),
+    legend.text = element_text(color = "#2DAADA", size = 16),
+    strip.text.x = element_text(size = 16, hjust = .5, face = "plain", color = "black", margin = margin(t = 20, b = 5)),
+    strip.text.y.left = element_text(size = 18, angle = 0, vjust = .5, face = "plain", color = "black"),
+    strip.background = element_rect(fill = "transparent", color = "transparent"),
+    panel.grid.minor = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.spacing.x = unit(0.3, "lines"),
+    panel.spacing.y = unit(0.25, "lines"),
+    panel.background = element_rect(fill = "transparent", color = "transparent"),
+    panel.border = element_rect(color = "transparent", size = 0),
+    plot.background = element_rect(fill = "transparent", color = "transparent", size = .4),
+    plot.margin = margin(rep(18, 4))
+  )
+```
+
+
 ### Small multiples
+
+[The data from the National Drought Center comes divided by region](https://droughtmonitor.unl.edu/DmData/DataDownload/ComprehensiveStatistics.aspx). These regions, known technically as [USDA Climate Hubs](https://www.climatehubs.usda.gov/), include the Pacific Northwest, California, the Southwest, the Northern Plains, the Southern Plains, the Midwest, the Southeast, the Northeast, the Northern Forests, and the Caribbean (data for the latter two regions was not included in the final visualization). 
+
+While drought has become more common in all regions (TODO: is this true?), certain regions have been hit harder than others. Using the  
 
 ### Well-chosen colors
 
