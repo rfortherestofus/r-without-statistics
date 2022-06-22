@@ -36,7 +36,8 @@
         1.  Complete themes
         2. theme() function
 5. Misc
-		1. 
+		1. coord_cartesian()
+		2. 
 6.  Wrap up
     1.  Don't try to do everything in R!
         1.  Post processing on this piece done outside of R
