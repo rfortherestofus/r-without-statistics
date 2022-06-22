@@ -34,9 +34,10 @@
         2.  Also mention facet_wrap()?
     5.  Themes (tweaks that makes everything shine)
         1.  Complete themes
-        2.  theme() function
-	1. 1. Misc
-5.  Wrap up
+        2. theme() function
+5. Misc
+		1. 
+6.  Wrap up
     1.  Don't try to do everything in R!
         1.  Post processing on this piece done outside of R
     2.  ggplot is great for high-quality data viz

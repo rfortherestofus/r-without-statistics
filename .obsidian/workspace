@@ -7,8 +7,13 @@
         "id": "b8fb30a1887873c2",
         "type": "leaf",
         "state": {
-          "type": "empty",
-          "state": {}
+          "type": "markdown",
+          "state": {
+            "file": "outlines/data-viz.md",
+            "mode": "source",
+            "backlinks": false,
+            "source": false
+          }
         }
       }
     ],
@@ -87,6 +92,7 @@
   },
   "active": "b8fb30a1887873c2",
   "lastOpenFiles": [
+    "outlines/data-viz.md",
     "Data Viz Chapter Outline.md",
     "rstudio conf 2022 talk.md",
     "Things to do with kids.md",
@@ -95,7 +101,6 @@
     "Stock Music.md",
     "Joscelin Rocha-Hidalgo.md",
     "Intern Notes.md",
-    "John David Smith - Shambhala.md",
-    "R Without Statistics Interview - Cedric Scherer and Georgios Karamanis.md"
+    "John David Smith - Shambhala.md"
   ]
 }
