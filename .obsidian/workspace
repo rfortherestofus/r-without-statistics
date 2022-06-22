@@ -1,0 +1,101 @@
+{
+  "main": {
+    "id": "38e342522e487b13",
+    "type": "split",
+    "children": [
+      {
+        "id": "b8fb30a1887873c2",
+        "type": "leaf",
+        "state": {
+          "type": "empty",
+          "state": {}
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "7c588f8dca14b0d4",
+    "type": "split",
+    "children": [
+      {
+        "id": "4fe52a522a81f8ba",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "90b272cfdc192bbb",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "c5f4b3037076c415",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 227.0078125
+  },
+  "right": {
+    "id": "f194a501b0d977f4",
+    "type": "split",
+    "children": [
+      {
+        "id": "6d174a3a829e6423",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9ab828724ff8e443",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "ac8c8b3c40491436",
+            "type": "leaf",
+            "state": {
+              "type": "advanced-tables-toolbar",
+              "state": {}
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "horizontal",
+    "width": 100
+  },
+  "active": "b8fb30a1887873c2",
+  "lastOpenFiles": [
+    "Data Viz Chapter Outline.md",
+    "rstudio conf 2022 talk.md",
+    "Things to do with kids.md",
+    "Untitled 1.md",
+    "Untitled.md",
+    "Stock Music.md",
+    "Joscelin Rocha-Hidalgo.md",
+    "Intern Notes.md",
+    "John David Smith - Shambhala.md",
+    "R Without Statistics Interview - Cedric Scherer and Georgios Karamanis.md"
+  ]
+}

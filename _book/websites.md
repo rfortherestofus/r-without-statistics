@@ -1,2 +1,3 @@
 # Make Websites to Share Results Online {-}
 
+- When to do static vs when you need Shiny

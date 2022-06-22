@@ -6,16 +6,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Use General Principles of High-Quality Data Viz in R | R Without Statistics</title>
 <meta name="author" content="David Keyes">
-<meta name="description" content="Interview with Cedric + Georgios  SciAm Piece  Intro Hard to communicate drought extent If I recall correctly, I was suggesting the climate + plant risk topic because I found a paper on that topic...">
+<meta name="description" content="In the spring of 2021, nearly all of the American West was in a drought. In April of that year, officials in Southern California declared a water emergency, citing unprecedented conditions. This...">
 <meta name="generator" content="bookdown 0.26 with bs4_book()">
 <meta property="og:title" content="Use General Principles of High-Quality Data Viz in R | R Without Statistics">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://book.rwithoutstatistics.com/use-general-principles-of-high-quality-data-viz-in-r.html">
 <meta property="og:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
-<meta property="og:description" content="Interview with Cedric + Georgios  SciAm Piece  Intro Hard to communicate drought extent If I recall correctly, I was suggesting the climate + plant risk topic because I found a paper on that topic...">
+<meta property="og:description" content="In the spring of 2021, nearly all of the American West was in a drought. In April of that year, officials in Southern California declared a water emergency, citing unprecedented conditions. This...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Use General Principles of High-Quality Data Viz in R | R Without Statistics">
-<meta name="twitter:description" content="Interview with Cedric + Georgios  SciAm Piece  Intro Hard to communicate drought extent If I recall correctly, I was suggesting the climate + plant risk topic because I found a paper on that topic...">
+<meta name="twitter:description" content="In the spring of 2021, nearly all of the American West was in a drought. In April of that year, officials in Southern California declared a water emergency, citing unprecedented conditions. This...">
 <meta name="twitter:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -45,28 +45,7 @@
 </form>
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">About the Book</a></li>
-<li class="book-part">Introduction</li>
-<li><a class="" href="why-r-without-statistics.html">Why R Without Statistics?</a></li>
-<li class="book-part">Illuminate</li>
-<li><a class="active" href="use-general-principles-of-high-quality-data-viz-in-r.html">Use General Principles of High-Quality Data Viz in R</a></li>
-<li><a class="" href="develop-a-custom-theme-to-keep-your-data-viz-consistent.html">Develop a Custom Theme to Keep Your Data Viz Consistent</a></li>
-<li><a class="" href="r-is-a-full-fledged-map-making-tool.html">R is a Full-Fledged Map-Making Tool</a></li>
-<li><a class="" href="make-tables-that-look-good-and-share-results-effectively.html">Make Tables That Look Good and Share Results Effectively</a></li>
-<li class="book-part">Communicate</li>
-<li><a class="" href="use-rmarkdown-to-communicate-accurately-and-efficiently.html">Use RMarkdown to Communicate Accurately and Efficiently</a></li>
-<li><a class="" href="use-rmarkdown-to-instantly-generate-hundreds-of-reports.html">Use RMarkdown to Instantly Generate Hundreds of Reports</a></li>
-<li><a class="" href="create-beautiful-presentations-with-rmarkdown.html">Create Beautiful Presentations with RMarkdown</a></li>
-<li><a class="" href="make-websites-to-share-results-online.html">Make Websites to Share Results Online</a></li>
-<li class="book-part">Automate</li>
-<li><a class="" href="access-up-to-date-census-data-with-the-tidycensus-package.html">Access Up to Date Census Data with the tidycensus Package</a></li>
-<li><a class="" href="pull-in-survey-results-as-soon-as-they-come-in.html">Pull in Survey Results as Soon as They Come In</a></li>
-<li><a class="" href="stop-copying-and-pasting-code-by-creating-your-own-functions.html">Stop Copying and Pasting Code by Creating Your Own Functions</a></li>
-<li><a class="" href="bundle-your-functions-together-in-your-own-r-package.html">Bundle Your Functions Together in Your Own R Package</a></li>
-<li class="book-part">Conclusion</li>
-<li><a class="" href="come-for-the-data-stay-for-the-community.html">Come for the Data, Stay for the Community</a></li>
-</ul>
+        <ul class="book-toc list-unstyled"><li><a class="" href="index.html">Use General Principles of High-Quality Data Viz in R</a></li></ul>
 
         <div class="book-extra">
           <p><a id="book-repo" href="https://github.com/rfortherestofus/r-without-statistics">View book source <i class="fab fa-github"></i></a></p>
@@ -76,116 +55,93 @@
   </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="use-general-principles-of-high-quality-data-viz-in-r" class="section level1 unnumbered">
 <h1>Use General Principles of High-Quality Data Viz in R<a class="anchor" aria-label="anchor" href="#use-general-principles-of-high-quality-data-viz-in-r"><i class="fas fa-link"></i></a>
 </h1>
-<div id="interview-with-cedric-georgios" class="section level2 unnumbered">
-<h2>Interview with Cedric + Georgios<a class="anchor" aria-label="anchor" href="#interview-with-cedric-georgios"><i class="fas fa-link"></i></a>
+<p>In the spring of 2021, <a href="https://droughtmonitor.unl.edu/DmData/TimeSeries.aspx">nearly all of the American West was in a drought</a>. In April of that year, <a href="https://www.cbsnews.com/news/west-climate-change-water/">officials in Southern California declared a water emergency</a>, citing unprecedented conditions.</p>
+<p>This wouldn’t have come as news to those living in California and other Western states. In addition to the direct impact of drought (leading areas of California to implement water use restrictions), people could see the indirect impact of drought in increased wildfires. With forests dried out by years of drought conditions, wildfires became more frequent, filling skies in the West with smoke.</p>
+<p>TODO: Add personal story</p>
+<p>While more and more people are able to see the increase in drought conditions, communicating the extent of this change remains a challenge. How can we show the data in a way that accurately represents the data while is also compelling enough to have lay people take notice?</p>
+<p>This was the challenge that freelance data visualization designers Cédric Scherer and Georgios Karamanis took on in November 2021. Commissioned by the magazine Scientific American to create a data visualization that would highlight the extent to which droughts in the United States have become common, they turned to the ggplot2 package to turn what could be (pardon the pun) dry data on droughts into a set of impactful data visualizations.</p>
+<p>There was nothing unique about the data that Cédric and Georgios used. It was the same data from the National Drought Center that news organizations used in their stories. But what these two information designers did was present the data in a way that it both grabs attention and communicates clearly the scale of the phenomenon.</p>
+<div class="inline-figure"><img src="data-viz_files/figure-html/unnamed-chunk-3-1.png" width="672"></div>
+<p>Let’s take a look at how they made their visualization.</p>
+<div id="close-read-of-data-viz" class="section level2" number="1.1">
+<h2>
+<span class="header-section-number">1.1</span> Close read of data viz<a class="anchor" aria-label="anchor" href="#close-read-of-data-viz"><i class="fas fa-link"></i></a>
 </h2>
-<div id="sciam-piece" class="section level3 unnumbered">
-<h3>SciAm Piece<a class="anchor" aria-label="anchor" href="#sciam-piece"><i class="fas fa-link"></i></a>
+<p>TODO: Add something about how there was post-production so my viz is slightly different (e.g. missing 0% and 100% on y axis text).</p>
+<p>Looking at the visualization as a whole, what we see is a chart broken down in multiple ways:</p>
+<ol style="list-style-type: decimal">
+<li>The x axis is used to show the week in a single year.</li>
+<li>The y axis shows the percentage of each region at different drought levels.</li>
+<li>Color is used to show the drought levels in each region.</li>
+<li>The chart uses small multiples so that what appears to be one large chart is actually make up of many individual charts.</li>
+</ol>
+<p>To show how the chart works, let’s look at one year (2000) for one region (Southeast).</p>
+<div class="inline-figure"><img src="data-viz_files/figure-html/unnamed-chunk-4-1.png" width="672"></div>
+<p>Looking at this simplified version, we can see the structure of the chart much more clearly. The bars for each week are visible, with each color indicating a different drought level.</p>
+<p>TODO: Add annotated image with it showing one bar</p>
+<p>While the weeks in the first half of the year have very low percentages in the exceptional drought level, the darkest color begins to appear in the second half of the year as a higher percentage of the region enters this category.</p>
+<p>TODO: Add annotated image</p>
+<p>To understand how the code that creates this chart works, let’s recreate a simplified version of it. In this code, we take our <code>dm_perc_cat_hubs</code> data frame, filter it to only include 2000 data from Southeast, and then pipe this into ggplot. In the <code>ggplot()</code> function, we do what’s called setting our aesthetic properties by telling R to put week on the x axis, percentage on the y axis, and use the category variable (i.e. drought level) for our fill. This last piece sets the color of the bars that are created when we use <code>geom_col()</code> to create a bar chart.</p>
+<div class="inline-figure"><img src="data-viz_files/figure-html/unnamed-chunk-5-1.png" width="672"></div>
+<p>The visualization that Cédric and Georgios ended up making is a stacked bar chart
+Set of stacked bars</p>
+<div id="shows-pattern-over-time" class="section level3" number="1.1.1">
+<h3>
+<span class="header-section-number">1.1.1</span> Shows pattern over time<a class="anchor" aria-label="anchor" href="#shows-pattern-over-time"><i class="fas fa-link"></i></a>
 </h3>
-<div id="intro" class="section level4 unnumbered">
-<h4>Intro<a class="anchor" aria-label="anchor" href="#intro"><i class="fas fa-link"></i></a>
-</h4>
-<p>Hard to communicate drought extent</p>
-<blockquote>
-<p>If I recall correctly, I was suggesting the climate + plant risk topic because I found a paper on that topic that looked interesting to me. It was during the period when the US heat dome phenomenon was prominently featured in all news and I initially thought we could create a visualization on that. When pitching it, I wrote to Jen “motivated by the heat dome phenomenon and more intense wildfires every year”.</p>
-</blockquote>
-<p><a href="https://www.cbsnews.com/news/west-climate-change-water/" class="uri">https://www.cbsnews.com/news/west-climate-change-water/</a></p>
-<p>Droughts are an increasingly common fact of life. Those in drought-prone regions know that the last several decades have brought increasingly dry conditions, impacting agriculture, wildfires, and more.</p>
-<p>In spite of this, communicating the extent of drought conditions to the general public is a challenge. How do you show the increase in droughts in a way that accurately represents the data while is also compelling enough to have lay people take notice?</p>
-<p>This was the challenge that Cédric Scherer and Georgios Karamanis took on in November 2021. Commissioned by Scientific American to create a data visualization to highlight the extent to which droughts have become common, they turned to the ggplot2 package to provide them the tools to turn data on droughts into an impactful visualization.</p>
-</div>
-<div id="show-viz" class="section level4 unnumbered">
-<h4>Show viz<a class="anchor" aria-label="anchor" href="#show-viz"><i class="fas fa-link"></i></a>
-</h4>
-</div>
-<div id="why-its-a-good-viz" class="section level4 unnumbered">
-<h4>Why it’s a good viz<a class="anchor" aria-label="anchor" href="#why-its-a-good-viz"><i class="fas fa-link"></i></a>
-</h4>
+<p>The goal of the piece is to show, <a href="https://www.scientificamerican.com/article/climate-change-drives-escalating-drought/">as the final article in Scientific American puts it</a>, that “the past two decades have seen some of the most extreme dry periods in U.S. history.” To demonstrate this trend, Cédric and Georgios used longitudinal data. After a bit of data wrangling, the data ended up looking like this:</p>
+<p>TODO: Add image: <a href="https://show.rfor.us/IDq8ug" class="uri">https://show.rfor.us/IDq8ug</a></p>
+<p>The variables in this data are:</p>
 <ul>
-<li>Shows pattern over time</li>
-<li>Choice of chart (not line chart)</li>
-<li>Small multiples</li>
-<li>Well-chosen colors</li>
+<li>
+<strong>date</strong>: start date of the week of the observation</li>
+<li>
+<strong>hub</strong>: region</li>
+<li>
+<strong>category</strong>: level of drought (D0 = lowest level of drought; D5 = highest level) TODO: check that my interpretation is correct</li>
+<li>
+<strong>percentage</strong>: percentage of that region that is in that category of drought</li>
+<li>
+<strong>year</strong>: observation year</li>
+<li>
+<strong>week</strong>: week number (i.e. first week is week 1)</li>
+<li>
+<strong>max_week</strong>: TODO check what it means</li>
 </ul>
+<p>With the data ready, Cédric and Georgios began the process of plotting.</p>
 </div>
-</div>
-<div id="code-walkthrough" class="section level3 unnumbered">
-<h3>Code walkthrough<a class="anchor" aria-label="anchor" href="#code-walkthrough"><i class="fas fa-link"></i></a>
+<div id="choice-of-chart-not-line-chart" class="section level3" number="1.1.2">
+<h3>
+<span class="header-section-number">1.1.2</span> Choice of chart (not line chart)<a class="anchor" aria-label="anchor" href="#choice-of-chart-not-line-chart"><i class="fas fa-link"></i></a>
 </h3>
-<div id="pattern-over-time" class="section level4 unnumbered">
-<h4>Pattern over time<a class="anchor" aria-label="anchor" href="#pattern-over-time"><i class="fas fa-link"></i></a>
-</h4>
+<p>Show how you could do it as a line chart</p>
+<div class="inline-figure"><img src="data-viz_files/figure-html/unnamed-chunk-6-1.png" width="672"></div>
 </div>
-<div id="chart-choice" class="section level4 unnumbered">
-<h4>Chart choice<a class="anchor" aria-label="anchor" href="#chart-choice"><i class="fas fa-link"></i></a>
-</h4>
-<ul>
-<li>Show how you could do it as a line chart</li>
-</ul>
-</div>
-<div id="small-multiples" class="section level4 unnumbered">
-<h4>Small multiples<a class="anchor" aria-label="anchor" href="#small-multiples"><i class="fas fa-link"></i></a>
-</h4>
-</div>
-<div id="colors" class="section level4 unnumbered">
-<h4>Colors<a class="anchor" aria-label="anchor" href="#colors"><i class="fas fa-link"></i></a>
-</h4>
-</div>
-<div id="post-processing" class="section level4 unnumbered">
-<h4>Post-processing<a class="anchor" aria-label="anchor" href="#post-processing"><i class="fas fa-link"></i></a>
-</h4>
-<p>Don’t do everything in R</p>
-</div>
-</div>
-<div id="design" class="section level3 unnumbered">
-<h3>Design<a class="anchor" aria-label="anchor" href="#design"><i class="fas fa-link"></i></a>
+<div id="small-multiples" class="section level3" number="1.1.3">
+<h3>
+<span class="header-section-number">1.1.3</span> Small multiples<a class="anchor" aria-label="anchor" href="#small-multiples"><i class="fas fa-link"></i></a>
 </h3>
-<p>People think doing good design is an innate thing, but you can learn principles. From Refactoring UI: <a href="https://show.rfor.us/cJQqWH" class="uri">https://show.rfor.us/cJQqWH</a>.</p>
-<ul>
-<li>Mention Will Chase grammar of graphics talk</li>
-</ul>
-<div id="how-to-develop-sense-of-aesthetics-and-get-inspiration" class="section level4 unnumbered">
-<h4>How to develop sense of aesthetics and get inspiration<a class="anchor" aria-label="anchor" href="#how-to-develop-sense-of-aesthetics-and-get-inspiration"><i class="fas fa-link"></i></a>
-</h4>
-<p>Don’t just look at data viz</p>
-<p>Where to look for data viz inspiration
-- Datawrapper
-- Flowing Data
-- Look at Stephanie Evergreen tweet
-- Andy Kirk roundups
-- Tidy Tuesday</p>
+<p><a href="https://droughtmonitor.unl.edu/DmData/DataDownload/ComprehensiveStatistics.aspx">The data from the National Drought Center comes divided by region</a>. These regions, known technically as <a href="https://www.climatehubs.usda.gov/">USDA Climate Hubs</a>, include the Pacific Northwest, California, the Southwest, the Northern Plains, the Southern Plains, the Midwest, the Southeast, the Northeast, the Northern Forests, and the Caribbean (data for the latter two regions was not included in the final visualization).</p>
+<p>While drought has become more common in all regions (TODO: is this true?), certain regions have been hit harder than others. Using the</p>
 </div>
-</div>
-<div id="why-r-is-especially-well-suited-for-high-quality-data-viz" class="section level3 unnumbered">
-<h3>Why R is especially well suited for high-quality data viz<a class="anchor" aria-label="anchor" href="#why-r-is-especially-well-suited-for-high-quality-data-viz"><i class="fas fa-link"></i></a>
+<div id="well-chosen-colors" class="section level3" number="1.1.4">
+<h3>
+<span class="header-section-number">1.1.4</span> Well-chosen colors<a class="anchor" aria-label="anchor" href="#well-chosen-colors"><i class="fas fa-link"></i></a>
 </h3>
-<p>Use Tidy Tuesday as bridge to say that you can learn from others’ viz work by looking at their code</p>
-<p>Talk about how Cedric and Georgios used Tidy Tuesday to build awareness of their work</p>
 
 </div>
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="why-r-without-statistics.html">Why R Without Statistics?</a></div>
-<div class="next"><a href="develop-a-custom-theme-to-keep-your-data-viz-consistent.html">Develop a Custom Theme to Keep Your Data Viz Consistent</a></div>
+<div class="empty"></div>
+<div class="empty"></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#use-general-principles-of-high-quality-data-viz-in-r">Use General Principles of High-Quality Data Viz in R</a></li>
-<li>
-<a class="nav-link" href="#interview-with-cedric-georgios">Interview with Cedric + Georgios</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#sciam-piece">SciAm Piece</a></li>
-<li><a class="nav-link" href="#code-walkthrough">Code walkthrough</a></li>
-<li><a class="nav-link" href="#design">Design</a></li>
-<li><a class="nav-link" href="#why-r-is-especially-well-suited-for-high-quality-data-viz">Why R is especially well suited for high-quality data viz</a></li>
-</ul>
-</li>
-</ul>
+      <div id="book-on-this-page"></div>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/rfortherestofus/r-without-statistics/blob/master/data-viz.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/rfortherestofus/r-without-statistics/edit/master/data-viz.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+          
         </ul>
 </div>
     </nav>
