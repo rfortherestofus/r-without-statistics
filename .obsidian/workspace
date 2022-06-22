@@ -88,7 +88,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "outlines/data-viz.md"
+              }
             }
           }
         ],
@@ -101,14 +103,14 @@
   "active": "b8fb30a1887873c2",
   "lastOpenFiles": [
     "outlines/data-viz.md",
+    "_book/data-viz.md",
+    "_book/custom-theme.md",
+    "_book/custom-packages.md",
     "Data Viz Chapter Outline.md",
     "rstudio conf 2022 talk.md",
     "Things to do with kids.md",
     "Untitled 1.md",
     "Untitled.md",
-    "Stock Music.md",
-    "Joscelin Rocha-Hidalgo.md",
-    "Intern Notes.md",
-    "John David Smith - Shambhala.md"
+    "Stock Music.md"
   ]
 }
