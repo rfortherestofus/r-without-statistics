@@ -5,6 +5,10 @@ output: html_document
 
 # Background
 
+Travis director of data science at the Prostate Cancer Clinical Trials Consortium. Previously, he was a faculty member and health informatics director at Moffett Cancer Center. 
+
+Garrick is a data science educator and R developer at RStudio. He was previously a data scientist at Moffett. 
+
 ## How did you each get into R? What benefits did using R offer compared to what you had used previously?
 
 ## Garrick, I've heard you call yourself a full-stack R developer. What do you mean by this?
@@ -20,6 +24,9 @@ output: html_document
 - In talk, used example of connecting tissue sample to patient data
 
 ## What is the value of putting code like this into a package? Why not just have a functions.R file that people can source in? 
+
+## Did writing package get more R buy-in?
+- "Number of gradual on ramps"
 
 ## You created not just one package, but multiple. Why break your code into multiple packages? What did each package in moffettverse do?
 
@@ -41,7 +48,7 @@ Here's what I want to cover (basically Chapter 2 of v2 of R Packages book: https
 
 ## You talked about scaling people. Explain how developing a custom package allows you to do this.
 
-## Your code examples talks about how the code is more comprehensible by humans. Why is this valuable?
+## Your code examples talk about how the code is more comprehensible by humans. Why is this valuable?
 
 ## You talk about the value not only of having code in a single place, but also have associated docs through things like pkgdown. Explain why you see this is key to the success of the moffittverse or other custom packages.
 
