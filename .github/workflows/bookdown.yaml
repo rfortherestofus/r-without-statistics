@@ -15,6 +15,7 @@ jobs:
     steps:
     
       - run: sudo apt-get install libudunits2-dev
+      - run: apt-get -y update && apt-get install -y  libudunits2-dev libgdal-dev libgeos-dev libproj-dev
       
       - uses: actions/checkout@v2
 
