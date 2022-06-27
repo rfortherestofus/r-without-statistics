@@ -1,8 +1,10 @@
 ---
 output: html_document
 editor_options: 
-  chunk_output_type: console
+  chunk_output_type: inline
 ---
+
+
 # (PART\*) Illuminate {-}
 
 # Use General Principles of High-Quality Data Viz in R {-}
@@ -17,84 +19,135 @@ While more and more people are able to see the increase in drought conditions, c
 
 This was the challenge that freelance data visualization designers Cédric Scherer and Georgios Karamanis took on in November 2021. Commissioned by the magazine Scientific American to create a data visualization that would highlight the extent to which droughts in the United States have become common, they turned to the ggplot2 package to turn what could be (pardon the pun) dry data on droughts into a set of impactful data visualizations. 
 
-There was nothing unique about the data that Cédric and Georgios used. It was the same data from the National Drought Center that news organizations used in their stories. But what these two information designers did was present the data in a way that it both grabs attention and communicates clearly the scale of the phenomenon. 
+There was nothing unique about the data that Cédric and Georgios used. It was the same data from the National Drought Center that news organizations used in their stories. But what these two information designers did was visualize the data in a way that it both grabs attention and communicates clearly the scale of the phenomenon. 
+
+## Close read of viz to show why it's effective
+
+To understand why this visualization is effective, let's break it down into pieces. 
+
+At the broadest level, what we see as a single chart is actually a set of charts. Each rectangle represents one year in one region. 
+
+TODO: Add image
+
+Looking at this single visualization of one year in one region, we can see that the x axis shows the week while the y axis shows the percentage of that region at different drought levels. 
+
+TODO: Add image
+
+The stacked bars also use color to show the different drought levels. The lightest bar shows the percentage of the region that is abnormally dry while the darkest bar shows the percentage in exceptional drought conditions. 
+
+TODO: Add image
+
+When I asked Cédric and Georgios to speak with me about this data visualization, they initially told me that the code for this piece might be too simple to highlight R's data viz power. No, I told them, I want to speak with you precisely *because* the code is not super complex. The fact that Cédric and Georgios were able to produce this complex graph with relatively simple code shows the power of R for data visualization. And this is made possible because of a theory called the grammar of graphics.
+
+## The grammar of graphics
+
+If you've used Excel to make graphs, you're probably familiar with this menu: 
+
+TODO: Add image https://show.rfor.us/UewnER
+
+Working in Excel, your graph-making journey begins with the step of selecting the type of graph you want to make. If you've only ever made data visualization in Excel, this first step may seem so obvious that you've never even considered conceptualizing the process of creating data visualization in any different way. This was certainly the case for me in my years as an Excel user.
+
+But some people think of data visualization at a much deeper level. One of these was the late statistician Leland Wilkinson. Wilkinson thought deeply for years about what data visualization is and how we can describe it. In 1999, he published a book called *The Grammar of Graphics* that sought to develop a consistent way of describing *all* graphs. 
+
+Wilkinson argued that we should think of plots not as distinct types a la Excel, but as following a grammar that we can use to describe *any* plot. Throughout the book that Wilkinson is best remembered for, he presented general principles to describe graphs. Just as knowledge of English grammar tells us that a noun followed by a verb ("he goes") works while the opposite ("goes he") does not, knowledge of the grammar of graphics allows us to understand why certain graph types "work." Or, as Wilkinson put it,
+
+> A language consisting of words and no grammar (statement = word) expresses only as many ideas as there are words. ... The grammar of graphics takes us beyond a limited set of charts (words) to an almost unlimited world of graphical forms (statements). 
+
+[As Paul Velleman and Howard Wainer wrote in an obituary for Wilkinson](https://www.tandfonline.com/doi/full/10.1080/09332480.2022.2066422), *The Grammar of Graphics* is "not a book to curl up with in front of a fire on a cold winter’s night." They continued: "As literature, the plot is weak, but as science, the plots are better described than you’ll find anywhere else."
+
+Thinking about data visualization through the lens of the grammar of graphics allow us to see that graphs typically have data that is plotted on the x axis and other data that is plotted on the y axis. And this is the case no matter whether the type of graph we end up with is, to take just two examples, a bar chart of a line chart. Consider these two graphs:
+
+TODO: Add images of bar chart and line chart showing same data
+
+While they look different (and would, to the Excel user, be different types of graphs), Wilkinson's grammar of graphics allows us to see similarities in them. 
+
+As an academic statistician, Wilkinson's goal in writing *The Grammar of Graphics* was to provide a novel way of thinking about data visualization. But his feelings on graph-making tools like Excel were clear when he wrote that "most charting packages channel user requests into a rigid array of chart types. To atone for this lack of flexibility, they offer a kit of post-creation editing tools to return the image to what the user originally envisioned."
+
+The answer to this unspoken request for product would come in 2010, when [Hadley Wickham announced the `ggplot2` package for R](https://vita.had.co.nz/papers/layered-grammar.html). Implementing Wilkinson's ideas not only to describe graphs, but also providing the tools to make them, `ggplot2` would come to revolutionize the world of data visualization. 
+
+## ggplot2
+
+Hadley Wickham's article announcing `ggplot2` (which I, like nearly everyone in the data viz world, will refer to simply as ggplot) was titled "A Layered Grammar of Graphics." This idea of layering graphical elements is key to understanding how ggplot works. Let's walk through some of the most important layers. 
+
+When creating a graph with ggplot, we begin by mapping data to aesthetic properties. To the uninitiated, this may sound like complete nonsense. But all it means is that we use things like the x or y axis, color, size (aka aesthetic properties) to represent variables. 
+
+Let's use some data to make this concrete. Below are 10 (out of over 1,700 total) rows of data from the gapminder dataset made famous by Swedish TODO: add background on him Hans Rosling (TODO: cite). 
 
 
 
 
 
 
+```
+#> # A tibble: 10 × 6
+#>    country     continent  year lifeExp      pop gdpPercap
+#>    <fct>       <fct>     <int>   <dbl>    <int>     <dbl>
+#>  1 Afghanistan Asia       1952    28.8  8425333      779.
+#>  2 Afghanistan Asia       1957    30.3  9240934      821.
+#>  3 Afghanistan Asia       1962    32.0 10267083      853.
+#>  4 Afghanistan Asia       1967    34.0 11537966      836.
+#>  5 Afghanistan Asia       1972    36.1 13079460      740.
+#>  6 Afghanistan Asia       1977    38.4 14880372      786.
+#>  7 Afghanistan Asia       1982    39.9 12881816      978.
+#>  8 Afghanistan Asia       1987    40.8 13867957      852.
+#>  9 Afghanistan Asia       1992    41.7 16317921      649.
+#> 10 Afghanistan Asia       1997    41.8 22227415      635.
+```
 
-<img src="data-viz_files/figure-html/unnamed-chunk-3-1.png" width="672" />
-
-
-
-
-Let's take a look at how they made their visualization. 
-
-## Close read of data viz
-
-TODO: Add something about how there was post-production so my viz is slightly different (e.g. missing 0% and 100% on y axis text). 
-
-Looking at the visualization as a whole, what we see is a chart broken down in multiple ways:
-
-1. The x axis is used to show the week in a single year. 
-2. The y axis shows the percentage of each region at different drought levels. 
-3. Color is used to show the drought levels in each region. 
-4. The chart uses small multiples so that what appears to be one large chart is actually make up of many individual charts. 
-
-To show how the chart works, let's look at one year (2000) for one region (Southeast). 
+If we want to make a chart, we need to first decide which variable to use to put on the x axis and which to put on the y axis. Let's say we want to show life expectancy over time. That means using the variable `year` on the x axis and the variable `lifeExp` on the y axis. 
 
 
 
-<img src="data-viz_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+I begin by using the `ggplot()` function. Within this, I tell R that I'm using the data frame `gapminder_10_rows` (this is the shortened version I saved from the full `gapminder` data frame). The line following this tells R to use `year` on the x and `lifeExp` on the y axis. When I run my code, what I get doesn't look like much.
 
-Looking at this simplified version, we can see the structure of the chart much more clearly. The bars for each week are visible, with each color indicating a different drought level. 
+![](data-viz_files/figure-epub3/unnamed-chunk-4-1.png)<!-- -->
 
-TODO: Add annotated image with it showing one bar
+But if I look closely, I can see the beginnings of a plot. Remember that x axis using `year`? There it is! And `lifeExp` on the y axis? Yup, it's there too. 
 
-While the weeks in the first half of the year have very low percentages in the exceptional drought level, the darkest color begins to appear in the second half of the year as a higher percentage of the region enters this category. 
+I can also see that the values on the x and y axes match up to our data. In the `gapminder_10_rows` data frame, the first year is 1952 and the last year is 1997. The range of the x axis seems to have been created with this data in mind (spoiler: it was). And `lifeExp`, which goes from about 28 to about 42 will fit nicely on our y axis.
 
-TODO: Add annotated image
+Axes are nice, but we're missing any type of visual representation of the data. To get this, we need to add the next layer in ggplot: geoms. geoms, short for geometric objects, are different ways of representing data. For example, if we want to add points, we use `geom_point()`. 
 
-To understand how the code that creates this chart works, let's recreate a simplified version of it. In this code, we take our `dm_perc_cat_hubs` data frame, filter it to only include 2000 data from Southeast, and then pipe this into ggplot. In the `ggplot()` function, we do what's called setting our aesthetic properties by telling R to put week on the x axis, percentage on the y axis, and use the category variable (i.e. drought level) for our fill. This last piece sets the color of the bars that are created when we use `geom_col()` to create a bar chart. 
+![](data-viz_files/figure-epub3/unnamed-chunk-5-1.png)<!-- -->
+There we go! 1952 shows the life expectancy of about 28 and so on through every year in our data. 
 
-<img src="data-viz_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+Let's say we change our mind and want to make a line chart instead. Well, all we have to do is replace `geom_point()` with `geom_line()`. 
+
+![](data-viz_files/figure-epub3/unnamed-chunk-6-1.png)<!-- -->
+
+Or (and now we're really getting fancy), what if we add *both* `geom_point()` and `geom_line()`? A line chart with points!  
+
+![](data-viz_files/figure-epub3/unnamed-chunk-7-1.png)<!-- -->
+
+We can extend this idea further, swapping in `geom_col()` to create to a bar chart. 
+
+![](data-viz_files/figure-epub3/unnamed-chunk-8-1.png)<!-- -->
+
+I hope you're seeing how ggplot is a direct implementation of Wilkinson's grammar of graphics. The difference between a line chart and a bar chart isn't that great. Both can have the same aesthetic properties (namely, putting year on the x axis and life expectancy on the y axis), but simply use different geometric objects to visually represent the data. 
+
+Before we return to the drought data viz, let's look at a few additional layers that can help us can alter our bar chart. Let's say we want to change the color of our bars. In the grammar of graphics approach to chart-making, this means mapping some variable to the aesthetic property of fill (slightly confusingly, the aesthetic property color would, for a bar chart, change the outline of each bar). In the same way that we mapped `year` to the x axis and y to `lifeExp`, we can also map fill to a variable. Let's try mapping fill to the year variable.
+
+![](data-viz_files/figure-epub3/unnamed-chunk-9-1.png)<!-- -->
+
+What we see now is that, for earlier years, the fill is darker while for later years, it is lighter (the legend, added to the right of our plot, shows this). What if we want to change the fill color? For that, we use a scale function. In this case, I'll use the `scale_fill_viridis_c()` function (the c at the end of the function name refers to the fact that the data is not continuous). This function, just one of many functions that start with `scale_` and can alter the fill scale, changes the default palette to one that is colorblind-friendly and prints well in grayscale. 
+
+![](data-viz_files/figure-epub3/unnamed-chunk-10-1.png)<!-- -->
+
+Another layer we can use is the theme layer. This layer allows us to change the overall look-and-feel of plots (think: plot backgrounds, gridlines, etc). Just as there are a number of `scale_` functions, there are also a number of functions that start with `theme_`. Below, I've added `theme_minimal()`, my go-to theme, which gives us a much more streamlined look. 
+
+![](data-viz_files/figure-epub3/unnamed-chunk-11-1.png)<!-- -->
+
+While adding `theme_minimal()` massively improves any plot, our bar chart here is not anything I would put forward as high-quality data visualization. But, at the very least, we've seen building a chart with ggplot involves working with multiple layers:
+
+- First, we select variables to map to aesthetic properties such as x or y axis, color/fill, etc
+- Second, we choose the geometric object (aka geom) we want to use to represent our data
+- Third, if we want to change aesthetic properties (for example, using a different palette), we do this with a `scale_` function
+- Fourth, we use a `theme_` function to set the overall look-and-feel of our plot. 
+
+This is, of course, just scratching the surface of what is possible with ggplot. There are many ways you could improve this plot. But rather than improving an ugly plot, let's instead return to the drought data viz that Cédric Scherer and Georgios Karamanis made. Going through their code will show us some familiar aspects of ggplot -- and present some tips on how to make high-quality data visualization with R. 
 
 
-The visualization that Cédric and Georgios ended up making is a stacked bar chart
-Set of stacked bars
-
-### Shows pattern over time
-
-The goal of the piece is to show, [as the final article in Scientific American puts it](https://www.scientificamerican.com/article/climate-change-drives-escalating-drought/), that "the past two decades have seen some of the most extreme dry periods in U.S. history." To demonstrate this trend, Cédric and Georgios  used longitudinal data. After a bit of data wrangling, the data ended up looking like this: 
-
-TODO: Add image: https://show.rfor.us/IDq8ug
-
-The variables in this data are:
-
-- **date**: start date of the week of the observation
-- **hub**: region
-- **category**: level of drought (D0 = lowest level of drought; D5 = highest level) TODO: check that my interpretation is correct
-- **percentage**: percentage of that region that is in that category of drought
-- **year**: observation year
-- **week**: week number (i.e. first week is week 1)
-- **max_week**: TODO check what it means
-
-With the data ready, Cédric and Georgios began the process of plotting. 
-
-### Choice of chart (not line chart)
-
-Show how you could do it as a line chart
-
-<img src="data-viz_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 
 
-### Small multiples
 
-[The data from the National Drought Center comes divided by region](https://droughtmonitor.unl.edu/DmData/DataDownload/ComprehensiveStatistics.aspx). These regions, known technically as [USDA Climate Hubs](https://www.climatehubs.usda.gov/), include the Pacific Northwest, California, the Southwest, the Northern Plains, the Southern Plains, the Midwest, the Southeast, the Northeast, the Northern Forests, and the Caribbean (data for the latter two regions was not included in the final visualization). 
-
-While drought has become more common in all regions (TODO: is this true?), certain regions have been hit harder than others. Using the  
-
-### Well-chosen colors
-
+Let's look at a few other layers that we can 
