@@ -13,6 +13,9 @@ jobs:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       isExtPR: ${{ github.event.pull_request.head.repo.fork == true }}
     steps:
+    
+      - run: sudo apt-get install libudunits2-dev
+      
       - uses: actions/checkout@v2
 
       - uses: r-lib/actions/setup-pandoc@v1
@@ -25,10 +28,7 @@ jobs:
 
       - name: Install packages missed by renv
         run: |
-          R -e 'install.packages("bslib")'
-          R -e 'install.packages("xml2")'
           R -e 'install.packages("downlit")'
-          R -e 'install.packages("bookdown")'
 
       - name: Cache bookdown results
         uses: actions/cache@v2
