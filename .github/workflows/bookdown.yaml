@@ -28,6 +28,7 @@ jobs:
           R -e 'install.packages("bslib")'
           R -e 'install.packages("xml2")'
           R -e 'install.packages("downlit")'
+          R -e 'install.packages("bookdown")'
 
       - name: Cache bookdown results
         uses: actions/cache@v2
