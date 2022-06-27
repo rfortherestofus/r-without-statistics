@@ -14,7 +14,7 @@ jobs:
       isExtPR: ${{ github.event.pull_request.head.repo.fork == true }}
     steps:
     
-      - run: sudo apt-get -y update && apt-get install -y  libudunits2-dev libgdal-dev libgeos-dev libproj-dev
+      - run: sudo apt-get install libudunits2-dev libgdal-dev libgeos-dev libproj-dev
       
       - uses: actions/checkout@v2
 
