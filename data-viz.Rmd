@@ -325,9 +325,62 @@ ggplot(data = dm_perc_cat_hubs,
 ```
 
 
-### Small Tweaks
+### Small Polishes
+
+Incredibly, the broad outlines of the plot took us just 10 lines to create. All of the final code from here on out falls in the category of what I think of as small polishes. That's not to minimize how important they are (very) or the time it takes to create them (lots). But it is to say that a little bit of ggplot goes a long way. 
+
+With that said, let's look at a few of the small polishes that Cédric and Georgios make. The first is to apply a theme. They use `theme_light()`, which makes the 
+
+```{r fig.height = 10}
+ggplot(data = dm_perc_cat_hubs,
+       aes(x = week, 
+           y = percentage,
+           fill = category)) +
+  geom_col() +
+  scale_fill_viridis_d(option = "rocket",
+                       direction = -1) +
+  scale_x_continuous(name = NULL, guide = "none") +
+  scale_y_continuous(name = NULL, labels = NULL, position = "right") +
+  facet_grid(rows = vars(year), cols = vars(hub), switch = "y") +
+  theme_light(base_size = 18, base_family = "Roboto")
+```
 
 
+```{r fig.height = 10}
+ggplot(data = dm_perc_cat_hubs,
+       aes(x = week, 
+           y = percentage,
+           fill = category)) +
+  geom_col() +
+  scale_fill_viridis_d(option = "rocket",
+                       direction = -1) +
+  scale_x_continuous(name = NULL, guide = "none") +
+  scale_y_continuous(name = NULL, labels = NULL, position = "right") +
+  facet_grid(rows = vars(year), cols = vars(hub), switch = "y") +
+  theme_light(base_size = 18, base_family = "Roboto") +
+  theme(
+    axis.title = element_text(size = 14, color = "black"),
+    axis.text = element_text(family = "Roboto Mono", size = 11),
+    axis.line.x = element_blank(),
+    axis.line.y = element_line(color = "black", size = .2),
+    axis.ticks.y = element_line(color = "black", size = .2),
+    axis.ticks.length.y = unit(2, "mm"),
+    legend.position = "none",
+    legend.title = element_text(color = "#2DAADA", size = 18, face = "bold"),
+    legend.text = element_text(color = "#2DAADA", size = 16),
+    strip.text.x = element_text(size = 16, hjust = .5, face = "plain", color = "black", margin = margin(t = 20, b = 5)),
+    strip.text.y.left = element_text(size = 18, angle = 0, vjust = .5, face = "plain", color = "black"),
+    strip.background = element_rect(fill = "transparent", color = "transparent"),
+    panel.grid.minor = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.spacing.x = unit(0.3, "lines"),
+    panel.spacing.y = unit(0.25, "lines"),
+    panel.background = element_rect(fill = "transparent", color = "transparent"),
+    panel.border = element_rect(color = "transparent", size = 0),
+    plot.background = element_rect(fill = "transparent", color = "transparent", size = .4),
+    plot.margin = margin(rep(18, 4))
+  )
+```
 
 
 #### geom_rect
