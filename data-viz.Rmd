@@ -26,7 +26,6 @@ There was nothing unique about the data that Cédric and Georgios used. It was t
 To understand why this visualization is effective, let's break it down into pieces. 
 
 At the broadest level, what we see as a single chart is actually a set of charts. Each rectangle represents one year in one region. 
-
 TODO: Add image
 
 Looking at this single visualization of one year in one region, we can see that the x axis shows the week while the y axis shows the percentage of that region at different drought levels. 
@@ -183,10 +182,179 @@ While adding `theme_minimal()` massively improves any plot, our bar chart here i
 - Third, if we want to change aesthetic properties (for example, using a different palette), we do this with a `scale_` function
 - Fourth, we use a `theme_` function to set the overall look-and-feel of our plot. 
 
-This is, of course, just scratching the surface of what is possible with ggplot. There are many ways you could improve this plot. But rather than improving an ugly plot, let's instead return to the drought data viz that Cédric Scherer and Georgios Karamanis made. Going through their code will show us some familiar aspects of ggplot -- and present some tips on how to make high-quality data visualization with R. 
+This is, of course, just scratching the surface of what is possible with ggplot. There are many ways we could improve this plot. But rather than improving an ugly plot, let's instead return to the drought data viz that Cédric Scherer and Georgios Karamanis made. Going through their code will show us some familiar aspects of ggplot -- and present some tips on how to make high-quality data visualization with R. 
+
+## Return to plot and show how code works
+
+```{r}
+library(tidyverse)
+library(lubridate)
+
+## Color palette hubs
+greys <- c(0, 60, 40, 60, 0, 40, 60, 0)
+pal1 <- paste0("grey", greys)
+## Set up hubs map
+hub_northwest <- c("AK", "OR", "ID", "WA")
+hub_california <- "CA"
+hub_southwest <- c("AZ", "HI", "NM", "NV", "UT")
+hub_northern_plains <- c("CO", "MT", "ND", "NE", "SD", "WY")
+hub_southern_plains <- c("KS", "OK", "TX")
+hub_midwest <- c("IL", "IN", "MN", "IA", "MI", "MO", "OH", "WI")
+hub_southeast <- c("AL", "AR", "LA", "MS", "TN", "KY", "GA", "NC", "FL", "GA", "SC", "VA")
+hub_northeast <- c("CT", "DE", "ME", "MA", "MD", "NH", "NJ", "NY", "PA", "RI", "VT", "WV")
+hubs_order <- c("Northwest", "California", "Southwest", "Northern Plains", 
+                "Southern Plains", "Midwest", "Southeast", "Northeast")
+
+## Read in DroughMonitor hub data
+dm_perc_cat_hubs_raw <- rio::import(here::here("data", "dm_export_20000101_20210909_perc_cat_hubs.json"))
+
+## Wrangle
+dm_perc_cat_hubs <-
+  dm_perc_cat_hubs_raw %>%
+  ## Remove Northern Forest as it combines Midwest + Northeast
+  filter(Name != "Northern Forests\\n") %>%
+  ## Remove Carribean which shows no distinct drought patterns anyway
+  filter(Name != "Caribbean") %>%
+  mutate(
+    across(c(MapDate, ValidStart, ValidEnd), as_date),
+    across(None:D4, ~as.numeric(.x) / 100),
+    Name = stringr::str_remove(Name, "\\\\n"),
+    Name = str_replace(Name, "Nothern", "Northern")
+  ) %>%
+  rename("date" = "MapDate", "hub" = "Name") %>%
+  pivot_longer(
+    cols = c(None:D4),
+    names_to = "category",
+    values_to = "percentage"
+  ) %>%
+  filter(category != "None") %>%
+  mutate(category = factor(category)) %>%
+  dplyr::select(-ValidStart, -ValidEnd, -StatisticFormatID) %>%
+  mutate(
+    year = year(date),
+    week = week(date),
+    hub = factor(hub, levels = hubs_order, labels = hubs_order)
+  ) %>%
+  group_by(year) %>%
+  mutate(max_week = max(week)) %>% ## for var
+  ungroup() %>% 
+  filter(percentage > 0)
+```
+
+The code that Cédric and Georgios wrote to make their final data viz relies on a combination of ggplot fundamentals and some less-well-known tweaks that make it really shine. In order to understand how Cédric and Georgios made their data viz, we'll start out with a simplified version of their code. We'll build it up step-by-step, adding elements until we can see exactly how they made their drought data viz. 
+
+### Basics of ggplot
+
+Let's start by looking again at one region (Southeast) in one year (2000). First, we filter our data and save it as a new object called `southeast_2000`. 
+
+```{r}
+southeast_2000 <- dm_perc_cat_hubs %>% 
+  filter(hub == "Southeast") %>% 
+  filter(year == 2000)
+```
+We can take a look at this object to see the variables we have to work with:
+
+- **date**: start date of the week of the observation
+- **hub**: region
+- **category**: level of drought (D0 = lowest level of drought; D5 = highest level) TODO: check that my interpretation is correct
+- **percentage**: percentage of that region that is in that category of drought
+- **year**: observation year
+- **week**: week number (i.e. first week is week 1)
+- **max_week**: TODO check what it means
+
+```{r}
+southeast_2000 %>% 
+  slice(1:10)
+```
+Now we can use this `southeast_2000` object for our plotting. In the `ggplot()` function, we tell R to put week on the x axis, percentage on the y axis, and use the category variable (i.e. drought level) for our fill color. We then use `geom_col()` to create a bar chart where the color of each bar represents the percentage of the region in a single week that is at different drought levels. The colors don't match the final version of the plot, but with this code, we can start to see the outlines of Cédric and Georgios's data viz.  
+
+```{r}
+ggplot(data = southeast_2000,
+       aes(x = week, 
+           y = percentage,
+           fill = category)) +
+  geom_col()
+```
+
+### Scales
+
+Cédric and Georgios next select different fill colors for their bars. They use the `scale_fill_viridis_d()` function. The "d" here means the data that the fill scale is being applied to is discrete (i.e. broken into the categories D0, D1, D2, D3, D4, D5). They use the argument `option = "rocket"` in order to select the "rocket" palette (the `scale_fill_viridis_d()` function has several other palettes that can be selected). And they use the `direction = -1` argument to reverse the order of fill colors so that darker colors mean higher drought conditions. 
+
+```{r}
+ggplot(data = southeast_2000,
+       aes(x = week, 
+           y = percentage,
+           fill = category)) +
+  geom_col() +
+  scale_fill_viridis_d(option = "rocket",
+                       direction = -1)
+```
+
+#### x and y axes
+
+In the language of ggplot, x and y axis are aesthetic properties, just the same as fill color. Cédric and Georgios tweak the x axis to remove both the axis title ("week") using `name = NULL` and the 0-50 axis text with `guide = none`. On the y axis, they remove the axis title and axis text (which was showing percentages in 0.00, 0.25, 0.50, 0.75 format) using `labels = NULL` (this functionally does the same thing as `guide = "none"`). They also move the axis lines themselves to the right side using `position = "right"` (they are only apparent as tick marks at this point, but will become more visible later).
+
+```{r}
+ggplot(data = southeast_2000,
+       aes(x = week, 
+           y = percentage,
+           fill = category)) +
+  geom_col() +
+  scale_fill_viridis_d(option = "rocket",
+                       direction = -1) +
+  scale_x_continuous(name = NULL, guide = "none") +
+  scale_y_continuous(name = NULL, labels = NULL, position = "right")
+```
+
+### Small Multiples
+
+Up to this point, we've focused on one of the single plots that make up the larger data viz. But the final product that Cédric and Georgios made is actually 176 plots (22 years and 8 regions). One of the most useful features of ggplot is what's known as facetting (known more commonly in the data viz world as small multiples). With the `facet_grid()` function, we can select which variable to put in rows and which to put in columns of our facetted plot. Cédric and Georgios put `year` in rows and `hub` (region) in columns. The `switch = "y"` argument moves the year label from the right side (where it appears by default) to the left. With this code in place, we can see the final plot coming together. 
+
+
+```{r fig.height = 10}
+ggplot(data = dm_perc_cat_hubs,
+       aes(x = week, 
+           y = percentage,
+           fill = category)) +
+  geom_col() +
+  scale_fill_viridis_d(option = "rocket",
+                       direction = -1) +
+  scale_x_continuous(name = NULL, guide = "none") +
+  scale_y_continuous(name = NULL, labels = NULL, position = "right") +
+  facet_grid(rows = vars(year), cols = vars(hub), switch = "y")
+```
+
+
+### Small Tweaks
 
 
 
 
+#### geom_rect
 
-Let's look at a few other layers that we can 
+In addition to using `geom_col()` to make a stacked bar chart of the drought data, Cédric and Georgios also use `geom_rect()`. Let's add that and see what the plot looks like. 
+
+```{r}
+ggplot(data = southeast_2000,
+       aes(x = week, 
+           y = percentage,
+           fill = category)) +
+  geom_rect(aes(xmin = .5, 
+                xmax = max_week + .5,
+                ymin = -0.005, 
+                ymax = 1),
+            fill = "#f4f4f9", 
+            color = NA, 
+            size = 0.4, 
+            show.legend = FALSE
+  ) +
+  geom_col()
+```
+
+The difference is subtle, but if you look closely you can see a gray background added behind the multicolor bars. This will become more important later on. 
+
+#### Theme
+
+#### Coord
+
+#### Legend
