@@ -353,16 +353,11 @@ ggplot(data = dm_perc_cat_hubs,
            y = percentage,
            fill = category)) +
   geom_col() +
-  scale_fill_viridis_d(
-    option = "rocket", name = "Category:", 
-    direction = -1, begin = .17, end = .97,
-    labels = c("Abnormally Dry", "Moderate Drought", "Severe Drought", 
-               "Extreme Drought", "Exceptional Drought")
-  ) +
+  scale_fill_viridis_d(option = "rocket",
+                       direction = -1) +
   scale_x_continuous(name = NULL, guide = "none") +
   scale_y_continuous(name = NULL, labels = NULL, position = "right") +
   facet_grid(rows = vars(year), cols = vars(hub), switch = "y") +
-   guides(fill = guide_legend(override.aes = list(size = 1))) +
   theme_light(base_size = 18, base_family = "Roboto") +
   theme(
     axis.title = element_text(size = 14, color = "black"),
@@ -371,7 +366,7 @@ ggplot(data = dm_perc_cat_hubs,
     axis.line.y = element_line(color = "black", size = .2),
     axis.ticks.y = element_line(color = "black", size = .2),
     axis.ticks.length.y = unit(2, "mm"),
-    legend.position = "none",
+    legend.position = "top",
     legend.title = element_text(color = "#2DAADA", size = 18, face = "bold"),
     legend.text = element_text(color = "#2DAADA", size = 16),
     strip.text.x = element_text(size = 16, hjust = .5, face = "plain", color = "black", margin = margin(t = 20, b = 5)),
@@ -387,13 +382,16 @@ ggplot(data = dm_perc_cat_hubs,
     plot.margin = margin(rep(18, 4))
   )
 ```
+
 The code in the `theme()` function does many different things, but let's take a look at a few of the most important:
 
-`legend.position = "none"` removes the legend from the plot altogether. 
+`legend.position = "top"` moves the legend from the right (the default) to the top of the plot. 
 
 `strip.text.y.left = element_text(size = 18, angle = 0, vjust = .5, face = "plain", color = "black")` turns the year text in the columns so that it is no longer angled. 
 
 TODO: Add image that shows before + after of this
+
+The following lines make the distinctive axis lines and ticks that show up on the right side of the final plot. 
 
 ```{r eval = FALSE}
 axis.line.x = element_blank(),
@@ -402,7 +400,7 @@ axis.ticks.y = element_line(color = "black", size = .2),
 axis.ticks.length.y = unit(2, "mm")
 ```
 
-
+`panel.grid.minor = element_blank()` and `panel.grid.major = element_blank()` remove all grid lines from the final plot. 
 
 
 #### geom_rect
