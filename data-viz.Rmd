@@ -75,6 +75,11 @@ Let's use some data to make this concrete. Below are 10 (out of over 1,700 total
 ```{r}
 library(gapminder)
 library(tidyverse)
+library(lubridate)
+library(sf)
+library(albersusa)
+library(colorspace)
+library(shades)
 ```
 
 ```{r}

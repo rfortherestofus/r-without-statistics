@@ -1527,6 +1527,14 @@
         "units"
       ]
     },
+    "shades": {
+      "Package": "shades",
+      "Version": "1.4.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "3a2cf5eecb2cbca814d01d56bfb51494",
+      "Requirements": []
+    },
     "shiny": {
       "Package": "shiny",
       "Version": "1.7.1",
