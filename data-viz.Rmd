@@ -329,7 +329,7 @@ ggplot(data = dm_perc_cat_hubs,
 
 Incredibly, the broad outlines of the plot took us just 10 lines to create. All of the final code from here on out falls in the category of what I think of as small polishes. That's not to minimize how important they are (very) or the time it takes to create them (lots). But it is to say that a little bit of ggplot goes a long way. 
 
-With that said, let's look at a few of the small polishes that Cédric and Georgios make. The first is to apply a theme. They use `theme_light()`, which makes the 
+With that said, let's look at a few of the small polishes that Cédric and Georgios make. The first is to apply a theme. They use `theme_light()`, which removes the default gray background, changes the font to Roboto, and makes the default size of elements larger using the `base_size` argument, among other tweaks. 
 
 ```{r fig.height = 10}
 ggplot(data = dm_perc_cat_hubs,
@@ -344,7 +344,8 @@ ggplot(data = dm_perc_cat_hubs,
   facet_grid(rows = vars(year), cols = vars(hub), switch = "y") +
   theme_light(base_size = 18, base_family = "Roboto")
 ```
-
+`theme_light()` is what's known as a "complete theme." So-called complete themes change the overall look-and-feel of a plot. But Cédric and Georgios don't stop with applying a complete theme. From there, they use the `theme()` function to make additional tweaks to what `theme_light()` gives them. 
+- 
 
 ```{r fig.height = 10}
 ggplot(data = dm_perc_cat_hubs,
@@ -352,11 +353,16 @@ ggplot(data = dm_perc_cat_hubs,
            y = percentage,
            fill = category)) +
   geom_col() +
-  scale_fill_viridis_d(option = "rocket",
-                       direction = -1) +
+  scale_fill_viridis_d(
+    option = "rocket", name = "Category:", 
+    direction = -1, begin = .17, end = .97,
+    labels = c("Abnormally Dry", "Moderate Drought", "Severe Drought", 
+               "Extreme Drought", "Exceptional Drought")
+  ) +
   scale_x_continuous(name = NULL, guide = "none") +
   scale_y_continuous(name = NULL, labels = NULL, position = "right") +
   facet_grid(rows = vars(year), cols = vars(hub), switch = "y") +
+   guides(fill = guide_legend(override.aes = list(size = 1))) +
   theme_light(base_size = 18, base_family = "Roboto") +
   theme(
     axis.title = element_text(size = 14, color = "black"),
@@ -381,6 +387,22 @@ ggplot(data = dm_perc_cat_hubs,
     plot.margin = margin(rep(18, 4))
   )
 ```
+The code in the `theme()` function does many different things, but let's take a look at a few of the most important:
+
+`legend.position = "none"` removes the legend from the plot altogether. 
+
+`strip.text.y.left = element_text(size = 18, angle = 0, vjust = .5, face = "plain", color = "black")` turns the year text in the columns so that it is no longer angled. 
+
+TODO: Add image that shows before + after of this
+
+```{r eval = FALSE}
+axis.line.x = element_blank(),
+axis.line.y = element_line(color = "black", size = .2),
+axis.ticks.y = element_line(color = "black", size = .2),
+axis.ticks.length.y = unit(2, "mm")
+```
+
+
 
 
 #### geom_rect
