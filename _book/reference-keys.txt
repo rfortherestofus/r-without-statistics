@@ -1,3 +1,0 @@
-close-read-of-viz-to-show-why-its-effective
-the-grammar-of-graphics
-ggplot2
