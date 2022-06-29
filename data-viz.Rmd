@@ -582,12 +582,14 @@ While I've showed you a nearly complete version of the code, I have made some sm
 
 ## Conclusion
 
-There are all sorts of tools to make data visualization. From Excel to Tableau to niche apps for specific types of data viz, the range of tools out there is nearly limitless. So why use ggplot?
+If you take up ggplot, you may start to think of it as a solution to all of your data viz problems. Yes, you have a new hammer, but no, everything is not a nail. If you look at the version of this data viz that appeared in Scientific American (TODO: add link), you'll see that there are some annotations not visible in our recreation. That's because they were added in an external tool (TODO: add specific tool). While you *can* come up with ways to do everything in ggplot, it's often not the best use of your time. Get yourself 90% of the way there with ggplot and then use Photoshop or friends to finish off your work. 
 
-The data visualization that Cédric Scherer and Georgios Karamanis 
+With that caveat in place, ggplot is a very powerful hammer. And it's a hammer used to make plots that you've seen in the New York Times, FiveThirtyEight, the BBC, and other well-known news outlets. ggplot is so popular not because it is the only tool that can make data viz that follows principles of high-quality data viz, but because it makes it easy to do so. The graph that Cédric Scherer and Georgios Karamanis made shows this in several ways:
 
-- Small multiples
-- Well-chosen colors
-- Strips away extraneous elements with theme
+1. It strips away extraneous elements such as grid lines in order to keep the focus on the data itself.
+1. It uses well-chosen colors.
+1. It uses small multiples to break data from two decades and eight regions into a set of graphs that come together to create a single plot.
 
-And all of this is possible because ggplot makes it easy
+As we saw, complete themes and the `theme()` function allowed Cédric and Georgios to easily create the minimalist aesthetic that communicates effectively. The `scale_fill_viridis_d()` allowed them to create a color scheme that shows differences between groups well, is both colorblind-friendly, and shows up well when printed in grayscale. And, with a single call to the `facet_grid()` function, Cédric and Georgios created over 100 small multiples that are automatically combined into a single plot. 
+
+A final benefit of learning ggplot is that you can view other people's code to learn how to improve your own. You can take the code posted above and run it on your own system and the plot that Cédric and Georgios made will appear. As opposed to data viz made with tools like Excel, whose series of point-and-click steps disappear into the ether with each use, the R code used to make data viz is visible to anyone. You don't have to be the most talented designer to make high-quality data viz with ggplot. You can study others' code, adapt it to your own needs, and create your own data viz with ggplot that is beautiful and communicates effectively. 
