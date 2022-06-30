@@ -297,28 +297,30 @@ Wilkinson was clearly not an Excel user. But at the time he wrote his book, ther
 
 ## ggplot2
 
-Hadley Wickham's article announcing `ggplot2` (which I, like nearly everyone in the data viz world, will refer to simply as ggplot) was titled "A Layered Grammar of Graphics." This idea of layering graphical elements is key to understanding how ggplot works. Let's walk through some of the most important layers. 
+Hadley Wickham's article announcing `ggplot2` (which I, like nearly everyone in the data viz world, will refer to simply as ggplot) was titled "A Layered Grammar of Graphics." It showed a new R package that relied on the grammar of graphics and added on the idea of plots having multiple layers. Let's walk through some of the most important layers. 
 
 When creating a graph with ggplot, we begin by mapping data to aesthetic properties. To the uninitiated, this may sound like complete nonsense. But all it means is that we use things like the x or y axis, color, size (aka aesthetic properties) to represent variables. 
 
 Let's use some data to make this concrete. Below are 10 (out of over 1,700 total) rows of data from the gapminder dataset made famous by Swedish TODO: add background on him Hans Rosling (TODO: cite). 
 
-
-
 ```{r}
 gapminder_10_rows <- gapminder %>% 
   slice(1:10)
-```
 
-```{r}
 gapminder_10_rows
 ```
 
-If we want to make a chart, we need to first decide which variable to use to put on the x axis and which to put on the y axis. Let's say we want to show life expectancy over time. That means using the variable `year` on the x axis and the variable `lifeExp` on the y axis. 
+If we want to make a chart with ggplot, we need to first decide which variable to use to put on the x axis and which to put on the y axis. Let's say we want to show life expectancy over time. That means using the variable `year` on the x axis and the variable `lifeExp` on the y axis. 
 
+I begin by using the `ggplot()` function. Within this, I tell R that I'm using the data frame `gapminder_10_rows` (this is the filtered version I created from the full `gapminder` data frame). The line following this tells R to use `year` on the x and `lifeExp` on the y axis. 
 
+```{r echo = TRUE}
+ggplot(data = gapminder_10_rows,
+       mapping = aes(x = year,
+                     y = lifeExp))
+```
 
-I begin by using the `ggplot()` function. Within this, I tell R that I'm using the data frame `gapminder_10_rows` (this is the shortened version I saved from the full `gapminder` data frame). The line following this tells R to use `year` on the x and `lifeExp` on the y axis. When I run my code, what I get doesn't look like much.
+When I run my code, what I get doesn't look like much.
 
 ```{r}
 ggplot(data = gapminder_10_rows,
@@ -332,7 +334,7 @@ I can also see that the values on the x and y axes match up to our data. In the 
 
 Axes are nice, but we're missing any type of visual representation of the data. To get this, we need to add the next layer in ggplot: geoms. geoms, short for geometric objects, are different ways of representing data. For example, if we want to add points, we use `geom_point()`. 
 
-```{r}
+```{r echo = TRUE}
 ggplot(data = gapminder_10_rows,
        mapping = aes(x = year,
                      y = lifeExp)) +
@@ -342,7 +344,7 @@ There we go! 1952 shows the life expectancy of about 28 and so on through every 
 
 Let's say we change our mind and want to make a line chart instead. Well, all we have to do is replace `geom_point()` with `geom_line()`. 
 
-```{r}
+```{r echo = TRUE}
 ggplot(data = gapminder_10_rows,
        mapping = aes(x = year,
                      y = lifeExp)) +
@@ -350,8 +352,7 @@ ggplot(data = gapminder_10_rows,
 ```
 
 Or (and now we're really getting fancy), what if we add *both* `geom_point()` and `geom_line()`? A line chart with points!  
-
-```{r}
+```{r echo = TRUE}
 ggplot(data = gapminder_10_rows,
        mapping = aes(x = year,
                      y = lifeExp)) +
