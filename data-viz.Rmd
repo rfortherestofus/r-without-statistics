@@ -273,23 +273,27 @@ include_graphics("assets/excel-chart-chooser.png")
 ```
 
 
-Working in Excel, your graph-making journey begins with the step of selecting the type of graph you want to make. If you've only ever made data visualization in Excel, this first step may seem so obvious that you've never even considered conceptualizing the process of creating data visualization in any different way. This was certainly the case for me in my years as an Excel user.
+Working in Excel, your graph-making journey begins with the step of selecting the type of graph you want to make. Want a bar chart? Click the bar chart icon. Want a line chart? Click the line chart icon. 
 
-But there are different ways to think about graphs. Rather than conceptualizing graphs types as being distinct, it is also possible to recognize the things that, say, bar charts and line charts have in common, and using these commonalities as the starting point for making graphs. This approach to thinking about graphs comes from the late statistician Leland Wilkinson. Wilkinson thought deeply for years about what data visualization is and how we can describe it. In 1999, he published a book called *The Grammar of Graphics* that sought to develop a consistent way of describing *all* graphs. 
+If you've only ever made data visualization in Excel, this first step may seem so obvious that you've never even considered conceptualizing the process of creating data visualization in any different way. This was certainly the case for me in my years as an Excel user.
+
+But there are different ways to think about graphs. Rather than conceptualizing graphs types as being distinct, it is also possible to recognize the things that, say, bar charts and line charts have in common, and using these commonalities as the starting point for making graphs. 
+
+This approach to thinking about graphs comes from the late statistician Leland Wilkinson. Wilkinson thought deeply for years about what data visualization is and how we can describe it. In 1999, he published a book called *The Grammar of Graphics* that sought to develop a consistent way of describing *all* graphs. 
 
 Wilkinson argued that we should think of plots not as distinct types a la Excel, but as following a grammar that we can use to describe *any* plot. Throughout the book that Wilkinson is best remembered for, he presented general principles to describe graphs. Just as knowledge of English grammar tells us that a noun is typically followed by a verb ("he goes") works while the opposite ("goes he") does not, knowledge of the grammar of graphics allows us to understand why certain graph types "work." Or, as Wilkinson put it,
 
 > A language consisting of words and no grammar (statement = word) expresses only as many ideas as there are words. ... The grammar of graphics takes us beyond a limited set of charts (words) to an almost unlimited world of graphical forms (statements). 
 
-Thinking about data visualization through the lens of the grammar of graphics allow us to see that graphs typically have data that is plotted on the x axis and other data that is plotted on the y axis. And this is the case no matter whether the type of graph we end up with is, to take just two examples, a bar chart of a line chart. Consider these two graphs:
+Thinking about data visualization through the lens of the grammar of graphics allow us to see, for example, that graphs typically have data that is plotted on the x axis and other data that is plotted on the y axis. And this is the case no matter whether the type of graph we end up with is, to take just two examples, a bar chart of a line chart. Consider these two graphs:
 
 TODO: Add images of bar chart and line chart showing same data
 
-While they look different (and would, to the Excel user, be different types of graphs), Wilkinson's grammar of graphics allows us to see similarities in them. 
+While they look different (and would, to the Excel user, be different types of graphs), Wilkinson's grammar of graphics allows us to see their similarities. 
 
 As an academic statistician, Wilkinson's goal in writing *The Grammar of Graphics* was to provide a novel way of thinking about data visualization. But his feelings on graph-making tools like Excel were clear when he wrote that "most charting packages channel user requests into a rigid array of chart types. To atone for this lack of flexibility, they offer a kit of post-creation editing tools to return the image to what the user originally envisioned."
 
-The answer to this unspoken request for product would come in 2010, when [Hadley Wickham announced the `ggplot2` package for R](https://vita.had.co.nz/papers/layered-grammar.html). Implementing Wilkinson's ideas not only to describe graphs, but also providing the tools to make them, `ggplot2` would come to revolutionize the world of data visualization. 
+Wilkinson was clearly not an Excel user. But at the time he wrote his book, there was no other tool that could implement his grammar of graphics. This would change in 2010, when [Hadley Wickham announced the `ggplot2` package for R](https://vita.had.co.nz/papers/layered-grammar.html). Implementing Wilkinson's ideas not only to describe graphs, but also providing the tools to make them, `ggplot2` would come to revolutionize the world of data visualization. 
 
 ## ggplot2
 
