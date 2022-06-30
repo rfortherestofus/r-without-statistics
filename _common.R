@@ -7,5 +7,5 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   warning = FALSE,
   message = FALSE,
-  echo = TRUE
+  echo = FALSE
   )
