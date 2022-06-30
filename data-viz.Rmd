@@ -260,6 +260,8 @@ dm_perc_cat_hubs %>%
     plot.margin = margin(rep(18, 4))
   )
 ```
+
+
 Zooming in on a single region in a single year also makes the color choices more obvious. The lightest bars show the percentage of the region that is abnormally dry while the darkest bars shows the percentage in exceptional drought conditions. These colors, as we'll see shortly, are intentionally chosen to make differences in the drought levels visible to all readers. 
 
 When I asked Cédric and Georgios to speak with me about this data visualization, they initially told me that the code for this piece might be too simple to highlight the power of R for data viz. No, I told them, I want to speak with you precisely *because* the code is not super complex. The fact that Cédric and Georgios were able to produce this complex graph with relatively simple code shows the power of R for data visualization. And it is possible because of a theory called the grammar of graphics.
@@ -360,22 +362,20 @@ ggplot(data = gapminder_10_rows,
   geom_line()
 ```
 
-We can extend this idea further, swapping in `geom_col()` to create to a bar chart. 
+We can extend this idea further, swapping in `geom_col()` to create to a bar chart (note that the y axis range has been automatically updated now, going from 0 to 40 to account for the different geom). 
 
-```{r}
+```{r echo = TRUE}
 ggplot(data = gapminder_10_rows,
        mapping = aes(x = year,
                      y = lifeExp)) +
   geom_col()
 ```
 
-TODO: Add note that y axis changes to go to 0
-
-I hope you're seeing how ggplot is a direct implementation of Wilkinson's grammar of graphics. The difference between a line chart and a bar chart isn't that great. Both can have the same aesthetic properties (namely, putting year on the x axis and life expectancy on the y axis), but simply use different geometric objects to visually represent the data. 
+I hope you're seeing how ggplot is a direct implementation of Wilkinson's grammar of graphics. The difference between a line chart and a bar chart isn't as great as the Excel chart type picker might have us think. Both can have the same aesthetic properties (namely, putting year on the x axis and life expectancy on the y axis), but simply use different geometric objects to visually represent the data. 
 
 Before we return to the drought data viz, let's look at a few additional layers that can help us can alter our bar chart. Let's say we want to change the color of our bars. In the grammar of graphics approach to chart-making, this means mapping some variable to the aesthetic property of fill (slightly confusingly, the aesthetic property color would, for a bar chart, change the outline of each bar). In the same way that we mapped `year` to the x axis and y to `lifeExp`, we can also map fill to a variable. Let's try mapping fill to the year variable.
 
-```{r}
+```{r echo = TRUE}
 ggplot(data = gapminder_10_rows,
        mapping = aes(x = year,
                      y = lifeExp,
@@ -383,9 +383,9 @@ ggplot(data = gapminder_10_rows,
   geom_col()
 ```
 
-What we see now is that, for earlier years, the fill is darker while for later years, it is lighter (the legend, added to the right of our plot, shows this). What if we want to change the fill color? TODO: Note that it's done in a separate place For that, we use a scale function. In this case, I'll use the `scale_fill_viridis_c()` function (the c at the end of the function name refers to the fact that the data is not continuous). This function, just one of many functions that start with `scale_` and can alter the fill scale, changes the default palette to one that is colorblind-friendly and prints well in grayscale. 
+What we see now is that, for earlier years, the fill is darker while for later years, it is lighter (the legend, added to the right of our plot, shows this). What if we want to change the fill colors? For that, we use a new scale layer. In this case, I'll use the `scale_fill_viridis_c()` function (the c at the end of the function name refers to the fact that the data is not continuous). This function, just one of many functions that start with `scale_` and can alter the fill scale, changes the default palette to one that is colorblind-friendly and prints well in grayscale. 
 
-```{r}
+```{r echo = TRUE}
 ggplot(data = gapminder_10_rows,
        mapping = aes(x = year,
                      y = lifeExp,
@@ -394,9 +394,9 @@ ggplot(data = gapminder_10_rows,
   scale_fill_viridis_c()
 ```
 
-Another layer we can use is the theme layer. This layer allows us to change the overall look-and-feel of plots (think: plot backgrounds, gridlines, etc). Just as there are a number of `scale_` functions, there are also a number of functions that start with `theme_`. Below, I've added `theme_minimal()`, my go-to theme, which gives us a much more streamlined look. TODO: talk about decluttering
+A final layer we'll look at is the theme layer. This layer allows us to change the overall look-and-feel of plots (think: plot backgrounds, grid lines, etc). Just as there are a number of `scale_` functions, there are also a number of functions that start with `theme_`. Below, I've added `theme_minimal()`, which starts to declutter our plot. 
 
-```{r}
+```{r echo = TRUE}
 ggplot(data = gapminder_10_rows,
        mapping = aes(x = year,
                      y = lifeExp,
@@ -406,7 +406,7 @@ ggplot(data = gapminder_10_rows,
   theme_minimal()
 ```
 
-While adding `theme_minimal()` massively improves any plot, our bar chart here is not anything I would put forward as high-quality data visualization. But, at the very least, we've seen building a chart with ggplot involves working with multiple layers:
+We've now seen why Hadley Wickham described the `ggplot2` package as using a layered grammar of graphics. It relies on Leland Wilkinson's theory and implements it through the creation of multiple layers: 
 
 - First, we select variables to map to aesthetic properties such as x or y axis, color/fill, etc
 - Second, we choose the geometric object (aka geom) we want to use to represent our data
@@ -417,18 +417,18 @@ There are many ways we could improve the plot we've been working on. But rather 
 
 ## Return to plot and show how code works
 
-
 The code that Cédric and Georgios wrote to make their final data viz relies on a combination of ggplot fundamentals and some less-well-known tweaks that make it really shine. In order to understand how Cédric and Georgios made their data viz, we'll start out with a simplified version of their code. We'll build it up step-by-step, adding elements until we can see exactly how they made their drought data viz. 
 
 ### Basics of ggplot
 
-Let's start by looking again at one region (Southeast) in one year (2000). First, we filter our data and save it as a new object called `southeast_2000`. 
+Let's start by looking again at one region (Southwest) in one year (2003). First, we filter our data and save it as a new object called `southwest_2003`. 
 
-```{r}
-southeast_2000 <- dm_perc_cat_hubs %>% 
-  filter(hub == "Southeast") %>% 
-  filter(year == 2000)
+```{r echo = TRUE}
+southwest_2003 <- dm_perc_cat_hubs %>% 
+  filter(hub == "Southwest") %>% 
+  filter(year == 2003)
 ```
+
 We can take a look at this object to see the variables we have to work with:
 
 - **date**: start date of the week of the observation
@@ -439,14 +439,14 @@ We can take a look at this object to see the variables we have to work with:
 - **week**: week number (i.e. first week is week 1)
 - **max_week**: TODO check what it means
 
-```{r}
-southeast_2000 %>% 
+```{r echo = TRUE}
+southwest_2003 %>% 
   slice(1:10)
 ```
-Now we can use this `southeast_2000` object for our plotting. In the `ggplot()` function, we tell R to put week on the x axis, percentage on the y axis, and use the category variable (i.e. drought level) for our fill color. We then use `geom_col()` to create a bar chart where the fill color of each bar represents the percentage of the region in a single week that is at different drought levels. The colors don't match the final version of the plot, but with this code, we can start to see the outlines of Cédric and Georgios's data viz.  
+Now we can use this `southwest_2003` object for our plotting. In the `ggplot()` function, we tell R to put week on the x axis, percentage on the y axis, and use the category variable (i.e. drought level) for our fill color. We then use `geom_col()` to create a bar chart where the fill color of each bar represents the percentage of the region in a single week that is at different drought levels. The colors don't match the final version of the plot, but with this code, we can start to see the outlines of Cédric and Georgios's data viz.  
 
-```{r}
-ggplot(data = southeast_2000,
+```{r echo = TRUE}
+ggplot(data = southwest_2003,
        aes(x = week, 
            y = percentage,
            fill = category)) +
@@ -455,10 +455,10 @@ ggplot(data = southeast_2000,
 
 ### Scales
 
-Cédric and Georgios next select different fill colors for their bars. They use the `scale_fill_viridis_d()` function. The "d" here means the data that the fill scale is being applied to has discrete categories (D0, D1, D2, D3, D4, D5). They use the argument `option = "rocket"` in order to select the "rocket" palette (the `scale_fill_viridis_d()` function has several other palettes that can be selected). And they use the `direction = -1` argument to reverse the order of fill colors so that darker colors mean higher drought conditions. 
+Cédric and Georgios next select different fill colors for their bars. They use the `scale_fill_viridis_d()` function. The "d" here means the data that the fill scale is being applied to has discrete categories (D0, D1, D2, D3, D4, D5). They use the argument `option = "rocket"` in order to select the "rocket" palette (the `scale_fill_viridis_d()` function has several other palettes). And they use the `direction = -1` argument to reverse the order of fill colors so that darker colors mean higher drought conditions. 
 
-```{r}
-ggplot(data = southeast_2000,
+```{r echo = TRUE}
+ggplot(data = southwest_2003,
        aes(x = week, 
            y = percentage,
            fill = category)) +
@@ -471,8 +471,8 @@ ggplot(data = southeast_2000,
 
 In the language of ggplot, x and y axis are aesthetic properties, just the same as fill color. Cédric and Georgios tweak the x axis to remove both the axis title ("week") using `name = NULL` and the 0-50 axis text with `guide = none`. On the y axis, they remove the axis title and axis text (which was showing percentages in 0.00, 0.25, 0.50, 0.75 format) using `labels = NULL` (this functionally does the same thing as `guide = "none"`). They also move the axis lines themselves to the right side using `position = "right"` (they are only apparent as tick marks at this point, but will become more visible later).
 
-```{r}
-ggplot(data = southeast_2000,
+```{r echo = TRUE}
+ggplot(data = southwest_2003,
        aes(x = week, 
            y = percentage,
            fill = category)) +
@@ -488,7 +488,7 @@ ggplot(data = southeast_2000,
 Up to this point, we've focused on one of the single plots that make up the larger data viz. But the final product that Cédric and Georgios made is actually 176 plots (22 years and 8 regions). One of the most useful features of ggplot is what's known as facetting (known more commonly in the data viz world as small multiples). With the `facet_grid()` function, we can select which variable to put in rows and which to put in columns of our facetted plot. Cédric and Georgios put `year` in rows and `hub` (region) in columns. The `switch = "y"` argument moves the year label from the right side (where it appears by default) to the left. With this code in place, we can see the final plot coming together. 
 
 
-```{r fig.height = 10}
+```{r fig.height = 10, echo = TRUE}
 ggplot(data = dm_perc_cat_hubs,
        aes(x = week, 
            y = percentage,
