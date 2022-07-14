@@ -297,7 +297,13 @@ dm_perc_cat_hubs %>%
     legend.position = "none",
     legend.title = element_text(color = "#2DAADA", size = 18, face = "bold"),
     legend.text = element_text(color = "#2DAADA", size = 16),
-    strip.text.x = element_text(size = 16, hjust = .5, face = "plain", color = "black", margin = margin(t = 20, b = 5)),
+    strip.text.x = element_text(
+      size = 16,
+      hjust = .5,
+      face = "plain",
+      color = "black",
+      margin = margin(t = 20, b = 5)
+    ),
     strip.text.y.left = element_text(size = 18, angle = 0, vjust = .5, face = "plain", color = "black"),
     strip.background = element_rect(fill = "transparent", color = "transparent"),
     panel.grid.minor = element_blank(),
@@ -1004,7 +1010,7 @@ ggplot(dm_perc_cat_hubs, aes(week, percentage)) +
 
 ## ggplot is your data viz secret weapon {-}
 
-If you take up ggplot, you may start to think of it as a solution to all of your data viz problems. Yes, you have a new hammer, but no, everything is not a nail. If you look at the version of this data viz that appeared in Scientific American^[https://www.scientificamerican.com/article/climate-change-drives-escalating-drought/], you'll see that there are some annotations not visible in our recreation. That's because they were added in an external tool (TODO: add specific tool). While you *can* come up with ways to do everything in ggplot, it's often not the best use of your time. Get yourself 90% of the way there with ggplot and then use Illustrator, Figma, or a similar tool to finish off your work. 
+If you take up ggplot, you may start to think of it as a solution to all of your data viz problems. Yes, you have a new hammer, but no, everything is not a nail. If you look at the version of this data viz that appeared in Scientific American^[https://www.scientificamerican.com/article/climate-change-drives-escalating-drought/], you'll see that there are some annotations not visible in our recreation. That's because they were added in post-processing outside of ggplot. While you *can* come up with ways to do everything in ggplot, it's often not the best use of your time. Get yourself 90% of the way there with ggplot and then use Illustrator, Figma, or a similar tool to finish off your work. 
 
 With that caveat in place, ggplot is a very powerful hammer. And it's a hammer used to make plots that you've seen in the New York Times, FiveThirtyEight, the BBC, and other well-known news outlets. ggplot is so popular not because it is the only tool that can make data viz that follows principles of high-quality data viz, but because it makes it straightforward to do so. The graph that Cédric Scherer and Georgios Karamanis made shows this in several ways:
 
