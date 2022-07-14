@@ -543,7 +543,7 @@ ggplot(data = dm_perc_cat_hubs,
 
 `theme_light()` is what's known as a "complete theme." So-called complete themes change the overall look-and-feel of a plot. But Cédric and Georgios don't stop with applying a complete theme. From there, they use the `theme()` function to make additional tweaks to what `theme_light()` gives them. 
 
-```{r fig.height = 10}
+```{r fig.height = 10, echo = TRUE}
 ggplot(data = dm_perc_cat_hubs,
        aes(x = week, 
            y = percentage,
@@ -583,7 +583,7 @@ The code in the `theme()` function does many different things, but let's take a 
 
 - `legend.position = "top"` moves the legend from the right (the default) to the top of the plot. 
 
-- `strip.text.y.left = element_text(size = 18, angle = 0, vjust = .5, face = "plain", color = "black")` turns the year text in the columns so that it is no longer angled. Without the `angle = 0`, the reader is forced to uncomfortably tilt their head to read the years:
+- `strip.text.y.left = element_text(size = 18, angle = 0, vjust = .5, face = "plain", color = "black")` turns the year text in the columns so that it is no longer angled. Without the `angle = 0`, the reader would be forced to uncomfortably tilt their head to read the years:
 
 ```{r fig.height = 6}
 dm_perc_cat_hubs %>% 
@@ -623,10 +623,9 @@ dm_perc_cat_hubs %>%
   )
 ```
 
-
 - The following lines make the distinctive axis lines and ticks that show up on the right side of the final plot:
 
-```{r eval = FALSE}
+```{r eval = FALSE, echo = TRUE}
 axis.line.x = element_blank(),
 axis.line.y = element_line(color = "black", size = .2),
 axis.ticks.y = element_line(color = "black", size = .2),
@@ -637,7 +636,7 @@ axis.ticks.length.y = unit(2, "mm")
 
 - And finally, these three lines remove the borders and make each of the individual plots have a transparent background. 
 
-```{r eval = FALSE}
+```{r eval = FALSE, echo = TRUE}
 panel.background = element_rect(fill = "transparent", color = "transparent"),
 panel.border = element_rect(color = "transparent", size = 0),
 plot.background = element_rect(fill = "transparent", color = "transparent", size = .4)
@@ -652,8 +651,7 @@ geom_rect(aes(xmin = .5,
               ymax = 1),
           fill = "#f4f4f9", 
           color = NA, 
-          size = 0.4
-)
+          size = 0.4)
 ```
 
 
@@ -708,8 +706,11 @@ The final polish to highlight is the tweaks to the legend. I previously showed a
 scale_fill_viridis_d(option = "rocket",
                      direction = -1,
                      name = "Category:",
-                     labels = c("Abnormally Dry", "Moderate Drought", "Severe Drought", 
-                                "Extreme Drought", "Exceptional Drought"))
+                     labels = c("Abnormally Dry", 
+                                "Moderate Drought", 
+                                "Severe Drought", 
+                                "Extreme Drought", 
+                                "Exceptional Drought"))
 ```
 
 
@@ -760,9 +761,9 @@ ggplot(data = dm_perc_cat_hubs,
   )
 ```
 
-While I've showed you a nearly complete version of the code, I have made some small changes along the way to make it easier to understand. If you're curious to see the full code Cédric and Georgios used to create the data viz, here it is. There are a few additional tweaks to colors and spacing, but nothing major beyond what you've seen so far. 
+While I've showed you a nearly complete version of the code, I have made some small changes along the way to make it easier to understand. If you're curious to see the full code Cédric and Georgios used to create the data viz, here it is. There are a few additional tweaks to colors and spacing, but nothing major beyond what we've seen so far. 
 
-```{r echo = TRUE, include = FALSE}
+```{r echo = TRUE, eval = FALSE}
 ggplot(dm_perc_cat_hubs, aes(week, percentage)) +
   geom_rect(aes(
     xmin = .5, xmax = max_week + .5,
@@ -813,18 +814,16 @@ ggplot(dm_perc_cat_hubs, aes(week, percentage)) +
 
 ## ggplot is your data viz secret weapon {-}
 
-If you take up ggplot, you may start to think of it as a solution to all of your data viz problems. Yes, you have a new hammer, but no, everything is not a nail. If you look at the version of this data viz that appeared in Scientific American^[https://www.scientificamerican.com/article/climate-change-drives-escalating-drought/], you'll see that there are some annotations not visible in our recreation. That's because they were added in an external tool (TODO: add specific tool). While you *can* come up with ways to do everything in ggplot, it's often not the best use of your time.Get yourself 90% of the way there with ggplot and then use Illustrator, Figma, or a similar tool to finish off your work. 
+If you take up ggplot, you may start to think of it as a solution to all of your data viz problems. Yes, you have a new hammer, but no, everything is not a nail. If you look at the version of this data viz that appeared in Scientific American^[https://www.scientificamerican.com/article/climate-change-drives-escalating-drought/], you'll see that there are some annotations not visible in our recreation. That's because they were added in an external tool (TODO: add specific tool). While you *can* come up with ways to do everything in ggplot, it's often not the best use of your time. Get yourself 90% of the way there with ggplot and then use Illustrator, Figma, or a similar tool to finish off your work. 
 
-With that caveat in place, ggplot is a very powerful hammer. And it's a hammer used to make plots that you've seen in the New York Times, FiveThirtyEight, the BBC, and other well-known news outlets^[https://qz.com/1007328/all-hail-ggplot2-the-code-powering-all-those-excellent-charts-is-10-years-old/]. ggplot is so popular not because it is the only tool that can make data viz that follows principles of high-quality data viz, but because it makes it straightforward to do so. The graph that Cédric Scherer and Georgios Karamanis made shows this in several ways:
+With that caveat in place, ggplot is a very powerful hammer. And it's a hammer used to make plots that you've seen in the New York Times, FiveThirtyEight, the BBC, and other well-known news outlets. ggplot is so popular not because it is the only tool that can make data viz that follows principles of high-quality data viz, but because it makes it straightforward to do so. The graph that Cédric Scherer and Georgios Karamanis made shows this in several ways:
 
-1. It strips away extraneous elements such as grid lines in order to keep the focus on the data itself.
-1. It uses well-chosen colors.
-1. It uses small multiples to break data from two decades and eight regions into a set of graphs that come together to create a single plot.
+1. **It strips away extraneous elements such as grid lines in order to keep the focus on the data itself**. Complete themes such as `theme_light()` and the `theme()` function allowed Cédric and Georgios to create a decluttered visualization that communicates effectively. 
+1. **It uses well-chosen colors**. The `scale_fill_viridis_d()` allowed them to create a color scheme that shows differences between groups well, is both colorblind-friendly, and shows up well when printed in grayscale. 
+1. **It uses small multiples to break data from two decades and eight regions into a set of graphs that come together to create a single plot.** With a single call to the `facet_grid()` function, Cédric and Georgios created over 100 small multiples that are automatically combined into a single plot. 
 
-As we saw, complete themes such as `theme_light()` and the `theme()` function allowed Cédric and Georgios to create a decluttered visualization that communicates effectively. The `scale_fill_viridis_d()` allowed them to create a color scheme that shows differences between groups well, is both colorblind-friendly, and shows up well when printed in grayscale. And, with a single call to the `facet_grid()` function, Cédric and Georgios created over 100 small multiples that are automatically combined into a single plot. 
-
-Learning to create data visualization in ggplot invovles a significant time investment. But the long-term payoff is even greater. Once you learn how ggplot works, you can look at others' code and learn how to improve your own. Take Cédric and Georgios's code, run it on your own system, and the beautiful visualization they made will magically appear.  
+Learning to create data visualization in ggplot involves a significant time investment. But the long-term payoff is even greater. Once you learn how ggplot works, you can look at others' code and learn how to improve your own. Take Cédric and Georgios's code, run it on your own system, and the beautiful visualization they made will magically appear.  
 
 Being able to run and learn from others' code is not something you can do in Excel. When you make a data viz in Excel, the series of point-and-click steps disappear into the ether with each use. Want to recreate a visualization you made last week? You'll need to remember the exact steps you used. Want to make a data viz that you saw someone else make? You'll need them to write up their process for you. 
 
-Code-based data viz tools like ggplot allow you to keep that record of the steps you made. And, really, in the end, that's all code is: a set of instructions. And it's a set of instructions that you can re-run or you can share with others for them to run. Or the reverse: others can share their code and you can learn from them. You don't have to be the most talented designer to make high-quality data viz with ggplot. You can study others' code, adapt it to your own needs, and create your own data viz with ggplot that is beautiful and communicates effectively. 
+Code-based data viz tools like ggplot allow you to keep that record of the steps you made. In the end, that's all code is: a set of instructions. And it's a set of instructions that you can re-run or you can share with others for them to run. Or the reverse: others can share their code and you can learn from them. You don't have to be the most talented designer to make high-quality data viz with ggplot. You can study others' code, adapt it to your own needs, and create your own data viz with ggplot that is beautiful and communicates effectively. 
