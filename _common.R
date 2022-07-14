@@ -7,5 +7,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   warning = FALSE,
   message = FALSE,
-  echo = FALSE
+  echo = FALSE,
+  dpi = 300,
+  fig.width = 4.675
   )

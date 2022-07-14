@@ -10,6 +10,8 @@ rmd_files: [
   
   "introduction.Rmd",
   
+  "illuminate.Rmd",
+  
   "data-viz.Rmd",
   "custom-theme.Rmd",
   "maps.Rmd",

@@ -4,12 +4,9 @@ editor_options:
   chunk_output_type: inline
 ---
 
-
-# (PART\*) Illuminate {-}
-
 # Use General Principles of High-Quality Data Viz in R {-}
 
-In the spring of 2021, [nearly all of the American West was in a drought](https://droughtmonitor.unl.edu/DmData/TimeSeries.aspx). In April of that year, [officials in Southern California declared a water emergency](https://www.cbsnews.com/news/west-climate-change-water/), citing unprecedented conditions. 
+In the spring of 2021, nearly all of the American West was in a drought. In April of that year, officials in Southern California declared a water emergency, citing unprecedented conditions. 
 
 This wouldn't have come as news to those living in California and other Western states. In addition to the direct impact of drought (leading areas of California to implement water use restrictions), people could see the indirect impact of drought in the skies. With forests dried out by years of drought conditions, wildfires became more frequent, filling the air with smoke. By the summer, there were be so many wildfires that smoke from drifted across the country, making even East Coast skies hazy and the air dangerous to breathe. 
 
@@ -55,8 +52,16 @@ hub_southern_plains <- c("KS", "OK", "TX")
 hub_midwest <- c("IL", "IN", "MN", "IA", "MI", "MO", "OH", "WI")
 hub_southeast <- c("AL", "AR", "LA", "MS", "TN", "KY", "GA", "NC", "FL", "GA", "SC", "VA")
 hub_northeast <- c("CT", "DE", "ME", "MA", "MD", "NH", "NJ", "NY", "PA", "RI", "VT", "WV")
-hubs_order <- c("Northwest", "California", "Southwest", "Northern Plains", 
-                "Southern Plains", "Midwest", "Southeast", "Northeast")
+hubs_order <- c(
+  "Northwest",
+  "California",
+  "Southwest",
+  "Northern Plains",
+  "Southern Plains",
+  "Midwest",
+  "Southeast",
+  "Northeast"
+)
 
 ## Read in DroughMonitor hub data
 dm_perc_cat_hubs_raw <- rio::import(here::here("data", "dm_export_20000101_20210909_perc_cat_hubs.json"))
@@ -70,7 +75,7 @@ dm_perc_cat_hubs <-
   filter(Name != "Caribbean") %>%
   mutate(
     across(c(MapDate, ValidStart, ValidEnd), as_date),
-    across(None:D4, ~as.numeric(.x) / 100),
+    across(None:D4, ~ as.numeric(.x) / 100),
     Name = stringr::str_remove(Name, "\\\\n"),
     Name = str_replace(Name, "Nothern", "Northern")
   ) %>%
@@ -90,34 +95,52 @@ dm_perc_cat_hubs <-
   ) %>%
   group_by(year) %>%
   mutate(max_week = max(week)) %>% ## for var
-  ungroup() %>% 
+  ungroup() %>%
   filter(percentage > 0)
 ```
 
 ```{r fig.height = 10}
-dm_perc_cat_hubs %>% 
-  filter(hub %in% c("Northwest", "California", "Southwest", "Northern Plains")) %>% 
+dm_perc_cat_hubs %>%
+  filter(hub %in% c("Northwest", "California", "Southwest", "Northern Plains")) %>%
   ggplot(aes(week, percentage)) +
-  geom_rect(aes(
-    xmin = .5, xmax = max_week + .5,
-    ymin = -0.005, ymax = 1),
-    fill = "#f4f4f9", color = NA, size = 0.4, show.legend = FALSE  #9d9ca7, 99a4be, 8696bd
-  ) + 
+  geom_rect(
+    aes(
+      xmin = .5,
+      xmax = max_week + .5,
+      ymin = -0.005,
+      ymax = 1
+    ),
+    fill = "#f4f4f9",
+    color = NA,
+    size = 0.4,
+    show.legend = FALSE # 9d9ca7, 99a4be, 8696bd
+  ) +
   geom_col(
-    aes(fill = category, 
-        fill = after_scale(addmix(darken(fill, .05, space = "HLS"), "#d8005a", .15)), 
-        color = after_scale(darken(fill, .2, space = "HLS"))),
-    width = .9, size = 0.12
-  ) + 
+    aes(
+      fill = category,
+      fill = after_scale(addmix(darken(fill, .05, space = "HLS"), "#d8005a", .15)),
+      color = after_scale(darken(fill, .2, space = "HLS"))
+    ),
+    width = .9,
+    size = 0.12
+  ) +
   facet_grid(rows = vars(year), cols = vars(hub), switch = "y") +
   coord_cartesian(clip = "off") +
   scale_x_continuous(expand = c(.02, .02), guide = "none", name = NULL) +
-  scale_y_continuous(expand = c(0, 0), position = "right", labels = NULL, name = NULL) + 
+  scale_y_continuous(expand = c(0, 0), position = "right", labels = NULL, name = NULL) +
   scale_fill_viridis_d(
-    option = "rocket", name = "Category:", 
-    direction = -1, begin = .17, end = .97,
-    labels = c("Abnormally Dry", "Moderate Drought", "Severe Drought", 
-               "Extreme Drought", "Exceptional Drought")
+    option = "rocket",
+    name = "Category:",
+    direction = -1,
+    begin = .17,
+    end = .97,
+    labels = c(
+      "Abnormally Dry",
+      "Moderate Drought",
+      "Severe Drought",
+      "Extreme Drought",
+      "Exceptional Drought"
+    )
   ) +
   guides(fill = guide_legend(override.aes = list(size = 1))) +
   theme_light(base_size = 18, base_family = "Roboto") +
@@ -152,31 +175,45 @@ At the broadest level, the data viz is also notable for its minimalist aesthetic
 Need proof that Cédric and Georgios's decluttered graph is better than the alternative? Here's a version with a few small tweaks to the code to include grid lines and text labels on axes. Prepare yourself for clutter!
 
 ```{r fig.height = 10}
-dm_perc_cat_hubs %>% 
-  filter(hub %in% c("Northwest", "California", "Southwest", "Northern Plains")) %>% 
+dm_perc_cat_hubs %>%
+  filter(hub %in% c("Northwest", "California", "Southwest", "Northern Plains")) %>%
   ggplot(aes(week, percentage)) +
   # geom_rect(aes(
   #   xmin = .5, xmax = max_week + .5,
   #   ymin = -0.005, ymax = 1),
   #   fill = "#f4f4f9", color = NA, size = 0.4, show.legend = FALSE  #9d9ca7, 99a4be, 8696bd
-  # ) + 
+  # ) +
   geom_col(
-    aes(fill = category, 
-        fill = after_scale(addmix(darken(fill, .05, space = "HLS"), "#d8005a", .15)), 
-        color = after_scale(darken(fill, .2, space = "HLS"))),
-    width = .9, size = 0.12
-  ) + 
+    aes(
+      fill = category,
+      fill = after_scale(addmix(darken(fill, .05, space = "HLS"), "#d8005a", .15)),
+      color = after_scale(darken(fill, .2, space = "HLS"))
+    ),
+    width = .9,
+    size = 0.12
+  ) +
   # geom_text(aes(label = percent(percentage))) +
   facet_grid(rows = vars(year), cols = vars(hub), switch = "y") +
   coord_cartesian(clip = "off") +
   scale_x_continuous(expand = c(.02, .02)) +
-  scale_y_continuous(expand = c(0, 0), position = "right",
-                     label = percent_format()) + 
+  scale_y_continuous(
+    expand = c(0, 0),
+    position = "right",
+    label = percent_format()
+  ) +
   scale_fill_viridis_d(
-    option = "rocket", name = "Category:", 
-    direction = -1, begin = .17, end = .97,
-    labels = c("Abnormally Dry", "Moderate Drought", "Severe Drought", 
-               "Extreme Drought", "Exceptional Drought")
+    option = "rocket",
+    name = "Category:",
+    direction = -1,
+    begin = .17,
+    end = .97,
+    labels = c(
+      "Abnormally Dry",
+      "Moderate Drought",
+      "Severe Drought",
+      "Extreme Drought",
+      "Exceptional Drought"
+    )
   ) +
   guides(fill = guide_legend(override.aes = list(size = 1))) +
   theme_light(base_size = 18, base_family = "Roboto") +
@@ -209,30 +246,48 @@ And, again, it's not just that this cluttered version looks worse. The clutter a
 One of the best ways to reduce clutter is to break a single chart into what are known as small multiples. When we look closely at the data viz, we see that it is not one chart but actually a set of charts. Each rectangle represents one region in one year. If we filter to show the Southwest region in 2003 and add axis titles, we can see that the x axis shows the week while the y axis shows the percentage of that region at different drought levels. 
 
 ```{r}
-dm_perc_cat_hubs %>% 
-  filter(hub == "Southwest") %>% 
-  filter(year == 2003) %>% 
+dm_perc_cat_hubs %>%
+  filter(hub == "Southwest") %>%
+  filter(year == 2003) %>%
   ggplot(aes(week, percentage)) +
-  geom_rect(aes(
-    xmin = .5, xmax = max_week + .5,
-    ymin = -0.005, ymax = 1),
-    fill = "#f4f4f9", color = NA, size = 0.4, show.legend = FALSE  #9d9ca7, 99a4be, 8696bd
-  ) + 
+  geom_rect(
+    aes(
+      xmin = .5,
+      xmax = max_week + .5,
+      ymin = -0.005,
+      ymax = 1
+    ),
+    fill = "#f4f4f9",
+    color = NA,
+    size = 0.4,
+    show.legend = FALSE # 9d9ca7, 99a4be, 8696bd
+  ) +
   geom_col(
-    aes(fill = category, 
-        fill = after_scale(addmix(darken(fill, .05, space = "HLS"), "#d8005a", .15)), 
-        color = after_scale(darken(fill, .2, space = "HLS"))),
-    width = .9, size = 0.12
-  ) + 
+    aes(
+      fill = category,
+      fill = after_scale(addmix(darken(fill, .05, space = "HLS"), "#d8005a", .15)),
+      color = after_scale(darken(fill, .2, space = "HLS"))
+    ),
+    width = .9,
+    size = 0.12
+  ) +
   facet_grid(rows = vars(year), cols = vars(hub), switch = "y") +
   coord_cartesian(clip = "off") +
   scale_x_continuous(expand = c(.02, .02), guide = "none") +
-  scale_y_continuous(expand = c(0, 0), position = "right", labels = NULL) + 
+  scale_y_continuous(expand = c(0, 0), position = "right", labels = NULL) +
   scale_fill_viridis_d(
-    option = "rocket", name = "Category:", 
-    direction = -1, begin = .17, end = .97,
-    labels = c("Abnormally Dry", "Moderate Drought", "Severe Drought", 
-               "Extreme Drought", "Exceptional Drought")
+    option = "rocket",
+    name = "Category:",
+    direction = -1,
+    begin = .17,
+    end = .97,
+    labels = c(
+      "Abnormally Dry",
+      "Moderate Drought",
+      "Severe Drought",
+      "Extreme Drought",
+      "Exceptional Drought"
+    )
   ) +
   guides(fill = guide_legend(override.aes = list(size = 1))) +
   theme_light(base_size = 18, base_family = "Roboto") +
@@ -289,35 +344,51 @@ Wilkinson argued that we should think of plots not as distinct types a la Excel,
 Thinking about data visualization through the lens of the grammar of graphics allow us to see, for example, that graphs typically have data that is plotted on the x axis and other data that is plotted on the y axis. And this is the case no matter whether the type of graph we end up with is, to take just two examples, a bar chart of a line chart. Consider these two graphs, which use data on life expectancy in Afghanistan:
 
 ```{r}
-gapminder_10_rows <- gapminder %>% 
+gapminder_10_rows <- gapminder %>%
   slice(1:10)
 
-bar_chart <- ggplot(data = gapminder_10_rows,
-                    mapping = aes(x = year,
-                                  y = lifeExp)) +
+bar_chart <- ggplot(
+  data = gapminder_10_rows,
+  mapping = aes(
+    x = year,
+    y = lifeExp
+  )
+) +
   geom_col() +
   scale_y_continuous(limits = c(0, 45)) +
   scale_x_continuous(limits = c(1950, 2000))
 
-line_chart <- ggplot(data = gapminder_10_rows,
-                     mapping = aes(x = year,
-                                   y = lifeExp)) +
+line_chart <- ggplot(
+  data = gapminder_10_rows,
+  mapping = aes(
+    x = year,
+    y = lifeExp
+  )
+) +
   geom_line() +
   scale_y_continuous(limits = c(0, 45)) +
   scale_x_continuous(limits = c(1950, 2000))
 
 
 bar_chart + line_chart +
-  plot_annotation(title = "Life Expectancy in Afghanistan, 1952-1997",
-                  caption = "Data from Gapminder Foundation") &
+  plot_annotation(
+    title = "Life Expectancy in Afghanistan, 1952-1997",
+    caption = "Data from Gapminder Foundation"
+  ) &
   theme_minimal() +
-  theme(axis.title = element_blank(),
-        axis.text = element_text(),
-        plot.title = element_text(face = "bold",
-                                  hjust = 0.5,
-                                  size = 14),
-        plot.caption = element_text(color = "grey40",
-                                    size = 10))
+    theme(
+      axis.title = element_blank(),
+      axis.text = element_text(),
+      plot.title = element_text(
+        face = "bold",
+        hjust = 0.5,
+        size = 14
+      ),
+      plot.caption = element_text(
+        color = "grey40",
+        size = 10
+      )
+    )
 ```
 
 
@@ -344,17 +415,25 @@ If we want to make a chart with ggplot, we need to first decide which variable t
 I begin by using the `ggplot()` function. Within this, I tell R that I'm using the data frame `gapminder_10_rows` (this is the filtered version I created from the full `gapminder` data frame, which includes over 1,700 rows of data). The line following this tells R to use `year` on the x and `lifeExp` on the y axis. 
 
 ```{r echo = TRUE}
-ggplot(data = gapminder_10_rows,
-       mapping = aes(x = year,
-                     y = lifeExp))
+ggplot(
+  data = gapminder_10_rows,
+  mapping = aes(
+    x = year,
+    y = lifeExp
+  )
+)
 ```
 
 When I run my code, what I get doesn't look like much.
 
 ```{r}
-ggplot(data = gapminder_10_rows,
-       mapping = aes(x = year,
-                     y = lifeExp))
+ggplot(
+  data = gapminder_10_rows,
+  mapping = aes(
+    x = year,
+    y = lifeExp
+  )
+)
 ```
 
 But if I look closely, I can see the beginnings of a plot. Remember that x axis using `year`? There it is! And `lifeExp` on the y axis? Yup, it's there too. 
@@ -364,9 +443,13 @@ I can also see that the values on the x and y axes match up to our data. In the 
 Axes are nice, but we're missing any type of visual representation of the data. To get this, we need to add the next layer in ggplot: geoms. Short for geometric objects, geoms are different ways of representing data. For example, if we want to add points, we use `geom_point()`. 
 
 ```{r echo = TRUE}
-ggplot(data = gapminder_10_rows,
-       mapping = aes(x = year,
-                     y = lifeExp)) +
+ggplot(
+  data = gapminder_10_rows,
+  mapping = aes(
+    x = year,
+    y = lifeExp
+  )
+) +
   geom_point()
 ```
 
@@ -375,18 +458,26 @@ There we go! 1952 shows the life expectancy of about 28 and so on through every 
 Let's say we change our mind and want to make a line chart instead. Well, all we have to do is replace `geom_point()` with `geom_line()`. 
 
 ```{r echo = TRUE}
-ggplot(data = gapminder_10_rows,
-       mapping = aes(x = year,
-                     y = lifeExp)) +
+ggplot(
+  data = gapminder_10_rows,
+  mapping = aes(
+    x = year,
+    y = lifeExp
+  )
+) +
   geom_line()
 ```
 
 Or (and now we're really getting fancy), what if we add *both* `geom_point()` and `geom_line()`? A line chart with points!  
 
 ```{r echo = TRUE}
-ggplot(data = gapminder_10_rows,
-       mapping = aes(x = year,
-                     y = lifeExp)) +
+ggplot(
+  data = gapminder_10_rows,
+  mapping = aes(
+    x = year,
+    y = lifeExp
+  )
+) +
   geom_point() +
   geom_line()
 ```
@@ -394,9 +485,13 @@ ggplot(data = gapminder_10_rows,
 We can extend this idea further, swapping in `geom_col()` to create to a bar chart (note that the y axis range has been automatically updated now, going from 0 to 40 to account for the different geom). 
 
 ```{r echo = TRUE}
-ggplot(data = gapminder_10_rows,
-       mapping = aes(x = year,
-                     y = lifeExp)) +
+ggplot(
+  data = gapminder_10_rows,
+  mapping = aes(
+    x = year,
+    y = lifeExp
+  )
+) +
   geom_col()
 ```
 
@@ -405,20 +500,28 @@ I hope you're seeing how ggplot is a direct implementation of Wilkinson's gramma
 Before we return to the drought data viz, let's look at a few additional layers that can help us can alter our bar chart. Let's say we want to change the color of our bars. In the grammar of graphics approach to chart-making, this means mapping some variable to the aesthetic property of fill (slightly confusingly, the aesthetic property "color" would, for a bar chart, change the outline of each bar). In the same way that we mapped `year` to the x axis and y to `lifeExp`, we can also map fill to a variable. Let's try mapping fill to the year variable.
 
 ```{r echo = TRUE}
-ggplot(data = gapminder_10_rows,
-       mapping = aes(x = year,
-                     y = lifeExp,
-                     fill = year)) +
+ggplot(
+  data = gapminder_10_rows,
+  mapping = aes(
+    x = year,
+    y = lifeExp,
+    fill = year
+  )
+) +
   geom_col()
 ```
 
 What we see now is that, for earlier years, the fill is darker while for later years, it is lighter (the legend, added to the right of our plot, shows this). What if we want to change the fill colors? For that, we use a new scale layer. In this case, I'll use the `scale_fill_viridis_c()` function (the c at the end of the function name refers to the fact that the data is continuous). This function, just one of many functions that start with `scale_` and can alter the fill scale, changes the default palette to one that is colorblind-friendly and prints well in grayscale. 
 
 ```{r echo = TRUE}
-ggplot(data = gapminder_10_rows,
-       mapping = aes(x = year,
-                     y = lifeExp,
-                     fill = year)) +
+ggplot(
+  data = gapminder_10_rows,
+  mapping = aes(
+    x = year,
+    y = lifeExp,
+    fill = year
+  )
+) +
   geom_col() +
   scale_fill_viridis_c()
 ```
@@ -426,10 +529,14 @@ ggplot(data = gapminder_10_rows,
 A final layer we'll look at is the theme layer. This layer allows us to change the overall look-and-feel of plots (think: plot backgrounds, grid lines, etc). Just as there are a number of `scale_` functions, there are also a number of functions that start with `theme_`. Below, I've added `theme_minimal()`, which starts to declutter our plot. 
 
 ```{r echo = TRUE}
-ggplot(data = gapminder_10_rows,
-       mapping = aes(x = year,
-                     y = lifeExp,
-                     fill = year)) +
+ggplot(
+  data = gapminder_10_rows,
+  mapping = aes(
+    x = year,
+    y = lifeExp,
+    fill = year
+  )
+) +
   geom_col() +
   scale_fill_viridis_c() +
   theme_minimal()
@@ -451,8 +558,8 @@ The code that Cédric and Georgios wrote to make their final data viz relies on 
 Let's start by looking again at one region (Southwest) in one year (2003). First, we filter our data and save it as a new object called `southwest_2003`. 
 
 ```{r echo = TRUE}
-southwest_2003 <- dm_perc_cat_hubs %>% 
-  filter(hub == "Southwest") %>% 
+southwest_2003 <- dm_perc_cat_hubs %>%
+  filter(hub == "Southwest") %>%
   filter(year == 2003)
 ```
 
@@ -467,41 +574,57 @@ We can take a look at this object to see the variables we have to work with:
 - **max_week**: the maximum number of weeks in a given year
 
 ```{r echo = TRUE}
-southwest_2003 %>% 
+southwest_2003 %>%
   slice(1:10)
 ```
 Now we can use this `southwest_2003` object for our plotting. In the `ggplot()` function, we tell R to put week on the x axis, percentage on the y axis, and use the category variable (i.e. drought level) for our fill color. We then use `geom_col()` to create a bar chart where the fill color of each bar represents the percentage of the region in a single week that is at different drought levels. The colors don't match the final version of the plot, but with this code we can start to see the outlines of Cédric and Georgios's data viz.  
 
 ```{r echo = TRUE}
-ggplot(data = southwest_2003,
-       aes(x = week, 
-           y = percentage,
-           fill = category)) +
+ggplot(
+  data = southwest_2003,
+  aes(
+    x = week,
+    y = percentage,
+    fill = category
+  )
+) +
   geom_col()
 ```
 
 Cédric and Georgios next select different fill colors for their bars. They use the `scale_fill_viridis_d()` function. The "d" here means the data that the fill scale is being applied to has discrete categories (D0, D1, D2, D3, D4, D5). They use the argument `option = "rocket"` in order to select the "rocket" palette (the `scale_fill_viridis_d()` function has several other palettes). And they use the `direction = -1` argument to reverse the order of fill colors so that darker colors mean higher drought conditions. 
 
 ```{r echo = TRUE}
-ggplot(data = southwest_2003,
-       aes(x = week, 
-           y = percentage,
-           fill = category)) +
+ggplot(
+  data = southwest_2003,
+  aes(
+    x = week,
+    y = percentage,
+    fill = category
+  )
+) +
   geom_col() +
-  scale_fill_viridis_d(option = "rocket",
-                       direction = -1)
+  scale_fill_viridis_d(
+    option = "rocket",
+    direction = -1
+  )
 ```
 
 In the language of ggplot, x and y axis are aesthetic properties, the same as fill color. Cédric and Georgios tweak the x axis to remove both the axis title ("week") using `name = NULL` and the 0-50 axis text with `guide = none`. On the y axis, they remove the axis title and axis text (which was showing percentages in 0.00, 0.25, 0.50, 0.75 format) using `labels = NULL` (this functionally does the same thing as `guide = "none"`). They also move the axis lines themselves to the right side using `position = "right"` (they are only apparent as tick marks at this point, but will become more visible later).
 
 ```{r echo = TRUE}
-ggplot(data = southwest_2003,
-       aes(x = week, 
-           y = percentage,
-           fill = category)) +
+ggplot(
+  data = southwest_2003,
+  aes(
+    x = week,
+    y = percentage,
+    fill = category
+  )
+) +
   geom_col() +
-  scale_fill_viridis_d(option = "rocket",
-                       direction = -1) +
+  scale_fill_viridis_d(
+    option = "rocket",
+    direction = -1
+  ) +
   scale_x_continuous(name = NULL, guide = "none") +
   scale_y_continuous(name = NULL, labels = NULL, position = "right")
 ```
@@ -510,13 +633,19 @@ Up to this point, we've focused on one of the single plots that make up the larg
 
 
 ```{r fig.height = 10, echo = TRUE}
-ggplot(data = dm_perc_cat_hubs,
-       aes(x = week, 
-           y = percentage,
-           fill = category)) +
+ggplot(
+  data = dm_perc_cat_hubs,
+  aes(
+    x = week,
+    y = percentage,
+    fill = category
+  )
+) +
   geom_col() +
-  scale_fill_viridis_d(option = "rocket",
-                       direction = -1) +
+  scale_fill_viridis_d(
+    option = "rocket",
+    direction = -1
+  ) +
   scale_x_continuous(name = NULL, guide = "none") +
   scale_y_continuous(name = NULL, labels = NULL, position = "right") +
   facet_grid(rows = vars(year), cols = vars(hub), switch = "y")
@@ -528,13 +657,19 @@ Incredibly, the broad outlines of the plot took us just 10 lines to create. All 
 Let's look at a few of the small polishes that Cédric and Georgios make. The first is to apply a theme. They use `theme_light()`, which removes the default gray background, changes the font to Roboto, and makes the default size of elements larger using the `base_size` argument, among other tweaks. 
 
 ```{r fig.height = 10}
-ggplot(data = dm_perc_cat_hubs,
-       aes(x = week, 
-           y = percentage,
-           fill = category)) +
+ggplot(
+  data = dm_perc_cat_hubs,
+  aes(
+    x = week,
+    y = percentage,
+    fill = category
+  )
+) +
   geom_col() +
-  scale_fill_viridis_d(option = "rocket",
-                       direction = -1) +
+  scale_fill_viridis_d(
+    option = "rocket",
+    direction = -1
+  ) +
   scale_x_continuous(name = NULL, guide = "none") +
   scale_y_continuous(name = NULL, labels = NULL, position = "right") +
   facet_grid(rows = vars(year), cols = vars(hub), switch = "y") +
@@ -544,13 +679,19 @@ ggplot(data = dm_perc_cat_hubs,
 `theme_light()` is what's known as a "complete theme." So-called complete themes change the overall look-and-feel of a plot. But Cédric and Georgios don't stop with applying a complete theme. From there, they use the `theme()` function to make additional tweaks to what `theme_light()` gives them. 
 
 ```{r fig.height = 10, echo = TRUE}
-ggplot(data = dm_perc_cat_hubs,
-       aes(x = week, 
-           y = percentage,
-           fill = category)) +
+ggplot(
+  data = dm_perc_cat_hubs,
+  aes(
+    x = week,
+    y = percentage,
+    fill = category
+  )
+) +
   geom_col() +
-  scale_fill_viridis_d(option = "rocket",
-                       direction = -1) +
+  scale_fill_viridis_d(
+    option = "rocket",
+    direction = -1
+  ) +
   scale_x_continuous(name = NULL, guide = "none") +
   scale_y_continuous(name = NULL, labels = NULL, position = "right") +
   facet_grid(rows = vars(year), cols = vars(hub), switch = "y") +
@@ -581,20 +722,24 @@ ggplot(data = dm_perc_cat_hubs,
 
 The code in the `theme()` function does many different things, but let's take a look at a few of the most important:
 
-- `legend.position = "top"` moves the legend from the right (the default) to the top of the plot. 
+`legend.position = "top"` moves the legend from the right (the default) to the top of the plot. 
 
-- `strip.text.y.left = element_text(size = 18, angle = 0, vjust = .5, face = "plain", color = "black")` turns the year text in the columns so that it is no longer angled. Without the `angle = 0`, the reader would be forced to uncomfortably tilt their head to read the years:
+`strip.text.y.left = element_text(size = 18, angle = 0, vjust = .5, face = "plain", color = "black")` turns the year text in the columns so that it is no longer angled. Without the `angle = 0`, the reader would be forced to uncomfortably tilt their head to read the years:
 
 ```{r fig.height = 6}
-dm_perc_cat_hubs %>% 
-  filter(hub %in% c("Northwest", "California", "Southwest", "Northern Plains")) %>% 
-  filter(year <= 2005) %>% 
-  ggplot(aes(x = week, 
-             y = percentage,
-             fill = category)) +
+dm_perc_cat_hubs %>%
+  filter(hub %in% c("Northwest", "California", "Southwest", "Northern Plains")) %>%
+  filter(year <= 2005) %>%
+  ggplot(aes(
+    x = week,
+    y = percentage,
+    fill = category
+  )) +
   geom_col() +
-  scale_fill_viridis_d(option = "rocket",
-                       direction = -1) +
+  scale_fill_viridis_d(
+    option = "rocket",
+    direction = -1
+  ) +
   scale_x_continuous(name = NULL, guide = "none") +
   scale_y_continuous(name = NULL, labels = NULL, position = "right") +
   facet_grid(rows = vars(year), cols = vars(hub), switch = "y") +
@@ -623,54 +768,67 @@ dm_perc_cat_hubs %>%
   )
 ```
 
-- The following lines make the distinctive axis lines and ticks that show up on the right side of the final plot:
+The following lines make the distinctive axis lines and ticks that show up on the right side of the final plot:
 
 ```{r eval = FALSE, echo = TRUE}
-axis.line.x = element_blank(),
-axis.line.y = element_line(color = "black", size = .2),
-axis.ticks.y = element_line(color = "black", size = .2),
-axis.ticks.length.y = unit(2, "mm")
+# axis.line.x = element_blank(),
+# axis.line.y = element_line(color = "black", size = .2),
+# axis.ticks.y = element_line(color = "black", size = .2),
+# axis.ticks.length.y = unit(2, "mm")
 ```
 
-- `panel.grid.minor = element_blank()` and `panel.grid.major = element_blank()` remove all grid lines from the final plot. 
+`panel.grid.minor = element_blank()` and `panel.grid.major = element_blank()` remove all grid lines from the final plot. 
 
-- And finally, these three lines remove the borders and make each of the individual plots have a transparent background. 
+And finally, these three lines remove the borders and make each of the individual plots have a transparent background. 
 
 ```{r eval = FALSE, echo = TRUE}
-panel.background = element_rect(fill = "transparent", color = "transparent"),
-panel.border = element_rect(color = "transparent", size = 0),
-plot.background = element_rect(fill = "transparent", color = "transparent", size = .4)
+# panel.background = element_rect(fill = "transparent", color = "transparent"),
+# panel.border = element_rect(color = "transparent", size = 0),
+# plot.background = element_rect(fill = "transparent", color = "transparent", size = .4)
 ```
 
 Keen readers such as yourself may now be thinking: "wait, didn't the individual plots have a gray background behind them?" Yes, dear reader, they did. How did Cédric and Georgios make these? They did this with a separate geom: `geom_rect()`. Here, they set some additional aesthetic properties specific to `geom_rect()` (`xmin`, `xmax`, `ymin`, and `ymax`). The result is a gray background drawn behind each small multiple. 
 
 ```{r echo = TRUE, eval = FALSE}
-geom_rect(aes(xmin = .5, 
-              xmax = max_week + .5,
-              ymin = -0.005, 
-              ymax = 1),
-          fill = "#f4f4f9", 
-          color = NA, 
-          size = 0.4)
+geom_rect(
+  aes(
+    xmin = .5,
+    xmax = max_week + .5,
+    ymin = -0.005,
+    ymax = 1
+  ),
+  fill = "#f4f4f9",
+  color = NA,
+  size = 0.4
+)
 ```
 
 
 ```{r fig.height = 10, echo = FALSE}
-ggplot(data = dm_perc_cat_hubs,
-       aes(x = week, 
-           y = percentage,
-           fill = category)) +
-  geom_rect(aes(xmin = .5, 
-                xmax = max_week + .5,
-                ymin = -0.005, 
-                ymax = 1),
-            fill = "#f4f4f9", 
-            color = NA, 
-            size = 0.4
+ggplot(
+  data = dm_perc_cat_hubs,
+  aes(
+    x = week,
+    y = percentage,
+    fill = category
+  )
+) +
+  geom_rect(
+    aes(
+      xmin = .5,
+      xmax = max_week + .5,
+      ymin = -0.005,
+      ymax = 1
+    ),
+    fill = "#f4f4f9",
+    color = NA,
+    size = 0.4
   ) +
   geom_col() +
-  scale_fill_viridis_d(option = "rocket",
-                       direction = -1) +
+  scale_fill_viridis_d(
+    option = "rocket",
+    direction = -1
+  ) +
   scale_x_continuous(name = NULL, guide = "none") +
   scale_y_continuous(name = NULL, labels = NULL, position = "right") +
   facet_grid(rows = vars(year), cols = vars(hub), switch = "y") +
@@ -703,36 +861,54 @@ The final polish to highlight is the tweaks to the legend. I previously showed a
 
 
 ```{r echo = TRUE, eval = FALSE}
-scale_fill_viridis_d(option = "rocket",
-                     direction = -1,
-                     name = "Category:",
-                     labels = c("Abnormally Dry", 
-                                "Moderate Drought", 
-                                "Severe Drought", 
-                                "Extreme Drought", 
-                                "Exceptional Drought"))
+scale_fill_viridis_d(
+  option = "rocket",
+  direction = -1,
+  name = "Category:",
+  labels = c(
+    "Abnormally Dry",
+    "Moderate Drought",
+    "Severe Drought",
+    "Extreme Drought",
+    "Exceptional Drought"
+  )
+)
 ```
 
 
 ```{r fig.height = 10, echo = FALSE}
-ggplot(data = dm_perc_cat_hubs,
-       aes(x = week, 
-           y = percentage,
-           fill = category)) +
-  geom_rect(aes(xmin = .5, 
-                xmax = max_week + .5,
-                ymin = -0.005, 
-                ymax = 1),
-            fill = "#f4f4f9", 
-            color = NA, 
-            size = 0.4
+ggplot(
+  data = dm_perc_cat_hubs,
+  aes(
+    x = week,
+    y = percentage,
+    fill = category
+  )
+) +
+  geom_rect(
+    aes(
+      xmin = .5,
+      xmax = max_week + .5,
+      ymin = -0.005,
+      ymax = 1
+    ),
+    fill = "#f4f4f9",
+    color = NA,
+    size = 0.4
   ) +
   geom_col() +
-  scale_fill_viridis_d(option = "rocket",
-                       direction = -1,
-                       name = "Category:",
-                       labels = c("Abnormally Dry", "Moderate Drought", "Severe Drought", 
-                                  "Extreme Drought", "Exceptional Drought")) +
+  scale_fill_viridis_d(
+    option = "rocket",
+    direction = -1,
+    name = "Category:",
+    labels = c(
+      "Abnormally Dry",
+      "Moderate Drought",
+      "Severe Drought",
+      "Extreme Drought",
+      "Exceptional Drought"
+    )
+  ) +
   scale_x_continuous(name = NULL, guide = "none") +
   scale_y_continuous(name = NULL, labels = NULL, position = "right") +
   facet_grid(rows = vars(year), cols = vars(hub), switch = "y") +
@@ -765,26 +941,44 @@ While I've showed you a nearly complete version of the code, I have made some sm
 
 ```{r echo = TRUE, eval = FALSE}
 ggplot(dm_perc_cat_hubs, aes(week, percentage)) +
-  geom_rect(aes(
-    xmin = .5, xmax = max_week + .5,
-    ymin = -0.005, ymax = 1),
-    fill = "#f4f4f9", color = NA, size = 0.4, show.legend = FALSE  #9d9ca7, 99a4be, 8696bd
-  ) + 
+  geom_rect(
+    aes(
+      xmin = .5,
+      xmax = max_week + .5,
+      ymin = -0.005,
+      ymax = 1
+    ),
+    fill = "#f4f4f9",
+    color = NA,
+    size = 0.4,
+    show.legend = FALSE # 9d9ca7, 99a4be, 8696bd
+  ) +
   geom_col(
-    aes(fill = category, 
-        fill = after_scale(addmix(darken(fill, .05, space = "HLS"), "#d8005a", .15)), 
-        color = after_scale(darken(fill, .2, space = "HLS"))),
-    width = .9, size = 0.12
-  ) + 
+    aes(
+      fill = category,
+      fill = after_scale(addmix(darken(fill, .05, space = "HLS"), "#d8005a", .15)),
+      color = after_scale(darken(fill, .2, space = "HLS"))
+    ),
+    width = .9,
+    size = 0.12
+  ) +
   facet_grid(rows = vars(year), cols = vars(hub), switch = "y") +
   coord_cartesian(clip = "off") +
   scale_x_continuous(expand = c(.02, .02), guide = "none", name = NULL) +
-  scale_y_continuous(expand = c(0, 0), position = "right", labels = NULL, name = NULL) + 
+  scale_y_continuous(expand = c(0, 0), position = "right", labels = NULL, name = NULL) +
   scale_fill_viridis_d(
-    option = "rocket", name = "Category:", 
-    direction = -1, begin = .17, end = .97,
-    labels = c("Abnormally Dry", "Moderate Drought", "Severe Drought", 
-               "Extreme Drought", "Exceptional Drought")
+    option = "rocket",
+    name = "Category:",
+    direction = -1,
+    begin = .17,
+    end = .97,
+    labels = c(
+      "Abnormally Dry",
+      "Moderate Drought",
+      "Severe Drought",
+      "Extreme Drought",
+      "Exceptional Drought"
+    )
   ) +
   guides(fill = guide_legend(override.aes = list(size = 1))) +
   theme_light(base_size = 18, base_family = "Roboto") +
