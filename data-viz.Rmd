@@ -99,7 +99,7 @@ dm_perc_cat_hubs <-
   filter(percentage > 0)
 ```
 
-```{r fig.height = 10}
+```{r fig.height = 8}
 dm_perc_cat_hubs %>%
   filter(hub %in% c("Northwest", "California", "Southwest", "Northern Plains")) %>%
   ggplot(aes(week, percentage)) +
@@ -130,7 +130,7 @@ dm_perc_cat_hubs %>%
   scale_y_continuous(expand = c(0, 0), position = "right", labels = NULL, name = NULL) +
   scale_fill_viridis_d(
     option = "rocket",
-    name = "Category:",
+    name = NULL,
     direction = -1,
     begin = .17,
     end = .97,
@@ -143,7 +143,7 @@ dm_perc_cat_hubs %>%
     )
   ) +
   guides(fill = guide_legend(override.aes = list(size = 1))) +
-  theme_light(base_size = 18, base_family = "Roboto") +
+  theme_light(base_family = "Roboto") +
   theme(
     axis.title = element_text(size = 14, color = "black"),
     axis.text = element_text(family = "Roboto Mono", size = 11),
@@ -152,10 +152,10 @@ dm_perc_cat_hubs %>%
     axis.ticks.y = element_line(color = "black", size = .2),
     axis.ticks.length.y = unit(2, "mm"),
     legend.position = "top",
-    legend.title = element_text(color = "#2DAADA", size = 18, face = "bold"),
-    legend.text = element_text(color = "#2DAADA", size = 16),
-    strip.text.x = element_text(size = 16, hjust = .5, face = "plain", color = "black", margin = margin(t = 20, b = 5)),
-    strip.text.y.left = element_text(size = 18, angle = 0, vjust = .5, face = "plain", color = "black"),
+    legend.title = element_text(color = "#2DAADA", face = "bold"),
+    legend.text = element_text(color = "#2DAADA"),
+    strip.text.x = element_text(hjust = .5, face = "plain", color = "black", margin = margin(t = 20, b = 5)),
+    strip.text.y.left = element_text(angle = 0, vjust = .5, face = "plain", color = "black"),
     strip.background = element_rect(fill = "transparent", color = "transparent"),
     panel.grid.minor = element_blank(),
     panel.grid.major = element_blank(),
