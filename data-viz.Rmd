@@ -157,8 +157,8 @@ dm_perc_cat_hubs %>%
     strip.text.x = element_text(hjust = .5, face = "plain", color = "black", margin = margin(t = 20, b = 5)),
     strip.text.y.left = element_text(angle = 0, vjust = .5, face = "plain", color = "black"),
     strip.background = element_rect(fill = "transparent", color = "transparent"),
-    panel.grid.minor = element_blank(),
-    panel.grid.major = element_blank(),
+    # panel.grid.minor = element_blank(),
+    # panel.grid.major = element_blank(),
     panel.spacing.x = unit(0.3, "lines"),
     panel.spacing.y = unit(0.25, "lines"),
     panel.background = element_rect(fill = "transparent", color = "transparent"),
@@ -174,15 +174,11 @@ At the broadest level, the data viz is also notable for its minimalist aesthetic
 
 Need proof that Cédric and Georgios's decluttered graph is better than the alternative? Here's a version with a few small tweaks to the code to include grid lines and text labels on axes. Prepare yourself for clutter!
 
+
 ```{r fig.height = 10}
 dm_perc_cat_hubs %>%
   filter(hub %in% c("Northwest", "California", "Southwest", "Northern Plains")) %>%
   ggplot(aes(week, percentage)) +
-  # geom_rect(aes(
-  #   xmin = .5, xmax = max_week + .5,
-  #   ymin = -0.005, ymax = 1),
-  #   fill = "#f4f4f9", color = NA, size = 0.4, show.legend = FALSE  #9d9ca7, 99a4be, 8696bd
-  # ) +
   geom_col(
     aes(
       fill = category,
@@ -219,7 +215,7 @@ dm_perc_cat_hubs %>%
   theme_light(base_size = 18, base_family = "Roboto") +
   theme(
     axis.title = element_text(size = 14, color = "black"),
-    axis.text = element_text(family = "Roboto Mono", size = 11),
+    # axis.text = element_text(family = "Roboto Mono", size = 11),
     axis.line.x = element_blank(),
     axis.line.y = element_line(color = "black", size = .2),
     axis.ticks.y = element_line(color = "black", size = .2),
