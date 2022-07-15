@@ -1,0 +1,2 @@
+# Redirects from what the browser requests to what we serve
+/data-viz          https://book.rwithoutstatistics.com/use-general-principles-of-high-quality-data-viz-in-r.html
