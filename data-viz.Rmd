@@ -16,7 +16,7 @@ This was the challenge that data visualization designers Cédric Scherer and Geo
 
 There was nothing unique about the data that Cédric and Georgios used. It was the same data from the National Drought Center that news organizations used in their stories. But Cédric and Georgios visualized the data in a way that it both grabs attention and communicates the scale of the phenomenon.
 
-Below is a section of the final visualization. Showing four regions over the last two decades, the increase in drought conditions, especially in California and the Southwest, is made apparent. 
+Below is a section of the final visualization (if you're incredibly eagle-eyed, you'll see a few minor elements that differ from the version published in Scientific American; these were added in post-production). Showing four regions over the last two decades, the increase in drought conditions, especially in California and the Southwest, is made apparent. 
 
 ```{r}
 library(tidyverse)
@@ -101,8 +101,12 @@ dm_perc_cat_hubs <-
 
 ```{r fig.height = 8}
 dm_perc_cat_hubs %>%
-  filter(hub %in% c("Northwest", "California", "Southwest", "Northern Plains")) %>%
-  ggplot(aes(week, percentage)) +
+  filter(hub %in% c("Northwest", 
+                    "California", 
+                    "Southwest", 
+                    "Northern Plains")) %>%
+  ggplot(aes(x = week, 
+             y = percentage)) +
   geom_rect(
     aes(
       xmin = .5,
@@ -113,21 +117,30 @@ dm_perc_cat_hubs %>%
     fill = "#f4f4f9",
     color = NA,
     size = 0.4,
-    show.legend = FALSE # 9d9ca7, 99a4be, 8696bd
+    show.legend = FALSE
   ) +
   geom_col(
     aes(
       fill = category,
-      fill = after_scale(addmix(darken(fill, .05, space = "HLS"), "#d8005a", .15)),
+      fill = after_scale(addmix(darken(fill, .05, space = "HLS"), 
+                                "#d8005a", 
+                                .15)),
       color = after_scale(darken(fill, .2, space = "HLS"))
     ),
     width = .9,
     size = 0.12
   ) +
-  facet_grid(rows = vars(year), cols = vars(hub), switch = "y") +
+  facet_grid(rows = vars(year), 
+             cols = vars(hub), 
+             switch = "y") +
   coord_cartesian(clip = "off") +
-  scale_x_continuous(expand = c(.02, .02), guide = "none", name = NULL) +
-  scale_y_continuous(expand = c(0, 0), position = "right", labels = NULL, name = NULL) +
+  scale_x_continuous(expand = c(.02, .02), 
+                     guide = "none", 
+                     name = NULL) +
+  scale_y_continuous(expand = c(0, 0), 
+                     position = "right", 
+                     labels = NULL, 
+                     name = NULL) +
   scale_fill_viridis_d(
     option = "rocket",
     name = NULL,
@@ -145,25 +158,41 @@ dm_perc_cat_hubs %>%
   guides(fill = guide_legend(override.aes = list(size = 1))) +
   theme_light(base_family = "Roboto") +
   theme(
-    axis.title = element_text(size = 14, color = "black"),
-    axis.text = element_text(family = "Roboto Mono", size = 11),
+    axis.title = element_text(size = 14, 
+                              color = "black"),
+    axis.text = element_text(family = "Roboto Mono", 
+                             size = 11),
     axis.line.x = element_blank(),
-    axis.line.y = element_line(color = "black", size = .2),
-    axis.ticks.y = element_line(color = "black", size = .2),
+    axis.line.y = element_line(color = "black", 
+                               size = .2),
+    axis.ticks.y = element_line(color = "black", 
+                                size = .2),
     axis.ticks.length.y = unit(2, "mm"),
     legend.position = "top",
-    legend.title = element_text(color = "#2DAADA", face = "bold"),
+    legend.title = element_text(color = "#2DAADA", 
+                                face = "bold"),
     legend.text = element_text(color = "#2DAADA"),
-    strip.text.x = element_text(hjust = .5, face = "plain", color = "black", margin = margin(t = 20, b = 5)),
-    strip.text.y.left = element_text(angle = 0, vjust = .5, face = "plain", color = "black"),
-    strip.background = element_rect(fill = "transparent", color = "transparent"),
-    # panel.grid.minor = element_blank(),
-    # panel.grid.major = element_blank(),
+    strip.text.x = element_text(hjust = .5, 
+                                face = "plain", 
+                                color = "black", 
+                                margin = margin(t = 20, b = 5)),
+    strip.text.y.left = element_text(angle = 0, 
+                                     vjust = .5, 
+                                     face = "plain", 
+                                     color = "black"),
+    strip.background = element_rect(fill = "transparent", 
+                                    color = "transparent"),
+    panel.grid.minor = element_blank(),
+    panel.grid.major = element_blank(),
     panel.spacing.x = unit(0.3, "lines"),
     panel.spacing.y = unit(0.25, "lines"),
-    panel.background = element_rect(fill = "transparent", color = "transparent"),
-    panel.border = element_rect(color = "transparent", size = 0),
-    plot.background = element_rect(fill = "transparent", color = "transparent", size = .4),
+    panel.background = element_rect(fill = "transparent", 
+                                    color = "transparent"),
+    panel.border = element_rect(color = "transparent", 
+                                size = 0),
+    plot.background = element_rect(fill = "transparent", 
+                                   color = "transparent", 
+                                   size = .4),
     plot.margin = margin(rep(18, 4))
   )
 ```
@@ -175,31 +204,51 @@ At the broadest level, the data viz is also notable for its minimalist aesthetic
 Need proof that Cédric and Georgios's decluttered graph is better than the alternative? Here's a version with a few small tweaks to the code to include grid lines and text labels on axes. Prepare yourself for clutter!
 
 
-```{r fig.height = 10}
+```{r fig.height = 8}
 dm_perc_cat_hubs %>%
-  filter(hub %in% c("Northwest", "California", "Southwest", "Northern Plains")) %>%
-  ggplot(aes(week, percentage)) +
-  geom_col(
-    aes(
-      fill = category,
-      fill = after_scale(addmix(darken(fill, .05, space = "HLS"), "#d8005a", .15)),
-      color = after_scale(darken(fill, .2, space = "HLS"))
-    ),
-    width = .9,
-    size = 0.12
-  ) +
-  # geom_text(aes(label = percent(percentage))) +
-  facet_grid(rows = vars(year), cols = vars(hub), switch = "y") +
+  filter(hub %in% c("Northwest", 
+                    "California", 
+                    "Southwest", 
+                    "Northern Plains")) %>%
+  ggplot(aes(x = week, 
+             y = percentage)) +
+  # geom_rect(
+  #   aes(
+  #     xmin = .5,
+  #     xmax = max_week + .5,
+  #     ymin = -0.005,
+  #     ymax = 1
+  #   ),
+  #   fill = "#f4f4f9",
+  #   color = NA,
+  #   size = 0.4,
+  #   show.legend = FALSE
+# ) +
+geom_col(
+  aes(
+    fill = category,
+    fill = after_scale(addmix(darken(fill, .05, space = "HLS"), 
+                              "#d8005a", 
+                              .15)),
+    color = after_scale(darken(fill, .2, space = "HLS"))
+  ),
+  width = .9,
+  size = 0.12
+) +
+  facet_grid(rows = vars(year), 
+             cols = vars(hub), 
+             switch = "y") +
   coord_cartesian(clip = "off") +
-  scale_x_continuous(expand = c(.02, .02)) +
-  scale_y_continuous(
-    expand = c(0, 0),
-    position = "right",
-    label = percent_format()
-  ) +
+  scale_x_continuous(expand = c(.02, .02), 
+                     guide = "none", 
+                     name = NULL) +
+  scale_y_continuous(expand = c(0, 0), 
+                     position = "right", 
+                     labels = percent_format(), 
+                     name = NULL) +
   scale_fill_viridis_d(
     option = "rocket",
-    name = "Category:",
+    name = NULL,
     direction = -1,
     begin = .17,
     end = .97,
@@ -212,27 +261,42 @@ dm_perc_cat_hubs %>%
     )
   ) +
   guides(fill = guide_legend(override.aes = list(size = 1))) +
-  theme_light(base_size = 18, base_family = "Roboto") +
+  theme_light(base_family = "Roboto") +
   theme(
-    axis.title = element_text(size = 14, color = "black"),
-    # axis.text = element_text(family = "Roboto Mono", size = 11),
+    axis.title = element_text(size = 14, 
+                              color = "black"),
+    axis.text = element_text(family = "Roboto Mono"),
     axis.line.x = element_blank(),
-    axis.line.y = element_line(color = "black", size = .2),
-    axis.ticks.y = element_line(color = "black", size = .2),
+    axis.line.y = element_line(color = "black", 
+                               size = .2),
+    axis.ticks.y = element_line(color = "black", 
+                                size = .2),
     axis.ticks.length.y = unit(2, "mm"),
     legend.position = "top",
-    legend.title = element_text(color = "#2DAADA", size = 18, face = "bold"),
-    legend.text = element_text(color = "#2DAADA", size = 16),
-    strip.text.x = element_text(size = 16, hjust = .5, face = "plain", color = "black", margin = margin(t = 20, b = 5)),
-    strip.text.y.left = element_text(size = 18, angle = 0, vjust = .5, face = "plain", color = "black"),
-    strip.background = element_rect(fill = "transparent", color = "transparent"),
+    legend.title = element_text(color = "#2DAADA", 
+                                face = "bold"),
+    legend.text = element_text(color = "#2DAADA"),
+    strip.text.x = element_text(hjust = .5, 
+                                face = "plain", 
+                                color = "black", 
+                                margin = margin(t = 20, b = 5)),
+    strip.text.y.left = element_text(angle = 0, 
+                                     vjust = .5, 
+                                     face = "plain", 
+                                     color = "black"),
+    strip.background = element_rect(fill = "transparent", 
+                                    color = "transparent"),
     # panel.grid.minor = element_blank(),
     # panel.grid.major = element_blank(),
     panel.spacing.x = unit(0.3, "lines"),
     panel.spacing.y = unit(0.25, "lines"),
-    panel.background = element_rect(fill = "transparent", color = "transparent"),
-    panel.border = element_rect(color = "transparent", size = 0),
-    plot.background = element_rect(fill = "transparent", color = "transparent", size = .4),
+    panel.background = element_rect(fill = "transparent", 
+                                    color = "transparent"),
+    panel.border = element_rect(color = "transparent", 
+                                size = 0),
+    plot.background = element_rect(fill = "transparent", 
+                                   color = "transparent", 
+                                   size = .4),
     plot.margin = margin(rep(18, 4))
   )
 ```
@@ -241,11 +305,12 @@ And, again, it's not just that this cluttered version looks worse. The clutter a
 
 One of the best ways to reduce clutter is to break a single chart into what are known as small multiples. When we look closely at the data viz, we see that it is not one chart but actually a set of charts. Each rectangle represents one region in one year. If we filter to show the Southwest region in 2003 and add axis titles, we can see that the x axis shows the week while the y axis shows the percentage of that region at different drought levels. 
 
-```{r}
+```{r fig.height = 4}
 dm_perc_cat_hubs %>%
   filter(hub == "Southwest") %>%
-  filter(year == 2003) %>%
-  ggplot(aes(week, percentage)) +
+  filter(year == 2003) %>% 
+  ggplot(aes(x = week, 
+             y = percentage)) +
   geom_rect(
     aes(
       xmin = .5,
@@ -256,24 +321,33 @@ dm_perc_cat_hubs %>%
     fill = "#f4f4f9",
     color = NA,
     size = 0.4,
-    show.legend = FALSE # 9d9ca7, 99a4be, 8696bd
+    show.legend = FALSE
   ) +
   geom_col(
     aes(
       fill = category,
-      fill = after_scale(addmix(darken(fill, .05, space = "HLS"), "#d8005a", .15)),
+      fill = after_scale(addmix(darken(fill, .05, space = "HLS"), 
+                                "#d8005a", 
+                                .15)),
       color = after_scale(darken(fill, .2, space = "HLS"))
     ),
     width = .9,
     size = 0.12
   ) +
-  facet_grid(rows = vars(year), cols = vars(hub), switch = "y") +
+  facet_grid(rows = vars(year), 
+             cols = vars(hub), 
+             switch = "y") +
   coord_cartesian(clip = "off") +
-  scale_x_continuous(expand = c(.02, .02), guide = "none") +
-  scale_y_continuous(expand = c(0, 0), position = "right", labels = NULL) +
+  scale_x_continuous(expand = c(.02, .02), 
+                     guide = "none", 
+                     name = NULL) +
+  scale_y_continuous(expand = c(0, 0), 
+                     position = "right", 
+                     labels = NULL, 
+                     name = NULL) +
   scale_fill_viridis_d(
     option = "rocket",
-    name = "Category:",
+    name = NULL,
     direction = -1,
     begin = .17,
     end = .97,
@@ -286,36 +360,47 @@ dm_perc_cat_hubs %>%
     )
   ) +
   guides(fill = guide_legend(override.aes = list(size = 1))) +
-  theme_light(base_size = 18, base_family = "Roboto") +
+  theme_light(base_family = "Roboto") +
   theme(
-    axis.title = element_text(size = 14, color = "black"),
-    axis.text = element_text(family = "Roboto Mono", size = 11),
+    axis.title = element_text(size = 14, 
+                              color = "black"),
+    axis.text = element_text(family = "Roboto Mono", 
+                             size = 11),
     axis.line.x = element_blank(),
-    axis.line.y = element_line(color = "black", size = .2),
-    axis.ticks.y = element_line(color = "black", size = .2),
+    axis.line.y = element_line(color = "black", 
+                               size = .2),
+    axis.ticks.y = element_line(color = "black", 
+                                size = .2),
     axis.ticks.length.y = unit(2, "mm"),
     legend.position = "none",
-    legend.title = element_text(color = "#2DAADA", size = 18, face = "bold"),
-    legend.text = element_text(color = "#2DAADA", size = 16),
-    strip.text.x = element_text(
-      size = 16,
-      hjust = .5,
-      face = "plain",
-      color = "black",
-      margin = margin(t = 20, b = 5)
-    ),
-    strip.text.y.left = element_text(size = 18, angle = 0, vjust = .5, face = "plain", color = "black"),
-    strip.background = element_rect(fill = "transparent", color = "transparent"),
+    legend.title = element_text(color = "#2DAADA", 
+                                face = "bold"),
+    legend.text = element_text(color = "#2DAADA"),
+    strip.text.x = element_text(hjust = .5, 
+                                face = "plain", 
+                                color = "black", 
+                                margin = margin(t = 20, b = 5)),
+    strip.text.y.left = element_text(angle = 0, 
+                                     vjust = .5, 
+                                     face = "plain", 
+                                     color = "black"),
+    strip.background = element_rect(fill = "transparent", 
+                                    color = "transparent"),
     panel.grid.minor = element_blank(),
     panel.grid.major = element_blank(),
     panel.spacing.x = unit(0.3, "lines"),
     panel.spacing.y = unit(0.25, "lines"),
-    panel.background = element_rect(fill = "transparent", color = "transparent"),
-    panel.border = element_rect(color = "transparent", size = 0),
-    plot.background = element_rect(fill = "transparent", color = "transparent", size = .4),
+    panel.background = element_rect(fill = "transparent", 
+                                    color = "transparent"),
+    panel.border = element_rect(color = "transparent", 
+                                size = 0),
+    plot.background = element_rect(fill = "transparent", 
+                                   color = "transparent", 
+                                   size = .4),
     plot.margin = margin(rep(18, 4))
   )
 ```
+
 
 Zooming in on a single region in a single year also makes the color choices more obvious. The lightest bars show the percentage of the region that is abnormally dry while the darkest bars shows the percentage in exceptional drought conditions. These colors, as we'll see shortly, are intentionally chosen to make differences in the drought levels visible to all readers. 
 
@@ -378,19 +463,19 @@ bar_chart + line_chart +
     caption = "Data from Gapminder Foundation"
   ) &
   theme_minimal() +
-    theme(
-      axis.title = element_blank(),
-      axis.text = element_text(),
-      plot.title = element_text(
-        face = "bold",
-        hjust = 0.5,
-        size = 14
-      ),
-      plot.caption = element_text(
-        color = "grey40",
-        size = 10
-      )
+  theme(
+    axis.title = element_blank(),
+    axis.text = element_text(),
+    plot.title = element_text(
+      face = "bold",
+      hjust = 0.5,
+      size = 14
+    ),
+    plot.caption = element_text(
+      color = "grey40",
+      size = 10
     )
+  )
 ```
 
 
@@ -627,145 +712,204 @@ ggplot(
     option = "rocket",
     direction = -1
   ) +
-  scale_x_continuous(name = NULL, guide = "none") +
-  scale_y_continuous(name = NULL, labels = NULL, position = "right")
+  scale_x_continuous(name = NULL, 
+                     guide = "none") +
+  scale_y_continuous(name = NULL, 
+                     labels = NULL, 
+                     position = "right")
 ```
 
-Up to this point, we've focused on one of the single plots that make up the larger data viz. But the final product that Cédric and Georgios made is actually 176 plots (22 years and 8 regions). One of the most useful features of ggplot is what's known as facetting (known more commonly in the data viz world as small multiples). With the `facet_grid()` function, we can select which variable to put in rows and which to put in columns of our facetted plot. Cédric and Georgios put `year` in rows and `hub` (region) in columns. The `switch = "y"` argument moves the year label from the right side (where it appears by default) to the left. With this code in place, we can see the final plot coming together. 
+Up to this point, we've focused on one of the single plots that make up the larger data viz. But the final product that Cédric and Georgios made is actually 176 plots (22 years and 8 regions). One of the most useful features of ggplot is what's known as facetting (known more commonly in the data viz world as small multiples). With the `facet_grid()` function, we can select which variable to put in rows and which to put in columns of our facetted plot. Cédric and Georgios put `year` in rows and `hub` (region) in columns. The `switch = "y"` argument moves the year label from the right side (where it appears by default) to the left. With this code in place, we can see the final plot coming together. Space considerations require me to again include only four regions, but you get the idea.
 
-
-```{r fig.height = 10, echo = TRUE}
-ggplot(
-  data = dm_perc_cat_hubs,
-  aes(
-    x = week,
-    y = percentage,
-    fill = category
-  )
-) +
+```{r fig.height = 8, echo = TRUE}
+dm_perc_cat_hubs %>%
+  filter(hub %in% c("Northwest", 
+                    "California", 
+                    "Southwest", 
+                    "Northern Plains")) %>%
+  ggplot(aes(x = week, 
+             y = percentage,
+             fill = category)) +
   geom_col() +
   scale_fill_viridis_d(
     option = "rocket",
     direction = -1
   ) +
-  scale_x_continuous(name = NULL, guide = "none") +
-  scale_y_continuous(name = NULL, labels = NULL, position = "right") +
-  facet_grid(rows = vars(year), cols = vars(hub), switch = "y")
+  scale_x_continuous(name = NULL, 
+                     guide = "none") +
+  scale_y_continuous(name = NULL, 
+                     labels = NULL, 
+                     position = "right") +
+  facet_grid(rows = vars(year), 
+             cols = vars(hub), 
+             switch = "y")
 ```
+
+
+
 
 
 Incredibly, the broad outlines of the plot took us just 10 lines to create. All of the final code from here on out falls in the category of small polishes. That's not to minimize how important small polishes are (very) or the time it takes to create them (lots). But it is to say that a little bit of ggplot goes a long way. 
 
-Let's look at a few of the small polishes that Cédric and Georgios make. The first is to apply a theme. They use `theme_light()`, which removes the default gray background, changes the font to Roboto, and makes the default size of elements larger using the `base_size` argument, among other tweaks. 
+Let's look at a few of the small polishes that Cédric and Georgios make. The first is to apply a theme. They use `theme_light()`, which removes the default gray background and changes the font to Roboto.
 
-```{r fig.height = 10}
-ggplot(
-  data = dm_perc_cat_hubs,
-  aes(
-    x = week,
-    y = percentage,
-    fill = category
-  )
-) +
+
+```{r fig.height = 8, echo = TRUE}
+dm_perc_cat_hubs %>%
+  filter(hub %in% c("Northwest", 
+                    "California", 
+                    "Southwest", 
+                    "Northern Plains")) %>%
+  ggplot(aes(x = week, 
+             y = percentage,
+             fill = category)) +
   geom_col() +
   scale_fill_viridis_d(
     option = "rocket",
     direction = -1
   ) +
-  scale_x_continuous(name = NULL, guide = "none") +
-  scale_y_continuous(name = NULL, labels = NULL, position = "right") +
-  facet_grid(rows = vars(year), cols = vars(hub), switch = "y") +
-  theme_light(base_size = 18, base_family = "Roboto")
+  scale_x_continuous(name = NULL, 
+                     guide = "none") +
+  scale_y_continuous(name = NULL, 
+                     labels = NULL, 
+                     position = "right") +
+  facet_grid(rows = vars(year), 
+             cols = vars(hub), 
+             switch = "y") +
+  theme_light(base_family = "Roboto")
 ```
+
 
 `theme_light()` is what's known as a "complete theme." So-called complete themes change the overall look-and-feel of a plot. But Cédric and Georgios don't stop with applying a complete theme. From there, they use the `theme()` function to make additional tweaks to what `theme_light()` gives them. 
 
-```{r fig.height = 10, echo = TRUE}
-ggplot(
-  data = dm_perc_cat_hubs,
-  aes(
-    x = week,
-    y = percentage,
-    fill = category
-  )
-) +
+```{r fig.height = 8, echo = TRUE}
+dm_perc_cat_hubs %>%
+  filter(hub %in% c("Northwest", 
+                    "California", 
+                    "Southwest", 
+                    "Northern Plains")) %>%
+  ggplot(aes(x = week, 
+             y = percentage,
+             fill = category)) +
   geom_col() +
   scale_fill_viridis_d(
     option = "rocket",
     direction = -1
   ) +
-  scale_x_continuous(name = NULL, guide = "none") +
-  scale_y_continuous(name = NULL, labels = NULL, position = "right") +
-  facet_grid(rows = vars(year), cols = vars(hub), switch = "y") +
-  theme_light(base_size = 18, base_family = "Roboto") +
+  scale_x_continuous(name = NULL, 
+                     guide = "none") +
+  scale_y_continuous(name = NULL, 
+                     labels = NULL, 
+                     position = "right") +
+  facet_grid(rows = vars(year), 
+             cols = vars(hub), 
+             switch = "y") +
+  theme_light(base_family = "Roboto") +
   theme(
-    axis.title = element_text(size = 14, color = "black"),
-    axis.text = element_text(family = "Roboto Mono", size = 11),
+    axis.title = element_text(size = 14, 
+                              color = "black"),
+    axis.text = element_text(family = "Roboto Mono", 
+                             size = 11),
     axis.line.x = element_blank(),
-    axis.line.y = element_line(color = "black", size = .2),
-    axis.ticks.y = element_line(color = "black", size = .2),
+    axis.line.y = element_line(color = "black", 
+                               size = .2),
+    axis.ticks.y = element_line(color = "black", 
+                                size = .2),
     axis.ticks.length.y = unit(2, "mm"),
     legend.position = "top",
-    legend.title = element_text(color = "#2DAADA", size = 18, face = "bold"),
-    legend.text = element_text(color = "#2DAADA", size = 16),
-    strip.text.x = element_text(size = 16, hjust = .5, face = "plain", color = "black", margin = margin(t = 20, b = 5)),
-    strip.text.y.left = element_text(size = 18, angle = 0, vjust = .5, face = "plain", color = "black"),
-    strip.background = element_rect(fill = "transparent", color = "transparent"),
+    legend.title = element_text(color = "#2DAADA", 
+                                face = "bold"),
+    legend.text = element_text(color = "#2DAADA"),
+    strip.text.x = element_text(hjust = .5, 
+                                face = "plain", 
+                                color = "black", 
+                                margin = margin(t = 20, b = 5)),
+    strip.text.y.left = element_text(angle = 0, 
+                                     vjust = .5, 
+                                     face = "plain", 
+                                     color = "black"),
+    strip.background = element_rect(fill = "transparent", 
+                                    color = "transparent"),
     panel.grid.minor = element_blank(),
     panel.grid.major = element_blank(),
     panel.spacing.x = unit(0.3, "lines"),
     panel.spacing.y = unit(0.25, "lines"),
-    panel.background = element_rect(fill = "transparent", color = "transparent"),
-    panel.border = element_rect(color = "transparent", size = 0),
-    plot.background = element_rect(fill = "transparent", color = "transparent", size = .4),
+    panel.background = element_rect(fill = "transparent", 
+                                    color = "transparent"),
+    panel.border = element_rect(color = "transparent", 
+                                size = 0),
+    plot.background = element_rect(fill = "transparent", 
+                                   color = "transparent", 
+                                   size = .4),
     plot.margin = margin(rep(18, 4))
   )
 ```
+
 
 The code in the `theme()` function does many different things, but let's take a look at a few of the most important:
 
 `legend.position = "top"` moves the legend from the right (the default) to the top of the plot. 
 
-`strip.text.y.left = element_text(size = 18, angle = 0, vjust = .5, face = "plain", color = "black")` turns the year text in the columns so that it is no longer angled. Without the `angle = 0`, the reader would be forced to uncomfortably tilt their head to read the years:
+`strip.text.y.left = element_text(size = 18, angle = 0, vjust = .5, face = "plain", color = "black")` turns the year text in the columns so that it is no longer angled. Without the `angle = 0`, the years would be much less readable.
 
-```{r fig.height = 6}
+```{r fig.height = 8}
 dm_perc_cat_hubs %>%
-  filter(hub %in% c("Northwest", "California", "Southwest", "Northern Plains")) %>%
-  filter(year <= 2005) %>%
-  ggplot(aes(
-    x = week,
-    y = percentage,
-    fill = category
-  )) +
+  filter(hub %in% c("Northwest", 
+                    "California", 
+                    "Southwest", 
+                    "Northern Plains")) %>%
+  ggplot(aes(x = week, 
+             y = percentage,
+             fill = category)) +
   geom_col() +
   scale_fill_viridis_d(
     option = "rocket",
     direction = -1
   ) +
-  scale_x_continuous(name = NULL, guide = "none") +
-  scale_y_continuous(name = NULL, labels = NULL, position = "right") +
-  facet_grid(rows = vars(year), cols = vars(hub), switch = "y") +
-  theme_light(base_size = 18, base_family = "Roboto") +
+  scale_x_continuous(name = NULL, 
+                     guide = "none") +
+  scale_y_continuous(name = NULL, 
+                     labels = NULL, 
+                     position = "right") +
+  facet_grid(rows = vars(year), 
+             cols = vars(hub), 
+             switch = "y") +
+  theme_light(base_family = "Roboto") +
   theme(
-    axis.title = element_text(size = 14, color = "black"),
-    axis.text = element_text(family = "Roboto Mono", size = 11),
+    axis.title = element_text(size = 14, 
+                              color = "black"),
+    axis.text = element_text(family = "Roboto Mono", 
+                             size = 11),
     axis.line.x = element_blank(),
-    axis.line.y = element_line(color = "black", size = .2),
-    axis.ticks.y = element_line(color = "black", size = .2),
+    axis.line.y = element_line(color = "black", 
+                               size = .2),
+    axis.ticks.y = element_line(color = "black", 
+                                size = .2),
     axis.ticks.length.y = unit(2, "mm"),
     legend.position = "top",
-    legend.title = element_text(color = "#2DAADA", size = 18, face = "bold"),
-    legend.text = element_text(color = "#2DAADA", size = 16),
-    strip.text.x = element_text(size = 16, hjust = .5, face = "plain", color = "black", margin = margin(t = 20, b = 5)),
-    strip.text.y.left = element_text(size = 18, vjust = .5, face = "plain", color = "black"),
-    strip.background = element_rect(fill = "transparent", color = "transparent"),
+    legend.title = element_text(color = "#2DAADA", 
+                                face = "bold"),
+    legend.text = element_text(color = "#2DAADA"),
+    strip.text.x = element_text(hjust = .5, 
+                                face = "plain", 
+                                color = "black", 
+                                margin = margin(t = 20, b = 5)),
+    strip.text.y.left = element_text(vjust = .5, 
+                                     face = "plain", 
+                                     color = "black"),
+    strip.background = element_rect(fill = "transparent", 
+                                    color = "transparent"),
     panel.grid.minor = element_blank(),
     panel.grid.major = element_blank(),
     panel.spacing.x = unit(0.3, "lines"),
     panel.spacing.y = unit(0.25, "lines"),
-    panel.background = element_rect(fill = "transparent", color = "transparent"),
-    panel.border = element_rect(color = "transparent", size = 0),
-    plot.background = element_rect(fill = "transparent", color = "transparent", size = .4),
+    panel.background = element_rect(fill = "transparent", 
+                                    color = "transparent"),
+    panel.border = element_rect(color = "transparent", 
+                                size = 0),
+    plot.background = element_rect(fill = "transparent", 
+                                   color = "transparent", 
+                                   size = .4),
     plot.margin = margin(rep(18, 4))
   )
 ```
@@ -773,10 +917,10 @@ dm_perc_cat_hubs %>%
 The following lines make the distinctive axis lines and ticks that show up on the right side of the final plot:
 
 ```{r eval = FALSE, echo = TRUE}
-# axis.line.x = element_blank(),
-# axis.line.y = element_line(color = "black", size = .2),
-# axis.ticks.y = element_line(color = "black", size = .2),
-# axis.ticks.length.y = unit(2, "mm")
+axis.line.x = element_blank(),
+axis.line.y = element_line(color = "black", size = .2),
+axis.ticks.y = element_line(color = "black", size = .2),
+axis.ticks.length.y = unit(2, "mm")
 ```
 
 `panel.grid.minor = element_blank()` and `panel.grid.major = element_blank()` remove all grid lines from the final plot. 
@@ -784,9 +928,9 @@ The following lines make the distinctive axis lines and ticks that show up on th
 And finally, these three lines remove the borders and make each of the individual plots have a transparent background. 
 
 ```{r eval = FALSE, echo = TRUE}
-# panel.background = element_rect(fill = "transparent", color = "transparent"),
-# panel.border = element_rect(color = "transparent", size = 0),
-# plot.background = element_rect(fill = "transparent", color = "transparent", size = .4)
+panel.background = element_rect(fill = "transparent", color = "transparent"),
+panel.border = element_rect(color = "transparent", size = 0),
+plot.background = element_rect(fill = "transparent", color = "transparent", size = .4)
 ```
 
 Keen readers such as yourself may now be thinking: "wait, didn't the individual plots have a gray background behind them?" Yes, dear reader, they did. How did Cédric and Georgios make these? They did this with a separate geom: `geom_rect()`. Here, they set some additional aesthetic properties specific to `geom_rect()` (`xmin`, `xmax`, `ymin`, and `ymax`). The result is a gray background drawn behind each small multiple. 
@@ -807,14 +951,17 @@ geom_rect(
 
 
 ```{r fig.height = 10, echo = FALSE}
-ggplot(
-  data = dm_perc_cat_hubs,
-  aes(
+dm_perc_cat_hubs %>%
+  filter(hub %in% c("Northwest", 
+                    "California", 
+                    "Southwest", 
+                    "Northern Plains")) %>%
+  ggplot(aes(
     x = week,
     y = percentage,
     fill = category
   )
-) +
+  ) +
   geom_rect(
     aes(
       xmin = .5,
@@ -834,27 +981,43 @@ ggplot(
   scale_x_continuous(name = NULL, guide = "none") +
   scale_y_continuous(name = NULL, labels = NULL, position = "right") +
   facet_grid(rows = vars(year), cols = vars(hub), switch = "y") +
-  theme_light(base_size = 18, base_family = "Roboto") +
+  theme_light(base_family = "Roboto") +
   theme(
-    axis.title = element_text(size = 14, color = "black"),
-    axis.text = element_text(family = "Roboto Mono", size = 11),
+    axis.title = element_text(size = 14, 
+                              color = "black"),
+    axis.text = element_text(family = "Roboto Mono", 
+                             size = 11),
     axis.line.x = element_blank(),
-    axis.line.y = element_line(color = "black", size = .2),
-    axis.ticks.y = element_line(color = "black", size = .2),
+    axis.line.y = element_line(color = "black", 
+                               size = .2),
+    axis.ticks.y = element_line(color = "black", 
+                                size = .2),
     axis.ticks.length.y = unit(2, "mm"),
     legend.position = "top",
-    legend.title = element_text(color = "#2DAADA", size = 18, face = "bold"),
-    legend.text = element_text(color = "#2DAADA", size = 16),
-    strip.text.x = element_text(size = 16, hjust = .5, face = "plain", color = "black", margin = margin(t = 20, b = 5)),
-    strip.text.y.left = element_text(size = 18, angle = 0, vjust = .5, face = "plain", color = "black"),
-    strip.background = element_rect(fill = "transparent", color = "transparent"),
+    legend.title = element_text(color = "#2DAADA", 
+                                face = "bold"),
+    legend.text = element_text(color = "#2DAADA"),
+    strip.text.x = element_text(hjust = .5, 
+                                face = "plain", 
+                                color = "black", 
+                                margin = margin(t = 20, b = 5)),
+    strip.text.y.left = element_text(angle = 0, 
+                                     vjust = .5, 
+                                     face = "plain", 
+                                     color = "black"),
+    strip.background = element_rect(fill = "transparent", 
+                                    color = "transparent"),
     panel.grid.minor = element_blank(),
     panel.grid.major = element_blank(),
     panel.spacing.x = unit(0.3, "lines"),
     panel.spacing.y = unit(0.25, "lines"),
-    panel.background = element_rect(fill = "transparent", color = "transparent"),
-    panel.border = element_rect(color = "transparent", size = 0),
-    plot.background = element_rect(fill = "transparent", color = "transparent", size = .4),
+    panel.background = element_rect(fill = "transparent", 
+                                    color = "transparent"),
+    panel.border = element_rect(color = "transparent", 
+                                size = 0),
+    plot.background = element_rect(fill = "transparent", 
+                                   color = "transparent", 
+                                   size = .4),
     plot.margin = margin(rep(18, 4))
   )
 ```
@@ -877,16 +1040,14 @@ scale_fill_viridis_d(
 )
 ```
 
-
-```{r fig.height = 10, echo = FALSE}
-ggplot(
-  data = dm_perc_cat_hubs,
-  aes(
-    x = week,
-    y = percentage,
-    fill = category
-  )
-) +
+```{r fig.height = 8}
+dm_perc_cat_hubs %>%
+  filter(hub %in% c("Northwest", 
+                    "California", 
+                    "Southwest", 
+                    "Northern Plains")) %>%
+  ggplot(aes(x = week, 
+             y = percentage)) +
   geom_rect(
     aes(
       xmin = .5,
@@ -896,13 +1057,37 @@ ggplot(
     ),
     fill = "#f4f4f9",
     color = NA,
-    size = 0.4
+    size = 0.4,
+    show.legend = FALSE
   ) +
-  geom_col() +
+  geom_col(
+    aes(
+      fill = category,
+      fill = after_scale(addmix(darken(fill, .05, space = "HLS"), 
+                                "#d8005a", 
+                                .15)),
+      color = after_scale(darken(fill, .2, space = "HLS"))
+    ),
+    width = .9,
+    size = 0.12
+  ) +
+  facet_grid(rows = vars(year), 
+             cols = vars(hub), 
+             switch = "y") +
+  coord_cartesian(clip = "off") +
+  scale_x_continuous(expand = c(.02, .02), 
+                     guide = "none", 
+                     name = NULL) +
+  scale_y_continuous(expand = c(0, 0), 
+                     position = "right", 
+                     labels = NULL, 
+                     name = NULL) +
   scale_fill_viridis_d(
     option = "rocket",
+    name = NULL,
     direction = -1,
-    name = "Category:",
+    begin = .17,
+    end = .97,
     labels = c(
       "Abnormally Dry",
       "Moderate Drought",
@@ -911,30 +1096,44 @@ ggplot(
       "Exceptional Drought"
     )
   ) +
-  scale_x_continuous(name = NULL, guide = "none") +
-  scale_y_continuous(name = NULL, labels = NULL, position = "right") +
-  facet_grid(rows = vars(year), cols = vars(hub), switch = "y") +
-  theme_light(base_size = 18, base_family = "Roboto") +
+  guides(fill = guide_legend(override.aes = list(size = 1))) +
+  theme_light(base_family = "Roboto") +
   theme(
-    axis.title = element_text(size = 14, color = "black"),
-    axis.text = element_text(family = "Roboto Mono", size = 11),
+    axis.title = element_text(size = 14, 
+                              color = "black"),
+    axis.text = element_text(family = "Roboto Mono", 
+                             size = 11),
     axis.line.x = element_blank(),
-    axis.line.y = element_line(color = "black", size = .2),
-    axis.ticks.y = element_line(color = "black", size = .2),
+    axis.line.y = element_line(color = "black", 
+                               size = .2),
+    axis.ticks.y = element_line(color = "black", 
+                                size = .2),
     axis.ticks.length.y = unit(2, "mm"),
     legend.position = "top",
-    legend.title = element_text(color = "#2DAADA", size = 18, face = "bold"),
-    legend.text = element_text(color = "#2DAADA", size = 16),
-    strip.text.x = element_text(size = 16, hjust = .5, face = "plain", color = "black", margin = margin(t = 20, b = 5)),
-    strip.text.y.left = element_text(size = 18, angle = 0, vjust = .5, face = "plain", color = "black"),
-    strip.background = element_rect(fill = "transparent", color = "transparent"),
+    legend.title = element_text(color = "#2DAADA", 
+                                face = "bold"),
+    legend.text = element_text(color = "#2DAADA"),
+    strip.text.x = element_text(hjust = .5, 
+                                face = "plain", 
+                                color = "black", 
+                                margin = margin(t = 20, b = 5)),
+    strip.text.y.left = element_text(angle = 0, 
+                                     vjust = .5, 
+                                     face = "plain", 
+                                     color = "black"),
+    strip.background = element_rect(fill = "transparent", 
+                                    color = "transparent"),
     panel.grid.minor = element_blank(),
     panel.grid.major = element_blank(),
     panel.spacing.x = unit(0.3, "lines"),
     panel.spacing.y = unit(0.25, "lines"),
-    panel.background = element_rect(fill = "transparent", color = "transparent"),
-    panel.border = element_rect(color = "transparent", size = 0),
-    plot.background = element_rect(fill = "transparent", color = "transparent", size = .4),
+    panel.background = element_rect(fill = "transparent", 
+                                    color = "transparent"),
+    panel.border = element_rect(color = "transparent", 
+                                size = 0),
+    plot.background = element_rect(fill = "transparent", 
+                                   color = "transparent", 
+                                   size = .4),
     plot.margin = margin(rep(18, 4))
   )
 ```
@@ -953,21 +1152,32 @@ ggplot(dm_perc_cat_hubs, aes(week, percentage)) +
     fill = "#f4f4f9",
     color = NA,
     size = 0.4,
-    show.legend = FALSE # 9d9ca7, 99a4be, 8696bd
+    show.legend = FALSE
   ) +
   geom_col(
     aes(
       fill = category,
-      fill = after_scale(addmix(darken(fill, .05, space = "HLS"), "#d8005a", .15)),
-      color = after_scale(darken(fill, .2, space = "HLS"))
+      fill = after_scale(addmix(darken(fill, .05, 
+                                       space = "HLS"), 
+                                "#d8005a", 
+                                .15)),
+      color = after_scale(darken(fill, .2, 
+                                 space = "HLS"))
     ),
     width = .9,
     size = 0.12
   ) +
-  facet_grid(rows = vars(year), cols = vars(hub), switch = "y") +
+  facet_grid(rows = vars(year), 
+             cols = vars(hub), 
+             switch = "y") +
   coord_cartesian(clip = "off") +
-  scale_x_continuous(expand = c(.02, .02), guide = "none", name = NULL) +
-  scale_y_continuous(expand = c(0, 0), position = "right", labels = NULL, name = NULL) +
+  scale_x_continuous(expand = c(.02, .02), 
+                     guide = "none", 
+                     name = NULL) +
+  scale_y_continuous(expand = c(0, 0), 
+                     position = "right", 
+                     labels = NULL, 
+                     name = NULL) +
   scale_fill_viridis_d(
     option = "rocket",
     name = "Category:",
@@ -983,27 +1193,48 @@ ggplot(dm_perc_cat_hubs, aes(week, percentage)) +
     )
   ) +
   guides(fill = guide_legend(override.aes = list(size = 1))) +
-  theme_light(base_size = 18, base_family = "Roboto") +
+  theme_light(base_size = 18, 
+              base_family = "Roboto") +
   theme(
-    axis.title = element_text(size = 14, color = "black"),
-    axis.text = element_text(family = "Roboto Mono", size = 11),
+    axis.title = element_text(size = 14, 
+                              color = "black"),
+    axis.text = element_text(family = "Roboto Mono", 
+                             size = 11),
     axis.line.x = element_blank(),
-    axis.line.y = element_line(color = "black", size = .2),
-    axis.ticks.y = element_line(color = "black", size = .2),
+    axis.line.y = element_line(color = "black", 
+                               size = .2),
+    axis.ticks.y = element_line(color = "black", 
+                                size = .2),
     axis.ticks.length.y = unit(2, "mm"),
     legend.position = "top",
-    legend.title = element_text(color = "#2DAADA", size = 18, face = "bold"),
-    legend.text = element_text(color = "#2DAADA", size = 16),
-    strip.text.x = element_text(size = 16, hjust = .5, face = "plain", color = "black", margin = margin(t = 20, b = 5)),
-    strip.text.y.left = element_text(size = 18, angle = 0, vjust = .5, face = "plain", color = "black"),
-    strip.background = element_rect(fill = "transparent", color = "transparent"),
+    legend.title = element_text(color = "#2DAADA", 
+                                size = 18, 
+                                face = "bold"),
+    legend.text = element_text(color = "#2DAADA", 
+                               size = 16),
+    strip.text.x = element_text(size = 16, 
+                                hjust = .5, 
+                                face = "plain", 
+                                color = "black", 
+                                margin = margin(t = 20, b = 5)),
+    strip.text.y.left = element_text(size = 18, 
+                                     angle = 0, 
+                                     vjust = .5, 
+                                     face = "plain", 
+                                     color = "black"),
+    strip.background = element_rect(fill = "transparent", 
+                                    color = "transparent"),
     panel.grid.minor = element_blank(),
     panel.grid.major = element_blank(),
     panel.spacing.x = unit(0.3, "lines"),
     panel.spacing.y = unit(0.25, "lines"),
-    panel.background = element_rect(fill = "transparent", color = "transparent"),
-    panel.border = element_rect(color = "transparent", size = 0),
-    plot.background = element_rect(fill = "transparent", color = "transparent", size = .4),
+    panel.background = element_rect(fill = "transparent", 
+                                    color = "transparent"),
+    panel.border = element_rect(color = "transparent", 
+                                size = 0),
+    plot.background = element_rect(fill = "transparent", 
+                                   color = "transparent", 
+                                   size = .4),
     plot.margin = margin(rep(18, 4))
   )
 ```
