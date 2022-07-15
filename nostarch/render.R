@@ -8,3 +8,5 @@ render(
   output_dir = "word",
   output_format = "word_document"
 )
+
+beepr::beep()

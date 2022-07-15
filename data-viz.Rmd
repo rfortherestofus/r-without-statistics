@@ -410,9 +410,7 @@ When I asked Cédric and Georgios to speak with me about this data visualization
 
 If you've used Excel to make graphs, you're probably familiar with this menu: 
 
-```{r}
-# TODO: make bigger version
-
+```{r out.width="100%"}
 include_graphics("assets/excel-chart-chooser.png")
 ```
 
@@ -487,7 +485,7 @@ At the time Wilkinson wrote his book, there was no data viz tool that could impl
 
 ## ggplot2 {-}
 
-Hadley Wickham's article announcing `ggplot2` (which I, like nearly everyone in the data viz world, will refer to simply as ggplot) was titled "A Layered Grammar of Graphics." It showed a new R package that relied on the grammar of graphics and added on the idea of plots having multiple layers. Let's walk through some of the most important layers. 
+Hadley Wickham's article announcing `ggplot2` (which I, like nearly everyone in the data viz world, will refer to simply as ggplot) was titled *A Layered Grammar of Graphics*. It showed a new R package that relied on the grammar of graphics and added on the idea of plots having multiple layers. Let's walk through some of the most important layers. 
 
 When creating a graph with ggplot, we begin by mapping data to aesthetic properties. To the uninitiated, this may sound like complete nonsense. But all it means is that we use things like the x or y axis, color, size (aka aesthetic properties) to represent variables. 
 
