@@ -19,7 +19,7 @@ This was the challenge that data visualization designers Cédric Scherer and Geo
 
 There was nothing unique about the data that Cédric and Georgios used. It was the same data from the National Drought Center that news organizations used in their stories. But Cédric and Georgios visualized the data in a way that it both grabs attention and communicates the scale of the phenomenon.
 
-Below is a section of the final visualization (if you're incredibly eagle-eyed, you'll see a few minor elements that differ from the version published in Scientific American; these were added in post-production). Showing four regions over the last two decades, the increase in drought conditions, especially in California and the Southwest, is made apparent. 
+Below is a section of the final visualization ^[If you're incredibly eagle-eyed, you'll see a few minor elements that differ from the version published in Scientific American. These are things I had to change to make the plots fit in this book (e.g. text size and putting legend text on two rows) or things that Scientific American added in post-production (e.g. some annotations). Showing four regions over the last two decades, the increase in drought conditions, especially in California and the Southwest, is made apparent. 
 
 ```{r}
 library(tidyverse)
@@ -157,7 +157,8 @@ dm_perc_cat_hubs %>%
       "Exceptional Drought"
     )
   ) +
-  guides(fill = guide_legend(override.aes = list(size = 1))) +
+  guides(fill = guide_legend(nrow = 2,
+                             override.aes = list(size = 1))) +
   theme_light(base_family = "Roboto") +
   theme(
     axis.title = element_text(size = 14, 
@@ -264,7 +265,8 @@ geom_col(
       "Exceptional Drought"
     )
   ) +
-  guides(fill = guide_legend(override.aes = list(size = 1))) +
+  guides(fill = guide_legend(nrow = 2,
+                             override.aes = list(size = 1))) +
   theme_light(base_family = "Roboto") +
   theme(
     axis.title = element_text(size = 14, 
@@ -365,7 +367,8 @@ dm_perc_cat_hubs %>%
       "Exceptional Drought"
     )
   ) +
-  guides(fill = guide_legend(override.aes = list(size = 1))) +
+  guides(fill = guide_legend(nrow = 2,
+                             override.aes = list(size = 1))) +
   theme_light(base_family = "Roboto") +
   theme(
     axis.title = element_text(size = 14, 
@@ -1136,7 +1139,8 @@ dm_perc_cat_hubs %>%
       "Exceptional Drought"
     )
   ) +
-  guides(fill = guide_legend(override.aes = list(size = 1))) +
+  guides(fill = guide_legend(nrow = 2,
+                             override.aes = list(size = 1))) +
   theme_light(base_family = "Roboto") +
   theme(
     axis.title = element_text(size = 14, 
@@ -1234,7 +1238,8 @@ ggplot(dm_perc_cat_hubs, aes(week, percentage)) +
       "Exceptional Drought"
     )
   ) +
-  guides(fill = guide_legend(override.aes = list(size = 1))) +
+  guides(fill = guide_legend(nrow = 2,
+                             override.aes = list(size = 1))) +
   theme_light(base_size = 18, 
               base_family = "Roboto") +
   theme(
@@ -1285,7 +1290,7 @@ save_figure_for_nostarch(figure_height = 8)
 
 ## ggplot is your data viz secret weapon {-}
 
-If you take up ggplot, you may start to think of it as a solution to all of your data viz problems. Yes, you have a new hammer, but no, everything is not a nail. If you look at the version of this data viz that appeared in Scientific American^[https://www.scientificamerican.com/article/climate-change-drives-escalating-drought/], you'll see that there are some annotations not visible in our recreation. That's because they were added in post-processing outside of ggplot. While you *can* come up with ways to do everything in ggplot, it's often not the best use of your time. Get yourself 90% of the way there with ggplot and then use Illustrator, Figma, or a similar tool to finish off your work. 
+If you take up ggplot, you may start to think of it as a solution to all of your data viz problems. Yes, you have a new hammer, but no, everything is not a nail. If you look at the version of this data viz that appeared in Scientific American^[https://www.scientificamerican.com/article/climate-change-drives-escalating-drought/], you'll see that there are some annotations not visible in our recreation. That's because they were added in post-production outside of ggplot. While you *can* come up with ways to do everything in ggplot, it's often not the best use of your time. Get yourself 90% of the way there with ggplot and then use Illustrator, Figma, or a similar tool to finish off your work. 
 
 With that caveat in place, ggplot is a very powerful hammer. And it's a hammer used to make plots that you've seen in the New York Times, FiveThirtyEight, the BBC, and other well-known news outlets. ggplot is so popular not because it is the only tool that can make data viz that follows principles of high-quality data viz, but because it makes it straightforward to do so. The graph that Cédric Scherer and Georgios Karamanis made shows this in several ways:
 
