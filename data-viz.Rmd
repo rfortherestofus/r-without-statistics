@@ -1,8 +1,11 @@
 ---
 output: html_document
-editor_options: 
-  chunk_output_type: inline
 ---
+
+```{r}
+i <- 1
+```
+
 
 # Use General Principles of High-Quality Data Viz in R {-}
 
@@ -18,7 +21,7 @@ There was nothing unique about the data that Cédric and Georgios used. It was t
 
 Below is a section of the final visualization (if you're incredibly eagle-eyed, you'll see a few minor elements that differ from the version published in Scientific American; these were added in post-production). Showing four regions over the last two decades, the increase in drought conditions, especially in California and the Southwest, is made apparent. 
 
-```{r }
+```{r}
 library(tidyverse)
 library(lubridate)
 library(gapminder)
@@ -33,14 +36,11 @@ library(showtext)
 library(knitr)
 library(patchwork)
 
-i <- 1
-
 ## Add fonts
 # font_add_google("Roboto", "Roboto")
 # font_add_google("Roboto Mono", "Roboto Mono")
 # font_add_google("Inter", "Inter")
 # showtext_auto()
-
 
 ## Color palette hubs
 greys <- c(0, 60, 40, 60, 0, 40, 60, 0)
