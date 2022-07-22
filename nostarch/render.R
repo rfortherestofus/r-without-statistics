@@ -50,7 +50,7 @@ render_chapter <- function(chapter_rmd) {
   render(
     input = chapter_rmd,
     output_dir = "nostarch/chapters",
-    output_format = "word_document"
+    output_format = "bookdown::word_document2"
   )
   
 }

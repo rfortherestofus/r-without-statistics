@@ -4,6 +4,8 @@ output: html_document
 
 ```{r}
 i <- 1
+
+# source("_common.R")
 ```
 
 
@@ -101,7 +103,7 @@ dm_perc_cat_hubs <-
   filter(percentage > 0)
 ```
 
-```{r, fig.height = 8}
+```{r, fig.height = 8, fig.cap="Test"}
 dm_perc_cat_hubs %>%
   filter(hub %in% c("Northwest", 
                     "California", 
@@ -306,7 +308,7 @@ geom_col(
     plot.margin = margin(rep(18, 4))
   )
 
-save_figure_for_nostarch(figure_height = 8)
+# save_figure_for_nostarch(figure_height = 8)
 ```
 
 And, again, it's not just that this cluttered version looks worse. The clutter actively inhibits understanding. Rather than focus on overall drought patterns (the point of the graph), our brain gets stuck reading repetitive and unnecessary axis text. 
@@ -409,7 +411,7 @@ dm_perc_cat_hubs %>%
     plot.margin = margin(rep(18, 4))
   )
 
-save_figure_for_nostarch(figure_height = 4)
+# save_figure_for_nostarch(figure_height = 4)
 ```
 
 
@@ -422,7 +424,7 @@ When I asked Cédric and Georgios to speak with me about this data visualization
 If you've used Excel to make graphs, you're probably familiar with this menu: 
 
 ```{r, out.width="100%"}
-save_image_for_nostarch("assets/excel-chart-chooser.png")
+# save_image_for_nostarch("assets/excel-chart-chooser.png")
 ```
 
 Working in Excel, your graph-making journey begins with the step of selecting the type of graph you want to make. Want a bar chart? Click the bar chart icon. Want a line chart? Click the line chart icon. 
@@ -486,7 +488,7 @@ bar_chart + line_chart +
     )
   )
 
-save_figure_for_nostarch()
+# save_figure_for_nostarch()
 ```
 
 
@@ -521,7 +523,7 @@ ggplot(
   )
 )
 
-save_figure_for_nostarch()
+# save_figure_for_nostarch()
 ```
 
 When I run my code, what I get doesn't look like much.
@@ -552,7 +554,7 @@ ggplot(
 ) +
   geom_point()
 
-save_figure_for_nostarch()
+# save_figure_for_nostarch()
 ```
 
 There we go! 1952 shows the life expectancy of about 28 and so on through every year in our data. 
@@ -569,7 +571,7 @@ ggplot(
 ) +
   geom_line()
 
-save_figure_for_nostarch()
+# save_figure_for_nostarch()
 ```
 
 Or (and now we're really getting fancy), what if we add *both* `geom_point()` and `geom_line()`? A line chart with points!  
@@ -585,7 +587,7 @@ ggplot(
   geom_point() +
   geom_line()
 
-save_figure_for_nostarch()
+# save_figure_for_nostarch()
 ```
 
 We can extend this idea further, swapping in `geom_col()` to create to a bar chart (note that the y axis range has been automatically updated now, going from 0 to 40 to account for the different geom). 
@@ -600,7 +602,7 @@ ggplot(
 ) +
   geom_col()
 
-save_figure_for_nostarch()
+# save_figure_for_nostarch()
 ```
 
 I hope you're seeing how ggplot is a direct implementation of Wilkinson's grammar of graphics. The difference between a line chart and a bar chart isn't as great as the Excel chart type picker might have us think. Both can have the same aesthetic properties (namely, putting year on the x axis and life expectancy on the y axis), but simply use different geometric objects to visually represent the data. 
@@ -618,7 +620,7 @@ ggplot(
 ) +
   geom_col()
 
-save_figure_for_nostarch()
+# save_figure_for_nostarch()
 ```
 
 What we see now is that, for earlier years, the fill is darker while for later years, it is lighter (the legend, added to the right of our plot, shows this). What if we want to change the fill colors? For that, we use a new scale layer. In this case, I'll use the `scale_fill_viridis_c()` function (the c at the end of the function name refers to the fact that the data is continuous). This function, just one of many functions that start with `scale_` and can alter the fill scale, changes the default palette to one that is colorblind-friendly and prints well in grayscale. 
@@ -635,7 +637,7 @@ ggplot(
   geom_col() +
   scale_fill_viridis_c()
 
-save_figure_for_nostarch()
+# save_figure_for_nostarch()
 ```
 
 A final layer we'll look at is the theme layer. This layer allows us to change the overall look-and-feel of plots (think: plot backgrounds, grid lines, etc). Just as there are a number of `scale_` functions, there are also a number of functions that start with `theme_`. Below, I've added `theme_minimal()`, which starts to declutter our plot. 
@@ -653,7 +655,7 @@ ggplot(
   scale_fill_viridis_c() +
   theme_minimal()
 
-save_figure_for_nostarch()
+# save_figure_for_nostarch()
 ```
 
 We've now seen why Hadley Wickham described the `ggplot2` package as using a layered grammar of graphics. It relies on Leland Wilkinson's theory and implements it through the creation of multiple layers: 
