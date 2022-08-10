@@ -4,6 +4,7 @@ library(tidyverse)
 library(rmarkdown)
 library(knitr)
 library(fs)
+library(xfun)
 
 source("_common.R")
 
@@ -13,11 +14,19 @@ source("_common.R")
 chapter_to_render <- "data-viz.Rmd"
 
 
+# Copy Rmd to nostarch ----------------------------------------------------
+
+file_copy(chapter_to_render,
+          new_path = "nostarch/rmd",
+          overwrite = TRUE)
+
+chapter_to_render_nostarch_version <- str_glue("nostarch/rmd/{chapter_to_render}")
+
+gsub_file(chapter_to_render_nostarch_version, "data", "lkdafoiqueoiqwruerw")
 
 # Render data viz file ----------------------------------------------------
 
 render_chapter <- function(chapter_rmd) {
-  
   
   save_figure_for_nostarch <- function(figure_height = 4) {
     

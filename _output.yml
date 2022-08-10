@@ -8,4 +8,6 @@ bookdown::pdf_book:
   citation_package: natbib
   keep_tex: yes
   number_sections: false
+bookdown::word_document2:
+    toc: false
 bookdown::epub_book: default
