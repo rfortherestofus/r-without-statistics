@@ -411,7 +411,7 @@ Zooming in on a single region in a single year also makes the color choices more
 
 When I asked Cédric and Georgios to speak with me about this data visualization, they initially told me that the code for this piece might be too simple to highlight the power of R for data viz. No, I told them, I want to speak with you precisely *because* the code is not super complex. The fact that Cédric and Georgios were able to produce this complex graph with relatively simple code shows the power of R for data visualization. And it is possible because of a theory called the grammar of graphics.
 
-## The Grammar of Graphics {-}
+## The Grammar of Graphics 
 
 If you've used Excel to make graphs, you're probably familiar with this menu: 
 
@@ -492,7 +492,7 @@ As an academic statistician, Wilkinson's goal in writing *The Grammar of Graphic
 
 At the time Wilkinson wrote his book, there was no data viz tool that could implement his grammar of graphics. This would change in 2010, when Hadley Wickham announced the `ggplot2` package for R. Providing the tools to implement Wilkinson's ideas, `ggplot2` would come to revolutionize the world of data visualization. 
 
-## ggplot2 {-}
+## ggplot2 
 
 Hadley Wickham's article announcing `ggplot2` (which I, like nearly everyone in the data viz world, will refer to simply as ggplot) was titled *A Layered Grammar of Graphics*. It showed a new R package that relied on the grammar of graphics and added on the idea of plots having multiple layers. Let's walk through some of the most important layers. 
 
@@ -678,7 +678,7 @@ We've now seen why Hadley Wickham described the `ggplot2` package as using a lay
 
 There are many ways we could improve the plot we've been working on. But rather than improving an ugly plot, let's instead return to the drought data viz that Cédric Scherer and Georgios Karamanis made. Going through their code will show us some familiar aspects of ggplot -- and present some tips on how to make high-quality data visualization with R. 
 
-## Recreating the Drought Visualization {-}
+## Recreating the Drought Visualization 
 
 The code that Cédric and Georgios wrote to make their final data viz relies on a combination of ggplot fundamentals and some less-well-known tweaks that make it really shine. In order to understand how Cédric and Georgios made their data viz, we'll start out with a simplified version of their code. We'll build it up layer by layer, adding elements until we can see exactly how they made their drought data viz. 
 
@@ -1317,7 +1317,7 @@ ggplot(dm_perc_cat_hubs, aes(week, percentage)) +
 save_figure_for_nostarch(figure_height = 8)
 ```
 
-## ggplot is Your Data Viz Secret Weapon {-}
+## ggplot is Your Data Viz Secret Weapon 
 
 If you take up ggplot, you may start to think of it as a solution to all of your data viz problems. Yes, you have a new hammer, but no, everything is not a nail. If you look at the version of this data viz that appeared in Scientific American^[https://www.scientificamerican.com/article/climate-change-drives-escalating-drought/], you'll see that there are some annotations not visible in our recreation. That's because they were added in post-production outside of ggplot. While you *can* come up with ways to do everything in ggplot, it's often not the best use of your time. Get yourself 90% of the way there with ggplot and then use Illustrator, Figma, or a similar tool to finish off your work. 
 

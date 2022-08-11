@@ -1,2 +1,2 @@
-# Create Beautiful Presentations with RMarkdown {-}
+# Create Beautiful Presentations with RMarkdown 
 

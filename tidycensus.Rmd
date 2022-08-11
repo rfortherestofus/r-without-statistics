@@ -1,4 +1,4 @@
-# (PART\*) Automate {-}
+# (PART\*) Automate 
 
-# Access Up to Date Census Data with the `tidycensus` Package {-}
+# Access Up to Date Census Data with the `tidycensus` Package 
 

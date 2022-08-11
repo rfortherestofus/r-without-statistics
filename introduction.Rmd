@@ -7,15 +7,15 @@ library(tweetrmd)
 ```
 
 
-# (PART\*) Introduction {-}
+# (PART\*) Introduction 
 
 # Why R Without Statistics?
 
-## How New Zealand Used R to Fight COVID {-}
+## How New Zealand Used R to Fight COVID 
 
 TODO
 
-## How I Came to Use R {-}
+## How I Came to Use R 
 
 My own relationship with R goes back to 2016. At the time, I was a consultant, helping non-profits, government agencies, and educational institutions to measure the effectiveness of their work is (a field known as [program evaluation](https://www.cdc.gov/evaluation/index.htm)). A lot of my work involved conducting surveys, analyzing the resulting the data, and sharing the results with clients. 
 
@@ -180,7 +180,7 @@ If I only used R for the things I thought "real" R users used it for, I wouldn't
 
 And here's the thing: if I, a qualitatively-trained anthropologist whose most complex statistical use for R is calculating averages, can find value in R, so can you. No matter what your background or what you think about R right now, using R without statistics can transform how you work in the future. 
 
-## How This Book Works {-}
+## How This Book Works 
 
 This book shows the many ways that people use R without statistics. It's not comprehensive (trust me, there are many ways people use R not covered here). But I hope the ideas inspire you to think about learning to use R (if you're not yet an R user) or (if you are already on board the R train) learning to use R in ways you hadn't previously considered. 
 
@@ -190,7 +190,7 @@ I've tried to choose topics for each chapter that are relevant to a broad audien
 
 There are some great topics that I thought to include but were just too narrow in their focus (for example, [the world of generative art made with R](https://blog.djnavarro.net/posts/2021-10-19_rtistry-posts/). If, at any point while you're reading this book, you think, "why didn't David include X topic," please know that X might be a great topic, but I can only cover so much. The fact that you're able to come up with other ideas for things that R can do is a) fantastic and b) a further display of R's versatility. I eagerly await your follow-up book highlighting the myriad other things R can do that I am unable to cover in this book!
 
-## A Favor to Ask {-}
+## A Favor to Ask 
 
 Pedants of the world (as one of you, I come in peace), I have a favor to ask. 
 

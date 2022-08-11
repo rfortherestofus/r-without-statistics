@@ -1,2 +1,2 @@
-# R is a Full-Fledged Map-Making Tool {-}
+# R is a Full-Fledged Map-Making Tool 
 
