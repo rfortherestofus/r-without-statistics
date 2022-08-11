@@ -30,6 +30,7 @@ jobs:
         run: |
           R -e 'install.packages("downlit")'
           R -e 'install.packages("ragg")'
+          R -e 'install.packages("textshaping")'
 
       - name: Cache bookdown results
         uses: actions/cache@v2
