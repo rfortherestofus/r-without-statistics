@@ -74,8 +74,8 @@ dm_perc_cat_hubs <-
 
 ```{r}
 i <- 1
-
-# source("_common.R")
+chapter_number <- 2
+source("_common.R")
 ```
 
 # Use General Principles of High-Quality Data Viz in R
@@ -90,7 +90,7 @@ This was the challenge that data visualization designers Cédric Scherer and Geo
 
 There was nothing unique about the data that Cédric and Georgios used. It was the same data from the National Drought Center that news organizations used in their stories. But Cédric and Georgios visualized the data in a way that it both grabs attention and communicates the scale of the phenomenon.
 
-Below is a section of the final visualization ^[If you're incredibly eagle-eyed, you'll see a few minor elements that differ from the version published in Scientific American. These are things I had to change to make the plots fit in this book (e.g. text size and putting legend text on two rows) or things that Scientific American added in post-production (e.g. some annotations). Showing four regions over the last two decades, the increase in drought conditions, especially in California and the Southwest, is made apparent. 
+Below is a section of the final visualization (If you're incredibly eagle-eyed, you'll see a few minor elements that differ from the version published in Scientific American). These are things I had to change to make the plots fit in this book (e.g. text size and putting legend text on two rows) or things that Scientific American added in post-production (e.g. some annotations). Showing four regions over the last two decades, the increase in drought conditions, especially in California and the Southwest, is made apparent. 
 
 
 ```{r, fig.height = 8, fig.cap="Test"}
@@ -151,11 +151,11 @@ dm_perc_cat_hubs %>%
   ) +
   guides(fill = guide_legend(nrow = 2,
                              override.aes = list(size = 1))) +
-  theme_light(base_family = "Helvetica") +
+  theme_light(base_family = "Roboto") +
   theme(
     axis.title = element_text(size = 14, 
                               color = "black"),
-    axis.text = element_text(family = "Helvetica", 
+    axis.text = element_text(family = "Roboto Mono", 
                              size = 11),
     axis.line.x = element_blank(),
     axis.line.y = element_line(color = "black", 
@@ -193,6 +193,8 @@ dm_perc_cat_hubs %>%
 
 save_figure_for_nostarch(figure_height = 8)
 ```
+
+
 
 To understand why this visualization is effective, let's break it down into pieces. 
 
@@ -259,11 +261,11 @@ geom_col(
   ) +
   guides(fill = guide_legend(nrow = 2,
                              override.aes = list(size = 1))) +
-  theme_light(base_family = "Helvetica") +
+  theme_light(base_family = "Roboto") +
   theme(
     axis.title = element_text(size = 14, 
                               color = "black"),
-    axis.text = element_text(family = "Helvetica"),
+    axis.text = element_text(family = "Roboto Mono"),
     axis.line.x = element_blank(),
     axis.line.y = element_line(color = "black", 
                                size = .2),
@@ -298,7 +300,7 @@ geom_col(
     plot.margin = margin(rep(18, 4))
   )
 
-# save_figure_for_nostarch(figure_height = 8)
+save_figure_for_nostarch(figure_height = 8)
 ```
 
 And, again, it's not just that this cluttered version looks worse. The clutter actively inhibits understanding. Rather than focus on overall drought patterns (the point of the graph), our brain gets stuck reading repetitive and unnecessary axis text. 
@@ -361,11 +363,11 @@ dm_perc_cat_hubs %>%
   ) +
   guides(fill = guide_legend(nrow = 2,
                              override.aes = list(size = 1))) +
-  theme_light(base_family = "Helvetica") +
+  theme_light(base_family = "Roboto") +
   theme(
     axis.title = element_text(size = 14, 
                               color = "black"),
-    axis.text = element_text(family = "Helvetica", 
+    axis.text = element_text(family = "Roboto Mono", 
                              size = 11),
     axis.line.x = element_blank(),
     axis.line.y = element_line(color = "black", 
@@ -414,7 +416,9 @@ When I asked Cédric and Georgios to speak with me about this data visualization
 If you've used Excel to make graphs, you're probably familiar with this menu: 
 
 ```{r, out.width="100%"}
-# save_image_for_nostarch("assets/excel-chart-chooser.png")
+knitr::include_graphics("assets/excel-chart-chooser.png")
+
+save_image_for_nostarch("assets/excel-chart-chooser.png")
 ```
 
 Working in Excel, your graph-making journey begins with the step of selecting the type of graph you want to make. Want a bar chart? Click the bar chart icon. Want a line chart? Click the line chart icon. 
@@ -478,7 +482,7 @@ bar_chart + line_chart +
     )
   )
 
-# save_figure_for_nostarch()
+save_figure_for_nostarch()
 ```
 
 
@@ -512,13 +516,16 @@ ggplot(
     y = lifeExp
   )
 )
-
-# save_figure_for_nostarch()
 ```
+
+```{r}
+save_figure_for_nostarch()
+```
+
 
 When I run my code, what I get doesn't look like much.
 
-```{r }
+```{r}
 ggplot(
   data = gapminder_10_rows,
   mapping = aes(
@@ -543,8 +550,10 @@ ggplot(
   )
 ) +
   geom_point()
+```
 
-# save_figure_for_nostarch()
+```{r}
+save_figure_for_nostarch()
 ```
 
 There we go! 1952 shows the life expectancy of about 28 and so on through every year in our data. 
@@ -560,8 +569,10 @@ ggplot(
   )
 ) +
   geom_line()
+```
 
-# save_figure_for_nostarch()
+```{r}
+save_figure_for_nostarch()
 ```
 
 Or (and now we're really getting fancy), what if we add *both* `geom_point()` and `geom_line()`? A line chart with points!  
@@ -576,8 +587,10 @@ ggplot(
 ) +
   geom_point() +
   geom_line()
+```
 
-# save_figure_for_nostarch()
+```{r}
+save_figure_for_nostarch()
 ```
 
 We can extend this idea further, swapping in `geom_col()` to create to a bar chart (note that the y axis range has been automatically updated now, going from 0 to 40 to account for the different geom). 
@@ -591,8 +604,10 @@ ggplot(
   )
 ) +
   geom_col()
+```
 
-# save_figure_for_nostarch()
+```{r}
+save_figure_for_nostarch()
 ```
 
 I hope you're seeing how ggplot is a direct implementation of Wilkinson's grammar of graphics. The difference between a line chart and a bar chart isn't as great as the Excel chart type picker might have us think. Both can have the same aesthetic properties (namely, putting year on the x axis and life expectancy on the y axis), but simply use different geometric objects to visually represent the data. 
@@ -609,8 +624,10 @@ ggplot(
   )
 ) +
   geom_col()
+```
 
-# save_figure_for_nostarch()
+```{r}
+save_figure_for_nostarch()
 ```
 
 What we see now is that, for earlier years, the fill is darker while for later years, it is lighter (the legend, added to the right of our plot, shows this). What if we want to change the fill colors? For that, we use a new scale layer. In this case, I'll use the `scale_fill_viridis_c()` function (the c at the end of the function name refers to the fact that the data is continuous). This function, just one of many functions that start with `scale_` and can alter the fill scale, changes the default palette to one that is colorblind-friendly and prints well in grayscale. 
@@ -626,8 +643,10 @@ ggplot(
 ) +
   geom_col() +
   scale_fill_viridis_c()
+```
 
-# save_figure_for_nostarch()
+```{r}
+save_figure_for_nostarch()
 ```
 
 A final layer we'll look at is the theme layer. This layer allows us to change the overall look-and-feel of plots (think: plot backgrounds, grid lines, etc). Just as there are a number of `scale_` functions, there are also a number of functions that start with `theme_`. Below, I've added `theme_minimal()`, which starts to declutter our plot. 
@@ -644,8 +663,10 @@ ggplot(
   geom_col() +
   scale_fill_viridis_c() +
   theme_minimal()
+```
 
-# save_figure_for_nostarch()
+```{r}
+save_figure_for_nostarch()
 ```
 
 We've now seen why Hadley Wickham described the `ggplot2` package as using a layered grammar of graphics. It relies on Leland Wilkinson's theory and implements it through the creation of multiple layers: 
@@ -695,7 +716,9 @@ ggplot(
   )
 ) +
   geom_col()
+```
 
+```{r}
 save_figure_for_nostarch()
 ```
 
@@ -715,7 +738,9 @@ ggplot(
     option = "rocket",
     direction = -1
   )
+```
 
+```{r}
 save_figure_for_nostarch()
 ```
 
@@ -740,7 +765,9 @@ ggplot(
   scale_y_continuous(name = NULL, 
                      labels = NULL, 
                      position = "right")
+```
 
+```{r}
 save_figure_for_nostarch()
 ```
 
@@ -768,17 +795,15 @@ dm_perc_cat_hubs %>%
   facet_grid(rows = vars(year), 
              cols = vars(hub), 
              switch = "y")
+```
 
+```{r}
 save_figure_for_nostarch(figure_height = 8)
 ```
 
-
-
-
-
 Incredibly, the broad outlines of the plot took us just 10 lines to create. All of the final code from here on out falls in the category of small polishes. That's not to minimize how important small polishes are (very) or the time it takes to create them (lots). But it is to say that a little bit of ggplot goes a long way. 
 
-Let's look at a few of the small polishes that Cédric and Georgios make. The first is to apply a theme. They use `theme_light()`, which removes the default gray background and changes the font to Helvetica.
+Let's look at a few of the small polishes that Cédric and Georgios make. The first is to apply a theme. They use `theme_light()`, which removes the default gray background and changes the font to Roboto.
 
 
 ```{r, fig.height = 8, echo = TRUE}
@@ -803,8 +828,10 @@ dm_perc_cat_hubs %>%
   facet_grid(rows = vars(year), 
              cols = vars(hub), 
              switch = "y") +
-  theme_light(base_family = "Helvetica")
+  theme_light(base_family = "Roboto")
+```
 
+```{r}
 save_figure_for_nostarch(figure_height = 8)
 ```
 
@@ -833,11 +860,11 @@ dm_perc_cat_hubs %>%
   facet_grid(rows = vars(year), 
              cols = vars(hub), 
              switch = "y") +
-  theme_light(base_family = "Helvetica") +
+  theme_light(base_family = "Roboto") +
   theme(
     axis.title = element_text(size = 14, 
                               color = "black"),
-    axis.text = element_text(family = "Helvetica", 
+    axis.text = element_text(family = "Roboto Mono", 
                              size = 11),
     axis.line.x = element_blank(),
     axis.line.y = element_line(color = "black", 
@@ -872,7 +899,9 @@ dm_perc_cat_hubs %>%
                                    size = .4),
     plot.margin = margin(rep(18, 4))
   )
+```
 
+```{r}
 save_figure_for_nostarch(figure_height = 8)
 ```
 
@@ -905,11 +934,11 @@ dm_perc_cat_hubs %>%
   facet_grid(rows = vars(year), 
              cols = vars(hub), 
              switch = "y") +
-  theme_light(base_family = "Helvetica") +
+  theme_light(base_family = "Roboto") +
   theme(
     axis.title = element_text(size = 14, 
                               color = "black"),
-    axis.text = element_text(family = "Helvetica", 
+    axis.text = element_text(family = "Roboto Mono", 
                              size = 11),
     axis.line.x = element_blank(),
     axis.line.y = element_line(color = "black", 
@@ -943,7 +972,9 @@ dm_perc_cat_hubs %>%
                                    size = .4),
     plot.margin = margin(rep(18, 4))
   )
+```
 
+```{r}
 save_figure_for_nostarch(figure_height = 8)
 ```
 
@@ -1014,11 +1045,11 @@ dm_perc_cat_hubs %>%
   scale_x_continuous(name = NULL, guide = "none") +
   scale_y_continuous(name = NULL, labels = NULL, position = "right") +
   facet_grid(rows = vars(year), cols = vars(hub), switch = "y") +
-  theme_light(base_family = "Helvetica") +
+  theme_light(base_family = "Roboto") +
   theme(
     axis.title = element_text(size = 14, 
                               color = "black"),
-    axis.text = element_text(family = "Helvetica", 
+    axis.text = element_text(family = "Roboto Mono", 
                              size = 11),
     axis.line.x = element_blank(),
     axis.line.y = element_line(color = "black", 
@@ -1053,7 +1084,9 @@ dm_perc_cat_hubs %>%
                                    size = .4),
     plot.margin = margin(rep(18, 4))
   )
+```
 
+```{r}
 save_figure_for_nostarch(figure_height = 8)
 ```
 
@@ -1133,11 +1166,11 @@ dm_perc_cat_hubs %>%
   ) +
   guides(fill = guide_legend(nrow = 2,
                              override.aes = list(size = 1))) +
-  theme_light(base_family = "Helvetica") +
+  theme_light(base_family = "Roboto") +
   theme(
     axis.title = element_text(size = 14, 
                               color = "black"),
-    axis.text = element_text(family = "Helvetica", 
+    axis.text = element_text(family = "Roboto Mono", 
                              size = 11),
     axis.line.x = element_blank(),
     axis.line.y = element_line(color = "black", 
@@ -1172,7 +1205,9 @@ dm_perc_cat_hubs %>%
                                    size = .4),
     plot.margin = margin(rep(18, 4))
   )
+```
 
+```{r}
 save_figure_for_nostarch(figure_height = 8)
 ```
 
@@ -1233,11 +1268,11 @@ ggplot(dm_perc_cat_hubs, aes(week, percentage)) +
   guides(fill = guide_legend(nrow = 2,
                              override.aes = list(size = 1))) +
   theme_light(base_size = 18, 
-              base_family = "Helvetica") +
+              base_family = "Roboto") +
   theme(
     axis.title = element_text(size = 14, 
                               color = "black"),
-    axis.text = element_text(family = "Helvetica", 
+    axis.text = element_text(family = "Roboto Mono", 
                              size = 11),
     axis.line.x = element_blank(),
     axis.line.y = element_line(color = "black", 
@@ -1276,7 +1311,9 @@ ggplot(dm_perc_cat_hubs, aes(week, percentage)) +
                                    size = .4),
     plot.margin = margin(rep(18, 4))
   )
+```
 
+```{r}
 save_figure_for_nostarch(figure_height = 8)
 ```
 
@@ -1291,7 +1328,6 @@ With that caveat in place, ggplot is a very powerful hammer. And it's a hammer u
 1. **It uses small multiples to break data from two decades and eight regions into a set of graphs that come together to create a single plot.** With a single call to the `facet_grid()` function, Cédric and Georgios created over 100 small multiples that are automatically combined into a single plot. 
 
 Learning to create data visualization in ggplot involves a significant time investment. But the long-term payoff is even greater. Once you learn how ggplot works, you can look at others' code and learn how to improve your own. Take Cédric and Georgios's code, run it on your own system, and the beautiful visualization they made will magically appear.  
-
 Being able to run and learn from others' code is not something you can do in Excel. When you make a data viz in Excel, the series of point-and-click steps disappear into the ether with each use. Want to recreate a visualization you made last week? You'll need to remember the exact steps you used. Want to make a data viz that you saw someone else make? You'll need them to write up their process for you. 
 
 Code-based data viz tools like ggplot allow you to keep that record of the steps you made. In the end, that's all code is: a set of instructions. And it's a set of instructions that you can re-run or you can share with others for them to run. Or the reverse: others can share their code and you can learn from them. You don't have to be the most talented designer to make high-quality data viz with ggplot. You can study others' code, adapt it to your own needs, and create your own data viz with ggplot that is beautiful and communicates effectively. 
