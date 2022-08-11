@@ -14,7 +14,7 @@ jobs:
       isExtPR: ${{ github.event.pull_request.head.repo.fork == true }}
     steps:
     
-      - run: sudo apt-get update && sudo apt-get install libudunits2-dev libgdal-dev libgeos-dev libproj-dev --fix-missing
+      - run: sudo apt-get update && sudo apt-get install libudunits2-dev libgdal-dev libgeos-dev libproj-dev libharfbuzz-dev libfribidi-dev --fix-missing
       
       - uses: actions/checkout@v2
 
@@ -30,7 +30,6 @@ jobs:
         run: |
           R -e 'install.packages("downlit")'
           R -e 'install.packages("ragg")'
-          R -e 'install.packages("textshaping")'
 
       - name: Cache bookdown results
         uses: actions/cache@v2
