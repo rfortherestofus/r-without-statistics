@@ -1,7 +1,7 @@
 --- 
 title: "R Without Statistics"
 author: "David Keyes"
-# date: "`r Sys.Date()`"
+# date: "2022-08-11"
 site: bookdown::bookdown_site
 documentclass: book
 url: https://book.rwithoutstatistics.com
@@ -45,4 +45,4 @@ Each chapter will, using a consistent format, cover one novel way of using R.
 
 3.  Finally, there will be a summary, with lessons learned from this novel way of using R.
 
-Written by David Keyes, Founder and CEO of [R for the Rest of Us](https://rfortherestofus.com/), R Without Statistics will be published by [No Starch Press](https://nostarch.com/).
+Written by David Keyes, Founder and CEO of [R for the Rest of Us](https://rfortherestofus.com/), R Without Statistics will be published by [No Starch Press](https://nostarch.com/).
