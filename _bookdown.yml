@@ -5,6 +5,8 @@ delete_merged_file: true
 language:
   ui:
     chapter_name: "Chapter "
+  label:
+    fig: !expr function(i) paste("Figure", stringr::str_replace_all(i, ".", "-"))
 rmd_files: [
   "index.Rmd",
   
@@ -29,3 +31,4 @@ rmd_files: [
    
   "conclusion.Rmd"
   ]
+  
