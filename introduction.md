@@ -21,7 +21,7 @@ But, for me, Excel was tedious. The amount of pointing and clicking I had to do 
 
 No matter what I did, analyzing data and creating charts in Excel just involved a lot of repetitive pointing and clicking. Kind of like this:
 
-![](introduction_files/figure-latex/unnamed-chunk-2-1.pdf)<!-- --> 
+![](introduction_files/figure-epub3/unnamed-chunk-2-1.png)<!-- -->
 
 
 Endless pointing and clicking was just one problem I faced using Excel. Annoying though it was, it didn't affect the quality of my work. Or so I thought until I recalled a project I had worked on a few years earlier. 
