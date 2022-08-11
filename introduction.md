@@ -1,10 +1,4 @@
-```{r}
-library(tidyverse)
-library(readxl)
-library(janitor)
-library(knitr)
-library(tweetrmd)
-```
+
 
 
 # (PART\*) Introduction {-}
@@ -27,21 +21,7 @@ But, for me, Excel was tedious. The amount of pointing and clicking I had to do 
 
 No matter what I did, analyzing data and creating charts in Excel just involved a lot of repetitive pointing and clicking. Kind of like this:
 
-```{r echo = FALSE}
-tibble(
-  time = seq(0, 9, 1),
-  clicks = seq(0, 99, 10)) %>% 
-  ggplot(aes(x = time, y = clicks)) +
-  geom_line(size = 1,
-            arrow = arrow(type = "closed", 
-                          length = unit(10, "pt"))) +
-  labs(x = "Number of Projects",
-       y = "Number of Clicks") +
-  theme_void() +
-  theme(axis.line = element_line(size = 1),
-        axis.title.y = element_text(margin = margin(r = 10)),
-        axis.title.x = element_text(margin = margin(t = 10))) 
-```
+![](introduction_files/figure-latex/unnamed-chunk-2-1.pdf)<!-- --> 
 
 
 Endless pointing and clicking was just one problem I faced using Excel. Annoying though it was, it didn't affect the quality of my work. Or so I thought until I recalled a project I had worked on a few years earlier. 
@@ -62,41 +42,17 @@ If I were to redo that project on Outdoor School with R, here's what I'd do diff
 
 Download data on all school districts:
 
-```{r}
-# Download the data directly from the Oregon Department of Education website
-download.file(url = "https://www.oregon.gov/ode/educator-resources/assessment/Documents/TestResults2019/pagr_schools_ela_tot_raceethnicity_1819.xlsx",
-              destfile = "data/pagr_schools_ela_tot_raceethnicity_1819.xlsx")
 
-# Import the downloaded data and use the `clean_names()` function to make the variable names easy to work with
-oregon_schools <- read_excel("data/pagr_schools_ela_tot_raceethnicity_1819.xlsx") %>% 
-  clean_names()
-```
 
 
 Filter to only include districts with fifth or sixth graders:
 
-```{r}
-# Start with the oregon_schools data from above
-oregon_schools_fifth_sixth_grade <- oregon_schools %>% 
-  
-  # Only keep schools with fifth or sixth graders
-  filter(grade_level == "Grade 5" | grade_level == "Grade 6") %>% 
-  
-  # Only keep the variables we need
-  select(district_id:school) %>% 
-  
-  # There are multiple observations of the same school, just keep one of each
-  distinct()
-```
+
 
 
 Join the filtered data on school districts with my survey data:
 
-```{r eval = FALSE}
-# Use the school_id variable to join the survey data with the oregon_schools_fifth_sixth_grade from above 
-left_join(survey_data, oregon_schools_fifth_sixth_grade,
-          by = "school_id")
-```
+
 
 
 Code can be scary. Having to write code is one of the reasons many people never learn R. But code is just a list of things you want to do to your data. It may be written in a hard-to-parse syntax (though it gets easier over time), but it's just a set of steps. The same steps that we should write out when we're working in Excel, but never do. Rather than having a separate document with my steps written down (the one that never gets written), I can see my steps in my code. See that line that says filter. Guess what it's doing? Yep, it's filtering!
@@ -147,27 +103,19 @@ Take a look at the R community on Twitter (where users congregate under the #rst
 
 - [Making illuminating data visualizations](https://twitter.com/CedScherer/status/1220843943224578050) as part of the [Tidy Tuesday project](https://github.com/rfordatascience/tidytuesday).
 
-```{r, out.width = '100%', echo = FALSE, fig.cap="Visualization by Cédric Scherer", eval = FALSE}
-include_graphics('https://raw.githubusercontent.com/Z3tt/TidyTuesday/master/plots/2020_04/2020_04_SpotifySongs.png')
-```
 
-```{r echo = FALSE, eval = FALSE}
-tweet_embed("https://twitter.com/CedScherer/status/1220843943224578050")
-```
+
+
 
 
 - [Video tutorials on how to communicate through effective presentations using R](https://twitter.com/spcanelon/status/1424932510065209348).
 
-```{r echo = FALSE, eval = FALSE}
-tweet_embed("https://twitter.com/spcanelon/status/1424932510065209348")
-```
+
 
 
 - [Love letters to the `clean_names()` function from the `janitor` package, which automates the process of making messy variable names easy to work with in R](https://twitter.com/WeAreRLadies/status/1228049014601342976). 
 
-```{r echo = FALSE, eval = FALSE}
-tweet_embed("https://twitter.com/WeAreRLadies/status/1228049014601342976")
-```
+
 
 
 No matter what else you do in R, you have to **illuminate** your findings and **communicate** your results. And, the more you use R, the more you'll find yourself wanting to **automate** things you used to do manually (your wrists will thank you). 

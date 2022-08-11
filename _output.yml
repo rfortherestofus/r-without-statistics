@@ -10,4 +10,5 @@ bookdown::pdf_book:
   number_sections: false
 bookdown::word_document2:
     toc: false
+    number_section: true
 bookdown::epub_book: default
