@@ -9,7 +9,8 @@ knitr::opts_chunk$set(
   message = FALSE,
   echo = FALSE,
   dpi = 300,
-  fig.width = 4.675
+  fig.width = 4.675,
+  dev = "ragg_png"
 )
 
 

@@ -151,11 +151,11 @@ dm_perc_cat_hubs %>%
   ) +
   guides(fill = guide_legend(nrow = 2,
                              override.aes = list(size = 1))) +
-  theme_light(base_family = "Roboto") +
+  theme_light(base_family = "Helvetica") +
   theme(
     axis.title = element_text(size = 14, 
                               color = "black"),
-    axis.text = element_text(family = "Roboto Mono", 
+    axis.text = element_text(family = "Helvetica", 
                              size = 11),
     axis.line.x = element_blank(),
     axis.line.y = element_line(color = "black", 
@@ -259,11 +259,11 @@ geom_col(
   ) +
   guides(fill = guide_legend(nrow = 2,
                              override.aes = list(size = 1))) +
-  theme_light(base_family = "Roboto") +
+  theme_light(base_family = "Helvetica") +
   theme(
     axis.title = element_text(size = 14, 
                               color = "black"),
-    axis.text = element_text(family = "Roboto Mono"),
+    axis.text = element_text(family = "Helvetica"),
     axis.line.x = element_blank(),
     axis.line.y = element_line(color = "black", 
                                size = .2),
@@ -361,11 +361,11 @@ dm_perc_cat_hubs %>%
   ) +
   guides(fill = guide_legend(nrow = 2,
                              override.aes = list(size = 1))) +
-  theme_light(base_family = "Roboto") +
+  theme_light(base_family = "Helvetica") +
   theme(
     axis.title = element_text(size = 14, 
                               color = "black"),
-    axis.text = element_text(family = "Roboto Mono", 
+    axis.text = element_text(family = "Helvetica", 
                              size = 11),
     axis.line.x = element_blank(),
     axis.line.y = element_line(color = "black", 
@@ -778,7 +778,7 @@ save_figure_for_nostarch(figure_height = 8)
 
 Incredibly, the broad outlines of the plot took us just 10 lines to create. All of the final code from here on out falls in the category of small polishes. That's not to minimize how important small polishes are (very) or the time it takes to create them (lots). But it is to say that a little bit of ggplot goes a long way. 
 
-Let's look at a few of the small polishes that Cédric and Georgios make. The first is to apply a theme. They use `theme_light()`, which removes the default gray background and changes the font to Roboto.
+Let's look at a few of the small polishes that Cédric and Georgios make. The first is to apply a theme. They use `theme_light()`, which removes the default gray background and changes the font to Helvetica.
 
 
 ```{r, fig.height = 8, echo = TRUE}
@@ -803,7 +803,7 @@ dm_perc_cat_hubs %>%
   facet_grid(rows = vars(year), 
              cols = vars(hub), 
              switch = "y") +
-  theme_light(base_family = "Roboto")
+  theme_light(base_family = "Helvetica")
 
 save_figure_for_nostarch(figure_height = 8)
 ```
@@ -833,11 +833,11 @@ dm_perc_cat_hubs %>%
   facet_grid(rows = vars(year), 
              cols = vars(hub), 
              switch = "y") +
-  theme_light(base_family = "Roboto") +
+  theme_light(base_family = "Helvetica") +
   theme(
     axis.title = element_text(size = 14, 
                               color = "black"),
-    axis.text = element_text(family = "Roboto Mono", 
+    axis.text = element_text(family = "Helvetica", 
                              size = 11),
     axis.line.x = element_blank(),
     axis.line.y = element_line(color = "black", 
@@ -905,11 +905,11 @@ dm_perc_cat_hubs %>%
   facet_grid(rows = vars(year), 
              cols = vars(hub), 
              switch = "y") +
-  theme_light(base_family = "Roboto") +
+  theme_light(base_family = "Helvetica") +
   theme(
     axis.title = element_text(size = 14, 
                               color = "black"),
-    axis.text = element_text(family = "Roboto Mono", 
+    axis.text = element_text(family = "Helvetica", 
                              size = 11),
     axis.line.x = element_blank(),
     axis.line.y = element_line(color = "black", 
@@ -1014,11 +1014,11 @@ dm_perc_cat_hubs %>%
   scale_x_continuous(name = NULL, guide = "none") +
   scale_y_continuous(name = NULL, labels = NULL, position = "right") +
   facet_grid(rows = vars(year), cols = vars(hub), switch = "y") +
-  theme_light(base_family = "Roboto") +
+  theme_light(base_family = "Helvetica") +
   theme(
     axis.title = element_text(size = 14, 
                               color = "black"),
-    axis.text = element_text(family = "Roboto Mono", 
+    axis.text = element_text(family = "Helvetica", 
                              size = 11),
     axis.line.x = element_blank(),
     axis.line.y = element_line(color = "black", 
@@ -1133,11 +1133,11 @@ dm_perc_cat_hubs %>%
   ) +
   guides(fill = guide_legend(nrow = 2,
                              override.aes = list(size = 1))) +
-  theme_light(base_family = "Roboto") +
+  theme_light(base_family = "Helvetica") +
   theme(
     axis.title = element_text(size = 14, 
                               color = "black"),
-    axis.text = element_text(family = "Roboto Mono", 
+    axis.text = element_text(family = "Helvetica", 
                              size = 11),
     axis.line.x = element_blank(),
     axis.line.y = element_line(color = "black", 
@@ -1233,11 +1233,11 @@ ggplot(dm_perc_cat_hubs, aes(week, percentage)) +
   guides(fill = guide_legend(nrow = 2,
                              override.aes = list(size = 1))) +
   theme_light(base_size = 18, 
-              base_family = "Roboto") +
+              base_family = "Helvetica") +
   theme(
     axis.title = element_text(size = 14, 
                               color = "black"),
-    axis.text = element_text(family = "Roboto Mono", 
+    axis.text = element_text(family = "Helvetica", 
                              size = 11),
     axis.line.x = element_blank(),
     axis.line.y = element_line(color = "black", 
