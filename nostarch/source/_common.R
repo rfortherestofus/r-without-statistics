@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 # Functions ---------------------------------------------------------------
 
-save_figure_for_nostarch <- function(figure_height = 4, chap_number = chapter_number, print_figure_number = FALSE) {
+save_figure_for_nostarch <- function(figure_height = 4, chap_number = chapter_number, print_figure_number = TRUE) {
   
   chapter_number_two_digits <- stringr::str_pad(chap_number, 2, "left", "0")
   figure_number_three_digits <- stringr::str_pad(i, 3, "left", "0")
@@ -43,7 +43,7 @@ save_figure_for_nostarch <- function(figure_height = 4, chap_number = chapter_nu
   
 }
 
-save_image_for_nostarch <- function(image_file, chap_number = chapter_number, print_figure_number = FALSE) {
+save_image_for_nostarch <- function(image_file, chap_number = chapter_number, print_figure_number = TRUE) {
   
   chapter_number_two_digits <- stringr::str_pad(chap_number, 2, "left", "0")
   figure_number_three_digits <- stringr::str_pad(i, 3, "left", "0")
@@ -54,6 +54,8 @@ save_image_for_nostarch <- function(image_file, chap_number = chapter_number, pr
   fs::file_copy(path = image_file,
                 new_path = str_glue("{save_directory}/{file_name}"),
                 overwrite = TRUE)
+  
+  knitr::include_graphics(image_file)
   
   i <<- i + 1
   

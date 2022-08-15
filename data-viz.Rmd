@@ -190,9 +190,12 @@ dm_perc_cat_hubs %>%
                                    size = .4),
     plot.margin = margin(rep(18, 4))
   )
+```
 
+```{r results='asis'}
 save_figure_for_nostarch(figure_height = 8)
 ```
+
 
 
 
@@ -299,9 +302,12 @@ geom_col(
                                    size = .4),
     plot.margin = margin(rep(18, 4))
   )
+```
 
+```{r results='asis'}
 save_figure_for_nostarch(figure_height = 8)
 ```
+
 
 And, again, it's not just that this cluttered version looks worse. The clutter actively inhibits understanding. Rather than focus on overall drought patterns (the point of the graph), our brain gets stuck reading repetitive and unnecessary axis text. 
 
@@ -402,10 +408,11 @@ dm_perc_cat_hubs %>%
                                    size = .4),
     plot.margin = margin(rep(18, 4))
   )
-
-# save_figure_for_nostarch(figure_height = 4)
 ```
 
+```{r results='asis'}
+save_figure_for_nostarch(figure_height = 4)
+```
 
 Zooming in on a single region in a single year also makes the color choices more obvious. The lightest bars show the percentage of the region that is abnormally dry while the darkest bars shows the percentage in exceptional drought conditions. These colors, as we'll see shortly, are intentionally chosen to make differences in the drought levels visible to all readers. 
 
@@ -416,10 +423,13 @@ When I asked Cédric and Georgios to speak with me about this data visualization
 If you've used Excel to make graphs, you're probably familiar with this menu: 
 
 ```{r, out.width="100%"}
-knitr::include_graphics("assets/excel-chart-chooser.png")
-
-save_image_for_nostarch("assets/excel-chart-chooser.png")
+knitr::include_graphics(here::here("assets/excel-chart-chooser.png"))
 ```
+
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/excel-chart-chooser.png"))
+```
+
 
 Working in Excel, your graph-making journey begins with the step of selecting the type of graph you want to make. Want a bar chart? Click the bar chart icon. Want a line chart? Click the line chart icon. 
 
@@ -481,9 +491,12 @@ bar_chart + line_chart +
       size = 10
     )
   )
+```
 
+```{r results='asis'}
 save_figure_for_nostarch()
 ```
+
 
 
 While they look different (and would, to the Excel user, be different types of graphs), Wilkinson's grammar of graphics allows us to see their similarities. 
@@ -518,7 +531,7 @@ ggplot(
 )
 ```
 
-```{r}
+```{r results='asis'}
 save_figure_for_nostarch()
 ```
 
@@ -552,7 +565,7 @@ ggplot(
   geom_point()
 ```
 
-```{r}
+```{r results='asis'}
 save_figure_for_nostarch()
 ```
 
@@ -571,7 +584,7 @@ ggplot(
   geom_line()
 ```
 
-```{r}
+```{r results='asis'}
 save_figure_for_nostarch()
 ```
 
@@ -589,7 +602,7 @@ ggplot(
   geom_line()
 ```
 
-```{r}
+```{r results='asis'}
 save_figure_for_nostarch()
 ```
 
@@ -606,7 +619,7 @@ ggplot(
   geom_col()
 ```
 
-```{r}
+```{r results='asis'}
 save_figure_for_nostarch()
 ```
 
@@ -626,7 +639,7 @@ ggplot(
   geom_col()
 ```
 
-```{r}
+```{r results='asis'}
 save_figure_for_nostarch()
 ```
 
@@ -645,7 +658,7 @@ ggplot(
   scale_fill_viridis_c()
 ```
 
-```{r}
+```{r results='asis'}
 save_figure_for_nostarch()
 ```
 
@@ -665,7 +678,7 @@ ggplot(
   theme_minimal()
 ```
 
-```{r}
+```{r results='asis'}
 save_figure_for_nostarch()
 ```
 
@@ -718,7 +731,7 @@ ggplot(
   geom_col()
 ```
 
-```{r}
+```{r results='asis'}
 save_figure_for_nostarch()
 ```
 
@@ -740,7 +753,7 @@ ggplot(
   )
 ```
 
-```{r}
+```{r results='asis'}
 save_figure_for_nostarch()
 ```
 
@@ -767,7 +780,7 @@ ggplot(
                      position = "right")
 ```
 
-```{r}
+```{r results='asis'}
 save_figure_for_nostarch()
 ```
 
@@ -797,7 +810,7 @@ dm_perc_cat_hubs %>%
              switch = "y")
 ```
 
-```{r}
+```{r results='asis'}
 save_figure_for_nostarch(figure_height = 8)
 ```
 
@@ -831,7 +844,7 @@ dm_perc_cat_hubs %>%
   theme_light(base_family = "Roboto")
 ```
 
-```{r}
+```{r results='asis'}
 save_figure_for_nostarch(figure_height = 8)
 ```
 
@@ -901,7 +914,7 @@ dm_perc_cat_hubs %>%
   )
 ```
 
-```{r}
+```{r results='asis'}
 save_figure_for_nostarch(figure_height = 8)
 ```
 
@@ -974,7 +987,7 @@ dm_perc_cat_hubs %>%
   )
 ```
 
-```{r}
+```{r results='asis'}
 save_figure_for_nostarch(figure_height = 8)
 ```
 
@@ -1086,7 +1099,7 @@ dm_perc_cat_hubs %>%
   )
 ```
 
-```{r}
+```{r results='asis'}
 save_figure_for_nostarch(figure_height = 8)
 ```
 
@@ -1207,7 +1220,7 @@ dm_perc_cat_hubs %>%
   )
 ```
 
-```{r}
+```{r results='asis'}
 save_figure_for_nostarch(figure_height = 8)
 ```
 
@@ -1313,7 +1326,7 @@ ggplot(dm_perc_cat_hubs, aes(week, percentage)) +
   )
 ```
 
-```{r}
+```{r results='asis'}
 save_figure_for_nostarch(figure_height = 8)
 ```
 

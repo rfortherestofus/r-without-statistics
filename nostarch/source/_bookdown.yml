@@ -1,0 +1,34 @@
+book_filename: "r-without-statistics"
+new_session: true
+before_chapter_script: _common.R
+delete_merged_file: true
+language:
+  ui:
+    chapter_name: "Chapter "
+  label:
+    fig: !expr function(i) paste("Figure", stringr::str_replace_all(i, "[.]", "-"), " ")
+rmd_files: [
+  "index.Rmd",
+  
+  "introduction.Rmd",
+  
+  "illuminate.Rmd",
+  
+  "data-viz.Rmd",
+  "custom-theme.Rmd",
+  "maps.Rmd",
+  "tables.Rmd",
+  
+  "rmarkdown.Rmd",
+  "parameterized-reports.Rmd",
+  "presentations.Rmd",
+  "websites.Rmd",
+  
+  "tidycensus.Rmd",
+  "qualtrics.Rmd",
+  "functions.Rmd",
+  "custom-packages.Rmd",
+   
+  "conclusion.Rmd"
+  ]
+  
