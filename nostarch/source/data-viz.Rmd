@@ -94,7 +94,7 @@ Below is a section of the final visualization (If you're incredibly eagle-eyed, 
 
 
 ```{r results='asis'}
-print_nostarch_file_name()
+print_nostarch_file_name(actually_print = TRUE)
 ```
 
 
@@ -212,7 +212,7 @@ Need proof that Cédric and Georgios's decluttered graph is better than the alte
 
 
 ```{r results='asis'}
-print_nostarch_file_name()
+print_nostarch_file_name(actually_print = TRUE)
 ```
 
 ```{r, fig.height = 8}
@@ -323,7 +323,7 @@ And, again, it's not just that this cluttered version looks worse. The clutter a
 One of the best ways to reduce clutter is to break a single chart into what are known as small multiples. When we look closely at the data viz, we see that it is not one chart but actually a set of charts. Each rectangle represents one region in one year. If we filter to show the Southwest region in 2003 and add axis titles, we can see that the x axis shows the week while the y axis shows the percentage of that region at different drought levels. 
 
 ```{r results='asis'}
-print_nostarch_file_name()
+print_nostarch_file_name(actually_print = TRUE)
 ```
 
 ```{r, fig.height = 4}
@@ -436,7 +436,7 @@ When I asked Cédric and Georgios to speak with me about this data visualization
 If you've used Excel to make graphs, you're probably familiar with this menu: 
 
 ```{r results='asis'}
-print_nostarch_file_name(file_type_to_print = "png")
+print_nostarch_file_name(file_type_to_print = "png", actually_print = TRUE)
 ```
 
 ```{r, out.width="100%"}
@@ -463,7 +463,7 @@ Wilkinson argued that we should think of plots not as distinct types a la Excel,
 Thinking about data visualization through the lens of the grammar of graphics allow us to see, for example, that graphs typically have data that is plotted on the x axis and other data that is plotted on the y axis. And this is the case no matter whether the type of graph we end up with is, to take just two examples, a bar chart of a line chart. Consider these two graphs, which use data on life expectancy in Afghanistan:
 
 ```{r results='asis'}
-print_nostarch_file_name()
+print_nostarch_file_name(actually_print = TRUE)
 ```
 
 
@@ -544,7 +544,7 @@ If we want to make a chart with ggplot, we need to first decide which variable t
 I begin by using the `ggplot()` function. Within this, I tell R that I'm using the data frame `gapminder_10_rows` (this is the filtered version I created from the full `gapminder` data frame, which includes over 1,700 rows of data). The line following this tells R to use `year` on the x and `lifeExp` on the y axis. 
 
 ```{r results='asis'}
-print_nostarch_file_name()
+print_nostarch_file_name(actually_print = TRUE)
 ```
 
 ```{r, echo = TRUE}
@@ -565,7 +565,7 @@ save_figure_for_nostarch()
 When I run my code, what I get doesn't look like much.
 
 ```{r results='asis'}
-print_nostarch_file_name()
+print_nostarch_file_name(actually_print = TRUE)
 ```
 
 ```{r}
@@ -589,7 +589,7 @@ I can also see that the values on the x and y axes match up to our data. In the 
 Axes are nice, but we're missing any type of visual representation of the data. To get this, we need to add the next layer in ggplot: geoms. Short for geometric objects, geoms are different ways of representing data. For example, if we want to add points, we use `geom_point()`. 
 
 ```{r results='asis'}
-print_nostarch_file_name()
+print_nostarch_file_name(actually_print = TRUE)
 ```
 
 ```{r, echo = TRUE}
@@ -612,7 +612,7 @@ There we go! 1952 shows the life expectancy of about 28 and so on through every 
 Let's say we change our mind and want to make a line chart instead. Well, all we have to do is replace `geom_point()` with `geom_line()`. 
 
 ```{r results='asis'}
-print_nostarch_file_name()
+print_nostarch_file_name(actually_print = TRUE)
 ```
 
 ```{r, echo = TRUE}
@@ -633,7 +633,7 @@ save_figure_for_nostarch()
 Or (and now we're really getting fancy), what if we add *both* `geom_point()` and `geom_line()`? A line chart with points!  
 
 ```{r results='asis'}
-print_nostarch_file_name()
+print_nostarch_file_name(actually_print = TRUE)
 ```
 
 ```{r, echo = TRUE}
@@ -655,7 +655,7 @@ save_figure_for_nostarch()
 We can extend this idea further, swapping in `geom_col()` to create to a bar chart (note that the y axis range has been automatically updated now, going from 0 to 40 to account for the different geom). 
 
 ```{r results='asis'}
-print_nostarch_file_name()
+print_nostarch_file_name(actually_print = TRUE)
 ```
 
 ```{r, echo = TRUE}
@@ -678,7 +678,7 @@ I hope you're seeing how ggplot is a direct implementation of Wilkinson's gramma
 Before we return to the drought data viz, let's look at a few additional layers that can help us can alter our bar chart. Let's say we want to change the color of our bars. In the grammar of graphics approach to chart-making, this means mapping some variable to the aesthetic property of fill (slightly confusingly, the aesthetic property "color" would, for a bar chart, change the outline of each bar). In the same way that we mapped `year` to the x axis and y to `lifeExp`, we can also map fill to a variable. Let's try mapping fill to the year variable.
 
 ```{r results='asis'}
-print_nostarch_file_name()
+print_nostarch_file_name(actually_print = TRUE)
 ```
 
 ```{r, echo = TRUE}
@@ -700,7 +700,7 @@ save_figure_for_nostarch()
 What we see now is that, for earlier years, the fill is darker while for later years, it is lighter (the legend, added to the right of our plot, shows this). What if we want to change the fill colors? For that, we use a new scale layer. In this case, I'll use the `scale_fill_viridis_c()` function (the c at the end of the function name refers to the fact that the data is continuous). This function, just one of many functions that start with `scale_` and can alter the fill scale, changes the default palette to one that is colorblind-friendly and prints well in grayscale. 
 
 ```{r results='asis'}
-print_nostarch_file_name()
+print_nostarch_file_name(actually_print = TRUE)
 ```
 
 ```{r, echo = TRUE}
@@ -723,7 +723,7 @@ save_figure_for_nostarch()
 A final layer we'll look at is the theme layer. This layer allows us to change the overall look-and-feel of plots (think: plot backgrounds, grid lines, etc). Just as there are a number of `scale_` functions, there are also a number of functions that start with `theme_`. Below, I've added `theme_minimal()`, which starts to declutter our plot. 
 
 ```{r results='asis'}
-print_nostarch_file_name()
+print_nostarch_file_name(actually_print = TRUE)
 ```
 
 ```{r, echo = TRUE}
@@ -783,7 +783,7 @@ southwest_2003 %>%
 Now we can use this `southwest_2003` object for our plotting. In the `ggplot()` function, we tell R to put week on the x axis, percentage on the y axis, and use the category variable (i.e. drought level) for our fill color. We then use `geom_col()` to create a bar chart where the fill color of each bar represents the percentage of the region in a single week that is at different drought levels. The colors don't match the final version of the plot, but with this code we can start to see the outlines of Cédric and Georgios's data viz.  
 
 ```{r results='asis'}
-print_nostarch_file_name()
+print_nostarch_file_name(actually_print = TRUE)
 ```
 
 ```{r, echo = TRUE}
@@ -805,7 +805,7 @@ save_figure_for_nostarch()
 Cédric and Georgios next select different fill colors for their bars. They use the `scale_fill_viridis_d()` function. The "d" here means the data that the fill scale is being applied to has discrete categories (D0, D1, D2, D3, D4, D5). They use the argument `option = "rocket"` in order to select the "rocket" palette (the `scale_fill_viridis_d()` function has several other palettes). And they use the `direction = -1` argument to reverse the order of fill colors so that darker colors mean higher drought conditions. 
 
 ```{r results='asis'}
-print_nostarch_file_name()
+print_nostarch_file_name(actually_print = TRUE)
 ```
 
 ```{r, echo = TRUE}
@@ -831,7 +831,7 @@ save_figure_for_nostarch()
 In the language of ggplot, x and y axis are aesthetic properties, the same as fill color. Cédric and Georgios tweak the x axis to remove both the axis title ("week") using `name = NULL` and the 0-50 axis text with `guide = none`. On the y axis, they remove the axis title and axis text (which was showing percentages in 0.00, 0.25, 0.50, 0.75 format) using `labels = NULL` (this functionally does the same thing as `guide = "none"`). They also move the axis lines themselves to the right side using `position = "right"` (they are only apparent as tick marks at this point, but will become more visible later).
 
 ```{r results='asis'}
-print_nostarch_file_name()
+print_nostarch_file_name(actually_print = TRUE)
 ```
 
 ```{r, echo = TRUE}
@@ -862,7 +862,7 @@ save_figure_for_nostarch()
 Up to this point, we've focused on one of the single plots that make up the larger data viz. But the final product that Cédric and Georgios made is actually 176 plots (22 years and 8 regions). One of the most useful features of ggplot is what's known as facetting (known more commonly in the data viz world as small multiples). With the `facet_grid()` function, we can select which variable to put in rows and which to put in columns of our facetted plot. Cédric and Georgios put `year` in rows and `hub` (region) in columns. The `switch = "y"` argument moves the year label from the right side (where it appears by default) to the left. With this code in place, we can see the final plot coming together. Space considerations require me to again include only four regions, but you get the idea.
 
 ```{r results='asis'}
-print_nostarch_file_name()
+print_nostarch_file_name(actually_print = TRUE)
 ```
 
 ```{r, fig.height = 8, echo = TRUE}
@@ -898,7 +898,7 @@ Incredibly, the broad outlines of the plot took us just 10 lines to create. All 
 Let's look at a few of the small polishes that Cédric and Georgios make. The first is to apply a theme. They use `theme_light()`, which removes the default gray background and changes the font to Roboto.
 
 ```{r results='asis'}
-print_nostarch_file_name()
+print_nostarch_file_name(actually_print = TRUE)
 ```
 
 ```{r, fig.height = 8, echo = TRUE}
@@ -934,7 +934,7 @@ save_figure_for_nostarch(figure_height = 8)
 `theme_light()` is what's known as a "complete theme." So-called complete themes change the overall look-and-feel of a plot. But Cédric and Georgios don't stop with applying a complete theme. From there, they use the `theme()` function to make additional tweaks to what `theme_light()` gives them. 
 
 ```{r results='asis'}
-print_nostarch_file_name()
+print_nostarch_file_name(actually_print = TRUE)
 ```
 
 ```{r, fig.height = 8, echo = TRUE}
@@ -1012,7 +1012,7 @@ The code in the `theme()` function does many different things, but let's take a 
 `strip.text.y.left = element_text(size = 18, angle = 0, vjust = .5, face = "plain", color = "black")` turns the year text in the columns so that it is no longer angled. Without the `angle = 0`, the years would be much less readable.
 
 ```{r results='asis'}
-print_nostarch_file_name()
+print_nostarch_file_name(actually_print = TRUE)
 ```
 
 ```{r, fig.height = 8}
@@ -1117,7 +1117,7 @@ geom_rect(
 ```
 
 ```{r results='asis'}
-print_nostarch_file_name()
+print_nostarch_file_name(actually_print = TRUE)
 ```
 
 ```{r, fig.height = 10, echo = FALSE}
@@ -1215,7 +1215,7 @@ scale_fill_viridis_d(
 ```
 
 ```{r results='asis'}
-print_nostarch_file_name()
+print_nostarch_file_name(actually_print = TRUE)
 ```
 
 ```{r, fig.height = 8}

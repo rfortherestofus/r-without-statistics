@@ -27,11 +27,15 @@ create_nostarch_file_name <- function(file_type = "pdf", chap_number = chapter_n
   
 }
 
-print_nostarch_file_name <- function(file_type_to_print = "pdf") {
+print_nostarch_file_name <- function(file_type_to_print = "pdf", actually_print = FALSE) {
   
   file_name_with_brackets <- stringr::str_glue("[{create_nostarch_file_name(file_type = file_type_to_print)}]")
   
-  cat(file_name_with_brackets)
+  if (actually_print == TRUE) {
+    
+    cat(file_name_with_brackets)
+    
+  }
   
 }
 
@@ -49,7 +53,7 @@ save_figure_for_nostarch <- function(figure_height = 4) {
          height = figure_height)
   
   i <<- i + 1
-
+  
   
 }
 

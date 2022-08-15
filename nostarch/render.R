@@ -18,9 +18,21 @@ file_copy(path = source_files,
 
 # Make figure numbers show ------------------------------------------------
 
+# Fix stuff in _common.R
+
 gsub_file(file = "nostarch/source/_common.R",
           "print_figure_number = FALSE",
           "print_figure_number = TRUE")
+
+gsub_files(files = dir_ls(path = "nostarch/source", regexp = "Rmd"),
+          "print_nostarch_file_name\\(\\)",
+          "print_nostarch_file_name(actually_print = TRUE)")
+
+gsub_files(files = dir_ls(path = "nostarch/source", regexp = "Rmd"),
+          'print_nostarch_file_name\\(file_type_to_print = "png"\\)',
+          'print_nostarch_file_name(file_type_to_print = "png", actually_print = TRUE)')
+
+
 
 # Render ------------------------------------------------------------------
 
@@ -36,9 +48,6 @@ file_copy(path = "nostarch/source/_book/r-without-statistics.docx",
           overwrite = TRUE)
 
 file_show("nostarch/word/r-without-statistics.docx")
-
-
-
 
 
 # Manual Rendering --------------------------------------------------------
