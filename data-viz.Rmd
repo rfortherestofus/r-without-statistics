@@ -578,6 +578,10 @@ ggplot(
 )
 ```
 
+```{r results='asis'}
+save_figure_for_nostarch()
+```
+
 But if I look closely, I can see the beginnings of a plot. Remember that x axis using `year`? There it is! And `lifeExp` on the y axis? Yup, it's there too. 
 
 I can also see that the values on the x and y axes match up to our data. In the `gapminder_10_rows` data frame, the first year is 1952 and the last year is 1997. The range of the x axis seems to have been created with this data in mind (spoiler: it was). And `lifeExp`, which goes from about 28 to about 42 will fit nicely on our y axis.
@@ -649,6 +653,10 @@ save_figure_for_nostarch()
 ```
 
 We can extend this idea further, swapping in `geom_col()` to create to a bar chart (note that the y axis range has been automatically updated now, going from 0 to 40 to account for the different geom). 
+
+```{r results='asis'}
+print_nostarch_file_name()
+```
 
 ```{r, echo = TRUE}
 ggplot(
@@ -766,6 +774,7 @@ We can take a look at this object to see the variables we have to work with:
 - **year**: observation year
 - **week**: week number (i.e. first week is week 1)
 - **max_week**: the maximum number of weeks in a given year
+
 
 ```{r, echo = TRUE}
 southwest_2003 %>%
