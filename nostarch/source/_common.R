@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 i <- 1
 
-create_nostarch_file_name <- function(file_type = "pdf", chap_number = chapter_number, print_figure_number = FALSE) {
+create_nostarch_file_name <- function(file_type = "pdf", chap_number = chapter_number, print_figure_number = TRUE) {
   
   chapter_number_two_digits <- stringr::str_pad(chap_number, 2, "left", "0")
   figure_number_three_digits <- stringr::str_pad(i, 3, "left", "0")
