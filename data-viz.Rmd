@@ -1,3 +1,8 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
 ```{r}
 library(tidyverse)
 library(lubridate)
@@ -90,7 +95,7 @@ This was the challenge that data visualization designers Cédric Scherer and Geo
 
 There was nothing unique about the data that Cédric and Georgios used. It was the same data from the National Drought Center that news organizations used in their stories. But Cédric and Georgios visualized the data in a way that it both grabs attention and communicates the scale of the phenomenon.
 
-Below is a section of the final visualization (If you're incredibly eagle-eyed, you'll see a few minor elements that differ from the version published in Scientific American). These are things I had to change to make the plots fit in this book (e.g. text size and putting legend text on two rows) or things that Scientific American added in post-production (e.g. some annotations). Showing four regions over the last two decades, the increase in drought conditions, especially in California and the Southwest, is made apparent. 
+Figure \@ref(fig:final-viz) shows a section of the final visualization (If you're incredibly eagle-eyed, you'll see a few minor elements that differ from the version published in Scientific American). These are things I had to change to make the plots fit in this book (e.g. text size and putting legend text on two rows) or things that Scientific American added in post-production (e.g. some annotations). Showing four regions over the last two decades, the increase in drought conditions, especially in California and the Southwest, is made apparent. 
 
 
 ```{r results='asis'}
@@ -98,7 +103,7 @@ print_nostarch_file_name()
 ```
 
 
-```{r, fig.height = 8, fig.cap="Test"}
+```{r final-viz, fig.height = 8, fig.cap="Section of the final drought visualization"}
 dm_perc_cat_hubs %>%
   filter(hub %in% c("Northwest", 
                     "California", 
@@ -208,14 +213,13 @@ To understand why this visualization is effective, let's break it down into piec
 
 At the broadest level, the data viz is also notable for its minimalist aesthetic. There are, for example, no grid lines, little text along the axes, and few text labels. What Cédric and Georgios have done is to remove what statistician Edward Tufte, in his 1983 book *The Visual Display of Quantitative Information*, calls "chartjunk." Tufte wrote (and researchers as well as data viz designers since have generally agreed) that extraneous elements often hinder, rather than help, our understanding of charts. 
 
-Need proof that Cédric and Georgios's decluttered graph is better than the alternative? Here's a version with a few small tweaks to the code to include grid lines and text labels on axes. Prepare yourself for clutter!
-
+Need proof that Cédric and Georgios's decluttered graph is better than the alternative? Figure \@ref(fig:cluttered-viz) shows a version with a few small tweaks to the code to include grid lines and text labels on axes. Prepare yourself for clutter!
 
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
-```{r, fig.height = 8}
+```{r cluttered-viz, fig.height = 8, fig.cap="Cluttered version of the drought visualization"}
 dm_perc_cat_hubs %>%
   filter(hub %in% c("Northwest", 
                     "California", 
@@ -320,13 +324,13 @@ save_figure_for_nostarch(figure_height = 8)
 
 And, again, it's not just that this cluttered version looks worse. The clutter actively inhibits understanding. Rather than focus on overall drought patterns (the point of the graph), our brain gets stuck reading repetitive and unnecessary axis text. 
 
-One of the best ways to reduce clutter is to break a single chart into what are known as small multiples. When we look closely at the data viz, we see that it is not one chart but actually a set of charts. Each rectangle represents one region in one year. If we filter to show the Southwest region in 2003 and add axis titles, we can see that the x axis shows the week while the y axis shows the percentage of that region at different drought levels. 
+One of the best ways to reduce clutter is to break a single chart into what are known as small multiples. When we look closely at the data viz, we see that it is not one chart but actually a set of charts. Each rectangle represents one region in one year. If we filter to show the Southwest region in 2003 and add axis titles, we can see in Figure \@ref(fig:viz-sw-2003) that the x axis shows the week while the y axis shows the percentage of that region at different drought levels. 
 
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
-```{r, fig.height = 4}
+```{r viz-sw-2003, fig.height = 4, fig.cap="Drought visualization for Southwest in 2003"}
 dm_perc_cat_hubs %>%
   filter(hub == "Southwest") %>%
   filter(year == 2003) %>% 
@@ -433,13 +437,13 @@ When I asked Cédric and Georgios to speak with me about this data visualization
 
 ## The Grammar of Graphics {-}
 
-If you've used Excel to make graphs, you're probably familiar with this menu: 
+If you've used Excel to make graphs, you're probably familiar with the menu shown in Figure \@ref(fig:excel-chart-chooser): 
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
 ```
 
-```{r, out.width="100%"}
+```{r excel-chart-chooser, out.width="100%", fig.cap="Excel chart chooser menu"}
 knitr::include_graphics(here::here("assets/excel-chart-chooser.png"))
 ```
 
@@ -460,14 +464,13 @@ Wilkinson argued that we should think of plots not as distinct types a la Excel,
 
 > A language consisting of words and no grammar (statement = word) expresses only as many ideas as there are words. ... The grammar of graphics takes us beyond a limited set of charts (words) to an almost unlimited world of graphical forms (statements). 
 
-Thinking about data visualization through the lens of the grammar of graphics allow us to see, for example, that graphs typically have data that is plotted on the x axis and other data that is plotted on the y axis. And this is the case no matter whether the type of graph we end up with is, to take just two examples, a bar chart of a line chart. Consider these two graphs, which use data on life expectancy in Afghanistan:
+Thinking about data visualization through the lens of the grammar of graphics allow us to see, for example, that graphs typically have data that is plotted on the x axis and other data that is plotted on the y axis. And this is the case no matter whether the type of graph we end up with is, to take just two examples, a bar chart of a line chart. Consider \@ref(fig:bar-line-chart), which shows two charts that use identical data on life expectancy in Afghanistan:
 
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
-
-```{r}
+```{r bar-line-chart, fig.cap="Bar chart and line chart showing identical data on Afghanistan life expectancy"}
 gapminder_10_rows <- gapminder %>%
   slice(1:10)
 
@@ -519,8 +522,6 @@ bar_chart + line_chart +
 save_figure_for_nostarch()
 ```
 
-
-
 While they look different (and would, to the Excel user, be different types of graphs), Wilkinson's grammar of graphics allows us to see their similarities. 
 
 As an academic statistician, Wilkinson's goal in writing *The Grammar of Graphics*  was to provide a novel way of thinking about data visualization. But his feelings on graph-making tools like Excel were clear when he wrote that "most charting packages channel user requests into a rigid array of chart types." 
@@ -541,13 +542,13 @@ gapminder_10_rows
 
 If we want to make a chart with ggplot, we need to first decide which variable to use to put on the x axis and which to put on the y axis. Let's say we want to show life expectancy over time. That means using the variable `year` on the x axis and the variable `lifeExp` on the y axis. 
 
-I begin by using the `ggplot()` function. Within this, I tell R that I'm using the data frame `gapminder_10_rows` (this is the filtered version I created from the full `gapminder` data frame, which includes over 1,700 rows of data). The line following this tells R to use `year` on the x and `lifeExp` on the y axis. 
+I begin by using the `ggplot()` function. Within this, I tell R that I'm using the data frame `gapminder_10_rows` (this is the filtered version I created from the full `gapminder` data frame, which includes over 1,700 rows of data). The line following this tells R to use `year` on the x and `lifeExp` on the y axis. When I run my code, what I get in Figure \@ref(fig:blank-ggplot) doesn't look like much.
 
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
-```{r, echo = TRUE}
+```{r blank-ggplot, echo = TRUE, fig.cap="A blank chart"}
 ggplot(
   data = gapminder_10_rows,
   mapping = aes(
@@ -561,38 +562,18 @@ ggplot(
 save_figure_for_nostarch()
 ```
 
-
-When I run my code, what I get doesn't look like much.
-
-```{r results='asis'}
-print_nostarch_file_name()
-```
-
-```{r}
-ggplot(
-  data = gapminder_10_rows,
-  mapping = aes(
-    x = year,
-    y = lifeExp
-  )
-)
-```
-
-```{r results='asis'}
-save_figure_for_nostarch()
-```
 
 But if I look closely, I can see the beginnings of a plot. Remember that x axis using `year`? There it is! And `lifeExp` on the y axis? Yup, it's there too. 
 
 I can also see that the values on the x and y axes match up to our data. In the `gapminder_10_rows` data frame, the first year is 1952 and the last year is 1997. The range of the x axis seems to have been created with this data in mind (spoiler: it was). And `lifeExp`, which goes from about 28 to about 42 will fit nicely on our y axis.
 
-Axes are nice, but we're missing any type of visual representation of the data. To get this, we need to add the next layer in ggplot: geoms. Short for geometric objects, geoms are different ways of representing data. For example, if we want to add points, we use `geom_point()`. 
+Axes are nice, but we're missing any type of visual representation of the data. To get this, we need to add the next layer in ggplot: geoms. Short for geometric objects, geoms are different ways of representing data. For example, if we want to add points, we use `geom_point()`, as seen in Figure \@ref(fig:gapminder-points). 
 
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
-```{r, echo = TRUE}
+```{r gapminder-points, echo = TRUE, fig.cap="The same chart but with points added"}
 ggplot(
   data = gapminder_10_rows,
   mapping = aes(
@@ -609,13 +590,13 @@ save_figure_for_nostarch()
 
 There we go! 1952 shows the life expectancy of about 28 and so on through every year in our data. 
 
-Let's say we change our mind and want to make a line chart instead. Well, all we have to do is replace `geom_point()` with `geom_line()`. 
+Let's say we change our mind and want to make a line chart instead. Well, all we have to do is replace `geom_point()` with `geom_line()` and we get \@ref(fig:gapminder-line). 
 
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
-```{r, echo = TRUE}
+```{r gapminder-line, echo = TRUE, fig.cap="The same data but as a line chart"}
 ggplot(
   data = gapminder_10_rows,
   mapping = aes(
@@ -630,13 +611,13 @@ ggplot(
 save_figure_for_nostarch()
 ```
 
-Or (and now we're really getting fancy), what if we add *both* `geom_point()` and `geom_line()`? A line chart with points!  
+Or (and now we're really getting fancy), what if we add *both* `geom_point()` and `geom_line()`? The line chart with points seen in Figure \@ref(fig:gapminder-points-line)!  
 
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
-```{r, echo = TRUE}
+```{r gapminder-points-line, echo = TRUE, fig.cap="The same data with points and a line"}
 ggplot(
   data = gapminder_10_rows,
   mapping = aes(
@@ -652,13 +633,13 @@ ggplot(
 save_figure_for_nostarch()
 ```
 
-We can extend this idea further, swapping in `geom_col()` to create to a bar chart (note that the y axis range has been automatically updated now, going from 0 to 40 to account for the different geom). 
+We can extend this idea further, as seen in Figure \@ref(fig:gapminder-bar), swapping in `geom_col()` to create to a bar chart (note that the y axis range has been automatically updated now, going from 0 to 40 to account for the different geom). 
 
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
-```{r, echo = TRUE}
+```{r gapminder-bar, echo = TRUE, fig.cap="The same data as a bar chart"}
 ggplot(
   data = gapminder_10_rows,
   mapping = aes(
@@ -675,13 +656,13 @@ save_figure_for_nostarch()
 
 I hope you're seeing how ggplot is a direct implementation of Wilkinson's grammar of graphics. The difference between a line chart and a bar chart isn't as great as the Excel chart type picker might have us think. Both can have the same aesthetic properties (namely, putting year on the x axis and life expectancy on the y axis), but simply use different geometric objects to visually represent the data. 
 
-Before we return to the drought data viz, let's look at a few additional layers that can help us can alter our bar chart. Let's say we want to change the color of our bars. In the grammar of graphics approach to chart-making, this means mapping some variable to the aesthetic property of fill (slightly confusingly, the aesthetic property "color" would, for a bar chart, change the outline of each bar). In the same way that we mapped `year` to the x axis and y to `lifeExp`, we can also map fill to a variable. Let's try mapping fill to the year variable.
+Before we return to the drought data viz, let's look at a few additional layers that can help us can alter our bar chart. Let's say we want to change the color of our bars. In the grammar of graphics approach to chart-making, this means mapping some variable to the aesthetic property of fill (slightly confusingly, the aesthetic property "color" would, for a bar chart, change the outline of each bar). In the same way that we mapped `year` to the x axis and y to `lifeExp`, we can also map fill to a variable. Let's try mapping fill to the year variable. The result is shown in Figure \@ref(fig:gapminder-bar-colors)
 
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
-```{r, echo = TRUE}
+```{r gapminder-bar-colors, echo = TRUE, fig.cap="The same chart, now with added colors"}
 ggplot(
   data = gapminder_10_rows,
   mapping = aes(
@@ -697,13 +678,13 @@ ggplot(
 save_figure_for_nostarch()
 ```
 
-What we see now is that, for earlier years, the fill is darker while for later years, it is lighter (the legend, added to the right of our plot, shows this). What if we want to change the fill colors? For that, we use a new scale layer. In this case, I'll use the `scale_fill_viridis_c()` function (the c at the end of the function name refers to the fact that the data is continuous). This function, just one of many functions that start with `scale_` and can alter the fill scale, changes the default palette to one that is colorblind-friendly and prints well in grayscale. 
+What we see now is that, for earlier years, the fill is darker while for later years, it is lighter (the legend, added to the right of our plot, shows this). What if we want to change the fill colors? For that, we use a new scale layer. In this case, I'll use the `scale_fill_viridis_c()` function (the c at the end of the function name refers to the fact that the data is continuous). This function, just one of many functions that start with `scale_` and can alter the fill scale, changes the default palette to one that is colorblind-friendly and prints well in grayscale. If you're looking at \@ref(fig:gapminder-viridis) in a print version of the book, you're able to see differences in the bar colors because of this!
 
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
-```{r, echo = TRUE}
+```{r gapminder-viridis, echo = TRUE, fig.cap="The same chart with a colorblind-friendly palette"}
 ggplot(
   data = gapminder_10_rows,
   mapping = aes(
@@ -720,13 +701,13 @@ ggplot(
 save_figure_for_nostarch()
 ```
 
-A final layer we'll look at is the theme layer. This layer allows us to change the overall look-and-feel of plots (think: plot backgrounds, grid lines, etc). Just as there are a number of `scale_` functions, there are also a number of functions that start with `theme_`. Below, I've added `theme_minimal()`, which starts to declutter our plot. 
+A final layer we'll look at is the theme layer. This layer allows us to change the overall look-and-feel of plots (think: plot backgrounds, grid lines, etc). Just as there are a number of `scale_` functions, there are also a number of functions that start with `theme_`. Below, I've added `theme_minimal()`, which starts to declutter our plot in Figure \@ref(fig:gapminder-theme). 
 
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
-```{r, echo = TRUE}
+```{r gapminder-theme, echo = TRUE, fig.cap="The same chart with theme_minimal() added"}
 ggplot(
   data = gapminder_10_rows,
   mapping = aes(
@@ -780,13 +761,13 @@ We can take a look at this object to see the variables we have to work with:
 southwest_2003 %>%
   slice(1:10)
 ```
-Now we can use this `southwest_2003` object for our plotting. In the `ggplot()` function, we tell R to put week on the x axis, percentage on the y axis, and use the category variable (i.e. drought level) for our fill color. We then use `geom_col()` to create a bar chart where the fill color of each bar represents the percentage of the region in a single week that is at different drought levels. The colors don't match the final version of the plot, but with this code we can start to see the outlines of Cédric and Georgios's data viz.  
+Now we can use this `southwest_2003` object for our plotting. In the `ggplot()` function, we tell R to put week on the x axis, percentage on the y axis, and use the category variable (i.e. drought level) for our fill color. We then use `geom_col()` to create a bar chart where the fill color of each bar represents the percentage of the region in a single week that is at different drought levels. The colors don't match the final version of the plot, but with this code we can start to see the outlines of Cédric and Georgios's data viz in Figure \@ref(fig:southwest-2003-no-style).  
 
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
-```{r, echo = TRUE}
+```{r southwest-2003-no-style, echo = TRUE, fig.cap="One year and one region of the drought visualization"}
 ggplot(
   data = southwest_2003,
   aes(
@@ -802,13 +783,13 @@ ggplot(
 save_figure_for_nostarch()
 ```
 
-Cédric and Georgios next select different fill colors for their bars. They use the `scale_fill_viridis_d()` function. The "d" here means the data that the fill scale is being applied to has discrete categories (D0, D1, D2, D3, D4, D5). They use the argument `option = "rocket"` in order to select the "rocket" palette (the `scale_fill_viridis_d()` function has several other palettes). And they use the `direction = -1` argument to reverse the order of fill colors so that darker colors mean higher drought conditions. 
+Cédric and Georgios next select different fill colors for their bars. They use the `scale_fill_viridis_d()` function. The "d" here means the data that the fill scale is being applied to has discrete categories (D0, D1, D2, D3, D4, D5). They use the argument `option = "rocket"` in order to select the "rocket" palette (the `scale_fill_viridis_d()` function has several other palettes). And they use the `direction = -1` argument to reverse the order of fill colors so that darker colors mean higher drought conditions, as seen in Figure \@ref(fig:southwest-2003-with-color). 
 
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
-```{r, echo = TRUE}
+```{r southwest-2003-with-color, echo = TRUE, fig.cap="One year and one region of the drought visualization using a viridis palette"}
 ggplot(
   data = southwest_2003,
   aes(
@@ -828,13 +809,13 @@ ggplot(
 save_figure_for_nostarch()
 ```
 
-In the language of ggplot, x and y axis are aesthetic properties, the same as fill color. Cédric and Georgios tweak the x axis to remove both the axis title ("week") using `name = NULL` and the 0-50 axis text with `guide = none`. On the y axis, they remove the axis title and axis text (which was showing percentages in 0.00, 0.25, 0.50, 0.75 format) using `labels = NULL` (this functionally does the same thing as `guide = "none"`). They also move the axis lines themselves to the right side using `position = "right"` (they are only apparent as tick marks at this point, but will become more visible later).
+In the language of ggplot, x and y axis are aesthetic properties, the same as fill color. Cédric and Georgios tweak the x axis to remove both the axis title ("week") using `name = NULL` and the 0-50 axis text with `guide = none`. On the y axis, they remove the axis title and axis text (which was showing percentages in 0.00, 0.25, 0.50, 0.75 format) using `labels = NULL` (this functionally does the same thing as `guide = "none"`). They also move the axis lines themselves to the right side using `position = "right"` (they are only apparent as tick marks at this point, but will become more visible later). Figure \@ref(fig:southwest-2003-xy-scales) shows the result of these tweaks.
 
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
-```{r, echo = TRUE}
+```{r southwest-2003-xy-scales, echo = TRUE, fig.cap="One year and one region of the drought visualization with adjustments to the x and y axes"}
 ggplot(
   data = southwest_2003,
   aes(
@@ -859,13 +840,13 @@ ggplot(
 save_figure_for_nostarch()
 ```
 
-Up to this point, we've focused on one of the single plots that make up the larger data viz. But the final product that Cédric and Georgios made is actually 176 plots (22 years and 8 regions). One of the most useful features of ggplot is what's known as facetting (known more commonly in the data viz world as small multiples). With the `facet_grid()` function, we can select which variable to put in rows and which to put in columns of our facetted plot. Cédric and Georgios put `year` in rows and `hub` (region) in columns. The `switch = "y"` argument moves the year label from the right side (where it appears by default) to the left. With this code in place, we can see the final plot coming together. Space considerations require me to again include only four regions, but you get the idea.
+Up to this point, we've focused on one of the single plots that make up the larger data viz. But the final product that Cédric and Georgios made is actually 176 plots (22 years and 8 regions). One of the most useful features of ggplot is what's known as facetting (known more commonly in the data viz world as small multiples). With the `facet_grid()` function, we can select which variable to put in rows and which to put in columns of our facetted plot. Cédric and Georgios put `year` in rows and `hub` (region) in columns. The `switch = "y"` argument moves the year label from the right side (where it appears by default) to the left. With this code in place, we can see the final plot coming together in Figure \@ref(fig:drought-viz-facetted). Space considerations require me to again include only four regions, but you get the idea.
 
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
-```{r, fig.height = 8, echo = TRUE}
+```{r drought-viz-facetted, fig.height = 8, echo = TRUE, fig.cap="Facetted version of the drought visualization"}
 dm_perc_cat_hubs %>%
   filter(hub %in% c("Northwest", 
                     "California", 
@@ -895,13 +876,13 @@ save_figure_for_nostarch(figure_height = 8)
 
 Incredibly, the broad outlines of the plot took us just 10 lines to create. All of the final code from here on out falls in the category of small polishes. That's not to minimize how important small polishes are (very) or the time it takes to create them (lots). But it is to say that a little bit of ggplot goes a long way. 
 
-Let's look at a few of the small polishes that Cédric and Georgios make. The first is to apply a theme. They use `theme_light()`, which removes the default gray background and changes the font to Roboto.
+Let's look at a few of the small polishes that Cédric and Georgios make. The first is to apply a theme, as seen in Figure \@ref(fig:drought-viz-theme-light). They use `theme_light()`, which removes the default gray background and changes the font to Roboto. 
 
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
-```{r, fig.height = 8, echo = TRUE}
+```{r drought-viz-theme-light, fig.height = 8, echo = TRUE, fig.cap="Drought visualization with theme_light() added"}
 dm_perc_cat_hubs %>%
   filter(hub %in% c("Northwest", 
                     "California", 
@@ -931,13 +912,13 @@ save_figure_for_nostarch(figure_height = 8)
 ```
 
 
-`theme_light()` is what's known as a "complete theme." So-called complete themes change the overall look-and-feel of a plot. But Cédric and Georgios don't stop with applying a complete theme. From there, they use the `theme()` function to make additional tweaks to what `theme_light()` gives them. 
+`theme_light()` is what's known as a "complete theme." So-called complete themes change the overall look-and-feel of a plot. But Cédric and Georgios don't stop with applying a complete theme. From there, they use the `theme()` function to make additional tweaks to what `theme_light()` gives them. The drought visualization as it currently stands is seen in \@ref(fig:drought-viz-theme-tweaks).
 
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
-```{r, fig.height = 8, echo = TRUE}
+```{r drought-viz-theme-tweaks, fig.height = 8, echo = TRUE, fig.cap="Drought visualization with tweaks to the theme"}
 dm_perc_cat_hubs %>%
   filter(hub %in% c("Northwest", 
                     "California", 
@@ -1004,7 +985,6 @@ dm_perc_cat_hubs %>%
 save_figure_for_nostarch(figure_height = 8)
 ```
 
-
 The code in the `theme()` function does many different things, but let's take a look at a few of the most important:
 
 `legend.position = "top"` moves the legend from the right (the default) to the top of the plot. 
@@ -1015,7 +995,7 @@ The code in the `theme()` function does many different things, but let's take a 
 print_nostarch_file_name()
 ```
 
-```{r, fig.height = 8}
+```{r drought-viz-more-tweaks, fig.height = 8, fig.cap="Drought visualization with additional tweaks to the theme"}
 dm_perc_cat_hubs %>%
   filter(hub %in% c("Northwest", 
                     "California", 
@@ -1100,7 +1080,7 @@ panel.border = element_rect(color = "transparent", size = 0),
 plot.background = element_rect(fill = "transparent", color = "transparent", size = .4)
 ```
 
-Keen readers such as yourself may now be thinking: "wait, didn't the individual plots have a gray background behind them?" Yes, dear reader, they did. How did Cédric and Georgios make these? They did this with a separate geom: `geom_rect()`. Here, they set some additional aesthetic properties specific to `geom_rect()` (`xmin`, `xmax`, `ymin`, and `ymax`). The result is a gray background drawn behind each small multiple. 
+Keen readers such as yourself may now be thinking: "wait, didn't the individual plots have a gray background behind them?" Yes, dear reader, they did. How did Cédric and Georgios make these? They did this with a separate geom: `geom_rect()`. Here, they set some additional aesthetic properties specific to `geom_rect()` (`xmin`, `xmax`, `ymin`, and `ymax`). The result is a gray background drawn behind each small multiple, as seen in \@ref(fig:drought-viz-gray-backgrounds). 
 
 ```{r, echo = TRUE, eval = FALSE}
 geom_rect(
@@ -1120,7 +1100,7 @@ geom_rect(
 print_nostarch_file_name()
 ```
 
-```{r, fig.height = 10, echo = FALSE}
+```{r drought-viz-gray-backgrounds, fig.height = 10, echo = FALSE, fig.cap="Facetted version of the drought visualization with gray backgrounds behind each small multiple"}
 dm_perc_cat_hubs %>%
   filter(hub %in% c("Northwest", 
                     "California", 
@@ -1196,7 +1176,7 @@ dm_perc_cat_hubs %>%
 save_figure_for_nostarch(figure_height = 8)
 ```
 
-The final polish to highlight is the tweaks to the legend. I previously showed a simplified version of the `scale_fill_viridis_d()` function. A more complete version is as follows. The `name` argument sets the legend title and the `labels` argument determine the labels that show up in the legend. Rather than D0, D1, D2, D3, and D4, we now have Abnormally Dry, Moderate Drought, Severe Drought, Extreme Drought, and Exceptional Drought.
+The final polish to highlight is the tweaks to the legend. I previously showed a simplified version of the `scale_fill_viridis_d()` function. A more complete version is as follows. The `name` argument sets the legend title and the `labels` argument determine the labels that show up in the legend. Rather than D0, D1, D2, D3, and D4, we now have Abnormally Dry, Moderate Drought, Severe Drought, Extreme Drought, and Exceptional Drought. Figure \@ref(fig:drought-viz-legend-tweaks) shows the result of these changes.
 
 
 ```{r, echo = TRUE, eval = FALSE}
@@ -1218,7 +1198,7 @@ scale_fill_viridis_d(
 print_nostarch_file_name()
 ```
 
-```{r, fig.height = 8}
+```{r drought-viz-legend-tweaks, fig.height = 8, fig.cap="Drought visualization with changes made to the legend text"}
 dm_perc_cat_hubs %>%
   filter(hub %in% c("Northwest", 
                     "California", 
