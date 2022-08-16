@@ -464,7 +464,7 @@ Wilkinson argued that we should think of plots not as distinct types a la Excel,
 
 > A language consisting of words and no grammar (statement = word) expresses only as many ideas as there are words. ... The grammar of graphics takes us beyond a limited set of charts (words) to an almost unlimited world of graphical forms (statements). 
 
-Thinking about data visualization through the lens of the grammar of graphics allow us to see, for example, that graphs typically have data that is plotted on the x axis and other data that is plotted on the y axis. And this is the case no matter whether the type of graph we end up with is, to take just two examples, a bar chart of a line chart. Consider \@ref(fig:bar-line-chart), which shows two charts that use identical data on life expectancy in Afghanistan:
+Thinking about data visualization through the lens of the grammar of graphics allow us to see, for example, that graphs typically have data that is plotted on the x axis and other data that is plotted on the y axis. And this is the case no matter whether the type of graph we end up with is, to take just two examples, a bar chart of a line chart. Consider Figure \@ref(fig:bar-line-chart), which shows two charts that use identical data on life expectancy in Afghanistan:
 
 ```{r results='asis'}
 print_nostarch_file_name(actually_print = TRUE)
@@ -590,7 +590,7 @@ save_figure_for_nostarch()
 
 There we go! 1952 shows the life expectancy of about 28 and so on through every year in our data. 
 
-Let's say we change our mind and want to make a line chart instead. Well, all we have to do is replace `geom_point()` with `geom_line()` and we get \@ref(fig:gapminder-line). 
+Let's say we change our mind and want to make a line chart instead. Well, all we have to do is replace `geom_point()` with `geom_line()` and we get Figure \@ref(fig:gapminder-line). 
 
 ```{r results='asis'}
 print_nostarch_file_name(actually_print = TRUE)
@@ -662,7 +662,7 @@ Before we return to the drought data viz, let's look at a few additional layers 
 print_nostarch_file_name(actually_print = TRUE)
 ```
 
-```{r gapminder-bar-colors, echo = TRUE, fig.cap="The same chart, now will added colors"}
+```{r gapminder-bar-colors, echo = TRUE, fig.cap="The same chart, now with added colors"}
 ggplot(
   data = gapminder_10_rows,
   mapping = aes(
@@ -678,7 +678,7 @@ ggplot(
 save_figure_for_nostarch()
 ```
 
-What we see now is that, for earlier years, the fill is darker while for later years, it is lighter (the legend, added to the right of our plot, shows this). What if we want to change the fill colors? For that, we use a new scale layer. In this case, I'll use the `scale_fill_viridis_c()` function (the c at the end of the function name refers to the fact that the data is continuous). This function, just one of many functions that start with `scale_` and can alter the fill scale, changes the default palette to one that is colorblind-friendly and prints well in grayscale. If you're looking at \@ref(fig:gapminder-viridis) in a print version of the book, you're able to see differences in the bar colors because of this!
+What we see now is that, for earlier years, the fill is darker while for later years, it is lighter (the legend, added to the right of our plot, shows this). What if we want to change the fill colors? For that, we use a new scale layer. In this case, I'll use the `scale_fill_viridis_c()` function (the c at the end of the function name refers to the fact that the data is continuous). This function, just one of many functions that start with `scale_` and can alter the fill scale, changes the default palette to one that is colorblind-friendly and prints well in grayscale. If you're looking at Figure \@ref(fig:gapminder-viridis) in a print version of the book, you're able to see differences in the bar colors because of this!
 
 ```{r results='asis'}
 print_nostarch_file_name(actually_print = TRUE)
@@ -912,7 +912,7 @@ save_figure_for_nostarch(figure_height = 8)
 ```
 
 
-`theme_light()` is what's known as a "complete theme." So-called complete themes change the overall look-and-feel of a plot. But Cédric and Georgios don't stop with applying a complete theme. From there, they use the `theme()` function to make additional tweaks to what `theme_light()` gives them. The drought visualization as it currently stands is seen in \@ref(fig:drought-viz-theme-tweaks).
+`theme_light()` is what's known as a "complete theme." So-called complete themes change the overall look-and-feel of a plot. But Cédric and Georgios don't stop with applying a complete theme. From there, they use the `theme()` function to make additional tweaks to what `theme_light()` gives them. The drought visualization as it currently stands is seen in Figure \@ref(fig:drought-viz-theme-tweaks).
 
 ```{r results='asis'}
 print_nostarch_file_name(actually_print = TRUE)
@@ -1080,7 +1080,7 @@ panel.border = element_rect(color = "transparent", size = 0),
 plot.background = element_rect(fill = "transparent", color = "transparent", size = .4)
 ```
 
-Keen readers such as yourself may now be thinking: "wait, didn't the individual plots have a gray background behind them?" Yes, dear reader, they did. How did Cédric and Georgios make these? They did this with a separate geom: `geom_rect()`. Here, they set some additional aesthetic properties specific to `geom_rect()` (`xmin`, `xmax`, `ymin`, and `ymax`). The result is a gray background drawn behind each small multiple, as seen in \@ref(fig:drought-viz-gray-backgrounds). 
+Keen readers such as yourself may now be thinking: "wait, didn't the individual plots have a gray background behind them?" Yes, dear reader, they did. How did Cédric and Georgios make these? They did this with a separate geom: `geom_rect()`. Here, they set some additional aesthetic properties specific to `geom_rect()` (`xmin`, `xmax`, `ymin`, and `ymax`). The result is a gray background drawn behind each small multiple, as seen in Figure \@ref(fig:drought-viz-gray-backgrounds). 
 
 ```{r, echo = TRUE, eval = FALSE}
 geom_rect(
@@ -1406,7 +1406,7 @@ ggplot(dm_perc_cat_hubs, aes(week, percentage)) +
 
 ## ggplot is Your Data Viz Secret Weapon {-}
 
-If you take up ggplot, you may start to think of it as a solution to all of your data viz problems. Yes, you have a new hammer, but no, everything is not a nail. If you look at the version of this data viz that appeared in Scientific American^[https://www.scientificamerican.com/article/climate-change-drives-escalating-drought/], you'll see that there are some annotations not visible in our recreation. That's because they were added in post-production outside of ggplot. While you *can* come up with ways to do everything in ggplot, it's often not the best use of your time. Get yourself 90% of the way there with ggplot and then use Illustrator, Figma, or a similar tool to finish off your work. 
+If you take up ggplot, you may start to think of it as a solution to all of your data viz problems. Yes, you have a new hammer, but no, everything is not a nail. If you look at the version of this data viz that appeared in Scientific American in November 2021, you'll see that there are some annotations not visible in our recreation. That's because they were added in post-production outside of ggplot. While you *can* come up with ways to do everything in ggplot, it's often not the best use of your time. Get yourself 90% of the way there with ggplot and then use Illustrator, Figma, or a similar tool to finish off your work. 
 
 With that caveat in place, ggplot is a very powerful hammer. And it's a hammer used to make plots that you've seen in the New York Times, FiveThirtyEight, the BBC, and other well-known news outlets. ggplot is so popular not because it is the only tool that can make data viz that follows principles of high-quality data viz, but because it makes it straightforward to do so. The graph that Cédric Scherer and Georgios Karamanis made shows this in several ways:
 
