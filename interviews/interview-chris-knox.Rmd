@@ -1,0 +1,38 @@
+---
+title: "Interview with Chris Knox"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Checklist on day of recording
+
+- Make sure people keep browser open after call
+- Get repo URL
+
+# Personal Background
+
+Data editor and head of data journalism at NZ Herald
+
+https://www.nzherald.co.nz/author/chris-knox/
+
+Previously worked at NZ Ministry of Health, leading analytics team focused on COVID response. 
+
+
+# NZ COVID response
+
+## You've said that R helped to stand up the NZ COVID response quickly. Explain this.
+
+## You've also said that R gave you massive flexibility. How so? 
+
+## You've said that early on, the response consisted of a massive number of R scripts. Give me a sense of the scope and what types of things those scripts were doing.
+
+## In addition to R, you used RMarkdown a lot. How so? And what benefits did it offer? 
+
+## Can you give an example of an analysis that was run regularly? Explain what this would have looked like without R.
+
+## If you were advising the NZ government (or any government), what would you tell them to do now with regard to R that would prepare them for the next pandemic? 
+
+## What else would be useful for me to know about the role R played in the NZ COVID response? 
