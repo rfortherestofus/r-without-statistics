@@ -6,7 +6,6 @@ language:
   ui:
     chapter_name: "Chapter "
   label:
-    # fig: !expr function(i) paste("Figure", stringr::str_replace_all(i, "[.]", "-"), " ")
     # fig: !expr function(i) paste("")
 rmd_files: [
   "index.Rmd",
