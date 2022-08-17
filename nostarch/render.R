@@ -33,6 +33,12 @@ gsub_files(files = dir_ls(path = "nostarch/source", regexp = "Rmd"),
            'print_nostarch_file_name\\(file_type_to_print = "png"\\)',
            'print_nostarch_file_name(file_type_to_print = "png", actually_print = TRUE)')
 
+gsub_file(file = "nostarch/source/_bookdown.yml",
+          '\\# fig: \\!expr function\\(i\\) paste\\(""\\)',
+          'fig: !expr function(i) paste("")')
+
+
+
 
 # Delete all existing figures ---------------------------------------------
 
