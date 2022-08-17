@@ -71,10 +71,25 @@ file_show("nostarch/word/r-without-statistics.docx")
 # 
 # str_replace(fig, "\\[\\.\\]", "test")
 # 
-# styles_info(word_doc)
-# 
 # print(updated_word_doc,
 #       target = "nostarch/word/new.docx")
+
+
+# Change styles -----------------------------------------------------------
+
+word_doc <- read_docx("nostarch/word/r-without-statistics.docx")
+
+styles_info(word_doc)
+
+updated_doc <- change_styles(word_doc,
+              list(
+                 "Body" = "Body Text"
+              ))
+
+print(updated_doc,
+      target = "nostarch/word/new.docx")
+
+file_show("nostarch/word/new.docx")
 
 
 # Manual Rendering --------------------------------------------------------

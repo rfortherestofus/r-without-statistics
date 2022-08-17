@@ -528,7 +528,7 @@ As an academic statistician, Wilkinson's goal in writing *The Grammar of Graphic
 
 At the time Wilkinson wrote his book, there was no data viz tool that could implement his grammar of graphics. This would change in 2010, when Hadley Wickham announced the `ggplot2` package for R. Providing the tools to implement Wilkinson's ideas, `ggplot2` would come to revolutionize the world of data visualization. 
 
-## ggplot2 {-}
+## The Arrival of ggplot2 {-}
 
 Hadley Wickham's article announcing `ggplot2` (which I, like nearly everyone in the data viz world, will refer to simply as ggplot) was titled *A Layered Grammar of Graphics*. It showed a new R package that relied on the grammar of graphics and added on the idea of plots having multiple layers. Let's walk through some of the most important layers. 
 
