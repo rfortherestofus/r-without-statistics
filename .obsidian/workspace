@@ -4,16 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "b8fb30a1887873c2",
+        "id": "e52812ad475b2743",
         "type": "leaf",
         "state": {
-          "type": "markdown",
-          "state": {
-            "file": "outlines/data-viz.md",
-            "mode": "source",
-            "backlinks": false,
-            "source": false
-          }
+          "type": "empty",
+          "state": {}
         }
       }
     ],
@@ -88,9 +83,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "outlines/data-viz.md"
-              }
+              "state": {}
             }
           }
         ],
@@ -100,7 +93,7 @@
     "direction": "horizontal",
     "width": 100
   },
-  "active": "b8fb30a1887873c2",
+  "active": "e52812ad475b2743",
   "lastOpenFiles": [
     "outlines/data-viz.md",
     "_book/data-viz.md",

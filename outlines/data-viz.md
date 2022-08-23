@@ -34,10 +34,10 @@
         2.  Also mention facet_wrap()?
     5.  Themes (tweaks that makes everything shine)
         1.  Complete themes
-        2. theme() function
-    6. Misc
-        1. coord_cartesian()
-        2. guides()
+        2.  theme() function
+    6.  Misc
+        1.  coord_cartesian()
+        2.  guides()
 5.  Wrap up
     1.  Don't try to do everything in R!
         1.  Post processing on this piece done outside of R
@@ -62,35 +62,37 @@
 
 Do this all at a high level before later using technical language
 
-- Pattern over time (map data to aesthetic properties)
-- Choice of chart (geoms)
-	- Show geom_col() first
-	- Then explain geom_rect()
-- Well-chosen colors (scales)
-	- scale_fill_viridis_d()
-	- Also mention that we use scales for x + y axes
-- Small multiples (facetting)
-	- facet_grid()
-	- Also mention facet_wrap()? 
-- Themes (tweaks that makes everything shine)
-	- Complete themes
-	- theme() function
+-   Pattern over time (map data to aesthetic properties)
+-   Choice of chart (geoms)
+    -   Show geom_col() first
+    -   Then explain geom_rect()
+-   Well-chosen colors (scales)
+    -   scale_fill_viridis_d()
+    -   Also mention that we use scales for x + y axes
+-   Small multiples (facetting)
+    -   facet_grid()
+    -   Also mention facet_wrap()?
+-   Themes (tweaks that makes everything shine)
+    -   Complete themes
+    -   theme() function
 
 ## Then transition to showing how they made such an effective chart
 
 ## Then talk about ggplot generally (grammar of graphics)
 
-- Intro with Wilkinson's article
-- Then talk about Hadley picking it up and running with it
+-   Intro with Wilkinson's article
 
-- Data mapped to ...
-- ... aesthetic properties
-- Scales
-- Facets
-- Themes
+-   Then talk about Hadley picking it up and running with it
 
+-   Data mapped to ...
 
+-   ... aesthetic properties
 
+-   Scales
+
+-   Facets
+
+-   Themes
 
 ```{r}
 library(tidyverse)
@@ -156,8 +158,6 @@ dm_perc_cat_hubs <-
   filter(percentage > 0)
 ```
 
-
-
 ```{r}
 dm_perc_cat_hubs %>% 
   ggplot(aes(x = week, y = percentage)) +
@@ -212,22 +212,20 @@ dm_perc_cat_hubs %>%
   )
 ```
 
-Let's take a look at how they made their visualization. 
+Let's take a look at how they made their visualization.
 
 ## Close read of data viz
 
-TODO: Add something about how there was post-production so my viz is slightly different (e.g. missing 0% and 100% on y axis text). 
+TODO: Add something about how there was post-production so my viz is slightly different (e.g. missing 0% and 100% on y axis text).
 
 Looking at the visualization as a whole, what we see is a chart broken down in multiple ways:
 
-1. The x axis is used to show the week in a single year. 
-2. The y axis shows the percentage of each region at different drought levels. 
-3. Color is used to show the drought levels in each region. 
-4. The chart uses small multiples so that what appears to be one large chart is actually make up of many individual charts. 
+1.  The x axis is used to show the week in a single year.
+2.  The y axis shows the percentage of each region at different drought levels.
+3.  Color is used to show the drought levels in each region.
+4.  The chart uses small multiples so that what appears to be one large chart is actually make up of many individual charts.
 
-To show how the chart works, let's look at one year (2000) for one region (Southeast). 
-
-
+To show how the chart works, let's look at one year (2000) for one region (Southeast).
 
 ```{r}
 dm_perc_cat_hubs %>% 
@@ -285,15 +283,15 @@ dm_perc_cat_hubs %>%
   )
 ```
 
-Looking at this simplified version, we can see the structure of the chart much more clearly. The bars for each week are visible, with each color indicating a different drought level. 
+Looking at this simplified version, we can see the structure of the chart much more clearly. The bars for each week are visible, with each color indicating a different drought level.
 
 TODO: Add annotated image with it showing one bar
 
-While the weeks in the first half of the year have very low percentages in the exceptional drought level, the darkest color begins to appear in the second half of the year as a higher percentage of the region enters this category. 
+While the weeks in the first half of the year have very low percentages in the exceptional drought level, the darkest color begins to appear in the second half of the year as a higher percentage of the region enters this category.
 
 TODO: Add annotated image
 
-To understand how the code that creates this chart works, let's recreate a simplified version of it. In this code, we take our `dm_perc_cat_hubs` data frame, filter it to only include 2000 data from Southeast, and then pipe this into ggplot. In the `ggplot()` function, we do what's called setting our aesthetic properties by telling R to put week on the x axis, percentage on the y axis, and use the category variable (i.e. drought level) for our fill. This last piece sets the color of the bars that are created when we use `geom_col()` to create a bar chart. 
+To understand how the code that creates this chart works, let's recreate a simplified version of it. In this code, we take our `dm_perc_cat_hubs` data frame, filter it to only include 2000 data from Southeast, and then pipe this into ggplot. In the `ggplot()` function, we do what's called setting our aesthetic properties by telling R to put week on the x axis, percentage on the y axis, and use the category variable (i.e. drought level) for our fill. This last piece sets the color of the bars that are created when we use `geom_col()` to create a bar chart.
 
 ```{r}
 dm_perc_cat_hubs %>% 
@@ -312,27 +310,25 @@ dm_perc_cat_hubs %>%
   geom_col()
 ```
 
-
-The visualization that Cédric and Georgios ended up making is a stacked bar chart
-Set of stacked bars
+The visualization that Cédric and Georgios ended up making is a stacked bar chart Set of stacked bars
 
 ### Shows pattern over time
 
-The goal of the piece is to show, [as the final article in Scientific American puts it](https://www.scientificamerican.com/article/climate-change-drives-escalating-drought/), that "the past two decades have seen some of the most extreme dry periods in U.S. history." To demonstrate this trend, Cédric and Georgios  used longitudinal data. After a bit of data wrangling, the data ended up looking like this: 
+The goal of the piece is to show, [as the final article in Scientific American puts it](https://www.scientificamerican.com/article/climate-change-drives-escalating-drought/), that "the past two decades have seen some of the most extreme dry periods in U.S. history." To demonstrate this trend, Cédric and Georgios used longitudinal data. After a bit of data wrangling, the data ended up looking like this:
 
-TODO: Add image: https://show.rfor.us/IDq8ug
+TODO: Add image: <https://show.rfor.us/IDq8ug>
 
 The variables in this data are:
 
-- **date**: start date of the week of the observation
-- **hub**: region
-- **category**: level of drought (D0 = lowest level of drought; D5 = highest level) TODO: check that my interpretation is correct
-- **percentage**: percentage of that region that is in that category of drought
-- **year**: observation year
-- **week**: week number (i.e. first week is week 1)
-- **max_week**: TODO check what it means
+-   **date**: start date of the week of the observation
+-   **hub**: region
+-   **category**: level of drought (D0 = lowest level of drought; D5 = highest level) TODO: check that my interpretation is correct
+-   **percentage**: percentage of that region that is in that category of drought
+-   **year**: observation year
+-   **week**: week number (i.e. first week is week 1)
+-   **max_week**: TODO check what it means
 
-With the data ready, Cédric and Georgios began the process of plotting. 
+With the data ready, Cédric and Georgios began the process of plotting.
 
 ### Choice of chart (not line chart)
 
@@ -394,14 +390,12 @@ dm_perc_cat_hubs %>%
   )
 ```
 
-
 ### Small multiples
 
-[The data from the National Drought Center comes divided by region](https://droughtmonitor.unl.edu/DmData/DataDownload/ComprehensiveStatistics.aspx). These regions, known technically as [USDA Climate Hubs](https://www.climatehubs.usda.gov/), include the Pacific Northwest, California, the Southwest, the Northern Plains, the Southern Plains, the Midwest, the Southeast, the Northeast, the Northern Forests, and the Caribbean (data for the latter two regions was not included in the final visualization). 
+[The data from the National Drought Center comes divided by region](https://droughtmonitor.unl.edu/DmData/DataDownload/ComprehensiveStatistics.aspx). These regions, known technically as [USDA Climate Hubs](https://www.climatehubs.usda.gov/), include the Pacific Northwest, California, the Southwest, the Northern Plains, the Southern Plains, the Midwest, the Southeast, the Northeast, the Northern Forests, and the Caribbean (data for the latter two regions was not included in the final visualization).
 
-While drought has become more common in all regions (TODO: is this true?), certain regions have been hit harder than others. Using the  
+While drought has become more common in all regions (TODO: is this true?), certain regions have been hit harder than others. Using the
 
 ### Well-chosen colors
 
 ### Little tweaks that make the chart really shine
-
