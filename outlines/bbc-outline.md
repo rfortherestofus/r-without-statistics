@@ -14,6 +14,11 @@ Overall message: bbplot allows people to make plots that are on-brand, but that'
 
 
 2. Code
+	3. Text formatting
+	4. Legend
+	5. Axes
+	6. Grid lines
+	7. Backgrounds (panel and strip)
 
 
 3. Conclusion
