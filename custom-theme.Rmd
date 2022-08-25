@@ -35,13 +35,7 @@ The answers to these questions are what makes charts on-brand. Having consistent
 
 - Discuss adding logo etc
 - Discuss cookbook
-
-The team had become comfortable with using R 
-
-
- and you've got something that's just there. And then you realize that like the possibilities to tweak, this are limitless. 
-
-And as opposed to making a rough mockup for a designer to 
-
-"Yeah, I was thinking about this, cuz I definitely found it like immediately addictive when I started working with ggplot to make charts, like even before we got anywhere near having a production ready chart, just trying things out, visualizing things for the first time. And I was trying to work out why. That was, and I think it is that, that you were saying that you can make like the simplest chart with just a couple of lines of code and you've got something that's just there. And then you realize that like the possibilities to tweak, this are limitless. Like I can do anything now. and you can go as in depth, as you want, just moving things, moving the tiniest things around and you. Just completely flexible in a way that was just completely new to me. Coming from, having worked with chart tools basically previously to, to visualize things."
+- They never intended to make custom theme
+	- It was all very gradual
+- BBC made tons of data viz during pandemic because of bbplot
 
