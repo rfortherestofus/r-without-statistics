@@ -1,2 +1,47 @@
 # Develop a Custom Theme to Keep Your Data Viz Consistent 
 
+In 2018, BBC data journalist Nassos Stylianou was working with a backend developer on a particularly large data set. Nassos was primarily an Excel user at the time, but this data was too large for Excel. Seeing the developer work, a light bulb went off for Nassos: if he and his data journalism team learned to use R, they could do this type of analysis on their own. 
+
+This realization began a journey into R. This journey, which started with needing to analyze data too large for Excel to handle, would ultimately end up in a very different place. 
+
+In 2019, Nassos, his colleague Clara Guibourg, and their team created a custom ggplot theme to create plots that match the BBC style. The code in the `bbplot` package is a great example of the value of developing a custom theme. 
+
+But the real story of the creation of bbplot is not just about technical tools. Through learning R and creating a custom theme for others to use, Nassos, Clara and their colleagues would change the culture, remove bottlenecks, and allow the BBC to be more creative with their data viz.
+
+To understand how big these changes were, it's helpful to understand what things looked like at the BBC before bbplot. In the mid-2010s, journalists at the BBC who wanted to make data visualization had two choices:
+
+1. They could use an internal tool called Chart Tools. This tool could create data visualization, but only the predefined charts it had been designed to generate. 
+2. They could use Excel to create mockups and then work with a graphic designer to finalize the charts. This approach led to better results, and was way more flexible, but required extensive back-and-forth with a designer. As Nassos described it, working with a designer "is just a very time consuming workflow if you think of how many visualizations the BBC does." 
+
+Neither of these choices was ideal. And this limited set of less-than-ideal choices led to a limited output of data viz.   
+
+That would all change when Nassos, Clara, and their colleagues realized that R, the tool they had decided to learn for data analysis, could also do data visualization. As they began playing around with ggplot, they quickly saw its power. 
+
+Clara said she found it "immediately addictive when I started working with ggplot to make charts." No longer limited by Chart Tools, she found that ggplot was "completely flexible in a way that was just completely new to me." 
+
+The biggest change, though, came from not having to work with a designer. Not because the designers were bad (they weren't). But because ggplot allowed the BBC data journalists to explore different visualizations on their own. Working with a designer required the journalists to have a fully-formed idea that the designer could take and improve upon. Working in ggplot allowed BBC data journalists to explore different data viz ideas. 
+
+Clara Guibourg believes this freedom is what explains the addictive quality of ggplot. As she told me, "even before we got anywhere near having a production-ready chart, just trying things out, visualizing things for the first time" was completely captivating. Having learned the basics of ggplot, she saw that "you can make like the simplest chart with just a couple of lines of code." Being able to explore different types of visualization on her own led Clara and others to produce more  data viz than they had previously. 
+
+As the BBC data journalism team improved their ggplot skills, they realized that they could produce not only exploratory data viz, but also production-ready charts. They had learned to use R for data analysis, were starting to use it for exploratory data visualization, could they go all the way and create a chart in R that could go straight onto the BBC website? 
+
+Nassos, Clara, and their colleagues set about looking into what would be involved in creating production-ready charts from R. They realized that so much of the work required to create production-ready charts involved small tweaks. What font should they use? Where should the legend go? Should axes have titles? Should charts have grid lines? 
+
+The answers to these questions are what makes charts on-brand. Having consistent answers to them is what enabled BBC designers to turn Excel mockups into data viz ready to go on the website. As the BBC data journalism team dug further into ggplot, they realized that they might be able to write code to make their data viz production-ready. They realized that, if making production-ready charts required asking question about fonts, legends, axes, and grid lines, ggplot had an answer. And the answer was to make a custom theme. 
+
+## Enter bbplot
+
+## Conclusion
+
+- Discuss adding logo etc
+- Discuss cookbook
+
+The team had become comfortable with using R 
+
+
+ and you've got something that's just there. And then you realize that like the possibilities to tweak, this are limitless. 
+
+And as opposed to making a rough mockup for a designer to 
+
+"Yeah, I was thinking about this, cuz I definitely found it like immediately addictive when I started working with ggplot to make charts, like even before we got anywhere near having a production ready chart, just trying things out, visualizing things for the first time. And I was trying to work out why. That was, and I think it is that, that you were saying that you can make like the simplest chart with just a couple of lines of code and you've got something that's just there. And then you realize that like the possibilities to tweak, this are limitless. Like I can do anything now. and you can go as in depth, as you want, just moving things, moving the tiniest things around and you. Just completely flexible in a way that was just completely new to me. Coming from, having worked with chart tools basically previously to, to visualize things."
+
