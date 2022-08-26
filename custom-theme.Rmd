@@ -31,11 +31,453 @@ The answers to these questions are what makes charts on-brand. Having consistent
 
 ## Enter bbplot
 
+TODO: Show example plot: https://ichef.bbci.co.uk/news/976/cpsprodpb/82BA/production/_121266433_beef_by_region_ws_640x3-nc.png (source: https://www.bbc.com/news/science-environment-46459714) 
+
+### Show data
+
+To show how `bbplot` works, let's create our own plot. We'll do so using the `palmerpenguins` package, which has data on penguins living on three islands in Antarctica. To give you a sense of what this data looks like, let's load `palmerpenguins` and the `tidyverse` packages.
+
+```{r}
+library(palmerpenguins)
+library(tidyverse)
+```
+
+We now have data that we can work with in an object called `penguins`. Here's what the first ten rows look like.
+
+```{r}
+penguins
+```
+To get our data in a more usable format, let's count how many penguins live on each island. We do this with the `count()` function from the `dplyr` package (one of several packages that are loaded when we load the `tidyverse`).
+
+```{r}
+penguins %>%
+  count(island)
+```
+
+Because we're going to use this data multiple times below, let's save it as an object called `penguins_summary`.
+
+```{r}
+penguins_summary <- penguins %>%
+  count(island)
+```
+
+### Create plot
+
+Now that we've got some data to work with, we're ready to create a plot. Before showing what `bbplot` does, let's make a plot with ggplot defaults. Of course, this isn't the most aesthetically pleasing chart. But we'll be improving it soon!
+
+```{r}
+ggplot(
+  data = penguins_summary,
+  aes(
+    x = island,
+    y = n,
+    fill = island
+  )
+) +
+  geom_col() +
+  labs(
+    title = "Number of Penguins by Island",
+    subtitle = "Islands are in Antarctica",
+    caption = "Data from palmerpenguins package"
+  )
+```
+
+### Save plot as object
+
+We're going to use this plot multiple times (with some modifications each time). To simplify things, let's save it as an object called `penguins_plot`. 
+
+```{r}
+penguins_plot <- ggplot(
+  data = penguins_summary,
+  aes(
+    x = island,
+    y = n,
+    fill = island
+  )
+) +
+  geom_col() +
+  labs(
+    title = "Number of Penguins by Island",
+    subtitle = "Islands are in Antarctica",
+    caption = "Data from palmerpenguins package"
+  )
+```
+
+### Apply bbc_style()
+
+Now that we have a basic plot to work with, let's make it look like a BBC chart. To do this, we load the `bbplot` package. 
+
+This package has two functions: `bbc_style()` and `finalise_plot()`. The latter deals with things like adding the BBC logo, saving plots in the correct dimensions, and other tasks done after the plot is complete. We'll discuss this a bit more below. 
+
+For now, let's look at the `bbc_style()` function. This function applies a custom ggplot theme to any plot. Watch what happens when I apply it to our `penguins_plot`.
+
+
+```{r}
+library(bbplot)
+
+penguins_plot +
+  bbc_style()
+```
+Way different, right? Larger font size, legend on top, no axis titles, stripped down grid lines, and a white background – these are the major changes that the `bbc_style()` function makes. Let's look at them one by one. 
+
+### Look at bbc_style() function
+
+Here's the code for the `bbc_style()` function (this is taken from the `bbplot` GitHub repository, found at https://github.com/bbc/bbplot). 
+
+- add something about functions
+- add something about theme() function
+- add something about ggplot2:: style code
+
+I've made some minor formatting tweaks for readability. For example, you can see the comments in ALL CAPS, which show the category of modification that the section which follows makes. Fortunately for us, the code is organized nicely and allows us to see what each section does. 
+
+```{r}
+bbc_style <- function() {
+  font <- "Helvetica"
+
+  ggplot2::theme(
+
+    # TEXT FORMAT
+    # This sets the font, size, type and colour of text for the chart's title
+    plot.title = ggplot2::element_text(
+      family = font,
+      size = 28,
+      face = "bold",
+      color = "#222222"
+    ),
+    # This sets the font, size, type and colour of text for the chart's subtitle,
+    # as well as setting a margin between the title and the subtitle
+    plot.subtitle = ggplot2::element_text(
+      family = font,
+      size = 22,
+      margin = ggplot2::margin(9, 0, 9, 0)
+    ),
+    # This leaves the caption text element empty, because it is set elsewhere in the finalise plot function
+    plot.caption = ggplot2::element_blank(),
+
+    # LEGEND FORMAT
+    # This sets the position and alignment of the legend, removes a title and backround for it
+    # and sets the requirements for any text within the legend.
+    # The legend may often need some more manual tweaking when it comes to its exact position based on the plot coordinates.
+    legend.position = "top",
+    legend.text.align = 0,
+    legend.background = ggplot2::element_blank(),
+    legend.title = ggplot2::element_blank(),
+    legend.key = ggplot2::element_blank(),
+    legend.text = ggplot2::element_text(
+      family = font,
+      size = 18,
+      color = "#222222"
+    ),
+
+    # AXIS FORMAT
+    # This sets the text font, size and colour for the axis test, as well as setting the margins and removes lines and ticks.
+    # In some cases, axis lines and axis ticks are things we would want to have in the chart - the cookbook shows examples of how to do so.
+    axis.title = ggplot2::element_blank(),
+    axis.text = ggplot2::element_text(
+      family = font,
+      size = 18,
+      color = "#222222"
+    ),
+    axis.text.x = ggplot2::element_text(margin = ggplot2::margin(5, b = 10)),
+    axis.ticks = ggplot2::element_blank(),
+    axis.line = ggplot2::element_blank(),
+
+    # GRID LINES
+    # This removes all minor gridlines and adds major y gridlines.
+    # In many cases you will want to change this to remove y gridlines and add x gridlines.
+    # The cookbook shows you examples for doing so.
+    panel.grid.minor = ggplot2::element_blank(),
+    panel.grid.major.y = ggplot2::element_line(color = "#cbcbcb"),
+    panel.grid.major.x = ggplot2::element_blank(),
+
+    # BLANK BACKGROUND
+    # This sets the panel background as blank, removing the standard grey ggplot background colour from the plot.
+    panel.background = ggplot2::element_blank(),
+
+    # STRIP BACKGROUND
+    # This sets the panel background for facet-wrapped plots to white,
+    # removing the standard grey ggplot background colour and sets the title size of the facet-wrap title to font size 22.
+    strip.background = ggplot2::element_rect(fill = "white"),
+    strip.text = ggplot2::element_text(size = 22, hjust = 0)
+  )
+}
+```
+
+### Text formatting
+
+```{r}
+font <- "Helvetica"
+
+penguins_plot +
+  theme(
+    plot.title = element_text(
+      family = font,
+      size = 28,
+      face = "bold",
+      color = "#222222"
+    ),
+    plot.subtitle = element_text(
+      family = font,
+      size = 22,
+      margin = margin(9, 0, 9, 0)
+    ),
+    plot.caption = element_blank()
+  )
+```
+
+```{r}
+penguins_plot_text <- penguins_plot +
+  theme(
+    plot.title = element_text(
+      family = font,
+      size = 28,
+      face = "bold",
+      color = "#222222"
+    ),
+    plot.subtitle = element_text(
+      family = font,
+      size = 22,
+      margin = margin(9, 0, 9, 0)
+    ),
+    plot.caption = element_blank()
+  )
+```
+
+
+### Legend
+
+```{r}
+penguins_plot_text +
+  theme(
+    legend.position = "top",
+    legend.text.align = 0,
+    legend.background = element_blank(),
+    legend.title = element_blank(),
+    legend.key = element_blank(),
+    legend.text = element_text(
+      family = font,
+      size = 18,
+      color = "#222222"
+    )
+  )
+```
+
+```{r}
+penguins_plot_legend <- penguins_plot_text +
+  theme(
+    legend.position = "top",
+    legend.text.align = 0,
+    legend.background = element_blank(),
+    legend.title = element_blank(),
+    legend.key = element_blank(),
+    legend.text = element_text(
+      family = font,
+      size = 18,
+      color = "#222222"
+    )
+  )
+```
+
+### Axes
+
+```{r}
+penguins_plot_legend +
+  theme(
+    axis.title = element_blank(),
+    axis.text = element_text(
+      family = font,
+      size = 18,
+      color = "#222222"
+    ),
+    axis.text.x = element_text(margin = margin(5, b = 10)),
+    axis.ticks = element_blank(),
+    axis.line = element_blank()
+  )
+```
+
+```{r}
+penguins_plot_axes <- penguins_plot_legend +
+  theme(
+    axis.title = element_blank(),
+    axis.text = element_text(
+      family = font,
+      size = 18,
+      color = "#222222"
+    ),
+    axis.text.x = element_text(margin = margin(5, b = 10)),
+    axis.ticks = element_blank(),
+    axis.line = element_blank()
+  )
+```
+
+### Grid lines
+
+```{r}
+penguins_plot_axes +
+  theme(
+    panel.grid.minor = element_blank(),
+    panel.grid.major.y = element_line(color = "#cbcbcb"),
+    panel.grid.major.x = element_blank()
+  )
+```
+
+```{r}
+penguins_plot_grid_lines <- penguins_plot_axes +
+  theme(
+    panel.grid.minor = element_blank(),
+    panel.grid.major.y = element_line(color = "#cbcbcb"),
+    panel.grid.major.x = element_blank()
+  )
+```
+
+### Backgrounds
+
+#### Panel
+
+```{r}
+penguins_plot_grid_lines +
+  theme(
+    panel.background = element_blank()
+  )
+```
+
+#### Strip
+
+```{r}
+penguins %>%
+  group_by(island, sex) %>%
+  summarize(avg_weight = mean(body_mass_g, na.rm = TRUE)) %>%
+  drop_na(sex) %>%
+  ggplot(aes(
+    x = sex,
+    y = avg_weight
+  )) +
+  geom_col() +
+  labs(title = "Penguin Weight by Island and Sex") +
+  facet_wrap(~island) +
+  theme(
+    
+    plot.title = element_text(
+      family = font,
+      size = 28,
+      face = "bold",
+      color = "#222222"
+    ),
+    
+    plot.subtitle = element_text(
+      family = font,
+      size = 22,
+      margin = margin(9, 0, 9, 0)
+    ),
+    
+    plot.caption = element_blank(),
+
+    legend.position = "top",
+    legend.text.align = 0,
+    legend.background = element_blank(),
+    legend.title = element_blank(),
+    legend.key = element_blank(),
+    legend.text = element_text(
+      family = font,
+      size = 18,
+      color = "#222222"
+    ),
+
+    axis.title = element_blank(),
+    axis.text = element_text(
+      family = font,
+      size = 18,
+      color = "#222222"
+    ),
+    axis.text.x = element_text(margin = margin(5, b = 10)),
+    axis.ticks = element_blank(),
+    axis.line = element_blank(),
+
+    panel.grid.minor = element_blank(),
+    panel.grid.major.y = element_line(color = "#cbcbcb"),
+    panel.grid.major.x = element_blank(),
+
+    panel.background = element_blank()
+  )
+```
+
+```{r}
+penguins_plot_weight <- penguins %>%
+  group_by(island, sex) %>%
+  summarize(avg_weight = mean(body_mass_g, na.rm = TRUE)) %>%
+  drop_na(sex) %>%
+  ggplot(aes(
+    x = sex,
+    y = avg_weight
+  )) +
+  geom_col() +
+  labs(title = "Penguin Weight by Island and Sex") +
+  facet_wrap(~island) +
+  theme(
+    
+    plot.title = element_text(
+      family = font,
+      size = 28,
+      face = "bold",
+      color = "#222222"
+    ),
+    
+    plot.subtitle = element_text(
+      family = font,
+      size = 22,
+      margin = margin(9, 0, 9, 0)
+    ),
+    
+    plot.caption = element_blank(),
+
+    legend.position = "top",
+    legend.text.align = 0,
+    legend.background = element_blank(),
+    legend.title = element_blank(),
+    legend.key = element_blank(),
+    legend.text = element_text(
+      family = font,
+      size = 18,
+      color = "#222222"
+    ),
+
+    axis.title = element_blank(),
+    axis.text = element_text(
+      family = font,
+      size = 18,
+      color = "#222222"
+    ),
+    axis.text.x = element_text(margin = margin(5, b = 10)),
+    axis.ticks = element_blank(),
+    axis.line = element_blank(),
+
+    panel.grid.minor = element_blank(),
+    panel.grid.major.y = element_line(color = "#cbcbcb"),
+    panel.grid.major.x = element_blank(),
+
+    panel.background = element_blank()
+  )
+```
+
+```{r}
+penguins_plot_weight +
+  theme(
+    strip.background = element_rect(fill = "white"),
+    strip.text = element_text(size = 22, hjust = 0)
+  )
+```
+
+
+TODO: Return to example plot: https://ichef.bbci.co.uk/news/976/cpsprodpb/82BA/production/_121266433_beef_by_region_ws_640x3-nc.png (source: https://www.bbc.com/news/science-environment-46459714) 
+
 ## Conclusion
 
-- Discuss adding logo etc
+Technical stuff
+- Discuss adding logo etc with finalise_plot()
 - Discuss cookbook
-- They never intended to make custom theme
-	- It was all very gradual
-- BBC made tons of data viz during pandemic because of bbplot
+- Link to ggplot theme reference sheet Henry Wang: https://henrywang.nl/ggplot2-theme-elements-demonstration/
 
+Larger message stuff
+- They never intended to make custom theme
+- It was all very gradual
+- BBC made tons of data viz during pandemic because of bbplot
