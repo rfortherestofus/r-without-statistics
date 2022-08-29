@@ -155,7 +155,7 @@ bbc_style <- function() {
     plot.caption = ggplot2::element_blank(),
 
     # LEGEND FORMAT
-    # This sets the position and alignment of the legend, removes a title and backround for it
+    # This sets the position and alignment of the legend, removes a title and background for it
     # and sets the requirements for any text within the legend.
     # The legend may often need some more manual tweaking when it comes to its exact position based on the plot coordinates.
     legend.position = "top",
