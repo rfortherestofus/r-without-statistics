@@ -122,20 +122,20 @@ Way different, right? Larger font size, legend on top, no axis titles, stripped 
 
 ### Look at bbc_style() function
 
-Here's the code for the `bbc_style()` function (this is taken from the `bbplot` GitHub repository, found at https://github.com/bbc/bbplot). 
+Here's the code for the `bbc_style()` function (taken from the `bbplot` GitHub repository, found at https://github.com/bbc/bbplot). 
 
-- add something about functions
-- add something about theme() function
-- add something about ggplot2:: style code
+You may be a bit confused by some of the code syntax used. First of all, this is the code used to create a function. The first line gives the function a name (`bbc_style`) and indicates that it is, in fact, a function definition. We'll discuss functions more in Chapter \@ref(functions).
+
+You'll see that instead of loading the package `ggplot2` with the code `library(ggplot2)` and then using the `theme()` function, the code below uses `ggplot2::theme()`. This indicates that the `theme()` function comes from the `ggplot2` package. Writing code in this way is something that is done when making an R package, something we'll discuss in Chapter \@ref(custom-packages).
 
 I've made some minor formatting tweaks for readability. For example, you can see the comments in ALL CAPS, which show the category of modification that the section which follows makes. Fortunately for us, the code is organized nicely and allows us to see what each section does. 
 
 ```{r}
 bbc_style <- function() {
   font <- "Helvetica"
-
+  
   ggplot2::theme(
-
+    
     # TEXT FORMAT
     # This sets the font, size, type and colour of text for the chart's title
     plot.title = ggplot2::element_text(
@@ -153,7 +153,7 @@ bbc_style <- function() {
     ),
     # This leaves the caption text element empty, because it is set elsewhere in the finalise plot function
     plot.caption = ggplot2::element_blank(),
-
+    
     # LEGEND FORMAT
     # This sets the position and alignment of the legend, removes a title and background for it
     # and sets the requirements for any text within the legend.
@@ -168,7 +168,7 @@ bbc_style <- function() {
       size = 18,
       color = "#222222"
     ),
-
+    
     # AXIS FORMAT
     # This sets the text font, size and colour for the axis test, as well as setting the margins and removes lines and ticks.
     # In some cases, axis lines and axis ticks are things we would want to have in the chart - the cookbook shows examples of how to do so.
@@ -181,7 +181,7 @@ bbc_style <- function() {
     axis.text.x = ggplot2::element_text(margin = ggplot2::margin(5, b = 10)),
     axis.ticks = ggplot2::element_blank(),
     axis.line = ggplot2::element_blank(),
-
+    
     # GRID LINES
     # This removes all minor gridlines and adds major y gridlines.
     # In many cases you will want to change this to remove y gridlines and add x gridlines.
@@ -189,11 +189,11 @@ bbc_style <- function() {
     panel.grid.minor = ggplot2::element_blank(),
     panel.grid.major.y = ggplot2::element_line(color = "#cbcbcb"),
     panel.grid.major.x = ggplot2::element_blank(),
-
+    
     # BLANK BACKGROUND
     # This sets the panel background as blank, removing the standard grey ggplot background colour from the plot.
     panel.background = ggplot2::element_blank(),
-
+    
     # STRIP BACKGROUND
     # This sets the panel background for facet-wrapped plots to white,
     # removing the standard grey ggplot background colour and sets the title size of the facet-wrap title to font size 22.
@@ -203,11 +203,38 @@ bbc_style <- function() {
 }
 ```
 
+Nearly all of the code in the `bbc_style()` function exists within the `theme()` function from `ggplot2`. In the last chapter, we saw how Cédric Scherer and Georgios Karamanis customized their plot by applying the `theme_light()` function. This a so-called complete theme, meaning you can call the function and will change the whole look-and-feel of your plot. Cédric and Georgios then used the `theme()` function make additional tweaks. The `bbc_style()` theme does not use a complete theme to start. Instead, by jumping straight into the `theme()` function, they make tweaks to the base ggplot theme (TODO: Add something about it being gray? Or is that too niche?). 
+
+It can be challenging to remember how to tweak different elements in a plot. Fortunately, there are cheatsheets available to help. This one by Clara Granell shows the various elements that you can tweak within the `theme()` function. 
+
+https://github.com/claragranell/ggplot2/blob/main/ggplot_theme_system_cheatsheet.pdf
+
+As you can see, the `bbc_style()` function does a lot of tweaking. So, let's go through the changes it makes, section by section. 
+
 ### Text formatting
+
+The first section of the code deals with text formatting. First, it defines a variable called "font" and assigns it the value "Helvetica." This allows later sections of code to simply write "font" rather than repeating "Helvetica" over and over again. And, if the team ever wanted to use a different font, they could simply change "Helvetica" to, say, "Comic Sans" and change all BBC plots (I suspect higher-ups at the BBC might not be on board). 
 
 ```{r}
 font <- "Helvetica"
+```
 
+
+Subsequent pieces of this section of the code make changes to the title, subtitle, and caption. The pattern used in code to make changes is as follows:
+
+```{r eval = FALSE}
+AREA = ELEMENT_TYPE(
+  PROPERTY = VALUE
+)
+```
+
+We begin by selecting an area (e.g. `plot.title`). Then, we have to say what type of element it is. The options are `element_text()`, `element_line()`, `element_rect()`, and `element_blank()`. We'll deal with the other three later on. For now, we're working with `element_text()` to handle formatting of the title, subtitle, and caption since they're all text elements. 
+
+TODO: Add something about making everything bigger per what Nassos said?
+
+The code first formats the title using Helvetica 28-point bold font in a nearly black color (that's the hex code #222222). The subtitle is 22-point Helvetica. Some spacing is added between the title and subtitle using the `margin()` function, which gives the spacing, in points, for the top (9), right (0), bottom (9), and left (0) sides. Finally, the caption is removed using the `element_blank()` function. This is done because the `bbplot` package has another function called `finalise_plot()` that adds elements, including a caption and the BBC logo to the bottom of plots. 
+
+```{r}
 penguins_plot +
   theme(
     plot.title = element_text(
@@ -224,6 +251,8 @@ penguins_plot +
     plot.caption = element_blank()
   )
 ```
+
+TODO: mention something about saving this, as below?
 
 ```{r}
 penguins_plot_text <- penguins_plot +
@@ -245,6 +274,8 @@ penguins_plot_text <- penguins_plot +
 
 
 ### Legend
+
+Next, we deal with the legend. The code puts the legend on top of the plot, and left aligns the text within it Then, it removes the legend background (TODO: not sure when this would ever actually show up), title, and legend key (this is a box that can show up around the boxes with the names of the islands). Finally, we make the text 18-point Helevetica with the same nearly black color. 
 
 ```{r}
 penguins_plot_text +
@@ -280,6 +311,8 @@ penguins_plot_legend <- penguins_plot_text +
 
 ### Axes
 
+Next up are the axes. The code first removes axis titles because, as TODO told me, "TODO add quote here." All text on axes becomes 18-point Helevetica nearly black. The text on the x axis (in our case, Biscoe, Dream, and Torgersen) gets a bit of spacing around it. And, finally, both axis ticks and axis lines are removed. 
+
 ```{r}
 penguins_plot_legend +
   theme(
@@ -312,6 +345,8 @@ penguins_plot_axes <- penguins_plot_legend +
 
 ### Grid lines
 
+Now that we've tweaked overall text formatting, the legend, and the axes, let's move onto grid lines. The approach here is fairly straightforward: remove all minor grid lines, remove major grid lines on the x axis, keeping only major grid lines on the y axis, but making them a light gray (#cbcbcb). We can see the result of these tweaks to the grid lines.
+
 ```{r}
 penguins_plot_axes +
   theme(
@@ -332,6 +367,8 @@ penguins_plot_grid_lines <- penguins_plot_axes +
 
 ### Backgrounds
 
+Of course, in the last iteration of our plot, it still had a gray background. The `bbc_style()` function removes this with the following line:
+
 #### Panel
 
 ```{r}
@@ -341,6 +378,10 @@ penguins_plot_grid_lines +
   )
 ```
 
+And there we go! We've now recreated the plot that we made above using the `bbc_style()` function. However, you may recall there is a bit more code in the `bbc_style()` function. This code deals with `strip.background` and `strip.text`. Both of these elements occur when we make small multiples charts. Small multiples is a common technique in data visualization, where, instead of making one chart that incorporates all of the available data, we break the chart into multiple charts in order to make the final results easier for the reader to comprehend. 
+
+When we use the `facet_wrap()` function, we are left with one chart per island. But note that, by default, the text above each chart is noticeably smaller than the rest of the chart. And the gray background behind the text stands out when we have removed the gray background from other parts of the chart. 
+
 #### Strip
 
 ```{r}
@@ -349,8 +390,9 @@ penguins %>%
   summarize(avg_weight = mean(body_mass_g, na.rm = TRUE)) %>%
   drop_na(sex) %>%
   ggplot(aes(
-    x = sex,
-    y = avg_weight
+    y = sex,
+    y = avg_weight,
+    fill = island
   )) +
   geom_col() +
   labs(title = "Penguin Weight by Island and Sex") +
@@ -371,7 +413,7 @@ penguins %>%
     ),
     
     plot.caption = element_blank(),
-
+    
     legend.position = "top",
     legend.text.align = 0,
     legend.background = element_blank(),
@@ -382,7 +424,7 @@ penguins %>%
       size = 18,
       color = "#222222"
     ),
-
+    
     axis.title = element_blank(),
     axis.text = element_text(
       family = font,
@@ -392,11 +434,11 @@ penguins %>%
     axis.text.x = element_text(margin = margin(5, b = 10)),
     axis.ticks = element_blank(),
     axis.line = element_blank(),
-
+    
     panel.grid.minor = element_blank(),
     panel.grid.major.y = element_line(color = "#cbcbcb"),
     panel.grid.major.x = element_blank(),
-
+    
     panel.background = element_blank()
   )
 ```
@@ -408,7 +450,8 @@ penguins_plot_weight <- penguins %>%
   drop_na(sex) %>%
   ggplot(aes(
     x = sex,
-    y = avg_weight
+    y = avg_weight,
+    fill = island
   )) +
   geom_col() +
   labs(title = "Penguin Weight by Island and Sex") +
@@ -429,7 +472,7 @@ penguins_plot_weight <- penguins %>%
     ),
     
     plot.caption = element_blank(),
-
+    
     legend.position = "top",
     legend.text.align = 0,
     legend.background = element_blank(),
@@ -440,7 +483,7 @@ penguins_plot_weight <- penguins %>%
       size = 18,
       color = "#222222"
     ),
-
+    
     axis.title = element_blank(),
     axis.text = element_text(
       family = font,
@@ -450,14 +493,16 @@ penguins_plot_weight <- penguins %>%
     axis.text.x = element_text(margin = margin(5, b = 10)),
     axis.ticks = element_blank(),
     axis.line = element_blank(),
-
+    
     panel.grid.minor = element_blank(),
     panel.grid.major.y = element_line(color = "#cbcbcb"),
     panel.grid.major.x = element_blank(),
-
+    
     panel.background = element_blank()
   )
 ```
+
+So, in order to change these elements, we remove the background and make the text larger and left aligned (using `hjust = 0`). 
 
 ```{r}
 penguins_plot_weight +
@@ -469,6 +514,16 @@ penguins_plot_weight +
 
 
 TODO: Return to example plot: https://ichef.bbci.co.uk/news/976/cpsprodpb/82BA/production/_121266433_beef_by_region_ws_640x3-nc.png (source: https://www.bbc.com/news/science-environment-46459714) 
+
+If we now compare our plot to the actual chart made by Nassos and Clara, we can see how similar it is. 
+
+TODO: Add this for No Starch and save it and use knitr::include_graphics()
+
+![](https://ichef.bbci.co.uk/news/976/cpsprodpb/82BA/production/_121266433_beef_by_region_ws_640x3-nc.png)
+
+## Sum up why this follows data viz principles
+
+TODO: Add something about what fonts don't do (colors)
 
 ## Conclusion
 
