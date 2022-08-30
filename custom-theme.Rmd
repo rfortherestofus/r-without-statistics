@@ -522,7 +522,7 @@ knitr::include_graphics("https://ichef.bbci.co.uk/news/976/cpsprodpb/82BA/produc
 ```
 
 ```{r results='asis'}
-save_image_for_nostarch("https://ichef.bbci.co.uk/news/976/cpsprodpb/82BA/production/_121266433_beef_by_region_ws_640x3-nc.png")
+# save_image_for_nostarch("https://ichef.bbci.co.uk/news/976/cpsprodpb/82BA/production/_121266433_beef_by_region_ws_640x3-nc.png")
 ```
 
 
