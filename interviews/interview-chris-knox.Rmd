@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Personal Background
 
-Data editor and head of data journalism at NZ Herald
+Head of data journalism at NZ Herald
 
 https://www.nzherald.co.nz/author/chris-knox/
 
@@ -24,6 +24,10 @@ Previously worked at NZ Ministry of Health, leading analytics team focused on CO
 # NZ COVID response
 
 ## You've said that R helped to stand up the NZ COVID response quickly. Explain this.
+
+## Team details
+
+## Despite turnover, R kept things going
 
 ## You've also said that R gave you massive flexibility. How so? 
 
@@ -36,3 +40,5 @@ Previously worked at NZ Ministry of Health, leading analytics team focused on CO
 ## If you were advising the NZ government (or any government), what would you tell them to do now with regard to R that would prepare them for the next pandemic? 
 
 ## What else would be useful for me to know about the role R played in the NZ COVID response? 
+
+- "the spreadsheet of doom"
