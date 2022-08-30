@@ -1,3 +1,8 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
 # Develop a Custom Theme to Keep Your Data Viz Consistent 
 
 In 2018, BBC data journalist Nassos Stylianou was working with a backend developer on a particularly large data set. Nassos was primarily an Excel user at the time, but this data was too large for Excel. Seeing the developer work, a light bulb went off for Nassos: if he and his data journalism team learned to use R, they could do this type of analysis on their own. 
@@ -390,7 +395,7 @@ penguins %>%
   summarize(avg_weight = mean(body_mass_g, na.rm = TRUE)) %>%
   drop_na(sex) %>%
   ggplot(aes(
-    y = sex,
+    x = sex,
     y = avg_weight,
     fill = island
   )) +
