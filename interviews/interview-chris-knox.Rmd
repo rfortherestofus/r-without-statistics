@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 # Checklist on day of recording
 
 - Make sure people keep browser open after call
-- Get repo URL
+- https://book.rwithoutstatistics.com/why-r-without-statistics.html
 
 # Personal Background
 
