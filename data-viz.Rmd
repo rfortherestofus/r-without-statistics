@@ -83,7 +83,7 @@ chapter_number <- 2
 source("_common.R")
 ```
 
-# Use General Principles of High-Quality Data Viz in R
+# Use General Principles of High-Quality Data Viz in R {#data-viz-chapter}
 
 In the spring of 2021, nearly all of the American West was in a drought. In April of that year, officials in Southern California declared a water emergency, citing unprecedented conditions. 
 
