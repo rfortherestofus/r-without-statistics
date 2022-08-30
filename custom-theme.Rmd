@@ -41,7 +41,7 @@ Nassos, Clara, and their colleagues set about looking into what would be involve
 
 The answers to these questions are what makes charts on-brand. Having consistent answers to them is what enabled BBC designers to turn Excel mockups into data viz ready to go on the website. As the BBC data journalism team dug further into ggplot, they realized that they might be able to write code to make their data viz production-ready. They realized that, if making production-ready charts required asking question about fonts, legends, axes, and grid lines, ggplot had an answer. And the answer was to make a custom theme. 
 
-## Enter bbplot
+## Enter bbplot {-}
 
 TODO: Show example plot: https://ichef.bbci.co.uk/news/976/cpsprodpb/82BA/production/_121266433_beef_by_region_ws_640x3-nc.png (source: https://www.bbc.com/news/science-environment-46459714) 
 
@@ -528,7 +528,7 @@ save_image_for_nostarch("https://ichef.bbci.co.uk/news/976/cpsprodpb/82BA/produc
 
 TODO: Themes don't do anything with colors (only "non-data elements")
 
-## Conclusion
+## Conclusion {-}
 
 When Nassos Stylianou and Clara Guibourg started thinking of developing a custom theme for the BBC, they had one goal in mind: could they write code that would enable people to create graphs in R that could go straight onto the BBC website? And, wouldn't you know, they succeeded! The creation of the `bbc_style()` function within the `bbplot` package allowed them to make plots that had a consistent look-and-feel, followed BBC standards, and, most importantly, did not need the intervention of a designer in order to be published. 
 
