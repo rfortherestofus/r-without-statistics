@@ -58,6 +58,7 @@ We now have data that we can work with in an object called `penguins`. Here's wh
 ```{r echo = TRUE}
 penguins
 ```
+
 To get our data in a more usable format, let's count how many penguins live on each island. We do this with the `count()` function from the `dplyr` package (one of several packages that are loaded when we load the `tidyverse`).
 
 ```{r echo = TRUE}
@@ -71,8 +72,6 @@ Because we're going to use this data multiple times below, let's save it as an o
 penguins_summary <- penguins %>%
   count(island)
 ```
-
-
 
 Now that we've got some data to work with, we're ready to create a plot. Before showing what `bbplot` does, let's make a plot with ggplot defaults. Of course, Figure \@ref(fig:basic-penguins-plot) isn't the most aesthetically pleasing chart. But we'll be improving it soon!
 
@@ -133,7 +132,7 @@ Way different, right? Larger font size, legend on top, no axis titles, stripped 
 
 Here's the code for the `bbc_style()` function (taken from the `bbplot` GitHub repository, found at https://github.com/bbc/bbplot). 
 
-You may be a bit confused by the way some of the code is written. First of all, this is the code used to create a function. The first line gives the function a name (`bbc_style`) and indicates that it is, in fact, a function definition. We'll discuss functions more in Chapter \@ref(functions).
+You may be a bit confused by the way some of the code is written. This is in part because it is the code used to create a function. The first line gives the function a name (`bbc_style`) and indicates that it is, in fact, a function definition. We'll discuss functions more in Chapter \@ref(functions).
 
 You'll see that instead of loading the package `ggplot2` with the code `library(ggplot2)` and then using the `theme()` function, the code below uses `ggplot2::theme()`. This indicates that the `theme()` function comes from the `ggplot2` package. Writing code in this way is something that is done when making an R package, something we'll discuss in Chapter \@ref(custom-packages).
 
@@ -218,7 +217,7 @@ It can be challenging to remember how to tweak different elements in a plot. For
 
 https://github.com/claragranell/ggplot2/blob/main/ggplot_theme_system_cheatsheet.pdf
 
-TODO: Is this cheatsheet going to be legible in the book?
+TODO: Add image. Also, is this cheatsheet going to be legible in the book?
 
 As you can see, the `bbc_style()` function does a lot of tweaking. So, let's go through the changes it makes, section by section. 
 
@@ -236,7 +235,7 @@ AREA_OF_CHART = ELEMENT_TYPE(
 )
 ```
 
-We begin by selecting an area of the chart (e.g. `plot.title`). Then, we have to say what type of element it is. The options are `element_text()`, `element_line()`, `element_rect()`, and `element_blank()`. We'll deal with the other three later on. For now, we're working with `element_text()` to handle formatting of the title, subtitle, and caption since they're all text elements. 
+We begin by selecting an area of the chart (e.g. `plot.title`). Then, we have to say what type of element it is. The options are `element_text()`, `element_line()`, `element_rect()`, and `element_blank()`. We'll deal with the other three later on. For now, we're working with `element_text()` to handle formatting of the title, subtitle, and caption since they're all text elements. Within the element type, we give values to properties. This can be, say, setting the font family (the property) to Helvetica (the value).
 
 One of the main things that the `bbc_style()` function does is to bump up the text size. As Nassos put it to me, on a lot of plots made with ggplot, "font and the numbers are just so small." Increasing font size helps with legibility, especially when plots made using the `bbplot` package are viewed on smaller mobile devices. 
 
@@ -350,7 +349,7 @@ penguins_plot_axes <- penguins_plot_legend +
   )
 ```
 
-Now that we've tweaked overall text formatting, the legend, and the axes, let's move onto grid lines. The approach here is fairly straightforward: remove all minor grid lines, remove major grid lines on the x axis, keeping only major grid lines on the y axis, but making them a light gray (#cbcbcb). We can see the result of these tweaks to the grid lines in Figure \@ref(fig:penguins-plot-gridlines).
+Now that we've tweaked overall text formatting, the legend, and the axes, let's move onto grid lines. The approach here is fairly straightforward: remove all minor grid lines, remove major grid lines on the x axis, keeping only major grid lines on the y axis, but making them a light gray (using the #cbcbcb hex code). We can see the result of these tweaks to the grid lines in Figure \@ref(fig:penguins-plot-gridlines).
 
 ```{r penguins-plot-gridlines, echo = TRUE, fig.cap = "Our chart with tweaks to the grid lines"}
 penguins_plot_axes +
@@ -381,9 +380,9 @@ penguins_plot_grid_lines +
   )
 ```
 
-And there we go! We've now recreated the plot that we made above using the `bbc_style()` function. However, you may recall there is a bit more code in the `bbc_style()` function. This code deals with `strip.background` and `strip.text`. Both of these elements occur when we make small multiples charts. Small multiples is a common technique in data visualization, where, instead of making one chart that incorporates all of the available data, we break the chart into multiple charts in order to make the final results easier for the reader to comprehend. 
+And there we go! We've now recreated the plot that we made above using the `bbc_style()` function. However, you may recall there is a bit more code in the `bbc_style()` function. This code deals with `strip.background` and `strip.text`. Both of these occur when we make small multiples charts. Small multiples is a common technique in data visualization, where, instead of making one chart that incorporates all of the available data, we break the chart into multiple charts in order to make the final results easier for the reader to comprehend. 
 
-When we use the `facet_wrap()` function, we are left with one chart per island. But note that, by default, the text above each chart is noticeably smaller than the rest of the chart. And the gray background behind the text stands out when we have removed the gray background from other parts of the chart. 
+Let's make an example small multiples chart to show what this looks like. See Figure \@ref(fig:penguin-facetted-plot) below.
 
 ```{r penguin-facetted-plot, fig.cap = "Small multiples chart with no changes to the strip text formatting"}
 penguins %>%
@@ -443,6 +442,8 @@ penguins %>%
     panel.background = element_blank()
   )
 ```
+
+When we use the `facet_wrap()` function, we are left with one chart per island. But note that, by default, the text above each chart is noticeably smaller than the rest of the chart. And the gray background behind the text stands out when we have removed the gray background from other parts of the chart. 
 
 ```{r}
 penguins_plot_weight <- penguins %>%
@@ -513,7 +514,7 @@ penguins_plot_weight +
   )
 ```
 
-If we now compare our plot to a 2019 chart that Nassos and Clara made for an article on the carbon footprint of various food items, we can see how similar it is. Figure \@ref(fig:bbc-beef-chart) has the same large text, no axis titles or grid lines, a white background, and more.
+If we now return to Figure \@ref(fig:bbc-beef-chart), the 2019 carbon impact of food chart that Nassos and Clara made, we can again see how similar it is. All of the tweaks in the `bbc_style()` function (text formatting, legends, axes, grid lines, and backgrounds) are visible. 
 
 ```{r bbc-beef-chart}
 ```
@@ -522,8 +523,11 @@ If we now compare our plot to a 2019 chart that Nassos and Clara made for an art
 # save_image_for_nostarch("https://ichef.bbci.co.uk/news/976/cpsprodpb/82BA/production/_121266433_beef_by_region_ws_640x3-nc.png")
 ```
 
+You might be thinking: wait, what about the colors? Doesn't the theme change that? It's a common point of confusion. If we read the documentation for the `theme()` function, though, it becomes clearer why this is the case:
 
-TODO: Themes don't do anything with colors (only "non-data elements")
+> Themes are a powerful way to customize the non-data components of your plots: i.e. titles, labels, fonts, background, gridlines, and legends.
+
+Color is used in plots as an aesthetic property to show something about data. In Figure \@ref(fig:bbc-beef-chart), for instance, color is mapped to the type of carbon impact (emissions, land use, and water use). As we saw in Chapter \@ref(data-viz-chapter), we can change color using the various `scale_` functions. It is because color is tied to the data rather than being about the overall look-and-feel that ggplot themes do not, on their own, change this component of plots. 
 
 ## Code is the Catalyst for Culture Change {-}
 
