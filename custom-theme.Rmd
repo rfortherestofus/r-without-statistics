@@ -12,11 +12,9 @@ source("_common.R")
 
 # Develop a Custom Theme to Keep Your Data Viz Consistent 
 
-In 2018, BBC data journalist Nassos Stylianou was working with a backend developer on a particularly large data set. Nassos was primarily an Excel user at the time, but this data was too large for Excel. Seeing the developer work, a light bulb went off for Nassos: if he and his data journalism team learned to use R, they could do this type of analysis on their own. 
+In 2018, BBC data journalist Nassos Stylianou was working with a backend developer on a particularly large data set. Nassos was primarily an Excel user at the time, but this data was too large for Excel. Seeing the developer work through the data with ease, a light bulb went off for Nassos: if he and his data journalism team learned to use R, they could do this type of analysis on their own. 
 
-This realization began a journey into R. This journey, which started with needing to analyze data too large for Excel to handle, would ultimately end up in a very different place. 
-
-In 2019, Nassos, his colleague Clara Guibourg, and their team created a custom ggplot theme to create plots that match the BBC style. The code in the `bbplot` package is a great example of the value of developing a custom theme. 
+This realization began a journey into R. This journey, which started with needing to analyze data too large for Excel to handle, would ultimately end up in a very different place. In 2019, Nassos, his colleague Clara Guibourg, and their team created a custom ggplot theme to create plots that match the BBC style. The code in the `bbplot` package is a great example of the value of developing a custom theme. 
 
 But the real story of the creation of bbplot is not just about technical tools. Through learning R and creating a custom theme for others to use, Nassos, Clara and their colleagues would change the culture, remove bottlenecks, and allow the BBC to be more creative with their data viz.
 
@@ -27,27 +25,28 @@ To understand how big these changes were, it's helpful to understand what things
 
 Neither of these choices was ideal. And this limited set of less-than-ideal choices led to a limited output of data viz.   
 
-That would all change when Nassos, Clara, and their colleagues realized that R, the tool they had decided to learn for data analysis, could also do data visualization. As they began playing around with ggplot, they quickly saw its power. 
+That would all change when Nassos, Clara, and their colleagues realized that R, the tool they had decided to learn for data analysis, could also do data visualization. As they began playing around with ggplot, they quickly saw its power. Clara said she found it "immediately addictive when I started working with ggplot to make charts." No longer limited by Chart Tools, she found that ggplot was "completely flexible in a way that was just completely new to me." 
 
-Clara said she found it "immediately addictive when I started working with ggplot to make charts." No longer limited by Chart Tools, she found that ggplot was "completely flexible in a way that was just completely new to me." 
-
-The biggest change, though, came from not having to work with a designer. Not because the designers were bad (they weren't). But because ggplot allowed the BBC data journalists to explore different visualizations on their own. Working with a designer required the journalists to have a fully-formed idea that the designer could take and improve upon. Working in ggplot allowed BBC data journalists to explore different data viz ideas. 
+The biggest change, though, came from not having to work with a designer. Not because the designers were bad (they weren't), but because ggplot allowed the BBC data journalists to explore different visualizations on their own. Working with a designer required the journalists to have a fully-formed idea that the designer could take and improve upon. Working in ggplot allowed BBC data journalists to explore different data viz ideas. 
 
 Clara Guibourg believes this freedom is what explains the addictive quality of ggplot. As she told me, "even before we got anywhere near having a production-ready chart, just trying things out, visualizing things for the first time" was completely captivating. Having learned the basics of ggplot, she saw that "you can make like the simplest chart with just a couple of lines of code." Being able to explore different types of visualization on her own led Clara and others to produce more  data viz than they had previously. 
 
-As the BBC data journalism team improved their ggplot skills, they realized that they could produce not only exploratory data viz, but also production-ready charts. They had learned to use R for data analysis, were starting to use it for exploratory data visualization, could they go all the way and create a chart in R that could go straight onto the BBC website? 
+As the BBC data journalism team improved their ggplot skills, they realized that it might be possible produce not only exploratory data viz, but also production-ready charts. They had learned to use R for data analysis and they were starting to use it for exploratory data visualization. Could they go all the way and create a chart in R that could go straight onto the BBC website? 
 
 Nassos, Clara, and their colleagues set about looking into what would be involved in creating production-ready charts from R. They realized that so much of the work required to create production-ready charts involved small tweaks. What font should they use? Where should the legend go? Should axes have titles? Should charts have grid lines? 
 
-The answers to these questions are what makes charts on-brand. Having consistent answers to them is what enabled BBC designers to turn Excel mockups into data viz ready to go on the website. As the BBC data journalism team dug further into ggplot, they realized that they might be able to write code to make their data viz production-ready. They realized that, if making production-ready charts required asking question about fonts, legends, axes, and grid lines, ggplot had an answer. And the answer was to make a custom theme. 
+These questions may seem small but they have a big impact. Having consistent answers to them is what enabled BBC designers to turn Excel mockups into data viz ready to go on the website. As the BBC data journalism team dug further into ggplot, they realized that they might be able to write code to make their data viz production-ready. They realized that, if making production-ready charts required asking question about fonts, legends, axes, and grid lines, ggplot had the answer. And the answer was to make a custom theme. 
 
 ## Enter bbplot {-}
 
-TODO: Show example plot: https://ichef.bbci.co.uk/news/976/cpsprodpb/82BA/production/_121266433_beef_by_region_ws_640x3-nc.png (source: https://www.bbc.com/news/science-environment-46459714) 
+Take a look at this 2019 plot that Nassos, Clara, and their colleague  Helen Briggs made for an article on the carbon footprint of various food items. It's got a distinctive look, with the same minimalist aesthetic we saw in Chapter \@ref(data-viz-chapter). 
 
+```{r bbc-beef-chart, out.width="100%", fig.cap="Actual BBC chart"}
+# https://www.bbc.com/news/science-environment-46459714
+knitr::include_graphics("https://ichef.bbci.co.uk/news/976/cpsprodpb/82BA/production/_121266433_beef_by_region_ws_640x3-nc.png")
+```
 
-
-To show how `bbplot` works, let's create our own plot. We'll do so using the `palmerpenguins` package, which has data on penguins living on three islands in Antarctica. To give you a sense of what this data looks like, let's load the `palmerpenguins` and `tidyverse` packages.
+This plot was made using the `bbplot` package. To show how this works, let's create our own plot. We'll do so using the `palmerpenguins` package, which has data on penguins living on three islands in Antarctica. To give you a sense of what this data looks like, let's load the `palmerpenguins` and `tidyverse` packages.
 
 ```{r echo = TRUE}
 library(palmerpenguins)
@@ -514,11 +513,9 @@ penguins_plot_weight +
   )
 ```
 
-If we now compare our plot to a 2019 chart that Nassos and Clara made for an article on the carbon footprint of various food items, we can see how similar it is. Figure \@ref(fig:bbc-beef-chart) has the same large text, no axis titles or grid lines, legend on the top, and more. 
+If we now compare our plot to a 2019 chart that Nassos and Clara made for an article on the carbon footprint of various food items, we can see how similar it is. Figure \@ref(fig:bbc-beef-chart) has the same large text, no axis titles or grid lines, a white background, and more.
 
-```{r bbc-beef-chart, out.width="100%", fig.cap="Actual BBC chart"}
-# https://www.bbc.com/news/science-environment-46459714
-knitr::include_graphics("https://ichef.bbci.co.uk/news/976/cpsprodpb/82BA/production/_121266433_beef_by_region_ws_640x3-nc.png")
+```{r bbc-beef-chart}
 ```
 
 ```{r results='asis'}
@@ -528,11 +525,11 @@ knitr::include_graphics("https://ichef.bbci.co.uk/news/976/cpsprodpb/82BA/produc
 
 TODO: Themes don't do anything with colors (only "non-data elements")
 
-## Conclusion {-}
+## Code is the Catalyst for Culture Change {-}
 
 When Nassos Stylianou and Clara Guibourg started developing a custom theme for the BBC, they had one goal in mind: make it possible to create graphs in R that could go straight onto the BBC website? And, wouldn't you know, they succeeded! The creation of the `bbc_style()` function within the `bbplot` package allowed them to make plots that had a consistent look-and-feel, followed BBC standards, and, most importantly, did not need a designer.
 
-Many of the principles of high-quality data visualization that we discussed in \@ref(data-viz-chapter) can be seen in this custom theme. In particular, the stripping out of extraneous elements (axis titles and grid lines, for instance) helps keep the focus on the data itself. And by creating a custom theme that only requires users to add a single line (`bbc_style()`) to their ggplot code, it became simple to get others on board. 
+Many of the principles of high-quality data visualization that we discussed in Chapter \@ref(data-viz-chapter) can be seen in this custom theme. In particular, the stripping out of extraneous elements (axis titles and grid lines, for instance) helps keep the focus on the data itself. And by creating a custom theme that only requires users to add a single line (`bbc_style()`) to their ggplot code, it became simple to get others on board. 
 
 The development of the `bbplot` package would lead to significant changes at the BBC. It inspired Nassos, Clara, and the other data journalists who created it to use ggplot more than before. Knowing that they had the flexibility of ggplot at their fingertips gave them license to explore. And knowing that they did not have to work with a designer to create production-ready graphics empowered them to make more and better graphics.
 
