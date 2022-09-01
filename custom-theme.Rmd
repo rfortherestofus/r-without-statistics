@@ -12,20 +12,20 @@ source("_common.R")
 
 # Develop a Custom Theme to Keep Your Data Viz Consistent 
 
-In 2018, BBC data journalist Nassos Stylianou was working with a backend developer on a particularly large data set. Nassos was primarily an Excel user at the time, but this data was too large for Excel. Seeing the developer work through the data with ease, a light bulb went off for Nassos: if he and his data journalism team learned to use R, they could do this type of analysis on their own. 
+In 2017, BBC data journalist Nassos Stylianou was working with a backend developer on a particularly large data set. Nassos was primarily an Excel user at the time, but this data was too large for Excel. Seeing the developer work through the data with ease, a light bulb went off for Nassos: if he and his data journalism team learned to use R, they could do this type of analysis on their own. 
 
-This realization began a journey into R. This journey, which started with needing to analyze data too large for Excel to handle, would ultimately end up in a very different place. In 2019, Nassos, his colleague Clara Guibourg, and their team created a custom ggplot theme to create plots that match the BBC style. The code in the `bbplot` package is a great example of the value of developing a custom theme. 
+This realization began a journey into R. This journey, which started with needing to analyze data too large for Excel to handle, would ultimately end up in a very different place. In 2018, Nassos, his colleague Clara Guibourg, and their team created a custom ggplot theme to create plots that match the BBC style. The code in the `bbplot` package is a great example of the value of developing a custom theme. 
 
 But the real story of the creation of bbplot is not just about technical tools. Through learning R and creating a custom theme for others to use, Nassos, Clara and their colleagues would change the culture, remove bottlenecks, and allow the BBC to be more creative with their data viz.
 
 To understand how big these changes were, it's helpful to understand what things looked like at the BBC before bbplot. In the mid-2010s, journalists at the BBC who wanted to make data visualization had two choices:
 
-1. They could use an internal tool called Chart Tools. This tool could create data visualization, but only the predefined charts it had been designed to generate. 
+1. They could use an internal tool. This tool could create data visualization, but only the predefined charts it had been designed to generate. 
 2. They could use Excel to create mockups and then work with a graphic designer to finalize the charts. This approach led to better results, and was way more flexible, but required extensive back-and-forth with a designer. As Nassos described it, working with a designer "is just a very time consuming workflow if you think of how many visualizations the BBC does." 
 
 Neither of these choices was ideal. And this limited set of less-than-ideal choices led to a limited output of data viz.   
 
-That would all change when Nassos, Clara, and their colleagues realized that R, the tool they had decided to learn for data analysis, could also do data visualization. As they began playing around with ggplot, they quickly saw its power. Clara said she found it "immediately addictive when I started working with ggplot to make charts." No longer limited by Chart Tools, she found that ggplot was "completely flexible in a way that was just completely new to me." 
+That would all change when Nassos, Clara, and their colleagues realized that R, the tool they had decided to learn for data analysis, could also do data visualization. As they began playing around with ggplot, they quickly saw its power. Clara said she found it "immediately addictive when I started working with ggplot to make charts." No longer limited by the BBC's inflexible internal tool, she found that ggplot was "completely flexible in a way that was just completely new to me." 
 
 The biggest change, though, came from not having to work with a designer. Not because the designers were bad (they weren't), but because ggplot allowed the BBC data journalists to explore different visualizations on their own. Working with a designer required the journalists to have a fully-formed idea that the designer could take and improve upon. Working in ggplot allowed BBC data journalists to explore different data viz ideas. 
 
@@ -531,9 +531,9 @@ Color is used in plots as an aesthetic property to show something about data. In
 
 ## Code is the Catalyst for Culture Change {-}
 
-When Nassos Stylianou and Clara Guibourg started developing a custom theme for the BBC, they had one goal in mind: make it possible to create graphs in R that could go straight onto the BBC website? And, wouldn't you know, they succeeded! The creation of the `bbc_style()` function within the `bbplot` package allowed them to make plots that had a consistent look-and-feel, followed BBC standards, and, most importantly, did not need a designer.
+When Nassos Stylianou and Clara Guibourg started developing a custom theme for the BBC, they had one question: would they be able to create graphs in R that could go straight onto the BBC website? And, wouldn't you know, they succeeded! The creation of the the `bbplot` package allowed them to make plots that had a consistent look-and-feel, followed BBC standards, and, most importantly, did not need help from a designer. 
 
-Many of the principles of high-quality data visualization that we discussed in Chapter \@ref(data-viz-chapter) can be seen in this custom theme. In particular, the stripping out of extraneous elements (axis titles and grid lines, for instance) helps keep the focus on the data itself. And by creating a custom theme that only requires users to add a single line (`bbc_style()`) to their ggplot code, it became simple to get others on board. 
+Many of the principles of high-quality data visualization that we discussed in Chapter \@ref(data-viz-chapter) can be seen in this custom theme. In particular, the removal of extraneous elements (axis titles and grid lines, for instance) helps keep the focus on the data itself. And by creating a custom theme that only requires users to add a single line to their ggplot code, it became simple to get others on board. Telling users they could just append `bbc_style()` to their code and get a BBC-style plot was an eye-opener.
 
 The development of the `bbplot` package would lead to significant changes at the BBC. It inspired Nassos, Clara, and the other data journalists who created it to use ggplot more than before. Knowing that they had the flexibility of ggplot at their fingertips gave them license to explore. And knowing that they did not have to work with a designer to create production-ready graphics empowered them to make more and better graphics.
 
@@ -548,10 +548,8 @@ knitr::include_graphics("assets/bbc-graphics-cookbook.png")
 
 These two resources led to a large increase in R users at the BBC. As Nassos told me, they "spurred people a lot people outside of the data journalism team to take a real interest [in R]." Having `bbplot` made the value of R click for many people at the BBC. He continued:
 
-> There is no, "why am I doing this" in their mind. It's is worth the pain, because it is a pain at first. But seeing this graphic that a few months ago you would have had to do in this old process ... if you devote a bit of time each day, here are the five lines of code that you can run and you can [make a production-ready graphic] yourself.
+> There is no, "why am I doing this?" in their mind. It's is worth the pain [to learn R], because it is a pain at first. But seeing this graphic that a few months ago you would have had to do in this old process ... if you devote a bit of time each day, here are the five lines of code that you can run and you can [make a production-ready graphic] yourself.
 
 As so many more people at the BBC came to learn R, the quality and quantity of data visualization produced exploded. Nassos told me, "I don't think there's been a day where someone at the BBC hasn't used the package to produce a graphic." The `bbplot` package came in particularly helpful during COVID. Being able to produce on-brand graphics on a quick turnaround was possible in a way it would not have been previously. 
 
-Reflecting on her experience, Clara attributes the successful transition to R at the BBC to its culture. As she put it, "I think that what helped me get started was that there was a really supportive environment internally at the BBC for learning."
-
-And, indeed, this same supportive culture that led Clara to organically explore what R was capable of was reinforced after she and the data journalism team released `bbplot`. The custom theme they developed enabled the creation of so many BBC graphics that otherwise never would have seen the light of day. A culture open to learning led the data journalism team to insights about the power of code. And this code then facilitated a culture change around how graphics are produced at the BBC. 
+Reflecting on her experience, Clara attributes the successful transition to R at the BBC to its culture. As she put it, "I think that what helped me get started was that there was a really supportive environment internally at the BBC for learning." And, indeed, this same supportive culture that led Clara to organically explore what R was capable of was reinforced after she and the data journalism team released `bbplot`. The custom theme they developed enabled the creation of so many BBC graphics that otherwise never would have seen the light of day. A culture open to learning led the data journalism team to insights about the power of code. And this code then facilitated a culture change around how graphics are produced at the BBC. 
