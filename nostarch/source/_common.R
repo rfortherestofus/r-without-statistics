@@ -66,7 +66,7 @@ save_image_for_nostarch <- function(image_file, chap_number = chapter_number) {
   save_directory <- here::here("nostarch/figures/")
   
   fs::file_copy(path = image_file,
-                new_path = str_glue("{save_directory}/{file_name}"),
+                new_path = stringr::str_glue("{save_directory}/{file_name}"),
                 overwrite = TRUE)
   
   i <<- i + 1

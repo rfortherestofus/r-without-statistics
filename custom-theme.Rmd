@@ -41,10 +41,19 @@ These questions may seem small but they have a big impact. Having consistent ans
 
 Take a look at this 2019 plot that Nassos, Clara, and their colleague  Helen Briggs made for an article on the carbon footprint of various food items. It's got a distinctive look, with the same minimalist aesthetic we saw in Chapter \@ref(data-viz-chapter). 
 
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
+
 ```{r bbc-beef-chart, out.width="100%", fig.cap="BBC chart showing carbon impact of various foods"}
 # https://www.bbc.com/news/science-environment-46459714
-knitr::include_graphics("assets/bbc-food-chart.png")
+knitr::include_graphics(here::here("assets/bbc-food-chart.png"))
 ```
+
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/bbc-food-chart.png"))
+```
+
 
 This plot was made using the `bbplot` package. To show how this works, let's create our own plot. We'll do so using the `palmerpenguins` package, which has data on penguins living on three islands in Antarctica. To give you a sense of what this data looks like, let's load the `palmerpenguins` and `tidyverse` packages.
 
@@ -75,6 +84,10 @@ penguins_summary <- penguins %>%
 
 Now that we've got some data to work with, we're ready to create a plot. Before showing what `bbplot` does, let's make a plot with ggplot defaults. Of course, Figure \@ref(fig:basic-penguins-plot) isn't the most aesthetically pleasing chart. But we'll be improving it soon!
 
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
 ```{r basic-penguins-plot, echo = TRUE, fig.cap = "A chart with the default theme"}
 ggplot(
   data = penguins_summary,
@@ -92,7 +105,9 @@ ggplot(
   )
 ```
 
-
+```{r results='asis'}
+save_figure_for_nostarch(figure_height = 4)
+```
 
 We're going to use this plot multiple times (with some modifications each time). To simplify things, let's save it as an object called `penguins_plot`. 
 
@@ -113,19 +128,25 @@ penguins_plot <- ggplot(
   )
 ```
 
-
-
 Now that we have a basic plot to work with, let's make it look like a BBC chart. To do this, we load the `bbplot` package. 
 
 This package has two functions: `bbc_style()` and `finalise_plot()`. The latter deals with things like adding the BBC logo, saving plots in the correct dimensions, and other tasks done after the plot is complete. We'll discuss this a bit more below. 
 
 For now, let's look at the `bbc_style()` function. This function applies a custom ggplot theme to any plot. Watch what happens in Figure \@ref(fig:penguins-bbc-style) when I apply it to our `penguins_plot`.
 
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
 ```{r penguins-bbc-style, echo = TRUE, fig.cap = "The same chart with BBC style"}
 library(bbplot)
 
 penguins_plot +
   bbc_style()
+```
+
+```{r results='asis'}
+save_figure_for_nostarch(figure_height = 4)
 ```
 
 Way different, right? Larger font size, legend on top, no axis titles, stripped down grid lines, and a white background – these are the major changes that the `bbc_style()` function makes. Let's look at them one by one. 
@@ -241,6 +262,10 @@ One of the main things that the `bbc_style()` function does is to bump up the te
 
 The code first formats the title using Helvetica 28-point bold font in a nearly black color (that's the hex code #222222). The subtitle is 22-point Helvetica. Some spacing is added between the title and subtitle using the `margin()` function, which gives the spacing, in points, for the top (9), right (0), bottom (9), and left (0) sides. Finally, the caption is removed using the `element_blank()` function. This is done because the `finalise_plot()` function in the `bbplot` package adds elements, including a caption and the BBC logo to the bottom of plots. 
 
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
 ```{r echo = TRUE, fig.cap = "Our chart with only text formatting changed"}
 penguins_plot +
   theme(
@@ -257,6 +282,10 @@ penguins_plot +
     ),
     plot.caption = element_blank()
   )
+```
+
+```{r results='asis'}
+save_figure_for_nostarch(figure_height = 4)
 ```
 
 We then save our plot as an object in order to work with it in the next section.
@@ -281,6 +310,10 @@ penguins_plot_text <- penguins_plot +
 
 Next, we deal with the legend. The code puts the legend on top of the plot, and left aligns the text within it. Then, it removes the legend background (this would only show up if the background color of the entire plot were different than the legend background), title, and legend key (this is a box that can show up around the boxes with the names of the islands). Finally, we make the legend text 18-point Helevetica with the same nearly black color. We can see the result in Figure \@ref(fig:penguins-plot-legend).
 
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
 ```{r penguins-plot-legend, echo = TRUE, fig.cap = "Our chart with changes to the legend"}
 penguins_plot_text +
   theme(
@@ -295,6 +328,10 @@ penguins_plot_text +
       color = "#222222"
     )
   )
+```
+
+```{r results='asis'}
+save_figure_for_nostarch(figure_height = 4)
 ```
 
 And again, we save this plot so we can continue to alter it below.
@@ -317,6 +354,10 @@ penguins_plot_legend <- penguins_plot_text +
 
 Next up are the axes. The code first removes axis titles because, as Nassos told me, these tend to take up a lot of chart real estate and you can use the title and subtitle to make clear what the axes show. All text on axes becomes 18-point Helevetica nearly black. The text on the x axis (in our case, Biscoe, Dream, and Torgersen) gets a bit of spacing around it. And, finally, as we can see in Figure \@ref(fig:penguins-plot-axes), both axis ticks and axis lines are removed. 
 
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
 ```{r penguins-plot-axes, echo = TRUE, fig.cap = "Our chart with changes to axis formatting"}
 penguins_plot_legend +
   theme(
@@ -330,6 +371,10 @@ penguins_plot_legend +
     axis.ticks = element_blank(),
     axis.line = element_blank()
   )
+```
+
+```{r results='asis'}
+save_figure_for_nostarch(figure_height = 4)
 ```
 
 Let's now save this plot as an object for future tweaks.
@@ -351,6 +396,10 @@ penguins_plot_axes <- penguins_plot_legend +
 
 Now that we've tweaked overall text formatting, the legend, and the axes, let's move onto grid lines. The approach here is fairly straightforward: remove all minor grid lines, remove major grid lines on the x axis, keeping only major grid lines on the y axis, but making them a light gray (using the #cbcbcb hex code). We can see the result of these tweaks to the grid lines in Figure \@ref(fig:penguins-plot-gridlines).
 
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
 ```{r penguins-plot-gridlines, echo = TRUE, fig.cap = "Our chart with tweaks to the grid lines"}
 penguins_plot_axes +
   theme(
@@ -358,6 +407,10 @@ penguins_plot_axes +
     panel.grid.major.y = element_line(color = "#cbcbcb"),
     panel.grid.major.x = element_blank()
   )
+```
+
+```{r results='asis'}
+save_figure_for_nostarch(figure_height = 4)
 ```
 
 And, once again, we save our plot to an object.
@@ -373,6 +426,10 @@ penguins_plot_grid_lines <- penguins_plot_axes +
 
 Of course, in the previous iteration of our plot, it still had a gray background. The `bbc_style()` function removes this with the following code (and the resulting plot, seen in Figure \@ref(fig:penguins-plot-no-bg)).
 
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
 ```{r penguins-plot-no-bg, echo = TRUE, fig.cap = "Our chart with the gray background removed"}
 penguins_plot_grid_lines +
   theme(
@@ -380,9 +437,17 @@ penguins_plot_grid_lines +
   )
 ```
 
+```{r results='asis'}
+save_figure_for_nostarch(figure_height = 4)
+```
+
 And there we go! We've now recreated the plot that we made above using the `bbc_style()` function. However, you may recall there is a bit more code in the `bbc_style()` function. This code deals with `strip.background` and `strip.text`. Both of these occur when we make small multiples charts. Small multiples is a common technique in data visualization, where, instead of making one chart that incorporates all of the available data, we break the chart into multiple charts in order to make the final results easier for the reader to comprehend. 
 
 Let's make an example small multiples chart to show what this looks like. See Figure \@ref(fig:penguin-facetted-plot) below.
+
+```{r results='asis'}
+print_nostarch_file_name()
+```
 
 ```{r penguin-facetted-plot, fig.cap = "Small multiples chart with no changes to the strip text formatting"}
 penguins %>%
@@ -441,6 +506,10 @@ penguins %>%
     
     panel.background = element_blank()
   )
+```
+
+```{r results='asis'}
+save_figure_for_nostarch(figure_height = 4)
 ```
 
 When we use the `facet_wrap()` function, we are left with one chart per island. But note that, by default, the text above each chart is noticeably smaller than the rest of the chart. And the gray background behind the text stands out when we have removed the gray background from other parts of the chart. 
@@ -506,6 +575,10 @@ penguins_plot_weight <- penguins %>%
 
 I've saved the code used to make Figure \@ref(fig:penguin-facetted-plot) as an object (`penguins_plot_weight`). We now use this object in order to show how to change the text that shows up above each small multiples chart (in ggplot this text is called the "strip"). We remove the background (or, more accurately, make it white) and make the text larger (to match the rest of the plot) and left aligned (using `hjust = 0`). The result shows up in Figure \@ref(fig:penguins-plot-facetted-bbc).
 
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
 ```{r penguins-plot-facetted-bbc, echo = TRUE, fig.cap = "Small multiples chart in the BBC style"}
 penguins_plot_weight +
   theme(
@@ -514,13 +587,21 @@ penguins_plot_weight +
   )
 ```
 
+```{r results='asis'}
+save_figure_for_nostarch(figure_height = 4)
+```
+
 If we now return to Figure \@ref(fig:bbc-beef-chart), the 2019 carbon impact of food chart that Nassos and Clara made, we can again see how similar it is. All of the tweaks in the `bbc_style()` function (text formatting, legends, axes, grid lines, and backgrounds) are visible. 
+
+```{r results='asis'}
+print_nostarch_file_name()
+```
 
 ```{r bbc-beef-chart}
 ```
 
 ```{r results='asis'}
-# save_image_for_nostarch("https://ichef.bbci.co.uk/news/976/cpsprodpb/82BA/production/_121266433_beef_by_region_ws_640x3-nc.png")
+save_image_for_nostarch(here::here("assets/bbc-food-chart.png"))
 ```
 
 You might be thinking: wait, what about the colors? Doesn't the theme change that? It's a common point of confusion. If we read the documentation for the `theme()` function, though, it becomes clearer why this is the case:
@@ -541,9 +622,13 @@ In addition to the `bbc_style()` function, the `bbplot` package also provides an
 
 The impact of `bbplot` would also come to be seen outside of the small team of data journalists that brought it to life. Others at the BBC saw how the data journalism team was now able to produce production-ready graphs and they wanted to do the same. This led the data journalism team to set up R trainings for their colleagues and to develop a "cookbook" (shown \@ref(fig: bbc-cookbook)) that provided examples of how to make various types of charts. 
 
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
+
 ```{r bbc-cookbook, out.width="100%", fig.cap="Screenshot of BBC graphics cookbook"}
 # https://www.bbc.com/news/science-environment-46459714
-knitr::include_graphics("assets/bbc-graphics-cookbook.png")
+knitr::include_graphics(here::here("assets/bbc-graphics-cookbook.png"))
 ```
 
 These two resources led to a large increase in R users at the BBC. As Nassos told me, they "spurred people a lot people outside of the data journalism team to take a real interest [in R]." Having `bbplot` made the value of R click for many people at the BBC. He continued:
