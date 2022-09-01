@@ -602,7 +602,7 @@ save_figure_for_nostarch(figure_height = 5)
 If we now return to Figure \@ref(fig:bbc-beef-chart), the 2019 carbon impact of food chart that Nassos and Clara made, we can again see how similar it is. All of the tweaks in the `bbc_style()` function (text formatting, legends, axes, grid lines, and backgrounds) are visible. 
 
 ```{r results='asis'}
-print_nostarch_file_name(actually_print = TRUE)
+print_nostarch_file_name(file_type_to_print = "png", actually_print = TRUE)
 ```
 
 ```{r bbc-beef-chart}
