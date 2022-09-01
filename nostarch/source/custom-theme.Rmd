@@ -99,14 +99,14 @@ ggplot(
 ) +
   geom_col() +
   labs(
-    title = "Number of Penguins by Island",
+    title = "Number of Penguins",
     subtitle = "Islands are in Antarctica",
     caption = "Data from palmerpenguins package"
   )
 ```
 
 ```{r results='asis'}
-save_figure_for_nostarch(figure_height = 4)
+save_figure_for_nostarch(figure_height = 5)
 ```
 
 We're going to use this plot multiple times (with some modifications each time). To simplify things, let's save it as an object called `penguins_plot`. 
@@ -122,7 +122,7 @@ penguins_plot <- ggplot(
 ) +
   geom_col() +
   labs(
-    title = "Number of Penguins by Island",
+    title = "Number of Penguins",
     subtitle = "Islands are in Antarctica",
     caption = "Data from palmerpenguins package"
   )
@@ -146,7 +146,7 @@ penguins_plot +
 ```
 
 ```{r results='asis'}
-save_figure_for_nostarch(figure_height = 4)
+save_figure_for_nostarch(figure_height = 5)
 ```
 
 Way different, right? Larger font size, legend on top, no axis titles, stripped down grid lines, and a white background – these are the major changes that the `bbc_style()` function makes. Let's look at them one by one. 
@@ -285,7 +285,7 @@ penguins_plot +
 ```
 
 ```{r results='asis'}
-save_figure_for_nostarch(figure_height = 4)
+save_figure_for_nostarch(figure_height = 5)
 ```
 
 We then save our plot as an object in order to work with it in the next section.
@@ -331,7 +331,7 @@ penguins_plot_text +
 ```
 
 ```{r results='asis'}
-save_figure_for_nostarch(figure_height = 4)
+save_figure_for_nostarch(figure_height = 5)
 ```
 
 And again, we save this plot so we can continue to alter it below.
@@ -374,7 +374,7 @@ penguins_plot_legend +
 ```
 
 ```{r results='asis'}
-save_figure_for_nostarch(figure_height = 4)
+save_figure_for_nostarch(figure_height = 5)
 ```
 
 Let's now save this plot as an object for future tweaks.
@@ -410,7 +410,7 @@ penguins_plot_axes +
 ```
 
 ```{r results='asis'}
-save_figure_for_nostarch(figure_height = 4)
+save_figure_for_nostarch(figure_height = 5)
 ```
 
 And, once again, we save our plot to an object.
@@ -438,12 +438,12 @@ penguins_plot_grid_lines +
 ```
 
 ```{r results='asis'}
-save_figure_for_nostarch(figure_height = 4)
+save_figure_for_nostarch(figure_height = 5)
 ```
 
 And there we go! We've now recreated the plot that we made above using the `bbc_style()` function. However, you may recall there is a bit more code in the `bbc_style()` function. This code deals with `strip.background` and `strip.text`. Both of these occur when we make small multiples charts. Small multiples is a common technique in data visualization, where, instead of making one chart that incorporates all of the available data, we break the chart into multiple charts in order to make the final results easier for the reader to comprehend. 
 
-Let's make an example small multiples chart to show what this looks like. See Figure \@ref(fig:penguin-facetted-plot) below.
+Let's make an example small multiples chart to show what this looks like. I've used the code from the `bbc_style()` function (though I've removed the legend as it's not necessary in this chart). See Figure \@ref(fig:penguin-facetted-plot) below.
 
 ```{r results='asis'}
 print_nostarch_file_name(actually_print = TRUE)
@@ -454,13 +454,17 @@ penguins %>%
   group_by(island, sex) %>%
   summarize(avg_weight = mean(body_mass_g, na.rm = TRUE)) %>%
   drop_na(sex) %>%
+  mutate(sex = fct_recode(sex,
+                           "F" = "female",
+                           "M" = "male")) %>% 
   ggplot(aes(
     x = sex,
     y = avg_weight,
     fill = island
   )) +
   geom_col() +
-  labs(title = "Penguin Weight by Island and Sex") +
+  labs(title = "Penguin Weight",
+       subtitle = "By Island and Sex") +
   facet_wrap(~island) +
   theme(
     
@@ -479,7 +483,7 @@ penguins %>%
     
     plot.caption = element_blank(),
     
-    legend.position = "top",
+    legend.position = "none",
     legend.text.align = 0,
     legend.background = element_blank(),
     legend.title = element_blank(),
@@ -509,7 +513,7 @@ penguins %>%
 ```
 
 ```{r results='asis'}
-save_figure_for_nostarch(figure_height = 4)
+save_figure_for_nostarch(figure_height = 5)
 ```
 
 When we use the `facet_wrap()` function, we are left with one chart per island. But note that, by default, the text above each chart is noticeably smaller than the rest of the chart. And the gray background behind the text stands out when we have removed the gray background from other parts of the chart. 
@@ -519,13 +523,17 @@ penguins_plot_weight <- penguins %>%
   group_by(island, sex) %>%
   summarize(avg_weight = mean(body_mass_g, na.rm = TRUE)) %>%
   drop_na(sex) %>%
+   mutate(sex = fct_recode(sex,
+                           "F" = "female",
+                           "M" = "male")) %>% 
   ggplot(aes(
     x = sex,
     y = avg_weight,
     fill = island
   )) +
   geom_col() +
-  labs(title = "Penguin Weight by Island and Sex") +
+  labs(title = "Penguin Weight",
+       subtitle = "By Island and Sex") +
   facet_wrap(~island) +
   theme(
     
@@ -544,7 +552,7 @@ penguins_plot_weight <- penguins %>%
     
     plot.caption = element_blank(),
     
-    legend.position = "top",
+    legend.position = "none",
     legend.text.align = 0,
     legend.background = element_blank(),
     legend.title = element_blank(),
@@ -573,7 +581,7 @@ penguins_plot_weight <- penguins %>%
   )
 ```
 
-I've saved the code used to make Figure \@ref(fig:penguin-facetted-plot) as an object (`penguins_plot_weight`). We now use this object in order to show how to change the text that shows up above each small multiples chart (in ggplot this text is called the "strip"). We remove the background (or, more accurately, make it white) and make the text larger (to match the rest of the plot) and left aligned (using `hjust = 0`). The result shows up in Figure \@ref(fig:penguins-plot-facetted-bbc).
+I've saved the code used to make Figure \@ref(fig:penguin-facetted-plot) as an object (`penguins_plot_weight`). We now use this object in order to show how to change the text that shows up above each small multiples chart (in ggplot this text is called the "strip"). We remove the background (or, more accurately, make it white) and make the text larger, bold, and left aligned (using `hjust = 0`). (I did have to make the text size slightly smaller to fit in the book and added code to make it bold, something done in the chart on carbon impact of food chart, though not seen in the `bbc_style()` code.) The result shows up in Figure \@ref(fig:penguins-plot-facetted-bbc).
 
 ```{r results='asis'}
 print_nostarch_file_name(actually_print = TRUE)
@@ -583,12 +591,12 @@ print_nostarch_file_name(actually_print = TRUE)
 penguins_plot_weight +
   theme(
     strip.background = element_rect(fill = "white"),
-    strip.text = element_text(size = 22, hjust = 0)
+    strip.text = element_text(size = 17, hjust = 0, face = "bold")
   )
 ```
 
 ```{r results='asis'}
-save_figure_for_nostarch(figure_height = 4)
+save_figure_for_nostarch(figure_height = 5)
 ```
 
 If we now return to Figure \@ref(fig:bbc-beef-chart), the 2019 carbon impact of food chart that Nassos and Clara made, we can again see how similar it is. All of the tweaks in the `bbc_style()` function (text formatting, legends, axes, grid lines, and backgrounds) are visible. 
