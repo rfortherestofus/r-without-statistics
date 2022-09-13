@@ -13,7 +13,39 @@ library(tweetrmd)
 
 ## How New Zealand Used R to Fight COVID {-}
 
-TODO
+In early 2020, as COVID spread across the world, the government of New Zealand began planning their response. A remote island, New Zealand had one major advantage that other countries lacked. This bought the country some time, but those working in the government knew that this head start would not last forever. Unless they quickly developed a plan to tackle COVID, New Zealand faced the same bleak future that other countries were already beginning to experience. 
+
+Of course, New Zealand did develop a plan to tackle COVID. As one of the few countries to largely keep COVID out in 2020 and 2021, New Zealand came to be seen as a model for how to respond to a global pandemic. While other countries dealt with repeated lockdowns, out of control COVID spread, and a constant sense of potential doom, life in New Zealand remained largely normal. 
+
+There are many reasons why New Zealand was so successful in tackling COVID. One of these was its use of R. Yes, R. 
+
+To understand how R helped New Zealand tackle COVID, let's go back a bit before the pandemic. In TODO: add year, the Ministry of Health began to transition from SAS to R. The Ministry wanted to encourage TODO: add something here.
+
+When COVID arrived in 2020, the Ministry of Health had to create a reporting system. Government officials and general public needed to know how many cases there were in New Zealand and whether these cases were the result of international arrivals or community spread. And they didn't need to know just once. They needed to know every day. 
+
+Creating a system to report on this data is no small feat. But because the Ministry of Health was already using R, they were able to leverage its power to make their reporting efficient. 
+
+The data analysis was not the most complex thing ever. Case reports from across New Zealand would go into a database. The Ministry of Health team would then pull data to generate three daily reports:
+
+1. A 9:00am summary of cases for high-level government officials.
+2. An 11:00am situation report, complete with charts and tables, sent out to a wide range of government officials.
+3. A 1:00pm public release of data on a Ministry of Health website.
+
+There were a few tricky steps along the way. The team had to make sure to not double count cases from previous days before separating out international arrival and community spread cases.   But these reports did not involve any complex statistics. They were, quite literally, counting cases. 
+
+So why am I discussing the New Zealand Ministry of Health's use of R, a tool designed for statistics, to generate reports where the most complex statistic is something we learn to do in elementary school? I'm using this example to highlight the power of R because it shows things that R can do that go beyond statistics.
+
+Specifically, the way that the New Zealand Ministry of Health used R shows the power of a code-based tool to make work more reproducible. Which is really just a fancy way of saying that it was way, way easier to make those three daily reports using R than it would have been with a tool like Excel. 
+
+Reproducibility is a fancy word that often hides its true value. I used to hear it and think it referred to scientists recreating each other's experiments in order to validate their results. But reproducibility really just means that code you write today can be run in another context. Sometimes this means someone else running your code. But sometimes it means you running the code you wrote last week. If your old code works, it's reproducible. 
+
+Getting previously written code to run was key to the success of the New Zealand Ministry of Health team reporting on COVID cases. They had to produce three reports every day. Doing this manually each time would quickly become untenable. But the process become viable because they wrote R code once and reused it day after day. 
+
+Of course, reporting requirements changed over time. Fortunately for the team at the Ministry of Health, they could make changes to their R code to adapt. 
+
+R was an important tool in enabling a small team to generate daily reports that were key to New Zealand's successful COVID response. It allowed a team of five or six people to produce reports much more efficiently than would otherwise have been possible. In spite of this, the intensity of the work led to some burnout. As team members left and new members joined, the Ministry of Health found that, again, R was key to their work. Because the team used code for their work, a new team member could read it, get themselves up to speed, and quickly begin contributing. The public nature of a code-based workflow stands in marked contrast the all-too-common situation where an outsized amount of institutional knowledge is found in one person's brain. If this person leaves, the team's work grinds to a halt. R not only makes work more efficient, it also ensures long-term continuity. 
+
+
 
 ## How I Came to Use R {-}
 
@@ -109,7 +141,7 @@ Using R won't mean you'll never make mistakes again (trust me, you will). But it
 
 I started learning R to avoid tedious pointing and clicking. But what I found was that R improved my work in ways I never expected. It's not just that my wrists are less tired. I now have more confidence that my work is accurate. 
 
-## R Can Do Much More Than Just Statistics
+## R Can Do Much More Than Just Statistics {-}
 
 I used to feel ashamed about the way I use R. I use R, a tool for statistical analysis, but I don't use it for complex statistical analysis. I don't do machine learning. I don't know what a random forest is. I've never run a regression in R. [The only statistics I do in R are descriptive statistics](https://rfortherestofus.com/2018/12/descriptive-stats-r/): counts, sums, averages, that type of thing. 
 
