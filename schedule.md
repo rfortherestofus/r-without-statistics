@@ -2,7 +2,7 @@
 
 ## Sent to No Starch
 
-- [ ] Data viz
+- [x] Data viz
 
 ## To Write
 
