@@ -1,43 +1,35 @@
 # Schedule
 
-## March
+## Sent to No Starch
 
-- Write Intro
+- [ ] Data viz
 
-## April
+## To Write
 
-- Write Chapter 1
-- Write Chapter 2
+### September
+- [ ] Custom theme
 
-## May
+### October
+- [ ] Maps
+- [ ] Tables
 
-- Write Chapter 3
-- Write Chapter 4
+### November
+- [ ] RMarkdown
 
-## June
+### December
+- [ ] Presentations
 
-- Write Chapter 5
-- Write Chapter 6
+### January
+- [ ] Websites
+- [ ] tidycensus
 
-## July
+### February
+- [ ] Survey results
+- [ ] Functions
 
-- Write Chapter 7
-- Write Chapter 8
+### March
+- [ ] Custom package
+- [ ] Conclusion
 
-## August
-
-- Write Chapter 9
-- Write Chapter 10
-
-## September
-
-- Write Chapter 11
-- Write Chapter 12
-
-## October
-
-- Write Conclusion
-
-## November
-
-## December
+### April
+- [ ] Intro
