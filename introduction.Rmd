@@ -157,7 +157,9 @@ My own use of R is an example of this. I think of my work with R in three bucket
 
 **Illuminate** through data visualization: making graphs, maps, and tables that look good and share results effectively. 
 
-![](assets/psc-sample.png)
+```{r out.width="100%", fig.cap="Sample pages from a report on housing in demographics in Hartford, Connecticut"}
+knitr::include_graphics(here::here("assets/psc-sample.png"))
+```
 
 **Communicate** by doing reporting with RMarkdown: moving away from the inefficient and error-prone workflow of using multiple tools to create reports by instead doing it all in the one tool that I think of as [R's killer feature](https://rfortherestofus.com/2019/03/r-killer-feature-rmarkdown/). 
 
@@ -167,19 +169,27 @@ A typical workflow looks like this:
 2. Copy data into Excel to make graphs
 3. Copy graphs into Word and write your report
 
-![](assets/non-r-workflow.png)
+
+```{r out.width="100%", fig.cap="A typical non-R workflow"}
+knitr::include_graphics(here::here("assets/non-r-workflow.png"))
+```
+
 
 What happens, though, if you forget to include some data at step one? Or if you need to produce the same report with new data? You have to manually repeat the steps. It's painful.
 
 With R, things are different. You do your data analysis, make your graphs, and write your report all in one tool (RStudio). Once you like what you have, you export it to a format (like Word) to share. 
 
-![](assets/r-workflow.png)
+```{r out.width="100%", fig.cap="An R-based workflow"}
+knitr::include_graphics(here::here("assets/r-workflow.png"))
+```
 
 And, best of all, if you forget to include data or need to produce your report again with new data, just re-run your code and you end up with a new Word document, ready to share. 
 
 **Automate** tedious practices: Remember my Excel-burdened wrists? Since I moved to R I've found so many ways to automate tedious practices, from gathering data directly from the U.S. Census Bureau to pulling survey results in from Google Sheets and more.
 
-![](assets/google-sheets-workflow.png)
+```{r out.width="100%", fig.cap="An workflow that brings data from Google Sheets directly into R"}
+knitr::include_graphics(here::here("assets/google-sheets-workflow.png"))
+```
 
 The main reason I've come to accept that my way of using R is as valid as anyone else's has come through realizing that more "sophisticated" R users are doing many of the same things I am. Sure, they may also be doing statistical analyses that I am not, but everyone who uses R needs to illuminate, communicate, and automate.  
 
@@ -189,28 +199,22 @@ Take a look at the R community on Twitter (where users congregate under the #rst
 
 - [Making illuminating data visualizations](https://twitter.com/CedScherer/status/1220843943224578050) as part of the [Tidy Tuesday project](https://github.com/rfordatascience/tidytuesday).
 
-```{r, out.width = '100%', echo = FALSE, fig.cap="Visualization by Cédric Scherer", eval = FALSE}
-include_graphics('https://raw.githubusercontent.com/Z3tt/TidyTuesday/master/plots/2020_04/2020_04_SpotifySongs.png')
-```
 
-```{r echo = FALSE, eval = FALSE}
+```{r echo = TRUE, eval = FALSE}
 tweet_embed("https://twitter.com/CedScherer/status/1220843943224578050")
 ```
 
-
 - [Video tutorials on how to communicate through effective presentations using R](https://twitter.com/spcanelon/status/1424932510065209348).
 
-```{r echo = FALSE, eval = FALSE}
+```{r echo = TRUE, eval = FALSE}
 tweet_embed("https://twitter.com/spcanelon/status/1424932510065209348")
 ```
 
-
 - [Love letters to the `clean_names()` function from the `janitor` package, which automates the process of making messy variable names easy to work with in R](https://twitter.com/WeAreRLadies/status/1228049014601342976). 
 
-```{r echo = FALSE, eval = FALSE}
+```{r echo = TRUE, eval = FALSE}
 tweet_embed("https://twitter.com/WeAreRLadies/status/1228049014601342976")
 ```
-
 
 No matter what else you do in R, you have to **illuminate** your findings and **communicate** your results. And, the more you use R, the more you'll find yourself wanting to **automate** things you used to do manually (your wrists will thank you). I realize now that the things that I use R for *are* the things that everyone uses R for. R was created for statistics. But today people are just as likely to use R without statistics. 
 

@@ -1,7 +1,7 @@
 --- 
 title: "R Without Statistics"
 author: "David Keyes"
-# date: "2022-08-30"
+# date: "2022-09-14"
 site: bookdown::bookdown_site
 documentclass: book
 url: https://book.rwithoutstatistics.com
@@ -56,9 +56,45 @@ Written by David Keyes, Founder and CEO of [R for the Rest of Us](https://rforth
 
 # Why R Without Statistics?
 
-## How New Zealand Used R to Fight COVID {-}
+In early 2020, as COVID spread across the world, the government of New Zealand began planning their response. New Zealand had one major advantage that other countries lacked: being a remote island. This bought the country some time, but those working in the government knew that this head start would not last forever. Unless they quickly developed a plan to tackle COVID, New Zealand faced the same bleak future that other countries were already beginning to experience. 
 
-TODO
+Of course, New Zealand did develop a plan to tackle COVID. As one of the few countries to largely keep COVID out in 2020 and 2021, New Zealand came to be seen as a model for how to respond to a global pandemic. While other countries were forced into repeated lockdowns due out of control COVID spread, life in New Zealand remained largely normal. 
+
+There are many reasons why New Zealand was so successful in tackling COVID. One of these was its use of R. Yes, R. 
+
+To understand how R helped New Zealand tackle COVID, let's go back a bit before the pandemic. In the years leading up to 2020, the Ministry of Health had begun to transition from SAS to R. So when COVID finally arrived on the shores of New Zealand in February 2020, they had the knowledge of R to use it as their main analysis and reporting tool.
+
+But while people at Ministry of Health had R skills, they did not have a reporting system in place for a virus like COVID. Government officials and the general public needed to know how many cases there were in New Zealand and whether these cases were the result of international arrivals or community spread. And they didn't need to know just once. They needed to know every day. As Chris Knox, who led a team at the Ministry of Health focused on the COVID response in 2021 and 2022 told me, 
+
+> Our general infectious disease reporting was not designed to be day to day. There were systems in place for reporting at the end of the year after everything had been tidied up. 
+
+Creating a system to report daily on COVID data was no small feat. But because the Ministry of Health was already using R, they were able to leverage its power to make their reporting efficient. 
+
+The work did involve complex analysis. Case reports from across New Zealand would go into a database. The Ministry of Health team would then pull data to generate reports on cases throughout the country. But the reporting requirements were high. The team had to produce three daily reports:
+
+1. A 9:00am summary of cases for high-level government officials.
+2. An 11:00am situation report, complete with charts and tables, sent out to a wide range of government officials.
+3. A 1:00pm public release of data on a Ministry of Health website.
+
+There were a few tricky steps along the way. The team had to make sure to not double count cases from previous days before separating out international arrival and community spread cases.   But, again, these reports did not involve any complex statistics. They were, quite literally, counting cases. 
+
+So why am I discussing the New Zealand Ministry of Health's use of R, a tool designed for statistics, to generate reports where the most complex statistic is counting? I'm using this example to highlight the power of R because it shows things that R can do that go beyond complex statistics.
+
+Specifically, the way that the New Zealand Ministry of Health used R shows the power of a code-based tool to make work more reproducible. Reproducible is really just a fancy way of saying that it was way, way easier to make those three daily reports using R than it would have been with a point-and-click tool like Excel. 
+
+Reproducibility is a fancy word that often hides its true value. I used to hear it and think it referred to scientists recreating each other's experiments in order to validate their results. But reproducibility really just means that code you write today can be run in another context. Sometimes this means someone else running your code. But sometimes it means you running the code you wrote last week. If last week's code works when you run it again this week, it's reproducible. 
+
+Getting previously written code to run day after day was key to the success of the New Zealand Ministry of Health team reporting on COVID cases. Producing the three daily reports manually would have quickly become untenable. But the process become viable because they wrote R code once and reused it day after day. 
+
+This isn't to say that the original code the team wrote never changed. Reporting requirements shifted with time and the team at the Ministry of Health had to adapt. Chris Knox told me that, "at some points, the reporting requirements changed every day." Fortunately, they could tweak their R code and re-run it to produce reports that met the new reporting needs.
+
+R was an important tool in enabling a small team to generate daily reports that were key to New Zealand's successful COVID response. It allowed a team of five or six people to produce reports much more efficiently than would otherwise have been possible. In spite of this, the intensity of the work led to some burnout. As team members left and new members joined, the Ministry of Health found that, again, R was key to their success. Because the team used code for their work, a new team member could read it, get themselves up to speed, and quickly begin contributing. The public nature of a code-based workflow stands in marked contrast the all-too-common situation where an outsized amount of institutional knowledge is found in one person's brain (let's call him Larry). If Larry leaves, the team's work grinds to a halt. R not only makes work more efficient, it also ensures long-term continuity. Chris Knox described how this played out at the New Zealand Ministry of Health:
+
+> Setting up Larry's analysis in Excel is usually faster than writing it up in code, but it's harder to onboard people into that type of environment. If you have to just sit down, run this code, look for error messages, almost anyone can do that.
+
+R also made collaboration among the Ministry of Health team easier. Being able to review code allowed team members to improve their collective work and learn from each other. To understand the true benefit this offers, consider again our friend Larry. If Larry works in Excel, say, so much of his work is hidden. Team members can't see the set of points-and-clicks that Larry carries out to do his analysis. His colleagues can't improve his work, and it's much harder for them to learn from Larry. 
+
+R often feels intimidating to newcomers, especially those new to coding. But what the story of New Zealand's COVID response shows us it that the power of R is huge. R was the main tool in a workflow that made it possible for a small team to produce regular reports every day for months on end. These reports didn't involve any kind of complex statistics – they were literally counts of COVID cases. But the reproducibility of their R-based workflow is where the true value is found. As Chris Knox put it, "trying to do what we did in a point-and-click environment is not possible." But with R, a small team helped a small island stay safe from COVID.
 
 ## How I Came to Use R {-}
 
@@ -68,7 +104,7 @@ The work itself was fine, but the tools I was using to do it were getting on my 
 
 Now look, this is not a place for an anti-Excel rant. Excel is a fine tool that has empowered millions to work with data in ways they would never have been able to otherwise. 
 
-But, for me, Excel was tedious. The amount of pointing and clicking I had to do when working with the amount of data I had got old fast. Each time I would conduct a survey, I'd know that it would yield an avalanche of data and that my wrists would end up exhausted from hours of pointing and clicking. 
+But I found Excel extremely tedious. The amount of pointing and clicking I had to do when working with the amount of data I had got old fast. Each time I would conduct a survey, I'd know that it would yield an avalanche of data and that my wrists would end up exhausted from hours of pointing and clicking. 
 
 No matter what I did, analyzing data and creating charts in Excel just involved a lot of repetitive pointing and clicking. Kind of like this:
 
@@ -79,55 +115,76 @@ Endless pointing and clicking was just one problem I faced using Excel. Annoying
 
 In this project, I was looking at which school districts in the state of Oregon have [outdoor education programs known as Outdoor School](https://oregonstate.app.box.com/s/83g5sjdm88xgqdxfze0ri7qo4uff5sj7). As part of this project, I had to download data on all school districts throughout Oregon, filter to only include relevant districts with fifth or sixth graders (the ages Outdoor School takes place), and then merge this with data that I collected as part of a survey I conducted. 
 
-I did the work in Excel, using a lot of (you guessed it!) pointing and clicking. The problem came when I was almost done with the project. I've blocked the details from my memory (as I've done with most things Excel-related), but what I do recall is that not being 100% certain I had done my filtering and joining correctly. And, to make it worse, I had no way to check my work. Why? Because all my pointing and clicking was ephemeral, gone in the ether as soon as I had completed it. 
+I did the work in Excel, using a lot of (you guessed it!) pointing and clicking. The problem came when I was almost done with the project. I've blocked the details from my memory (as I've done with most things Excel-related), but what I do recall is not being 100% certain I had done my filtering and joining correctly. And, to make it worse, I had no way to check my work. Why? Because all my pointing and clicking was ephemeral, gone in the ether as soon as I had completed it. 
 
-I finished the Outdoor School project and submitted my report. I think the work I did was *probably* accurate, but maybe it wasn't? 
+I finished the Outdoor School project and submitted my report. The work I did was *probably* accurate, but maybe it wasn't? 
 
 Now, you may be reading this thinking: why didn't you write down the steps you used in Excel so you could retrace them later? Sure, I could (and should) have done that. But let's be honest: most of us don't. 
 
-The reality is, we're human. We all make mistakes. And without a straightforward way to audit your work (and keeping a list of all of your Excel points and clicks in a separate document is not, in my view, straightforward), mistakes will happen. If you've used Excel to work with data, I guarantee you've made a mistake, just like me. 
+We're human. We're lazy. We all make mistakes. And without a straightforward way to audit your work (and keeping a list of all of your Excel points and clicks in a separate document is not, in my view, straightforward), mistakes will happen. If you've used Excel to work with data, I guarantee you've made a mistake, just like me. 
 
-The good news is that it's ok. There's a solution. And that solution is R. 
+The good news is that it's okay. There's a solution. And that solution is R. 
 
 If I were to redo that project on Outdoor School with R, here's what I'd do differently. Rather than watching points and clicks disappear into the ether, I'd write code that would serve as a record of everything I did. This code would: 
 
 Download data on all school districts:
 
 
+```r
+# Download the data directly from the Oregon Department of Education website
+download.file(url = "https://www.oregon.gov/ode/educator-resources/assessment/Documents/TestResults2019/pagr_schools_ela_tot_raceethnicity_1819.xlsx",
+              destfile = here::here("data/pagr_schools_ela_tot_raceethnicity_1819.xlsx"))
+```
 
 
-
-
+```r
+# Import the downloaded data and use the `clean_names()` function to make the variable names easy to work with
+oregon_schools <- read_excel(here::here("data/pagr_schools_ela_tot_raceethnicity_1819.xlsx")) %>% 
+  clean_names()
+```
 
 Filter to only include districts with fifth or sixth graders:
 
 
+```r
+# Start with the oregon_schools data from above
+oregon_schools_fifth_sixth_grade <- oregon_schools %>% 
+  
+  # Only keep schools with fifth or sixth graders
+  filter(grade_level == "Grade 5" | grade_level == "Grade 6") %>% 
+  
+  # Only keep the variables we need
+  select(district_id:school) %>% 
+  
+  # There are multiple observations of the same school, just keep one of each
+  distinct()
+```
 
 
 Join the filtered data on school districts with my survey data:
 
 
+```r
+# Use the school_id variable to join the survey data with the oregon_schools_fifth_sixth_grade from above 
+left_join(survey_data, oregon_schools_fifth_sixth_grade,
+          by = "school_id")
+```
 
+## Code is Just a Written Record of Your Work {-}
 
-Code can be scary. Having to write code is one of the reasons many people never learn R. But code is just a list of things you want to do to your data. It may be written in a hard-to-parse syntax (though it gets easier over time), but it's just a set of steps. The same steps that we should write out when we're working in Excel, but never do. Rather than having a separate document with my steps written down (the one that never gets written), I can see my steps in my code. See that line that says filter. Guess what it's doing? Yep, it's filtering!
+Code can be scary. Having to write code is one of the reasons many people never learn R. But code is just a list of things you want to do to your data. It may be written in a hard-to-parse syntax (though it gets easier over time), but it's just a set of steps. The same steps that we should write out when we're working in Excel, but never do. Rather than having a separate document with my steps written down, I can see my steps in my code. See that line that says filter? Guess what it's doing? Yep, it's filtering!
 
-If I had done things this way when working on the Outdoor School project, I could have looked back at any point to make sure what I thought was happening to my data was in fact happening. That nagging sensation I had near the end of the project that I may have made a mistake in one of my early points or clicks? It never would come up because I could just review my code to make sure it did what I thought it did. And if it didn't, I could rewrite and rerun my code to get updated results. 
+If I had done things this way when working on the Outdoor School project, I could have looked back at any point to make sure what I thought was happening to my data was in fact happening. That nagging sensation I had near the end of the project that I may have made a mistake in one of my early points or clicks? It never would have come up because I could have just reviewed my code to make sure it did what I thought it did. And if it didn't, I could rewrite and rerun my code to get updated results. 
 
 Using R won't mean you'll never make mistakes again (trust me, you will). But it will mean that you can easily spot your mistakes, make changes, and fix any issues. 
 
 I started learning R to avoid tedious pointing and clicking. But what I found was that R improved my work in ways I never expected. It's not just that my wrists are less tired. I now have more confidence that my work is accurate. 
 
-* * *
+## R Can Do Much More Than Just Statistics {-}
 
-I used to feel ashamed about the way I use R. 
+I used to feel ashamed about the way I use R. I use R, a tool for statistical analysis, but I don't use it for complex statistical analysis. I don't do machine learning. I don't know what a random forest is. I've never run a regression in R. [The only statistics I do in R are descriptive statistics](https://rfortherestofus.com/2018/12/descriptive-stats-r/): counts, sums, averages, that type of thing. 
 
-I use R, a tool for statistical analysis, but I don't use it for complex statistical analysis. I don't do machine learning. I don't know what a random forest is. I've never even run a regression in R. 
-
-[The only statistics I do in R are descriptive statistics](https://rfortherestofus.com/2018/12/descriptive-stats-r/). Counts, sums, averages: these are the statistics that I do in R. 
-
-For a long time, I felt like I wasn't a "real" R user. Real R users, in my mind, used R for hardcore stats. I "only" used R for descriptive stats. 
-
-I sometimes felt like I was using a souped up sports car to drive 20 miles an hour to the grocery store. What was the point in using a high-powered machine like R to do "simple" things?  
+For a long time, I felt like I wasn't a "real" R user. Real R users, in my mind, used R for hardcore stats. I "only" used R for descriptive stats. I sometimes felt like I was using a souped up sports car to drive 20 miles an hour to the grocery store. What was the point in using a high-powered machine like R to do "simple" things?  
 
 Eventually, I realized that this framing misses the point. [R started out as a tool created by statisticians for other statisticians](https://rss.onlinelibrary.wiley.com/doi/10.1111/j.1740-9713.2018.01169.x). But, over a quarter century since its creation, R can do much more than statistical analysis. 
 
@@ -135,19 +192,43 @@ My own use of R is an example of this. I think of my work with R in three bucket
 
 **Illuminate** through data visualization: making graphs, maps, and tables that look good and share results effectively. 
 
-TODO: Add examples
+<div class="figure">
+<img src="assets/psc-sample.png" alt="Sample pages from a report on housing in demographics in Hartford, Connecticut" width="100%" />
+<p class="caption">(\#fig:unnamed-chunk-7)Sample pages from a report on housing in demographics in Hartford, Connecticut</p>
+</div>
 
-**Communicate** by doing reporting with RMarkdown: moving away from the inefficiency and error-prone workflow of using multiple tools to create reports by instead doing it all in the one tool that I think of as [R's killer feature](https://rfortherestofus.com/2019/03/r-killer-feature-rmarkdown/). 
+**Communicate** by doing reporting with RMarkdown: moving away from the inefficient and error-prone workflow of using multiple tools to create reports by instead doing it all in the one tool that I think of as [R's killer feature](https://rfortherestofus.com/2019/03/r-killer-feature-rmarkdown/). 
 
-TODO: Improve/explain graphics
+A typical workflow looks like this:
 
-![](assets/non-r-workflow.png)
+1. Analyze data in SPSS
+2. Copy data into Excel to make graphs
+3. Copy graphs into Word and write your report
 
-![](assets/r-workflow.png)
 
-**Automate** tedious practices: Remember my Excel-burdened wrists? Since I moved to R I've found so many ways to automate tedious practices, from gathering data directly from the U.S. Census Bureau to pulling survey results in from Qualtrics and more.
+<div class="figure">
+<img src="assets/non-r-workflow.png" alt="A typical non-R workflow" width="100%" />
+<p class="caption">(\#fig:unnamed-chunk-8)A typical non-R workflow</p>
+</div>
 
-![](assets/qualtrics-workflow.png)
+
+What happens, though, if you forget to include some data at step one? Or if you need to produce the same report with new data? You have to manually repeat the steps. It's painful.
+
+With R, things are different. You do your data analysis, make your graphs, and write your report all in one tool (RStudio). Once you like what you have, you export it to a format (like Word) to share. 
+
+<div class="figure">
+<img src="assets/r-workflow.png" alt="An R-based workflow" width="100%" />
+<p class="caption">(\#fig:unnamed-chunk-9)An R-based workflow</p>
+</div>
+
+And, best of all, if you forget to include data or need to produce your report again with new data, just re-run your code and you end up with a new Word document, ready to share. 
+
+**Automate** tedious practices: Remember my Excel-burdened wrists? Since I moved to R I've found so many ways to automate tedious practices, from gathering data directly from the U.S. Census Bureau to pulling survey results in from Google Sheets and more.
+
+<div class="figure">
+<img src="assets/google-sheets-workflow.png" alt="An workflow that brings data from Google Sheets directly into R" width="100%" />
+<p class="caption">(\#fig:unnamed-chunk-10)An workflow that brings data from Google Sheets directly into R</p>
+</div>
 
 The main reason I've come to accept that my way of using R is as valid as anyone else's has come through realizing that more "sophisticated" R users are doing many of the same things I am. Sure, they may also be doing statistical analyses that I am not, but everyone who uses R needs to illuminate, communicate, and automate.  
 
@@ -159,26 +240,29 @@ Take a look at the R community on Twitter (where users congregate under the #rst
 
 
 
-
-
+```r
+tweet_embed("https://twitter.com/CedScherer/status/1220843943224578050")
+```
 
 - [Video tutorials on how to communicate through effective presentations using R](https://twitter.com/spcanelon/status/1424932510065209348).
 
 
-
+```r
+tweet_embed("https://twitter.com/spcanelon/status/1424932510065209348")
+```
 
 - [Love letters to the `clean_names()` function from the `janitor` package, which automates the process of making messy variable names easy to work with in R](https://twitter.com/WeAreRLadies/status/1228049014601342976). 
 
 
+```r
+tweet_embed("https://twitter.com/WeAreRLadies/status/1228049014601342976")
+```
 
+No matter what else you do in R, you have to **illuminate** your findings and **communicate** your results. And, the more you use R, the more you'll find yourself wanting to **automate** things you used to do manually (your wrists will thank you). I realize now that the things that I use R for *are* the things that everyone uses R for. R was created for statistics. But today people are just as likely to use R without statistics. 
 
-No matter what else you do in R, you have to **illuminate** your findings and **communicate** your results. And, the more you use R, the more you'll find yourself wanting to **automate** things you used to do manually (your wrists will thank you). 
+Ten years ago, if you had told me I'd be writing a book on R, I'd have laughed. As someone with an extremely non-quantitative background (I did a PhD in anthropology) who never used R in graduate school, I never thought I'd be in a position to teach people about R. But here we are. And I'm excited to be your guide on this journey through the ways you can use R without statistics. 
 
-I realize now that the things that I use R for *are* the things that everyone uses R for. R was created for statistics. But today people are just as likely to use R without statistics. 
-
-Ten years ago, if you had told me I'd be writing a book on R, I'd have laughed. As someone with an extremely non-quantitative background (I did a PhD in anthropology) who never used R in graduate school, I never thought I'd be in a position to teach people about R. But here we find ourselves. And I'm excited to be your guide on this journey through the ways you can use R without statistics. 
-
-If I only used R for the things I thought "real" R users used it for, I wouldn't be writing this book. But, instead of slogging away in the world of complex statistical analysis, far outside of my area of expertise, I have found a place for myself in the world of R. Expanding my conception of what R can do has enabled me to get more out of this tool.
+If I only used R for the things I thought "real" R users used it for, I wouldn't be writing this book. But, instead of slogging away in the world of complex statistical analysis, far outside of my area of expertise, I have found a place for myself in the world of R. Expanding my conception of what this tool can do has enabled me to get more out of R.
 
 And here's the thing: if I, a qualitatively-trained anthropologist whose most complex statistical use for R is calculating averages, can find value in R, so can you. No matter what your background or what you think about R right now, using R without statistics can transform how you work in the future. 
 
@@ -190,15 +274,13 @@ Each chapter focuses on one novel use of R. You'll begin by learning about a use
 
 I've tried to choose topics for each chapter that are relevant to a broad audience. Things like data visualization, report generation, and creating your own functions are things that anyone, no matter what you use R for, will find valuable. 
 
-There are some great topics that I thought to include but were just too narrow in their focus (for example, [the world of generative art made with R](https://blog.djnavarro.net/posts/2021-10-19_rtistry-posts/). If, at any point while you're reading this book, you think, "why didn't David include X topic," please know that X might be a great topic, but I can only cover so much. The fact that you're able to come up with other ideas for things that R can do is a) fantastic and b) a further display of R's versatility. I eagerly await your follow-up book highlighting the myriad other things R can do that I am unable to cover in this book!
+There are some great topics that I thought to include but were just too narrow in their focus (for example, [the world of generative art made with R](https://blog.djnavarro.net/posts/2021-10-19_rtistry-posts/). If, at any point while you're reading this book, you think, "why didn't David include X topic?" please know that X might be a great topic, but I can only cover so much. The fact that you're able to come up with other ideas for things that R can do is a) fantastic and b) a further display of R's versatility. I eagerly await your follow-up book highlighting the myriad other things R can do that I am unable to cover in this book!
 
 ## A Favor to Ask {-}
 
 Pedants of the world (as one of you, I come in peace), I have a favor to ask. 
 
-This book is called R Without Statistics. But it's not meant to be taken literally. 
-
-Of course it's true that if you're making a graph you're using statistics. So, before you start typing an angry email to me, please know that R Without Statistics is a mindset rather than a literal statement. 
+This book is called R Without Statistics. But it's not meant to be taken literally. Of course it's true that if you're making a graph you're using statistics. So, before you start typing an angry email to me, please know that R Without Statistics is a mindset rather than a literal statement. 
 
 We're all using R with statistics already. Let's also learn to use R without statistics. 
 
@@ -226,7 +308,7 @@ editor_options:
 
 
 
-# Use General Principles of High-Quality Data Viz in R
+# Use General Principles of High-Quality Data Viz in R {#data-viz-chapter}
 
 In the spring of 2021, nearly all of the American West was in a drought. In April of that year, officials in Southern California declared a water emergency, citing unprecedented conditions. 
 
@@ -1060,51 +1142,63 @@ output: html_document
 editor_options: 
   chunk_output_type: console
 ---
+
+
+
 # Develop a Custom Theme to Keep Your Data Viz Consistent 
 
-In 2018, BBC data journalist Nassos Stylianou was working with a backend developer on a particularly large data set. Nassos was primarily an Excel user at the time, but this data was too large for Excel. Seeing the developer work, a light bulb went off for Nassos: if he and his data journalism team learned to use R, they could do this type of analysis on their own. 
+In 2017, BBC data journalist Nassos Stylianou was working with a backend developer on a particularly large data set. Nassos was primarily an Excel user at the time, but this data was too large for Excel. Seeing the developer work through the data with ease, a light bulb went off for Nassos: if he and his data journalism team learned to use R, they could do this type of analysis on their own. 
 
-This realization began a journey into R. This journey, which started with needing to analyze data too large for Excel to handle, would ultimately end up in a very different place. 
-
-In 2019, Nassos, his colleague Clara Guibourg, and their team created a custom ggplot theme to create plots that match the BBC style. The code in the `bbplot` package is a great example of the value of developing a custom theme. 
+This realization began a journey into R. This journey, which started with needing to analyze data too large for Excel to handle, would ultimately end up in a very different place. In 2018, Nassos, his colleague Clara Guibourg, and their team created a custom ggplot theme to create plots that match the BBC style. The code in the `bbplot` package is a great example of the value of developing a custom theme. 
 
 But the real story of the creation of bbplot is not just about technical tools. Through learning R and creating a custom theme for others to use, Nassos, Clara and their colleagues would change the culture, remove bottlenecks, and allow the BBC to be more creative with their data viz.
 
 To understand how big these changes were, it's helpful to understand what things looked like at the BBC before bbplot. In the mid-2010s, journalists at the BBC who wanted to make data visualization had two choices:
 
-1. They could use an internal tool called Chart Tools. This tool could create data visualization, but only the predefined charts it had been designed to generate. 
+1. They could use an internal tool. This tool could create data visualization, but only the predefined charts it had been designed to generate. 
 2. They could use Excel to create mockups and then work with a graphic designer to finalize the charts. This approach led to better results, and was way more flexible, but required extensive back-and-forth with a designer. As Nassos described it, working with a designer "is just a very time consuming workflow if you think of how many visualizations the BBC does." 
 
 Neither of these choices was ideal. And this limited set of less-than-ideal choices led to a limited output of data viz.   
 
-That would all change when Nassos, Clara, and their colleagues realized that R, the tool they had decided to learn for data analysis, could also do data visualization. As they began playing around with ggplot, they quickly saw its power. 
+That would all change when Nassos, Clara, and their colleagues realized that R, the tool they had decided to learn for data analysis, could also do data visualization. As they began playing around with ggplot, they quickly saw its power. Clara said she found it "immediately addictive when I started working with ggplot to make charts." No longer limited by the BBC's inflexible internal tool, she found that ggplot was "completely flexible in a way that was just completely new to me." 
 
-Clara said she found it "immediately addictive when I started working with ggplot to make charts." No longer limited by Chart Tools, she found that ggplot was "completely flexible in a way that was just completely new to me." 
-
-The biggest change, though, came from not having to work with a designer. Not because the designers were bad (they weren't). But because ggplot allowed the BBC data journalists to explore different visualizations on their own. Working with a designer required the journalists to have a fully-formed idea that the designer could take and improve upon. Working in ggplot allowed BBC data journalists to explore different data viz ideas. 
+The biggest change, though, came from not having to work with a designer. Not because the designers were bad (they weren't), but because ggplot allowed the BBC data journalists to explore different visualizations on their own. Working with a designer required the journalists to have a fully-formed idea that the designer could take and improve upon. Working in ggplot allowed BBC data journalists to explore different data viz ideas. 
 
 Clara Guibourg believes this freedom is what explains the addictive quality of ggplot. As she told me, "even before we got anywhere near having a production-ready chart, just trying things out, visualizing things for the first time" was completely captivating. Having learned the basics of ggplot, she saw that "you can make like the simplest chart with just a couple of lines of code." Being able to explore different types of visualization on her own led Clara and others to produce more  data viz than they had previously. 
 
-As the BBC data journalism team improved their ggplot skills, they realized that they could produce not only exploratory data viz, but also production-ready charts. They had learned to use R for data analysis, were starting to use it for exploratory data visualization, could they go all the way and create a chart in R that could go straight onto the BBC website? 
+As the BBC data journalism team improved their ggplot skills, they realized that it might be possible produce not only exploratory data viz, but also production-ready charts. They had learned to use R for data analysis and they were starting to use it for exploratory data visualization. Could they go all the way and create a chart in R that could go straight onto the BBC website? 
 
 Nassos, Clara, and their colleagues set about looking into what would be involved in creating production-ready charts from R. They realized that so much of the work required to create production-ready charts involved small tweaks. What font should they use? Where should the legend go? Should axes have titles? Should charts have grid lines? 
 
-The answers to these questions are what makes charts on-brand. Having consistent answers to them is what enabled BBC designers to turn Excel mockups into data viz ready to go on the website. As the BBC data journalism team dug further into ggplot, they realized that they might be able to write code to make their data viz production-ready. They realized that, if making production-ready charts required asking question about fonts, legends, axes, and grid lines, ggplot had an answer. And the answer was to make a custom theme. 
+These questions may seem small but they have a big impact. Having consistent answers to them is what enabled BBC designers to turn Excel mockups into data viz ready to go on the website. As the BBC data journalism team dug further into ggplot, they realized that they might be able to write code to make their data viz production-ready. They realized that, if making production-ready charts required asking question about fonts, legends, axes, and grid lines, ggplot had the answer. And the answer was to make a custom theme. 
 
-## Enter bbplot
+## Enter bbplot {-}
 
-TODO: Show example plot: https://ichef.bbci.co.uk/news/976/cpsprodpb/82BA/production/_121266433_beef_by_region_ws_640x3-nc.png (source: https://www.bbc.com/news/science-environment-46459714) 
-
-### Show data
-
-To show how `bbplot` works, let's create our own plot. We'll do so using the `palmerpenguins` package, which has data on penguins living on three islands in Antarctica. To give you a sense of what this data looks like, let's load the `palmerpenguins` and `tidyverse` packages.
+Take a look at this 2019 plot that Nassos, Clara, and their colleague  Helen Briggs made for an article on the carbon footprint of various food items. It's got a distinctive look, with the same minimalist aesthetic we saw in Chapter \@ref(data-viz-chapter). 
 
 
+
+<div class="figure">
+<img src="assets/bbc-food-chart.png" alt="BBC chart showing carbon impact of various foods" width="100%" />
+<p class="caption">(\#fig:bbc-beef-chart)BBC chart showing carbon impact of various foods</p>
+</div>
+
+
+
+
+This plot was made using the `bbplot` package. To show how this works, let's create our own plot. We'll do so using the `palmerpenguins` package, which has data on penguins living on three islands in Antarctica. To give you a sense of what this data looks like, let's load the `palmerpenguins` and `tidyverse` packages.
+
+
+```r
+library(palmerpenguins)
+library(tidyverse)
+```
 
 We now have data that we can work with in an object called `penguins`. Here's what the first ten rows look like.
 
 
-```
+```r
+penguins
 #> # A tibble: 344 × 8
 #>    species island    bill_le…¹ bill_…² flipp…³ body_…⁴ sex  
 #>    <fct>   <fct>         <dbl>   <dbl>   <int>   <int> <fct>
@@ -1121,12 +1215,14 @@ We now have data that we can work with in an object called `penguins`. Here's wh
 #> # … with 334 more rows, 1 more variable: year <int>, and
 #> #   abbreviated variable names ¹​bill_length_mm,
 #> #   ²​bill_depth_mm, ³​flipper_length_mm, ⁴​body_mass_g
-#> # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
 ```
+
 To get our data in a more usable format, let's count how many penguins live on each island. We do this with the `count()` function from the `dplyr` package (one of several packages that are loaded when we load the `tidyverse`).
 
 
-```
+```r
+penguins %>%
+  count(island)
 #> # A tibble: 3 × 2
 #>   island        n
 #>   <fct>     <int>
@@ -1138,37 +1234,88 @@ To get our data in a more usable format, let's count how many penguins live on e
 Because we're going to use this data multiple times below, let's save it as an object called `penguins_summary`.
 
 
+```r
+penguins_summary <- penguins %>%
+  count(island)
+```
 
-### Create plot
+Now that we've got some data to work with, we're ready to create a plot. Before showing what `bbplot` does, let's make a plot with ggplot defaults. Of course, Figure \@ref(fig:basic-penguins-plot) isn't the most aesthetically pleasing chart. But we'll be improving it soon!
 
-Now that we've got some data to work with, we're ready to create a plot. Before showing what `bbplot` does, let's make a plot with ggplot defaults. Of course, this isn't the most aesthetically pleasing chart. But we'll be improving it soon!
 
-<img src="custom-theme_files/figure-html/unnamed-chunk-5-1.png" width="100%" />
 
-### Save plot as object
+
+```r
+ggplot(
+  data = penguins_summary,
+  aes(
+    x = island,
+    y = n,
+    fill = island
+  )
+) +
+  geom_col() +
+  labs(
+    title = "Number of Penguins",
+    subtitle = "Islands are in Antarctica",
+    caption = "Data from palmerpenguins package"
+  )
+```
+
+<div class="figure">
+<img src="custom-theme_files/figure-html/basic-penguins-plot-1.png" alt="A chart with the default theme" width="100%" />
+<p class="caption">(\#fig:basic-penguins-plot)A chart with the default theme</p>
+</div>
+
+
 
 We're going to use this plot multiple times (with some modifications each time). To simplify things, let's save it as an object called `penguins_plot`. 
 
 
-
-### Apply bbc_style()
+```r
+penguins_plot <- ggplot(
+  data = penguins_summary,
+  aes(
+    x = island,
+    y = n,
+    fill = island
+  )
+) +
+  geom_col() +
+  labs(
+    title = "Number of Penguins",
+    subtitle = "Islands are in Antarctica",
+    caption = "Data from palmerpenguins package"
+  )
+```
 
 Now that we have a basic plot to work with, let's make it look like a BBC chart. To do this, we load the `bbplot` package. 
 
 This package has two functions: `bbc_style()` and `finalise_plot()`. The latter deals with things like adding the BBC logo, saving plots in the correct dimensions, and other tasks done after the plot is complete. We'll discuss this a bit more below. 
 
-For now, let's look at the `bbc_style()` function. This function applies a custom ggplot theme to any plot. Watch what happens when I apply it to our `penguins_plot`.
+For now, let's look at the `bbc_style()` function. This function applies a custom ggplot theme to any plot. Watch what happens in Figure \@ref(fig:penguins-bbc-style) when I apply it to our `penguins_plot`.
 
 
-<img src="custom-theme_files/figure-html/unnamed-chunk-7-1.png" width="100%" />
+
+
+```r
+library(bbplot)
+
+penguins_plot +
+  bbc_style()
+```
+
+<div class="figure">
+<img src="custom-theme_files/figure-html/penguins-bbc-style-1.png" alt="The same chart with BBC style" width="100%" />
+<p class="caption">(\#fig:penguins-bbc-style)The same chart with BBC style</p>
+</div>
+
+
 
 Way different, right? Larger font size, legend on top, no axis titles, stripped down grid lines, and a white background – these are the major changes that the `bbc_style()` function makes. Let's look at them one by one. 
 
-### Look at bbc_style() function
-
 Here's the code for the `bbc_style()` function (taken from the `bbplot` GitHub repository, found at https://github.com/bbc/bbplot). 
 
-You may be a bit confused by the way some of the code is written. First of all, this is the code used to create a function. The first line gives the function a name (`bbc_style`) and indicates that it is, in fact, a function definition. We'll discuss functions more in Chapter \@ref(functions).
+You may be a bit confused by the way some of the code is written. This is in part because it is the code used to create a function. The first line gives the function a name (`bbc_style`) and indicates that it is, in fact, a function definition. We'll discuss functions more in Chapter \@ref(functions).
 
 You'll see that instead of loading the package `ggplot2` with the code `library(ggplot2)` and then using the `theme()` function, the code below uses `ggplot2::theme()`. This indicates that the `theme()` function comes from the `ggplot2` package. Writing code in this way is something that is done when making an R package, something we'll discuss in Chapter \@ref(custom-packages).
 
@@ -1248,15 +1395,15 @@ bbc_style <- function() {
 }
 ```
 
-Nearly all of the code in the `bbc_style()` function exists within the `theme()` function from `ggplot2`. In the last chapter, we saw how Cédric Scherer and Georgios Karamanis customized their plot by applying the `theme_light()` function. This a so-called complete theme, meaning you can call the function and will change the whole look-and-feel of your plot. After applying `theme_light()`, Cédric and Georgios used the `theme()` function make additional tweaks. The `bbc_style()` theme does not use a complete theme to start. Instead, by jumping straight into the `theme()` function, they make tweaks to the base ggplot theme (TODO: Add something about it being gray? Or is that too niche?). 
+Nearly all of the code in the `bbc_style()` function exists within the `theme()` function from `ggplot2`. In the last chapter, we saw how Cédric Scherer and Georgios Karamanis customized their plot by applying the `theme_light()` function. This a so-called complete theme, meaning you can call the function and will change the whole look-and-feel of your plot. After applying `theme_light()`, Cédric and Georgios used the `theme()` function make additional tweaks. The `bbc_style()` theme does not use a complete theme to start. Instead, by jumping straight into the `theme()` function, they make tweaks to the ggplot defaults. 
 
 It can be challenging to remember how to tweak different elements in a plot. Fortunately, there are cheatsheets available to help. This one by Clara Granell shows the various elements that you can tweak within the `theme()` function. 
 
 https://github.com/claragranell/ggplot2/blob/main/ggplot_theme_system_cheatsheet.pdf
 
-As you can see, the `bbc_style()` function does a lot of tweaking. So, let's go through the changes it makes, section by section. 
+TODO: Add image. Also, is this cheatsheet going to be legible in the book?
 
-### Text formatting
+As you can see, the `bbc_style()` function does a lot of tweaking. So, let's go through the changes it makes, section by section. 
 
 The first section of the code deals with text formatting. First, it defines a variable called "font" and assigns it the value "Helvetica." This allows later sections of code to simply write "font" rather than repeating "Helvetica" over and over again. And, if the team ever wanted to use a different font, they could simply change "Helvetica" to, say, "Comic Sans" and change all BBC plots (I suspect higher-ups at the BBC might not be on board). 
 
@@ -1269,94 +1416,279 @@ Subsequent pieces of this section of the code make changes to the title, subtitl
 
 
 ```r
-AREA = ELEMENT_TYPE(
+AREA_OF_CHART = ELEMENT_TYPE(
   PROPERTY = VALUE
 )
 ```
 
-We begin by selecting an area (e.g. `plot.title`). Then, we have to say what type of element it is. The options are `element_text()`, `element_line()`, `element_rect()`, and `element_blank()`. We'll deal with the other three later on. For now, we're working with `element_text()` to handle formatting of the title, subtitle, and caption since they're all text elements. 
+We begin by selecting an area of the chart (e.g. `plot.title`). Then, we have to say what type of element it is. The options are `element_text()`, `element_line()`, `element_rect()`, and `element_blank()`. We'll deal with the other three later on. For now, we're working with `element_text()` to handle formatting of the title, subtitle, and caption since they're all text elements. Within the element type, we give values to properties. This can be, say, setting the font family (the property) to Helvetica (the value).
 
-TODO: Add something about making everything bigger per what Nassos said?
+One of the main things that the `bbc_style()` function does is to bump up the text size. As Nassos put it to me, on a lot of plots made with ggplot, "font and the numbers are just so small." Increasing font size helps with legibility, especially when plots made using the `bbplot` package are viewed on smaller mobile devices. 
 
 The code first formats the title using Helvetica 28-point bold font in a nearly black color (that's the hex code #222222). The subtitle is 22-point Helvetica. Some spacing is added between the title and subtitle using the `margin()` function, which gives the spacing, in points, for the top (9), right (0), bottom (9), and left (0) sides. Finally, the caption is removed using the `element_blank()` function. This is done because the `finalise_plot()` function in the `bbplot` package adds elements, including a caption and the BBC logo to the bottom of plots. 
 
-<img src="custom-theme_files/figure-html/unnamed-chunk-11-1.png" width="100%" />
-
-TODO: mention something about saving this, as below?
 
 
 
+```r
+penguins_plot +
+  theme(
+    plot.title = element_text(
+      family = font,
+      size = 28,
+      face = "bold",
+      color = "#222222"
+    ),
+    plot.subtitle = element_text(
+      family = font,
+      size = 22,
+      margin = margin(9, 0, 9, 0)
+    ),
+    plot.caption = element_blank()
+  )
+```
 
-### Legend
-
-Next, we deal with the legend. The code puts the legend on top of the plot, and left aligns the text within it Then, it removes the legend background (TODO: not sure when this would ever actually show up), title, and legend key (this is a box that can show up around the boxes with the names of the islands). Finally, we make the text 18-point Helevetica with the same nearly black color. 
-
-<img src="custom-theme_files/figure-html/unnamed-chunk-13-1.png" width="100%" />
-
-
-
-### Axes
-
-Next up are the axes. The code first removes axis titles because, as TODO told me, "TODO add quote here." All text on axes becomes 18-point Helevetica nearly black. The text on the x axis (in our case, Biscoe, Dream, and Torgersen) gets a bit of spacing around it. And, finally, both axis ticks and axis lines are removed. 
-
-<img src="custom-theme_files/figure-html/unnamed-chunk-15-1.png" width="100%" />
+<div class="figure">
+<img src="custom-theme_files/figure-html/unnamed-chunk-17-1.png" alt="Our chart with only text formatting changed" width="100%" />
+<p class="caption">(\#fig:unnamed-chunk-17)Our chart with only text formatting changed</p>
+</div>
 
 
 
-### Grid lines
-
-Now that we've tweaked overall text formatting, the legend, and the axes, let's move onto grid lines. The approach here is fairly straightforward: remove all minor grid lines, remove major grid lines on the x axis, keeping only major grid lines on the y axis, but making them a light gray (#cbcbcb). We can see the result of these tweaks to the grid lines.
-
-<img src="custom-theme_files/figure-html/unnamed-chunk-17-1.png" width="100%" />
+We then save our plot as an object in order to work with it in the next section.
 
 
+```r
+penguins_plot_text <- penguins_plot +
+  theme(
+    plot.title = element_text(
+      family = font,
+      size = 28,
+      face = "bold",
+      color = "#222222"
+    ),
+    plot.subtitle = element_text(
+      family = font,
+      size = 22,
+      margin = margin(9, 0, 9, 0)
+    ),
+    plot.caption = element_blank()
+  )
+```
 
-### Backgrounds
+Next, we deal with the legend. The code puts the legend on top of the plot, and left aligns the text within it. Then, it removes the legend background (this would only show up if the background color of the entire plot were different than the legend background), title, and legend key (this is a box that can show up around the boxes with the names of the islands). Finally, we make the legend text 18-point Helevetica with the same nearly black color. We can see the result in Figure \@ref(fig:penguins-plot-legend).
 
-Of course, in the last iteration of our plot, it still had a gray background. The `bbc_style()` function removes this with the following line:
 
-#### Panel
 
-<img src="custom-theme_files/figure-html/unnamed-chunk-19-1.png" width="100%" />
 
-And there we go! We've now recreated the plot that we made above using the `bbc_style()` function. However, you may recall there is a bit more code in the `bbc_style()` function. This code deals with `strip.background` and `strip.text`. Both of these elements occur when we make small multiples charts. Small multiples is a common technique in data visualization, where, instead of making one chart that incorporates all of the available data, we break the chart into multiple charts in order to make the final results easier for the reader to comprehend. 
+```r
+penguins_plot_text +
+  theme(
+    legend.position = "top",
+    legend.text.align = 0,
+    legend.background = element_blank(),
+    legend.title = element_blank(),
+    legend.key = element_blank(),
+    legend.text = element_text(
+      family = font,
+      size = 18,
+      color = "#222222"
+    )
+  )
+```
+
+<div class="figure">
+<img src="custom-theme_files/figure-html/penguins-plot-legend-1.png" alt="Our chart with changes to the legend" width="100%" />
+<p class="caption">(\#fig:penguins-plot-legend)Our chart with changes to the legend</p>
+</div>
+
+
+
+And again, we save this plot so we can continue to alter it below.
+
+
+```r
+penguins_plot_legend <- penguins_plot_text +
+  theme(
+    legend.position = "top",
+    legend.text.align = 0,
+    legend.background = element_blank(),
+    legend.title = element_blank(),
+    legend.key = element_blank(),
+    legend.text = element_text(
+      family = font,
+      size = 18,
+      color = "#222222"
+    )
+  )
+```
+
+Next up are the axes. The code first removes axis titles because, as Nassos told me, these tend to take up a lot of chart real estate and you can use the title and subtitle to make clear what the axes show. All text on axes becomes 18-point Helevetica nearly black. The text on the x axis (in our case, Biscoe, Dream, and Torgersen) gets a bit of spacing around it. And, finally, as we can see in Figure \@ref(fig:penguins-plot-axes), both axis ticks and axis lines are removed. 
+
+
+
+
+```r
+penguins_plot_legend +
+  theme(
+    axis.title = element_blank(),
+    axis.text = element_text(
+      family = font,
+      size = 18,
+      color = "#222222"
+    ),
+    axis.text.x = element_text(margin = margin(5, b = 10)),
+    axis.ticks = element_blank(),
+    axis.line = element_blank()
+  )
+```
+
+<div class="figure">
+<img src="custom-theme_files/figure-html/penguins-plot-axes-1.png" alt="Our chart with changes to axis formatting" width="100%" />
+<p class="caption">(\#fig:penguins-plot-axes)Our chart with changes to axis formatting</p>
+</div>
+
+
+
+Let's now save this plot as an object for future tweaks.
+
+
+```r
+penguins_plot_axes <- penguins_plot_legend +
+  theme(
+    axis.title = element_blank(),
+    axis.text = element_text(
+      family = font,
+      size = 18,
+      color = "#222222"
+    ),
+    axis.text.x = element_text(margin = margin(5, b = 10)),
+    axis.ticks = element_blank(),
+    axis.line = element_blank()
+  )
+```
+
+Now that we've tweaked overall text formatting, the legend, and the axes, let's move onto grid lines. The approach here is fairly straightforward: remove all minor grid lines, remove major grid lines on the x axis, keeping only major grid lines on the y axis, but making them a light gray (using the #cbcbcb hex code). We can see the result of these tweaks to the grid lines in Figure \@ref(fig:penguins-plot-gridlines).
+
+
+
+
+```r
+penguins_plot_axes +
+  theme(
+    panel.grid.minor = element_blank(),
+    panel.grid.major.y = element_line(color = "#cbcbcb"),
+    panel.grid.major.x = element_blank()
+  )
+```
+
+<div class="figure">
+<img src="custom-theme_files/figure-html/penguins-plot-gridlines-1.png" alt="Our chart with tweaks to the grid lines" width="100%" />
+<p class="caption">(\#fig:penguins-plot-gridlines)Our chart with tweaks to the grid lines</p>
+</div>
+
+
+
+And, once again, we save our plot to an object.
+
+
+
+Of course, in the previous iteration of our plot, it still had a gray background. The `bbc_style()` function removes this with the following code (and the resulting plot, seen in Figure \@ref(fig:penguins-plot-no-bg)).
+
+
+
+
+```r
+penguins_plot_grid_lines +
+  theme(
+    panel.background = element_blank()
+  )
+```
+
+<div class="figure">
+<img src="custom-theme_files/figure-html/penguins-plot-no-bg-1.png" alt="Our chart with the gray background removed" width="100%" />
+<p class="caption">(\#fig:penguins-plot-no-bg)Our chart with the gray background removed</p>
+</div>
+
+
+
+And there we go! We've now recreated the plot that we made above using the `bbc_style()` function. However, you may recall there is a bit more code in the `bbc_style()` function. This code deals with `strip.background` and `strip.text`. Both of these occur when we make small multiples charts. Small multiples is a common technique in data visualization, where, instead of making one chart that incorporates all of the available data, we break the chart into multiple charts in order to make the final results easier for the reader to comprehend. 
+
+Let's make an example small multiples chart to show what this looks like. I've used the code from the `bbc_style()` function (though I've removed the legend as it's not necessary in this chart). See Figure \@ref(fig:penguin-facetted-plot) below.
+
+
+
+<div class="figure">
+<img src="custom-theme_files/figure-html/penguin-facetted-plot-1.png" alt="Small multiples chart with no changes to the strip text formatting" width="100%" />
+<p class="caption">(\#fig:penguin-facetted-plot)Small multiples chart with no changes to the strip text formatting</p>
+</div>
+
+
 
 When we use the `facet_wrap()` function, we are left with one chart per island. But note that, by default, the text above each chart is noticeably smaller than the rest of the chart. And the gray background behind the text stands out when we have removed the gray background from other parts of the chart. 
 
-#### Strip
-
-<img src="custom-theme_files/figure-html/unnamed-chunk-20-1.png" width="100%" />
 
 
-
-So, in order to change these elements, we remove the background and make the text larger and left aligned (using `hjust = 0`). 
-
-<img src="custom-theme_files/figure-html/unnamed-chunk-22-1.png" width="100%" />
+I've saved the code used to make Figure \@ref(fig:penguin-facetted-plot) as an object (`penguins_plot_weight`). We now use this object in order to show how to change the text that shows up above each small multiples chart (in ggplot this text is called the "strip"). We remove the background (or, more accurately, make it white) and make the text larger, bold, and left aligned (using `hjust = 0`). (I did have to make the text size slightly smaller to fit in the book and added code to make it bold, something done in the chart on carbon impact of food chart, though not seen in the `bbc_style()` code.) The result shows up in Figure \@ref(fig:penguins-plot-facetted-bbc).
 
 
-TODO: Return to example plot: https://ichef.bbci.co.uk/news/976/cpsprodpb/82BA/production/_121266433_beef_by_region_ws_640x3-nc.png (source: https://www.bbc.com/news/science-environment-46459714) 
 
-If we now compare our plot to the actual chart made by Nassos and Clara, we can see how similar it is. 
 
-TODO: Add this for No Starch and save it and use knitr::include_graphics()
+```r
+penguins_plot_weight +
+  theme(
+    strip.background = element_rect(fill = "white"),
+    strip.text = element_text(size = 17, hjust = 0, face = "bold")
+  )
+```
 
-![](https://ichef.bbci.co.uk/news/976/cpsprodpb/82BA/production/_121266433_beef_by_region_ws_640x3-nc.png)
+<div class="figure">
+<img src="custom-theme_files/figure-html/penguins-plot-facetted-bbc-1.png" alt="Small multiples chart in the BBC style" width="100%" />
+<p class="caption">(\#fig:penguins-plot-facetted-bbc)Small multiples chart in the BBC style</p>
+</div>
 
-## Sum up why this follows data viz principles
 
-TODO: Add something about what fonts don't do (colors)
 
-## Conclusion
+If we now return to Figure \@ref(fig:bbc-beef-chart), the 2019 carbon impact of food chart that Nassos and Clara made, we can again see how similar it is. All of the tweaks in the `bbc_style()` function (text formatting, legends, axes, grid lines, and backgrounds) are visible. 
 
-Technical stuff
-- Discuss adding logo etc with finalise_plot()
-- Discuss cookbook
-- Link to ggplot theme reference sheet Henry Wang: https://henrywang.nl/ggplot2-theme-elements-demonstration/
 
-Larger message stuff
-- They never intended to make custom theme
-- It was all very gradual
-- BBC made tons of data viz during pandemic because of bbplot
+
+<img src="assets/bbc-food-chart.png" width="100%" />
+
+
+
+You might be thinking: wait, what about the colors? Doesn't the theme change that? It's a common point of confusion. If we read the documentation for the `theme()` function, though, it becomes clearer why this is the case:
+
+> Themes are a powerful way to customize the non-data components of your plots: i.e. titles, labels, fonts, background, gridlines, and legends.
+
+Color is used in plots as an aesthetic property to show something about data. In Figure \@ref(fig:bbc-beef-chart), for instance, color is mapped to the type of carbon impact (emissions, land use, and water use). As we saw in Chapter \@ref(data-viz-chapter), we can change color using the various `scale_` functions. It is because color is tied to the data rather than being about the overall look-and-feel that ggplot themes do not, on their own, change this component of plots. 
+
+## Code is the Catalyst for Culture Change {-}
+
+When Nassos Stylianou and Clara Guibourg started developing a custom theme for the BBC, they had one question: would they be able to create graphs in R that could go straight onto the BBC website? And, wouldn't you know, they succeeded! The creation of the the `bbplot` package allowed them to make plots that had a consistent look-and-feel, followed BBC standards, and, most importantly, did not need help from a designer. 
+
+Many of the principles of high-quality data visualization that we discussed in Chapter \@ref(data-viz-chapter) can be seen in this custom theme. In particular, the removal of extraneous elements (axis titles and grid lines, for instance) helps keep the focus on the data itself. And by creating a custom theme that only requires users to add a single line to their ggplot code, it became simple to get others on board. Telling users they could just append `bbc_style()` to their code and get a BBC-style plot was an eye-opener.
+
+The development of the `bbplot` package would lead to significant changes at the BBC. It inspired Nassos, Clara, and the other data journalists who created it to use ggplot more than before. Knowing that they had the flexibility of ggplot at their fingertips gave them license to explore. And knowing that they did not have to work with a designer to create production-ready graphics empowered them to make more and better graphics.
+
+In addition to the `bbc_style()` function, the `bbplot` package also provides another function (`finalise_plot()`) that adds a source at the bottom of the chart (recall how the `bbc_style()` function removed the caption), adds the BBC logo in the footer, and gives height, width, and file name options for saving the plot. These two functions combined allowed Nassos, Clara, and others to achieve their holy grail: creating production-ready graphs that could go straight from R to the BBC website. 
+
+The impact of `bbplot` would also come to be seen outside of the small team of data journalists that brought it to life. Others at the BBC saw how the data journalism team was now able to produce production-ready graphs and they wanted to do the same. This led the data journalism team to set up R trainings for their colleagues and to develop a "cookbook" (shown \@ref(fig: bbc-cookbook)) that provided examples of how to make various types of charts. 
+
+
+
+<div class="figure">
+<img src="assets/bbc-graphics-cookbook.png" alt="Screenshot of BBC graphics cookbook" width="100%" />
+<p class="caption">(\#fig:bbc-cookbook)Screenshot of BBC graphics cookbook</p>
+</div>
+
+These two resources led to a large increase in R users at the BBC. As Nassos told me, they "spurred people a lot people outside of the data journalism team to take a real interest [in R]." Having `bbplot` made the value of R click for many people at the BBC. He continued:
+
+> There is no, "why am I doing this?" in their mind. It's is worth the pain [to learn R], because it is a pain at first. But seeing this graphic that a few months ago you would have had to do in this old process ... if you devote a bit of time each day, here are the five lines of code that you can run and you can [make a production-ready graphic] yourself.
+
+As so many more people at the BBC came to learn R, the quality and quantity of data visualization produced exploded. Nassos told me, "I don't think there's been a day where someone at the BBC hasn't used the package to produce a graphic." The `bbplot` package came in particularly helpful during COVID. Being able to produce on-brand graphics on a quick turnaround was possible in a way it would not have been previously. 
+
+Reflecting on her experience, Clara attributes the successful transition to R at the BBC to its culture. As she put it, "I think that what helped me get started was that there was a really supportive environment internally at the BBC for learning." And, indeed, this same supportive culture that led Clara to organically explore what R was capable of was reinforced after she and the data journalism team released `bbplot`. The custom theme they developed enabled the creation of so many BBC graphics that otherwise never would have seen the light of day. A culture open to learning led the data journalism team to insights about the power of code. And this code then facilitated a culture change around how graphics are produced at the BBC. 
 
 <!--chapter:end:custom-theme.Rmd-->
 
