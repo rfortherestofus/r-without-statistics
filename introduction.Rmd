@@ -200,19 +200,19 @@ Take a look at the R community on Twitter (where users congregate under the #rst
 - [Making illuminating data visualizations](https://twitter.com/CedScherer/status/1220843943224578050) as part of the [Tidy Tuesday project](https://github.com/rfordatascience/tidytuesday).
 
 
-```{r echo = TRUE, eval = FALSE}
+```{r echo = FALSE, eval = TRUE}
 tweet_embed("https://twitter.com/CedScherer/status/1220843943224578050")
 ```
 
 - [Video tutorials on how to communicate through effective presentations using R](https://twitter.com/spcanelon/status/1424932510065209348).
 
-```{r echo = TRUE, eval = FALSE}
+```{r echo = FALSE, eval = TRUE}
 tweet_embed("https://twitter.com/spcanelon/status/1424932510065209348")
 ```
 
 - [Love letters to the `clean_names()` function from the `janitor` package, which automates the process of making messy variable names easy to work with in R](https://twitter.com/WeAreRLadies/status/1228049014601342976). 
 
-```{r echo = TRUE, eval = FALSE}
+```{r echo = FALSE, eval = TRUE}
 tweet_embed("https://twitter.com/WeAreRLadies/status/1228049014601342976")
 ```
 
