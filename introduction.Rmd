@@ -7,8 +7,6 @@ library(tweetrmd)
 ```
 
 
-# (PART\*) Introduction {-}
-
 # Why R Without Statistics?
 
 In early 2020, as COVID spread across the world, the government of New Zealand began planning their response. New Zealand had one major advantage that other countries lacked: being a remote island. This bought the country some time, but those working in the government knew that this head start would not last forever. Unless they quickly developed a plan to tackle COVID, New Zealand faced the same bleak future that other countries were already beginning to experience. 
