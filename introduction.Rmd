@@ -201,19 +201,19 @@ Take a look at the R community on Twitter (where users congregate under the #rst
 
 
 ```{r echo = FALSE, eval = TRUE}
-tweet_embed("https://twitter.com/CedScherer/status/1220843943224578050")
+# tweet_embed("https://twitter.com/CedScherer/status/1220843943224578050")
 ```
 
 - [Video tutorials on how to communicate through effective presentations using R](https://twitter.com/spcanelon/status/1424932510065209348).
 
 ```{r echo = FALSE, eval = TRUE}
-tweet_embed("https://twitter.com/spcanelon/status/1424932510065209348")
+# tweet_embed("https://twitter.com/spcanelon/status/1424932510065209348")
 ```
 
 - [Love letters to the `clean_names()` function from the `janitor` package, which automates the process of making messy variable names easy to work with in R](https://twitter.com/WeAreRLadies/status/1228049014601342976). 
 
 ```{r echo = FALSE, eval = TRUE}
-tweet_embed("https://twitter.com/WeAreRLadies/status/1228049014601342976")
+# tweet_embed("https://twitter.com/WeAreRLadies/status/1228049014601342976")
 ```
 
 No matter what else you do in R, you have to **illuminate** your findings and **communicate** your results. And, the more you use R, the more you'll find yourself wanting to **automate** things you used to do manually (your wrists will thank you). I realize now that the things that I use R for *are* the things that everyone uses R for. R was created for statistics. But today people are just as likely to use R without statistics. 

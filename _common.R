@@ -1,3 +1,6 @@
+
+# YAML etc ----------------------------------------------------------------
+
 # example R options set globally
 options(width = 60)
 
@@ -13,6 +16,10 @@ knitr::opts_chunk$set(
   dev = "ragg_png"
 )
 
+
+# Packages ----------------------------------------------------------------
+
+library(tidyverse)
 
 # Functions ---------------------------------------------------------------
 
@@ -56,11 +63,6 @@ save_figure_for_nostarch <- function(figure_height = 4) {
   
   
 }
-
-library(tidyverse)
-pixel / dpi = inches
-
-
 
 save_image_for_nostarch <- function(image_file, chap_number = chapter_number) {
   
