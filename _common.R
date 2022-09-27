@@ -57,18 +57,43 @@ save_figure_for_nostarch <- function(figure_height = 4) {
   
 }
 
+library(tidyverse)
+pixel / dpi = inches
+
+
+
 save_image_for_nostarch <- function(image_file, chap_number = chapter_number) {
+  
+  image_info <- magick::image_read(image_file) %>%
+    magick::image_info() 
+  
+  image_width_pixels <- image_info %>% 
+    pull(width)
+  
+  image_dpi <- image_info %>%
+    separate(density, sep = "x", into = c("dpi", NA)) %>% 
+    mutate(dpi = as.numeric(dpi)) %>% 
+    pull(dpi)
+  
+  image_width_inches <- image_width_pixels / image_dpi
+  
+  image_width_scale_down_factor <- image_width_inches / 4.675
+  
+  image_new_width <- image_width_pixels / image_width_scale_down_factor
+  
+  resized_image <- magick::image_read(image_file) %>% 
+    magick::image_resize(image_new_width)
   
   chapter_number_two_digits <- stringr::str_pad(chap_number, 2, "left", "0")
   figure_number_three_digits <- stringr::str_pad(i, 3, "left", "0")
   
   file_name <- create_nostarch_file_name(file_type = "png")
   save_directory <- here::here("nostarch/figures/")
+  image_full_path <- stringr::str_glue("{save_directory}/{file_name}")
   
-  fs::file_copy(path = image_file,
-                new_path = stringr::str_glue("{save_directory}/{file_name}"),
-                overwrite = TRUE)
-  
+  magick::image_write(resized_image,
+                      path = image_full_path)
+
   i <<- i + 1
   
 }
