@@ -47,7 +47,7 @@ print_nostarch_file_name(file_type_to_print = "png")
 
 ```{r bbc-beef-chart, out.width="100%", fig.cap="BBC chart showing carbon impact of various foods"}
 # https://www.bbc.com/news/science-environment-46459714
-knitr::include_graphics(here::here("assets/bbc-food-chart.png"))
+# knitr::include_graphics(here::here("assets/bbc-food-chart.png"))
 ```
 
 ```{r results='asis'}
