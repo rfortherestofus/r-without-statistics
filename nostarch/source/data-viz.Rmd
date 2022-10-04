@@ -16,6 +16,7 @@ library(shades)
 library(scales)
 library(knitr)
 library(patchwork)
+library(ggpubr)
 
 ## Color palette hubs
 greys <- c(0, 60, 40, 60, 0, 40, 60, 0)
@@ -1198,8 +1199,8 @@ scale_fill_viridis_d(
 print_nostarch_file_name(actually_print = TRUE)
 ```
 
-```{r drought-viz-legend-tweaks, fig.height = 8, fig.cap="Drought visualization with changes made to the legend text"}
-dm_perc_cat_hubs %>%
+```{r drought-viz-legend-tweaks, fig.height = 1, fig.cap="Drought visualization with changes made to the legend text"}
+drought_viz_legend_tweaks <- dm_perc_cat_hubs %>%
   filter(hub %in% c("Northwest", 
                     "California", 
                     "Southwest", 
@@ -1295,10 +1296,13 @@ dm_perc_cat_hubs %>%
                                    size = .4),
     plot.margin = margin(rep(18, 4))
   )
+
+get_legend(drought_viz_legend_tweaks) %>% 
+  as_ggplot()
 ```
 
 ```{r results='asis'}
-save_figure_for_nostarch(figure_height = 8)
+save_figure_for_nostarch(figure_height = 1)
 ```
 
 While I've showed you a nearly complete version of the code, I have made some small changes along the way to make it easier to understand. If you're curious to see the full code Cédric and Georgios used to create the data viz, here it is. There are a few additional tweaks to colors and spacing, but nothing major beyond what we've seen so far. 

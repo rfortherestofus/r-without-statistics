@@ -639,6 +639,10 @@ print_nostarch_file_name(file_type_to_print = "png", actually_print = TRUE)
 knitr::include_graphics(here::here("assets/bbc-graphics-cookbook.png"))
 ```
 
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/bbc-graphics-cookbook.png"))
+```
+
 These two resources led to a large increase in R users at the BBC. As Nassos told me, they "spurred people a lot people outside of the data journalism team to take a real interest [in R]." Having `bbplot` made the value of R click for many people at the BBC. He continued:
 
 > There is no, "why am I doing this?" in their mind. It's is worth the pain [to learn R], because it is a pain at first. But seeing this graphic that a few months ago you would have had to do in this old process ... if you devote a bit of time each day, here are the five lines of code that you can run and you can [make a production-ready graphic] yourself.

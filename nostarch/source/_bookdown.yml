@@ -10,25 +10,29 @@ language:
 rmd_files: [
   "index.Rmd",
   
+  "part-introduction.Rmd",
   "introduction.Rmd",
   
-  "illuminate.Rmd",
+  "part-illuminate.Rmd",
   
   "data-viz.Rmd",
   "custom-theme.Rmd",
   "maps.Rmd",
   "tables.Rmd",
   
+  "part-communicate.Rmd",
   "rmarkdown.Rmd",
   "parameterized-reports.Rmd",
   "presentations.Rmd",
   "websites.Rmd",
   
+  "part-automate.Rmd",
   "tidycensus.Rmd",
   "qualtrics.Rmd",
   "functions.Rmd",
   "custom-packages.Rmd",
    
+   "part-conclusion.Rmd",
   "conclusion.Rmd"
   ]
   
