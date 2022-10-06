@@ -760,9 +760,11 @@ We could improve the plot we’ve been working on in many ways. But rather than 
 
 ## Recreating the Drought Visualization with ggplot {-}
 
-The code that Cédric and Georgios wrote to make their final data viz relies on a combination of ggplot fundamentals and some less-well-known tweaks that make it really shine. In order to understand how Cédric and Georgios made their data viz, we'll start out with a simplified version of their code. We'll build it up layer by layer, adding elements until we can see exactly how they made their drought data viz. 
+The drought visualization code relies on a combination of ggplot fundamentals and some less-well-known tweaks that make it really shine. In order to understand how Scherer and Karamanis made their data visualization, we’ll start out with a simplified version of their code. We’ll build it up layer by layer, adding elements as we go. 
 
-Let's start by looking again at one region (Southwest) in one year (2003). First, we filter our data and save it as a new object called `southwest_2003`. 
+### Plotting One Region and Year {-}
+
+Let’s start by looking at just one region (the Southwest) in one year (2003). First, we filter our data and save it as a new object called `southwest_2003`.
 
 ```{r, echo = TRUE}
 southwest_2003 <- dm_perc_cat_hubs %>%
@@ -772,26 +774,17 @@ southwest_2003 <- dm_perc_cat_hubs %>%
 
 We can take a look at this object to see the variables we have to work with:
 
-- **date**: start date of the week of the observation
-- **hub**: region
-- **category**: level of drought (D0 = lowest level of drought; D5 = highest level)
-- **percentage**: percentage of that region that is in that category of drought (0 = 0%, 1 = 100%)
-- **year**: observation year
-- **week**: week number (i.e. first week is week 1)
-- **max_week**: the maximum number of weeks in a given year
-
 
 ```{r, echo = TRUE}
 southwest_2003 %>%
   slice(1:10)
 ```
-Now we can use this `southwest_2003` object for our plotting. In the `ggplot()` function, we tell R to put week on the x axis, percentage on the y axis, and use the category variable (i.e. drought level) for our fill color. We then use `geom_col()` to create a bar chart where the fill color of each bar represents the percentage of the region in a single week that is at different drought levels. The colors don't match the final version of the plot, but with this code we can start to see the outlines of Cédric and Georgios's data viz in Figure \@ref(fig:southwest-2003-no-style).  
 
-```{r results='asis'}
-print_nostarch_file_name()
-```
+The `date` variable represents the start date of the week in which the observation took place. The `hub` variable is the region, and `category` is level of drought (a value of `D0` indicates the lowest level of drought, while `D5` indicates the highest level). The `percentage` variable is the percentage of that region that is in that drought category, ranging from `0` to `1`. The `year` and `week` variables are the observation year and week number (beginning with week 1). The `max_week` variable is the maximum number of weeks in a given year.
 
-```{r southwest-2003-no-style, echo = TRUE, fig.cap="One year and one region of the drought visualization"}
+Now we can use this `southwest_2003` object for our plotting:
+
+```{r southwest-2003-no-style, echo = TRUE, include = FALSE}
 ggplot(
   data = southwest_2003,
   aes(
@@ -803,17 +796,27 @@ ggplot(
   geom_col()
 ```
 
-```{r results='asis'}
-save_figure_for_nostarch()
-```
-
-Cédric and Georgios next select different fill colors for their bars. They use the `scale_fill_viridis_d()` function. The "d" here means the data that the fill scale is being applied to has discrete categories (D0, D1, D2, D3, D4, D5). They use the argument `option = "rocket"` in order to select the "rocket" palette (the `scale_fill_viridis_d()` function has several other palettes). And they use the `direction = -1` argument to reverse the order of fill colors so that darker colors mean higher drought conditions, as seen in Figure \@ref(fig:southwest-2003-with-color). 
+In the `ggplot()` function, we tell R to put `week` on the x axis and `percentage` on the y axis. We also use the `category` variable for our `fill` color. We then use `geom_col()` to create a bar chart in which the fill color of each bar represents the percentage of the region in a single week at each drought level. You can see the result in in \@ref(fig:southwest-2003-no-style).
 
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
-```{r southwest-2003-with-color, echo = TRUE, fig.cap="One year and one region of the drought visualization using a viridis palette"}
+```{r ref.label = "southwest-2003-no-style", echo = FALSE, fig.cap="One year and region of the drought visualization"}
+```
+
+```{r results='asis'}
+save_figure_for_nostarch()
+```
+
+
+The colors don’t match the final version of the plot, but we can start to see the outlines of Scherer and Karamanis’s data visualization.
+
+### Changing Aesthetic Properties {-}
+
+Scherer and Karamanis next selected different `fill` colors for their bars. To do so, they used the `scale_fill_viridis_d()` function. The *d* here means that the data to which the fill scale is being applied has discrete categories, called D0, D1, D2, D3, D4, and D5:
+
+```{r southwest-2003-with-color, echo = TRUE, include = FALSE}
 ggplot(
   data = southwest_2003,
   aes(
@@ -829,17 +832,12 @@ ggplot(
   )
 ```
 
-```{r results='asis'}
-save_figure_for_nostarch()
-```
 
-In the language of ggplot, x and y axis are aesthetic properties, the same as fill color. Cédric and Georgios tweak the x axis to remove both the axis title ("week") using `name = NULL` and the 0-50 axis text with `guide = none`. On the y axis, they remove the axis title and axis text (which was showing percentages in 0.00, 0.25, 0.50, 0.75 format) using `labels = NULL` (this functionally does the same thing as `guide = "none"`). They also move the axis lines themselves to the right side using `position = "right"` (they are only apparent as tick marks at this point, but will become more visible later). Figure \@ref(fig:southwest-2003-xy-scales) shows the result of these tweaks.
+They used the argument `option = "rocket"` to select the rocket palette (the function has several other palettes). Then they used the `direction = -1` argument to reverse the order of fill colors so that darker colors mean higher drought conditions.
+Scherer and Karamanis also tweaked the appearance of the x and y axes: 
 
-```{r results='asis'}
-print_nostarch_file_name()
-```
 
-```{r southwest-2003-xy-scales, echo = TRUE, fig.cap="One year and one region of the drought visualization with adjustments to the x and y axes"}
+```{r southwest-2003-xy-scales, echo = TRUE, include = FALSE}
 ggplot(
   data = southwest_2003,
   aes(
@@ -860,17 +858,57 @@ ggplot(
                      position = "right")
 ```
 
-```{r results='asis'}
-save_figure_for_nostarch()
-```
-
-Up to this point, we've focused on one of the single plots that make up the larger data viz. But the final product that Cédric and Georgios made is actually 176 plots (22 years and 8 regions). One of the most useful features of ggplot is what's known as facetting (known more commonly in the data viz world as small multiples). With the `facet_grid()` function, we can select which variable to put in rows and which to put in columns of our facetted plot. Cédric and Georgios put `year` in rows and `hub` (region) in columns. The `switch = "y"` argument moves the year label from the right side (where it appears by default) to the left. With this code in place, we can see the final plot coming together in Figure \@ref(fig:drought-viz-facetted). Space considerations require me to again include only four regions, but you get the idea.
+On the x axis, they removed both the axis title (“week”) using `name = NULL` and the 0–50 text with `guide = "none"`. On the y axis, they removed the title and text showing percentages using `labels = NULL`, which functionally does the same thing as `guide = "none"`. They also moved the axis lines themselves to the right side using `position = "right"`. These axis lines are only apparent as tick marks at this point but will become more visible later. Figure \@ref(fig:southwest-2003-xy-scales) shows the result of these tweaks.
 
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
-```{r drought-viz-facetted, fig.height = 8, echo = TRUE, fig.cap="Facetted version of the drought visualization"}
+```{r ref.label = "southwest-2003-xy-scales", echo = FALSE, fig.cap="One year and region of the drought visualization with adjustments to the x and y axes"}
+```
+
+```{r results='asis'}
+save_figure_for_nostarch()
+```
+
+Up to this point, we’ve focused on one of the single plots that make up the larger data visualization. But the final product that Scherer and Karamanis made is actually 176 plots visualizing 22 years and eight regions. Let’s discuss the ggplot feature they used to create all of these plots.
+
+### Faceting the Plot {-}
+
+One of the most useful features of ggplot is what’s known as *faceting* (or, more commonly in the data visualization world, *small multiples*). Faceting takes a single plot and makes it into multiple plots using a variable (think: a line chart showing life expectancy by country over time, but instead of multiple lines on one plot, we get multiple plots with one line per plot). With the `facet_grid()` function, we can select which variable to put in rows and which to put in columns of our faceted plot. 
+
+
+```{r drought-viz-faceted, fig.height = 8, echo = TRUE, include = FALSE}
+dm_perc_cat_hubs %>%
+  filter(hub %in% c("Northwest", 
+                    "California", 
+                    "Southwest", 
+                    "Northern Plains")) %>%
+  ggplot(aes(x = week, 
+             y = percentage,
+             fill = category)) +
+  geom_col() +
+  scale_fill_viridis_d(
+    option = "rocket",
+    direction = -1
+  ) +
+  scale_x_continuous(name = NULL, 
+                     guide = "none") +
+  scale_y_continuous(name = NULL, 
+                     labels = NULL, 
+                     position = "right") +
+  facet_grid(rows = vars(year), 
+             cols = vars(hub), 
+             switch = "y")
+```
+
+Scherer and Karamanis put `year` in rows and `hub` (region) in columns. The `switch = "y"` argument moves the year label from the right side (where it appears by default) to the left. With this code in place, we can see the final plot coming together in Figure \@ref(fig:drought-viz-faceted). 
+
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
+```{r ref.label = "drought-viz-faceted", fig.height = 8, echo = FALSE, fig.cap="The faceted version of the drought visualization. Space considerations require me to include only four regions, but you get the idea."}
 dm_perc_cat_hubs %>%
   filter(hub %in% c("Northwest", 
                     "California", 
@@ -898,51 +936,15 @@ dm_perc_cat_hubs %>%
 save_figure_for_nostarch(figure_height = 8)
 ```
 
-Incredibly, the broad outlines of the plot took us just 10 lines to create. All of the final code from here on out falls in the category of small polishes. That's not to minimize how important small polishes are (very) or the time it takes to create them (lots). But it is to say that a little bit of ggplot goes a long way. 
+Incredibly, the broad outlines of the plot took us just 10 lines to create. The rest of the code falls into the category of small polishes. That’s not to minimize how important small polishes are (very) or the time it takes to create them (lots). It does show, however, that a little bit of ggplot goes a long way.
 
-Let's look at a few of the small polishes that Cédric and Georgios make. The first is to apply a theme, as seen in Figure \@ref(fig:drought-viz-theme-light). They use `theme_light()`, which removes the default gray background and changes the font to Roboto. 
+### Applying Small Polishes {-}
 
-```{r results='asis'}
-print_nostarch_file_name()
-```
+Let’s look at a few of the small polishes that Scherer and Karamanis made. The first is to apply a theme, as seen in Figure \@ref(fig:drought-viz-theme-light). They used `theme_light()`, which removes the default gray background and changes the font to Roboto.
 
-```{r drought-viz-theme-light, fig.height = 8, echo = TRUE, fig.cap="Drought visualization with theme_light() added"}
-dm_perc_cat_hubs %>%
-  filter(hub %in% c("Northwest", 
-                    "California", 
-                    "Southwest", 
-                    "Northern Plains")) %>%
-  ggplot(aes(x = week, 
-             y = percentage,
-             fill = category)) +
-  geom_col() +
-  scale_fill_viridis_d(
-    option = "rocket",
-    direction = -1
-  ) +
-  scale_x_continuous(name = NULL, 
-                     guide = "none") +
-  scale_y_continuous(name = NULL, 
-                     labels = NULL, 
-                     position = "right") +
-  facet_grid(rows = vars(year), 
-             cols = vars(hub), 
-             switch = "y") +
-  theme_light(base_family = "Roboto")
-```
+The `theme_light()` function is what’s known as a complete theme. So-called complete themes change the overall look-and-feel of a plot. But Scherer and Karamanis didn’t stop there. They then used the theme() function to make additional tweaks to what `theme_light()` gave them. 
 
-```{r results='asis'}
-save_figure_for_nostarch(figure_height = 8)
-```
-
-
-`theme_light()` is what's known as a "complete theme." So-called complete themes change the overall look-and-feel of a plot. But Cédric and Georgios don't stop with applying a complete theme. From there, they use the `theme()` function to make additional tweaks to what `theme_light()` gives them. The drought visualization as it currently stands is seen in Figure \@ref(fig:drought-viz-theme-tweaks).
-
-```{r results='asis'}
-print_nostarch_file_name()
-```
-
-```{r drought-viz-theme-tweaks, fig.height = 8, echo = TRUE, fig.cap="Drought visualization with tweaks to the theme"}
+```{r drought-viz-theme-tweaks, fig.height = 8, echo = TRUE, include = FALSE}
 dm_perc_cat_hubs %>%
   filter(hub %in% c("Northwest", 
                     "California", 
@@ -1005,106 +1007,11 @@ dm_perc_cat_hubs %>%
   )
 ```
 
-```{r results='asis'}
-save_figure_for_nostarch(figure_height = 8)
-```
+The code in the `theme()` function does many different things, but let’s take a look at a few of the most important. First, it moves the legend from the right side (the default) to the top of the plot. Then, an `angle = 0` argument rotates the year text in the columns so that it is no longer angled. Without this argument, the years would be much less readable. 
 
-The code in the `theme()` function does many different things, but let's take a look at a few of the most important:
+Next, the `theme()` function makes the distinctive axis lines and ticks that show up on the right side of the final plot. Calling `element_blank()` removes all grid lines. Finally, three lines remove the borders and make each of the individual plots have a transparent background.
 
-`legend.position = "top"` moves the legend from the right (the default) to the top of the plot. 
-
-`strip.text.y.left = element_text(size = 18, angle = 0, vjust = .5, face = "plain", color = "black")` turns the year text in the columns so that it is no longer angled. Without the `angle = 0`, the years would be much less readable.
-
-```{r results='asis'}
-print_nostarch_file_name()
-```
-
-```{r drought-viz-more-tweaks, fig.height = 8, fig.cap="Drought visualization with additional tweaks to the theme"}
-dm_perc_cat_hubs %>%
-  filter(hub %in% c("Northwest", 
-                    "California", 
-                    "Southwest", 
-                    "Northern Plains")) %>%
-  ggplot(aes(x = week, 
-             y = percentage,
-             fill = category)) +
-  geom_col() +
-  scale_fill_viridis_d(
-    option = "rocket",
-    direction = -1
-  ) +
-  scale_x_continuous(name = NULL, 
-                     guide = "none") +
-  scale_y_continuous(name = NULL, 
-                     labels = NULL, 
-                     position = "right") +
-  facet_grid(rows = vars(year), 
-             cols = vars(hub), 
-             switch = "y") +
-  theme_light(base_family = "Roboto") +
-  theme(
-    axis.title = element_text(size = 14, 
-                              color = "black"),
-    axis.text = element_text(family = "Roboto Mono", 
-                             size = 11),
-    axis.line.x = element_blank(),
-    axis.line.y = element_line(color = "black", 
-                               size = .2),
-    axis.ticks.y = element_line(color = "black", 
-                                size = .2),
-    axis.ticks.length.y = unit(2, "mm"),
-    legend.position = "top",
-    legend.title = element_text(color = "#2DAADA", 
-                                face = "bold"),
-    legend.text = element_text(color = "#2DAADA"),
-    strip.text.x = element_text(hjust = .5, 
-                                face = "plain", 
-                                color = "black", 
-                                margin = margin(t = 20, b = 5)),
-    strip.text.y.left = element_text(vjust = .5, 
-                                     face = "plain", 
-                                     color = "black"),
-    strip.background = element_rect(fill = "transparent", 
-                                    color = "transparent"),
-    panel.grid.minor = element_blank(),
-    panel.grid.major = element_blank(),
-    panel.spacing.x = unit(0.3, "lines"),
-    panel.spacing.y = unit(0.25, "lines"),
-    panel.background = element_rect(fill = "transparent", 
-                                    color = "transparent"),
-    panel.border = element_rect(color = "transparent", 
-                                size = 0),
-    plot.background = element_rect(fill = "transparent", 
-                                   color = "transparent", 
-                                   size = .4),
-    plot.margin = margin(rep(18, 4))
-  )
-```
-
-```{r results='asis'}
-save_figure_for_nostarch(figure_height = 8)
-```
-
-The following lines make the distinctive axis lines and ticks that show up on the right side of the final plot:
-
-```{r, eval = FALSE, echo = TRUE}
-axis.line.x = element_blank(),
-axis.line.y = element_line(color = "black", size = .2),
-axis.ticks.y = element_line(color = "black", size = .2),
-axis.ticks.length.y = unit(2, "mm")
-```
-
-`panel.grid.minor = element_blank()` and `panel.grid.major = element_blank()` remove all grid lines from the final plot. 
-
-And finally, these three lines remove the borders and make each of the individual plots have a transparent background. 
-
-```{r, eval = FALSE, echo = TRUE}
-panel.background = element_rect(fill = "transparent", color = "transparent"),
-panel.border = element_rect(color = "transparent", size = 0),
-plot.background = element_rect(fill = "transparent", color = "transparent", size = .4)
-```
-
-Keen readers such as yourself may now be thinking: "wait, didn't the individual plots have a gray background behind them?" Yes, dear reader, they did. How did Cédric and Georgios make these? They did this with a separate geom: `geom_rect()`. Here, they set some additional aesthetic properties specific to `geom_rect()` (`xmin`, `xmax`, `ymin`, and `ymax`). The result is a gray background drawn behind each small multiple, as seen in Figure \@ref(fig:drought-viz-gray-backgrounds). 
+Keen readers such as yourself may now be thinking, “Wait. Didn’t the individual plots have a gray background behind them?” Yes, dear reader, they did. Scherer and Karamanis made these with a separate geom, `geom_rect()`: 
 
 ```{r, echo = TRUE, eval = FALSE}
 geom_rect(
@@ -1120,41 +1027,34 @@ geom_rect(
 )
 ```
 
+They set some additional aesthetic properties specific to this geom: `xmin`, `xmax`, `ymin`, and `ymax`, which determine the boundaries of the rectangle it produces. The result is a gray background drawn behind each small multiple, as seen in Figure \@ref(fig:drought-viz-theme-tweaks).
+
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
-```{r drought-viz-gray-backgrounds, fig.height = 10, echo = FALSE, fig.cap="Facetted version of the drought visualization with gray backgrounds behind each small multiple"}
+```{r drought-viz-theme-tweaks, fig.height = 8, echo = FALSE, fig.cap="Figure 1-16	Faceted version of the drought visualization with gray backgrounds behind each small multiple"}
 dm_perc_cat_hubs %>%
   filter(hub %in% c("Northwest", 
                     "California", 
                     "Southwest", 
                     "Northern Plains")) %>%
-  ggplot(aes(
-    x = week,
-    y = percentage,
-    fill = category
-  )
-  ) +
-  geom_rect(
-    aes(
-      xmin = .5,
-      xmax = max_week + .5,
-      ymin = -0.005,
-      ymax = 1
-    ),
-    fill = "#f4f4f9",
-    color = NA,
-    size = 0.4
-  ) +
+  ggplot(aes(x = week, 
+             y = percentage,
+             fill = category)) +
   geom_col() +
   scale_fill_viridis_d(
     option = "rocket",
     direction = -1
   ) +
-  scale_x_continuous(name = NULL, guide = "none") +
-  scale_y_continuous(name = NULL, labels = NULL, position = "right") +
-  facet_grid(rows = vars(year), cols = vars(hub), switch = "y") +
+  scale_x_continuous(name = NULL, 
+                     guide = "none") +
+  scale_y_continuous(name = NULL, 
+                     labels = NULL, 
+                     position = "right") +
+  facet_grid(rows = vars(year), 
+             cols = vars(hub), 
+             switch = "y") +
   theme_light(base_family = "Roboto") +
   theme(
     axis.title = element_text(size = 14, 
@@ -1200,7 +1100,9 @@ dm_perc_cat_hubs %>%
 save_figure_for_nostarch(figure_height = 8)
 ```
 
-The final polish to highlight is the tweaks to the legend. I previously showed a simplified version of the `scale_fill_viridis_d()` function. A more complete version is as follows. The `name` argument sets the legend title and the `labels` argument determine the labels that show up in the legend. Rather than D0, D1, D2, D3, and D4, we now have Abnormally Dry, Moderate Drought, Severe Drought, Extreme Drought, and Exceptional Drought. Figure \@ref(fig:drought-viz-legend-tweaks) shows the result of these changes.
+
+
+Finally, consider the tweaks made to the legend. We previously saw a simplified version of the `scale_fill_viridis_d()` function. Here is a more complete version: 
 
 
 ```{r, echo = TRUE, eval = FALSE}
@@ -1217,6 +1119,9 @@ scale_fill_viridis_d(
   )
 )
 ```
+
+The `name` argument sets the legend title, and the `labels` argument determines the labels that show up in the legend. Figure \@ref(fig:drought-viz-legend-tweaks) shows the result of these changes.
+
 
 ```{r results='asis'}
 print_nostarch_file_name()
@@ -1328,6 +1233,10 @@ get_legend(drought_viz_legend_tweaks) %>%
 save_figure_for_nostarch(figure_height = 1)
 ```
 
+Rather than D0, D1, D2, D3, and D4, we now have Abnormally Dry, Moderate Drought, Severe Drought, Extreme Drought, and Exceptional Drought.
+
+### The Complete Visualization Code {-}
+
 While I've showed you a nearly complete version of the code, I have made some small changes along the way to make it easier to understand. If you're curious to see the full code Cédric and Georgios used to create the data viz, here it is. There are a few additional tweaks to colors and spacing, but nothing major beyond what we've seen so far. 
 
 ```{r, echo = TRUE, eval = FALSE}
@@ -1430,18 +1339,21 @@ ggplot(dm_perc_cat_hubs, aes(week, percentage)) +
   )
 ```
 
+There are a few additional tweaks to colors and spacing, but most of the code reflects what you’ve seen so far.
 
-## ggplot is Your Data Viz Secret Weapon {-}
 
-If you take up ggplot, you may start to think of it as a solution to all of your data viz problems. Yes, you have a new hammer, but no, everything is not a nail. If you look at the version of this data viz that appeared in Scientific American in November 2021, you'll see that there are some annotations not visible in our recreation. That's because they were added in post-production outside of ggplot. While you *can* come up with ways to do everything in ggplot, it's often not the best use of your time. Get yourself 90% of the way there with ggplot and then use Illustrator, Figma, or a similar tool to finish off your work. 
+## In Conclusion: ggplot is Your Data Viz Secret Weapon {-}
 
-With that caveat in place, ggplot is a very powerful hammer. And it's a hammer used to make plots that you've seen in the New York Times, FiveThirtyEight, the BBC, and other well-known news outlets. ggplot is so popular not because it is the only tool that can make data viz that follows principles of high-quality data viz, but because it makes it straightforward to do so. The graph that Cédric Scherer and Georgios Karamanis made shows this in several ways:
+You may start to think of ggplot as a solution to all of your data visualization problems. And yes, you have a new hammer, but no, everything is not a nail. If you look at the version of the data visualization that appeared in *Scientific American* in November 2021, you’ll see that some of its annotations aren’t visible in our recreation. That’s because they were added in post-production. While you could have found ways to create them in ggplot, it’s often not the best use of your time. Get yourself 90 percent of the way there with ggplot and then use Illustrator, Figma, or a similar tool to finish your work.
 
-1. **It strips away extraneous elements such as grid lines in order to keep the focus on the data itself**. Complete themes such as `theme_light()` and the `theme()` function allowed Cédric and Georgios to create a decluttered visualization that communicates effectively. 
-1. **It uses well-chosen colors**. The `scale_fill_viridis_d()` allowed them to create a color scheme that shows differences between groups well, is both colorblind-friendly, and shows up well when printed in grayscale. 
-1. **It uses small multiples to break data from two decades and eight regions into a set of graphs that come together to create a single plot.** With a single call to the `facet_grid()` function, Cédric and Georgios created over 100 small multiples that are automatically combined into a single plot. 
+Even so, ggplot is a very powerful hammer, used to make plots that you’ve seen in *The New York Times*, FiveThirtyEight, the BBC, and other well-known news outlets. Although not the only tool that can generate high-quality data visualization, it makes the process straightforward. The graph by Scherer and Karamanis shows this in several ways:
 
-Learning to create data visualization in ggplot involves a significant time investment. But the long-term payoff is even greater. Once you learn how ggplot works, you can look at others' code and learn how to improve your own. Take Cédric and Georgios's code, run it on your own system, and the beautiful visualization they made will magically appear.  
-Being able to run and learn from others' code is not something you can do in Excel. When you make a data viz in Excel, the series of point-and-click steps disappear into the ether with each use. Want to recreate a visualization you made last week? You'll need to remember the exact steps you used. Want to make a data viz that you saw someone else make? You'll need them to write up their process for you. 
+- **It strips away extraneous elements, such as grid lines, in order to keep the focus on the data itself**. Complete themes such as `theme_light()` and the `theme()` function allowed Scherer and Karamanis to create a decluttered visualization that communicates effectively.
 
-Code-based data viz tools like ggplot allow you to keep that record of the steps you made. In the end, that's all code is: a set of instructions. And it's a set of instructions that you can re-run or you can share with others for them to run. Or the reverse: others can share their code and you can learn from them. You don't have to be the most talented designer to make high-quality data viz with ggplot. You can study others' code, adapt it to your own needs, and create your own data viz with ggplot that is beautiful and communicates effectively. 
+- **It uses well-chosen colors**. The `scale_fill_viridis_d()` allowed them to create a color scheme that demonstrates differences between groups, is colorblind friendly, and shows up well when printed in grayscale.
+
+- **It uses small multiples to break data from two decades and eight regions into a set of graphs that come together to create a single plot**. With a single call to the `facet_grid()` function, Scherer and Karamanis created over 100 small multiples that the tool automatically combined into a single plot.
+
+Learning to create data visualization in ggplot involves a significant time investment. But the long-term payoff is even greater. Once you learn how ggplot works, you can look at others’ code and learn how to improve your own. By contrast, when you make a data visualization in Excel, the series of point-and-click steps disappears into the ether. To recreate a visualization you made last week, you’ll need to remember the exact steps you used, and to make someone else’s data visualization, you’ll need them to write up their process for you.
+
+Because code-based data visualization tools allow you to keep that record of the steps you made, you don’t have to be the most talented designer to make high-quality data visualization with ggplot. You can study others’ code, adapt it to your own needs, and create your own data visualization that is beautiful and communicates effectively.
