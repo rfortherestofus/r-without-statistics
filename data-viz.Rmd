@@ -571,13 +571,13 @@ ggplot(
   geom_point()
 ```
 
-Now, in Figure \@ref(fig:gapminder-points), we see that people in 1952 had a life expectancy of about 28 and that this value rose through every year in our data.
+Now, in Figure \@ref(fig:gapminder-points-plot), we see that people in 1952 had a life expectancy of about 28 and that this value rose through every year in our data.
 
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
-```{r ref.label = "gapminder-points", echo = FALSE, include = TRUE, fig.cap="The same chart but with points added"}
+```{r gapminder-points-plot, ref.label = "gapminder-points", echo = FALSE, include = TRUE, fig.cap="The same chart but with points added"}
 ```
 
 ```{r results='asis'}
@@ -597,13 +597,13 @@ ggplot(
   geom_line()
 ```
 
-Figure \@ref(fig:gapminder-line) shows the result.
+Figure \@ref(fig:gapminder-line-plot) shows the result.
 
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
-```{r ref.label = "gapminder-line", echo = FALSE, fig.cap="The data as a line chart"}
+```{r gapminder-line-plot, ref.label = "gapminder-line", echo = FALSE, fig.cap="The data as a line chart"}
 ```
 
 ```{r results='asis'}
@@ -624,20 +624,20 @@ ggplot(
   geom_line()
 ```
 
-This code generates a line chart with points, as seen in Figure \@ref(fig:gapminder-points-line).
+This code generates a line chart with points, as seen in Figure \@ref(fig:gapminder-points-line-plot).
 
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
-```{r ref.label = "gapminder-points-line", echo = FALSE, fig.cap="The data with points and a line"}
+```{r gapminder-points-line-plot, ref.label = "gapminder-points-line", echo = FALSE, fig.cap="The data with points and a line"}
 ```
 
 ```{r results='asis'}
 save_figure_for_nostarch()
 ```
 
-We can extend this idea further, as seen in Figure \@ref(fig:gapminder-bar), swapping in `geom_col()` to create a bar chart:
+We can extend this idea further, as seen in Figure \@ref(fig:gapminder-bar-plot), swapping in `geom_col()` to create a bar chart:
 
 ```{r gapminder-bar, echo = TRUE, include = FALSE}
 ggplot(
@@ -656,7 +656,7 @@ Note that the y axis range has been automatically updated, going from 0 to 40 to
 print_nostarch_file_name()
 ```
 
-```{r ref.label = "gapminder-bar", echo = FALSE, fig.cap="The data as a bar chart"}
+```{r gapminder-bar-plot, ref.label = "gapminder-bar", echo = FALSE, fig.cap="The data as a bar chart"}
 ```
 
 ```{r results='asis'}
@@ -681,13 +681,13 @@ ggplot(
   geom_col()
 ```
 
-The result is shown in Figure \@ref(fig:gapminder-bar-colors). We see now that, for earlier years, the fill is darker, while for later years, it is lighter (the legend, added to the right of our plot, shows this).
+The result is shown in Figure \@ref(fig:gapminder-bar-colors-plot). We see now that, for earlier years, the fill is darker, while for later years, it is lighter (the legend, added to the right of our plot, shows this).
 
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
-```{r ref.label = "gapminder-bar-colors", echo = FALSE, fig.cap="The same chart, now with added colors"}
+```{r gapminder-bar-colors-plot, ref.label = "gapminder-bar-colors", echo = FALSE, fig.cap="The same chart, now with added colors"}
 ```
 
 ```{r results='asis'}
@@ -715,7 +715,7 @@ This function changes the default palette to one that is colorblind-friendly and
 print_nostarch_file_name()
 ```
 
-```{r ref.label = "gapminder-viridis", echo = FALSE, fig.cap="The same chart with a colorblind-friendly palette"}
+```{r gapminder-viridis-plot, ref.label = "gapminder-viridis", echo = FALSE, fig.cap="The same chart with a colorblind-friendly palette"}
 ```
 
 ```{r results='asis'}
@@ -740,14 +740,14 @@ ggplot(
   theme_minimal()
 ```
 
-Notice in Figure \@ref(fig:gapminder-theme) that this theme starts to declutter our plot.
+Notice in Figure \@ref(fig:gapminder-theme-plot) that this theme starts to declutter our plot.
 
 
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
-```{r ref.label = "gapminder-theme", echo = FALSE, fig.cap="The same chart with `theme_minimal()` added"}
+```{r gapminder-theme-plot, ref.label = "gapminder-theme", echo = FALSE, fig.cap="The same chart with `theme_minimal()` added"}
 ```
 
 ```{r results='asis'}
@@ -796,13 +796,13 @@ ggplot(
   geom_col()
 ```
 
-In the `ggplot()` function, we tell R to put `week` on the x axis and `percentage` on the y axis. We also use the `category` variable for our `fill` color. We then use `geom_col()` to create a bar chart in which the fill color of each bar represents the percentage of the region in a single week at each drought level. You can see the result in in \@ref(fig:southwest-2003-no-style).
+In the `ggplot()` function, we tell R to put `week` on the x axis and `percentage` on the y axis. We also use the `category` variable for our `fill` color. We then use `geom_col()` to create a bar chart in which the fill color of each bar represents the percentage of the region in a single week at each drought level. You can see the result in in \@ref(fig:southwest-2003-no-style-plot).
 
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
-```{r ref.label = "southwest-2003-no-style", echo = FALSE, fig.cap="One year and region of the drought visualization"}
+```{r southwest-2003-no-style-plot, ref.label = "southwest-2003-no-style", echo = FALSE, fig.cap="One year and region of the drought visualization"}
 ```
 
 ```{r results='asis'}
@@ -858,13 +858,13 @@ ggplot(
                      position = "right")
 ```
 
-On the x axis, they removed both the axis title (“week”) using `name = NULL` and the 0–50 text with `guide = "none"`. On the y axis, they removed the title and text showing percentages using `labels = NULL`, which functionally does the same thing as `guide = "none"`. They also moved the axis lines themselves to the right side using `position = "right"`. These axis lines are only apparent as tick marks at this point but will become more visible later. Figure \@ref(fig:southwest-2003-xy-scales) shows the result of these tweaks.
+On the x axis, they removed both the axis title (“week”) using `name = NULL` and the 0–50 text with `guide = "none"`. On the y axis, they removed the title and text showing percentages using `labels = NULL`, which functionally does the same thing as `guide = "none"`. They also moved the axis lines themselves to the right side using `position = "right"`. These axis lines are only apparent as tick marks at this point but will become more visible later. Figure \@ref(fig:southwest-2003-xy-scales-plot) shows the result of these tweaks.
 
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
-```{r ref.label = "southwest-2003-xy-scales", echo = FALSE, fig.cap="One year and region of the drought visualization with adjustments to the x and y axes"}
+```{r southwest-2003-xy-scales-plot, ref.label = "southwest-2003-xy-scales", echo = FALSE, fig.cap="One year and region of the drought visualization with adjustments to the x and y axes"}
 ```
 
 ```{r results='asis'}
@@ -902,34 +902,13 @@ dm_perc_cat_hubs %>%
              switch = "y")
 ```
 
-Scherer and Karamanis put `year` in rows and `hub` (region) in columns. The `switch = "y"` argument moves the year label from the right side (where it appears by default) to the left. With this code in place, we can see the final plot coming together in Figure \@ref(fig:drought-viz-faceted). 
+Scherer and Karamanis put `year` in rows and `hub` (region) in columns. The `switch = "y"` argument moves the year label from the right side (where it appears by default) to the left. With this code in place, we can see the final plot coming together in Figure \@ref(fig:drought-viz-faceted-plot). 
 
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
-```{r ref.label = "drought-viz-faceted", fig.height = 8, echo = FALSE, fig.cap="The faceted version of the drought visualization. Space considerations require me to include only four regions, but you get the idea."}
-dm_perc_cat_hubs %>%
-  filter(hub %in% c("Northwest", 
-                    "California", 
-                    "Southwest", 
-                    "Northern Plains")) %>%
-  ggplot(aes(x = week, 
-             y = percentage,
-             fill = category)) +
-  geom_col() +
-  scale_fill_viridis_d(
-    option = "rocket",
-    direction = -1
-  ) +
-  scale_x_continuous(name = NULL, 
-                     guide = "none") +
-  scale_y_continuous(name = NULL, 
-                     labels = NULL, 
-                     position = "right") +
-  facet_grid(rows = vars(year), 
-             cols = vars(hub), 
-             switch = "y")
+```{r drought-viz-faceted-plot, ref.label = "drought-viz-faceted", fig.height = 8, echo = FALSE, fig.cap="The faceted version of the drought visualization. Space considerations require me to include only four regions, but you get the idea."}
 ```
 
 ```{r results='asis'}
@@ -940,7 +919,7 @@ Incredibly, the broad outlines of the plot took us just 10 lines to create. The 
 
 ### Applying Small Polishes {-}
 
-Let’s look at a few of the small polishes that Scherer and Karamanis made. The first is to apply a theme, as seen in Figure \@ref(fig:drought-viz-theme-light). They used `theme_light()`, which removes the default gray background and changes the font to Roboto.
+Let’s look at a few of the small polishes that Scherer and Karamanis made. The first is to apply a theme, as seen in Figure \@ref(fig:drought-viz-theme-tweaks-plot). They used `theme_light()`, which removes the default gray background and changes the font to Roboto.
 
 The `theme_light()` function is what’s known as a complete theme. So-called complete themes change the overall look-and-feel of a plot. But Scherer and Karamanis didn’t stop there. They then used the theme() function to make additional tweaks to what `theme_light()` gave them. 
 
@@ -1027,73 +1006,13 @@ geom_rect(
 )
 ```
 
-They set some additional aesthetic properties specific to this geom: `xmin`, `xmax`, `ymin`, and `ymax`, which determine the boundaries of the rectangle it produces. The result is a gray background drawn behind each small multiple, as seen in Figure \@ref(fig:drought-viz-theme-tweaks).
+They set some additional aesthetic properties specific to this geom: `xmin`, `xmax`, `ymin`, and `ymax`, which determine the boundaries of the rectangle it produces. The result is a gray background drawn behind each small multiple, as seen in Figure \@ref(fig:drought-viz-theme-tweaks-plot).
 
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
-```{r drought-viz-theme-tweaks, fig.height = 8, echo = FALSE, fig.cap="Figure 1-16	Faceted version of the drought visualization with gray backgrounds behind each small multiple"}
-dm_perc_cat_hubs %>%
-  filter(hub %in% c("Northwest", 
-                    "California", 
-                    "Southwest", 
-                    "Northern Plains")) %>%
-  ggplot(aes(x = week, 
-             y = percentage,
-             fill = category)) +
-  geom_col() +
-  scale_fill_viridis_d(
-    option = "rocket",
-    direction = -1
-  ) +
-  scale_x_continuous(name = NULL, 
-                     guide = "none") +
-  scale_y_continuous(name = NULL, 
-                     labels = NULL, 
-                     position = "right") +
-  facet_grid(rows = vars(year), 
-             cols = vars(hub), 
-             switch = "y") +
-  theme_light(base_family = "Roboto") +
-  theme(
-    axis.title = element_text(size = 14, 
-                              color = "black"),
-    axis.text = element_text(family = "Roboto Mono", 
-                             size = 11),
-    axis.line.x = element_blank(),
-    axis.line.y = element_line(color = "black", 
-                               size = .2),
-    axis.ticks.y = element_line(color = "black", 
-                                size = .2),
-    axis.ticks.length.y = unit(2, "mm"),
-    legend.position = "top",
-    legend.title = element_text(color = "#2DAADA", 
-                                face = "bold"),
-    legend.text = element_text(color = "#2DAADA"),
-    strip.text.x = element_text(hjust = .5, 
-                                face = "plain", 
-                                color = "black", 
-                                margin = margin(t = 20, b = 5)),
-    strip.text.y.left = element_text(angle = 0, 
-                                     vjust = .5, 
-                                     face = "plain", 
-                                     color = "black"),
-    strip.background = element_rect(fill = "transparent", 
-                                    color = "transparent"),
-    panel.grid.minor = element_blank(),
-    panel.grid.major = element_blank(),
-    panel.spacing.x = unit(0.3, "lines"),
-    panel.spacing.y = unit(0.25, "lines"),
-    panel.background = element_rect(fill = "transparent", 
-                                    color = "transparent"),
-    panel.border = element_rect(color = "transparent", 
-                                size = 0),
-    plot.background = element_rect(fill = "transparent", 
-                                   color = "transparent", 
-                                   size = .4),
-    plot.margin = margin(rep(18, 4))
-  )
+```{r drought-viz-theme-tweaks-plot, ref.label = "drought-viz-theme-tweaks", fig.height = 8, echo = FALSE, fig.cap="Figure 1-16	Faceted version of the drought visualization with gray backgrounds behind each small multiple"}
 ```
 
 ```{r results='asis'}
