@@ -10,6 +10,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   warning = FALSE,
   message = FALSE,
+  include = TRUE,
   echo = FALSE,
   dpi = 150,
   out.width = "100%",

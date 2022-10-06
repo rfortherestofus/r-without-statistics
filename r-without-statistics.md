@@ -1,7 +1,7 @@
 --- 
 title: "R Without Statistics"
 author: "David Keyes"
-# date: "2022-09-14"
+# date: "2022-10-06"
 site: bookdown::bookdown_site
 documentclass: book
 url: https://book.rwithoutstatistics.com
@@ -49,10 +49,12 @@ Written by David Keyes, Founder and CEO of [R for the Rest of Us](https://rforth
 
 <!--chapter:end:index.Rmd-->
 
-
-
-
 # (PART\*) Introduction {-}
+
+<!--chapter:end:part-introduction.Rmd-->
+
+
+
 
 # Why R Without Statistics?
 
@@ -240,23 +242,14 @@ Take a look at the R community on Twitter (where users congregate under the #rst
 
 
 
-```r
-tweet_embed("https://twitter.com/CedScherer/status/1220843943224578050")
-```
 
 - [Video tutorials on how to communicate through effective presentations using R](https://twitter.com/spcanelon/status/1424932510065209348).
 
 
-```r
-tweet_embed("https://twitter.com/spcanelon/status/1424932510065209348")
-```
 
 - [Love letters to the `clean_names()` function from the `janitor` package, which automates the process of making messy variable names easy to work with in R](https://twitter.com/WeAreRLadies/status/1228049014601342976). 
 
 
-```r
-tweet_embed("https://twitter.com/WeAreRLadies/status/1228049014601342976")
-```
 
 No matter what else you do in R, you have to **illuminate** your findings and **communicate** your results. And, the more you use R, the more you'll find yourself wanting to **automate** things you used to do manually (your wrists will thank you). I realize now that the things that I use R for *are* the things that everyone uses R for. R was created for statistics. But today people are just as likely to use R without statistics. 
 
@@ -296,7 +289,7 @@ editor_options:
 
 # (PART\*) Illuminate {-}
 
-<!--chapter:end:illuminate.Rmd-->
+<!--chapter:end:part-illuminate.Rmd-->
 
 ---
 output: html_document
@@ -308,27 +301,26 @@ editor_options:
 
 
 
-# Use General Principles of High-Quality Data Viz in R {#data-viz-chapter}
+# Principles of Data Visualization {#data-viz-chapter}
 
-In the spring of 2021, nearly all of the American West was in a drought. In April of that year, officials in Southern California declared a water emergency, citing unprecedented conditions. 
+In the spring of 2021, nearly all of the American West was in a drought. By April of that year, officials in Southern California had declared a water emergency, citing unprecedented conditions.
 
-This wouldn't have come as news to those living in California and other Western states. In addition to the direct impact of drought (leading areas of California to implement water use restrictions), people could see the indirect impact of drought in the skies. With forests dried out by years of drought conditions, wildfires became more frequent, filling the air with smoke. By the summer, there were be so many wildfires that smoke from drifted across the country, making even East Coast skies hazy and the air dangerous to breathe. 
+This wouldn’t have come as news to those living in California and other Western states.  Drought conditions like those in the West in 2021 are becoming increasingly common. Yet communicating the extent of problem remains difficult. How can we show the data in a way that accurately represents it while making it compelling enough to get people to take notice?
+This was the challenge that data-visualization designers Cédric Scherer and Georgios Karamanis took on in the fall of 2021. Commissioned by the magazine *Scientific American* to create a data visualization of drought conditions over the last two decades in the United States, they turned to the ggplot2 package to transform what could have been dry data (pardon the pun) into a visually arresting and impactful graph.
 
-Drought conditions like those in the West in 2021 are becoming increasingly common. Yet communicating the extent of problem remains difficult. How can we show the data in a way that accurately represents the data while is also compelling enough to get people to take notice? 
+In this chapter, I show how Scherer and Karamanis made their data visualization. We begin by looking at why the data visualization is effective. Next, we talk about the grammar of graphics, a theory to make sense of graphs that underlies the ggplot2 package that Scherer, Karamanis, and millions of others use to make data visualization. We then return to the drought graph, recreating it step-by-step using ggplot2. In the process, we pull out some key principles of high-quality data visualization that you can use to improve your own work.
 
-This was the challenge that data visualization designers Cédric Scherer and Georgios Karamanis took on in the fall of 2021. Commissioned by the magazine Scientific American to create a data visualization of drought conditions in the last two decades in the United States, they turned to the `ggplot2` package to turn what could be (pardon the pun) dry data into a visually arresting and impactful graph.
+## The Drought Visualization
 
-There was nothing unique about the data that Cédric and Georgios used. It was the same data from the National Drought Center that news organizations used in their stories. But Cédric and Georgios visualized the data in a way that it both grabs attention and communicates the scale of the phenomenon.
-
-Figure \@ref(fig:final-viz) shows a section of the final visualization (If you're incredibly eagle-eyed, you'll see a few minor elements that differ from the version published in Scientific American). These are things I had to change to make the plots fit in this book (e.g. text size and putting legend text on two rows) or things that Scientific American added in post-production (e.g. some annotations). Showing four regions over the last two decades, the increase in drought conditions, especially in California and the Southwest, is made apparent. 
+There was nothing unique about the data that Scherer and Karamanis used. Other news organizations had relied on the same data, from the National Drought Center, in their stories. But Scherer and Karamanis visualized it in a way that it both grabs attention and communicates the scale of the phenomenon. Figure \@ref(fig:final-viz) shows a section of the final visualization. Showing four regions over the last two decades, the increase in drought conditions, especially in California and the Southwest, is made apparent.
 
 
 
 
 
 <div class="figure">
-<img src="data-viz_files/figure-html/final-viz-1.png" alt="Section of the final drought visualization" width="100%" />
-<p class="caption">(\#fig:final-viz)Section of the final drought visualization</p>
+<img src="data-viz_files/figure-html/final-viz-1.png" alt="A section of the final drought visualization. If you’re incredibly eagle-eyed, you’ll see a few minor elements that differ from the version published in *Scientific American*. These are things I had to change to make the plots fit in this book (for example, altering the text size and putting legend text on two rows) or things that *Scientific American* added in post-production (such as annotations)." width="100%" />
+<p class="caption">(\#fig:final-viz)A section of the final drought visualization. If you’re incredibly eagle-eyed, you’ll see a few minor elements that differ from the version published in *Scientific American*. These are things I had to change to make the plots fit in this book (for example, altering the text size and putting legend text on two rows) or things that *Scientific American* added in post-production (such as annotations).</p>
 </div>
 
 
@@ -1178,10 +1170,7 @@ Take a look at this 2019 plot that Nassos, Clara, and their colleague  Helen Bri
 
 
 
-<div class="figure">
-<img src="assets/bbc-food-chart.png" alt="BBC chart showing carbon impact of various foods" width="100%" />
-<p class="caption">(\#fig:bbc-beef-chart)BBC chart showing carbon impact of various foods</p>
-</div>
+
 
 
 
@@ -1653,7 +1642,7 @@ If we now return to Figure \@ref(fig:bbc-beef-chart), the 2019 carbon impact of 
 
 
 
-<img src="assets/bbc-food-chart.png" width="100%" />
+
 
 
 
@@ -1682,6 +1671,8 @@ The impact of `bbplot` would also come to be seen outside of the small team of d
 <p class="caption">(\#fig:bbc-cookbook)Screenshot of BBC graphics cookbook</p>
 </div>
 
+
+
 These two resources led to a large increase in R users at the BBC. As Nassos told me, they "spurred people a lot people outside of the data journalism team to take a real interest [in R]." Having `bbplot` made the value of R click for many people at the BBC. He continued:
 
 > There is no, "why am I doing this?" in their mind. It's is worth the pain [to learn R], because it is a pain at first. But seeing this graphic that a few months ago you would have had to do in this old process ... if you devote a bit of time each day, here are the five lines of code that you can run and you can [make a production-ready graphic] yourself.
@@ -1705,6 +1696,8 @@ https://clauswilke.com/dataviz/figure-titles-captions.html#tables
 
 # (PART\*) Communicate {-}
 
+<!--chapter:end:part-communicate.Rmd-->
+
 # Use RMarkdown to Communicate Accurately and Efficiently 
 
 
@@ -1727,6 +1720,8 @@ https://clauswilke.com/dataviz/figure-titles-captions.html#tables
 
 # (PART\*) Automate {-}
 
+<!--chapter:end:part-automate.Rmd-->
+
 # Access Up to Date Census Data with the `tidycensus` Package 
 
 
@@ -1739,6 +1734,7 @@ https://clauswilke.com/dataviz/figure-titles-captions.html#tables
 
 # Stop Copying and Pasting Code by Creating Your Own Functions {#functions}
 
+https://twitter.com/hadleywickham/status/1574373127349575680
 
 <!--chapter:end:functions.Rmd-->
 
@@ -1747,6 +1743,9 @@ https://clauswilke.com/dataviz/figure-titles-captions.html#tables
 <!--chapter:end:custom-packages.Rmd-->
 
 # (PART\*) Conclusion {-}
+
+
+<!--chapter:end:part-conclusion.Rmd-->
 
 # Come for the Data, Stay for the Community 
 
