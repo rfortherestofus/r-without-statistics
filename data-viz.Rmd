@@ -577,7 +577,7 @@ Now, in Figure \@ref(fig:gapminder-points), we see that people in 1952 had a lif
 print_nostarch_file_name()
 ```
 
-```{r gapminder-points, echo = FALSE, include = TRUE, fig.cap="The same chart but with points added"}
+```{r ref.label = "gapminder-points", echo = FALSE, include = TRUE, fig.cap="The same chart but with points added"}
 ```
 
 ```{r results='asis'}
@@ -603,7 +603,7 @@ Figure \@ref(fig:gapminder-line) shows the result.
 print_nostarch_file_name()
 ```
 
-```{r gapminder-line, echo = FALSE, fig.cap="The data as a line chart"}
+```{r ref.label = "gapminder-line", echo = FALSE, fig.cap="The data as a line chart"}
 ```
 
 ```{r results='asis'}
@@ -630,7 +630,7 @@ This code generates a line chart with points, as seen in Figure \@ref(fig:gapmin
 print_nostarch_file_name()
 ```
 
-```{r gapminder-points-line, echo = FALSE, fig.cap="The data with points and a line"}
+```{r ref.label = "gapminder-points-line", echo = FALSE, fig.cap="The data with points and a line"}
 ```
 
 ```{r results='asis'}
@@ -656,7 +656,7 @@ Note that the y axis range has been automatically updated, going from 0 to 40 to
 print_nostarch_file_name()
 ```
 
-```{r gapminder-bar, echo = FALSE, fig.cap="The data as a bar chart"}
+```{r ref.label = "gapminder-bar", echo = FALSE, fig.cap="The data as a bar chart"}
 ```
 
 ```{r results='asis'}
@@ -687,7 +687,7 @@ The result is shown in Figure \@ref(fig:gapminder-bar-colors). We see now that, 
 print_nostarch_file_name()
 ```
 
-```{r gapminder-bar-colors, echo = FALSE, fig.cap="The same chart, now with added colors"}
+```{r ref.label = "gapminder-bar-colors", echo = FALSE, fig.cap="The same chart, now with added colors"}
 ```
 
 ```{r results='asis'}
@@ -715,17 +715,7 @@ This function changes the default palette to one that is colorblind-friendly and
 print_nostarch_file_name()
 ```
 
-```{r gapminder-viridis, echo = TRUE, fig.cap="The same chart with a colorblind-friendly palette"}
-ggplot(
-  data = gapminder_10_rows,
-  mapping = aes(
-    x = year,
-    y = lifeExp,
-    fill = year
-  )
-) +
-  geom_col() +
-  scale_fill_viridis_c()
+```{r ref.label = "gapminder-viridis", echo = FALSE, fig.cap="The same chart with a colorblind-friendly palette"}
 ```
 
 ```{r results='asis'}
@@ -734,13 +724,9 @@ save_figure_for_nostarch()
 
 ### The Fourth Layer: Setting a Theme {-}
 
-A final layer we'll look at is the theme layer. This layer allows us to change the overall look-and-feel of plots (think: plot backgrounds, grid lines, and so on). Just as there are a number of `scale_` functions, there are also a number of functions that start with `theme_`. Below, I've added `theme_minimal()`, which starts to declutter our plot in Figure \@ref(fig:gapminder-theme). 
+A final layer we’ll look at is the theme layer. This layer allows us to change the overall look-and-feel of plots (plot backgrounds, grid lines, and so on). Just as there are a number of `scale_` functions, there are also a number of functions that start with `theme_.` Here, we’ve added `theme_minimal()`: 
 
-```{r results='asis'}
-print_nostarch_file_name()
-```
-
-```{r gapminder-theme, echo = TRUE, fig.cap="The same chart with theme_minimal() added"}
+```{r gapminder-theme, echo = TRUE, include = FALSE}
 ggplot(
   data = gapminder_10_rows,
   mapping = aes(
@@ -754,20 +740,25 @@ ggplot(
   theme_minimal()
 ```
 
+Notice in Figure \@ref(fig:gapminder-theme) that this theme starts to declutter our plot.
+
+
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
+```{r ref.label = "gapminder-theme", echo = FALSE, fig.cap="The same chart with `theme_minimal()` added"}
+```
+
 ```{r results='asis'}
 save_figure_for_nostarch()
 ```
 
-We've now seen why Hadley Wickham described the `ggplot2` package as using a layered grammar of graphics. It relies on Leland Wilkinson's theory and implements it through the creation of multiple layers: 
+We’ve now seen why Hadley Wickham described the ggplot2 package as using a layered grammar of graphics. It implements Wilkinson’s theory through the creation of multiple layers. First, we select variables to map to aesthetic properties, such as x or y axes, color, and fill. Second, we choose the geometric object (or geom) we want to use to represent our data. Third, if we want to change aesthetic properties (for example, to use a different palette), we do this with a `scale_` function. Fourth, we use a `theme_` function to set the overall look-and-feel of our plot.
 
-- First, we select variables to map to aesthetic properties such as x or y axis, color/fill, etc
-- Second, we choose the geometric object (aka geom) we want to use to represent our data
-- Third, if we want to change aesthetic properties (for example, using a different palette), we do this with a `scale_` function
-- Fourth, we use a `theme_` function to set the overall look-and-feel of our plot. 
+We could improve the plot we’ve been working on in many ways. But rather than adding to an ugly plot, let’s instead return to the drought data visualization by Cédric Scherer and Georgios Karamanis. Going through their code will show us some familiar aspects of ggplot and reveal tips on how to make high-quality data visualization with R.
 
-There are many ways we could improve the plot we've been working on. But rather than improving an ugly plot, let's instead return to the drought data viz that Cédric Scherer and Georgios Karamanis made. Going through their code will show us some familiar aspects of ggplot -- and present some tips on how to make high-quality data visualization with R. 
-
-## Recreating the Drought Visualization {-}
+## Recreating the Drought Visualization with ggplot {-}
 
 The code that Cédric and Georgios wrote to make their final data viz relies on a combination of ggplot fundamentals and some less-well-known tweaks that make it really shine. In order to understand how Cédric and Georgios made their data viz, we'll start out with a simplified version of their code. We'll build it up layer by layer, adding elements until we can see exactly how they made their drought data viz. 
 
