@@ -70,11 +70,6 @@ potato_tb <- potato_data %>%
 potato_tb
 ```
 
-```{r}
-
-```
-
-
 ### Improved example
 
 ```{r}
