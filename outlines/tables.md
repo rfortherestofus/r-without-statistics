@@ -5,17 +5,22 @@ Tables
 - https://stephanieevergreen.com/kauffman-report-guidance/
 - https://twitter.com/jschwabish/status/1290325663543627784
 - https://themockup.blog/posts/2020-09-04-10-table-rules-in-r/
+- https://clauswilke.com/dataviz/figure-titles-captions.html#tables
 
 ## Outline
 1. Tables are data viz
 	2. Don't just dump data into tables
 	3. If you look at news orgs, they have nicely designed tables
+	4. Sample principles of data viz apply to table design as well
+1. Why R is a great tool to make tables (reference RMarkdown chapter)
+	2. It's where you're already working
 1. How to make tables in R
 	2. Various package options
 2. How to make good tables in R
 	3. Builds on Tom Mock blog post, which builds on Jon Schwabish article
 	4. Make your data wide, not long
-	4. Gridlines
+	5. Offset heads from body
+	4. Minimize gridlines
 	5. Right align numbers, left align text
 	6. Choose right level of precision (decimal places)
 	7. Use color to highlight outliers

@@ -105,7 +105,7 @@ rule2_data <- yield_data %>%
   mutate(
     avg_07_11 = mean(`2007`:`2011`),
     .before = `2012`
-    ) %>% 
+  ) %>% 
   mutate(
     avg_12_16 = mean(`2012`:`2016`)
   ) %>% 
@@ -139,11 +139,11 @@ rule2_data %>%
     locations = list(
       cells_body(
         everything()
-        ),
+      ),
       cells_column_labels(
         everything()
       )
-      )
+    )
   ) %>% 
   grand_summary_rows(
     columns = 2:last_col(),
@@ -184,11 +184,11 @@ rule2_data %>%
     locations = list(
       cells_body(
         columns = vars(avg_07_11, avg_12_16)
-        ),
+      ),
       cells_column_labels(
         columns = vars(avg_07_11, avg_12_16)
       )
-      )
+    )
   ) %>%
   tab_style(
     style = cell_borders(
@@ -233,7 +233,7 @@ rule3_data <- yield_data %>%
 ```{r}
 rule3_data %>% 
   mutate(`Center align` = `2016`,
-             `Right align` = `2016`) %>%
+         `Right align` = `2016`) %>%
   rename(`Left align` = 2) %>% 
   gt() %>% 
   tab_style(
@@ -396,32 +396,32 @@ rule8_tb %>%
       cells_body(
         columns = 2,
         rows = `2010` < 0
-    ),
-    cells_body(
-      columns = 3,
-      rows = `2011` < 0
-    ),
-    cells_body(
-      columns = 4,
-      rows = `2012` < 0
-    ),
-    cells_body(
-      columns = 5,
-      rows = `2013` < 0
-    ),
-    cells_body(
-      columns = 6,
-      rows = `2014` < 0
-    ),
-    cells_body(
-      columns = 7,
-      rows = `2015` < 0
-    ),
-    cells_body(
-      columns = 8,
-      rows = `2016` < 0
+      ),
+      cells_body(
+        columns = 3,
+        rows = `2011` < 0
+      ),
+      cells_body(
+        columns = 4,
+        rows = `2012` < 0
+      ),
+      cells_body(
+        columns = 5,
+        rows = `2013` < 0
+      ),
+      cells_body(
+        columns = 6,
+        rows = `2014` < 0
+      ),
+      cells_body(
+        columns = 7,
+        rows = `2015` < 0
+      ),
+      cells_body(
+        columns = 8,
+        rows = `2016` < 0
+      )
     )
-  )
   ) %>% 
   tab_source_note(md("**Table**: @thomas_mock | **Data**: OurWorldInData.org<br>**Inspiration**: @jschwabish"))
 ```

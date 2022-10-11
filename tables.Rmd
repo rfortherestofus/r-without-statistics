@@ -1,3 +1,9 @@
 # Make Tables That Look Good and Share Results Effectively 
 
-https://clauswilke.com/dataviz/figure-titles-captions.html#tables
+In his book *Fundamentals of Data Visualization*, Claus Wilke writes that "tables are an important tool for visualizing data." This statement might seem might odd. Tables are often seen as the opposite of data visualization: plots are (or should be) highly-designed tools of communication; tables are where we dump numbers for the few nerds who care to read them. But Wilke sees things differently. Tables should not be data dumps devoid of design. He writes: "because of their apparent simplicity, they may not always receive the attention they need." 
+
+The attention that tables need is to be treated as data visualization because *that is exactly what they are*. As the term data visualization has become codified, it has become a synonym for graph. But think about what the phrase data visualization really means. Don't overthink it. It simply means to visualize data. And while bars, lines, and points in graphs are visualizations, so too are numbers in a table. When we make tables, we visualize our data. 
+
+We saw in Chapter \@ref(data-viz-chapter) that 
+
+
