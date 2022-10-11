@@ -6,6 +6,7 @@ Tables
 - https://twitter.com/jschwabish/status/1290325663543627784
 - https://themockup.blog/posts/2020-09-04-10-table-rules-in-r/
 - https://clauswilke.com/dataviz/figure-titles-captions.html#tables
+- https://www.darkhorseanalytics.com/blog/clear-off-the-table/
 
 ## Outline
 1. Tables are data viz
@@ -14,19 +15,21 @@ Tables
 	4. Sample principles of data viz apply to table design as well
 1. Why R is a great tool to make tables (reference RMarkdown chapter)
 	2. It's where you're already working
-1. How to make tables in R
-	2. Various package options
-2. How to make good tables in R
-	3. Builds on Tom Mock blog post, which builds on Jon Schwabish article
-	4. Make your data wide, not long
-	5. Offset heads from body
+	3. No copy paste errors
+	4. Word defaults are bad
+1. Table design principles
+	2. Offset heads from body
 	4. Minimize gridlines
 	5. Right align numbers, left align text
 	6. Choose right level of precision (decimal places)
 	7. Use color to highlight outliers
 	8. Add viz
+2. How to make good tables in R
+	3. Make your data wide, not long
+
 4. Conclusion
 	5. I've shown static tables, but think about whether you want to do static vs interactive 
+	6. Other packages
 	6. Add-on packages
 		7. gtextras
 		8. reactablefmtr
