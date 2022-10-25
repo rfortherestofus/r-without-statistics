@@ -421,6 +421,7 @@ gdp %>%
             )) %>% 
   gt_plt_sparkline(column = Trend,
                    label = FALSE,
+                   type = "shaded",
                    palette = c("black", "black", "black", "black", "black"))
 ```
 
