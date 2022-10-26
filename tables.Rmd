@@ -43,7 +43,7 @@ library(gt)
 library(gtExtras)
 ```
 
-As we saw in \@ref(data-viz-chapter), the `gapminder` package gives data on country-level demographic statistics. To make a data frame we'll use for our table, let's use just a few countries (the first four in alphabetical order: Afghanistan, Albania, Algeria, and Angola). We then select the relevant variables. The `gapminder` data has variables for country, continent, year, life expectancy, population, and GDP. We'll select only country, year, and life expectancy. Next, we use the `pivot_wider()` function to put our data into the wide format that tables often use. Finally, we select only three years (1952, 1972, and 1992). The `gapminder` data has many years but we only need a few to demonstrate table-making principles. 
+As we saw in \@ref(data-viz-chapter), the `gapminder` package provides data on country-level demographic statistics. To make a data frame we'll use for our table, let's use just a few countries (the first four in alphabetical order: Afghanistan, Albania, Algeria, and Angola). We then select the relevant variables. The `gapminder` data has variables for country, continent, year, life expectancy, population, and GDP. We'll select only country, year, and life expectancy. Next, we use the `pivot_wider()` function to put our data into the wide format that tables often use. Finally, we select only three years (1952, 1972, and 1992). The `gapminder` data has many years but we only need a few to demonstrate table-making principles. 
 
 ```{r}
 # TODO: Add something about converting to character?
