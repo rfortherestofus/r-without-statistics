@@ -1,3 +1,8 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
 # Make Tables That Look Good and Share Results Effectively 
 
 In his book *Fundamentals of Data Visualization*, Claus Wilke writes that "tables are an important tool for visualizing data." This statement might seem might odd. Tables are often seen as the opposite of data visualization: plots are (or should be) highly-designed tools of communication; tables are where we dump numbers for the few nerds who care to read them. But Wilke sees things differently. Tables should not be data dumps devoid of design. He writes: "because of their apparent simplicity, they may not always receive the attention they need." 
@@ -43,7 +48,7 @@ library(gt)
 library(gtExtras)
 ```
 
-As we saw in \@ref(data-viz-chapter), the `gapminder` package provides data on country-level demographic statistics. To make a data frame we'll use for our table, let's use just a few countries (the first four in alphabetical order: Afghanistan, Albania, Algeria, and Angola). We then select the relevant variables. The `gapminder` data has variables for country, continent, year, life expectancy, population, and GDP. We'll select only country, year, and life expectancy. Next, we use the `pivot_wider()` function to put our data into the wide format that tables often use. Finally, we select only three years (1952, 1972, and 1992). The `gapminder` data has many years but we only need a few to demonstrate table-making principles. 
+As we saw in \@ref(data-viz-chapter), the `gapminder` package provides data on country-level demographic statistics. To make a data frame we'll use for our table, let's use just a few countries (the first four in alphabetical order: Afghanistan, Albania, Algeria, and Angola). We then select the relevant variables. The `gapminder` data has variables for country, continent, year, life expectancy, population, and gross domestic product (GDP). We'll select only country, year, and life expectancy. Next, we use the `pivot_wider()` function to put our data into the wide format that tables often use. Finally, we select only three years (1952, 1972, and 1992). The `gapminder` data has many years but we only need a few to demonstrate table-making principles. 
 
 ```{r}
 # TODO: Add something about converting to character?
@@ -59,14 +64,13 @@ gdp <- gapminder %>%
   rename(Country = country)
 ```
 
-We save this data frame as `gdp` and we can take a look at it. 
+We save this data frame as an object called `gdp`. We can take a look at it and see what it looks like.
 
 ```{r}
 gdp
 ```
 
 Now that we've created the data frame we can work with, it's time to talk about reducing clutter by getting rid of gridlines. Often, you see tables that look like this:
-
 
 ```{r}
 gdp %>% 
@@ -174,7 +178,7 @@ A third principle of high-quality table design is appropriate alignment. Specifi
 
 > Left-alignment or center-alignment of numbers impairs the ability to clearly compare numbers and decimal places. Right-alignment lets you align decimal places and numbers for easy parsing.
 
-We can see this in action. In the table below, I've left aligned 1952, center aligned 1972, and right aligned 1992. You can see how much easier it is to compare the values in 1992 than in the other two columns. In both 1952 and 1972, it is much more difficult to compare the numeric values because the numbers in the same columns (the tens place, for example) are not in the same vertical position. In 1992, however, the number in the tens place in Afghanistan (4) aligns with the number in the tens place in Albania (9) and all other countries. This vertical alignment makes it easier to scan the table. 
+We can see this in action. In the table below, we've left aligned 1952, center aligned 1972, and right aligned 1992. You can see how much easier it is to compare the values in 1992 than in the other two columns. In both 1952 and 1972, it is much more difficult to compare the numeric values because the numbers in the same columns (the tens place, for example) are not in the same vertical position. In 1992, however, the number in the tens place in Afghanistan (4) aligns with the number in the tens place in Albania (9) and all other countries. This vertical alignment makes it easier to scan the table. 
 
 ```{r}
 gdp %>% 
@@ -195,7 +199,7 @@ gdp %>%
              columns = 4)
 ```
 
-As with other tables, I've actually had to override the defaults to get the `gt` package to misalign the columns. By default, `gt` will right align numeric values. So, just don't change anything and you'll be golden!
+As with other tables, we've actually had to override the defaults to get the `gt` package to misalign the columns. By default, `gt` will right align numeric values. So, just don't change anything and you'll be golden!
 
 ```{r}
 gdp %>% 
@@ -241,8 +245,7 @@ gdp_with_bosnia %>%
 ```
 
 
-This is another example where I've had to change the `gt` defaults to mess things up. The `gt` package has good default alignment practices for other column types as well. In addition to right aligning numeric columns by default, it will also left align character columns. So, if I don't touch anything, `gt` will give me the alignment I'm looking for.
-
+This is another example where we've had to change the `gt` defaults to mess things up. The `gt` package has good default alignment practices for other column types as well. In addition to right aligning numeric columns by default, it will also left align character columns. So, if we don't touch anything, `gt` will give me the alignment I'm looking for.
 
 ```{r}
 gdp_with_bosnia %>% 
@@ -276,9 +279,9 @@ gdp_with_bosnia %>%
 
 ### Principle Four: Use the Right Level of Precision {-}
 
-In all of the tables we've made so far, we've used the data exactly as it came to us. In all of the numeric columns, we have data to four decimal places. This is almost certainly too many. Having more decimal places than necessary makes our table harder to read. There is always a balance between what Jon Schwabish describes as "necessary precision and a clean, spare table." I've also had it described to me that, if adding additional decimal places would change some action, keep them; otherwise, it is better to remove them. My general experience is that people tend to leave too many decimal places in, assuming that accuracy to a very precise degree is more important than it is (and, in the process, reduce the legibility of their tables).
+In all of the tables we've made so far, we've used the data exactly as it came to us. In all of the numeric columns, we have data to four decimal places. This is almost certainly too many. Having more decimal places than necessary makes our table harder to read. There is always a balance between what Jon Schwabish describes as "necessary precision and a clean, spare table." I've also heard it described that, if adding additional decimal places would change some action, keep them; otherwise, take them. out My general experience is that people tend to leave too many decimal places in, assuming that accuracy to a very high degree is more important than it is (and, in the process, they reduce the legibility of their tables).
 
-Looking at our GDP table, we can use the `fmt_currency()` function to format our numeric values. In the code below, I set `fmt_currency()` to be applied to the 1952, 1972, and 1992 columns. I then use `decimals` argument to tell `gt` to format the values with zero decimal places (the difference between a GDP of \$799.4453 and \$779 is unlikely to lead to different decisions so I'm comfortable with sacrificing precision for legibility). What we end up with is values formatted as dollars, with a comma automatically added to show thousands. 
+Looking at our GDP table, we can use the `fmt_currency()` function to format our numeric values. The `gt` package has a whole series of functions for formatting values in tables. All of these functions start with `fmt_`. In the code below, we set `fmt_currency()` to be applied to the 1952, 1972, and 1992 columns. I then use `decimals` argument to tell `fmt_currency()` to format the values with zero decimal places (the difference between a GDP of \$799.4453 and \$779 is unlikely to lead to different decisions so I'm comfortable with sacrificing precision for legibility). What we end up with is values formatted as dollars, with a thousands-place comma automatically added by `fmt_currency()` to make the values even easier to read. 
 
 ```{r}
 gdp %>% 
@@ -299,7 +302,7 @@ gdp %>%
 
 ### Principle Five: Use Color Intentionally {-}
 
-Up to this point, our table has not had any color. We're now going to add some, using color intentionally to highlight outliers. Especially for those readers who want to scan your table, highlighting outliers with color can help significantly. Let's make the highest value in any single year a different color. To do this, we again use the `tab_style()` function. Within this function, I'm using the `cell_text()` function to change both the color of text to orange and make it bold. I'm then using the `locations` argument to say that we want to adjust cells in the body of the table. Within the `cells_body()` function, we have to specify both the columns we want to apply our change to and the rows. If we just look at 1952, we see that we set the columns equal to that year. The rows are set to a more complicated formula. The text rows = `1952` == max(`1952`) means that the text transformation will occur in rows where the value is equal to the maximum value in that year. 
+Up to this point, our table has not had any color. We're now going to add some, using color to highlight outliers. Especially for those readers who want to scan your table, highlighting outliers with color can help significantly. Let's make the highest value in any single year a different color. To do this, we again use the `tab_style()` function. Within this function, I'm using the `cell_text()` function to change both the color of text to orange and make it bold. I'm then using the `locations` argument to say that we want to adjust cells in the body of the table. Within the `cells_body()` function, we have to specify both the columns we want to apply our change to and the rows. If we just look at 1952, we see that we set the columns equal to that year. The rows are set to a more complicated formula. The text rows = `1952` == max(`1952`) means that the text transformation will occur in rows where the value is equal to the maximum value in that year. 
 
 ```{r}
 gdp %>% 
@@ -378,8 +381,7 @@ gdp %>%
 ### Principle Six: Add Data Visualization Where Appropriate {-}
 
 Adding color to highlight outliers is one way to help guide the reader's attention. Another way is to incorporate graphs into tables. Tom Mock has developed an add-on package for `gt` called `gtExtras` that makes it possible to do just this. In our table that we've made we might want to show the trend of GDP by country. To do that, we'll add a new column that shows this trend using a sparkline (essentially, a simple line chart). 
-
-The `gt_plt_sparkline()` function that we'll use to do this requires us to have a single column will all of the values needed to make the sparkline. I'll create a Trend variable using `group_by()` and `mutate()`. This variable will be a list of the values for each country (so, for Afghanistan, it would be 779.4453145, 739.9811058, and 649.3413952). From there, we create our table, same as before. But at the end of our code, we add the `gt_plt_sparkline()` function. Within this function, we specificaly which column to use to create the sparkline (Trend). We set `label = FALSE` to remove text labels that `gt_plt_sparkline()` adds by default. And we add `palette = c("black", "black", "black", "black", "black")` to make all parts of the sparkline black (by default, the function will make different parts of the sparkline different colors). This stripped-down sparkline now allows the user to see the trend for each country at a glance. 
+The `gt_plt_sparkline()` function that we'll use to do this requires us to have a single column with all of the values needed to make the sparkline. We'll create a variable called `Trend` using `group_by()` and `mutate()`. This variable will be a list of the values for each country (so, for Afghanistan, it would be 779.4453145, 739.9811058, and 649.3413952). From there, we create our table, same as before. But at the end of our code, we add the `gt_plt_sparkline()` function. Within this function, we specify which column to use to create the sparkline (`Trend`). We set `label = FALSE` to remove text labels that `gt_plt_sparkline()` adds by default. And we add `palette = c("black", "transparent", "transparent", "transparent", "transparent")` to make the sparkline black and all other elements of it transparent (by default, the function will make different parts of the sparkline different colors). This stripped-down sparkline now allows the user to see the trend for each country at a glance. 
 
 ```{r}
 # TODO: Figure out what's up with circles on sparkline
