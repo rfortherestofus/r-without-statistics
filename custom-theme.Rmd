@@ -10,7 +10,7 @@ chapter_number <- 3
 source("_common.R")
 ```
 
-# Develop a Custom Theme to Keep Your Data Viz Consistent 
+# Make Your Own Theme
 
 In 2017, BBC data journalist Nassos Stylianou was working with a backend developer on a particularly large data set. Nassos was primarily an Excel user at the time, but this data was too large for Excel. Seeing the developer work through the data with ease, a light bulb went off for Nassos: if he and his data journalism team learned to use R, they could do this type of analysis on their own. 
 
@@ -236,9 +236,10 @@ Nearly all of the code in the `bbc_style()` function exists within the `theme()`
 
 It can be challenging to remember how to tweak different elements in a plot. Fortunately, there are cheatsheets available to help. This one by Clara Granell shows the various elements that you can tweak within the `theme()` function. 
 
-https://github.com/claragranell/ggplot2/blob/main/ggplot_theme_system_cheatsheet.pdf
-
-TODO: Add image. Also, is this cheatsheet going to be legible in the book?
+```{r ggplot-theme-cheatsheet, out.width="100%", fig.cap="Cheatsheet for working with ggplot themes"}
+# https://www.bbc.com/news/science-environment-46459714
+knitr::include_graphics(here::here("assets/ggplot_theme_system_cheatsheet.png"))
+```
 
 As you can see, the `bbc_style()` function does a lot of tweaking. So, let's go through the changes it makes, section by section. 
 
