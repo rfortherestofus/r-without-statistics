@@ -47,7 +47,7 @@ print_nostarch_file_name(file_type_to_print = "png")
 
 ```{r bbc-beef-chart, out.width="100%", fig.cap="BBC chart showing carbon impact of various foods"}
 # https://www.bbc.com/news/science-environment-46459714
-# knitr::include_graphics(here::here("assets/bbc-food-chart.png"))
+knitr::include_graphics(here::here("assets/bbc-food-chart.png"))
 ```
 
 ```{r results='asis'}
@@ -232,7 +232,7 @@ bbc_style <- function() {
 }
 ```
 
-Nearly all of the code in the `bbc_style()` function exists within the `theme()` function from `ggplot2`. In the last chapter, we saw how Cédric Scherer and Georgios Karamanis customized their plot by applying the `theme_light()` function. This a so-called complete theme, meaning you can call the function and will change the whole look-and-feel of your plot. After applying `theme_light()`, Cédric and Georgios used the `theme()` function make additional tweaks. The `bbc_style()` theme does not use a complete theme to start. Instead, by jumping straight into the `theme()` function, they make tweaks to the ggplot defaults. 
+Nearly all of the code in the `bbc_style()` function exists within the `theme()` function from `ggplot2`. In the last chapter, we saw how Cédric Scherer and Georgios Karamanis customized their plot by applying the `theme_light()` function. This a so-called complete theme, meaning you can call the function and will change the whole look-and-feel of your plot. After applying `theme_light()`, Scherer and Karamanis used the `theme()` function make additional tweaks. The `bbc_style()` theme does not use a complete theme to start. Instead, by jumping straight into the `theme()` function, they make tweaks to the ggplot defaults. 
 
 It can be challenging to remember how to tweak different elements in a plot. Fortunately, there are cheatsheets available to help. This one by Clara Granell shows the various elements that you can tweak within the `theme()` function. 
 
