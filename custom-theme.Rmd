@@ -629,7 +629,7 @@ The development of the `bbplot` package would lead to significant changes at the
 
 In addition to the `bbc_style()` function, the `bbplot` package also provides another function (`finalise_plot()`) that adds a source at the bottom of the chart (recall how the `bbc_style()` function removed the caption), adds the BBC logo in the footer, and gives height, width, and file name options for saving the plot. These two functions combined allowed Nassos, Clara, and others to achieve their holy grail: creating production-ready graphs that could go straight from R to the BBC website. 
 
-The impact of `bbplot` would also come to be seen outside of the small team of data journalists that brought it to life. Others at the BBC saw how the data journalism team was now able to produce production-ready graphs and they wanted to do the same. This led the data journalism team to set up R trainings for their colleagues and to develop a "cookbook" (shown \@ref(fig: bbc-cookbook)) that provided examples of how to make various types of charts. 
+The impact of `bbplot` would also come to be seen outside of the small team of data journalists that brought it to life. Others at the BBC saw how the data journalism team was now able to produce production-ready graphs and they wanted to do the same. This led the data journalism team to set up R trainings for their colleagues and to develop a "cookbook" (shown in Figure \@ref(fig:bbc-cookbook)) that provided examples of how to make various types of charts. 
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
