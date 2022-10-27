@@ -3,7 +3,7 @@ output: html_document
 editor_options: 
   chunk_output_type: console
 ---
-# Make Tables That Look Good and Share Results Effectively 
+# Make High-Quality Tables
 
 In his book *Fundamentals of Data Visualization*, Claus Wilke writes that "tables are an important tool for visualizing data." This statement might seem might odd. Tables are often seen as the opposite of data visualization: plots are (or should be) highly-designed tools of communication; tables are where we dump numbers for the few nerds who care to read them. But Wilke sees things differently. Tables should not be data dumps devoid of design. He writes: "because of their apparent simplicity, they may not always receive the attention they need." 
 
@@ -428,3 +428,40 @@ gdp %>%
 
 ## Conclusion
 
+Many of the tweaks we made to create an effective table are quite subtle. Things like removing excess gridlines, bolding header text, right aligning numeric values, and adjusting the level of precision can often go unnoticed. But skip them and your table will be far less effective. What we ended up with is not flashy, but it does communicate clearly, which is the main goal of tables. 
+
+We used the `gt` package to make a high-quality table. One benefit of using this package is that we were able to use the `gt_plt_sparkline()` function from the `gtExtras` package to easily add a sparkline to our table. `gtExtras` does way more than this, though. This package has a set of "theme" functions to allow you to make your tables look like those made by FiveThirtyEight, the New York Times, the Guardian, and other news outlets. I've removed the formatting we created and instead used the `gt_theme_538()` function to make our tables look like they came from that organization. 
+
+```{r}
+gdp %>% 
+  group_by(Country) %>% 
+  mutate(Trend = list(c(`1952`, `1972`, `1992`))) %>% 
+  ungroup() %>% 
+  gt() %>% 
+  tab_style(style = cell_text(color = "orange",
+                              weight = "bold"),
+            locations = cells_body(
+              columns = `1952`,
+              rows = `1952` == max(`1952`)
+            )) %>% 
+  tab_style(style = cell_text(color = "orange",
+                              weight = "bold"),
+            locations = cells_body(
+              columns = `1972`,
+              rows = `1972` == max(`1972`)
+            )) %>% 
+  tab_style(style = cell_text(color = "orange",
+                              weight = "bold"),
+            locations = cells_body(
+              columns = `1992`,
+              rows = `1992` == max(`1992`)
+            )) %>% 
+  gt_plt_sparkline(column = Trend,
+                   label = FALSE,
+                   palette = c("black", "transparent", "transparent", "transparent", "transparent")) %>% 
+  gt_theme_538()
+```
+
+Add-on packages like `gtExtras` are common in the table-making landscape. If you are working with the `reactable` package to make interactive tables, for example, you can also use the `reactablefmtr` to add interactive sparklines, themes, and more. The functionality that you get from these packages is enough to never make you go back to making tables in Word!
+
+No matter which packages you use to make tables, it's essential to treat them as worthy of as much thought as data visualization (because, let me remind you, tables *are* data visualization). Good tables are well designed; they are not data dumps. And fortunately for us, R is well-suited to making well designed tables. Working within R, the tool you're already using to create your reports (TODO add something about RMarkdown?), you make publication-ready tables with just a few lines of code.
