@@ -3,17 +3,21 @@ output: html_document
 editor_options: 
   chunk_output_type: console
 ---
+
+```{r}
+i <- 1
+chapter_number <- 2
+source("_common.R")
+```
+
+
 # Make High-Quality Tables
 
 In his book *Fundamentals of Data Visualization*, Claus Wilke writes that "tables are an important tool for visualizing data." This statement might seem might odd. Tables are often seen as the opposite of data visualization: plots are (or should be) highly-designed tools of communication; tables are where we dump numbers for the few nerds who care to read them. But Wilke sees things differently. Tables should not be data dumps devoid of design. He writes: "because of their apparent simplicity, they may not always receive the attention they need." 
 
 Tables should be treated as data visualization because *that is exactly what they are*. As the term data visualization has become codified, it has become a synonym for graphs. But think about what the phrase data visualization really means. Don't overthink it. It simply means to visualize data. And while bars, lines, and points in graphs are visualizations, so too are numbers in a table. When we make tables, we visualize our data. 
 
-And since we're visualizing data, we should care about design. Need proof that good design matters when it comes to making tables? Look at tables made by reputable news organizations.
-
-TODO: Add some kind of table here? But permissions ugh.
-
-Data dumps these are not. News organizations, whose job is to communicate clearly and effectively, pay a lot of attention to table design. 
+And since we're visualizing data, we should care about design. Need proof that good design matters when it comes to making tables? Look at tables made by reputable news organizations. Data dumps these are not. News organizations, whose job is to communicate clearly and effectively, pay a lot of attention to table design. 
 
 We saw in Chapter \@ref(data-viz-chapter) that a few simple but significant tweaks can drastically improve the quality of our graphs. In this chapter, we'll see that a little bit of work can go a long way toward improving our tables. 
 
@@ -76,7 +80,7 @@ gdp %>%
   tab_style(
     style = cell_borders(
       side = "all",
-      color = "grey",
+      color = "black",
       weight = px(1),
       style = "solid"
     ),
@@ -88,7 +92,8 @@ gdp %>%
         everything()
       )
     )
-  )
+  ) %>% 
+  opt_table_lines(extent = "none")
 ```
 
 Having gridlines around every single cell in our table is unnecessary and creates visual clutter that distracts from the goal of communicating clearly. A table with minimal or even no gridlines is a much more effective communication tool. 
