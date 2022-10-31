@@ -65,6 +65,20 @@ save_figure_for_nostarch <- function(figure_height = 4) {
   
 }
 
+save_table_for_nostarch <- function(table_object) {
+  
+  file_name <- create_nostarch_file_name(file_type = "png")
+  file_name_with_path <- str_glue(here::here("nostarch/temp/{file_name}"))
+  
+  gtsave(data = table_object,
+         filename = file_name_with_path)
+  
+  save_image_for_nostarch(file_name_with_path) 
+  
+  return(file_name_with_path)
+  
+}
+
 save_image_for_nostarch <- function(image_file, chap_number = chapter_number) {
   
   image_info <- magick::image_read(image_file) %>%
@@ -96,7 +110,7 @@ save_image_for_nostarch <- function(image_file, chap_number = chapter_number) {
   
   magick::image_write(resized_image,
                       path = image_full_path)
-
+  
   i <<- i + 1
   
 }

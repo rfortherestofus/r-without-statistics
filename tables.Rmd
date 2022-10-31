@@ -6,8 +6,13 @@ editor_options:
 
 ```{r}
 i <- 1
-chapter_number <- 2
+chapter_number <- 5
 source("_common.R")
+
+# I'm setting include = FALSE for this chapter because I'm not displaying table output
+# but instead an image version of each table
+knitr::opts_chunk$set(include = FALSE,
+                      echo = TRUE)
 ```
 
 
@@ -45,7 +50,7 @@ In this chapter, I use the `gt` package. This is one of the most popular table-m
 
 As with data visualization, one of the most important principles of table design is to minimize clutter. One of the most important ways we can do this is by removing unnecessary elements. One of the most common unnecessary elements that clutter tables is gridlines. To show you how we can make more effective tables by removing gridlines, let's first load the packages we need. We're relying on the `tidyverse` package for general data manipulation functions, `gapminder` for the data we'll use, and `gt` to make the tables.
 
-```{r echo = TRUE}
+```{r echo = TRUE, include = TRUE}
 library(tidyverse)
 library(gapminder)
 library(gt)
@@ -68,13 +73,60 @@ gdp <- gapminder %>%
 
 I've created a data frame called `gdp`. We can see what it looks like.
 
-```{r}
+```{r include = TRUE, echo = FALSE}
 gdp
 ```
 
 Now that we've created the data frame we can work with, it's time to talk about reducing clutter by getting rid of gridlines. Often, you see tables that look like this:
 
-```{r}
+
+```{r results='asis', include = TRUE, echo = FALSE}
+print_nostarch_file_name(file_type_to_print = "png")
+
+table <- gdp %>% 
+  gt() %>% 
+  tab_style(
+    style = cell_borders(
+      side = "all",
+      color = "black",
+      weight = px(1),
+      style = "solid"
+    ),
+    locations = list(
+      cells_body(
+        everything()
+      ),
+      cells_column_labels(
+        everything()
+      )
+    )
+  ) %>% 
+  opt_table_lines(extent = "none")
+
+knitr::include_graphics(here::here(save_table_for_nostarch(table)))
+```
+
+Having gridlines around every single cell in our table is unnecessary and creates visual clutter that distracts from the goal of communicating clearly. A table with minimal or even no gridlines is a much more effective communication tool. 
+
+```{r results='asis', include = TRUE, echo = FALSE}
+print_nostarch_file_name(file_type_to_print = "png")
+
+table <- gdp %>% 
+  gt()
+
+knitr::include_graphics(here::here(save_table_for_nostarch(table)))
+```
+
+You know how I mentioned before that `gt` uses good table design principles by default? This is a great example of it. The second table, with minimal gridlines, requires just two lines. We pipe our `gdp` data into the `gt()` function, which creates a table. 
+
+```{r echo = TRUE}
+gdp %>% 
+  gt()
+```
+
+To make the example with gridlines everywhere, we would have to add additional code. The code that follows `gt()` here adds gridlines. 
+
+```{r echo = TRUE}
 gdp %>% 
   gt() %>% 
   tab_style(
@@ -96,48 +148,6 @@ gdp %>%
   opt_table_lines(extent = "none")
 ```
 
-Having gridlines around every single cell in our table is unnecessary and creates visual clutter that distracts from the goal of communicating clearly. A table with minimal or even no gridlines is a much more effective communication tool. 
-
-```{r}
-gdp %>% 
-  gt()
-```
-
-You know how I mentioned before that `gt` uses good table design principles by default? This is a great example of it. The second table, with minimal gridlines, requires just two lines. We pipe our `gdp` data into the `gt()` function, which creates a table. 
-
-```{r echo = TRUE}
-gdp %>% 
-  gt()
-```
-
-To make the example with gridlines everywhere, we would have to add additional code. The code that follows `gt()` here adds gridlines. 
-
-```{r table-with-all-borders, echo = TRUE, include = FALSE}
-gdp %>% 
-  gt() %>% 
-  tab_style(
-    style = cell_borders(
-      side = "all",
-      color = "grey",
-      weight = px(1),
-      style = "solid"
-    ),
-    locations = list(
-      cells_body(
-        everything()
-      ),
-      cells_column_labels(
-        everything()
-      )
-    )
-  )
-```
-
-And we end up with a table that looks like this.
-
-```{r ref.label = "table-with-all-borders", echo = FALSE, include = TRUE}
-```
-
 Since I don't recommend doing this, I won't walk through the code. The important thing to remember is that you get good defaults using `gt()`. Take advantage of them!
 
 If we wanted to remove additional gridlines, we could use the following code. The `tab_style()` function uses a two-step approach:
@@ -147,7 +157,7 @@ If we wanted to remove additional gridlines, we could use the following code. Th
 
 Here, we tell `tab_style()` that we want to modify the borders using the `cell_borders()` function, making our borders transparent. Then, we say that we want this to apply to the `cells_body()` location (other options include `cells_column_labels()` for the row with country, 1952, 1972, and 1992). 
 
-```{r remove-gridlines, echo = TRUE, include = FALSE}
+```{r remove-gridlines, echo = TRUE}
 gdp %>% 
   gt() %>% 
   tab_style(
@@ -158,8 +168,20 @@ gdp %>%
 
 Doing this gives us a table with no gridlines at all in the body.
 
-```{r ref.label = "remove-gridlines", echo = FALSE, include = TRUE}
+```{r results='asis', include = TRUE, echo = FALSE}
+print_nostarch_file_name(file_type_to_print = "png")
+
+table <- gdp %>% 
+  gt() %>% 
+  tab_style(
+    style = cell_borders(color = "transparent"),
+    locations = cells_body()
+  )
+
+
+knitr::include_graphics(here::here(save_table_for_nostarch(table)))
 ```
+
 
 ### Principle Two: Differentiate the Header from the Body {-}
 
@@ -184,6 +206,23 @@ gdp %>%
     style = cell_text(weight = "bold"),
     locations = cells_column_labels()
   )
+```
+
+```{r results='asis', include = TRUE}
+print_nostarch_file_name(file_type_to_print = "png")
+
+table_to_save <- gdp %>% 
+  gt() %>% 
+  tab_style(
+    style = cell_borders(color = "transparent"),
+    locations = cells_body()
+  ) %>% 
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_column_labels()
+  )
+
+save_table_for_nostarch(table_to_save)
 ```
 
 ### Principle Three: Align Appropriately {-}
