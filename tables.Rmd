@@ -11,8 +11,7 @@ source("_common.R")
 
 # I'm setting include = FALSE for this chapter because I'm not displaying table output
 # but instead an image version of each table
-knitr::opts_chunk$set(include = FALSE,
-                      echo = TRUE)
+knitr::opts_chunk$set(include = FALSE)
 ```
 
 
