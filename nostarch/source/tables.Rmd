@@ -11,7 +11,7 @@ source("_common.R")
 
 # I'm setting include = FALSE for this chapter because I'm not displaying table output
 # but instead an image version of each table
-knitr::opts_chunk$set(include = FALSE)
+knitr::opts_chunk$set(include = TRUE)
 ```
 
 
@@ -118,14 +118,14 @@ knitr::include_graphics(here::here(save_table_for_nostarch(table)))
 
 You know how I mentioned before that `gt` uses good table design principles by default? This is a great example of it. The second table, with minimal gridlines, requires just two lines. We pipe our `gdp` data into the `gt()` function, which creates a table. 
 
-```{r echo = TRUE}
+```{r echo = TRUE, eval = FALSE}
 gdp %>% 
   gt()
 ```
 
 To make the example with gridlines everywhere, we would have to add additional code. The code that follows `gt()` here adds gridlines. 
 
-```{r echo = TRUE}
+```{r echo = TRUE, eval = FALSE}
 gdp %>% 
   gt() %>% 
   tab_style(
@@ -156,7 +156,7 @@ If we wanted to remove additional gridlines, we could use the following code. Th
 
 Here, we tell `tab_style()` that we want to modify the borders using the `cell_borders()` function, making our borders transparent. Then, we say that we want this to apply to the `cells_body()` location (other options include `cells_column_labels()` for the row with country, 1952, 1972, and 1992). 
 
-```{r remove-gridlines, echo = TRUE}
+```{r remove-gridlines, echo = TRUE, eval = FALSE}
 gdp %>% 
   gt() %>% 
   tab_style(
