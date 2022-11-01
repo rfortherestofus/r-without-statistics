@@ -102,8 +102,13 @@ table <- gdp %>%
   ) %>% 
   opt_table_lines(extent = "none")
 
-knitr::include_graphics(here::here(save_table_for_nostarch(table)))
+save_table_for_nostarch(table)
 ```
+
+```{r echo = FALSE, include = TRUE}
+print_last_table()
+```
+
 
 
 Having gridlines around every single cell in our table is unnecessary and creates visual clutter that distracts from the goal of communicating clearly. A table with minimal or even no gridlines is a much more effective communication tool. 
@@ -114,7 +119,11 @@ print_nostarch_file_name(file_type_to_print = "png")
 table <- gdp %>% 
   gt()
 
-knitr::include_graphics(here::here(save_table_for_nostarch(table)))
+save_table_for_nostarch(table)
+```
+
+```{r echo = FALSE, include = TRUE}
+print_last_table()
 ```
 
 You know how I mentioned before that `gt` uses good table design principles by default? This is a great example of it. The second table, with minimal gridlines, requires just two lines. We pipe our `gdp` data into the `gt()` function, which creates a table. 
@@ -179,7 +188,11 @@ table <- gdp %>%
   )
 
 
-knitr::include_graphics(here::here(save_table_for_nostarch(table)))
+save_table_for_nostarch(table)
+```
+
+```{r echo = FALSE, include = TRUE}
+print_last_table()
 ```
 
 
@@ -211,7 +224,7 @@ gdp %>%
 ```{r results='asis', include = TRUE}
 print_nostarch_file_name(file_type_to_print = "png")
 
-table_to_save <- gdp %>% 
+table <- gdp %>% 
   gt() %>% 
   tab_style(
     style = cell_borders(color = "transparent"),
@@ -222,7 +235,11 @@ table_to_save <- gdp %>%
     locations = cells_column_labels()
   )
 
-save_table_for_nostarch(table_to_save)
+save_table_for_nostarch(table)
+```
+
+```{r echo = FALSE, include = TRUE}
+print_last_table()
 ```
 
 ### Principle Three: Align Appropriately {-}
@@ -255,7 +272,7 @@ gdp %>%
 As with other tables, we've actually had to override the defaults to get the `gt` package to misalign the columns. By default, `gt` will right align numeric values. So, just don't change anything and you'll be golden!
 
 ```{r}
-gdp %>% 
+gdp %>%  
   gt() %>% 
   tab_style(
     style = cell_borders(color = "transparent"),

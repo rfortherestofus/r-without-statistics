@@ -68,15 +68,29 @@ save_figure_for_nostarch <- function(figure_height = 4) {
 save_table_for_nostarch <- function(table_object) {
   
   file_name <- create_nostarch_file_name(file_type = "png")
-  # file_name_with_path <- str_glue(here::here("nostarch/temp/{file_name}"))
-  file_name_with_path <- str_glue("{tempdir()}/{file_name}")
+  file_name_with_path <- str_glue(here::here("nostarch/temp/{file_name}"))
+  # file_name_with_path <- str_glue("{tempdir()}/{file_name}")
   
   gtsave(data = table_object,
          filename = file_name_with_path)
   
   save_image_for_nostarch(file_name_with_path) 
   
-  return(file_name_with_path)
+  # return(file_name_with_path)
+  
+}
+
+print_last_table <- function(chap_number = chapter_number) {
+  
+  figure_number <- i - 1
+  
+  chapter_number_two_digits <- stringr::str_pad(chap_number, 2, "left", "0")
+  figure_number_three_digits <- stringr::str_pad(figure_number, 3, "left", "0")
+  
+  file_name <- stringr::str_glue("F{chapter_number_two_digits}{ figure_number_three_digits }.png")
+  
+  here::here(stringr::str_glue("nostarch/temp/{file_name}")) %>% 
+    knitr::include_graphics()
   
 }
 
