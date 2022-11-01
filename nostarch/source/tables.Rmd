@@ -79,9 +79,11 @@ gdp
 Now that we've created the data frame we can work with, it's time to talk about reducing clutter by getting rid of gridlines. Often, you see tables that look like this:
 
 
-```{r results='asis', include = TRUE, echo = FALSE}
+```{r results='asis', include = TRUE}
 print_nostarch_file_name(file_type_to_print = "png", actually_print = TRUE)
+```
 
+```{r include = TRUE}
 table <- gdp %>% 
   gt() %>% 
   tab_style(
@@ -104,6 +106,8 @@ table <- gdp %>%
 
 knitr::include_graphics(here::here(save_table_for_nostarch(table)))
 ```
+
+
 
 Having gridlines around every single cell in our table is unnecessary and creates visual clutter that distracts from the goal of communicating clearly. A table with minimal or even no gridlines is a much more effective communication tool. 
 
