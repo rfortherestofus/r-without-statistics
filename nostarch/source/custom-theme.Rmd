@@ -273,7 +273,7 @@ save_image_for_nostarch(here::here("assets/ggplot_theme_system_cheatsheet.png"))
 
 As you can see, the `bbc_style()` function does a lot of tweaking. So, let's go through the changes it makes, section by section. 
 
-### Text Formatting {-}
+#### Text Formatting {-}
 
 The first section of the code deals with text formatting. First, it defines a variable called "font" and assigns it the value "Helvetica." This allows later sections of code to simply write "font" rather than repeating "Helvetica" over and over again. And, if the team ever wanted to use a different font, they could simply change "Helvetica" to, say, "Comic Sans" and change all BBC plots (I suspect higher-ups at the BBC might not be on board). 
 
@@ -346,7 +346,7 @@ penguins_plot_text <- penguins_plot +
   )
 ```
 
-### Legend Formatting {-}
+#### Legend Formatting {-}
 
 Next, we deal with the legend. The code puts the legend on top of the plot, and left aligns the text within it. Then, it removes the legend background (this would only show up if the background color of the entire plot were different than the legend background), title, and legend key (this is a box that can show up around the boxes with the names of the islands). Finally, we make the legend text 18-point Helevetica with the same nearly black color. 
 
@@ -397,7 +397,7 @@ penguins_plot_legend <- penguins_plot_text +
   )
 ```
 
-### Axis Formatting {-}
+#### Axis Formatting {-}
 
 Next up are the axes. The code first removes axis titles because, as Nassos told me, these tend to take up a lot of chart real estate and you can use the title and subtitle to make clear what the axes show. All text on axes becomes 18-point Helevetica nearly black. The text on the x axis (in our case, Biscoe, Dream, and Torgersen) gets a bit of spacing around it. And, finally, both axis ticks and axis lines are removed. 
 
@@ -422,7 +422,7 @@ We can see the changes to our axes in Figure \@ref(fig:penguins-plot-axes-plot).
 print_nostarch_file_name(actually_print = TRUE)
 ```
 
-```{r penguins-plot-axes-plot, ref.label = "penguins-plot-axes", echo = TRUE, fig.cap = "Our chart with changes to axis formatting"}
+```{r penguins-plot-axes-plot, ref.label = "penguins-plot-axes", fig.cap = "Our chart with changes to axis formatting"}
 ```
 
 ```{r results='asis'}
@@ -446,7 +446,7 @@ penguins_plot_axes <- penguins_plot_legend +
   )
 ```
 
-### Grid Lines Formatting {-}
+#### Grid Lines Formatting {-}
 
 Now that we've tweaked overall text formatting, the legend, and the axes, let's move onto grid lines. The approach here is fairly straightforward: remove all minor grid lines, remove major grid lines on the x axis, keeping only major grid lines on the y axis, but making them a light gray (using the #cbcbcb hex code). 
 
@@ -465,7 +465,7 @@ We can see the result of these tweaks to the grid lines in Figure \@ref(fig:peng
 print_nostarch_file_name(actually_print = TRUE)
 ```
 
-```{r penguins-plot-gridlines-plot, ref.label = "penguins-plot-gridlines", echo = TRUE, fig.cap = "Our chart with tweaks to the grid lines"}
+```{r penguins-plot-gridlines-plot, ref.label = "penguins-plot-gridlines", fig.cap = "Our chart with tweaks to the grid lines"}
 ```
 
 ```{r results='asis'}
@@ -483,7 +483,7 @@ penguins_plot_grid_lines <- penguins_plot_axes +
   )
 ```
 
-### Background Formatting {-}
+#### Background Formatting {-}
 
 Of course, in the previous iteration of our plot, it still had a gray background. The `bbc_style()` function removes this with the following code.
 
@@ -507,7 +507,7 @@ print_nostarch_file_name(actually_print = TRUE)
 save_figure_for_nostarch(figure_height = 5)
 ```
 
-### Small Multiples Formatting {-}
+#### Small Multiples Formatting {-}
 
 And there we go! We've now recreated the plot that we made above using the `bbc_style()` function. However, you may recall there is a bit more code in the `bbc_style()` function. This code deals with `strip.background` and `strip.text`. Both of these occur when we make small multiples charts. Small multiples is a common technique in data visualization, where, instead of making one chart that incorporates all of the available data, we break the chart into multiple charts in order to make the final results easier for the reader to comprehend. 
 
@@ -685,7 +685,7 @@ print_nostarch_file_name(file_type_to_print = "png", actually_print = TRUE)
 save_image_for_nostarch(here::here("assets/bbc-food-chart.png"))
 ```
 
-### What About Colors? {-}
+#### What About Colors? {-}
 
 You might be thinking: wait, what about the colors? Doesn't the theme change that? It's a common point of confusion. If we read the documentation for the `theme()` function, though, it becomes clearer why this is the case:
 
@@ -695,11 +695,11 @@ Color is used in plots as an aesthetic property to show something about data. In
 
 ## Code is the Catalyst for Culture Change {-}
 
-When Nassos Stylianou and Clara Guibourg started developing a custom theme for the BBC, they had one question: would they be able to create graphs in R that could go straight onto the BBC website? And, wouldn't you know, they succeeded! The creation of the the `bbplot` package allowed them to make plots that had a consistent look-and-feel, followed BBC standards, and, most importantly, did not need help from a designer. 
+When Nassos Stylianou and Clara Guibourg started developing a custom theme for the BBC, they had one question: would they be able to create graphs in R that could go straight onto the BBC website? And, wouldn't you know, they succeeded! The creation of the `bbplot` package allowed them to make plots that had a consistent look-and-feel, followed BBC standards, and, most importantly, did not need help from a designer. 
 
 Many of the principles of high-quality data visualization that we discussed in Chapter \@ref(data-viz-chapter) can be seen in this custom theme. In particular, the removal of extraneous elements (axis titles and grid lines, for instance) helps keep the focus on the data itself. And by creating a custom theme that only requires users to add a single line to their ggplot code, it became simple to get others on board. Telling users they could just append `bbc_style()` to their code and get a BBC-style plot was an eye-opener.
 
-The development of the `bbplot` package would lead to significant changes at the BBC. It inspired Nassos, Clara, and the other data journalists who created it to use ggplot more than before. Knowing that they had the flexibility of ggplot at their fingertips gave them license to explore. And knowing that they did not have to work with a designer to create production-ready graphics empowered them to make more and better graphics.
+The development of the `bbplot` package would lead to significant changes at the BBC. It inspired Stylianou, Guibourg, and the other data journalists who created it to use ggplot more than before. Knowing that they had the flexibility of ggplot at their fingertips gave them license to explore. And knowing that they did not have to work with a designer to create production-ready graphics empowered them to make more and better graphics.
 
 In addition to the `bbc_style()` function, the `bbplot` package also provides another function called `finalise_plot()` that adds a source at the bottom of the chart (recall how the `bbc_style()` function removed the caption), adds the BBC logo in the footer, and gives height, width, and file name options for saving the plot. These two functions combined allowed Nassos, Clara, and others to achieve their holy grail: creating production-ready graphs that could go straight from R to the BBC website. 
 
@@ -717,10 +717,10 @@ knitr::include_graphics(here::here("assets/bbc-graphics-cookbook.png"))
 save_image_for_nostarch(here::here("assets/bbc-graphics-cookbook.png"))
 ```
 
-These two resources led to a large increase in R users at the BBC. As Nassos told me, they "spurred people a lot people outside of the data journalism team to take a real interest [in R]." Having `bbplot` made the value of R click for many people at the BBC. He continued:
+These two resources led to a large increase in R users at the BBC. As Stylianou told me, they "spurred people a lot people outside of the data journalism team to take a real interest [in R]." Having `bbplot` made the value of R click for many people at the BBC. He continued:
 
 > There is no, "why am I doing this?" in their mind. It's is worth the pain [to learn R], because it is a pain at first. But seeing this graphic that a few months ago you would have had to do in this old process ... if you devote a bit of time each day, here are the five lines of code that you can run and you can [make a production-ready graphic] yourself.
 
-As so many more people at the BBC came to learn R, the quality and quantity of data visualization produced exploded. Nassos told me, "I don't think there's been a day where someone at the BBC hasn't used the package to produce a graphic." The `bbplot` package came in particularly helpful during COVID. Being able to produce on-brand graphics on a quick turnaround was possible in a way it would not have been previously. 
+As so many more people at the BBC came to learn R, the quality and quantity of data visualization produced exploded. Stylianou told me, "I don't think there's been a day where someone at the BBC hasn't used the package to produce a graphic." The `bbplot` package came in particularly helpful during COVID. Being able to produce on-brand graphics on a quick turnaround was possible in a way it would not have been previously. 
 
-Reflecting on her experience, Clara attributes the successful transition to R at the BBC to its culture. As she put it, "I think that what helped me get started was that there was a really supportive environment internally at the BBC for learning." And, indeed, this same supportive culture that led Clara to organically explore what R was capable of was reinforced after she and the data journalism team released `bbplot`. The custom theme they developed enabled the creation of so many BBC graphics that otherwise never would have seen the light of day. A culture open to learning led the data journalism team to insights about the power of code. And this code then facilitated a culture change around how graphics are produced at the BBC. 
+Reflecting on her experience, Guibourg attributes the successful transition to R at the BBC to its culture. As she put it, "I think that what helped me get started was that there was a really supportive environment internally at the BBC for learning." And, indeed, this same supportive culture that led Clara to organically explore what R was capable of was reinforced after she and the data journalism team released `bbplot`. The custom theme they developed enabled the creation of so many BBC graphics that otherwise never would have seen the light of day. A culture open to learning led the data journalism team to insights about the power of code. And this code then facilitated a culture change around how graphics are produced at the BBC. 

@@ -530,8 +530,7 @@ gapminder_10_rows
 If we want to make a chart with ggplot, we need to first decide which variable to put on the x axis and which to put on the y axis. Let’s say we want to show life expectancy over time. That means we would use the variable `year` on the x axis and the variable `lifeExp` on the y axis. To do so, we begin by using the `ggplot()` function: 
 
 
-
-```{r blank-ggplot, echo = TRUE, include = FALSE}
+```{r blank-ggplot, echo = TRUE, eval = FALSE}
 ggplot(
   data = gapminder_10_rows,
   mapping = aes(
@@ -560,7 +559,7 @@ But, if you look closely, you can see the beginnings of a plot. Remember that x 
 
 Axes are nice, but we’re missing any type of visual representation of the data. To get this, we need to add the next layer in ggplot: geoms. Short for geometric objects, geoms are functions that provide different ways of representing data. For example, if we want to add points, we use `geom_point()`: 
 
-```{r gapminder-points, echo = TRUE, include = FALSE}
+```{r gapminder-points, echo = TRUE, eval = FALSE}
 ggplot(
   data = gapminder_10_rows,
   mapping = aes(
@@ -586,7 +585,7 @@ save_figure_for_nostarch()
 
 Let’s say we change our mind and want to make a line chart instead. Well, all we have to do is replace `geom_point()` with `geom_line()`:
 
-```{r gapminder-line, echo = TRUE, include = FALSE}
+```{r gapminder-line, echo = TRUE, eval = FALSE}
 ggplot(
   data = gapminder_10_rows,
   mapping = aes(
@@ -612,7 +611,7 @@ save_figure_for_nostarch()
 
 To really get fancy, what if we add both `geom_point()` and `geom_line()`? 
 
-```{r gapminder-points-line, echo = TRUE, include = FALSE}
+```{r gapminder-points-line, echo = TRUE, eval = FALSE}
 ggplot(
   data = gapminder_10_rows,
   mapping = aes(
@@ -639,7 +638,7 @@ save_figure_for_nostarch()
 
 We can extend this idea further, as seen in Figure \@ref(fig:gapminder-bar-plot), swapping in `geom_col()` to create a bar chart:
 
-```{r gapminder-bar, echo = TRUE, include = FALSE}
+```{r gapminder-bar, echo = TRUE, eval = FALSE}
 ggplot(
   data = gapminder_10_rows,
   mapping = aes(
@@ -669,7 +668,7 @@ As you can see, the difference between a line chart and a bar chart isn’t as g
 
 Before we return to the drought data visualization, let’s look at a few additional layers that can help us can alter our bar chart. Say we want to change the color of our bars. In the grammar of graphics approach to chart-making, this means mapping some variable to the aesthetic property of `fill`. (Slightly confusingly, the aesthetic property of `color` would, for a bar chart, change only the outline of each bar). In the same way that we mapped `year` to the x axis and y to `lifeExp`, we can also map fill to a variable, such as year:
 
-```{r gapminder-bar-colors, echo = TRUE, include = FALSE}
+```{r gapminder-bar-colors, echo = TRUE, eval = FALSE}
 ggplot(
   data = gapminder_10_rows,
   mapping = aes(
@@ -696,7 +695,7 @@ save_figure_for_nostarch()
 
 What if we want to change the fill colors? For that, we use a new *scale layer*. In this case, I’ll use the `scale_fill_viridis_c()` function. The c at the end of the function name refers to the fact that the data is continuous, meaning it can take any numeric value:
 
-```{r gapminder-viridis, echo = TRUE, include = FALSE}
+```{r gapminder-viridis, echo = TRUE, eval = FALSE}
 ggplot(
   data = gapminder_10_rows,
   mapping = aes(
@@ -726,7 +725,7 @@ save_figure_for_nostarch()
 
 A final layer we’ll look at is the theme layer. This layer allows us to change the overall look-and-feel of plots (plot backgrounds, grid lines, and so on). Just as there are a number of `scale_` functions, there are also a number of functions that start with `theme_.` Here, we’ve added `theme_minimal()`: 
 
-```{r gapminder-theme, echo = TRUE, include = FALSE}
+```{r gapminder-theme, echo = TRUE, eval = FALSE}
 ggplot(
   data = gapminder_10_rows,
   mapping = aes(
@@ -784,7 +783,7 @@ The `date` variable represents the start date of the week in which the observati
 
 Now we can use this `southwest_2003` object for our plotting:
 
-```{r southwest-2003-no-style, echo = TRUE, include = FALSE}
+```{r southwest-2003-no-style, echo = TRUE, eval = FALSE}
 ggplot(
   data = southwest_2003,
   aes(
@@ -816,7 +815,7 @@ The colors don’t match the final version of the plot, but we can start to see 
 
 Scherer and Karamanis next selected different `fill` colors for their bars. To do so, they used the `scale_fill_viridis_d()` function. The *d* here means that the data to which the fill scale is being applied has discrete categories, called D0, D1, D2, D3, D4, and D5:
 
-```{r southwest-2003-with-color, echo = TRUE, include = FALSE}
+```{r southwest-2003-with-color, echo = TRUE, eval = FALSE}
 ggplot(
   data = southwest_2003,
   aes(
@@ -837,7 +836,7 @@ They used the argument `option = "rocket"` to select the rocket palette (the fun
 Scherer and Karamanis also tweaked the appearance of the x and y axes: 
 
 
-```{r southwest-2003-xy-scales, echo = TRUE, include = FALSE}
+```{r southwest-2003-xy-scales, echo = TRUE, eval = FALSE}
 ggplot(
   data = southwest_2003,
   aes(
@@ -878,7 +877,7 @@ Up to this point, we’ve focused on one of the single plots that make up the la
 One of the most useful features of ggplot is what’s known as *faceting* (or, more commonly in the data visualization world, *small multiples*). Faceting takes a single plot and makes it into multiple plots using a variable (think: a line chart showing life expectancy by country over time, but instead of multiple lines on one plot, we get multiple plots with one line per plot). With the `facet_grid()` function, we can select which variable to put in rows and which to put in columns of our faceted plot. 
 
 
-```{r drought-viz-faceted, fig.height = 8, echo = TRUE, include = FALSE}
+```{r drought-viz-faceted, fig.height = 8, echo = TRUE, eval = FALSE}
 dm_perc_cat_hubs %>%
   filter(hub %in% c("Northwest", 
                     "California", 
@@ -923,7 +922,7 @@ Let’s look at a few of the small polishes that Scherer and Karamanis made. The
 
 The `theme_light()` function is what’s known as a complete theme. So-called complete themes change the overall look-and-feel of a plot. But Scherer and Karamanis didn’t stop there. They then used the theme() function to make additional tweaks to what `theme_light()` gave them. 
 
-```{r drought-viz-theme-tweaks, fig.height = 8, echo = TRUE, include = FALSE}
+```{r drought-viz-theme-tweaks, fig.height = 8, echo = TRUE, eval = FALSE}
 dm_perc_cat_hubs %>%
   filter(hub %in% c("Northwest", 
                     "California", 
