@@ -30,6 +30,10 @@ gsub_files(files = dir_ls(path = "nostarch/source", regexp = "Rmd"),
            "print_nostarch_file_name(actually_print = TRUE)")
 
 gsub_files(files = dir_ls(path = "nostarch/source", regexp = "Rmd"),
+           "print_nostarch_file_name\\(\\)",
+           "print_nostarch_file_name(actually_save = TRUE)")
+
+gsub_files(files = dir_ls(path = "nostarch/source", regexp = "Rmd"),
            'print_nostarch_file_name\\(file_type_to_print = "png"\\)',
            'print_nostarch_file_name(file_type_to_print = "png", actually_print = TRUE)')
 

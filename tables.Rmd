@@ -1,7 +1,7 @@
 ---
 output: html_document
 editor_options: 
-  chunk_output_type: console
+  chunk_output_type: inline
 ---
 
 ```{r}
@@ -103,11 +103,6 @@ table <- gdp %>%
 
 save_table_for_nostarch(table)
 ```
-
-```{r echo = FALSE, include = TRUE}
-print_last_table()
-```
-
 
 
 Having gridlines around every single cell in our table is unnecessary and creates visual clutter that distracts from the goal of communicating clearly. A table with minimal or even no gridlines is a much more effective communication tool. 
