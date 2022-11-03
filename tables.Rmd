@@ -56,7 +56,7 @@ library(gt)
 library(gtExtras)
 ```
 
-As we saw in \@ref(data-viz-chapter), the `gapminder` package provides data on country-level demographic statistics. To make a data frame we'll use for our table, let's use just a few countries (the first four in alphabetical order: Afghanistan, Albania, Algeria, and Angola) and a few years (1952, 1972, and 1992). The `gapminder` data has many years but we only need a few to demonstrate table-making principles. 
+As we saw in Chapter \@ref(data-viz-chapter), the `gapminder` package provides data on country-level demographic statistics. To make a data frame we'll use for our table, let's use just a few countries (the first four in alphabetical order: Afghanistan, Albania, Algeria, and Angola) and a few years (1952, 1972, and 1992). The `gapminder` data has many years but we only need a few to demonstrate table-making principles. 
 
 ```{r}
 gdp <- gapminder %>% 
@@ -77,7 +77,6 @@ gdp
 ```
 
 Now that we've created the data frame we can work with, it's time to talk about reducing clutter by getting rid of gridlines. Often, you see tables that look like this:
-
 
 ```{r results='asis', include = TRUE, echo = FALSE}
 print_nostarch_file_name(file_type_to_print = "png")
