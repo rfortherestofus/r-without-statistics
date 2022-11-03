@@ -79,7 +79,7 @@ gdp
 Now that we've created the data frame we can work with, it's time to talk about reducing clutter by getting rid of gridlines. Often, you see tables that look like this:
 
 ```{r results='asis', include = TRUE, echo = FALSE}
-print_nostarch_file_name(file_type_to_print = "png", actually_print = TRUE)
+print_nostarch_file_name(file_type_to_print = "png")
 
 table <- gdp %>% 
   gt() %>% 
@@ -104,11 +104,17 @@ table <- gdp %>%
 save_table_for_nostarch(table)
 ```
 
+```{r}
+print_table_in_html(table)
+```
+
+
+
 
 Having gridlines around every single cell in our table is unnecessary and creates visual clutter that distracts from the goal of communicating clearly. A table with minimal or even no gridlines is a much more effective communication tool. 
 
 ```{r results='asis', include = TRUE, echo = FALSE}
-print_nostarch_file_name(file_type_to_print = "png", actually_print = TRUE)
+print_nostarch_file_name(file_type_to_print = "png")
 
 table <- gdp %>% 
   gt()
@@ -116,9 +122,6 @@ table <- gdp %>%
 save_table_for_nostarch(table)
 ```
 
-```{r echo = FALSE, include = TRUE}
-print_last_table()
-```
 
 You know how I mentioned before that `gt` uses good table design principles by default? This is a great example of it. The second table, with minimal gridlines, requires just two lines. We pipe our `gdp` data into the `gt()` function, which creates a table. 
 
@@ -172,7 +175,7 @@ gdp %>%
 Doing this gives us a table with no gridlines at all in the body.
 
 ```{r results='asis', include = TRUE, echo = FALSE}
-print_nostarch_file_name(file_type_to_print = "png", actually_print = TRUE)
+print_nostarch_file_name(file_type_to_print = "png")
 
 table <- gdp %>% 
   gt() %>% 
@@ -183,10 +186,6 @@ table <- gdp %>%
 
 
 save_table_for_nostarch(table)
-```
-
-```{r echo = FALSE, include = TRUE}
-print_last_table()
 ```
 
 
@@ -216,7 +215,7 @@ gdp %>%
 ```
 
 ```{r results='asis', include = TRUE}
-print_nostarch_file_name(file_type_to_print = "png", actually_print = TRUE)
+print_nostarch_file_name(file_type_to_print = "png")
 
 table <- gdp %>% 
   gt() %>% 
@@ -230,10 +229,6 @@ table <- gdp %>%
   )
 
 save_table_for_nostarch(table)
-```
-
-```{r echo = FALSE, include = TRUE}
-print_last_table()
 ```
 
 ### Principle Three: Align Appropriately {-}

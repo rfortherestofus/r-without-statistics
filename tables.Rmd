@@ -104,6 +104,12 @@ table <- gdp %>%
 save_table_for_nostarch(table)
 ```
 
+```{r}
+print_table_in_html(table)
+```
+
+
+
 
 Having gridlines around every single cell in our table is unnecessary and creates visual clutter that distracts from the goal of communicating clearly. A table with minimal or even no gridlines is a much more effective communication tool. 
 

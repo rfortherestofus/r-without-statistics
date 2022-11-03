@@ -99,7 +99,7 @@ There was nothing unique about the data that Scherer and Karamanis used. Other n
 
 
 ```{r results='asis'}
-print_nostarch_file_name(actually_print = TRUE)
+print_nostarch_file_name()
 ```
 
 
@@ -211,7 +211,7 @@ To understand why this visualization is effective, let’s break it down into pi
 Need proof that Scherer and Karamanis’s decluttered graph is better than the alternative? Figure \@ref(fig:cluttered-viz) shows a version with a few small tweaks to the code to include grid lines and text labels on axes. Prepare yourself for clutter!
 
 ```{r results='asis'}
-print_nostarch_file_name(actually_print = TRUE)
+print_nostarch_file_name()
 ```
 
 ```{r cluttered-viz, fig.height = 8, fig.cap="The cluttered version of the drought visualization"}
@@ -322,7 +322,7 @@ One of the best ways to reduce clutter is to break a single chart into what are 
 
 
 ```{r results='asis'}
-print_nostarch_file_name(actually_print = TRUE)
+print_nostarch_file_name()
 ```
 
 ```{r viz-sw-2003, fig.height = 4, fig.cap="A drought visualization for the Southwest in 2003"}
@@ -436,7 +436,7 @@ When I asked Scherer and Karamanis to speak with me about this data visualizatio
 If you’ve used Excel to make graphs, you’re probably familiar with the menu shown in Figure \@ref(fig:excel-chart-chooser). When working in Excel, your graph-making journey begins by selecting the type of graph you want to make. Want a bar chart? Click the bar chart icon. Want a line chart? Click the line chart icon.
 
 ```{r results='asis'}
-print_nostarch_file_name(file_type_to_print = "png", actually_print = TRUE)
+print_nostarch_file_name(file_type_to_print = "png")
 ```
 
 ```{r excel-chart-chooser, out.width="100%", fig.cap="The Excel chart chooser menu"}
@@ -456,7 +456,7 @@ Thinking about data visualization through the lens of the grammar of graphics al
 
 
 ```{r results='asis'}
-print_nostarch_file_name(actually_print = TRUE)
+print_nostarch_file_name()
 ```
 
 ```{r bar-line-chart, fig.cap="A bar chart and a line chart showing identical data on Afghanistan life expectancy"}
@@ -543,7 +543,7 @@ ggplot(
 Within this function, we tell R that we’re using the data frame `gapminder_10_rows`. This is the filtered version we created from the full `gapminder` data frame, which includes over 1,700 rows of data. The line following this tells R to use `year` on the x axis and `lifeExp` on the y axis. When we run the code, what we get in Figure \@ref(fig:blank-ggplot) doesn’t look like much.
 
 ```{r results='asis'}
-print_nostarch_file_name(actually_print = TRUE)
+print_nostarch_file_name()
 ```
 
 ```{r blank-ggplot, echo = FALSE, fig.cap="A blank chart"}
@@ -573,7 +573,7 @@ ggplot(
 Now, in Figure \@ref(fig:gapminder-points-plot), we see that people in 1952 had a life expectancy of about 28 and that this value rose through every year in our data.
 
 ```{r results='asis'}
-print_nostarch_file_name(actually_print = TRUE)
+print_nostarch_file_name()
 ```
 
 ```{r gapminder-points-plot, ref.label = "gapminder-points", echo = FALSE, include = TRUE, fig.cap="The same chart but with points added"}
@@ -599,7 +599,7 @@ ggplot(
 Figure \@ref(fig:gapminder-line-plot) shows the result.
 
 ```{r results='asis'}
-print_nostarch_file_name(actually_print = TRUE)
+print_nostarch_file_name()
 ```
 
 ```{r gapminder-line-plot, ref.label = "gapminder-line", echo = FALSE, fig.cap="The data as a line chart"}
@@ -626,7 +626,7 @@ ggplot(
 This code generates a line chart with points, as seen in Figure \@ref(fig:gapminder-points-line-plot).
 
 ```{r results='asis'}
-print_nostarch_file_name(actually_print = TRUE)
+print_nostarch_file_name()
 ```
 
 ```{r gapminder-points-line-plot, ref.label = "gapminder-points-line", echo = FALSE, fig.cap="The data with points and a line"}
@@ -652,7 +652,7 @@ ggplot(
 Note that the y axis range has been automatically updated, going from 0 to 40 to account for the different geom.
 
 ```{r results='asis'}
-print_nostarch_file_name(actually_print = TRUE)
+print_nostarch_file_name()
 ```
 
 ```{r gapminder-bar-plot, ref.label = "gapminder-bar", echo = FALSE, fig.cap="The data as a bar chart"}
@@ -683,7 +683,7 @@ ggplot(
 The result is shown in Figure \@ref(fig:gapminder-bar-colors-plot). We see now that, for earlier years, the fill is darker, while for later years, it is lighter (the legend, added to the right of our plot, shows this).
 
 ```{r results='asis'}
-print_nostarch_file_name(actually_print = TRUE)
+print_nostarch_file_name()
 ```
 
 ```{r gapminder-bar-colors-plot, ref.label = "gapminder-bar-colors", echo = FALSE, fig.cap="The same chart, now with added colors"}
@@ -711,7 +711,7 @@ ggplot(
 This function changes the default palette to one that is colorblind-friendly and prints well in grayscale. The `scale_fill_viridis_c()` function is just one of many that start with `scale_` and can alter the fill scale.
 
 ```{r results='asis'}
-print_nostarch_file_name(actually_print = TRUE)
+print_nostarch_file_name()
 ```
 
 ```{r gapminder-viridis-plot, ref.label = "gapminder-viridis", echo = FALSE, fig.cap="The same chart with a colorblind-friendly palette"}
@@ -743,7 +743,7 @@ Notice in Figure \@ref(fig:gapminder-theme-plot) that this theme starts to declu
 
 
 ```{r results='asis'}
-print_nostarch_file_name(actually_print = TRUE)
+print_nostarch_file_name()
 ```
 
 ```{r gapminder-theme-plot, ref.label = "gapminder-theme", echo = FALSE, fig.cap="The same chart with `theme_minimal()` added"}
@@ -798,7 +798,7 @@ ggplot(
 In the `ggplot()` function, we tell R to put `week` on the x axis and `percentage` on the y axis. We also use the `category` variable for our `fill` color. We then use `geom_col()` to create a bar chart in which the fill color of each bar represents the percentage of the region in a single week at each drought level. You can see the result in in \@ref(fig:southwest-2003-no-style-plot).
 
 ```{r results='asis'}
-print_nostarch_file_name(actually_print = TRUE)
+print_nostarch_file_name()
 ```
 
 ```{r southwest-2003-no-style-plot, ref.label = "southwest-2003-no-style", echo = FALSE, fig.cap="One year and region of the drought visualization"}
@@ -860,7 +860,7 @@ ggplot(
 On the x axis, they removed both the axis title (“week”) using `name = NULL` and the 0–50 text with `guide = "none"`. On the y axis, they removed the title and text showing percentages using `labels = NULL`, which functionally does the same thing as `guide = "none"`. They also moved the axis lines themselves to the right side using `position = "right"`. These axis lines are only apparent as tick marks at this point but will become more visible later. Figure \@ref(fig:southwest-2003-xy-scales-plot) shows the result of these tweaks.
 
 ```{r results='asis'}
-print_nostarch_file_name(actually_print = TRUE)
+print_nostarch_file_name()
 ```
 
 ```{r southwest-2003-xy-scales-plot, ref.label = "southwest-2003-xy-scales", echo = FALSE, fig.cap="One year and region of the drought visualization with adjustments to the x and y axes"}
@@ -904,7 +904,7 @@ dm_perc_cat_hubs %>%
 Scherer and Karamanis put `year` in rows and `hub` (region) in columns. The `switch = "y"` argument moves the year label from the right side (where it appears by default) to the left. With this code in place, we can see the final plot coming together in Figure \@ref(fig:drought-viz-faceted-plot). 
 
 ```{r results='asis'}
-print_nostarch_file_name(actually_print = TRUE)
+print_nostarch_file_name()
 ```
 
 ```{r drought-viz-faceted-plot, ref.label = "drought-viz-faceted", fig.height = 8, echo = FALSE, fig.cap="The faceted version of the drought visualization. Space considerations require me to include only four regions, but you get the idea."}
@@ -1008,7 +1008,7 @@ geom_rect(
 They set some additional aesthetic properties specific to this geom: `xmin`, `xmax`, `ymin`, and `ymax`, which determine the boundaries of the rectangle it produces. The result is a gray background drawn behind each small multiple, as seen in Figure \@ref(fig:drought-viz-theme-tweaks-plot).
 
 ```{r results='asis'}
-print_nostarch_file_name(actually_print = TRUE)
+print_nostarch_file_name()
 ```
 
 ```{r drought-viz-theme-tweaks-plot, ref.label = "drought-viz-theme-tweaks", fig.height = 8, echo = FALSE, fig.cap="Figure 1-16	Faceted version of the drought visualization with gray backgrounds behind each small multiple"}
@@ -1042,7 +1042,7 @@ The `name` argument sets the legend title, and the `labels` argument determines 
 
 
 ```{r results='asis'}
-print_nostarch_file_name(actually_print = TRUE)
+print_nostarch_file_name()
 ```
 
 ```{r drought-viz-legend-tweaks, fig.height = 1, fig.cap="Drought visualization with changes made to the legend text"}

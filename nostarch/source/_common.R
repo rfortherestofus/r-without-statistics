@@ -24,7 +24,12 @@ library(tidyverse)
 
 # Functions ---------------------------------------------------------------
 
-create_nostarch_file_name <- function(file_type = "pdf", chap_number = chapter_number, print_figure_number = TRUE) {
+
+# * File Names ------------------------------------------------------------
+
+
+
+create_nostarch_file_name <- function(file_type = "pdf", chap_number = chapter_number, output_format = "word") {
   
   chapter_number_two_digits <- stringr::str_pad(chap_number, 2, "left", "0")
   figure_number_three_digits <- stringr::str_pad(i, 3, "left", "0")
@@ -35,17 +40,51 @@ create_nostarch_file_name <- function(file_type = "pdf", chap_number = chapter_n
   
 }
 
-print_nostarch_file_name <- function(file_type_to_print = "pdf", actually_print = FALSE) {
+print_nostarch_file_name <- function(file_type_to_print = "pdf", output_format = "word") {
   
   file_name_with_brackets <- stringr::str_glue("[{create_nostarch_file_name(file_type = file_type_to_print)}]")
   
-  if (actually_print == TRUE) {
+  if (output_format == "word") {
     
     cat(file_name_with_brackets)
     
   }
   
 }
+
+
+# * Tables ----------------------------------------------------------------
+
+save_table_for_nostarch <- function(table_object, output_format = "word") {
+  
+  if (output_format == "word") {
+    
+    file_name <- create_nostarch_file_name(file_type = "png")
+    file_name_with_path <- str_glue(here::here("nostarch/temp/{file_name}"))
+    
+    gtsave(data = table_object,
+           filename = file_name_with_path)
+    
+    save_image_for_nostarch(file_name_with_path) 
+    
+    knitr::include_graphics(file_name_with_path)
+    
+  }
+  
+}
+
+print_table_in_html <- function(table_object, output_format = "word") {
+  
+  if (output_format == "html") {
+    
+    table_object
+    
+  }
+  
+}
+
+
+# * Figures and Images ----------------------------------------------
 
 
 save_figure_for_nostarch <- function(figure_height = 4) {
@@ -65,42 +104,7 @@ save_figure_for_nostarch <- function(figure_height = 4) {
   
 }
 
-save_table_for_nostarch <- function(table_object, actually_save = FALSE) {
-  
-  if (actually_save == TRUE) {
-    
-    file_name <- create_nostarch_file_name(file_type = "png")
-    file_name_with_path <- str_glue(here::here("nostarch/temp/{file_name}"))
-    
-    gtsave(data = table_object,
-           filename = file_name_with_path)
-    
-    save_image_for_nostarch(file_name_with_path) 
-    
-  }
-  
-  if (actually_save == FALSE) {
-   
-    table_object
-    
-  }
-  
-  
-}
 
-print_last_table <- function(chap_number = chapter_number) {
-  
-  figure_number <- i - 1
-  
-  chapter_number_two_digits <- stringr::str_pad(chap_number, 2, "left", "0")
-  figure_number_three_digits <- stringr::str_pad(figure_number, 3, "left", "0")
-  
-  file_name <- stringr::str_glue("F{chapter_number_two_digits}{ figure_number_three_digits }.png")
-  
-  here::here(stringr::str_glue("nostarch/temp/{file_name}")) %>% 
-    knitr::include_graphics()
-  
-}
 
 save_image_for_nostarch <- function(image_file, chap_number = chapter_number) {
   

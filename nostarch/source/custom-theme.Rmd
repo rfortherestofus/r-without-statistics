@@ -39,7 +39,7 @@ Stylianou, Guibourg, and their colleagues set about looking into what would be i
 Take a look at this 2019 plot that Stylianou, Guibourg, and their colleague  Helen Briggs made for an article on the carbon footprint of various food items. It's got a distinctive look, with the same minimalist aesthetic we saw in Chapter \@ref(data-viz-chapter). 
 
 ```{r results='asis'}
-print_nostarch_file_name(file_type_to_print = "png", actually_print = TRUE)
+print_nostarch_file_name(file_type_to_print = "png")
 ```
 
 ```{r bbc-beef-chart, out.width="100%", fig.cap="BBC chart showing carbon impact of various foods"}
@@ -107,7 +107,7 @@ ggplot(
 The resulting plot, seen in Figure \@ref(fig:basic-penguins-plot-plot), isn't the most aesthetically pleasing chart, but we'll be improving it soon!
 
 ```{r results='asis'}
-print_nostarch_file_name(actually_print = TRUE)
+print_nostarch_file_name()
 ```
 
 ```{r basic-penguins-plot-plot, ref.label = "basic-penguins-plot", echo = FALSE, fig.cap = "A chart with the default theme"}
@@ -150,7 +150,7 @@ penguins_plot +
 Take a look at what happens in Figure \@ref(fig:penguins-bbc-style-plot) with the application of `bbc_style()` to our plot.
 
 ```{r results='asis'}
-print_nostarch_file_name(actually_print = TRUE)
+print_nostarch_file_name()
 ```
 
 ```{r penguins-bbc-style-plot, ref.label = "penguins-bbc-style", echo = FALSE, fig.cap = "The same chart with BBC style"}
@@ -259,7 +259,7 @@ It can be challenging to remember how to tweak different elements in a plot. For
 
 
 ```{r results='asis'}
-print_nostarch_file_name(file_type_to_print = "png", actually_print = TRUE)
+print_nostarch_file_name(file_type_to_print = "png")
 ```
 
 ```{r ggplot-theme-cheatsheet, out.width="100%", fig.cap="Cheatsheet for working with ggplot themes"}
@@ -316,7 +316,7 @@ penguins_plot +
 We can see these changes in Figure \@ref(fig:penguins-plot-text-formatting-plot) below.
 
 ```{r results='asis'}
-print_nostarch_file_name(actually_print = TRUE)
+print_nostarch_file_name()
 ```
 
 ```{r penguins-plot-text-formatting-plot, ref.label = "penguins-plot-text-formatting", echo = FALSE, fig.cap = "Our chart with only text formatting changed"}
@@ -369,7 +369,7 @@ penguins_plot_text +
 We can see the result in Figure \@ref(fig:penguins-plot-legend-plot).
 
 ```{r results='asis'}
-print_nostarch_file_name(actually_print = TRUE)
+print_nostarch_file_name()
 ```
 
 ```{r penguins-plot-legend-plot, ref.label = "penguins-plot-legend", echo = FALSE, include = TRUE, fig.cap = "Our chart with changes to the legend"}
@@ -419,7 +419,7 @@ penguins_plot_legend +
 We can see the changes to our axes in Figure \@ref(fig:penguins-plot-axes-plot).
 
 ```{r results='asis'}
-print_nostarch_file_name(actually_print = TRUE)
+print_nostarch_file_name()
 ```
 
 ```{r penguins-plot-axes-plot, ref.label = "penguins-plot-axes", fig.cap = "Our chart with changes to axis formatting"}
@@ -462,7 +462,7 @@ penguins_plot_axes +
 We can see the result of these tweaks to the grid lines in Figure \@ref(fig:penguins-plot-gridlines-plot).
 
 ```{r results='asis'}
-print_nostarch_file_name(actually_print = TRUE)
+print_nostarch_file_name()
 ```
 
 ```{r penguins-plot-gridlines-plot, ref.label = "penguins-plot-gridlines", fig.cap = "Our chart with tweaks to the grid lines"}
@@ -497,7 +497,7 @@ penguins_plot_grid_lines +
  The plot without the gray background is seen in Figure \@ref(fig:penguins-plot-no-bg).
 
 ```{r results='asis'}
-print_nostarch_file_name(actually_print = TRUE)
+print_nostarch_file_name()
 ```
 
 ```{r penguins-plot-no-bg, echo = FALSE, fig.cap = "Our chart with the gray background removed"}
@@ -514,7 +514,7 @@ And there we go! We've now recreated the plot that we made above using the `bbc_
 Let's make an example small multiples chart to show what this looks like. I've used the code from the `bbc_style()` function to make Figure \@ref(fig:penguin-facetted-plot) below.
 
 ```{r results='asis'}
-print_nostarch_file_name(actually_print = TRUE)
+print_nostarch_file_name()
 ```
 
 ```{r penguin-facetted-plot, fig.cap = "Small multiples chart with no changes to the strip text formatting"}
@@ -662,7 +662,7 @@ penguins_plot_weight +
 The result shows up in Figure \@ref(fig:penguins-plot-facetted-bbc-plot).
 
 ```{r results='asis'}
-print_nostarch_file_name(actually_print = TRUE)
+print_nostarch_file_name()
 ```
 
 ```{r penguins-plot-facetted-bbc-plot, ref.label = "penguins-plot-facetted-bbc", echo = FALSE, fig.cap = "Small multiples chart in the BBC style"}
@@ -675,7 +675,7 @@ save_figure_for_nostarch(figure_height = 5)
 If we now return to Figure \@ref(fig:bbc-beef-chart), the 2019 carbon impact of food chart that Nassos and Clara made, we can again see how similar it is. All of the tweaks in the `bbc_style()` function (text formatting, legends, axes, grid lines, and backgrounds) are visible. 
 
 ```{r results='asis'}
-print_nostarch_file_name(file_type_to_print = "png", actually_print = TRUE)
+print_nostarch_file_name(file_type_to_print = "png")
 ```
 
 ```{r bbc-beef-chart}
@@ -706,7 +706,7 @@ In addition to the `bbc_style()` function, the `bbplot` package also provides an
 The impact of `bbplot` would also come to be seen outside of the small team of data journalists that brought it to life. Others at the BBC saw how the data journalism team was now able to produce production-ready graphs and they wanted to do the same. This led the data journalism team to set up R trainings for their colleagues and to develop a "cookbook" (shown in Figure \@ref(fig:bbc-cookbook)) that provided examples of how to make various types of charts. 
 
 ```{r results='asis'}
-print_nostarch_file_name(file_type_to_print = "png", actually_print = TRUE)
+print_nostarch_file_name(file_type_to_print = "png")
 ```
 
 ```{r bbc-cookbook, out.width="100%", fig.cap="Screenshot of BBC graphics cookbook"}

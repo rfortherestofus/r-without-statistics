@@ -22,20 +22,16 @@ file_copy(path = source_files,
 # Fix stuff in _common.R
 
 gsub_file(file = "nostarch/source/_common.R",
-          "print_figure_number = FALSE",
-          "print_figure_number = TRUE")
+          'output_format = "html"',
+          'output_format = "word"')
 
-gsub_files(files = dir_ls(path = "nostarch/source", regexp = "Rmd"),
-           "print_nostarch_file_name\\(\\)",
-           "print_nostarch_file_name(actually_print = TRUE)")
-
-gsub_files(files = dir_ls(path = "nostarch/source", regexp = "Rmd"),
-           "print_nostarch_file_name\\(\\)",
-           "print_nostarch_file_name(actually_save = TRUE)")
-
-gsub_files(files = dir_ls(path = "nostarch/source", regexp = "Rmd"),
-           'print_nostarch_file_name\\(file_type_to_print = "png"\\)',
-           'print_nostarch_file_name(file_type_to_print = "png", actually_print = TRUE)')
+# gsub_files(files = dir_ls(path = "nostarch/source", regexp = "Rmd"),
+#            "save_table_for_nostarch\\(table\\)",
+#            "save_table_for_nostarch\\(table, actually_print = TRUE\\)")
+# 
+# gsub_files(files = dir_ls(path = "nostarch/source", regexp = "Rmd"),
+#            'print_nostarch_file_name\\(file_type_to_print = "png"\\)',
+#            'print_nostarch_file_name(file_type_to_print = "png", actually_print = TRUE)')
 
 gsub_file(file = "nostarch/source/_bookdown.yml",
           '\\# fig: \\!expr function\\(i\\) paste\\(""\\)',
