@@ -25,20 +25,9 @@ gsub_file(file = "nostarch/source/_common.R",
           'output_format = "html"',
           'output_format = "word"')
 
-# gsub_files(files = dir_ls(path = "nostarch/source", regexp = "Rmd"),
-#            "save_table_for_nostarch\\(table\\)",
-#            "save_table_for_nostarch\\(table, actually_print = TRUE\\)")
-# 
-# gsub_files(files = dir_ls(path = "nostarch/source", regexp = "Rmd"),
-#            'print_nostarch_file_name\\(file_type_to_print = "png"\\)',
-#            'print_nostarch_file_name(file_type_to_print = "png", actually_print = TRUE)')
-
 gsub_file(file = "nostarch/source/_bookdown.yml",
           '\\# fig: \\!expr function\\(i\\) paste\\(""\\)',
           'fig: !expr function(i) paste("")')
-
-
-
 
 # Delete all existing figures ---------------------------------------------
 
@@ -64,52 +53,3 @@ file_show("nostarch/word/r-without-statistics.docx")
 
 beepr::beep()
 
-
-# Replace figure x.x with x-x in Word doc ---------------------------------
-
-# word_doc <- read_docx("nostarch/word/r-without-statistics.docx")
-# 
-# updated_word_doc <- body_replace_all_text(word_doc,
-#                                           "Figure ([0-9]*)\\.([0-9]*)",
-#                                           "Figure \\1-\\2")
-# 
-# str_replace("Figure 2.1",
-#             pattern = regex("[0-9]\\.[0-9]"),
-#             replacement = "test")
-# 
-# fig <- "Figure 127.34"
-# stringr::str_replace(fig, "Figure ([0-9]*)\\.([0-9]*)", "Figure \\1-\\2")
-# 
-# str_replace(fig, "\\[\\.\\]", "test")
-# 
-# print(updated_word_doc,
-#       target = "nostarch/word/new.docx")
-
-
-# Change styles -----------------------------------------------------------
-
-# word_doc <- read_docx("nostarch/word/r-without-statistics.docx")
-# 
-# styles_info(word_doc)
-# 
-# updated_doc <- change_styles(word_doc,
-#               list(
-#                  "Body" = "Body Text"
-#               ))
-# 
-# print(updated_doc,
-#       target = "nostarch/word/new.docx")
-# 
-# file_show("nostarch/word/new.docx")
-
-
-# Manual Rendering --------------------------------------------------------
-
-# Everything
-# rmarkdown::render_site()
-
-# Website only
-# rmarkdown::render_site(output_format = 'bookdown::bs4_book', encoding = 'UTF-8')
-
-# Just Word
-# rmarkdown::render_site(output_format = 'bookdown::word_document2', encoding = 'UTF-8')
