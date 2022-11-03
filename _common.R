@@ -65,18 +65,26 @@ save_figure_for_nostarch <- function(figure_height = 4) {
   
 }
 
-save_table_for_nostarch <- function(table_object) {
+save_table_for_nostarch <- function(table_object, actually_save = FALSE) {
   
-  file_name <- create_nostarch_file_name(file_type = "png")
-  file_name_with_path <- str_glue(here::here("nostarch/temp/{file_name}"))
-  # file_name_with_path <- str_glue("{tempdir()}/{file_name}")
+  if (actually_save == TRUE) {
+    
+    file_name <- create_nostarch_file_name(file_type = "png")
+    file_name_with_path <- str_glue(here::here("nostarch/temp/{file_name}"))
+    
+    gtsave(data = table_object,
+           filename = file_name_with_path)
+    
+    save_image_for_nostarch(file_name_with_path) 
+    
+  }
   
-  gtsave(data = table_object,
-         filename = file_name_with_path)
+  if (actually_save == FALSE) {
+   
+    table_object
+    
+  }
   
-  save_image_for_nostarch(file_name_with_path) 
-  
-  # return(file_name_with_path)
   
 }
 
