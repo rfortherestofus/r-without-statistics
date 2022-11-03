@@ -273,7 +273,7 @@ save_image_for_nostarch(here::here("assets/ggplot_theme_system_cheatsheet.png"))
 
 As you can see, the `bbc_style()` function does a lot of tweaking. So, let's go through the changes it makes, section by section. 
 
-#### Text Formatting {-}
+### Text Formatting {-}
 
 The first section of the code deals with text formatting. First, it defines a variable called "font" and assigns it the value "Helvetica." This allows later sections of code to simply write "font" rather than repeating "Helvetica" over and over again. And, if the team ever wanted to use a different font, they could simply change "Helvetica" to, say, "Comic Sans" and change all BBC plots (I suspect higher-ups at the BBC might not be on board). 
 
@@ -346,7 +346,7 @@ penguins_plot_text <- penguins_plot +
   )
 ```
 
-#### Legend Formatting {-}
+### Legend Formatting {-}
 
 Next, we deal with the legend. The code puts the legend on top of the plot, and left aligns the text within it. Then, it removes the legend background (this would only show up if the background color of the entire plot were different than the legend background), title, and legend key (this is a box that can show up around the boxes with the names of the islands). Finally, we make the legend text 18-point Helevetica with the same nearly black color. 
 
@@ -397,7 +397,7 @@ penguins_plot_legend <- penguins_plot_text +
   )
 ```
 
-#### Axis Formatting {-}
+### Axis Formatting {-}
 
 Next up are the axes. The code first removes axis titles because, as Nassos told me, these tend to take up a lot of chart real estate and you can use the title and subtitle to make clear what the axes show. All text on axes becomes 18-point Helevetica nearly black. The text on the x axis (in our case, Biscoe, Dream, and Torgersen) gets a bit of spacing around it. And, finally, both axis ticks and axis lines are removed. 
 
@@ -446,7 +446,7 @@ penguins_plot_axes <- penguins_plot_legend +
   )
 ```
 
-#### Grid Lines Formatting {-}
+### Grid Lines Formatting {-}
 
 Now that we've tweaked overall text formatting, the legend, and the axes, let's move onto grid lines. The approach here is fairly straightforward: remove all minor grid lines, remove major grid lines on the x axis, keeping only major grid lines on the y axis, but making them a light gray (using the #cbcbcb hex code). 
 
@@ -483,7 +483,7 @@ penguins_plot_grid_lines <- penguins_plot_axes +
   )
 ```
 
-#### Background Formatting {-}
+### Background Formatting {-}
 
 Of course, in the previous iteration of our plot, it still had a gray background. The `bbc_style()` function removes this with the following code.
 
@@ -507,7 +507,7 @@ print_nostarch_file_name()
 save_figure_for_nostarch(figure_height = 5)
 ```
 
-#### Small Multiples Formatting {-}
+### Small Multiples Formatting {-}
 
 And there we go! We've now recreated the plot that we made above using the `bbc_style()` function. However, you may recall there is a bit more code in the `bbc_style()` function. This code deals with `strip.background` and `strip.text`. Both of these occur when we make small multiples charts. Small multiples is a common technique in data visualization, where, instead of making one chart that incorporates all of the available data, we break the chart into multiple charts in order to make the final results easier for the reader to comprehend. 
 
@@ -685,7 +685,7 @@ print_nostarch_file_name(file_type_to_print = "png")
 save_image_for_nostarch(here::here("assets/bbc-food-chart.png"))
 ```
 
-#### What About Colors? {-}
+### What About Colors? {-}
 
 You might be thinking: wait, what about the colors? Doesn't the theme change that? It's a common point of confusion. If we read the documentation for the `theme()` function, though, it becomes clearer why this is the case:
 
