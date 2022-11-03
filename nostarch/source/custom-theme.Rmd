@@ -20,7 +20,7 @@ To understand how big these changes were, it's helpful to understand what things
 
 1. They could use an internal tool. This tool could create data visualization, but only the predefined charts it had been designed to generate. 
 
-1. They could use Excel to create mockups and then work with a graphic designer to finalize the charts. This approach led to better results, and was way more flexible, but required extensive back-and-forth with a designer. As Stylianou described it, working with a designer "is just a very time consuming workflow if you think of how many visualizations the BBC does." 
+1. They could use Excel to create mockups and then work with a graphic designer to finalize the charts. This approach led to better results, and was way more flexible, but required extensive back-and-forth with a designer. As Stylianou described it, working with a designer "is just a very time-consuming workflow if you think of how many visualizations the BBC does." 
 
 Neither of these choices was ideal. And this limited set of less-than-ideal choices led to a limited output of data viz.   
 
@@ -168,8 +168,6 @@ You'll see that instead of loading the package `ggplot2` with the code `library(
 
 I've made some minor formatting tweaks for readability. For example, you can see the comments in ALL CAPS, which show the category of modification that the section which follows makes. Fortunately for us, the code is organized nicely and allows us to see what each section does. 
 
-TODO: START HERE BY CHECKING LINE LENGTH
-
 ```{r echo = TRUE}
 bbc_style <- function() {
   font <- "Helvetica"
@@ -177,27 +175,32 @@ bbc_style <- function() {
   ggplot2::theme(
     
     # TEXT FORMAT
-    # This sets the font, size, type and colour of text for the chart's title
+    # This sets the font, size, type and colour 
+    # of text for the chart's title
     plot.title = ggplot2::element_text(
       family = font,
       size = 28,
       face = "bold",
       color = "#222222"
     ),
-    # This sets the font, size, type and colour of text for the chart's subtitle,
+    # This sets the font, size, type and colour
+    # of text for the chart's subtitle,
     # as well as setting a margin between the title and the subtitle
     plot.subtitle = ggplot2::element_text(
       family = font,
       size = 22,
       margin = ggplot2::margin(9, 0, 9, 0)
     ),
-    # This leaves the caption text element empty, because it is set elsewhere in the finalise plot function
+    # This leaves the caption text element empty, 
+    # because it is set elsewhere in the finalise plot function
     plot.caption = ggplot2::element_blank(),
     
     # LEGEND FORMAT
-    # This sets the position and alignment of the legend, removes a title and background for it
+    # This sets the position and alignment of the legend, 
+    # removes a title and background for it
     # and sets the requirements for any text within the legend.
-    # The legend may often need some more manual tweaking when it comes to its exact position based on the plot coordinates.
+    # The legend may often need some more manual tweaking 
+    # when it comes to its exact position based on the plot coordinates.
     legend.position = "top",
     legend.text.align = 0,
     legend.background = ggplot2::element_blank(),
@@ -210,8 +213,11 @@ bbc_style <- function() {
     ),
     
     # AXIS FORMAT
-    # This sets the text font, size and colour for the axis test, as well as setting the margins and removes lines and ticks.
-    # In some cases, axis lines and axis ticks are things we would want to have in the chart - the cookbook shows examples of how to do so.
+    # This sets the text font, size and colour for the axis test, 
+    # as well as setting the margins and removes lines and ticks.
+    # In some cases, axis lines and axis ticks are things we would 
+    # want to have in the chart - 
+    # the cookbook shows examples of how to do so.
     axis.title = ggplot2::element_blank(),
     axis.text = ggplot2::element_text(
       family = font,
@@ -224,19 +230,22 @@ bbc_style <- function() {
     
     # GRID LINES
     # This removes all minor gridlines and adds major y gridlines.
-    # In many cases you will want to change this to remove y gridlines and add x gridlines.
+    # In many cases you will want to change this to remove 
+    # y gridlines and add x gridlines.
     # The cookbook shows you examples for doing so.
     panel.grid.minor = ggplot2::element_blank(),
     panel.grid.major.y = ggplot2::element_line(color = "#cbcbcb"),
     panel.grid.major.x = ggplot2::element_blank(),
     
     # BLANK BACKGROUND
-    # This sets the panel background as blank, removing the standard grey ggplot background colour from the plot.
+    # This sets the panel background as blank, removing the standard 
+    # grey ggplot background colour from the plot.
     panel.background = ggplot2::element_blank(),
     
     # STRIP BACKGROUND
     # This sets the panel background for facet-wrapped plots to white,
-    # removing the standard grey ggplot background colour and sets the title size of the facet-wrap title to font size 22.
+    # removing the standard grey ggplot background colour and sets the 
+    # title size of the facet-wrap title to font size 22.
     strip.background = ggplot2::element_rect(fill = "white"),
     strip.text = ggplot2::element_text(size = 22, hjust = 0)
   )
@@ -247,9 +256,19 @@ Nearly all of the code in the `bbc_style()` function exists within the `theme()`
 
 It can be challenging to remember how to tweak different elements in a plot. Fortunately, there are cheatsheets available to help. This one by Clara Granell shows the various elements that you can tweak within the `theme()` function. 
 
+
+
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png", actually_print = TRUE)
+```
+
 ```{r ggplot-theme-cheatsheet, out.width="100%", fig.cap="Cheatsheet for working with ggplot themes"}
 # TODO: Reformat this so it fits in the book
 knitr::include_graphics(here::here("assets/ggplot_theme_system_cheatsheet.png"))
+```
+
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/ggplot_theme_system_cheatsheet.png"))
 ```
 
 As you can see, the `bbc_style()` function does a lot of tweaking. So, let's go through the changes it makes, section by section. 
