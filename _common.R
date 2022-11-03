@@ -27,8 +27,6 @@ library(tidyverse)
 
 # * File Names ------------------------------------------------------------
 
-
-
 create_nostarch_file_name <- function(file_type = "pdf", chap_number = chapter_number, output_format = "html") {
   
   chapter_number_two_digits <- stringr::str_pad(chap_number, 2, "left", "0")

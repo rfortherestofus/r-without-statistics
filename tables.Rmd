@@ -123,6 +123,10 @@ save_table_for_nostarch(table)
 ```
 
 
+```{r}
+print_table_in_html(table)
+```
+
 You know how I mentioned before that `gt` uses good table design principles by default? This is a great example of it. The second table, with minimal gridlines, requires just two lines. We pipe our `gdp` data into the `gt()` function, which creates a table. 
 
 ```{r echo = TRUE, eval = FALSE}
@@ -188,6 +192,10 @@ table <- gdp %>%
 save_table_for_nostarch(table)
 ```
 
+
+```{r}
+print_table_in_html(table)
+```
 
 ### Principle Two: Differentiate the Header from the Body {-}
 
