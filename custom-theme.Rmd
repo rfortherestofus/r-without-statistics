@@ -36,22 +36,9 @@ Stylianou, Guibourg, and their colleagues set about looking into what would be i
 
 ## Enter bbplot {-}
 
-Take a look at this 2019 plot that Stylianou, Guibourg, and their colleague  Helen Briggs made for an article on the carbon footprint of various food items. It's got a distinctive look, with the same minimalist aesthetic we saw in Chapter \@ref(data-viz-chapter). 
+In 2018, Stylianou, Guibourg, and others at the BBC developed a package called `bbplot`. This package has two functions: `bbc_style()` and `finalise_plot()`. The latter deals with things like adding the BBC logo, saving plots in the correct dimensions, and other tasks done after the plot is complete (we'll discuss it a bit later on). For now, let's look at the `bbc_style()` function. This function applies a custom ggplot theme to any plot, making all plots look consistent and follow BBC style guidelines. 
 
-```{r results='asis'}
-print_nostarch_file_name(file_type_to_print = "png")
-```
-
-```{r bbc-beef-chart, out.width="100%", fig.cap="BBC chart showing carbon impact of various foods"}
-# https://www.bbc.com/news/science-environment-46459714
-knitr::include_graphics(here::here("assets/bbc-food-chart.png"))
-```
-
-```{r results='asis'}
-save_image_for_nostarch(here::here("assets/bbc-food-chart.png"))
-```
-
-This plot was made using the `bbplot` package. To show how this works, let's create our own plot. We'll do so using the `palmerpenguins` package, which has data on penguins living on three islands in Antarctica. To give you a sense of what this data looks like, let's load the `palmerpenguins` and `tidyverse` packages.
+To show how this function works, let's create a plot. We'll do so using the `palmerpenguins` package, which has data on penguins living on three islands in Antarctica. To give you a sense of what this data looks like, let's load the `palmerpenguins` and `tidyverse` packages.
 
 ```{r echo = TRUE}
 library(palmerpenguins)
@@ -138,11 +125,15 @@ penguins_plot <- ggplot(
 
 ### The `bbc_style()` function {-}  
 
-Now that we have a basic plot to work with, let's make it look like a BBC chart. To do this, we load the `bbplot` package. This package has two functions: `bbc_style()` and `finalise_plot()`. The latter deals with things like adding the BBC logo, saving plots in the correct dimensions, and other tasks done after the plot is complete. We'll discuss this a bit more below. For now, let's look at the `bbc_style()` function. This function applies a custom ggplot theme to any plot. We first load the `bbplot` package. Then we apply `bbc_style()` to `penguins_plot`.
+Now that we have a basic plot to work with, let's make it look like a BBC chart. To do this, we load the `bbplot` package. 
+
+```{r echo = TRUE}
+library(bbplot)
+```
+
+We can then apply the `bbc_style()` function to our `penguins_plot`. 
 
 ```{r penguins-bbc-style, echo = TRUE, eval = FALSE}
-library(bbplot)
-
 penguins_plot +
   bbc_style()
 ```
@@ -252,26 +243,7 @@ bbc_style <- function() {
 }
 ```
 
-Nearly all of the code in the `bbc_style()` function exists within the `theme()` function from `ggplot2`. In the Chapter \@ref(data-viz-chapter), we saw how Cédric Scherer and Georgios Karamanis customized their plot by applying the `theme_light()` function. This a so-called complete theme, meaning you can call the function and will change the whole look-and-feel of your plot. After applying `theme_light()`, Scherer and Karamanis used the `theme()` function make additional tweaks. The `bbc_style()` theme does not use a complete theme to start. Instead, by jumping straight into the `theme()` function, they make tweaks to the ggplot defaults. 
-
-It can be challenging to remember how to tweak different elements in a plot. Fortunately, there are cheatsheets available to help. This one by Clara Granell shows the various elements that you can tweak within the `theme()` function. 
-
-
-
-```{r results='asis'}
-print_nostarch_file_name(file_type_to_print = "png")
-```
-
-```{r ggplot-theme-cheatsheet, out.width="100%", fig.cap="Cheatsheet for working with ggplot themes"}
-# TODO: Reformat this so it fits in the book
-knitr::include_graphics(here::here("assets/ggplot_theme_system_cheatsheet.png"))
-```
-
-```{r results='asis'}
-save_image_for_nostarch(here::here("assets/ggplot_theme_system_cheatsheet.png"))
-```
-
-As you can see, the `bbc_style()` function does a lot of tweaking. So, let's go through the changes it makes, section by section. 
+Nearly all of the code in the `bbc_style()` function exists within the `theme()` function from `ggplot2`. In the Chapter \@ref(data-viz-chapter), we saw how Cédric Scherer and Georgios Karamanis customized their plot by applying the `theme_light()` function. This a so-called complete theme, meaning you can call the function and will change the whole look-and-feel of your plot. After applying `theme_light()`, Scherer and Karamanis used the `theme()` function make additional tweaks. The `bbc_style()` theme does not use a complete theme to start. Instead, by jumping straight into the `theme()` function, they make tweaks to the ggplot defaults. As you can see, the `bbc_style()` function does a lot of tweaking. So, let's go through the changes it makes, section by section. 
 
 ### Text Formatting {-}
 
@@ -348,7 +320,7 @@ penguins_plot_text <- penguins_plot +
 
 ### Legend Formatting {-}
 
-Next, we deal with the legend. The code puts the legend on top of the plot, and left aligns the text within it. Then, it removes the legend background (this would only show up if the background color of the entire plot were different than the legend background), title, and legend key (this is a box that can show up around the boxes with the names of the islands). Finally, we make the legend text 18-point Helevetica with the same nearly black color. 
+Next, we deal with the legend. The code puts the legend on top of the plot, and left aligns the text within it. Then, it removes the legend background (this would only show up if the background color of the entire plot were different than the legend background), title, and legend key (this is a box that can show up around the boxes with the names of the islands). Finally, we make the legend text 18-point Helvetica with the same nearly black color. 
 
 ```{r penguins-plot-legend, echo = TRUE, eval = FALSE}
 penguins_plot_text +
@@ -494,7 +466,7 @@ penguins_plot_grid_lines +
   )
 ```
 
- The plot without the gray background is seen in Figure \@ref(fig:penguins-plot-no-bg).
+The plot without the gray background is seen in Figure \@ref(fig:penguins-plot-no-bg).
 
 ```{r results='asis'}
 print_nostarch_file_name()
@@ -691,7 +663,7 @@ You might be thinking: wait, what about the colors? Doesn't the theme change tha
 
 > Themes are a powerful way to customize the non-data components of your plots: i.e. titles, labels, fonts, background, gridlines, and legends.
 
-Color is used in plots as an aesthetic property to show something about data. In Figure \@ref(fig:bbc-beef-chart), for instance, color is mapped to the type of carbon impact (emissions, land use, and water use). As we saw in Chapter \@ref(data-viz-chapter), we can change color using the various `scale_` functions. It is because color is tied to the data rather than being about the overall look-and-feel that ggplot themes do not, on their own, change this component of plots. 
+Color (or, technically, in the case of the bar charts we have made in this chapter, fill) is used in plots as an aesthetic property to show something about data. In our small multiples chart, for instance, fill is mapped to the island (Biscoe is salmon, Dream is green, and Torgersen is blue). As we saw in Chapter \@ref(data-viz-chapter), we can change fill using the various `scale_fill_` functions. It is because fill is tied to the data rather than being about the overall look-and-feel that ggplot themes do not, on their own, change this component of plots. 
 
 ## Code is the Catalyst for Culture Change {-}
 
@@ -703,19 +675,7 @@ The development of the `bbplot` package would lead to significant changes at the
 
 In addition to the `bbc_style()` function, the `bbplot` package also provides another function called `finalise_plot()` that adds a source at the bottom of the chart (recall how the `bbc_style()` function removed the caption), adds the BBC logo in the footer, and gives height, width, and file name options for saving the plot. These two functions combined allowed Nassos, Clara, and others to achieve their holy grail: creating production-ready graphs that could go straight from R to the BBC website. 
 
-The impact of `bbplot` would also come to be seen outside of the small team of data journalists that brought it to life. Others at the BBC saw how the data journalism team was now able to produce production-ready graphs and they wanted to do the same. This led the data journalism team to set up R trainings for their colleagues and to develop a "cookbook" (shown in Figure \@ref(fig:bbc-cookbook)) that provided examples of how to make various types of charts. 
-
-```{r results='asis'}
-print_nostarch_file_name(file_type_to_print = "png")
-```
-
-```{r bbc-cookbook, out.width="100%", fig.cap="Screenshot of BBC graphics cookbook"}
-knitr::include_graphics(here::here("assets/bbc-graphics-cookbook.png"))
-```
-
-```{r results='asis'}
-save_image_for_nostarch(here::here("assets/bbc-graphics-cookbook.png"))
-```
+The impact of `bbplot` would also come to be seen outside of the small team of data journalists that brought it to life. Others at the BBC saw how the data journalism team was now able to produce production-ready graphs and they wanted to do the same. This led the data journalism team to set up R trainings for their colleagues and to develop a "cookbook" (found at https://bbc.github.io/rcookbook/) that provided examples of how to make various types of charts. 
 
 These two resources led to a large increase in R users at the BBC. As Stylianou told me, they "spurred people a lot people outside of the data journalism team to take a real interest [in R]." Having `bbplot` made the value of R click for many people at the BBC. He continued:
 

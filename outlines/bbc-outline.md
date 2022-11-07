@@ -38,3 +38,21 @@ Overall message: bbplot allows people to make plots that are on-brand, but that'
 		14. Clara: "I think that what helped me, get started with it then was that there was just a really supportive environment at the BBC for learning internally."
 	15. During pandemic, R was used all the time to make data viz
 		16. Nassos: "It's something that just happens cuz it's all there."
+
+
+Cheatsheet pieces
+- plot.title
+- plot.subtitle
+- plot.caption
+- legend.position
+- legend.text.align
+- legend.background
+- legend.title
+- legend.key
+- legend.text
+- axis.title
+- axis.text
+- axis.text.x
+- axis.ticks
+- axis.line
+- 
