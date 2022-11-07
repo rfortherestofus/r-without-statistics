@@ -7,7 +7,7 @@
 ## To Write
 
 ### September
-- [ ] Custom theme
+- [x] Custom theme
 
 ### October
 - [ ] Maps
