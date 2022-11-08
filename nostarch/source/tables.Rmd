@@ -66,7 +66,7 @@ gdp <- gapminder %>%
   rename(Country = country)
 ```
 
-I've created a data frame called `gdp`. We can see what it looks like.
+I've created a data frame called `gdp`. Let's see what it looks like.
 
 ```{r include = TRUE, echo = FALSE}
 gdp
@@ -103,9 +103,6 @@ save_table_for_nostarch(table)
 ```{r}
 print_table_in_html(table)
 ```
-
-
-
 
 Having gridlines around every single cell in our table is unnecessary and creates visual clutter that distracts from the goal of communicating clearly. A table with minimal or even no gridlines is a much more effective communication tool. 
 
@@ -188,7 +185,6 @@ table <- gdp %>%
 save_table_for_nostarch(table)
 ```
 
-
 ```{r}
 print_table_in_html(table)
 ```
@@ -204,7 +200,6 @@ table <- gdp %>%
   gt() %>% 
   opt_table_lines(extent = "none")
 
-
 save_table_for_nostarch(table)
 ```
 
@@ -212,7 +207,7 @@ save_table_for_nostarch(table)
 print_table_in_html(table)
 ```
 
-We saw how to use appropriate gridlines above. We can add bolding to our header row to make it stand out even more. Again, we do this with the `tab_style()` function two-step, first saying we want to alter the text (using the `cell_text()` function) by setting the weight to bold and then saying we want this to happen only to the header row (using the `cells_column_labels()` function).
+We saw how to use appropriate gridlines above. We can make our header row bold to make it stand out even more. Again, we do this with the `tab_style()` function two-step, first saying we want to alter the text (using the `cell_text()` function) by setting the weight to bold and then saying we want this to happen only to the header row (using the `cells_column_labels()` function).
 
 ```{r echo = TRUE, eval = FALSE}
 gdp %>% 
@@ -318,9 +313,7 @@ gdp_with_bosnia <- gapminder %>%
 gdp_with_bosnia
 ```
 
-
 Let's then take the `gdp_with_bosnia` data frame and create a table with the country column center aligned. In this table, it is hard to scan the country names and that center-aligned column just looks a bit weird.
-
 
 ```{r results='asis', include = TRUE}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -435,8 +428,6 @@ save_table_for_nostarch(table)
 print_table_in_html(table)
 ```
 
-
-
 ### Principle Five: Use Color Intentionally {-}
 
 Up to this point, our table has not had any color. We're now going to add some, using color to highlight outliers. Especially for those readers who want to scan your table, highlighting outliers with color can help significantly. Let's make the highest value in any single year a different color. To do this, we again use the `tab_style()` function. Within this function, I'm using the `cell_text()` function to change both the color of text to orange and make it bold. I'm then using the `locations` argument to say that we want to adjust cells in the body of the table. Within the `cells_body()` function, we have to specify both the columns we want to apply our change to and the rows. If we just look at 1952, we see that we set the columns equal to that year. The rows are set to a more complicated formula. The text rows = `1952` == max(`1952`) means that the text transformation will occur in rows where the value is equal to the maximum value in that year. 
@@ -477,7 +468,6 @@ gdp %>%
 ```
 
 We then repeat this same code for 1972 and 1992, with the result shown below.
-
 
 ```{r results='asis', include = TRUE}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -524,14 +514,19 @@ print_table_in_html(table)
 
 ### Principle Six: Add Data Visualization Where Appropriate {-}
 
-Adding color to highlight outliers is one way to help guide the reader's attention. Another way is to incorporate graphs into tables. Tom Mock has developed an add-on package for `gt` called `gtExtras` that makes it possible to do just this. In our table that we've made we might want to show the trend of GDP by country. To do that, we'll add a new column that shows this trend using a sparkline (essentially, a simple line chart). 
-The `gt_plt_sparkline()` function that we'll use to do this requires us to have a single column with all of the values needed to make the sparkline. We'll create a variable called `Trend` using `group_by()` and `mutate()`. This variable will be a list of the values for each country (so, for Afghanistan, it would be 779.4453145, 739.9811058, and 649.3413952). From there, we create our table, same as before. But at the end of our code, we add the `gt_plt_sparkline()` function. Within this function, we specify which column to use to create the sparkline (`Trend`). We set `label = FALSE` to remove text labels that `gt_plt_sparkline()` adds by default. And we add `palette = c("black", "transparent", "transparent", "transparent", "transparent")` to make the sparkline black and all other elements of it transparent (by default, the function will make different parts of the sparkline different colors). 
+Adding color to highlight outliers is one way to help guide the reader's attention. Another way is to incorporate graphs into tables. Tom Mock has developed an add-on package for `gt` called `gtExtras` that makes it possible to do just this. In our table that we've made we might want to show the trend of GDP by country. To do that, we'll add a new column that shows this trend using a sparkline (essentially, a simple line chart). The `gt_plt_sparkline()` function that we'll use to do this requires us to have a single column with all of the values needed to make the sparkline. We'll create a variable called `Trend` using `group_by()` and `mutate()`. This variable will be a list of the values for each country (so, for Afghanistan, it would be 779.4453145, 739.9811058, and 649.3413952). We'll save this as an object called `gdp_with_trend`.
 
-```{r eval = FALSE, echo = TRUE}
-gdp %>% 
+```{r echo = TRUE}
+gdp_with_trend <- gdp %>% 
   group_by(Country) %>% 
   mutate(Trend = list(c(`1952`, `1972`, `1992`))) %>% 
-  ungroup() %>% 
+  ungroup()
+```
+
+From there, we create our table, same as before. But at the end of our code, we add the `gt_plt_sparkline()` function. Within this function, we specify which column to use to create the sparkline (`Trend`). We set `label = FALSE` to remove text labels that `gt_plt_sparkline()` adds by default. And we add `palette = c("black", "transparent", "transparent", "transparent", "transparent")` to make the sparkline black and all other elements of it transparent (by default, the function will make different parts of the sparkline different colors). 
+
+```{r eval = FALSE, echo = TRUE}
+gdp_with_trend %>% 
   gt() %>% 
   tab_style(
     style = cell_borders(color = "transparent"),
@@ -568,16 +563,12 @@ gdp %>%
                    palette = c("black", "transparent", "transparent", "transparent", "transparent"))
 ```
 
-This stripped-down sparkline now allows the user to see the trend for each country at a glance. 
-
+This stripped-down sparkline now allows the reader to see the trend for each country at a glance. 
 
 ```{r results='asis', include = TRUE}
 print_nostarch_file_name(file_type_to_print = "png")
 
-table <- gdp %>% 
-  group_by(Country) %>% 
-  mutate(Trend = list(c(`1952`, `1972`, `1992`))) %>% 
-  ungroup() %>% 
+table <- gdp_with_trend %>% 
   gt() %>% 
   tab_style(
     style = cell_borders(color = "transparent"),
@@ -659,7 +650,6 @@ gdp %>%
 
 Take a look at tables on the FiveThirtyEight website and you'll see the similarities to this table.
 
-
 ```{r results='asis', include = TRUE}
 print_nostarch_file_name(file_type_to_print = "png")
 
@@ -698,7 +688,8 @@ save_table_for_nostarch(table)
 print_table_in_html(table)
 ```
 
-
 Add-on packages like `gtExtras` are common in the table-making landscape. If you are working with the `reactable` package to make interactive tables, for example, you can also use the `reactablefmtr` to add interactive sparklines, themes, and more. The functionality that you get from these packages is enough to never make you go back to making tables in Word!
 
-No matter which packages you use to make tables, it's essential to treat them as worthy of as much thought as data visualization (because, let me remind you, tables *are* data visualization). Good tables are well designed; they are not data dumps. And fortunately for us, R is well-suited to making well designed tables. Working within R, the tool you're already using to create your reports (especially if you're using RMarkdown, a tool we discuss in \@ref(rmarkdown-chapter)), you make publication-ready tables with just a few lines of code.
+No matter which package you use to make tables, it's essential to treat them as worthy of as much thought as data visualization (because, let me remind you, tables *are* data visualization). Good tables are well designed; they are not data dumps. And fortunately for us, R is well-suited to making well designed tables. The `gt` package, as we've repeatedly seen, has good defaults built in. Oftentimes, you don't need to change much to end up with high-quality tables. 
+
+And it's not just that we have good packages to make tables. R is a great tool for making tables because it's the tool you're already using to create your reports (especially if you're using RMarkdown, a tool we discuss in \@ref(rmarkdown-chapter)). What better than using just a few lines of code to make publication-ready tables? 
