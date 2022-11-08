@@ -5,8 +5,6 @@ delete_merged_file: true
 language:
   ui:
     chapter_name: "Chapter "
-  label:
-    fig: !expr function(i) paste("")
 rmd_files: [
   "index.Rmd",
   
