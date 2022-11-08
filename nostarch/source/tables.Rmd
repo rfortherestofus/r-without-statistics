@@ -74,7 +74,7 @@ gdp
 
 Now that we've created the data frame we can work with, it's time to talk about reducing clutter by getting rid of gridlines. Often, you see tables that look like this:
 
-```{r results='asis', include = TRUE, echo = FALSE}
+```{r results='asis', include = TRUE, echo = FALSE, fig.cap = "Table with gridlines everywhere"}
 print_nostarch_file_name(file_type_to_print = "png")
 
 table <- gdp %>% 
@@ -106,7 +106,7 @@ print_table_in_html(table)
 
 Having gridlines around every single cell in our table is unnecessary and creates visual clutter that distracts from the goal of communicating clearly. A table with minimal or even no gridlines is a much more effective communication tool. 
 
-```{r results='asis', include = TRUE, echo = FALSE}
+```{r results='asis', include = TRUE, echo = FALSE, fig.cap = "Table with only horizontal gridlines"}
 print_nostarch_file_name(file_type_to_print = "png")
 
 table <- gdp %>% 
@@ -171,7 +171,7 @@ gdp %>%
 
 Doing this gives us a table with no gridlines at all in the body.
 
-```{r results='asis', include = TRUE, echo = FALSE}
+```{r results='asis', include = TRUE, echo = FALSE, fig.cap = "Table with gridlines only on the header row and bottom"}
 print_nostarch_file_name(file_type_to_print = "png")
 
 table <- gdp %>% 
@@ -205,7 +205,7 @@ table_no_gridlines <- gdp %>%
 
 While reducing clutter is an important goal, going too far can have negative consequences. A table with no gridlines at all can make it hard to differentiate between the header row and the table body. 
 
-```{r results='asis', include = TRUE, echo = FALSE}
+```{r results='asis', include = TRUE, echo = FALSE, fig.cap = "Table with all gridlines removed"}
 print_nostarch_file_name(file_type_to_print = "png")
 
 table <- gdp %>% 
@@ -231,7 +231,7 @@ table_no_gridlines %>%
 
 We can see what our table with headers bolded looks like below.
 
-```{r results='asis', include = TRUE}
+```{r results='asis', include = TRUE, fig.cap = "Table with header row bolded"}
 print_nostarch_file_name(file_type_to_print = "png")
 
 table <- table_no_gridlines %>% 
@@ -266,7 +266,7 @@ A third principle of high-quality table design is appropriate alignment. Specifi
 
 We can see this in action. In the table below, we've left aligned 1952, center aligned 1972, and right aligned 1992. You can see how much easier it is to compare the values in 1992 than in the other two columns. In both 1952 and 1972, it is much more difficult to compare the numeric values because the numbers in the same columns (the tens place, for example) are not in the same vertical position. In 1992, however, the number in the tens place in Afghanistan (4) aligns with the number in the tens place in Albania (9) and all other countries. This vertical alignment makes it easier to scan the table. 
 
-```{r results='asis', include = TRUE}
+```{r results='asis', include = TRUE, fig.cap = "Table with year columns aligned left, center, and right"}
 print_nostarch_file_name(file_type_to_print = "png")
 
 table <- table_bold_header %>% 
@@ -316,7 +316,7 @@ gdp_with_bosnia
 
 Let's then take the `gdp_with_bosnia` data frame and create a table with the country column center aligned. In this table, it is hard to scan the country names and that center-aligned column just looks a bit weird.
 
-```{r results='asis', include = TRUE}
+```{r results='asis', include = TRUE, fig.cap = "Table with Country column center aligned"}
 print_nostarch_file_name(file_type_to_print = "png")
 
 table <- gdp_with_bosnia %>% 
@@ -341,7 +341,7 @@ print_table_in_html(table)
 
 This is another example where we've had to change the `gt` defaults to mess things up. The `gt` package has good default alignment practices for other column types as well. In addition to right aligning numeric columns by default, it will also left align character columns. So, if we don't touch anything, `gt` will give us the alignment we're looking for.
 
-```{r results='asis', include = TRUE}
+```{r results='asis', include = TRUE, fig.cap = "Table with Country column left aligned"}
 print_nostarch_file_name(file_type_to_print = "png")
 
 table <- gdp_with_bosnia %>% 
@@ -395,7 +395,7 @@ table_bold_header %>%
 
 What we end up with is values formatted as dollars, with a thousands-place comma automatically added by `fmt_currency()` to make the values even easier to read. 
 
-```{r results='asis', include = TRUE}
+```{r results='asis', include = TRUE, fig.cap = "Table with numbers rounded to whole numbers and dollar sign added"}
 print_nostarch_file_name(file_type_to_print = "png")
 
 table <- table_bold_header %>%
@@ -438,7 +438,7 @@ table_whole_numbers %>%
 
 We then repeat this same code for 1972 and 1992, with the result shown below.
 
-```{r results='asis', include = TRUE}
+```{r results='asis', include = TRUE, fig.cap = "Table with color added to show the highest value in each year"}
 print_nostarch_file_name(file_type_to_print = "png")
 
 table <- table_whole_numbers %>% 
@@ -546,7 +546,7 @@ gdp_with_trend %>%
 
 This stripped-down sparkline now allows the reader to see the trend for each country at a glance. 
 
-```{r results='asis', include = TRUE}
+```{r results='asis', include = TRUE, fig.cap = "Table with sparkline added to show trend over time"}
 print_nostarch_file_name(file_type_to_print = "png")
 
 table <- gdp_with_trend %>% 
@@ -631,7 +631,7 @@ gdp %>%
 
 Take a look at tables on the FiveThirtyEight website and you'll see the similarities to this table.
 
-```{r results='asis', include = TRUE}
+```{r results='asis', include = TRUE, fig.cap = "Table redone in FiveThirtyEight style"}
 print_nostarch_file_name(file_type_to_print = "png")
 
 table <- gdp %>% 
