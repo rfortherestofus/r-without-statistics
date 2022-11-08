@@ -1,17 +1,13 @@
 ---
 output: html_document
 editor_options: 
-  chunk_output_type: inline
+  chunk_output_type: console
 ---
 
 ```{r}
 i <- 1
 chapter_number <- 5
 source("_common.R")
-
-# I'm setting include = FALSE for this chapter because I'm not displaying table output
-# but instead an image version of each table
-knitr::opts_chunk$set(include = TRUE)
 ```
 
 
@@ -70,7 +66,7 @@ gdp <- gapminder %>%
   rename(Country = country)
 ```
 
-I've created a data frame called `gdp`. We can see what it looks like.
+I've created a data frame called `gdp`. Let's see what it looks like.
 
 ```{r include = TRUE, echo = FALSE}
 gdp
@@ -107,9 +103,6 @@ save_table_for_nostarch(table)
 ```{r}
 print_table_in_html(table)
 ```
-
-
-
 
 Having gridlines around every single cell in our table is unnecessary and creates visual clutter that distracts from the goal of communicating clearly. A table with minimal or even no gridlines is a much more effective communication tool. 
 
@@ -192,7 +185,6 @@ table <- gdp %>%
 save_table_for_nostarch(table)
 ```
 
-
 ```{r}
 print_table_in_html(table)
 ```
@@ -201,15 +193,24 @@ print_table_in_html(table)
 
 While reducing clutter is an important goal, going too far can have negative consequences. A table with no gridlines at all can make it hard to differentiate between the header row and the table body. 
 
-```{r}
-gdp %>% 
+```{r results='asis', include = TRUE, echo = FALSE}
+print_nostarch_file_name(file_type_to_print = "png")
+
+table <- gdp %>% 
   gt() %>% 
   opt_table_lines(extent = "none")
+
+
+save_table_for_nostarch(table)
+```
+
+```{r}
+print_table_in_html(table)
 ```
 
 We saw how to use appropriate gridlines above. We can add bolding to our header row to make it stand out even more. Again, we do this with the `tab_style()` function two-step, first saying we want to alter the text (using the `cell_text()` function) by setting the weight to bold and then saying we want this to happen only to the header row (using the `cells_column_labels()` function).
 
-```{r}
+```{r echo = TRUE, eval = FALSE}
 gdp %>% 
   gt() %>% 
   tab_style(
@@ -221,6 +222,8 @@ gdp %>%
     locations = cells_column_labels()
   )
 ```
+
+We can see what our table with headers bolded looks like below.
 
 ```{r results='asis', include = TRUE}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -239,6 +242,10 @@ table <- gdp %>%
 save_table_for_nostarch(table)
 ```
 
+```{r}
+print_table_in_html(table)
+```
+
 ### Principle Three: Align Appropriately {-}
 
 A third principle of high-quality table design is appropriate alignment. Specifically, numbers in tables should be right-aligned. Tom Mock explains why:
@@ -247,8 +254,10 @@ A third principle of high-quality table design is appropriate alignment. Specifi
 
 We can see this in action. In the table below, we've left aligned 1952, center aligned 1972, and right aligned 1992. You can see how much easier it is to compare the values in 1992 than in the other two columns. In both 1952 and 1972, it is much more difficult to compare the numeric values because the numbers in the same columns (the tens place, for example) are not in the same vertical position. In 1992, however, the number in the tens place in Afghanistan (4) aligns with the number in the tens place in Albania (9) and all other countries. This vertical alignment makes it easier to scan the table. 
 
-```{r}
-gdp %>% 
+```{r results='asis', include = TRUE}
+print_nostarch_file_name(file_type_to_print = "png")
+
+table <- gdp %>% 
   gt() %>% 
   tab_style(
     style = cell_borders(color = "transparent"),
@@ -264,11 +273,17 @@ gdp %>%
              columns = 3) %>% 
   cols_align(align = "right",
              columns = 4)
+
+save_table_for_nostarch(table)
 ```
 
-As with other tables, we've actually had to override the defaults to get the `gt` package to misalign the columns. By default, `gt` will right align numeric values. So, just don't change anything and you'll be golden!
-
 ```{r}
+print_table_in_html(table)
+```
+
+As with other tables, we've actually had to override the defaults to get the `gt` package to misalign the columns (code shown below). By default, `gt` will right align numeric values. So, just don't change anything and you'll be golden!
+
+```{r echo = TRUE, eval = FALSE}
 gdp %>%  
   gt() %>% 
   tab_style(
@@ -281,7 +296,7 @@ gdp %>%
   )
 ```
 
-Right alignment is best practice for numeric columns, but for text columns, we want to use left alignment. As Jon Scwabish points out, it is much easier to read country names when they are left aligned. This is even easier to see if we add a country with a long name to our table. I've added Bosnia and Herzegovina to our table below and center aligned the country column. In this table, it is hard to scan the country names and that center-aligned column just looks a bit weird.
+Right alignment is best practice for numeric columns, but for text columns, we want to use left alignment. As Jon Scwabish points out, it's much easier to read country names when they are left aligned. This is even easier to see if we add a country with a long name to our table. I've added Bosnia and Herzegovina and saved this as a data frame called `gdp_with_bosnia`. 
 
 ```{r}
 gdp_with_bosnia <- gapminder %>% 
@@ -295,9 +310,18 @@ gdp_with_bosnia <- gapminder %>%
   rename(Country = country)
 ```
 
-
 ```{r}
-gdp_with_bosnia %>% 
+gdp_with_bosnia
+```
+
+
+Let's then take the `gdp_with_bosnia` data frame and create a table with the country column center aligned. In this table, it is hard to scan the country names and that center-aligned column just looks a bit weird.
+
+
+```{r results='asis', include = TRUE}
+print_nostarch_file_name(file_type_to_print = "png")
+
+table <- gdp_with_bosnia %>% 
   gt() %>% 
   tab_style(
     style = cell_borders(color = "transparent"),
@@ -309,13 +333,20 @@ gdp_with_bosnia %>%
   ) %>% 
   cols_align(columns = "Country",
              align = "center")
+
+save_table_for_nostarch(table)
 ```
 
-
-This is another example where we've had to change the `gt` defaults to mess things up. The `gt` package has good default alignment practices for other column types as well. In addition to right aligning numeric columns by default, it will also left align character columns. So, if we don't touch anything, `gt` will give me the alignment I'm looking for.
-
 ```{r}
-gdp_with_bosnia %>% 
+print_table_in_html(table)
+```
+
+This is another example where we've had to change the `gt` defaults to mess things up. The `gt` package has good default alignment practices for other column types as well. In addition to right aligning numeric columns by default, it will also left align character columns. So, if we don't touch anything, `gt` will give us the alignment we're looking for.
+
+```{r results='asis', include = TRUE}
+print_nostarch_file_name(file_type_to_print = "png")
+
+table <- gdp_with_bosnia %>% 
   gt() %>% 
   tab_style(
     style = cell_borders(color = "transparent"),
@@ -325,11 +356,17 @@ gdp_with_bosnia %>%
     style = cell_text(weight = "bold"),
     locations = cells_column_labels()
   ) 
+
+save_table_for_nostarch(table)
+```
+
+```{r}
+print_table_in_html(table)
 ```
 
 If you ever do want to override the default alignments, you can use the `cols_align()` function. Within this function, we use the `columns` argument to tell `gt` which columns to align and the `align` argument to select our alignment. That table above with the country names center aligned? Here's how I made it.
 
-```{r}
+```{r eval = FALSE, echo = TRUE}
 gdp_with_bosnia %>% 
   gt() %>% 
   tab_style(
@@ -348,9 +385,9 @@ gdp_with_bosnia %>%
 
 In all of the tables we've made so far, we've used the data exactly as it came to us. In all of the numeric columns, we have data to four decimal places. This is almost certainly too many. Having more decimal places than necessary makes our table harder to read. There is always a balance between what Jon Schwabish describes as "necessary precision and a clean, spare table." I've also heard it described that, if adding additional decimal places would change some action, keep them; otherwise, take them. out My general experience is that people tend to leave too many decimal places in, assuming that accuracy to a very high degree is more important than it is (and, in the process, they reduce the legibility of their tables).
 
-Looking at our GDP table, we can use the `fmt_currency()` function to format our numeric values. The `gt` package has a whole series of functions for formatting values in tables. All of these functions start with `fmt_`. In the code below, we set `fmt_currency()` to be applied to the 1952, 1972, and 1992 columns. I then use `decimals` argument to tell `fmt_currency()` to format the values with zero decimal places (the difference between a GDP of \$799.4453 and \$779 is unlikely to lead to different decisions so I'm comfortable with sacrificing precision for legibility). What we end up with is values formatted as dollars, with a thousands-place comma automatically added by `fmt_currency()` to make the values even easier to read. 
+Looking at our GDP table, we can use the `fmt_currency()` function to format our numeric values. The `gt` package has a whole series of functions for formatting values in tables. All of these functions start with `fmt_`. In the code below, we set `fmt_currency()` to be applied to the 1952, 1972, and 1992 columns. I then use `decimals` argument to tell `fmt_currency()` to format the values with zero decimal places (the difference between a GDP of \$799.4453 and \$779 is unlikely to lead to different decisions so I'm comfortable with sacrificing precision for legibility). 
 
-```{r}
+```{r echo = TRUE, eval = FALSE}
 gdp %>% 
   gt() %>% 
   tab_style(
@@ -367,11 +404,40 @@ gdp %>%
   ) 
 ```
 
+What we end up with is values formatted as dollars, with a thousands-place comma automatically added by `fmt_currency()` to make the values even easier to read. 
+
+```{r results='asis', include = TRUE}
+print_nostarch_file_name(file_type_to_print = "png")
+
+table <- gdp %>% 
+  gt() %>% 
+  tab_style(
+    style = cell_borders(color = "transparent"),
+    locations = cells_body()
+  ) %>%
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_column_labels()
+  ) %>%
+  fmt_currency(
+    columns = c(`1952`, `1972`, `1992`),
+    decimals = 0
+  ) 
+
+save_table_for_nostarch(table)
+```
+
+```{r}
+print_table_in_html(table)
+```
+
+
+
 ### Principle Five: Use Color Intentionally {-}
 
 Up to this point, our table has not had any color. We're now going to add some, using color to highlight outliers. Especially for those readers who want to scan your table, highlighting outliers with color can help significantly. Let's make the highest value in any single year a different color. To do this, we again use the `tab_style()` function. Within this function, I'm using the `cell_text()` function to change both the color of text to orange and make it bold. I'm then using the `locations` argument to say that we want to adjust cells in the body of the table. Within the `cells_body()` function, we have to specify both the columns we want to apply our change to and the rows. If we just look at 1952, we see that we set the columns equal to that year. The rows are set to a more complicated formula. The text rows = `1952` == max(`1952`) means that the text transformation will occur in rows where the value is equal to the maximum value in that year. 
 
-```{r}
+```{r eval = FALSE, echo = TRUE}
 gdp %>% 
   gt() %>% 
   tab_style(
@@ -406,12 +472,13 @@ gdp %>%
             ))
 ```
 
-We then repeat this same code for 1972 and 1992, ending up with the table below.
+We then repeat this same code for 1972 and 1992, with the result shown below.
 
-```{r}
-#TODO: Use code chunk ref instead
 
-gdp %>% 
+```{r results='asis', include = TRUE}
+print_nostarch_file_name(file_type_to_print = "png")
+
+table <- gdp %>% 
   gt() %>% 
   tab_style(
     style = cell_borders(color = "transparent"),
@@ -443,16 +510,20 @@ gdp %>%
               columns = `1992`,
               rows = `1992` == max(`1992`)
             ))
+
+save_table_for_nostarch(table)
+```
+
+```{r}
+print_table_in_html(table)
 ```
 
 ### Principle Six: Add Data Visualization Where Appropriate {-}
 
 Adding color to highlight outliers is one way to help guide the reader's attention. Another way is to incorporate graphs into tables. Tom Mock has developed an add-on package for `gt` called `gtExtras` that makes it possible to do just this. In our table that we've made we might want to show the trend of GDP by country. To do that, we'll add a new column that shows this trend using a sparkline (essentially, a simple line chart). 
-The `gt_plt_sparkline()` function that we'll use to do this requires us to have a single column with all of the values needed to make the sparkline. We'll create a variable called `Trend` using `group_by()` and `mutate()`. This variable will be a list of the values for each country (so, for Afghanistan, it would be 779.4453145, 739.9811058, and 649.3413952). From there, we create our table, same as before. But at the end of our code, we add the `gt_plt_sparkline()` function. Within this function, we specify which column to use to create the sparkline (`Trend`). We set `label = FALSE` to remove text labels that `gt_plt_sparkline()` adds by default. And we add `palette = c("black", "transparent", "transparent", "transparent", "transparent")` to make the sparkline black and all other elements of it transparent (by default, the function will make different parts of the sparkline different colors). This stripped-down sparkline now allows the user to see the trend for each country at a glance. 
+The `gt_plt_sparkline()` function that we'll use to do this requires us to have a single column with all of the values needed to make the sparkline. We'll create a variable called `Trend` using `group_by()` and `mutate()`. This variable will be a list of the values for each country (so, for Afghanistan, it would be 779.4453145, 739.9811058, and 649.3413952). From there, we create our table, same as before. But at the end of our code, we add the `gt_plt_sparkline()` function. Within this function, we specify which column to use to create the sparkline (`Trend`). We set `label = FALSE` to remove text labels that `gt_plt_sparkline()` adds by default. And we add `palette = c("black", "transparent", "transparent", "transparent", "transparent")` to make the sparkline black and all other elements of it transparent (by default, the function will make different parts of the sparkline different colors). 
 
-```{r}
-# TODO: Figure out what's up with circles on sparkline
-
+```{r eval = FALSE, echo = TRUE}
 gdp %>% 
   group_by(Country) %>% 
   mutate(Trend = list(c(`1952`, `1972`, `1992`))) %>% 
@@ -493,13 +564,66 @@ gdp %>%
                    palette = c("black", "transparent", "transparent", "transparent", "transparent"))
 ```
 
+This stripped-down sparkline now allows the user to see the trend for each country at a glance. 
+
+
+```{r results='asis', include = TRUE}
+print_nostarch_file_name(file_type_to_print = "png")
+
+table <- gdp %>% 
+  group_by(Country) %>% 
+  mutate(Trend = list(c(`1952`, `1972`, `1992`))) %>% 
+  ungroup() %>% 
+  gt() %>% 
+  tab_style(
+    style = cell_borders(color = "transparent"),
+    locations = cells_body()
+  ) %>%
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_column_labels()
+  ) %>%
+  fmt_currency(
+    columns = c(`1952`, `1972`, `1992`),
+    decimals = 0
+  ) %>% 
+  tab_style(style = cell_text(color = "orange",
+                              weight = "bold"),
+            locations = cells_body(
+              columns = `1952`,
+              rows = `1952` == max(`1952`)
+            )) %>% 
+  tab_style(style = cell_text(color = "orange",
+                              weight = "bold"),
+            locations = cells_body(
+              columns = `1972`,
+              rows = `1972` == max(`1972`)
+            )) %>% 
+  tab_style(style = cell_text(color = "orange",
+                              weight = "bold"),
+            locations = cells_body(
+              columns = `1992`,
+              rows = `1992` == max(`1992`)
+            )) %>% 
+  gt_plt_sparkline(column = Trend,
+                   label = FALSE,
+                   palette = c("black", "transparent", "transparent", "transparent", "transparent"))
+
+save_table_for_nostarch(table)
+```
+
+```{r}
+print_table_in_html(table)
+```
+
+
 ## Conclusion {-}
 
 Many of the tweaks we made to create an effective table are quite subtle. Things like removing excess gridlines, bolding header text, right aligning numeric values, and adjusting the level of precision can often go unnoticed. But skip them and your table will be far less effective. What we ended up with is not flashy, but it does communicate clearly, which is the main goal of tables. 
 
 We used the `gt` package to make a high-quality table. One benefit of using this package is that we were able to use the `gt_plt_sparkline()` function from the `gtExtras` package to easily add a sparkline to our table. `gtExtras` does way more than this, though. This package has a set of "theme" functions to allow you to make your tables look like those made by FiveThirtyEight, the New York Times, the Guardian, and other news outlets. I've removed the formatting we created and instead used the `gt_theme_538()` function to make our tables look like they came from that organization. 
 
-```{r}
+```{r eval = FALSE, echo = TRUE}
 gdp %>% 
   group_by(Country) %>% 
   mutate(Trend = list(c(`1952`, `1972`, `1992`))) %>% 
@@ -529,6 +653,48 @@ gdp %>%
   gt_theme_538()
 ```
 
+Take a look at tables on the FiveThirtyEight website and you'll see the similarities to this table.
+
+
+```{r results='asis', include = TRUE}
+print_nostarch_file_name(file_type_to_print = "png")
+
+table <- gdp %>% 
+  group_by(Country) %>% 
+  mutate(Trend = list(c(`1952`, `1972`, `1992`))) %>% 
+  ungroup() %>% 
+  gt() %>% 
+  tab_style(style = cell_text(color = "orange",
+                              weight = "bold"),
+            locations = cells_body(
+              columns = `1952`,
+              rows = `1952` == max(`1952`)
+            )) %>% 
+  tab_style(style = cell_text(color = "orange",
+                              weight = "bold"),
+            locations = cells_body(
+              columns = `1972`,
+              rows = `1972` == max(`1972`)
+            )) %>% 
+  tab_style(style = cell_text(color = "orange",
+                              weight = "bold"),
+            locations = cells_body(
+              columns = `1992`,
+              rows = `1992` == max(`1992`)
+            )) %>% 
+  gt_plt_sparkline(column = Trend,
+                   label = FALSE,
+                   palette = c("black", "transparent", "transparent", "transparent", "transparent")) %>% 
+  gt_theme_538()
+
+save_table_for_nostarch(table)
+```
+
+```{r}
+print_table_in_html(table)
+```
+
+
 Add-on packages like `gtExtras` are common in the table-making landscape. If you are working with the `reactable` package to make interactive tables, for example, you can also use the `reactablefmtr` to add interactive sparklines, themes, and more. The functionality that you get from these packages is enough to never make you go back to making tables in Word!
 
-No matter which packages you use to make tables, it's essential to treat them as worthy of as much thought as data visualization (because, let me remind you, tables *are* data visualization). Good tables are well designed; they are not data dumps. And fortunately for us, R is well-suited to making well designed tables. Working within R, the tool you're already using to create your reports (TODO add something about RMarkdown?), you make publication-ready tables with just a few lines of code.
+No matter which packages you use to make tables, it's essential to treat them as worthy of as much thought as data visualization (because, let me remind you, tables *are* data visualization). Good tables are well designed; they are not data dumps. And fortunately for us, R is well-suited to making well designed tables. Working within R, the tool you're already using to create your reports (especially if you're using RMarkdown, a tool we discuss in \@ref(rmarkdown-chapter)), you make publication-ready tables with just a few lines of code.
