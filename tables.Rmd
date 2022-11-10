@@ -100,8 +100,6 @@ table <- gdp %>%
 
 ```{r fig.cap = "Table with gridlines everywhere"}
 save_table_for_nostarch(table)
-
-print_table_in_html(table)
 ```
 
 Having gridlines around every single cell in our table is unnecessary and creates visual clutter that distracts from the goal of communicating clearly. A table with minimal or even no gridlines is a much more effective communication tool. 
@@ -115,8 +113,6 @@ table <- gdp %>%
 
 ```{r fig.cap = "Table with only horizontal gridlines"}
 save_table_for_nostarch(table)
-
-print_table_in_html(table)
 ```
 
 
@@ -184,8 +180,6 @@ table <- gdp %>%
 
 ```{r fig.cap = "Table with gridlines only on the header row and bottom"}
 save_table_for_nostarch(table)
-
-print_table_in_html(table)
 ```
 
 
@@ -215,8 +209,6 @@ table <- gdp %>%
 
 ```{r fig.cap = "Table with all gridlines removed"}
 save_table_for_nostarch(table)
-
-print_table_in_html(table)
 ```
 
 We saw how to use appropriate gridlines above. We can make our header row bold to make it stand out even more. We start with the `table_no_gridlines` object (our saved table from above). Then, we apply our formatting with the `tab_style()` function two-step, first saying we want to alter the text (using the `cell_text()` function) by setting the weight to bold and then saying we want this to happen only to the header row (using the `cells_column_labels()` function). 
@@ -243,8 +235,6 @@ table <- table_no_gridlines %>%
 
 ```{r fig.cap = "Table with header row bolded"}
 save_table_for_nostarch(table)
-
-print_table_in_html(table)
 ```
 
 Let's save this table as `table_bold_header` in order to reuse it below and add additional formatting on top of what's already there.
@@ -280,8 +270,6 @@ table <- table_bold_header %>%
 
 ```{r fig.cap = "Table with year columns aligned left, center, and right"}
 save_table_for_nostarch(table)
-
-print_table_in_html(table)
 ```
 
 As with other tables, we've actually had to override the defaults to get the `gt` package to misalign the columns (code shown below). By default, `gt` will right align numeric values. So, just don't change anything and you'll be golden!
@@ -335,8 +323,6 @@ table <- gdp_with_bosnia %>%
 
 ```{r fig.cap = "Table with Country column center aligned"}
 save_table_for_nostarch(table)
-
-print_table_in_html(table)
 ```
 
 This is another example where we've had to change the `gt` defaults to mess things up. The `gt` package has good default alignment practices for other column types as well. In addition to right aligning numeric columns by default, it will also left align character columns. So, if we don't touch anything, `gt` will give us the alignment we're looking for.
@@ -358,8 +344,6 @@ table <- gdp_with_bosnia %>%
 
 ```{r fig.cap = "Table with Country column left aligned"}
 save_table_for_nostarch(table)
-
-print_table_in_html(table)
 ```
 
 If you ever do want to override the default alignments, you can use the `cols_align()` function. Within this function, we use the `columns` argument to tell `gt` which columns to align and the `align` argument to select our alignment. That table above with the country names center aligned? Here's how I made it.
@@ -407,8 +391,6 @@ table <- table_bold_header %>%
 
 ```{r fig.cap = "Table with numbers rounded to whole numbers and dollar sign added"}
 save_table_for_nostarch(table)
-
-print_table_in_html(table)
 ```
 
 Let's now save our table for reuse below.
@@ -464,8 +446,6 @@ table <- table_whole_numbers %>%
 
 ```{r fig.cap = "Table with color added to show the highest value in each year"}
 save_table_for_nostarch(table)
-
-print_table_in_html(table)
 ```
 
 As always, we save this table to avoid having to repeat all of the formatting code we've created up to this point.
@@ -588,8 +568,6 @@ table <- gdp_with_trend %>%
 
 ```{r fig.cap = "Table with sparkline added to show trend over time"}
 save_table_for_nostarch(table)
-
-print_table_in_html(table)
 ```
 
 
@@ -665,8 +643,6 @@ table <- gdp %>%
 
 ```{r  fig.cap = "Table redone in FiveThirtyEight style"}
 save_table_for_nostarch(table)
-
-print_table_in_html(table)
 ```
 
 Add-on packages like `gtExtras` are common in the table-making landscape. If you are working with the `reactable` package to make interactive tables, for example, you can also use the `reactablefmtr` to add interactive sparklines, themes, and more. The functionality that you get from these packages is enough to never make you go back to making tables in Word!
