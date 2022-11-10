@@ -96,9 +96,12 @@ table <- gdp %>%
     )
   ) %>% 
   opt_table_lines(extent = "none")
+```
 
+```{r fig.cap = "Table with gridlines everywhere"}
 save_table_for_nostarch(table)
 ```
+
 
 ```{r}
 print_table_in_html(table)
