@@ -31,6 +31,7 @@ jobs:
           R -e 'install.packages("downlit")'
           R -e 'install.packages("ragg")'
           R -e 'install.packages("svglite")'
+          R -e 'install.packages("webshot2")'
 
       - name: Cache bookdown results
         uses: actions/cache@v2
