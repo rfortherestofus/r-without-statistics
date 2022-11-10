@@ -639,6 +639,10 @@ table <- gdp %>%
               columns = `1992`,
               rows = `1992` == max(`1992`)
             )) %>% 
+  fmt_currency(
+    columns = c(`1952`, `1972`, `1992`),
+    decimals = 0
+  ) %>% 
   gt_plt_sparkline(column = Trend,
                    label = FALSE,
                    palette = c("black", "transparent", "transparent", "transparent", "transparent")) %>% 
