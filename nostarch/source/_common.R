@@ -53,9 +53,7 @@ print_nostarch_file_name <- function(file_type_to_print = "pdf", output_format =
 
 # * Tables ----------------------------------------------------------------
 
-save_table_for_nostarch <- function(table_object, output_format = "word") {
-  
-  if (output_format == "word") {
+save_table_for_nostarch <- function(table_object) {
     
     file_name <- create_nostarch_file_name(file_type = "png")
     file_name_with_path <- str_glue(here::here("nostarch/temp/{file_name}"))
@@ -66,8 +64,6 @@ save_table_for_nostarch <- function(table_object, output_format = "word") {
     save_image_for_nostarch(file_name_with_path) 
     
     knitr::include_graphics(file_name_with_path)
-    
-  }
   
 }
 
