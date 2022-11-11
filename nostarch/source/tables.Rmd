@@ -11,7 +11,7 @@ source("_common.R")
 ```
 
 
-# Make High-Quality Tables
+# Making High-Quality Tables
 
 In his book *Fundamentals of Data Visualization*, Claus Wilke writes that "tables are an important tool for visualizing data." This statement might seem might odd. Tables are often seen as the opposite of data visualization: plots are (or should be) highly-designed tools of communication; tables are where we dump numbers for the few nerds who care to read them. But Wilke sees things differently. Tables should not be data dumps devoid of design. He writes: "because of their apparent simplicity, they may not always receive the attention they need." 
 
@@ -29,9 +29,7 @@ Generating tables in Microsoft Word, the tool that many use to make tables, has 
 
 In R, there are a number of packages to make a wide range of tables. And within these packages, there are a number of functions designed to make sure your tables follow important design principles. 
 
-The rest of this chapter will examine what these design principles are and show how to apply them in your tables made in R. We'll begin by with a brief trip into the world of table design. After examining the principles that Claus Wilke and other experts recommend, we'll learn how to apply these principles. 
-
-For this chapter, I spoke with Tom Mock of Posit (the company that makes RStudio), who has become something of an R table connoisseur. His 2020 blog post "10+ Guidelines for Better Tables in R" takes table design principles and shows how to implement them using the `gt` package. We'll walk through examples of Tom's code to show how small tweaks can make a big difference in improving your tables.
+The rest of this chapter will examine what these design principles are and show how to apply them in your tables made in R. We'll begin by with a brief trip into the world of table design. After examining the principles that Claus Wilke and other experts recommend, we'll learn how to apply these principles. For this chapter, I spoke with Tom Mock of Posit (the company that makes RStudio), who has become something of an R table connoisseur. His 2020 blog post "10+ Guidelines for Better Tables in R" takes table design principles and shows how to implement them using the `gt` package. We'll walk through examples of Tom's code to show how small tweaks can make a big difference in improving your tables.
 
 ## Table Design Principles {-}
 
@@ -284,7 +282,7 @@ table_bold_header %>%
              columns = 4)
 ```
 
-Right alignment is best practice for numeric columns, but for text columns, we want to use left alignment. As Jon Scwabish points out, it's much easier to read country names when they are left aligned. This is even easier to see if we add a country with a long name to our table. I've added Bosnia and Herzegovina and saved this as a data frame called `gdp_with_bosnia`. 
+Right alignment is best practice for numeric columns, but for text columns, we want to use left alignment. As Jon Scwabish points out, it's much easier to read longer text cells when they are left aligned. This is even easier to see if we add a country with a long name to our table. I've added Bosnia and Herzegovina and saved this as a data frame called `gdp_with_bosnia`. 
 
 ```{r}
 gdp_with_bosnia <- gapminder %>% 
