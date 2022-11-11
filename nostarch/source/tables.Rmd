@@ -109,7 +109,7 @@ table <- gdp %>%
   gt()
 ```
 
-```{r fig.cap = "Table with only horizontal gridlines"}
+```{r table-horizontal-gridlines, fig.cap = "Table with only horizontal gridlines"}
 save_table_for_nostarch(table)
 ```
 
@@ -573,7 +573,7 @@ save_table_for_nostarch(table)
 
 Many of the tweaks we made to create an effective table are quite subtle. Things like removing excess gridlines, bolding header text, right aligning numeric values, and adjusting the level of precision can often go unnoticed. But skip them and your table will be far less effective. What we ended up with is not flashy, but it does communicate clearly, which is the main goal of tables. 
 
-We used the `gt` package to make a high-quality table. One benefit of using this package is that we were able to use the `gt_plt_sparkline()` function from the `gtExtras` package to easily add a sparkline to our table. `gtExtras` does way more than this, though. This package has a set of "theme" functions to allow you to make your tables look like those made by FiveThirtyEight, the New York Times, the Guardian, and other news outlets. I've removed the formatting we created and instead used the `gt_theme_538()` function to make our tables look like they came from that organization. 
+We used the `gt` package to make a high-quality table. One benefit of using this package is that we were able to use the `gt_plt_sparkline()` function from the `gtExtras` package to easily add a sparkline to our table. `gtExtras` does way more than this, though. This package has a set of "theme" functions to allow you to make your tables look like those made by FiveThirtyEight, the *New York Times*, the *Guardian*, and other news outlets. I've removed the formatting we created and instead used the `gt_theme_538()` function to make our tables look like they came from that organization. 
 
 ```{r eval = FALSE, echo = TRUE}
 gdp %>% 
