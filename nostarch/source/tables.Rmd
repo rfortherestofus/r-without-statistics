@@ -319,7 +319,7 @@ table <- gdp_with_bosnia %>%
              align = "center")
 ```
 
-```{r fig.cap = "Table with Country column center aligned"}
+```{r fig.cap = "Table with country column center aligned"}
 save_table_for_nostarch(table)
 ```
 
@@ -340,7 +340,7 @@ table <- gdp_with_bosnia %>%
   ) 
 ```
 
-```{r fig.cap = "Table with Country column left aligned"}
+```{r fig.cap = "Table with country column left aligned"}
 save_table_for_nostarch(table)
 ```
 
