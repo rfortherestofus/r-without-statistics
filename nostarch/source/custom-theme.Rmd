@@ -47,7 +47,7 @@ library(tidyverse)
 
 We now have data that we can work with in an object called `penguins`. Here's what the first ten rows look like.
 
-```{r echo = TRUE, include = FALSE}
+```{r echo = FALSE, include = TRUE}
 penguins
 ```
 
@@ -459,7 +459,7 @@ penguins_plot_grid_lines <- penguins_plot_axes +
 
 Of course, in the previous iteration of our plot, it still had a gray background. The `bbc_style()` function removes this with the following code.
 
-```{r penguins-plot-no-bg, echo = TRUE, include = FALSE}
+```{r penguins-plot-no-bg, echo = TRUE, eval = FALSE}
 penguins_plot_grid_lines +
   theme(
     panel.background = element_blank()
