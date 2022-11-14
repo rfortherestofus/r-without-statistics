@@ -3,7 +3,7 @@
 ## Intro
 - You can make maps with R too
 - Excel can only make limited maps
-	- "Map charts can only plot high-level geographic details, so latitude/longitude, and street address mapping isn’t supported." ([source](https://support.microsoft.com/en-us/office/create-a-map-chart-in-excel-f2cfed55-d622-42cd-8ec9-ec8a358b593b)
+	- "Map charts can only plot high-level geographic details, so latitude/longitude, and street address mapping isn’t supported." ([source](https://support.microsoft.com/en-us/office/create-a-map-chart-in-excel-f2cfed55-d622-42cd-8ec9-ec8a358b593b))
 - ArcGIS is expensive and requires learning a whole new tool
 - There is QGIS but why learn another tool when R can do the same things?
 - You don't have to be a GIS expert to make nice maps (Aboul isn't but does)
