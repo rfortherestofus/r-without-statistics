@@ -19,10 +19,9 @@ Madjid is not a geospatial information systems (GIS) specialist, but he has lear
 In this chapter, we will begin by diving into geospatial data, giving you the minimum you need to know in order to make maps in R. We'll then walk through Abdoul Madjid's code, looking at the choices he made that resulted in this high-quality map. The chapter concludes with some thoughts on why R is the perfect tool for making maps.
 
 
-```{r}
+```{r eval = FALSE}
 # Load libraries ----------------------------------------------------------
 library(tidyverse)
-Sys.setlocale(locale = "en_US.UTF-8")
 
 # Data Reading and Wrangling ----------------------------------------------
 
