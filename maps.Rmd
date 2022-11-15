@@ -1,3 +1,8 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
 # R is a Full-Fledged Map-Making Tool 
 
 When I first started learning R, I had no idea it could make maps. I thought of R as being designed to work with numbers, not the shapes that make up maps. So I was surprised when I first saw people making maps with R. This is possible, I wondered? 
@@ -18,6 +23,111 @@ Madjid is not a geospatial information systems (GIS) specialist, but he has lear
 
 In this chapter, we will begin by diving into geospatial data, giving you the minimum you need to know in order to make maps in R. We'll then walk through Abdoul Madjid's code, looking at the choices he made that resulted in this high-quality map. The chapter concludes with some thoughts on why R is the perfect tool for making maps.
 
+## The Briefest of Primers on Geospatial Data
+
+If you are making maps today in R, consider yourself lucky. Changes in recent years have made it much simpler to work with geospatial data, and to build maps with R. Before then, there were competing standards for geospatial data, and each standard required learning a different approach. Today, though, the simple features (often abbreviated as sf) model for geospatial data has become dominant. I'm grateful for this, as simple features data is way easier to work with than were previous geospatial data models. 
+
+TODO: Add graf to clarify we're using vector data, not raster
+
+Geospatial data is both very similar to data you're already used to working with in R and, in some ways, very different. Let's take a look at some simple features geospatial data on U.S. states and the District of Columbia. 
+
+```{r}
+library(albersusa)
+library(sf)
+library(tidyverse)
+
+usa_states_geom <- usa_sf() %>% 
+  # st_transform(us_laea_proj) %>%
+  st_transform("WGS84") %>% 
+  select(name, pop_2010)
+
+usa_states_geom
+```
+
+You can see that we have a column for state name and one for the 2010 population. This looks like the output we're used to seeing with data in a data frame or tibble (TODO: explain tibble or remove it?). But there are two major differences:
+
+### Difference #1: Metadata (TODO: Update header)
+
+Above the main output, we see a section that starts with the text "Simple feature collection with 51 features and 2 fields." This is metadata about the geospatial data that follows.
+
+[TODO: Add image]
+
+TODO: Switch to polygon to show it simply first, then move to MULTIPOLYGON
+
+The geometry type shows the type of geospatial data we're working with. MULTIPOLYGON (geometry types are typically written in all caps) means that the shapes of each state are made up of multiple polygons. To see what I mean, take a look at Massachusetts mapped with this data. In addition to the main polygon that makes up most of the state, there are also polygons to make the islands of Martha's Vineyard and Nantucket off the coast of Massachusetts. 
+
+```{r}
+# TODO: Add island labels? 
+
+usa_states_geom %>% 
+  filter(name == "Massachusetts") %>% 
+  ggplot() +
+  geom_sf() +
+  theme_void()
+```
+
+MULTIPOLYGON is one geometry type of several that sf data can be used to represent. Others include:
+
+- POINT: Used to display something like a pin on a map that shows a single location. Here's a map showing the location of a single electric charging station in Massachusetts. 
+
+```{r}
+ma_sf <- usa_states_geom %>% 
+  filter(name == "Massachusetts") %>% 
+  st_transform("WGS84")
+
+ma_ev_stations <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-03-01/stations.csv') %>% 
+  clean_names() %>% 
+  filter(state == "MA") %>% 
+  # There is a mistake, with one station in Bethesda, MD so let's remove it
+  filter(city != "Bethesda") %>% 
+  filter(fuel_type_code == "ELEC") %>% 
+  st_as_sf(coords = c("x", "y"),
+           crs = "WGS84") %>% 
+  select(objectid)
+
+ggplot() +
+  geom_sf(data = ma_sf) +
+  geom_sf(data = slice(ma_ev_stations, 1)) +
+  theme_void()
+```
+
+
+- LINESTRING (described as a "sequence of points connected by straight, non-self intersecting line pieces," this is often used to represent roads): and polygons (this would just be a single polygon and could be used for a state that doesn't have any disconnected land such as islands). 
+
+```{r}
+us_roads <- tigris::primary_roads()
+
+us_roads %>% 
+  clean_names() %>% 
+  # filter(str_detect(fullname, "28"))
+  filter(fullname == "State Hwy 528") %>% 
+  ggplot() + 
+  geom_sf() +
+  geom_sf(data = ma_sf)
+```
+
+
+Each of these has a multi- variation (MULTIPOINT, MULTILINESTRING, and MULTIPOLYGON) to combine multiple instances of their "single" variation in one row of data. 
+
+
+
+We have a special `geometry` column. 
+
+[TODO: Add image]
+
+
+
+Simple features make it possible to work with geospatial data in a way that resembles how you work with data using the `tidyverse` (TODO: explain tidyverse?). 
+
+
+
+
+
+## How to Make High-Quality Maps
+
+## In Conclusion: R is a Swiss Army Knife That Can Help You Make Any Map You Want
+
+TODO: Improve section title
 
 ```{r eval = FALSE}
 # Load libraries ----------------------------------------------------------
