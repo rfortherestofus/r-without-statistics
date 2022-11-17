@@ -10,7 +10,7 @@ chapter_number <- 4
 source("_common.R")
 ```
 
-# R is a Full-Fledged Map-Making Tool 
+# R is a Full-Fledged Map-Making Tool {-} 
 
 When I first started learning R, I had no idea it could make maps. I thought of R as being designed to work with numbers, not the shapes that make up maps. So I was surprised when I first saw people making maps with R. This is possible, I wondered? 
 
@@ -28,7 +28,7 @@ Madjid is not a geospatial information systems (GIS) specialist, but he has lear
 
 In this chapter, we will begin by diving into geospatial data, giving you the minimum you need to know in order to make maps in R. We'll then walk through Abdoul Madjid's code, looking at the choices he made that resulted in this high-quality map. The chapter concludes with some thoughts on why R is the perfect tool for making maps.
 
-## The Briefest of Primers on Geospatial Data
+## The Briefest of Primers on Geospatial Data {-}
 
 If you are making maps today in R, consider yourself lucky. Changes in recent years have made it much simpler to work with geospatial data, and to build maps with R. Before then, there were competing standards for geospatial data, and each standard required learning a different approach. Today, though, the simple features (often abbreviated as sf) model for geospatial data has become dominant. I'm grateful for this, as simple features data is way easier to work with than were previous geospatial data models. 
 
@@ -110,12 +110,6 @@ LINESTRING: Described as a "sequence of points connected by straight, non-self i
 wy_roads <- primary_secondary_roads(state = "Wyoming",
                                     progress_bar = FALSE) %>% 
     janitor::clean_names()
-
-wy_roads %>% 
-  st_drop_geometry() %>% 
-  as_tibble() %>% 
-  count(fullname,
-        sort = TRUE) 
 
 wy_roads %>% 
   filter(linearid == 11010932011560) %>% 
