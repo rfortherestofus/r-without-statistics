@@ -1,3 +1,15 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+i <- 1
+chapter_number <- 4
+source("_common.R")
+```
+
 # R is a Full-Fledged Map-Making Tool 
 
 When I first started learning R, I had no idea it could make maps. I thought of R as being designed to work with numbers, not the shapes that make up maps. So I was surprised when I first saw people making maps with R. This is possible, I wondered? 
@@ -8,9 +20,7 @@ When many people hear "maps" they immediately think of ArcGIS. But this tool is 
 
 And the best part of making maps in R is that we can use what we learned about high-quality data visualization in \@ref(data-viz-chapter). Maps are a form of data visualization and the principles discussed in that chapter apply here as well. 
 
-Many people assume that making maps requires a ton of specialized knowledge (this is what I used to think). It doesn't. There are a few things you need to know in order to work with geospatial data used to make maps. But once you understand the basics, you too can make high-quality maps in R. 
-
-To show how anyone can make high-quality maps in R, I spoke with Abdoul Madjid. A polyglot developer originally from Benin, Madjid has been making maps with R for several years. In January 2022, he made a beautiful map that shows rates of COVID-19 in the US throughout 2021. 
+Many people assume that making maps requires a ton of specialized knowledge (this is what I used to think). It doesn't. There are a few things you need to know in order to work with geospatial data used to make maps. But once you understand the basics, you too can make high-quality maps in R. To show how anyone can make high-quality maps in R, I spoke with Abdoul Madjid. A polyglot developer originally from Benin, Madjid has been making maps with R for several years. In January 2022, he made a beautiful map that shows rates of COVID-19 in the US throughout 2021. 
 
 [TODO: ADD MAP]
 
@@ -22,19 +32,229 @@ In this chapter, we will begin by diving into geospatial data, giving you the mi
 
 If you are making maps today in R, consider yourself lucky. Changes in recent years have made it much simpler to work with geospatial data, and to build maps with R. Before then, there were competing standards for geospatial data, and each standard required learning a different approach. Today, though, the simple features (often abbreviated as sf) model for geospatial data has become dominant. I'm grateful for this, as simple features data is way easier to work with than were previous geospatial data models. 
 
-Geospatial data is both very similar to data you're already used to working with in R and, in some ways, very different. Let's take a look
+There are two types of geospatial data: vector and raster. Vector data uses points, lines, and polygons to represent data. Raster data, which often comes from digital photographs, ties each pixel in the photograph to a specific geographic location. Vector data tends to be simpler to work with, and we will be using it exclusively in this chapter (when I use the term "geospatial data" in this chapter, I'm referring to vector data).
+
+Geospatial data is both very similar to data you're already used to working with in R and, in some ways, very different. To get started, let's load a few packages. We'll use the `tidyverse` for general data manipulation. The `sf` package provides a wide range of functionality for manipulating simple features data. 
 
 ```{r}
-library(albersusa)
-library(sf)
 library(tidyverse)
-
-usa_states_geom <- usa_sf() %>% 
-  st_transform(us_laea_proj) %>%
-  select(name)
-
-usa_states_geom
+library(sf)
 ```
+
+Let's take a look at some simple features geospatial data that represents the U.S. state of Wyoming.
+
+```{r}
+library(tigris)
+
+wyoming <- states() %>% 
+  st_transform("WGS84") %>%
+  select(NAME) %>% 
+  filter(NAME == "Wyoming") %>% 
+  st_cast(to = "POLYGON")
+
+wyoming
+```
+
+You can see that we have a column for state name (`NAME`) and another column called `geometry`. Overall, this looks like the output we're used to seeing with data in a data frame. But there are two major differences:
+
+1. There is a bunch of metadata above the data frame
+2. Data frames do not typically have a `geometry` column
+
+### Difference #1: Metadata
+
+Above the main output, we see a section that starts with the text "Simple feature collection with 1 feature and 1 field." This is metadata about the geospatial data that follows.
+
+#### Geometry Type
+
+The geometry type shows the type of geospatial data we're working with. POLYGON (geometry types are typically written in all caps) means a relatively simple shape that can be represented by a single polygon. We can use ggplot to plot this data. Note that `geom_sf()` is a special geom designed to work with simple features (sf) data. 
+
+```{r echo = TRUE, include = FALSE}
+wyoming %>% 
+  ggplot() +
+  geom_sf() 
+```
+
+We can see the resulting map of Wyoming. It may not look like much, but, hey, I wasn't the one who chose to make Wyoming a nearly perfect rectangle! 
+
+```{r include = TRUE, fig.cap = "A map of Wyoming}
+wyoming %>% 
+  ggplot() +
+  geom_sf() 
+```
+
+POLYGON is one geometry type of several that sf data can be used to represent. Others include:
+
+POINT: Used to display something like a pin on a map that shows a single location. Here's a map showing the location of a single electric vehicle charging station in Wyoming 
+
+```{r fig.cap = "A map of a single electric vehicle charging station in Wyoming"}
+wy_ev_stations <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-03-01/stations.csv') %>% 
+  janitor::clean_names() %>% 
+  filter(state == "WY") %>% 
+  filter(fuel_type_code == "ELEC") %>% 
+  st_as_sf(coords = c("x", "y"),
+           crs = "WGS84") %>% 
+  select(objectid)
+
+ggplot() +
+  geom_sf(data = wyoming) +
+  geom_sf(data = slice(wy_ev_stations, 1),
+          shape = 21,
+          fill = "#ff7400",
+          color = "white",
+          size = 3) +
+  theme_void()
+```
+
+LINESTRING: Described as a "sequence of points connected by straight, non-self intersecting line pieces," this is often used to represent roads. Here's an example I've added of a LINESTRING showing a section of U.S. Highway 30 that runs through Wyoming. 
+
+```{r}
+wy_roads <- primary_secondary_roads(state = "Wyoming") %>% 
+    janitor::clean_names()
+
+wy_roads %>% 
+  st_drop_geometry() %>% 
+  as_tibble() %>% 
+  count(fullname,
+        sort = TRUE) 
+
+wy_roads %>% 
+  filter(linearid == 11010932011560) %>% 
+  ggplot() + 
+  geom_sf(data = wyoming) +
+  geom_sf(color = "#ff7400",
+          linewidth = 1)
+```
+
+
+Each of these has a multi- variation (MULTIPOINT, MULTILINESTRING, and MULTIPOLYGON) to combine multiple instances of their "single" variation in one row of data. For example, the data used to make Figure (TODO: Add number) below, which shows all electric vehicle charging stations in Wyoming, is MULTIPOINT.
+
+```{r}
+ggplot() +
+  geom_sf(data = wyoming) +
+  geom_sf(data = wy_ev_stations,
+          shape = 21,
+          fill = "#ff7400",
+          color = "white",
+          size = 3) +
+  theme_void()
+```
+
+MULTILINESTRING data can be seen if we show not one road, but all primary and secondary roads in Wyoming. 
+
+```{r}
+wy_roads %>% 
+  ggplot() + 
+  geom_sf(data = wyoming) +
+  geom_sf(color = "#ff7400",
+          linewidth = 1)
+```
+
+MULTIPOLYGON data occurs when, for example, we have a state made up of multiple polygons. To see what I mean, take a look at Massachusetts. In addition to the main polygon that makes up most of the state, there are also polygons to make the islands (shown in orange below) off the coast of Massachusetts. 
+
+```{r}
+ma_sf_multiple_shapes <- albersusa::usa_sf() %>% 
+  st_transform("WGS84") %>% 
+  select(name, pop_2010) %>% 
+  filter(name == "Massachusetts") %>% 
+  st_cast(to = "POLYGON")
+
+ma_sf_multiple_shapes %>% 
+  mutate(shape_type = c("Island",
+                        "Island",
+                        "Island",
+                        "Land")) %>% 
+  ggplot(aes(fill = shape_type)) +
+  geom_sf(linewidth = 0.001,
+          color = "white") +
+  scale_fill_manual(values = c("Land" = "grey80", 
+                               "Island" = "#ff7400")) +
+  theme(legend.position = "none")
+```
+
+
+#### Dimensions
+
+The next line we see in our geospatial data frame metadata is dimension. For our Wyoming data, we had the text `Dimension: XY`. Dimensions refer to the type of geospatial data we're working with. When we see `XY`, this means the data is two-dimensional. This is what we will see in all of the geospatial data used in this chapter. There are two other dimensions that you may occasionally see: 
+
+- `Z`, which represents height (think: building heights), and is only necessary when making three-dimensional maps
+
+TODO: Add this?
+
+"Most point geometries contain only two dimensions (3-dimensional CRSs contain an additional z value, typically representing height above sea level)." Source: https://geocompr.robinlovelace.net/spatial-class.html#vector-data
+
+- `M`, which represents some measurement about the feature (think: milepost markers on highways that represent distance from some other point)
+
+https://gis.stackexchange.com/questions/39131/what-is-an-xyzm-measurement-model
+
+TODO: Is M explanation sufficient?
+
+#### Bounding Box
+
+The next element we see in the metadata is the bounding box. For Wyoming, it looks like this:
+
+`Bounding box:  xmin: -111.0569 ymin: 40.99475 xmax: -104.0522 ymax: 45.0059`
+
+A bounding box represents the smallest area in which we can fit all of our geospatial data. What we see in our metadata is the four corners of this bounding box. For Wyoming, the `ymin` value of 40.99475 and `ymax` value of 45.0059 represent the lowest and highest latitude, respectively, that the polygon that represents the state can fit into (the x values do the same for longitude). Bounding boxes are calculated automatically and are not typically something we have to worry about altering.
+
+#### Geodetic CRS
+
+The final piece of metadata above our data frame is the "Geodetic CRS." This refers to the coordinate reference system (CRS) used to project our data when we plot it. The problem with representing any geospatial data is that we're projecting data that is three-dimensional (because the earth is round) onto a two-dimensional map. Doing so requires us to choose a coordinate reference system that determines what type of projection to use when making our map. 
+
+If it's been a while since your last geometry class, let's look at a couple projections of Massachusetts. Let's begin by looking at the data we're using to make our maps. As we can see in the line `Geodetic CRS:  WGS 84`, this uses a coordinate reference system known as WGS84. 
+
+```{r}
+ma_sf <- albersusa::usa_sf() %>% 
+  st_transform("WGS84") %>% 
+  select(name, pop_2010) %>% 
+  filter(name == "Massachusetts")
+
+ma_sf
+```
+
+If we plot our map with this data, here's what it looks like. 
+
+```{r}
+ma_sf %>% 
+  ggplot() +
+  geom_sf()
+```
+
+To see how different a map that uses a different projection can look, check out another map of Massachusetts, this time using what's known as the "Albers equal-area conic convenience projection" (the numeric code for it is 5070) Whereas Massachusetts looked perfectly horizontal in our first map, in this one it appears to be tilted. 
+
+```{r}
+# TODO: Show code, then map. And show how to reproject.
+
+ma_sf %>% 
+  st_transform(5070) %>% 
+  ggplot() +
+  geom_sf()
+```
+
+As Robin Lovelace, Jakub Nowosad, and Jannes Muenchow put it in their book *Geocomputation with R*, whenever we map geospatial data, "properties of the Earth’s surface are distorted in this process, such as area, direction, distance, and shape. A projected coordinate system can preserve only one or two of those properties."
+
+Selecting an appropriate CRS to represent our data is a combination of art and science. If you are looking for a shortcut, though, start with the ubiqitous WGS84. If you want other ideas,  the `crsuggest` package can help. The `suggest_top_crs()` function will return a CRS that is well-suited for your data. When we run this for our Massachusetts data, we are receive the suggestion 32619.
+
+```{r}
+library(crsuggest)
+
+ma_sf %>% 
+  suggest_top_crs()
+```
+
+We can use this projection to re-project our Massachusetts geospatial data and make a new map.
+
+```{r}
+ma_sf %>% 
+  st_transform(32619) %>% 
+  ggplot() +
+  geom_sf()
+```
+
+### Difference #2: The `geometry` Column
+
+We have a special `geometry` column. 
+
+[TODO: Add image]
 
 
 

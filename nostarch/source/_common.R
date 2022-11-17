@@ -21,6 +21,11 @@ knitr::opts_chunk$set(
 # Packages ----------------------------------------------------------------
 
 library(tidyverse)
+library(janitor)
+library(fs)
+library(rmarkdown)
+library(xfun)
+library(officer)
 
 # Functions ---------------------------------------------------------------
 
@@ -54,16 +59,16 @@ print_nostarch_file_name <- function(file_type_to_print = "pdf", output_format =
 # * Tables ----------------------------------------------------------------
 
 save_table_for_nostarch <- function(table_object) {
-    
-    file_name <- create_nostarch_file_name(file_type = "png")
-    file_name_with_path <- str_glue(here::here("nostarch/temp/{file_name}"))
-    
-    gtsave(data = table_object,
-           filename = file_name_with_path)
-    
-    save_image_for_nostarch(file_name_with_path) 
-    
-    knitr::include_graphics(file_name_with_path)
+  
+  file_name <- create_nostarch_file_name(file_type = "png")
+  file_name_with_path <- str_glue(here::here("nostarch/temp/{file_name}"))
+  
+  gtsave(data = table_object,
+         filename = file_name_with_path)
+  
+  save_image_for_nostarch(file_name_with_path) 
+  
+  knitr::include_graphics(file_name_with_path)
   
 }
 
@@ -134,4 +139,52 @@ save_image_for_nostarch <- function(image_file, chap_number = chapter_number) {
   
   i <<- i + 1
   
+}
+
+
+# Render ------------------------------------------------------------------
+
+render_word_doc <- function() {
+  
+  # Copy source files
+  
+  source_files <- dir_ls(regexp = "Rmd|yml|css|_common")
+  
+  file_copy(path = source_files,
+            new_path = "nostarch/source",
+            overwrite = TRUE)
+  
+  
+  # Make figure numbers show
+  
+  # Fix stuff in _common.R
+  
+  gsub_file(file = "nostarch/source/_common.R",
+            'output_format = "word"',
+            'output_format = "word"')
+  
+  gsub_file(file = "nostarch/source/_bookdown.yml",
+            '\\# fig: \\!expr function\\(i\\) paste\\(""\\)',
+            'fig: !expr function(i) paste("")')
+  
+  # Delete all existing figures
+  
+  file_delete(dir_ls("nostarch/figures/"))
+  
+  # Render
+  
+  render_site(input = "nostarch/source",
+              output_format = 'bookdown::word_document2', 
+              encoding = 'UTF-8')
+  
+  
+  # Copy Word doc
+  
+  file_copy(path = "nostarch/source/_book/r-without-statistics.docx",
+            new_path = "nostarch/word",
+            overwrite = TRUE)
+  
+  file_show("nostarch/word/r-without-statistics.docx")
+  
+  beepr::beep()
 }
