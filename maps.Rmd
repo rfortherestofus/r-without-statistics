@@ -10,7 +10,7 @@ chapter_number <- 4
 source("_common.R")
 ```
 
-# R is a Full-Fledged Map-Making Tool {-} 
+# R is a Full-Fledged Map-Making Tool
 
 When I first started learning R, I had no idea it could make maps. I thought of R as being designed to work with numbers, not the shapes that make up maps. So I was surprised when I first saw people making maps with R. This is possible, I wondered? 
 
