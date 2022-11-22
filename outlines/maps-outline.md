@@ -38,6 +38,12 @@ References
 
 ## Conclusion
 
+Nuts and bolts
+- Show we can use tidyverse stuff along with sf
+- How to find and use good projections
+- Where to find geo data
+
+Conceptual
 - Use the tool you're already using (same as making tables in RMarkdown files) 
 - But it's not just that you should use R because you're using it for other things. It's better than other tools.
 - You can do more flexible things than with Excel

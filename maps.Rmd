@@ -24,24 +24,19 @@ Many people assume that making maps requires a ton of specialized knowledge (thi
 
 [TODO: ADD MAP]
 
-Madjid is not a geospatial information systems (GIS) specialist, but he has learned how to work with geospatial data in R in a way that enables him to make beautiful maps like this one. I spoke with Madjid and he explained how he obtained the data, analyzed it, and made his COVID-19 map.
+Madjid is not a geospatial information system (GIS) specialist, but he has learned how to work with geospatial data in R in a way that enables him to make beautiful maps like this one. I spoke with Madjid and he explained how he obtained the data, analyzed it, and made his COVID-19 map.
 
 In this chapter, we will begin by diving into geospatial data, giving you the minimum you need to know in order to make maps in R. We'll then walk through Abdoul Madjid's code, looking at the choices he made that resulted in this high-quality map. The chapter concludes with some thoughts on why R is the perfect tool for making maps.
 
 ## The Briefest of Primers on Geospatial Data {-}
 
-If you are making maps today in R, consider yourself lucky. Changes in recent years have made it much simpler to work with geospatial data, and to build maps with R. Before then, there were competing standards for geospatial data, and each standard required learning a different approach. Today, though, the simple features (often abbreviated as sf) model for geospatial data has become dominant. I'm grateful for this, as simple features data is way easier to work with than were previous geospatial data models. 
+There are two main types of geospatial data: vector and raster. Vector data uses points, lines, and polygons shapes to spatially represent the world. Raster data, which often comes from digital photographs, ties each pixel in the photograph to a specific geographic location. Vector data tends to be simpler to work with, and we will be using it exclusively in this chapter (when I use the term "geospatial data" in this chapter, I'm referring to vector data).
 
-There are two types of geospatial data: vector and raster. Vector data uses points, lines, and polygons to represent data. Raster data, which often comes from digital photographs, ties each pixel in the photograph to a specific geographic location. Vector data tends to be simpler to work with, and we will be using it exclusively in this chapter (when I use the term "geospatial data" in this chapter, I'm referring to vector data).
+If you are making maps today in R, consider yourself lucky. Changes in recent years have made it much simpler to work with geospatial data, and to build maps with R. Before then, there were competing standards for geospatial data, and each standard required learning a different approach. Today, though, the simple features (often abbreviated as sf) model for working with vector geospatial data has become dominant. I'm grateful for this, as simple features data is way easier to work with than were previous geospatial data models. 
 
-Geospatial data is both very similar to data you're already used to working with in R and, in some ways, very different. To get started, let's load a few packages. We'll use the `tidyverse` for general data manipulation. The `sf` package provides a wide range of functionality for manipulating simple features data. 
+Geospatial data is both very similar to data you're already used to working with in R and, in some ways, very different. To see the similarities and differences, let's look at how simple features data works. In this section, I'll just show you data and the maps we make with that data, providing the bare minimum you need to know in order to understand how simple features data works. The sections that follow will explain how we import, manipulate, and plot geospatial data. 
 
-```{r}
-library(tidyverse)
-library(sf)
-```
-
-Let's take a look at some simple features geospatial data that represents the U.S. state of Wyoming.
+Let's begin by taking a look at some simple features geospatial data that represents the U.S. state of Wyoming.
 
 ```{r}
 library(tigris)
@@ -58,15 +53,15 @@ wyoming
 You can see that we have a column for state name (`NAME`) and another column called `geometry`. Overall, this looks like the output we're used to seeing with data in a data frame. But there are two major differences:
 
 1. There is a bunch of metadata above the data frame
-2. Data frames do not typically have a `geometry` column
+2. Our simple features data has a `geometry` column
 
 ### Difference #1: Metadata {-}
 
-Above the main output, we see a section that starts with the text "Simple feature collection with 1 feature and 1 field." This is metadata about the geospatial data that follows.
+Above the main output, we see a section that starts with the text "Simple feature collection with 1 feature and 1 field." The feature here is the row and the field is the variable (`NAME`) that contains non-spatial data (the `geometry` column, which contains geospatial data, will be discussed below). This line, and the lines that follow, are metadata about the geospatial data in the `wyoming` object.
 
 #### Geometry Type {-}
 
-The geometry type shows the type of geospatial data we're working with. POLYGON (geometry types are typically written in all caps) means a relatively simple shape that can be represented by a single polygon. We can use ggplot to plot this data. Note that `geom_sf()` is a special geom designed to work with simple features (sf) data. 
+The geometry type shows the type of geospatial data we're working with. POLYGON (geometry types are typically written in all caps) means a relatively simple shape that can be represented by a single polygon. We can use ggplot to display this data. Note that `geom_sf()` is a special geom designed to work with simple features (sf) data. 
 
 ```{r echo = TRUE, include = FALSE}
 wyoming %>% 
@@ -142,38 +137,25 @@ wy_roads %>%
           linewidth = 1)
 ```
 
-MULTIPOLYGON data occurs when, for example, we have a state made up of multiple polygons. To see what I mean, take a look at Massachusetts. In addition to the main polygon that makes up most of the state, there are also polygons to make the islands (shown in orange) off the coast of Massachusetts. 
+MULTIPOLYGON data occurs when, for example, we have a state made up of multiple polygons. To see what I mean, let's take a look at a map of Wyoming counties. First, let's look at simple features data used to represent the 23 counties in the state. We can see that the geometry type of this data is MULTIPOLYGON (in addition, the repeated MULTIPOLYGON text in the `geometry` column indicates that each row contains a shape of type MULTIPOLYGON; see section on the `geometry` column below). 
 
-```{r fig.cap = "A map of Massachusetts with islands highlighted in orange"}
-ma_sf_multiple_shapes <- albersusa::usa_sf() %>% 
+```{r}
+wy_counties <- counties(state = "Wyoming") %>% 
   st_transform("WGS84") %>% 
-  select(name, pop_2010) %>% 
-  filter(name == "Massachusetts") %>% 
-  st_cast(to = "POLYGON")
+  select(NAME)
 
-ma_sf_multiple_shapes %>% 
-  mutate(shape_type = c("Island",
-                        "Island",
-                        "Island",
-                        "Land")) %>% 
-  ggplot(aes(fill = shape_type)) +
-  geom_sf(linewidth = 0.001,
-          color = "white") +
-  scale_fill_manual(values = c("Land" = "grey80", 
-                               "Island" = "#ff7400")) +
-  theme(legend.position = "none")
+wy_counties
 ```
 
+```{r fig.cap = "A map of Wyoming counties"}
+wy_counties %>% 
+  ggplot() +
+  geom_sf()
+```
 
 #### Dimensions {-}
 
-The next line we see in our geospatial data frame metadata is dimension. For our Wyoming data, we had the text `Dimension: XY`. Dimensions refer to the type of geospatial data we're working with. When we see `XY`, this means the data is two-dimensional. This is what we will see in all of the geospatial data used in this chapter. There are two other dimensions that you see much more rarely: 
-
-- `Z` represents height (think: building heights), and is only necessary when making three-dimensional maps
-
-- `M`represents some measurement about the feature (think: milepost markers on highways that represent distance from some other point)
-
-Since `Z` and `M` are both less common and not relevant to the maps we're discussing in this chapter, I'll leave them for you to investigate further.
+The next line we see in our geospatial data frame metadata is dimension. For our Wyoming data, we had the text `Dimension: XY`. Dimensions refer to the type of geospatial data we're working with. When we see `XY`, this means the data is two-dimensional. This is what we will see in all of the geospatial data used in this chapter. There are two other dimensions (`Z` and `M`) that you see much more rarely. Since `Z` and `M` are both less common and not relevant to the maps we're discussing in this chapter, I'll leave them for you to investigate further.
 
 #### Bounding Box {-}
 
@@ -187,43 +169,121 @@ A bounding box represents the smallest area in which we can fit all of our geosp
 
 The final piece of metadata above our data frame is the "Geodetic CRS." This refers to the coordinate reference system (CRS) used to project our data when we plot it. The problem with representing any geospatial data is that we're projecting data that is inherently three-dimensional (the earth, after all, is round) onto a two-dimensional map. Doing so requires us to choose a coordinate reference system that determines what type of projection to use when making our map. 
 
-Let's look at a couple projections of Massachusetts. We'll begin by looking at the data we're using to make our maps. As we can see in the line `Geodetic CRS:  WGS 84`, this uses a coordinate reference system known as WGS84. 
+Let's look at a couple projections of our map of Wyoming Counties We'll begin by looking at the data we're using to make our maps. As we can see in the line `Geodetic CRS:  WGS 84`, this uses a coordinate reference system known as WGS84. 
 
 ```{r}
-ma_sf <- albersusa::usa_sf() %>% 
-  st_transform("WGS84") %>% 
-  select(name, pop_2010) %>% 
-  filter(name == "Massachusetts")
+# TODO: Do I need to show data here again or is it duplicative?
 
-ma_sf
+wy_counties
 ```
 
 If we plot our map with this data, here's what it looks like. 
 
-```{r fig.cap = "A map of Massachusetts using the WGS84 projection"}
-ma_sf %>% 
+```{r fig.cap = "A map of Wyoming counties using the WGS84 projection"}
+wy_counties %>% 
   ggplot() +
   geom_sf()
 ```
 
-To see how different a map that uses a different projection can look, check out another map of Massachusetts, this time using what's known as the "Albers equal-area conic convenience projection." Whereas Massachusetts looked perfectly horizontal in our first map, in this one it appears to be tilted. 
+To see how different a map that uses a different projection can look, check out another map of Wyoming counties, this time using what's known as the "Albers equal-area conic convenience projection." Whereas Wyoming looked perfectly horizontal in our first map, in this one it appears to be tilted. 
 
-```{r fig.cap = "A map of Massachusetts using the Albers equal-area conic convenience projection"}
-ma_sf %>% 
+```{r fig.cap = "A map of Wyoming counties using the Albers equal-area conic convenience projection"}
+wy_counties %>% 
   st_transform(5070) %>% 
   ggplot() +
   geom_sf()
 ```
 
+If you're curious about how to change projections when making maps of your own, fear not. I'll show you how to do so when we look at Abdoul Madjid's map. 
+
 ### Difference #2: The `geometry` Column {-}
 
-In addition to the metadata above our data frame, there is another difference between geospatial data and traditional data frames. All simple features data has a geometry column. As you probably guessed from the name, this column holds the data needed to make our maps.
+In addition to the metadata above our data frame, there is another difference between geospatial data and traditional data frames. All simple features data has a `geometry` column. As you probably guessed from the name, this column holds the data needed to make our maps.
 
 Think back to when you were a kid and you did connect-the-dots drawings. As you added lines to connect one point to the next, the subject of your drawing was eventually revealed. The geometry column is similar. It has a set of numbers, each of which corresponds to a point. If you're using LINESTRING/MULTILINESTRING or POLYGON/MULTIPOLYGON simple features data, ggplot uses the data in the geometry column to draw each point and then add lines to connect the points (if you're using POINT/MULTIPOINT data, it just draws the points but doesn't connect them). 
 
-If it sounds complicated, don't worry: you never have to worry about the details. The first time I looked in any depth at a geometry column was when I wrote this chapter. What you need to know is this: simple features data has a geometry column, and it's what allows us to make maps.
+If it sounds complicated, don't worry: you never have to worry about the details. The first time I looked in any depth at a geometry column was when I wrote this chapter. What you need to know is this: simple features data has a `geometry` column, and it's what allows us to make maps.
 
 ## How to Make High-Quality Maps {-}
+
+Now that we've explained the basics of geospatial data, let's make a map. All those concepts you just learned about geometry types, dimensions, bounding boxes, projections, and the geometry column will come into play as we return to the COVID-19 map that Abdoul Madjid made. Let's walk through the code Madjid used to make his map. As with other chapters, I've made small modifications to the code, but what you'll see below is nearly identical to the code Madjid wrote. 
+
+We'll use a few packages to create Madjid's COVID-19 map. The `tidyverse` we'll use for data importing, manipulation, and plotting (with ggplot). The `albersusa` package will give us the geospatial data we need and the `sf` package will enable us to change its coordinate reference system to use an appropriate projection. The `zoo` package has functions for calculating rolling averages and the `colorspace` package gives us a fill scale that highlights the data well. 
+
+```{r echo = TRUE}
+library(tidyverse)
+library(albersusa)
+library(sf)
+library(zoo)
+library(colorspace)
+```
+
+Next, let's import the data we need. There are three types of data we'll import:
+
+1. COVID rates by state over time
+1. State populations
+1. Geospatial data to make our map of the United States
+
+We'll import each of these types of data and then merge them.
+
+First, we import COVID data. This data comes directly from the *New York Times*, which publishes daily case rates by state as a CSV on their GitHub account. 
+
+```{r echo = TRUE}
+covid_data <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv") 
+```
+
+If we take a look at this data we can see the arrival of the first COVID cases in the United States. All of the variables are self-explanatory except for `fips`, which is the Federal Information Processing Standards codes used to represent states. 
+
+```{r}
+covid_data
+```
+
+The map that Abdoul Madjid made shows not absolute rates, but per capita rates. So, to make these maps, we need to have data on population by state. Madjid downloaded this data as a CSV. The code below imports this data, keeps the `State` and `Pop` (population) variables, and saves it as an object called `usa_states`. 
+
+```{r echo = TRUE}
+usa_states <- read_csv("https://raw.githubusercontent.com/AbdoulMa/TidyTuesday/main/2022_w1/usa_states_population.csv") %>% 
+  select(State, Pop)
+```
+
+Let's see what `usa_states` looks like.
+
+```{r}
+usa_states
+```
+
+Finally, we'll bring in our geospatial data and save it as an object called `usa_states_geom`. The `usa_sf()` function from the `albersausa` package gives us simple features data for all U.S. states (and, conveniently, puts Alaska and Hawaii in a location and at a scale that they are easy to see. This data comes from multiple variables, but we only need the state name so Madjid only keeps the `name` variable. Madjid then uses the `st_transform()` function from the `sf` package to change the coordinate reference system. The CRS that he uses comes from the `us_laea_proj` object, which comes from the `alberusa` package. Remember the Albers equal-area conic convenience projection we used to change the appearance of our Wyoming counties map? This is the same projection. 
+
+```{r echo = TRUE}
+usa_states_geom <- usa_sf() %>% 
+  select(name) %>% 
+  st_transform(us_laea_proj)
+```
+
+Let's pause for a moment to plot our geospatial data. As we saw when making our maps of Wyoming, it only takes three lines to make a map from our simple features data.
+
+```{r echo = TRUE, include = FALSE}
+usa_states_geom %>% 
+  ggplot() +
+  geom_sf()
+```
+
+We can see the curvature of the longitude and latitude lines and see how the land curves along with them.
+
+```{r}
+usa_states_geom %>% 
+  ggplot() +
+  geom_sf()
+```
+
+If 
+
+```{r}
+usa_sf() %>% 
+  ggplot() +
+  geom_sf()
+```
+
+
 
 
 ```{r eval = FALSE}
@@ -313,8 +373,10 @@ covid_evolution_plot <- usa_states_geom %>%
   labs(title = "2021 · A pandemic year",
        caption = caption)
 
-ggsave(covid_evolution_plot, 
-       filename = glue::glue("temp.png"), width = 25, height = 25, device = ragg::agg_png, dpi = 640)
+
+
+# ggsave(covid_evolution_plot, 
+#        filename = glue::glue("temp.png"), width = 25, height = 25, device = ragg::agg_png, dpi = 640)
 
 ```
 
