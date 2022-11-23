@@ -219,6 +219,8 @@ library(zoo)
 library(colorspace)
 ```
 
+### Data Import 
+
 Next, let's import the data we need. There are three types of data we'll import:
 
 1. COVID rates by state over time
@@ -276,32 +278,31 @@ usa_states_geom %>%
   geom_sf()
 ```
 
-If 
+If we want to see the same data projected with a different coordinate reference system, we can import the data again using the `usa_sf()` function, but without setting the CRS to the Albers equal-area conic convenience projection. 
+
+```{r echo = TRUE}
+usa_states_wgs84 <- usa_sf()
+```
+
+I saved this object as `usa_states_wgs84` because, as you can see below, it uses the ubiquitous WGS84 projection. 
 
 ```{r}
-usa_sf() %>% 
+usa_states_wgs84
+```
+
+We can now use the same three lines of code (switching out `usa_states_geom` for `usa_states_wgs84`) to plot our map.
+
+```{r echo = TRUE, include = FALSE}
+usa_states_wgs84 %>% 
   ggplot() +
   geom_sf()
 ```
 
+If we take a look at the resulting map, we can see how different it looks. The curvature of the latitude and longitude lines is gone and the shape of the United States has changed as well, looking far more straight than our previous map. 
 
-
+### Data Calculation
 
 ```{r eval = FALSE}
-# Load libraries ----------------------------------------------------------
-library(tidyverse)
-
-# Data Reading and Wrangling ----------------------------------------------
-
-# NY TIMES Data 
-covid_data <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv")
-usa_states <- read_csv("https://raw.githubusercontent.com/AbdoulMa/TidyTuesday/main/2022_w1/usa_states_population.csv") %>% 
-  select(State, Pop)
-
-# States Geometries
-usa_states_geom <- albersusa::usa_sf() %>% 
-  sf::st_transform(albersusa::us_laea_proj) %>%
-  select(name)
 
 covid_cases <- covid_data %>% 
   group_by(state, fips) %>% 
@@ -397,8 +398,8 @@ TODO: Improve section title
 ```{r}
 library(crsuggest)
 
-ma_sf %>% 
-  suggest_top_crs()
+# ma_sf %>% 
+#   suggest_top_crs()
 ```
 
 As Robin Lovelace, Jakub Nowosad, and Jannes Muenchow put it in their book *Geocomputation with R*, whenever we map geospatial data, "properties of the Earth’s surface are distorted in this process, such as area, direction, distance, and shape. A projected coordinate system can preserve only one or two of those properties."
@@ -408,9 +409,9 @@ Selecting an appropriate CRS to represent our data is a combination of art and s
 We can use this projection to re-project our Massachusetts geospatial data and make a new map.
 
 ```{r}
-ma_sf %>% 
-  st_transform(32619) %>% 
-  ggplot() +
-  geom_sf()
+# ma_sf %>% 
+#   st_transform(32619) %>% 
+#   ggplot() +
+#   geom_sf()
 ```
 
