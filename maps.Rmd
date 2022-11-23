@@ -40,6 +40,7 @@ Let's begin by taking a look at some simple features geospatial data that repres
 
 ```{r}
 library(tigris)
+library(sf)
 
 wyoming <- states(progress_bar = FALSE) %>% 
   st_transform("WGS84") %>%
