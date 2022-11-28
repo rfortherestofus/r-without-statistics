@@ -241,13 +241,14 @@ Next, let's import the data we need. There are three types of data we'll import:
 
 We'll import each of these types of data and then merge them.
 
-First, we import COVID data. This data comes directly from the *New York Times*, which publishes daily case rates by state as a CSV on their GitHub account. 
+First, we import COVID data. This data comes directly from the *New York Times*, which publishes daily case rates by state as a CSV on their GitHub account. I've dropped the `fips` variable (FIPS, which stands for Federal Information Processing Standards, are numeric codes used to represent states) because we can just use the state name instead.
 
 ```{r echo = TRUE}
-covid_data <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv")
+covid_data <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv") %>% 
+  select(-fips)
 ```
 
-If we take a look at this data we can see the arrival of the first COVID cases in the United States. All of the variables are self-explanatory except for `fips`, which is the Federal Information Processing Standards codes used to represent states. 
+If we take a look at this data we can see the arrival of the first COVID cases in the United States. 
 
 ```{r}
 covid_data
@@ -300,6 +301,8 @@ usa_states_wgs84 <- usa_sf()
 
 I saved this object as `usa_states_wgs84` because, as you can see below, it uses the ubiquitous WGS84 projection. 
 
+TODO: explain that it already has a built in projection?
+
 ```{r}
 usa_states_wgs84
 ```
@@ -326,13 +329,13 @@ There are many, many different projections you can use. The conclusion of this c
 
 #### Calculate cases
 
+Next, we need to calculate the number of daily COVID cases. We have to do this because the `covid_data` data frame gives us cumulative cases by state. So, to calculate the number of cases per day for each state, Madjid groups the data by state using the `group_by()` function, then creates a new variable called `pd_cases`, which represents the number of cases in the previous day (he uses the `lag()` function  to create this variable). Some days do not have cases counts for the previous day so, in these cases, Madjid sets the value as 0 using the `replace_na()` function. Finally, Madjid creates a new variable called `daily_cases`. For this variable, he uses the `case_when()` function to set up a condition: if the `cases` variable (cases on that day) is greater than the `pd_cases` variable (cases one day prior), then `daily_cases` is equal to `cases` minus `pd_cases`; otherwise, set `daily_cases` to be equal to 0. Since we grouped the data by state at the beginning, we must now remove this grouping using the `ungroup()` function. 
+
 ```{r echo = TRUE}
 covid_cases <- covid_data %>%
-  group_by(state, fips) %>%
-  arrange(date) %>%
-  # DON'T USE DIFF - somedays data  are incoherent
+  group_by(state) %>%
   mutate(
-    pd_cases = lag(cases) # Previous Day Cases
+    pd_cases = lag(cases) 
   ) %>%
   replace_na(list(pd_cases = 0)) %>%
   mutate(
@@ -341,11 +344,10 @@ covid_cases <- covid_data %>%
       TRUE ~ 0
     )
   ) %>%
-  ungroup() %>%
-  arrange(state, date)
+  ungroup()
 ```
 
-Show this data
+We can now take a look at the `covid_cases` data frame we created.
 
 ```{r}
 covid_cases
@@ -353,137 +355,102 @@ covid_cases
 
 #### Calculate rolling means
 
+We're not quite done with calculating values. The data that Madjid used to make his map was not daily case counts. Instead, it was a five-day rolling average of cases per 100,000 people. Madjid creates a new data frame called `covid_cases_rm` (rm for rolling mean). The first step in its creation is to use the `rollmean()` function from the `zoo` package to create a `roll_cases` variable. The `k` argument is the number of days (five in order to calculate the five-day rolling average) and the `fill` argument determines what happens in cases like the first day where we can't calculate a five-day rolling mean because there are no days prior to this day (Madjid sets these values to be NA). 
+
+After calculating `roll_cases`, Madjid started work on calculating per capita case rates. To do this, he needed population data so he joined the population data from the `usa_states` data frame with the `covid_cases` data. He then dropped rows with missing population data (the `Pop` variable). In practice, this meant getting rid of several U.S. territories (American Samoa, Guam, Northern Marianas Islands, and Virgin Islands).
+
+Next, Madjid created a per capita case rate variable called `incidence_rate` by multiplying the `roll_cases` variable by 100,000 and then dividing it by the population of each state. Rather than keeping raw values (for example, the Florida on June 29, 2021 had a rate of 57.77737 cases per 100,000 people), Madjid uses the `cut()` function to convert the values into categories. His code in this section makes values of ">0" (greater than 0), ">5", and so on up to a maximum value of ">50". 
+
+The last step is to only include 2021 data because Madjid's map only shows that year and keep only the variables (`state`, `date`, and `incidence_rate`) we'll need to create our map. 
+
 ```{r}
 covid_cases_rm <- covid_cases %>%
-  mutate(roll_cases = zoo::rollmean(daily_cases, k = 5, fill = NA)) %>%
-  # Select 2021 Data
-  filter(lubridate::year(date) == 2021) %>%
-  left_join(usa_states, by = c("state" = "State")) %>%
+  mutate(roll_cases = rollmean(daily_cases, 
+                               k = 5, 
+                               fill = NA)) %>%
+  left_join(usa_states, 
+            by = c("state" = "State")) %>%
   drop_na(Pop) %>%
   mutate(incidence_rate = 10^5 * roll_cases / Pop) %>%
-  mutate(incidence_rate = cut(incidence_rate, breaks = c(seq(0, 50, 5), Inf), include.lowest = T) %>%
-    factor(labels = paste0(">", seq(0, 50, 5))))
+  mutate(incidence_rate = cut(incidence_rate, 
+                              breaks = c(seq(0, 50, 5), Inf), 
+                              include.lowest = TRUE) %>%
+           factor(labels = paste0(">", seq(0, 50, 5)))) %>% 
+  filter(year(date) == 2021) %>% 
+  select(state, date, incidence_rate)
+```
+
+We can take a look at the `covid_cases_rm` data frame. 
+
+```{r}
+covid_cases_rm
 ```
 
 ### Mapping
 
-#### Define things
+We've now used two (COVID case data and state population data) of our three data sources to create the `covid_cases_rm` data frame that we'll use to make our map. Let's use our third data source: the geospatial data we saved as `usa_states_geom`. We start with this data frame and then merge our `covid_cases_rm` data frame into it, matching the `name` variable from `usa_states_geom` to the `state` variable in `covid_cases_rm`. Being able to merge together regular data frames with geospatial data is possible with simple features data, another mark in its favor. Next, Madjid created a new variable called `fancy_date`. As the name implies, it's a nicely formatted version of the date so that we get "Jan. 01" instead of "2021-01-01." The `format()` function does the formatting while the `fct_inorder()` function makes it so that the `fancy_date()` variable will display in order by date (rather than, say, putting August before January because it comes first alphabetically). We save this data frame as `usa_states_geom_covid`. 
 
 ```{r}
-bg_color <- "#e5e4e2"
-font_family <- "Times New Roman"
-caption <- "Incidence rates are calculated for 100,000 people in each state.
+usa_states_geom_covid <- usa_states_geom %>%
+  left_join(covid_cases_rm, by = c("name" = "state")) %>%
+  mutate(fancy_date = fct_inorder(format(date, "%b. %d")))
+```
+
+If we take a look at the `usa_states_geom_covid` data frame, we can see the metadata and `geometry` columns discussed above.
+
+```{r}
+# TODO: Why is fancy_date after geometry? 
+
+usa_states_geom_covid
+```
+
+
+
+```{r}
+covid_evolution_plot <- usa_states_geom_covid %>%
+  ggplot() +
+  geom_sf(aes(fill = incidence_rate), size = .05, color = "grey55") +
+  facet_wrap(vars(fancy_date), strip.position = "bottom") +
+  scale_fill_discrete_sequential(
+    name = str_to_upper("COVID-19 Incidence Rate"),
+    palette = "Rocket", rev = T,
+    guide = guide_legend(
+      nrow = 1,
+      keyheight = unit(.75, "cm"),
+      keywidth = unit(.75, "cm"),
+      label.position = "right",
+      label.theme = element_text(family = "Times New Roman", size = rel(15), margin = margin(r = 15)),
+      title.theme = element_text(family = "Times New Roman", size = rel(18), margin = margin(b = .5, unit = "cm")),
+      title.position = "top",
+      title.hjust = .5
+    )
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(
+      color = "#111111", family = "Times New Roman", size = rel(5), face = "bold", margin = margin(t = .5, b = .5, unit = "cm"),
+      hjust = 0.5
+    ),
+    plot.caption = element_text(family = "Times New Roman", size = rel(1.25), hjust = .5, face = "bold", margin = margin(t = .25, b = .25, unit = "cm")),
+    plot.margin = margin(t = .5, r = .5, b = .5, l = .5, unit = "cm"),
+    legend.box.spacing = unit(.5, "cm"),
+    text = element_text(family = "Times New Roman", color = "#111111"),
+    panel.grid = element_blank(),
+    axis.text = element_blank(),
+    strip.text = element_text(size = rel(1.125), face = "bold"),
+    legend.position = "top",
+    legend.text = element_text(family = "Times New Roman"),
+    plot.background = element_rect(fill = "#e5e4e2", color = NA)
+  ) +
+  labs(
+    title = "2021 · A pandemic year",
+    caption = "Incidence rates are calculated for 100,000 people in each state.
 Inspired from a graphic in the DIE ZEIT newspaper of November 18, 2021.
 Data from NY Times · Tidytuesday Week-1 2022 · Abdoul ISSA BIDA."
-```
-
-#### Map itself
-
-```{r}
-covid_evolution_plot <- usa_states_geom %>%
-  left_join(covid_cases_rm, by = c("name" = "state")) %>%
-  mutate(fancy_date = fct_inorder(format(date, "%b. %d"))) %>%
-  ggplot() +
-  geom_sf(aes(fill = incidence_rate), size = .05, color = "grey55") +
-  facet_wrap(vars(fancy_date), strip.position = "bottom") +
-  colorspace::scale_fill_discrete_sequential(
-    name = str_to_upper("COVID-19 Incidence Rate"),
-    palette = "Rocket", rev = T,
-    guide = guide_legend(
-      nrow = 1,
-      keyheight = unit(.75, "cm"),
-      keywidth = unit(.75, "cm"),
-      label.position = "right",
-      label.theme = element_text(family = font_family, size = rel(15), margin = margin(r = 15)),
-      title.theme = element_text(family = font_family, size = rel(18), margin = margin(b = .5, unit = "cm")),
-      title.position = "top",
-      title.hjust = .5
-    )
-  ) +
-  theme_minimal() +
-  theme(
-    plot.title = element_text(
-      color = "#111111", family = font_family, size = rel(5), face = "bold", margin = margin(t = .5, b = .5, unit = "cm"),
-      hjust = 0.5
-    ),
-    plot.caption = element_text(family = font_family, size = rel(1.25), hjust = .5, face = "bold", margin = margin(t = .25, b = .25, unit = "cm")),
-    plot.margin = margin(t = .5, r = .5, b = .5, l = .5, unit = "cm"),
-    legend.box.spacing = unit(.5, "cm"),
-    text = element_text(family = font_family, color = "#111111"),
-    panel.grid = element_blank(),
-    axis.text = element_blank(),
-    strip.text = element_text(size = rel(1.125), face = "bold"),
-    legend.position = "top",
-    legend.text = element_text(family = font_family),
-    plot.background = element_rect(fill = bg_color, color = NA)
-  ) +
-  labs(
-    title = "2021 · A pandemic year",
-    caption = caption
   )
 ```
 
 
-
-```{r eval = FALSE}
-
-
-
-# Roll Mean Computing
-
-
-
-# Graphic -----------------------------------------------------------------
-
-
-# Plot
-covid_evolution_plot <- usa_states_geom %>%
-  left_join(covid_cases_rm, by = c("name" = "state")) %>%
-  mutate(fancy_date = fct_inorder(format(date, "%b. %d"))) %>%
-  ggplot() +
-  geom_sf(aes(fill = incidence_rate), size = .05, color = "grey55") +
-  facet_wrap(vars(fancy_date), strip.position = "bottom") +
-  colorspace::scale_fill_discrete_sequential(
-    name = str_to_upper("COVID-19 Incidence Rate"),
-    palette = "Rocket", rev = T,
-    guide = guide_legend(
-      nrow = 1,
-      keyheight = unit(.75, "cm"),
-      keywidth = unit(.75, "cm"),
-      label.position = "right",
-      label.theme = element_text(family = font_family, size = rel(15), margin = margin(r = 15)),
-      title.theme = element_text(family = font_family, size = rel(18), margin = margin(b = .5, unit = "cm")),
-      title.position = "top",
-      title.hjust = .5
-    )
-  ) +
-  theme_minimal() +
-  theme(
-    plot.title = element_text(
-      color = "#111111", family = font_family, size = rel(5), face = "bold", margin = margin(t = .5, b = .5, unit = "cm"),
-      hjust = 0.5
-    ),
-    plot.caption = element_text(family = font_family, size = rel(1.25), hjust = .5, face = "bold", margin = margin(t = .25, b = .25, unit = "cm")),
-    plot.margin = margin(t = .5, r = .5, b = .5, l = .5, unit = "cm"),
-    legend.box.spacing = unit(.5, "cm"),
-    text = element_text(family = font_family, color = "#111111"),
-    panel.grid = element_blank(),
-    axis.text = element_blank(),
-    strip.text = element_text(size = rel(1.125), face = "bold"),
-    legend.position = "top",
-    legend.text = element_text(family = font_family),
-    plot.background = element_rect(fill = bg_color, color = NA)
-  ) +
-  labs(
-    title = "2021 · A pandemic year",
-    caption = caption
-  )
-
-
-
-# ggsave(covid_evolution_plot,
-#        filename = glue::glue("temp.png"), width = 25, height = 25, device = ragg::agg_png, dpi = 640)
-```
 
 
 
