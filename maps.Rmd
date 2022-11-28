@@ -344,7 +344,8 @@ covid_cases <- covid_data %>%
       TRUE ~ 0
     )
   ) %>%
-  ungroup()
+  ungroup() %>% 
+  arrange(state, date)
 ```
 
 We can now take a look at the `covid_cases` data frame we created.
@@ -404,6 +405,30 @@ If we take a look at the `usa_states_geom_covid` data frame, we can see the meta
 usa_states_geom_covid
 ```
 
+It was a lot of work to end up with the surprisingly simple data frame `usa_states_geom_covid`, but it's all we need in order to make our map. The data may be simple, but the code that Abdoul Madjid used to make his map is quite complex. Let's look at it in pieces. 
+
+First, a quick note: the final map is actually multiple maps, one for each day in 2021. Combining 365 days makes for a large final product. So, instead of showing every day for each step, I'm going to filter the `usa_states_geom_covid` to just show the first three days in January. I do this using the code below and save the result as a data frame called `usa_states_geom_covid_three_days`. 
+
+```{r echo = TRUE}
+usa_states_geom_covid_three_days <- usa_states_geom_covid %>%
+  filter(date <= as.Date("2021-01-03"))
+```
+
+#### Basic plot
+
+```{r}
+usa_states_geom_covid_three_days %>%
+  ggplot() +
+  geom_sf(aes(fill = incidence_rate), 
+          size = .05, 
+          color = "grey55") +
+  facet_wrap(vars(fancy_date), 
+             strip.position = "bottom")
+```
+
+#### Colors
+
+#### Theme
 
 
 ```{r}
@@ -448,6 +473,10 @@ covid_evolution_plot <- usa_states_geom_covid %>%
 Inspired from a graphic in the DIE ZEIT newspaper of November 18, 2021.
 Data from NY Times · Tidytuesday Week-1 2022 · Abdoul ISSA BIDA."
   )
+```
+
+```{r}
+covid_evolution_plot
 ```
 
 
