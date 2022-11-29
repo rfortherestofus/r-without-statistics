@@ -244,7 +244,7 @@ We'll import each of these types of data and then merge them.
 First, we import COVID data. This data comes directly from the *New York Times*, which publishes daily case rates by state as a CSV on their GitHub account. I've dropped the `fips` variable (FIPS, which stands for Federal Information Processing Standards, are numeric codes used to represent states) because we can just use the state name instead.
 
 ```{r echo = TRUE}
-covid_data <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv") %>% 
+covid_data <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv") %>%
   select(-fips)
 ```
 
@@ -272,7 +272,7 @@ Finally, we'll bring in our geospatial data and save it as an object called `usa
 ```{r echo = TRUE}
 usa_states_geom <- usa_sf() %>%
   select(name) %>%
-  st_transform(us_laea_proj) 
+  st_transform(us_laea_proj)
 ```
 
 #### Projections examples
@@ -335,7 +335,7 @@ Next, we need to calculate the number of daily COVID cases. We have to do this b
 covid_cases <- covid_data %>%
   group_by(state) %>%
   mutate(
-    pd_cases = lag(cases) 
+    pd_cases = lag(cases)
   ) %>%
   replace_na(list(pd_cases = 0)) %>%
   mutate(
@@ -344,7 +344,7 @@ covid_cases <- covid_data %>%
       TRUE ~ 0
     )
   ) %>%
-  ungroup() %>% 
+  ungroup() %>%
   arrange(state, date)
 ```
 
@@ -366,18 +366,24 @@ The last step is to only include 2021 data because Madjid's map only shows that 
 
 ```{r}
 covid_cases_rm <- covid_cases %>%
-  mutate(roll_cases = rollmean(daily_cases, 
-                               k = 5, 
-                               fill = NA)) %>%
-  left_join(usa_states, 
-            by = c("state" = "State")) %>%
+  mutate(roll_cases = rollmean(
+    daily_cases,
+    k = 5,
+    fill = NA
+  )) %>%
+  left_join(
+    usa_states,
+    by = c("state" = "State")
+  ) %>%
   drop_na(Pop) %>%
   mutate(incidence_rate = 10^5 * roll_cases / Pop) %>%
-  mutate(incidence_rate = cut(incidence_rate, 
-                              breaks = c(seq(0, 50, 5), Inf), 
-                              include.lowest = TRUE) %>%
-           factor(labels = paste0(">", seq(0, 50, 5)))) %>% 
-  filter(year(date) == 2021) %>% 
+  mutate(incidence_rate = cut(
+    incidence_rate,
+    breaks = c(seq(0, 50, 5), Inf),
+    include.lowest = TRUE
+  ) %>%
+    factor(labels = paste0(">", seq(0, 50, 5)))) %>%
+  filter(year(date) == 2021) %>%
   select(state, date, incidence_rate)
 ```
 
@@ -400,7 +406,7 @@ usa_states_geom_covid <- usa_states_geom %>%
 If we take a look at the `usa_states_geom_covid` data frame, we can see the metadata and `geometry` columns discussed above.
 
 ```{r}
-# TODO: Why is fancy_date after geometry? 
+# TODO: Why is fancy_date after geometry?
 
 usa_states_geom_covid
 ```
@@ -416,20 +422,219 @@ usa_states_geom_covid_three_days <- usa_states_geom_covid %>%
 
 #### Basic plot
 
+Now that we have three days of data, let's make some maps. Abdoul Madjid's map-making code has three main parts:
+
+1. Overall plotting
+1. Changing colors
+1. Making tweaks to the theme
+
+The three lines of code that we used above to make our Wyoming maps come back again, with some adornments to improve the quality of our map. Below, we can see that we're using `geom_sf()` to plot our geospatial data. Madjid modifies a couple arguments, using `size = .05` to make the state borders less prominent and `color = "grey55"` to make the borders a medium grey color. Then, because he is making one map for each day, he uses the `facet_wrap()` function. The `vars(fancy_date)` code specifies that the `fancy_date` variable should be used to do the facetting (in other words, make one map for each unique observation of `fancy_date`) and `strip.position = "bottom"` moves the "Jan. 01," "Jan. 02," and "Jan. 03" labels to the bottom of the maps. 
+
+
+```{r echo = TRUE, include = FALSE}
+usa_states_geom_covid_three_days %>%
+  ggplot() +
+  geom_sf(
+    aes(fill = incidence_rate),
+    size = .05,
+    color = "grey55"
+  ) +
+  facet_wrap(
+    vars(fancy_date),
+    strip.position = "bottom"
+  )
+```
+
+The resulting map can be seen in TODO add figure number below. 
+
 ```{r}
 usa_states_geom_covid_three_days %>%
   ggplot() +
-  geom_sf(aes(fill = incidence_rate), 
-          size = .05, 
-          color = "grey55") +
-  facet_wrap(vars(fancy_date), 
-             strip.position = "bottom")
+  geom_sf(
+    aes(fill = incidence_rate),
+    size = .05,
+    color = "grey55"
+  ) +
+  facet_wrap(
+    vars(fancy_date),
+    strip.position = "bottom"
+  )
 ```
 
 #### Colors
 
+Next, Madjid tweaked the colors of his maps. He used the `scale_fill_discrete_sequential()` function from the `colorspace` package to set the fill scale. This function is quite similar to the `scale_fill_viridis_d()` function that Cédric Scherer and Georgios Karamanis used to make their drought data visualization in \@ref(data-viz-chapter). Another similarity is that both visualizations use the "rocket" palette, with the fill scale going from a tan at the low end to a black at the high end. Madjid then uses the `name` argument to set the title for the legend. By default, it would use the variable name (`incidence_rate`), but Madjid improves it by using "COVID-19 INCIDENCE RATE" instead.
+
+```{r}
+usa_states_geom_covid_three_days %>%
+  ggplot() +
+  geom_sf(
+    aes(fill = incidence_rate),
+    size = .05,
+    color = "grey55"
+  ) +
+  facet_wrap(
+    vars(fancy_date),
+    strip.position = "bottom"
+  ) +
+  scale_fill_discrete_sequential(
+    palette = "Rocket",
+    name = "COVID-19 INCIDENCE RATE"
+  )
+```
+
+Our in-progress map can be seen below.
+
+```{r}
+usa_states_geom_covid_three_days %>%
+  ggplot() +
+  geom_sf(
+    aes(fill = incidence_rate),
+    size = .05,
+    color = "grey55"
+  ) +
+  facet_wrap(
+    vars(fancy_date),
+    strip.position = "bottom"
+  ) +
+  scale_fill_discrete_sequential(
+    palette = "Rocket",
+    name = "COVID-19 INCIDENCE RATE"
+  )
+```
+
+I've actually only shown a portion of the code that Abdoul Madjid used within the `scale_fill_discrete_sequential()` function. He also used the `guide` argument and the `guide_legend()` function to make tweaks to the legend. His code does the following:
+
+- Puts the colored squares in one row (`nrow = 1`) rather than the default (all in a single column)
+- Sets the height and width of each colored square (.75 centimeters for each)
+- Sets the font family, size, and margin of both the labels (the ">0," ">5," and so on) and the title ("COVID-19 INCIDENCE RATE")
+- Puts the title on top of the legend (`title.position = "top"`) and centers it (`title.hjust = .5`)
+
+```{r}
+usa_states_geom_covid_three_days %>%
+  ggplot() +
+  geom_sf(
+    aes(fill = incidence_rate),
+    size = .05,
+    color = "grey55"
+  ) +
+  facet_wrap(
+    vars(fancy_date),
+    strip.position = "bottom"
+  ) +
+  scale_fill_discrete_sequential(
+    palette = "Rocket",
+    name = "COVID-19 INCIDENCE RATE",
+    guide = guide_legend(
+      nrow = 1,
+      keyheight = unit(.75, "cm"),
+      keywidth = unit(.75, "cm"),
+      label.theme = element_text(
+        family = "Times New Roman",
+        size = rel(15),
+        margin = margin(
+          r = 15,
+          unit = "pt"
+        )
+      ),
+      title.theme = element_text(
+        family = "Times New Roman",
+        size = rel(18),
+        margin = margin(
+          b = .5,
+          unit = "cm"
+        )
+      ),
+      title.position = "top",
+      title.hjust = .5
+    )
+  )
+```
+
+If we view our map at this point, it won't actually look like much because the legend is currently set to the quite large in relation to the maps. In order to change this, and to make some other tweaks to improve the look-and-feel of our maps, Madjid made multiple tweaks to the maps themselves. He did this using the `theme()` function from the `ggplot2` package. One benefit of making maps with ggplot is that all of the tweaks you use when making a regular plot can be carried over to your maps as well. Many of the tweaks within the `theme()` function below are similar to those seen in Chapter \@ref(data-viz-chapter). 
+
 #### Theme
 
+```{r}
+usa_states_geom_covid_three_days %>%
+  ggplot() +
+  geom_sf(
+    aes(fill = incidence_rate),
+    size = .05,
+    color = "grey55"
+  ) +
+  facet_wrap(
+    vars(fancy_date),
+    strip.position = "bottom"
+  ) +
+  scale_fill_discrete_sequential(
+    palette = "Rocket",
+    name = "COVID-19 INCIDENCE RATE",
+    guide = guide_legend(
+      nrow = 1,
+      keyheight = unit(.75, "cm"),
+      keywidth = unit(.75, "cm"),
+      label.theme = element_text(
+        family = "Times New Roman",
+        size = rel(15),
+        margin = margin(
+          r = 15,
+          unit = "pt"
+        )
+      ),
+      title.theme = element_text(
+        family = "Times New Roman",
+        size = rel(18),
+        margin = margin(
+          b = .5,
+          unit = "cm"
+        )
+      ),
+      title.position = "top",
+      title.hjust = .5
+    )
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(
+      color = "#111111",
+      family = "Times New Roman",
+      size = rel(5),
+      face = "bold",
+      margin = margin(t = .5, 
+                      b = .5, 
+                      unit = "cm"),
+      hjust = 0.5
+    ),
+    plot.caption = element_text(
+      family = "Times New Roman",
+      size = rel(1.25),
+      hjust = .5,
+      face = "bold",
+      margin = margin(t = .25, 
+                      b = .25, 
+                      unit = "cm")
+    ),
+    plot.margin = margin(t = .5, 
+                         r = .5, 
+                         b = .5, 
+                         l = .5, 
+                         unit = "cm"),
+    legend.box.spacing = unit(.5, "cm"),
+    text = element_text(family = "Times New Roman", 
+                        color = "#111111"),
+    panel.grid = element_blank(),
+    axis.text = element_blank(),
+    strip.text = element_text(size = rel(1.125), 
+                              face = "bold"),
+    legend.position = "top",
+    legend.text = element_text(family = "Times New Roman"),
+    plot.background = element_rect(fill = "#e5e4e2", 
+                                   color = NA)
+  ) 
+```
+
+#### Titles
 
 ```{r}
 covid_evolution_plot <- usa_states_geom_covid %>%
@@ -438,7 +643,8 @@ covid_evolution_plot <- usa_states_geom_covid %>%
   facet_wrap(vars(fancy_date), strip.position = "bottom") +
   scale_fill_discrete_sequential(
     name = str_to_upper("COVID-19 Incidence Rate"),
-    palette = "Rocket", rev = T,
+    palette = "Rocket",
+    rev = T,
     guide = guide_legend(
       nrow = 1,
       keyheight = unit(.75, "cm"),
@@ -453,7 +659,11 @@ covid_evolution_plot <- usa_states_geom_covid %>%
   theme_minimal() +
   theme(
     plot.title = element_text(
-      color = "#111111", family = "Times New Roman", size = rel(5), face = "bold", margin = margin(t = .5, b = .5, unit = "cm"),
+      color = "#111111",
+      family = "Times New Roman",
+      size = rel(5),
+      face = "bold",
+      margin = margin(t = .5, b = .5, unit = "cm"),
       hjust = 0.5
     ),
     plot.caption = element_text(family = "Times New Roman", size = rel(1.25), hjust = .5, face = "bold", margin = margin(t = .25, b = .25, unit = "cm")),
@@ -513,7 +723,7 @@ We can use this projection to re-project our Massachusetts geospatial data and m
 
 ```{r}
 usa_states_wgs84 %>%
-  st_transform("ESRI:54030") %>% 
+  st_transform("ESRI:54030") %>%
   ggplot() +
   geom_sf()
 ```
