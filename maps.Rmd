@@ -153,7 +153,8 @@ wy_roads %>%
 MULTIPOLYGON data occurs when, for example, we have a state made up of multiple polygons. To see what I mean, let's take a look at a map of Wyoming counties. First, let's look at simple features data used to represent the 23 counties in the state. We can see that the geometry type of this data is MULTIPOLYGON (in addition, the repeated MULTIPOLYGON text in the `geometry` column indicates that each row contains a shape of type MULTIPOLYGON; see section on the `geometry` column below). 
 
 ```{r}
-wy_counties <- counties(state = "Wyoming") %>%
+wy_counties <- counties(state = "Wyoming",
+                        progress_bar = FALSE) %>%
   st_transform("WGS84") %>%
   select(NAME)
 
@@ -393,7 +394,7 @@ We can take a look at the `covid_cases_rm` data frame.
 covid_cases_rm
 ```
 
-### Mapping
+#### Merge with geosaptial data
 
 We've now used two (COVID case data and state population data) of our three data sources to create the `covid_cases_rm` data frame that we'll use to make our map. Let's use our third data source: the geospatial data we saved as `usa_states_geom`. We start with this data frame and then merge our `covid_cases_rm` data frame into it, matching the `name` variable from `usa_states_geom` to the `state` variable in `covid_cases_rm`. Being able to merge together regular data frames with geospatial data is possible with simple features data, another mark in its favor. Next, Madjid created a new variable called `fancy_date`. As the name implies, it's a nicely formatted version of the date so that we get "Jan. 01" instead of "2021-01-01." The `format()` function does the formatting while the `fct_inorder()` function makes it so that the `fancy_date()` variable will display in order by date (rather than, say, putting August before January because it comes first alphabetically). We save this data frame as `usa_states_geom_covid`. 
 
@@ -411,13 +412,15 @@ If we take a look at the `usa_states_geom_covid` data frame, we can see the meta
 usa_states_geom_covid
 ```
 
+### Mapping
+
 It was a lot of work to end up with the surprisingly simple data frame `usa_states_geom_covid`, but it's all we need in order to make our map. The data may be simple, but the code that Abdoul Madjid used to make his map is quite complex. Let's look at it in pieces. 
 
-First, a quick note: the final map is actually multiple maps, one for each day in 2021. Combining 365 days makes for a large final product. So, instead of showing every day for each step, I'm going to filter the `usa_states_geom_covid` to just show the first three days in January. I do this using the code below and save the result as a data frame called `usa_states_geom_covid_three_days`. 
+First, a quick note: the final map is actually multiple maps, one for each day in 2021. Combining 365 days makes for a large final product. So, instead of showing every day for each step, I'm going to filter the `usa_states_geom_covid` to just show the first six days in January. I do this using the code below and save the result as a data frame called `usa_states_geom_covid_six_days`. 
 
 ```{r echo = TRUE}
-usa_states_geom_covid_three_days <- usa_states_geom_covid %>%
-  filter(date <= as.Date("2021-01-03"))
+usa_states_geom_covid_six_days <- usa_states_geom_covid %>%
+  filter(date <= as.Date("2021-01-06"))
 ```
 
 #### Basic plot
@@ -432,7 +435,7 @@ The three lines of code that we used above to make our Wyoming maps come back ag
 
 
 ```{r echo = TRUE, include = FALSE}
-usa_states_geom_covid_three_days %>%
+usa_states_geom_covid_six_days %>%
   ggplot() +
   geom_sf(
     aes(fill = incidence_rate),
@@ -448,7 +451,7 @@ usa_states_geom_covid_three_days %>%
 The resulting map can be seen in TODO add figure number below. 
 
 ```{r}
-usa_states_geom_covid_three_days %>%
+usa_states_geom_covid_six_days %>%
   ggplot() +
   geom_sf(
     aes(fill = incidence_rate),
@@ -463,10 +466,10 @@ usa_states_geom_covid_three_days %>%
 
 #### Colors
 
-Next, Madjid tweaked the colors of his maps. He used the `scale_fill_discrete_sequential()` function from the `colorspace` package to set the fill scale. This function is quite similar to the `scale_fill_viridis_d()` function that Cédric Scherer and Georgios Karamanis used to make their drought data visualization in \@ref(data-viz-chapter). Another similarity is that both visualizations use the "rocket" palette, with the fill scale going from a tan at the low end to a black at the high end. Madjid then uses the `name` argument to set the title for the legend. By default, it would use the variable name (`incidence_rate`), but Madjid improves it by using "COVID-19 INCIDENCE RATE" instead.
+Next, Madjid tweaked the colors of his maps. He used the `scale_fill_discrete_sequential()` function from the `colorspace` package to set the fill scale. This function is quite similar to the `scale_fill_viridis_d()` function that Cédric Scherer and Georgios Karamanis used to make their drought data visualization in Chapter \@ref(data-viz-chapter). Another similarity is that both visualizations use the "rocket" palette, with the fill scale going from a tan at the low end to a black at the high end. Madjid then uses the `name` argument to set the title for the legend. By default, it would use the variable name (`incidence_rate`), but Madjid improves it by using "COVID-19 INCIDENCE RATE" instead.
 
 ```{r}
-usa_states_geom_covid_three_days %>%
+usa_states_geom_covid_six_days %>%
   ggplot() +
   geom_sf(
     aes(fill = incidence_rate),
@@ -486,7 +489,7 @@ usa_states_geom_covid_three_days %>%
 Our in-progress map can be seen below.
 
 ```{r}
-usa_states_geom_covid_three_days %>%
+usa_states_geom_covid_six_days %>%
   ggplot() +
   geom_sf(
     aes(fill = incidence_rate),
@@ -511,12 +514,12 @@ I've actually only shown a portion of the code that Abdoul Madjid used within th
 - Puts the title on top of the legend (`title.position = "top"`) and centers it (`title.hjust = .5`)
 
 ```{r}
-usa_states_geom_covid_three_days %>%
+usa_states_geom_covid_six_days %>%
   ggplot() +
   geom_sf(
     aes(fill = incidence_rate),
     size = .05,
-    color = "grey55"
+    color = "transparent"
   ) +
   facet_wrap(
     vars(fancy_date),
@@ -527,21 +530,64 @@ usa_states_geom_covid_three_days %>%
     name = "COVID-19 INCIDENCE RATE",
     guide = guide_legend(
       nrow = 1,
-      keyheight = unit(.75, "cm"),
-      keywidth = unit(.75, "cm"),
+      keyheight = unit(.3, "cm"),
+      keywidth = unit(.3, "cm"),
       label.theme = element_text(
         family = "Times New Roman",
-        size = rel(15),
+        size = rel(6),
         margin = margin(
-          r = 15,
+          r = 5,
           unit = "pt"
         )
       ),
       title.theme = element_text(
         family = "Times New Roman",
-        size = rel(18),
+        size = rel(9),
         margin = margin(
-          b = .5,
+          b = .1,
+          unit = "cm"
+        )
+      ),
+      title.position = "top",
+      title.hjust = .5
+    )
+  )
+```
+
+
+
+```{r}
+map_with_legend_tweaks <- usa_states_geom_covid_six_days %>%
+  ggplot() +
+  geom_sf(
+    aes(fill = incidence_rate),
+    size = .05,
+    color = "transparent"
+  ) +
+  facet_wrap(
+    vars(fancy_date),
+    strip.position = "bottom"
+  ) +
+  scale_fill_discrete_sequential(
+    palette = "Rocket",
+    name = "COVID-19 INCIDENCE RATE",
+    guide = guide_legend(
+      nrow = 1,
+      keyheight = unit(.3, "cm"),
+      keywidth = unit(.3, "cm"),
+      label.theme = element_text(
+        family = "Times New Roman",
+        size = rel(6),
+        margin = margin(
+          r = 5,
+          unit = "pt"
+        )
+      ),
+      title.theme = element_text(
+        family = "Times New Roman",
+        size = rel(9),
+        margin = margin(
+          b = .1,
           unit = "cm"
         )
       ),
@@ -555,139 +601,147 @@ If we view our map at this point, it won't actually look like much because the l
 
 #### Theme
 
+
+Let's review the changes that Abdoul Madjid made to his maps using ggplot themes. He began by applying `theme_minimal()` to his map. This removes the ugly gray background that ggplot applies to plots (and maps). He then applied additional tweaks using the `theme()` function. Let's start by looking at the tweaks to the legend. 
+
+While the code in the `scale_fill_discrete_sequential()` function customized individual elements *within* the legend (for example, the size of the colored squares), the code below customizes the legend as a whole. Madjid moved the legend to the top of the maps using `legend.position = "top"` and added a bit of spacing around the legend with `legend.box.spacing = unit(.5, "cm")`. 
+
+##### Legend tweaks
+
 ```{r}
-usa_states_geom_covid_three_days %>%
-  ggplot() +
-  geom_sf(
-    aes(fill = incidence_rate),
-    size = .05,
-    color = "grey55"
-  ) +
-  facet_wrap(
-    vars(fancy_date),
-    strip.position = "bottom"
-  ) +
-  scale_fill_discrete_sequential(
-    palette = "Rocket",
-    name = "COVID-19 INCIDENCE RATE",
-    guide = guide_legend(
-      nrow = 1,
-      keyheight = unit(.75, "cm"),
-      keywidth = unit(.75, "cm"),
-      label.theme = element_text(
-        family = "Times New Roman",
-        size = rel(15),
-        margin = margin(
-          r = 15,
-          unit = "pt"
-        )
-      ),
-      title.theme = element_text(
-        family = "Times New Roman",
-        size = rel(18),
-        margin = margin(
-          b = .5,
-          unit = "cm"
-        )
-      ),
-      title.position = "top",
-      title.hjust = .5
-    )
-  ) +
+map_with_legend_tweaks +
   theme_minimal() +
   theme(
+    legend.position = "top",
+    legend.box.spacing = unit(.25, "cm")
+  )
+```
+
+We can see the result of these tweaks below.
+
+```{r}
+map_with_legend_tweaks +
+  theme_minimal() +
+  theme(
+    legend.position = "top",
+    legend.box.spacing = unit(.25, "cm")
+  )
+```
+
+
+
+```{r}
+map_with_more_legend_tweaks <- map_with_legend_tweaks +
+  theme_minimal() +
+  theme(
+    legend.position = "top",
+    legend.box.spacing = unit(.25, "cm"))
+```
+
+
+##### Text
+
+```{r}
+map_with_more_legend_tweaks +
+  theme(
+    text = element_text(family = "Times New Roman", 
+                        color = "#111111"),
     plot.title = element_text(
       color = "#111111",
-      family = "Times New Roman",
-      size = rel(5),
+      size = rel(2.5),
       face = "bold",
-      margin = margin(t = .5, 
-                      b = .5, 
+      margin = margin(t = .25, 
+                      b = .25, 
                       unit = "cm"),
       hjust = 0.5
     ),
     plot.caption = element_text(
-      family = "Times New Roman",
-      size = rel(1.25),
       hjust = .5,
       face = "bold",
       margin = margin(t = .25, 
                       b = .25, 
-                      unit = "cm")
-    ),
-    plot.margin = margin(t = .5, 
-                         r = .5, 
-                         b = .5, 
-                         l = .5, 
-                         unit = "cm"),
-    legend.box.spacing = unit(.5, "cm"),
-    text = element_text(family = "Times New Roman", 
-                        color = "#111111"),
-    panel.grid = element_blank(),
-    axis.text = element_blank(),
-    strip.text = element_text(size = rel(1.125), 
-                              face = "bold"),
-    legend.position = "top",
-    legend.text = element_text(family = "Times New Roman"),
-    plot.background = element_rect(fill = "#e5e4e2", 
-                                   color = NA)
-  ) 
+                      unit = "cm")),
+    strip.text = element_text(size = rel(0.75), 
+                              face = "bold")
+  ) +
+  labs(title = "2021 · A pandemic year",
+       caption = "Incidence rates are calculated for 100,000 people in each state.
+Inspired from a graphic in the DIE ZEIT newspaper of November 18, 2021.
+Data from NY Times · Tidytuesday Week-1 2022 · Abdoul ISSA BIDA.")
+
+save_figure_for_nostarch(6)
 ```
 
-#### Titles
+
 
 ```{r}
-covid_evolution_plot <- usa_states_geom_covid %>%
-  ggplot() +
-  geom_sf(aes(fill = incidence_rate), size = .05, color = "grey55") +
-  facet_wrap(vars(fancy_date), strip.position = "bottom") +
-  scale_fill_discrete_sequential(
-    name = str_to_upper("COVID-19 Incidence Rate"),
-    palette = "Rocket",
-    rev = T,
-    guide = guide_legend(
-      nrow = 1,
-      keyheight = unit(.75, "cm"),
-      keywidth = unit(.75, "cm"),
-      label.position = "right",
-      label.theme = element_text(family = "Times New Roman", size = rel(15), margin = margin(r = 15)),
-      title.theme = element_text(family = "Times New Roman", size = rel(18), margin = margin(b = .5, unit = "cm")),
-      title.position = "top",
-      title.hjust = .5
-    )
-  ) +
-  theme_minimal() +
+map_with_text_tweaks <- map_with_more_legend_tweaks +
   theme(
+    text = element_text(family = "Times New Roman", 
+                        color = "#111111"),
     plot.title = element_text(
       color = "#111111",
-      family = "Times New Roman",
-      size = rel(5),
+      size = rel(2.5),
       face = "bold",
-      margin = margin(t = .5, b = .5, unit = "cm"),
+      margin = margin(t = .25, 
+                      b = .25, 
+                      unit = "cm"),
       hjust = 0.5
     ),
-    plot.caption = element_text(family = "Times New Roman", size = rel(1.25), hjust = .5, face = "bold", margin = margin(t = .25, b = .25, unit = "cm")),
-    plot.margin = margin(t = .5, r = .5, b = .5, l = .5, unit = "cm"),
-    legend.box.spacing = unit(.5, "cm"),
-    text = element_text(family = "Times New Roman", color = "#111111"),
-    panel.grid = element_blank(),
-    axis.text = element_blank(),
-    strip.text = element_text(size = rel(1.125), face = "bold"),
-    legend.position = "top",
-    legend.text = element_text(family = "Times New Roman"),
-    plot.background = element_rect(fill = "#e5e4e2", color = NA)
+    plot.caption = element_text(
+      hjust = .5,
+      face = "bold",
+      margin = margin(t = .25, 
+                      b = .25, 
+                      unit = "cm")),
+    strip.text = element_text(size = rel(0.75), 
+                              face = "bold")
   ) +
-  labs(
-    title = "2021 · A pandemic year",
-    caption = "Incidence rates are calculated for 100,000 people in each state.
+  labs(title = "2021 · A pandemic year",
+       caption = "Incidence rates are calculated for 100,000 people in each state.
 Inspired from a graphic in the DIE ZEIT newspaper of November 18, 2021.
-Data from NY Times · Tidytuesday Week-1 2022 · Abdoul ISSA BIDA."
+Data from NY Times · Tidytuesday Week-1 2022 · Abdoul ISSA BIDA.")
+```
+
+##### Grid lines and axis text
+
+```{r}
+map_with_text_tweaks +
+  theme(
+    panel.grid = element_blank(),
+    axis.text = element_blank()
   )
 ```
 
 ```{r}
-covid_evolution_plot
+map_with_grid_and_axis_tweaks <- map_with_text_tweaks +
+  theme(
+    panel.grid = element_blank(),
+    axis.text = element_blank()
+  )
 ```
+
+
+
+
+##### Background and margin
+
+
+```{r}
+map_with_grid_and_axis_tweaks +
+  theme(
+    plot.margin = margin(t = .25, 
+                         r = .25, 
+                         b = .25, 
+                         l = .25, 
+                         unit = "cm"),
+    plot.background = element_rect(fill = "#e5e4e2", 
+                                   color = NA)
+  )
+
+save_figure_for_nostarch()
+```
+
 
 
 
