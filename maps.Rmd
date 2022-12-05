@@ -416,22 +416,26 @@ usa_states_geom_covid
 
 It was a lot of work to end up with the surprisingly simple data frame `usa_states_geom_covid`, but it's all we need in order to make our map. The data may be simple, but the code that Abdoul Madjid used to make his map is quite complex. Let's look at it in pieces. 
 
-First, a quick note: the final map is actually multiple maps, one for each day in 2021. Combining 365 days makes for a large final product. So, instead of showing every day for each step, I'm going to filter the `usa_states_geom_covid` to just show the first six days in January. I do this using the code below and save the result as a data frame called `usa_states_geom_covid_six_days`. 
+But before doing so, two quick notes: 
+
+First: The final map is actually multiple maps, one for each day in 2021. Combining 365 days makes for a large final product. So, instead of showing every day for each step, I'm going to filter the `usa_states_geom_covid` to just show the first six days in January. I do this using the code below and save the result as a data frame called `usa_states_geom_covid_six_days`. 
 
 ```{r echo = TRUE}
 usa_states_geom_covid_six_days <- usa_states_geom_covid %>%
   filter(date <= as.Date("2021-01-06"))
 ```
 
+Second: the final product that Abdoul Madjid made is giant in order to fit all 365 maps. I've had to change sizes of a few elements below to make them fit in this book. I've kept the overall stucture of the code, but changed a few specific elements (for example, making text sizes smaller) so that everything fits.
+
 #### Basic plot
 
-Now that we have three days of data, let's make some maps. Abdoul Madjid's map-making code has three main parts:
+Now that we have six days of data, let's make some maps. Abdoul Madjid's map-making code has three main parts:
 
 1. Overall plotting
 1. Changing colors
 1. Making tweaks to the theme
 
-The three lines of code that we used above to make our Wyoming maps come back again, with some adornments to improve the quality of our map. Below, we can see that we're using `geom_sf()` to plot our geospatial data. Madjid modifies a couple arguments, using `size = .05` to make the state borders less prominent and `color = "grey55"` to make the borders a medium grey color. Then, because he is making one map for each day, he uses the `facet_wrap()` function. The `vars(fancy_date)` code specifies that the `fancy_date` variable should be used to do the facetting (in other words, make one map for each unique observation of `fancy_date`) and `strip.position = "bottom"` moves the "Jan. 01," "Jan. 02," and "Jan. 03" labels to the bottom of the maps. 
+The three lines of code that we used above to make our Wyoming maps come back again, with some adornments to improve the quality of our map. Below, we can see that we're using `geom_sf()` to plot our geospatial data. Madjid modifies a couple arguments, using `size = .05` to make the state borders less prominent and `color = "grey55"` to make the borders a medium grey color. Then, because he is making one map for each day, he uses the `facet_wrap()` function. The `vars(fancy_date)` code specifies that the `fancy_date` variable should be used to do the facetting (in other words, make one map for each unique observation of `fancy_date`) and `strip.position = "bottom"` moves the labels "Jan. 01", "Jan. 02", and so on to the bottom of the maps. 
 
 
 ```{r echo = TRUE, include = FALSE}
@@ -466,7 +470,7 @@ usa_states_geom_covid_six_days %>%
 
 #### Colors
 
-Next, Madjid tweaked the colors of his maps. He used the `scale_fill_discrete_sequential()` function from the `colorspace` package to set the fill scale. This function is quite similar to the `scale_fill_viridis_d()` function that Cédric Scherer and Georgios Karamanis used to make their drought data visualization in Chapter \@ref(data-viz-chapter). Another similarity is that both visualizations use the "rocket" palette, with the fill scale going from a tan at the low end to a black at the high end. Madjid then uses the `name` argument to set the title for the legend. By default, it would use the variable name (`incidence_rate`), but Madjid improves it by using "COVID-19 INCIDENCE RATE" instead.
+Next, Madjid tweaked the colors of his maps. He used the `scale_fill_discrete_sequential()` function from the `colorspace` package to set the fill scale. This function is quite similar to the `scale_fill_viridis_d()` function that Cédric Scherer and Georgios Karamanis used to make their drought data visualization in Chapter \@ref(data-viz-chapter). Both visualizations use the "rocket" palette, with the fill scale going from a tan at the low end to a black at the high end. Madjid then used the `name` argument to set the title for the legend. By default, it would use the variable name (`incidence_rate`), but Madjid improves it by using "COVID-19 INCIDENCE RATE" instead.
 
 ```{r}
 usa_states_geom_covid_six_days %>%
@@ -509,11 +513,11 @@ usa_states_geom_covid_six_days %>%
 I've actually only shown a portion of the code that Abdoul Madjid used within the `scale_fill_discrete_sequential()` function. He also used the `guide` argument and the `guide_legend()` function to make tweaks to the legend. His code does the following:
 
 - Puts the colored squares in one row (`nrow = 1`) rather than the default (all in a single column)
-- Sets the height and width of each colored square (.75 centimeters for each)
-- Sets the font family, size, and margin of both the labels (the ">0," ">5," and so on) and the title ("COVID-19 INCIDENCE RATE")
+- Sets the height and width of each colored square (.3 centimeters for each)
+- Sets the font family, size, and margin of both the labels (the ">0," ">5," and so on) with `label.theme` and the title ("COVID-19 INCIDENCE RATE") with `title.theme`
 - Puts the title on top of the legend (`title.position = "top"`) and centers it (`title.hjust = .5`)
 
-```{r}
+```{r echo = TRUE, include = FALSE}
 usa_states_geom_covid_six_days %>%
   ggplot() +
   geom_sf(
@@ -601,14 +605,13 @@ If we view our map at this point, it won't actually look like much because the l
 
 #### Theme
 
-
 Let's review the changes that Abdoul Madjid made to his maps using ggplot themes. He began by applying `theme_minimal()` to his map. This removes the ugly gray background that ggplot applies to plots (and maps). He then applied additional tweaks using the `theme()` function. Let's start by looking at the tweaks to the legend. 
-
-While the code in the `scale_fill_discrete_sequential()` function customized individual elements *within* the legend (for example, the size of the colored squares), the code below customizes the legend as a whole. Madjid moved the legend to the top of the maps using `legend.position = "top"` and added a bit of spacing around the legend with `legend.box.spacing = unit(.5, "cm")`. 
 
 ##### Legend tweaks
 
-```{r}
+While the code in the `scale_fill_discrete_sequential()` function customized individual elements *within* the legend (for example, the size of the colored squares), the code below customizes the legend as a whole. Madjid moved the legend to the top of the maps using `legend.position = "top"` and added a bit of spacing around the legend with `legend.box.spacing = unit(.25, "cm")`. 
+
+```{r echo = TRUE, include = FALSE}
 map_with_legend_tweaks +
   theme_minimal() +
   theme(
@@ -629,7 +632,6 @@ map_with_legend_tweaks +
 ```
 
 
-
 ```{r}
 map_with_more_legend_tweaks <- map_with_legend_tweaks +
   theme_minimal() +
@@ -641,19 +643,24 @@ map_with_more_legend_tweaks <- map_with_legend_tweaks +
 
 ##### Text
 
+Next, Madjid made tweaks to the title and caption. Below, we added the title and caption using this `labs()` function. Then, we see how Madjid used the `theme()` function to tweak these elements as well as the label for each map ("Jan. 01", "Jan. 02", and so on). He makes all text use Times New Roman font and makes it a nearly black color using the hex code #111111. This sets defaults for all text elements, but Madjid then also makes tweaks to individual elements as well. He sets the size of the title to be 2.5 times that of other text elements (`size = rel(2.5)`), makes it bold (`face = "bold"`) and centered (`hjust = 0.5`), and adds 0.25 centtimer margins on the top and bottom (`hjust = 0.5, margin = margin(t = .25, b = .25, unit = "cm")`). He makes the same tweaks to the caption, with the exception of adjusting the font size. And finally, Abdoul Madjid adjusts the size and bolding of the individual map labels using `strip.text`.
+
 ```{r}
 map_with_more_legend_tweaks +
+  labs(title = "2021 · A pandemic year",
+       caption = "Incidence rates are calculated for 100,000 people in each state.
+                  Inspired from a graphic in the DIE ZEIT newspaper of November 18, 2021.
+                  Data from NY Times · Tidytuesday Week-1 2022 · Abdoul ISSA BIDA.") +
   theme(
     text = element_text(family = "Times New Roman", 
                         color = "#111111"),
     plot.title = element_text(
-      color = "#111111",
       size = rel(2.5),
       face = "bold",
+      hjust = 0.5,
       margin = margin(t = .25, 
                       b = .25, 
-                      unit = "cm"),
-      hjust = 0.5
+                      unit = "cm")
     ),
     plot.caption = element_text(
       hjust = .5,
@@ -663,30 +670,27 @@ map_with_more_legend_tweaks +
                       unit = "cm")),
     strip.text = element_text(size = rel(0.75), 
                               face = "bold")
-  ) +
-  labs(title = "2021 · A pandemic year",
-       caption = "Incidence rates are calculated for 100,000 people in each state.
-Inspired from a graphic in the DIE ZEIT newspaper of November 18, 2021.
-Data from NY Times · Tidytuesday Week-1 2022 · Abdoul ISSA BIDA.")
-
-save_figure_for_nostarch(6)
+  )
 ```
 
 
 
 ```{r}
 map_with_text_tweaks <- map_with_more_legend_tweaks +
+  labs(title = "2021 · A pandemic year",
+       caption = "Incidence rates are calculated for 100,000 people in each state.
+                  Inspired from a graphic in the DIE ZEIT newspaper of November 18, 2021.
+                  Data from NY Times · Tidytuesday Week-1 2022 · Abdoul ISSA BIDA.") +
   theme(
     text = element_text(family = "Times New Roman", 
                         color = "#111111"),
     plot.title = element_text(
-      color = "#111111",
       size = rel(2.5),
       face = "bold",
+      hjust = 0.5,
       margin = margin(t = .25, 
                       b = .25, 
-                      unit = "cm"),
-      hjust = 0.5
+                      unit = "cm")
     ),
     plot.caption = element_text(
       hjust = .5,
@@ -696,14 +700,22 @@ map_with_text_tweaks <- map_with_more_legend_tweaks +
                       unit = "cm")),
     strip.text = element_text(size = rel(0.75), 
                               face = "bold")
-  ) +
-  labs(title = "2021 · A pandemic year",
-       caption = "Incidence rates are calculated for 100,000 people in each state.
-Inspired from a graphic in the DIE ZEIT newspaper of November 18, 2021.
-Data from NY Times · Tidytuesday Week-1 2022 · Abdoul ISSA BIDA.")
+  )
 ```
 
 ##### Grid lines and axis text
+
+Our map is looking good! Just a few tweaks left to get it close to Abdoul Madjid's original. By default, maps made with the `geom_sf()` function have text and lines to show longitude and latitude. These aren't not necessary so Madjid removed them using the `element_blank()` function on `panel.grid` and `axis.text`.
+
+```{r echo = TRUE, include = FALSE}
+map_with_text_tweaks +
+  theme(
+    panel.grid = element_blank(),
+    axis.text = element_blank()
+  )
+```
+
+The result is a much nicer-looking set of maps. 
 
 ```{r}
 map_with_text_tweaks +
@@ -713,6 +725,7 @@ map_with_text_tweaks +
   )
 ```
 
+
 ```{r}
 map_with_grid_and_axis_tweaks <- map_with_text_tweaks +
   theme(
@@ -721,11 +734,25 @@ map_with_grid_and_axis_tweaks <- map_with_text_tweaks +
   )
 ```
 
-
-
-
 ##### Background and margin
 
+The last bit of tweaking that Abdoul Madjid did was to adjust the margins around the final set of maps and give the whole thing a light gray background. The former is done within `plot.margin` while the latter is done using `plot.background`. Setting the fill color of #e5e4e2 gives it that light gray background while the `color = NA` ensures there is no outline around the plot (without that code, it would have a black border).
+
+
+```{r echo = TRUE, include = FALSE}
+map_with_grid_and_axis_tweaks +
+  theme(
+    plot.margin = margin(t = .25, 
+                         r = .25, 
+                         b = .25, 
+                         l = .25, 
+                         unit = "cm"),
+    plot.background = element_rect(fill = "#e5e4e2", 
+                                   color = NA)
+  )
+```
+
+And there we have it: our recreation of Abdoul Madjid's COVID-19 map.
 
 ```{r}
 map_with_grid_and_axis_tweaks +
@@ -738,29 +765,109 @@ map_with_grid_and_axis_tweaks +
     plot.background = element_rect(fill = "#e5e4e2", 
                                    color = NA)
   )
-
-save_figure_for_nostarch()
 ```
-
-
-
-
-
 
 ## In Conclusion: R is a Swiss Army Knife That Can Help You Make Any Map You Want {-}
 
+If this chapter has inspired you to want to make your own maps in R, fantastic! As we've seen from Abdoul Madjid's work, you can use R both to gather and analyze geospatial data as well as to plot it. R is a swiss army knife, with a tool you can pull out to do pretty much anything you can imagine. 
+
 ### Tutorial Stuff
+
+In the first part of this chapter, I gave you a quick overview of how geospatial data works. You may now be wondering: ok, great, but how do I actually make my own maps? Let's talk first about where you can find geospatial data. 
 
 #### Where to Get Data
 
-#### How to Work with Data
 
+##### How to read in raw geospatial data
+
+
+First, a reminder: we're exclusively discussing vector data in the simple features format. While there are other types of geospatial data, simple features data is the simplest to work with and, as a result, increasingly dominant. 
+
+With that said, there are two ways to access geospatial data. The first is to import raw data. Geospatial data can take a number of different formats. While ESRL shapefiles (with the .shp extension) are the most common, there is also GeoJSON (.geojson), KML (.kml), and others (chapter 8 of *Geocomputation with R* by Robin Lovelace, Jakub Nowosad, and Jannes Muenchow discusses the range of formats). The good news for us as users is that there is a single function that can read in pretty much any type of geospatial data. That function is `read_sf()` from the `sf` package. Let's show an example of how it works. 
+
+I downloaded geospatial data from the website geojson.xyz on United States state boundaries in GeoJSON format, saving it in the `data` folder as states.geojson. I can then import this data using the `read_sf()` function. I use the `dsn` argument (dsn stands for data source name) to tell `read_sf()` where to find the file. I then save this as the object `us_states`. 
+
+```{r echo = TRUE}
+us_states <- read_sf(dsn = "data/states.geojson")
+```
+
+Let's now take at `us_states`. The data has 41 variables so, to keep things legible, let's just keep a couple: `name` (of the state) and `geometry`. I can show these two by selecting only `name` because, when working with simple features data, the `geometry` column is unaffected by operations to all other variables. We can see all of the metadata we discussed above (geometry type, dimensions, bounding box, and coordinate reference system) as well as the data itself.
+
+```{r}
+us_states %>% 
+  select(name)
+```
+
+To prove that this is geospatial data like that we've seen throughout this chapter, let's make a map with it. I'll use the same three lines from before. 
+
+```{r}
+us_states %>% 
+  ggplot() +
+  geom_sf() 
+```
+
+And there we have it: a map of all 50 states.
+
+```{r}
+us_states %>% 
+  ggplot() +
+  geom_sf() 
+```
+
+##### Packages to access APIs
+
+Working with raw geosaptial data in this way is sometimes necessary. But oftentimes it's not. That's because there are R packages that provide functions to access geospatial data. Abdoul Madjid used the `usa_sf()` function from the `albersusa` package to bring in his geospatial data. Another package for accessing geospatial data related to the United States is called `tigris`. This package has a number of well-named functions for bringing in different types of data. One of these is the `states()` function. We can load the `tigris` package and run the `states()` function. We use the `cb = TRUE` argument to not use the most detailed shapefile (which can be quite large, depending on your data) and set the resolution to "20m" instead. We then save the result as `states_tigris`.
+
+```{r}
+library(tigris)
+
+states_tigris <- states(cb = TRUE, resolution = "20m")
+```
+
+The `states_tigris` object has 14 variables, but let's just keep the `NAME` and `geometry` variables in order to make the output easier to read. Our output has 52 rows (referred to in the output as features): the 50 states as well as the District of Columbia and Puerto Rico.
+
+```{r}
+states_tigris %>% 
+  select(NAME)
+```
+
+We can plot this as well, but before doing so, I'm going to use the `shift_geometry()` function from `tigris`. This will put Alaska, Hawaii, and Puerto Rico in places that it is easier to see all states. It also resizes these three states to make them easier to compare to other states. 
+
+```{r}
+states_tigris %>% 
+  shift_geometry() %>%
+  ggplot() +
+  geom_sf()
+```
+
+This data 
+
+
+Kyle Walker, developer of the `tigris` package, has written an entire book that yo
+
+
+US
+
+- albersusa
+- tigris (can shift geometry like usa_sf())
+- tidycensus
+
+International
+
+- rnaturalearth
+- osmdata
+- osmextract
+
+
+
+
+#### How to Work with Data
 
 - Simple features make it possible to work with geospatial data in a way that resembles how you work with data using the `tidyverse` (TODO: explain tidyverse?). 
 
 #### Projections
 
-
+https://geocompr.robinlovelace.net/reproj-geo-data.html?q=wgs#which-crs
 
 ```{r}
 library(crsuggest)
@@ -789,4 +896,27 @@ usa_states_wgs84 %>%
 #   geom_sf()
 ```
 
+
+#### You can use tidyverse the whole time
+
 ### Conceptual Stuff: Why R is Best Tool for Maps
+
+#### You don't need to be GIS expert
+
+#### Keep everything within R
+
+Give example of ORS? 
+
+But it's not just that you should use R because you're using it for other things. It's better than other tools.
+
+#### Better than other tools
+
+More flexible than Excel
+
+No cost of ArcGIS
+
+Can make interactive maps
+
+Can use data viz principles
+
+#### You can apply data viz principles (and code) to make your maps shine
