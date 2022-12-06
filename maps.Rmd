@@ -208,7 +208,7 @@ wy_counties %>%
   geom_sf()
 ```
 
-If you're curious about how to change projections when making maps of your own, fear not. I'll show you how to do so when we look at Abdoul Madjid's map. 
+If you're curious about how to change projections when making maps of your own, fear not. I'll show you how to do so after we look at Abdoul Madjid's map. 
 
 ### Difference #2: The `geometry` Column {-}
 
@@ -872,68 +872,84 @@ If you need geospatial data, start by looking for a package like `albersusa`,  `
 
 #### Projections
 
-https://geocompr.robinlovelace.net/reproj-geo-data.html?q=wgs#which-crs
+Once you have access to geospatial data and are ready to map it, you need to think about which projection to use. If you're looking for a simple answer to the question "which projection should I use?" you're likely to be disappointed. As Robin Lovelace, Jakub Nowosad, and Jannes Muenchow put it in their book *Geocomputation with R*, "the question of *which* CRS [to use] is tricky, and there is rarely a 'right' answer."  They continue: "properties of the Earth’s surface are distorted in this process, such as area, direction, distance, and shape. A projected coordinate system can preserve only one or two of those properties." 
+
+If you feel overwhelmed with choosing a projection, there is a package to help. The `crsuggest` package, made by Kyle Walker (who is also the developer of `tigris`), can give you ideas for a projection to use. The `suggest_top_crs()` function will return a CRS that is well-suited for your data. Let's load `crsuggest` and try it out on our `africa_countries` data. 
 
 ```{r}
 library(crsuggest)
 
-# ma_sf %>%
-#   suggest_top_crs()
+africa_countries %>% 
+  suggest_top_crs()
 ```
 
-As Robin Lovelace, Jakub Nowosad, and Jannes Muenchow put it in their book *Geocomputation with R*, whenever we map geospatial data, "properties of the Earth’s surface are distorted in this process, such as area, direction, distance, and shape. A projected coordinate system can preserve only one or two of those properties."
+The `suggest_top_crs` function returns the projection number 28232. We can now use this value in combination with the `st_transform` function in order to change the projection before we plot. 
 
-Selecting an appropriate CRS to represent our data is a combination of art and science. If you are looking for a shortcut, though, start with the ubiqitous WGS84. If you want other ideas,  the `crsuggest` package can help. The `suggest_top_crs()` function will return a CRS that is well-suited for your data. When we run this for our Massachusetts data, we receive the suggestion 32619.
-
-We can use this projection to re-project our Massachusetts geospatial data and make a new map.
-
-```{r}
-usa_states_wgs84 %>%
-  st_transform("ESRI:54030") %>%
+```{r echo = TRUE, include = FALSE}
+africa_countries %>%
+  st_transform(28232) %>% 
   ggplot() +
   geom_sf()
 ```
 
-```{r}
-# ma_sf %>%
-#   st_transform(32619) %>%
-#   ggplot() +
-#   geom_sf()
-```
-
-
-
-#### How to Work with Data
-
-- Simple features make it possible to work with geospatial data in a way that resembles how you work with data using the `tidyverse` (TODO: explain tidyverse?). 
+When we run this code, we see Africa mapped with a different projection. 
 
 ```{r}
-africa_countries %>% 
-  ggplot(aes(fill = income_grp)) +
+africa_countries %>%
+  st_transform(28232) %>% 
+  ggplot() +
   geom_sf()
 ```
 
+#### How to Work with Data
 
-- You can use tidyverse the whole time
+Abdoul Madjid's process for analyzing data involved a few steps: he began by doing analysis on traditional data frames (recall the data on COVID rates and that on state populations). Once he had done his analysis on these data frames, he merged them with his geospatial data to create the `usa_states_geom_covid` data frame that he used to make his map. The ability to merge traditional data frames with geospatial data is a huge benefit of working with simple features data. 
+
+Simple features data, as we've seen, looks almost exactly like a traditional data frame with two differences: 1) metadata and 2) a `geometry` column. And here's the thing with simple features data: it acts just like a traditional data frame, too. While Madjid did all of his analysis in traditional data frames before merging them with simple features data, you can also work directly on your geospatial data. All of the basic data wrangling and analysis functions from the `tidyverse` work on a simple features object. 
+
+To demonstrate this, let's return to the `africa_countries` simple features data. Let's select two variables (`name` and `pop_est`) to see the name and population of the countries. 
+
+```{r}
+africa_countries %>% 
+  select(name, pop_est)
+```
+
+Let's now work with these two variables. What if I want to make a map that shows which African countries have populations over 20 million? To do so, I'd need a variable that calculates whether each country has a population over 20 million. I can do this using `mutate()` and the `if_else()` functions, creating a new variable called `population_above_20_million` that is TRUE if a country's population is over 20 million and FALSE otherwise. 
+
+```{r}
+africa_countries %>% 
+  select(name, pop_est) %>% 
+  mutate(population_above_20_million = if_else(pop_est > 20000000, TRUE, FALSE))
+```
+
+We can then take this code and pipe it into ggplot, setting the fill aesthetic property to be equal to `population_above_20_million`. 
+
+```{r}
+africa_countries %>% 
+  select(name, pop_est) %>% 
+  mutate(population_above_20_million = if_else(pop_est > 20000000, TRUE, FALSE)) %>% 
+  ggplot(aes(fill = population_above_20_million)) +
+  geom_sf()
+```
+
+And we end up with a map like this: 
+
+```{r}
+africa_countries %>% 
+  select(name, pop_est) %>% 
+  mutate(population_above_20_million = if_else(pop_est > 20000000, TRUE, FALSE)) %>% 
+  ggplot(aes(fill = population_above_20_million)) +
+  geom_sf()
+```
+
+This is a simple example of the type of data wrangling and analysis you can do on simple features data. The larger lesson to take here is this: all of the skills you've worked hard to develop to work with data in R will also serve you well when working with geospatial data. 
 
 ### Conceptual Stuff: Why R is Best Tool for Maps
 
-#### You don't need to be GIS expert
+This chapter has been a short if exhausting romp through the world of map-making in R (don't know about you, but I'm tired!). We've discussed the basics needed to understand geospatial data, seen how Abdoul Madjid applied this knowledge and principles of high-quality data visualization to make his map, learned how to get your own geospatial data and project it appropriately to make your own maps. 
 
-#### Keep everything within R
+Over the years, I've come to believe that R is not just a tool for making maps, but the best tool for making maps. It's way more flexible than Excel and way less expensive than ArcGIS. But R as a map-making tool isn't just good because it's free. It's good because you can use the general skills you've developed working with traditional data frames to your work with geospatial data. And the same ggplot code that makes your graphs shine will also help you make maps look great. 
 
-Give example of ORS? 
+That's what Abdoul Madjid did when making his map of COVID in the United States in 2021. Madjid is not a GIS expert, but that's kind of the point. Combine an understanding of the basics of geospatial data, fundamental R skills, and knowledge of data visualization principles and he made a beautiful map. If Abdoul Madjid can do this, so can you.
 
-But it's not just that you should use R because you're using it for other things. It's better than other tools.
 
-#### Better than other tools
-
-More flexible than Excel
-
-No cost of ArcGIS
-
-Can make interactive maps
-
-Can use data viz principles
-
-#### You can apply data viz principles (and code) to make your maps shine
