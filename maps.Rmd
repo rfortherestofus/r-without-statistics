@@ -12,23 +12,26 @@ source("_common.R")
 
 # R is a Full-Fledged Map-Making Tool
 
-When I first started learning R, I had no idea it could make maps. I thought of R as being designed to work with numbers, not the shapes that make up maps. So I was surprised when I first saw people making maps with R. This is possible, I wondered? 
-
-The answer is yes: you absolutely can make maps in R. And not just prosaic maps. Beautiful maps that use high-quality design principles. Maps that are good enough to be featured in top media outlets. 
+When I first started learning R, I had no idea it could make maps. I thought of R as a tool to work with numbers, not the shapes that make up maps. So I was surprised when I first saw people making maps with R. You absolutely can make maps in R. And not just prosaic maps. Beautiful maps that use high-quality design principles. Maps that are good enough to be featured in top media outlets. 
 
 When many people hear "maps" they immediately think of ArcGIS. But this tool is expensive, with business licenses for ArcGIS starting at $500 per year. Excel has added support for map-making in recent years, but features are limited (making maps based on street addresses, for example, is not possible). There is QGIS, an open-source tool similar to ArcGIS. But the mental tax that comes from context switching between tools is significant. Learning to make maps in R means you can do everything, for free, in one tool. 
 
-And the best part of making maps in R is that we can use what we learned about high-quality data visualization in \@ref(data-viz-chapter). Maps are a form of data visualization and the principles discussed in that chapter apply here as well. 
+And the best part of making maps in R is that we can use what we learned about high-quality data visualization in Chapter \@ref(data-viz-chapter). Maps are a form of data visualization and the principles discussed in that chapter apply here as well. 
 
-Many people assume that making maps requires a ton of specialized knowledge (this is what I used to think). It doesn't. There are a few things you need to know in order to work with geospatial data used to make maps. But once you understand the basics, you too can make high-quality maps in R. To show how anyone can make high-quality maps in R, I spoke with Abdoul Madjid. A polyglot developer originally from Benin, Madjid has been making maps with R for several years. In January 2022, he made a beautiful map that shows rates of COVID-19 in the US throughout 2021. 
+Many people assume that making maps requires a ton of specialized knowledge. It doesn't. There are a few things you need to know in order to work with geospatial data used to make maps. But once you understand the basics, you too can make high-quality maps in R. To show how anyone can make high-quality maps in R, I spoke with Abdoul Madjid. A polyglot developer originally from Benin, Madjid has been making maps with R for several years. In January 2022, he made a beautiful map that shows rates of COVID-19 in the US throughout 2021. 
 
-[TODO: ADD MAP]
+```{r}
+knitr::include_graphics("assets/covid-map.png")
+```
+
 
 Madjid is not a geospatial information system (GIS) specialist, but he has learned how to work with geospatial data in R in a way that enables him to make beautiful maps like this one. I spoke with Madjid and he explained how he obtained the data, analyzed it, and made his COVID-19 map.
 
-In this chapter, we will begin by diving into geospatial data, giving you the minimum you need to know in order to make maps in R. We'll then walk through Abdoul Madjid's code, looking at the choices he made that resulted in this high-quality map. The chapter concludes with some thoughts on why R is the perfect tool for making maps.
+In this chapter, we will begin by diving into geospatial data, giving you the minimum you need to know in order to make maps in R. We'll then walk through Abdoul Madjid's code, looking at the choices he made that resulted in this high-quality map. I then offer some guidance on where you can find geospatial data to make your own maps. The chapter concludes with some thoughts about why R is the perfect tool for making maps.
 
 ## The Briefest of Primers on Geospatial Data {-}
+
+You don't need to be a GIS expert to make maps (I'm not and I make plenty of maps). But you do need to understand a few things about how geospatial data works. Here is the briefest of primers on geospatial data. 
 
 There are two main types of geospatial data: vector and raster. Vector data uses points, lines, and polygons shapes to spatially represent the world. Raster data, which often comes from digital photographs, ties each pixel in the photograph to a specific geographic location. Vector data tends to be simpler to work with, and we will be using it exclusively in this chapter (when I use the term "geospatial data" in this chapter, I'm referring to vector data).
 
@@ -56,7 +59,7 @@ You can see that we have a column for state name (`NAME`) and another column cal
 1. There is a bunch of metadata above the data frame
 2. Our simple features data has a `geometry` column
 
-### Difference #1: Metadata {-}
+### Metadata {-}
 
 Above the main output, we see a section that starts with the text "Simple feature collection with 1 feature and 1 field." The feature here is the row and the field is the variable (`NAME`) that contains non-spatial data (the `geometry` column, which contains geospatial data, will be discussed below). This line, and the lines that follow, are metadata about the geospatial data in the `wyoming` object.
 
@@ -83,7 +86,7 @@ POLYGON is one of several geometry types that sf data can be used to represent. 
 POINT: Used to display something like a pin on a map that shows a single location. Here's a map showing the location of a single electric vehicle charging station in Wyoming 
 
 ```{r fig.cap = "A map of a single electric vehicle charging station in Wyoming"}
-wy_ev_stations <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-03-01/stations.csv") %>%
+wy_ev_stations <- read_csv("data/ev-charging-stations.csv") %>%
   janitor::clean_names() %>%
   filter(state == "WY") %>%
   filter(fuel_type_code == "ELEC") %>%
@@ -210,7 +213,7 @@ wy_counties %>%
 
 If you're curious about how to change projections when making maps of your own, fear not. I'll show you how to do so after we look at Abdoul Madjid's map. 
 
-### Difference #2: The `geometry` Column {-}
+### {-}The `geometry` Column {-}
 
 In addition to the metadata above our data frame, there is another difference between geospatial data and traditional data frames. All simple features data has a `geometry` column. As you probably guessed from the name, this column holds the data needed to make our maps.
 
