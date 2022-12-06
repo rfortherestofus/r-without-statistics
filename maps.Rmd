@@ -831,7 +831,7 @@ states_tigris %>%
   select(NAME)
 ```
 
-We can plot this as well, but before doing so, I'm going to use the `shift_geometry()` function from `tigris`. This will put Alaska, Hawaii, and Puerto Rico in places that it is easier to see all states. It also resizes these three states to make them easier to compare to other states. 
+We can plot this as well, but before doing so, I'm going to use the `shift_geometry()` function from `tigris`. This will put Alaska, Hawaii, and Puerto Rico in places that it is easier to see all states. It also resizes these three states to make them easier to see on a map alongside the continental United States. 
 
 ```{r}
 states_tigris %>% 
@@ -840,30 +840,35 @@ states_tigris %>%
   geom_sf()
 ```
 
-This data 
+The `tigris` package has functions to get geospatial data on counties, census tracts, roads, and more. Kyle Walker, developer of the package, has also written an entire book, titled Analyzing US Census Data: Methods, Maps, and Models in R, that is a great place to learn more about how to use it.
 
 
-Kyle Walker, developer of the `tigris` package, has written an entire book that yo
+If you're looking for data outside of the United States, fear not! The `rnaturalearth` package provides functions to import geospatial data from across the world. This package has a number of functions, but let's look at one: `ne_countries()`. This function gets geospatial data on countries throughout the world. I'm using two arguments in the code below: `returnclass = "sf"` to get data in simple features format and `continent = "Africa"` to only get some countries. I save the result to an object called `africa_countries`.
 
+```{r}
+library(rnaturalearth)
 
-US
+africa_countries <- ne_countries(returnclass = "sf",
+                                 continent = "Africa")
+```
 
-- albersusa
-- tigris (can shift geometry like usa_sf())
-- tidycensus
+We can see our data below (as above, I'm keeping only the country name and the `geometry` column for legibility).
 
-International
+```{r}
+africa_countries %>% 
+  select(name)
+```
 
-- rnaturalearth
-- osmdata
-- osmextract
+And we can plot our data on a map.
 
+```{r}
+africa_countries %>% 
+  ggplot() +
+  geom_sf()
+```
 
+If you need geospatial data, start by looking for a package like `albersusa`,  `tigris`, or `rnaturalearth`. If you can't find a package to access geospatial data, you can always fall back on using `read_sf()` from the `sf` package. No matter what, there is a way to get your geospatial data into R!
 
-
-#### How to Work with Data
-
-- Simple features make it possible to work with geospatial data in a way that resembles how you work with data using the `tidyverse` (TODO: explain tidyverse?). 
 
 #### Projections
 
@@ -897,7 +902,19 @@ usa_states_wgs84 %>%
 ```
 
 
-#### You can use tidyverse the whole time
+
+#### How to Work with Data
+
+- Simple features make it possible to work with geospatial data in a way that resembles how you work with data using the `tidyverse` (TODO: explain tidyverse?). 
+
+```{r}
+africa_countries %>% 
+  ggplot(aes(fill = income_grp)) +
+  geom_sf()
+```
+
+
+- You can use tidyverse the whole time
 
 ### Conceptual Stuff: Why R is Best Tool for Maps
 
