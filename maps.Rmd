@@ -12,13 +12,13 @@ source("_common.R")
 
 # R is a Full-Fledged Map-Making Tool
 
-When I first started learning R, I had no idea it could make maps. I thought of R as a tool to work with numbers, not the shapes that make up maps. So I was surprised when I first saw people making maps with R. You absolutely can make maps in R. And not just prosaic maps. Beautiful maps that use high-quality design principles. Maps that are good enough to be featured in top media outlets. 
+When I first started learning R, I had no idea it could make maps. I thought of R as a tool to work with numbers, not shapes. So I was surprised when I first saw people making maps with R. You absolutely can make maps in R. And not just prosaic maps. Beautiful maps that use high-quality design principles. Maps that are good enough to be featured in top media outlets. 
 
-When many people hear "maps" they immediately think of ArcGIS. But this tool is expensive, with business licenses for ArcGIS starting at $500 per year. Excel has added support for map-making in recent years, but features are limited (making maps based on street addresses, for example, is not possible). There is QGIS, an open-source tool similar to ArcGIS. But the mental tax that comes from context switching between tools is significant. Learning to make maps in R means you can do everything, for free, in one tool. 
+When many people hear "maps" they immediately think of ArcGIS. But this tool is expensive, with business licenses for ArcGIS starting at $500 per year. Excel has added support for map-making in recent years, but features are limited (making maps based on street addresses, for example, is not possible). There is QGIS, an open-source tool similar to ArcGIS. But if you don't already use QGIS, you have to learn another tool. And, if you're working in R, the mental tax that comes from context switching between tools is significant. Learning to make maps in R means you can do everything, for free, in one tool. 
 
 And the best part of making maps in R is that we can use what we learned about high-quality data visualization in Chapter \@ref(data-viz-chapter). Maps are a form of data visualization and the principles discussed in that chapter apply here as well. 
 
-Many people assume that making maps requires a ton of specialized knowledge. It doesn't. There are a few things you need to know in order to work with geospatial data used to make maps. But once you understand the basics, you too can make high-quality maps in R. To show how anyone can make high-quality maps in R, I spoke with Abdoul Madjid. A polyglot developer originally from Benin, Madjid has been making maps with R for several years. In January 2022, he made a beautiful map that shows rates of COVID-19 in the US throughout 2021. 
+Many people assume that making maps requires a lot of specialized knowledge. It doesn't. There are a few things you need to know in order to work with geospatial data used to make maps. But once you understand the basics, you too can make high-quality maps in R. To show how anyone can make high-quality maps in R, I spoke with Abdoul Madjid. A polyglot developer, Madjid has been making maps with R for several years. In January 2022, he made a beautiful map that shows rates of COVID-19 in the US throughout 2021. Madjid is not a geospatial information system (GIS) specialist, but he has learned how to work with geospatial data in R in a way that enables him to make beautiful maps like this one. I spoke with Madjid and he explained how he obtained the data, analyzed it, and made his COVID-19 map.
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -32,9 +32,7 @@ knitr::include_graphics("assets/covid-map.png")
 save_image_for_nostarch(here::here("assets/covid-map.png"))
 ```
 
-Madjid is not a geospatial information system (GIS) specialist, but he has learned how to work with geospatial data in R in a way that enables him to make beautiful maps like this one. I spoke with Madjid and he explained how he obtained the data, analyzed it, and made his COVID-19 map.
-
-In this chapter, we will begin by diving into geospatial data, giving you the minimum you need to know in order to make maps in R. We'll then walk through Abdoul Madjid's code, looking at the choices he made that resulted in this high-quality map. I then offer some guidance on where you can find geospatial data to make your own maps. The chapter concludes with some thoughts about why R is the perfect tool for making maps.
+In this chapter, we will begin by diving into geospatial data, giving you the minimum you need to know in order to make maps in R. We'll then walk through Abdoul Madjid's code, looking at the choices he made that resulted in this high-quality map. I then offer some guidance on where you can finding and working with geospatial data to make your own maps. The chapter concludes with some thoughts about why R is such a good tool for making maps.
 
 ## The Briefest of Primers on Geospatial Data {-}
 
@@ -42,11 +40,11 @@ You don't need to be a GIS expert to make maps (I'm not and I do). But you do ne
 
 There are two main types of geospatial data: vector and raster. Vector data uses points, lines, and polygons to represent the world. Raster data, which often comes from digital photographs, ties each pixel in the photograph to a specific geographic location. Vector data tends to be simpler to work with, and we will be using it exclusively in this chapter (when I use the term "geospatial data" in this chapter, I'm referring to vector data).
 
-If you are making maps today in R, consider yourself lucky. Changes in recent years have made it much simpler to work with geospatial data, and to build maps with R. Before then, there were competing standards for geospatial data, and each standard required learning a different approach. Today, though, the simple features model (often abbreviated as sf) for working with vector geospatial data has become dominant. Be grateful for this, as simple features data is way easier to work with than were previous geospatial data models. 
+If you are making maps today in R, consider yourself lucky. Changes in recent years have made it much simpler to work with geospatial data, and to build maps with R. Before then, there were competing standards for geospatial data, and each standard required learning a different approach. Today, though, the simple features model (often abbreviated as sf) for working with vector geospatial data has become dominant. You should be grateful, as simple features data is way easier to work with than were previous geospatial data models. 
 
-Geospatial data is both very similar to data you're already used to working with in R and, in some ways, very different. To see the similarities and differences, let's look at how simple features data works. In this section, I'll just show you data and the maps we make with that data, providing the bare minimum you need to know in order to understand how simple features data works. The sections that follow will explain how we work wtih geospatial data. 
+Geospatial data is both very similar to data you're already used to working with in R and, in some ways, very different. To see the similarities and differences, let's look at how simple features data works. In this section, I'll just show you data and the maps we make with that data, providing the bare minimum you need to know in order to understand how simple features data works. This section won't show code, but the sections that follow, which explain how to work with geospatial data, will. 
 
-Let's begin by taking a look at some simple features geospatial data that represents the U.S. state of Wyoming. I've imported the data (using a package called `tigris` that I discuss in the conclusion of this chapter) and saved it as an object called `wyoming`. Here's what it looks like.
+Let's begin by taking a look at some simple features geospatial data that represents the U.S. state of Wyoming. Here's what it looks like.
 
 ```{r}
 library(tigris)
@@ -57,13 +55,26 @@ wyoming <- states(progress_bar = FALSE) %>%
   select(NAME) %>%
   filter(NAME == "Wyoming") %>%
   st_cast(to = "POLYGON")
-```
 
+wyoming
+```
 
 You can see that we have a column for state name (`NAME`) and another column called `geometry`. Overall, this looks like the output we're used to seeing with data in a data frame. But there are two major differences:
 
 1. There is a bunch of metadata above the data frame
 2. Our simple features data has a `geometry` column
+
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
+
+```{r out.width="100%", fig.cap="Abdoul Madjid's map of COVID in the United States in 2021"}
+knitr::include_graphics("assets/sf-data.png")
+```
+
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/sf-data.png"))
+```
 
 Let's discuss each of these differences.
 
@@ -255,7 +266,7 @@ library(zoo)
 library(colorspace)
 ```
 
-### Import Our Data {-}
+### Importing Our Data {-}
 
 Next, let's import the data we need. There are three pieces of data we'll import:
 
@@ -348,7 +359,7 @@ usa_states_wgs84 %>%
 
 There are many, many different projections you can use. The conclusion of this chapter talks about how to select appropriate projections for your data. 
 
-### Import COVID Cases Data {-}
+### Importing COVID Cases Data {-}
 
 Next, we need to calculate the number of daily COVID cases. We have to do this because the `covid_data` data frame gives us cumulative cases by state. So, to calculate the number of cases per day for each state, Madjid groups the data by state using the `group_by()` function, then creates a new variable called `pd_cases`, which represents the number of cases in the previous day (he uses the `lag()` function  to create this variable). Some days do not have cases counts for the previous day so, in these cases, Madjid sets the value as 0 using the `replace_na()` function. Finally, Madjid creates a new variable called `daily_cases`. For this variable, he uses the `case_when()` function to set up a condition: if the `cases` variable (cases on that day) is greater than the `pd_cases` variable (cases one day prior), then `daily_cases` is equal to `cases` minus `pd_cases`; otherwise, set `daily_cases` to be equal to 0. Since we grouped the data by state at the beginning, we must now remove this grouping using the `ungroup()` function. 
 
@@ -375,7 +386,7 @@ We can now take a look at the `covid_cases` data frame we created.
 covid_cases
 ```
 
-### Calculate Incidence Rate {-}
+### Calculating Incidence Rate {-}
 
 We're not quite done calculating values. The data that Madjid used to make his map was not daily case counts. Instead, it was a five-day rolling average of cases per 100,000 people. Madjid created a new data frame called `covid_cases_rm` (rm for rolling mean). The first step in its creation is to use the `rollmean()` function from the `zoo` package to create a `roll_cases` variable. The `k` argument is the number of days (five in order to calculate the five-day rolling average) and the `fill` argument determines what happens in cases like the first day where we can't calculate a five-day rolling mean because there are no days prior to this day (Madjid set these values to be NA). Here is that section of the code:
 
@@ -441,7 +452,7 @@ Let's now take a look at the `covid_cases_rm` data frame.
 covid_cases_rm
 ```
 
-### Add Geospatial Data {-}
+### Adding Geospatial Data {-}
 
 We've now used two (COVID case data and state population data) of our three data sources to create the `covid_cases_rm` data frame that we'll use to make our map. Let's use our third data source: the geospatial data we saved as `usa_states_geom`. We start with this data frame and then merge our `covid_cases_rm` data frame into it, matching the `name` variable from `usa_states_geom` to the `state` variable in `covid_cases_rm`. Being able to merge together regular data frames with geospatial data is possible with simple features data, another mark in its favor. 
 
@@ -480,7 +491,7 @@ usa_states_geom_covid_six_days <- usa_states_geom_covid %>%
 
 Second: the final product that Abdoul Madjid made is giant in order to fit all 365 maps. I've had to change sizes of a few elements below to make them fit in this book. I've kept the overall structure of the code, but changed a few specific elements (for example, making text sizes smaller) so that everything fits.
 
-#### Basic plot
+#### Making the Basic Map
 
 Now that we have six days of data, let's make some maps. Abdoul Madjid's map-making code has three main parts:
 
@@ -520,7 +531,7 @@ usa_states_geom_covid_six_days %>%
   )
 ```
 
-#### Colors
+#### Changing Colors
 
 Next, Madjid tweaked the colors of his maps. He used the `scale_fill_discrete_sequential()` function from the `colorspace` package to set the color scale. This function is quite similar to the `scale_fill_viridis_d()` function that Cédric Scherer and Georgios Karamanis used to make their drought data visualization in Chapter \@ref(data-viz-chapter). Both visualizations use the "rocket" palette, with the fill scale going from a tan at the low end to a black at the high end. Madjid then used the `name` argument to set the title for the legend. By default, it would use the variable name (`incidence_rate`), but Madjid improves it by using "COVID-19 INCIDENCE RATE" instead.
 
@@ -655,11 +666,11 @@ map_with_legend_tweaks <- usa_states_geom_covid_six_days %>%
 
 If we view our map at this point, it won't actually look like much because the legend is currently set to the quite large in relation to the maps. In order to change this, and to make some other tweaks to improve the look-and-feel of our maps, Madjid made multiple tweaks to the maps themselves. He did this using the `theme()` function from the `ggplot2` package. One benefit of making maps with ggplot is that all of the tweaks you use when making a regular plot can be carried over to your maps as well. Many of the tweaks within the `theme()` function below are similar to those seen in Chapter \@ref(data-viz-chapter). 
 
-#### Theme
+#### Tweaking the Theme
 
 Let's review the changes that Abdoul Madjid made to his maps using ggplot themes. He began by applying `theme_minimal()` to his map. This removes the ugly gray background that ggplot applies to plots (and maps). He then applied additional tweaks using the `theme()` function. Let's start by looking at the tweaks to the legend. 
 
-##### Legend tweaks
+##### Legend
 
 While the code in the `scale_fill_discrete_sequential()` function customized individual elements *within* the legend (for example, the size of the colored squares), the code below customizes the legend as a whole. Madjid moved the legend to the top of the maps using `legend.position = "top"` and added a bit of spacing around the legend with `legend.box.spacing = unit(.25, "cm")`. 
 
@@ -755,7 +766,7 @@ map_with_text_tweaks <- map_with_more_legend_tweaks +
   )
 ```
 
-##### Grid lines and axis text
+##### Grid Lines and Axis Text
 
 Our map is looking good! Just a few tweaks left to get it close to Abdoul Madjid's original. By default, maps made with the `geom_sf()` function have axis text and lines to show longitude and latitude. These aren't not necessary so Madjid removed them using the `element_blank()` function on `panel.grid` and `axis.text`.
 
@@ -786,7 +797,7 @@ map_with_grid_and_axis_tweaks <- map_with_text_tweaks +
   )
 ```
 
-##### Background and margin
+##### Background and Margin
 
 The last bit of tweaking that Abdoul Madjid did was to adjust the margins around the final set of maps and give the whole thing a light gray background. The former is done within `plot.margin` while the latter is done using `plot.background`. Setting the fill color of #e5e4e2 gives it that light gray background while the `color = NA` ensures there is no outline around the plot (without that code, it would have a black border).
 
@@ -819,14 +830,14 @@ map_with_grid_and_axis_tweaks +
   )
 ```
 
-## In Conclusion: R is a Swiss Army Knife That Can Help You Make Any Map You Want {-}
+## In Conclusion: R is a Map-Making Swiss Army Knife {-}
 
 If this chapter has inspired you to want to make your own maps in R, fantastic! As we've seen from Abdoul Madjid's work, you can use R both to gather and analyze geospatial data as well make maps it. R is a Swiss army knife, a tool you can pull out to do pretty much anything you can imagine. 
 
 
 In the first part of this chapter, I gave you a quick overview of how geospatial data works. You may now be wondering: okay, great, but how do I actually make my own maps? Let's talk first about where you can find geospatial data. 
 
-### How to Access Geospatial Data {-}
+### Finding Geospatial Data {-}
 
 First, a reminder: we're exclusively discussing vector data in the simple features format. While there are other types of geospatial data, simple features data is the simplest to work with and, as a result, increasingly dominant. 
 
@@ -913,7 +924,7 @@ africa_countries %>%
 
 If you need geospatial data, start by looking for a package like `albersusa`,  `tigris`, or `rnaturalearth`. If you can't find a package to access geospatial data, you can always fall back on using `read_sf()` from the `sf` package. No matter what, there is a way to get your geospatial data into R!
 
-### How to Use an Appropriate Projection {-}
+### Using Appropriate Projections {-}
 
 Once you have access to geospatial data and are ready to map it, you need to think about which projection to use. If you're looking for a simple answer to this question, you're likely to be disappointed. As Robin Lovelace, Jakub Nowosad, and Jannes Muenchow put it in their book *Geocomputation with R*, "the question of *which* CRS [to use] is tricky, and there is rarely a 'right' answer." 
 
@@ -944,7 +955,7 @@ africa_countries %>%
   geom_sf()
 ```
 
-### How to Work with Data {-}
+### Bring Your Existing R Skills to Geospatial Data {-}
 
 Abdoul Madjid's process for analyzing data involved a few steps: he began by doing analysis on traditional data frames (recall the data on COVID rates and that on state populations). Once he had done his analysis on these data frames, he merged them with his geospatial data to create the `usa_states_geom_covid` data frame that he used to make his map. The ability to merge traditional data frames with geospatial data is a huge benefit of working with simple features data. 
 
@@ -987,7 +998,7 @@ africa_countries %>%
 
 This is a simple example of the type of data wrangling and analysis you can do on simple features data. The larger lesson is this: all of the skills you've worked hard to develop to work with data in R will also serve you well when working with geospatial data. 
 
-### Conceptual Stuff: Why R is Best Tool for Maps
+### Why R is Best Tool for Making Maps
 
 This chapter has been a short, if exhausting, romp through the world of map-making in R. We've discussed the basics needed to understand geospatial data, seen how Abdoul Madjid applied this knowledge and principles of high-quality data visualization to make his map, learned how to get your own geospatial data, and how to project it appropriately to make your own maps. 
 
