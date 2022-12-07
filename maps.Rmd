@@ -390,17 +390,17 @@ covid_cases %>%
 
 After calculating `roll_cases`, Madjid started work on calculating per capita case rates. To do this, he needed population data so he joined the population data from the `usa_states` data frame with the `covid_cases` data. He then dropped rows with missing population data (the `Pop` variable). In practice, this meant getting rid of several U.S. territories (American Samoa, Guam, Northern Marianas Islands, and Virgin Islands).
 
-```{r echo = TRUE, include = FALSE}
+```{r echo = TRUE, eval = FALSE}
 left_join(
-    usa_states,
-    by = c("state" = "State")
-  ) %>%
+  usa_states,
+  by = c("state" = "State")
+) %>%
   drop_na(Pop)
 ```
 
 Next, Madjid created a per capita case rate variable called `incidence_rate` by multiplying the `roll_cases` variable by 100,000 and then dividing it by the population of each state. Rather than keeping raw values (for example, the Florida on June 29, 2021 had a rate of 57.77737 cases per 100,000 people), Madjid uses the `cut()` function to convert the values into categories. His code in this section makes values of ">0" (greater than 0), ">5", and so on up to a maximum value of ">50". 
 
-```{r echo = TRUE, include = FALSE}
+```{r echo = TRUE, eval = FALSE}
 mutate(incidence_rate = 10^5 * roll_cases / Pop) %>%
   mutate(incidence_rate = cut(
     incidence_rate,
