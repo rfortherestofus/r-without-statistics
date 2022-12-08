@@ -407,7 +407,7 @@ If we take a look at the resulting map in Figure \@ref(fig:us-map-wgs84-projecti
 print_nostarch_file_name()
 ```
 
-```{r us-map-wgs84-projection, fig.cap = "A map of the United States using the WGS84 projection}
+```{r us-map-wgs84-projection, fig.cap = "A map of the United States using the WGS84 projection"}
 usa_states_wgs84 %>%
   ggplot() +
   geom_sf()
