@@ -18,13 +18,13 @@ When many people hear "maps" they immediately think of ArcGIS. But this tool is 
 
 And the best part of making maps in R is that we can use what we learned about high-quality data visualization in Chapter \@ref(data-viz-chapter). Maps are a form of data visualization and the principles discussed in that chapter apply here as well. 
 
-Many people assume that making maps requires a lot of specialized knowledge. It doesn't. There are a few things you need to know in order to work with geospatial data used to make maps. But once you understand the basics, you too can make high-quality maps in R. To show how anyone can make high-quality maps in R, I spoke with Abdoul Madjid. A polyglot developer, Madjid has been making maps with R for several years. In January 2022, he made a beautiful map that shows rates of COVID-19 in the US throughout 2021. Madjid is not a geospatial information system (GIS) specialist, but he has learned how to work with geospatial data in R in a way that enables him to make beautiful maps like this one. I spoke with Madjid and he explained how he obtained the data, analyzed it, and made his COVID-19 map.
+Many people assume that making maps requires a lot of specialized knowledge. It doesn't. There are a few things you need to know in order to work with geospatial data used to make maps. But once you understand the basics, you too can make high-quality maps in R. To show how anyone can make high-quality maps in R, I spoke with Abdoul Madjid. A polyglot developer, Madjid has been making maps with R for several years. In January 2022, he made a beautiful map that shows rates of COVID-19 in the US throughout 2021. Madjid is not a geospatial information system (GIS) specialist, but he has learned how to work with geospatial data in R in a way that enables him to make beautiful maps like this one. I spoke with Madjid and he explained how he obtained the data, analyzed it, and made his COVID-19 map, which you can see in Figure \@ref(fig:madjid-covid-map) below.
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
 ```
 
-```{r out.width="100%", fig.cap="Abdoul Madjid's map of COVID in the United States in 2021"}
+```{r madjid-covid-map, out.width="100%", fig.cap="Abdoul Madjid's map of COVID in the United States in 2021"}
 knitr::include_graphics("assets/covid-map.png")
 ```
 
@@ -64,11 +64,13 @@ You can see that we have a column for state name (`NAME`) and another column cal
 1. There is a bunch of metadata above the data frame
 2. Our simple features data has a `geometry` column
 
+You can see these differences highlighted in Figure \@ref(fig:sf-data-output) below.
+
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
 ```
 
-```{r out.width="100%", fig.cap="Abdoul Madjid's map of COVID in the United States in 2021"}
+```{r sf-data-output, out.width="100%", fig.cap="The output of sf data with metadata and the geometry column highlighted"}
 knitr::include_graphics("assets/sf-data.png")
 ```
 
