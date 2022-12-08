@@ -168,9 +168,13 @@ wy_roads %>%
 save_figure_for_nostarch()
 ```
 
-Each of these has a MULTI- variation (MULTIPOINT, MULTILINESTRING, and MULTIPOLYGON) to combine multiple instances of their "single" variation in one row of data. For example, the data used to make Figure (TODO: Add number) below, which shows all electric vehicle charging stations in Wyoming, is MULTIPOINT.
+Each of these has a MULTI- variation (MULTIPOINT, MULTILINESTRING, and MULTIPOLYGON) to combine multiple instances of their "single" variation in one row of data. For example, the data used to make Figure \@ref(fig:wyoming-ev-stations-map) below, which shows all electric vehicle charging stations in Wyoming, is MULTIPOINT.
 
-```{r}
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
+```{r wyoming-ev-stations-map, fig.cap = "A map of all electric vehicle charging stations in Wyoming"}
 ggplot() +
   geom_sf(data = wyoming) +
   geom_sf(
@@ -180,9 +184,17 @@ ggplot() +
   )
 ```
 
-MULTILINESTRING data can be seen if we show not one road, but all major roads in Wyoming. 
+```{r results='asis'}
+save_figure_for_nostarch()
+```
 
-```{r fig.cap = "A map of all major roads in Wyoming"}
+MULTILINESTRING data can be seen if we show not one road, but all major roads in Wyoming, as in Figure \@ref(fig:wyoming-roads-map).
+
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
+```{r wyoming-roads-map, fig.cap = "A map of all major roads in Wyoming"}
 wy_roads %>%
   ggplot() +
   geom_sf(data = wyoming) +
@@ -190,6 +202,10 @@ wy_roads %>%
     color = "#ff7400",
     linewidth = 1
   )
+```
+
+```{r results='asis'}
+save_figure_for_nostarch()
 ```
 
 MULTIPOLYGON data occurs when, for example, we have a state made up of multiple polygons. To see what I mean, let's take a look at a map of Wyoming counties. First, let's look at simple features data used to represent the 23 counties in the state. We can see that the geometry type of this data is MULTIPOLYGON (in addition, the repeated MULTIPOLYGON text in the `geometry` column indicates that each row contains a shape of type MULTIPOLYGON; see section on the `geometry` column below). 
@@ -203,10 +219,20 @@ wy_counties <- counties(state = "Wyoming",
 wy_counties
 ```
 
-```{r fig.cap = "A map of Wyoming counties"}
+Figure \@ref(fig:wyoming-counties-map) is a map made with this data. You can see the multiple polygons that make up the map.
+
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
+```{r wyoming-counties-map, fig.cap = "A map of Wyoming counties"}
 wy_counties %>%
   ggplot() +
   geom_sf()
+```
+
+```{r results='asis'}
+save_figure_for_nostarch()
 ```
 
 #### Dimensions {-}
@@ -225,21 +251,37 @@ A bounding box represents the smallest area in which we can fit all of our geosp
 
 The final piece of metadata above our data frame is the "Geodetic CRS." This refers to the coordinate reference system (CRS) used to project our data when we plot it. The problem with representing any geospatial data is that we're projecting data used to represent the three-dimensional earth onto a two-dimensional map. Doing so requires us to choose a coordinate reference system that determines what type of projection to use when making our map. 
 
-Let's look at a couple projections of our map of Wyoming counties. We'll begin by looking at the data we're using to make our maps. As we can see in the line `Geodetic CRS:  WGS 84`, this uses a coordinate reference system known as WGS84. If we plot our map with this data, here's what it looks like. 
+Let's look at a couple projections of our map of Wyoming counties. We'll begin by looking at the data we're using to make our maps. As we can see in the line `Geodetic CRS:  WGS 84`, this uses a coordinate reference system known as WGS84. If we plot our map with this data, Figure \@ref(fig:wyoming-counties-map-wgs84) what it looks like. 
 
-```{r fig.cap = "A map of Wyoming counties using the WGS84 projection"}
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
+```{r wyoming-counties-map-wgs84, fig.cap = "A map of Wyoming counties using the WGS84 projection"}
 wy_counties %>%
   ggplot() +
   geom_sf()
 ```
 
-To see how different a map that uses a different projection can look, check out another map of Wyoming counties, this time using what's known as the "Albers equal-area conic convenience projection." Whereas Wyoming looked perfectly horizontal in our first map, in this one it appears to be tilted. 
+```{r results='asis'}
+save_figure_for_nostarch()
+```
 
-```{r fig.cap = "A map of Wyoming counties using the Albers equal-area conic convenience projection"}
+To see how different a map that uses a different projection can look, check out another map of Wyoming counties, this time using what's known as the "Albers equal-area conic convenience projection." Whereas Wyoming looked perfectly horizontal in Figure \@ref(fig:wyoming-counties-map-wgs84) above, in Figure \@ref(fig:wyoming-counties-map-5070) below it appears to be tilted. 
+
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
+```{r wyoming-counties-map-5070, fig.cap = "A map of Wyoming counties using the Albers equal-area conic convenience projection"}
 wy_counties %>%
   st_transform(5070) %>%
   ggplot() +
   geom_sf()
+```
+
+```{r results='asis'}
+save_figure_for_nostarch()
 ```
 
 If you're curious about how to change projections when making maps of your own, fear not. I'll show you how to do so when we look at Abdoul Madjid's map. And if you want to know how to choose appropriate projections for your maps, check out the conclusion of the chapter.
@@ -316,7 +358,7 @@ usa_states_geom <- usa_sf() %>%
 
 Let's pause for a moment to plot our geospatial data. As we saw when making our maps of Wyoming, it only takes three lines to make a map from our simple features data.
 
-```{r echo = TRUE, include = FALSE}
+```{r echo = TRUE, eval = FALSE}
 usa_states_geom %>%
   ggplot() +
   geom_sf()
