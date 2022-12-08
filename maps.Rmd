@@ -354,7 +354,7 @@ usa_states_geom <- usa_sf() %>%
   st_transform(us_laea_proj)
 ```
 
-### A Pause to Discuss Projections {-}
+### A Short Detour to Discuss Projections {-}
 
 Let's pause for a moment to plot our geospatial data. As we saw when making our maps of Wyoming, it only takes three lines to make a map from our simple features data.
 
@@ -370,7 +370,7 @@ In Figure \@ref(fig:us-map-albers-projection), we can see the curvature of the l
 print_nostarch_file_name()
 ```
 
-```{r us-map-albers-projection, fig.cap = "A map of the United States using the Albers equal-area conic convenience projection}
+```{r us-map-albers-projection, fig.cap = "A map of the United States using the Albers equal-area conic convenience projection"}
 usa_states_geom %>%
   ggplot() +
   geom_sf()
@@ -450,7 +450,7 @@ covid_cases
 
 We're not quite done calculating values. The data that Madjid used to make his map was not daily case counts. Instead, it was a five-day rolling average of cases per 100,000 people. Madjid created a new data frame called `covid_cases_rm` (rm for rolling mean). The first step in its creation is to use the `rollmean()` function from the `zoo` package to create a `roll_cases` variable. The `k` argument is the number of days (five in order to calculate the five-day rolling average) and the `fill` argument determines what happens in cases like the first day where we can't calculate a five-day rolling mean because there are no days prior to this day (Madjid set these values to be NA). Here is that section of the code:
 
-```{r echo = TRUE, include = FALSE}
+```{r echo = TRUE, eval = FALSE}
 covid_cases %>%
   mutate(roll_cases = rollmean(
     daily_cases,
@@ -512,7 +512,7 @@ covid_cases_rm
 
 We've now used two (COVID case data and state population data) of our three data sources to create the `covid_cases_rm` data frame that we'll use to make our map. Let's use our third data source: the geospatial data we saved as `usa_states_geom`. We start with this data frame and then merge our `covid_cases_rm` data frame into it, matching the `name` variable from `usa_states_geom` to the `state` variable in `covid_cases_rm`. Being able to merge together regular data frames with geospatial data is possible with simple features data, another mark in its favor. 
 
-```{r echo = TRUE, include = FALSE}
+```{r echo = TRUE, eval = FALSE}
 usa_states_geom %>%
   left_join(covid_cases_rm, by = c("name" = "state"))
 ```
@@ -545,6 +545,12 @@ usa_states_geom_covid_six_days <- usa_states_geom_covid %>%
   filter(date <= as.Date("2021-01-06"))
 ```
 
+Here's what this data looks like:
+
+```{r}
+usa_states_geom_covid_six_days
+```
+
 Second: the final product that Abdoul Madjid made is giant in order to fit all 365 days. I've had to change sizes of a few elements below to make them fit in this book. I've kept the overall structure of the code, but changed a few specific elements (for example, making text sizes smaller) so that everything fits.
 
 #### Making the Basic Map
@@ -557,7 +563,7 @@ Now that we have six days of data, let's make some maps. Abdoul Madjid's map-mak
 
 The three lines of code that we used above to make our Wyoming maps come back again, with some adornments to improve the quality of our map. Below, we can see that we're using `geom_sf()` to plot our geospatial data. Madjid modified a couple arguments, using `size = .05` to make the state borders less prominent and `color = "grey55"` to make the borders a medium grey color. Then, because he made one map for each day, he used the `facet_wrap()` function. The `vars(fancy_date)` code specifies that the `fancy_date` variable should be used to do the faceting (in other words, make one map for each day) and `strip.position = "bottom"` moves the labels "Jan. 01", "Jan. 02", and so on to the bottom of the maps. 
 
-```{r echo = TRUE, include = FALSE}
+```{r echo = TRUE, eval = FALSE}
 usa_states_geom_covid_six_days %>%
   ggplot() +
   geom_sf(
@@ -571,9 +577,13 @@ usa_states_geom_covid_six_days %>%
   )
 ```
 
-The resulting map can be seen in TODO add figure number below. 
+The resulting map can be seen in Figure \@ref(fig:basic-map). 
 
-```{r}
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
+```{r basic-map, fig.cap = "A map showing the incidence rate of COVID for the first six days of 2021"}
 usa_states_geom_covid_six_days %>%
   ggplot() +
   geom_sf(
@@ -585,6 +595,10 @@ usa_states_geom_covid_six_days %>%
     vars(fancy_date),
     strip.position = "bottom"
   )
+```
+
+```{r results='asis'}
+save_figure_for_nostarch()
 ```
 
 #### Changing Colors
@@ -609,9 +623,13 @@ usa_states_geom_covid_six_days %>%
   )
 ```
 
-Our in-progress map can be seen below.
+Our in-progress map can be seen in Figure \@ref(fig:map-with-rocket-palette) below.
 
-```{r}
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
+```{r map-with-rocket-palette, fig.cap = "The COVID map with the rocket palette added"}
 usa_states_geom_covid_six_days %>%
   ggplot() +
   geom_sf(
@@ -629,6 +647,10 @@ usa_states_geom_covid_six_days %>%
   )
 ```
 
+```{r results='asis'}
+save_figure_for_nostarch()
+```
+
 I've actually only shown a portion of the code that Abdoul Madjid used within the `scale_fill_discrete_sequential()` function. He also used the `guide` argument and the `guide_legend()` function to make tweaks to the legend. His code does the following:
 
 - Puts the colored squares in one row (`nrow = 1`) rather than the default (all in a single column)
@@ -636,7 +658,7 @@ I've actually only shown a portion of the code that Abdoul Madjid used within th
 - Sets the font family, size, and margin of both the labels (the ">0," ">5," and so on) with `label.theme` and the title ("COVID-19 INCIDENCE RATE") with `title.theme`
 - Puts the title on top of the legend (`title.position = "top"`) and centers it (`title.hjust = .5`)
 
-```{r echo = TRUE, include = FALSE}
+```{r echo = TRUE, eval = FALSE}
 usa_states_geom_covid_six_days %>%
   ggplot() +
   geom_sf(
@@ -677,7 +699,7 @@ usa_states_geom_covid_six_days %>%
   )
 ```
 
-
+I'm saving the map as it is now as the object `map_with_legend_tweaks` so that we can add onto it below.
 
 ```{r}
 map_with_legend_tweaks <- usa_states_geom_covid_six_days %>%
@@ -728,7 +750,7 @@ Let's review the changes that Abdoul Madjid made to his maps using ggplot themes
 
 ##### Legend
 
-While the code in the `scale_fill_discrete_sequential()` function customized individual elements *within* the legend (for example, the size of the colored squares), the code below customizes the legend as a whole. Madjid moved the legend to the top of the maps using `legend.position = "top"` and added a bit of spacing around the legend with `legend.box.spacing = unit(.25, "cm")`. 
+While the code in the `scale_fill_discrete_sequential()` function customized individual elements *within* the legend (for example, the size of the colored squares), the code below customizes the legend as a whole. Madjid moved the legend to the top of the maps using `legend.position = "top"` and added a bit of spacing around the legend with `legend.box.spacing = unit(.25, "cm")`.
 
 ```{r echo = TRUE, include = FALSE}
 map_with_legend_tweaks +
@@ -739,9 +761,13 @@ map_with_legend_tweaks +
   )
 ```
 
-We can see the result of these tweaks below.
+We can see the result of these tweaks in Figure \@ref(fig:map-with-more-legend-tweaks) below.
 
-```{r}
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
+```{r map-with-more-legend-tweaks, fig.cap = "The COVID map with additional tweaks to the legend"}
 map_with_legend_tweaks +
   theme_minimal() +
   theme(
@@ -750,6 +776,11 @@ map_with_legend_tweaks +
   )
 ```
 
+```{r results='asis'}
+save_figure_for_nostarch()
+```
+
+As I did above, I'm saving the map as it is at this point (in this case, to an object called `map_with_more_legend_tweaks`) to avoid having to reprint all of the code for each map (I do the same thing in the sections below).
 
 ```{r}
 map_with_more_legend_tweaks <- map_with_legend_tweaks +
@@ -763,7 +794,7 @@ map_with_more_legend_tweaks <- map_with_legend_tweaks +
 
 Next, Madjid made tweaks to the title and caption. Below, we added the title and caption using this `labs()` function. Then, we see how Madjid used the `theme()` function to tweak these elements as well as the label for each map ("Jan. 01", "Jan. 02", and so on). He makes all text use Times New Roman and makes it a nearly black color using the hex code #111111. This sets defaults for all text elements, but Madjid also made tweaks to individual elements as well. He set the size of the title to be 2.5 times that of other text elements (`size = rel(2.5)`), made it bold (`face = "bold"`) and centered (`hjust = 0.5`), and added 0.25 centimeter margins on the top and bottom (`hjust = 0.5, margin = margin(t = .25, b = .25, unit = "cm")`). He made the same tweaks to the caption, with the exception of adjusting the font size. And finally, Abdoul Madjid adjusted the size and bolding of the individual map labels using `strip.text`.
 
-```{r}
+```{r map-with-text-tweaks-code, echo = TRUE, eval = FALSE}
 map_with_more_legend_tweaks +
   labs(title = "2021 · A pandemic year",
        caption = "Incidence rates are calculated for 100,000 people in each state.
@@ -791,7 +822,10 @@ map_with_more_legend_tweaks +
   )
 ```
 
+The resulting map shows up in Figure \@ref(fig:map-with-text-tweaks) below.
 
+```{r map-with-text-tweaks, ref.label = "map-with-texttweaks-code", fig.cap = "The COVID map with tweaks to the title, captions, and strip text"}
+```
 
 ```{r}
 map_with_text_tweaks <- map_with_more_legend_tweaks +
@@ -825,7 +859,7 @@ map_with_text_tweaks <- map_with_more_legend_tweaks +
 
 Our map is looking good! Just a few tweaks left to get it close to Abdoul Madjid's original. By default, maps made with the `geom_sf()` function have axis text and lines to show longitude and latitude. Madjid removed them using the `element_blank()` function on `panel.grid` and `axis.text`.
 
-```{r echo = TRUE, include = FALSE}
+```{r echo = TRUE, eval = FALSE}
 map_with_text_tweaks +
   theme(
     panel.grid = element_blank(),
@@ -833,14 +867,22 @@ map_with_text_tweaks +
   )
 ```
 
-The result is a much nicer-looking set of maps. 
+The result, seen in Figure \@ref(fig:map-with-grid-tweaks), is a much nicer-looking set of maps. 
 
-```{r}
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
+```{r map-with-grid-tweaks, fig.cap = "The COVID map without the grid lines and axis text"}
 map_with_text_tweaks +
   theme(
     panel.grid = element_blank(),
     axis.text = element_blank()
   )
+```
+
+```{r results='asis'}
+save_figure_for_nostarch()
 ```
 
 
@@ -856,7 +898,7 @@ map_with_grid_and_axis_tweaks <- map_with_text_tweaks +
 
 The last bit of tweaking that Abdoul Madjid did was to adjust the margins around the final set of maps and give the whole thing a light gray background. The former is done within `plot.margin` while the latter is done using `plot.background`. Setting the fill color of #e5e4e2 gives it that light gray background while the `color = NA` ensures there is no outline around the plot (without that code, it would have a black border).
 
-```{r echo = TRUE, include = FALSE}
+```{r echo = TRUE, eval = FALSE}
 map_with_grid_and_axis_tweaks +
   theme(
     plot.margin = margin(t = .25, 
@@ -869,9 +911,13 @@ map_with_grid_and_axis_tweaks +
   )
 ```
 
-And there we have it: our recreation of Abdoul Madjid's COVID-19 map.
+And there we have it: Figure \@ref(fig:map-with-background-tweaks) our recreation of Abdoul Madjid's COVID-19 map.
 
-```{r}
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
+```{r map-with-background-tweaks, fig.cap = "The COVID map with tweaks to the margins and the background color"}
 map_with_grid_and_axis_tweaks +
   theme(
     plot.margin = margin(t = .25, 
@@ -882,6 +928,10 @@ map_with_grid_and_axis_tweaks +
     plot.background = element_rect(fill = "#e5e4e2", 
                                    color = NA)
   )
+```
+
+```{r results='asis'}
+save_figure_for_nostarch()
 ```
 
 ## In Conclusion: R is a Map-Making Swiss Army Knife {-}
@@ -911,18 +961,26 @@ us_states %>%
 
 To prove that this is geospatial data like that we've seen throughout this chapter, let's make a map with it. I'll use the same three lines we've used throughout this chapter.
 
-```{r}
+```{r echo = TRUE, eval = FALSE}
 us_states %>% 
   ggplot() +
   geom_sf() 
 ```
 
-And there we have it: a map of all 50 states.
+And there we have it: Figure \@ref(fig:geojson-us-map) shows a map of all 50 states.
 
-```{r}
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
+```{r geojson-us-map, fig.cap = "A map of the United States made with GeoJSON data"}
 us_states %>% 
   ggplot() +
   geom_sf() 
+```
+
+```{r results='asis'}
+save_figure_for_nostarch()
 ```
 
 Working with raw geosaptial data in this way is sometimes necessary. But not always. That's because there are R packages that provide functions to access geospatial data. Abdoul Madjid used the `usa_sf()` function from the `albersusa` package to bring in his geospatial data. Another package for accessing geospatial data related to the United States is called `tigris`. This package has a number of well-named functions for bringing in different types of data. One of these is the `states()` function. We can load the `tigris` package and run the `states()` function. Let's use the `cb = TRUE` argument to not use the most detailed shapefile and set the resolution to a more manageable "20m" (without these changes, the shapefile we'd get would be large and slow to work with). We then save the result as `states_tigris`.
@@ -942,11 +1000,28 @@ states_tigris %>%
 
 We can plot this as well, but before doing so, I'm going to use the `shift_geometry()` function from `tigris`. This will put Alaska, Hawaii, and Puerto Rico in places that it is easier to see all states. It also resizes these three states to make them easier to see on a map alongside the continental United States. This is similar to what the `usa_sf()` function from `albersusa` did above.
 
-```{r}
+```{r echo = TRUE, eval = FALSE}
 states_tigris %>% 
   shift_geometry() %>%
   ggplot() +
   geom_sf()
+```
+
+The map, using data and the `shift_geometry` function from the `tigris` package are seen in Figure \@ref(fig:tigris-us-map) below.
+
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
+```{r tigris-us-map, fig.cap = "A map of the United States made with data from the tigris package"}
+states_tigris %>% 
+  shift_geometry() %>%
+  ggplot() +
+  geom_sf()
+```
+
+```{r results='asis'}
+save_figure_for_nostarch()
 ```
 
 The `tigris` package has functions to get geospatial data on counties, census tracts, roads, and more. Kyle Walker, developer of the package, has also written an entire book, titled *Analyzing US Census Data: Methods, Maps, and Models in R*, that is a great place to learn more about how to use it.
@@ -967,12 +1042,28 @@ africa_countries %>%
   select(name)
 ```
 
-And we can plot our data on a map.
+And we can plot our data on a map with the same three lines as always.
 
-```{r}
+```{r echo = TRUE, include = FALSE}
 africa_countries %>% 
   ggplot() +
   geom_sf()
+```
+
+The resulting map shows up in Figure \@ref(fig:geojson-us-map).
+
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
+```{r geojson-us-map, fig.cap = "A map of Africa made with data from the rnaturalearth package"}
+africa_countries %>% 
+  ggplot() +
+  geom_sf()
+```
+
+```{r results='asis'}
+save_figure_for_nostarch()
 ```
 
 If you need geospatial data, start by looking for a package like `albersusa`,  `tigris`, or `rnaturalearth`. If you can't find a package to access geospatial data, you can always fall back on using `read_sf()` from the `sf` package. No matter what, there is a way to get your geospatial data into R!
@@ -983,7 +1074,7 @@ Once you have access to geospatial data and are ready to map it, you need to thi
 
 If you feel overwhelmed with choosing a projection, there is a package to help. The `crsuggest` package, also made by Kyle Walker, can give you ideas for a projection to use. The `suggest_top_crs()` function will return a CRS that is well-suited for your data. Let's load `crsuggest` and try it out on our `africa_countries` data. 
 
-```{r}
+```{r echo = TRUE, eval = FALSE}
 library(crsuggest)
 
 africa_countries %>% 
@@ -999,13 +1090,21 @@ africa_countries %>%
   geom_sf()
 ```
 
-When we run this code, we see Africa mapped with a different projection. 
+When we run this code, we see in Figure \@ref(fig:africa-map-different-projection) below, Africa mapped with a different projection. 
 
-```{r}
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
+```{r africa-map-different-projection, fig.cap = "A map of Africa made with projection number 28232"}
 africa_countries %>%
   st_transform(28232) %>% 
   ggplot() +
   geom_sf()
+```
+
+```{r results='asis'}
+save_figure_for_nostarch()
 ```
 
 ### Bring Your Existing R Skills to Geospatial Data {-}
@@ -1016,6 +1115,13 @@ Simple features data, as we've seen, looks almost exactly like a traditional dat
 
 To demonstrate this, let's return to the `africa_countries` simple features data. Let's select two variables (`name` and `pop_est`) to see the name and population of the countries. 
 
+```{r echo = TRUE, eval = FALSE}
+africa_countries %>% 
+  select(name, pop_est)
+```
+
+The output we get is this:
+
 ```{r}
 africa_countries %>% 
   select(name, pop_est)
@@ -1023,7 +1129,7 @@ africa_countries %>%
 
 Let's now work with these two variables. What if I want to make a map that shows which African countries have populations over 20 million? To do so, I'd need a variable that calculates whether each country has a population over 20 million. I can do this using `mutate()` and the `if_else()` functions, creating a new variable called `population_above_20_million` that is TRUE if a country's population is over 20 million and FALSE otherwise. 
 
-```{r}
+```{r echo = TRUE, eval = FALSE}
 africa_countries %>% 
   select(name, pop_est) %>% 
   mutate(population_above_20_million = if_else(pop_est > 20000000, TRUE, FALSE))
@@ -1031,7 +1137,7 @@ africa_countries %>%
 
 We can then take this code and pipe it into ggplot, setting the `fill` aesthetic property to be equal to `population_above_20_million`. 
 
-```{r}
+```{r echo = TRUE, eval = FALSE}
 africa_countries %>% 
   select(name, pop_est) %>% 
   mutate(population_above_20_million = if_else(pop_est > 20000000, TRUE, FALSE)) %>% 
@@ -1039,19 +1145,27 @@ africa_countries %>%
   geom_sf()
 ```
 
-And we end up with a map like this: 
+And we end up with the map in Figure \@ref(fig:africa-map-20m).
 
-```{r}
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
+```{r africa-map-20m, fig.cap = "A map of Africa that highlights countries with populations above 20 million people"}
 africa_countries %>% 
   select(name, pop_est) %>% 
   mutate(population_above_20_million = if_else(pop_est > 20000000, TRUE, FALSE)) %>% 
   ggplot(aes(fill = population_above_20_million)) +
   geom_sf()
+```
+
+```{r results='asis'}
+save_figure_for_nostarch()
 ```
 
 This is a simple example of the type of data wrangling and analysis you can do on simple features data. The larger lesson is this: all of the skills you've worked hard to develop to work with data in R will also serve you well when working with geospatial data. 
 
-### Why R is Best Tool for Making Maps
+### Why R is Best Tool for Making Maps {-}
 
 This chapter has been a short, if exhausting, romp through the world of map-making in R. We've discussed the basics needed to understand geospatial data, seen how Abdoul Madjid applied this knowledge and principles of high-quality data visualization to make his map, learned how to get your own geospatial data, and how to project it appropriately to make your own maps. 
 
