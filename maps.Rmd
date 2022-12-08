@@ -364,12 +364,20 @@ usa_states_geom %>%
   geom_sf()
 ```
 
-We can see the curvature of the longitude and latitude lines and see how the land curves along with them.
+In Figure \@ref(fig:us-map-albers-projection), we can see the curvature of the longitude and latitude lines and see how the land curves along with them.
 
-```{r}
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
+```{r us-map-albers-projection, fig.cap = "A map of the United States using the Albers equal-area conic convenience projection}
 usa_states_geom %>%
   ggplot() +
   geom_sf()
+```
+
+```{r results='asis'}
+save_figure_for_nostarch()
 ```
 
 If we want to see the same data projected with a different coordinate reference system, we can import the data again using the `usa_sf()` function, but without setting the CRS to the Albers equal-area conic convenience projection. I'm also only keeping the `name` variable in order to make our output easier to read. 
@@ -387,18 +395,26 @@ usa_states_wgs84
 
 We can now use the same three lines of code (switching out `usa_states_geom` for `usa_states_wgs84`) to plot our map.
 
-```{r echo = TRUE, include = FALSE}
+```{r echo = TRUE, eval = FALSE}
 usa_states_wgs84 %>%
   ggplot() +
   geom_sf()
 ```
 
-If we take a look at the resulting map, we can see how different it looks. The curvature of the latitude and longitude lines is gone and the shape of the United States has changed as well, looking far more straight than our previous map. 
+If we take a look at the resulting map in Figure \@ref(fig:us-map-wgs84-projection) below, we can see how different it looks. The curvature of the latitude and longitude lines is gone and the shape of the United States has changed as well, looking far more straight than our previous map. 
 
-```{r}
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
+```{r us-map-wgs84-projection, fig.cap = "A map of the United States using the WGS84 projection}
 usa_states_wgs84 %>%
   ggplot() +
   geom_sf()
+```
+
+```{r results='asis'}
+save_figure_for_nostarch()
 ```
 
 There are many, many different projections you can use. The conclusion of this chapter talks about how to select appropriate projections when making your own maps.
