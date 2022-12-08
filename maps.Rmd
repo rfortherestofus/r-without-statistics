@@ -14,7 +14,7 @@ source("_common.R")
 
 When I first started learning R, I had no idea it could make maps. I thought of R as a tool to work with numbers, not shapes. So I was surprised when I first saw people making maps with R. You absolutely can make maps in R. And not just prosaic maps. Beautiful maps that use high-quality design principles. Maps that are good enough to be featured in top media outlets. 
 
-When many people hear "maps" they immediately think of ArcGIS. But this tool is expensive, with business licenses for ArcGIS starting at $500 per year. Excel has added support for map-making in recent years, but features are limited (making maps based on street addresses, for example, is not possible). There is QGIS, an open-source tool similar to ArcGIS. But if you don't already use QGIS, you have to learn another tool. And, if you're working in R, the mental tax that comes from context switching between tools is significant. Learning to make maps in R means you can do everything, for free, in one tool. 
+When people hear "maps," many immediately think of ArcGIS. But this tool is expensive, with business licenses for ArcGIS starting at $500 per year. Excel has added support for map-making in recent years, but features are limited (making maps based on street addresses, for example, is not possible). There is QGIS, an open-source tool similar to ArcGIS. But if you don't already use QGIS, you have to learn another tool. And, if you're working in R, the mental tax that comes from context switching between tools is significant. Learning to make maps in R means you can do everything, for free, in one tool. 
 
 And the best part of making maps in R is that we can use what we learned about high-quality data visualization in Chapter \@ref(data-viz-chapter). Maps are a form of data visualization and the principles discussed in that chapter apply here as well. 
 
@@ -25,7 +25,7 @@ print_nostarch_file_name(file_type_to_print = "png")
 ```
 
 ```{r madjid-covid-map, out.width="100%", fig.cap="Abdoul Madjid's map of COVID in the United States in 2021"}
-knitr::include_graphics("assets/covid-map.png")
+knitr::include_graphics(here::here("assets/covid-map.png"))
 ```
 
 ```{r results='asis'}
@@ -71,7 +71,7 @@ print_nostarch_file_name(file_type_to_print = "png")
 ```
 
 ```{r sf-data-output, out.width="100%", fig.cap="The output of sf data with metadata and the geometry column highlighted"}
-knitr::include_graphics("assets/sf-data.png")
+knitr::include_graphics(here::here("assets/sf-data.png"))
 ```
 
 ```{r results='asis'}
@@ -580,7 +580,7 @@ print_nostarch_file_name()
 save_figure_for_nostarch()
 ```
 
-#### Changing Colors and Beginning to Tweak the Legend
+#### Changing Colors and Beginning to Tweak the Legend {-}
 
 Next, Madjid tweaked the colors of his maps. He used the `scale_fill_discrete_sequential()` function from the `colorspace` package to set the color scale. This function is quite similar to the `scale_fill_viridis_d()` function that Cédric Scherer and Georgios Karamanis used to make their drought data visualization in Chapter \@ref(data-viz-chapter). Both visualizations use the "rocket" palette, with the fill scale going from a tan at the low end to a black at the high end. Madjid then used the `name` argument to set the title for the legend. By default, it would use the variable name (`incidence_rate`), but Madjid improves it by using "COVID-19 INCIDENCE RATE" instead.
 
@@ -706,7 +706,7 @@ map_with_legend_tweaks <- usa_states_geom_covid_six_days %>%
   )
 ```
 
-#### Tweaking the Theme: The Legend
+#### Tweaking the Theme: The Legend {-}
 
 Let's review the changes that Abdoul Madjid made to his maps using ggplot themes. He began by applying `theme_minimal()` to his map. This removes the ugly gray background that ggplot applies to plots (and maps). He then applied additional tweaks using the `theme()` function. Let's start by looking at the tweaks to the legend. 
 
@@ -744,7 +744,7 @@ map_with_more_legend_tweaks <- map_with_legend_tweaks +
     legend.box.spacing = unit(.25, "cm"))
 ```
 
-#### Tweaking the Theme: The Title, Caption, and Strip Text
+#### Tweaking the Theme: The Title, Caption, and Strip Text {-}
 
 Next, Madjid made tweaks to the title and caption. Below, we added the title and caption using this `labs()` function. Then, we see how Madjid used the `theme()` function to tweak these elements as well as the label for each map ("Jan. 01", "Jan. 02", and so on). He makes all text use Times New Roman and makes it a nearly black color using the hex code #111111. This sets defaults for all text elements, but Madjid also made tweaks to individual elements as well. He set the size of the title to be 2.5 times that of other text elements (`size = rel(2.5)`), made it bold (`face = "bold"`) and centered (`hjust = 0.5`), and added 0.25 centimeter margins on the top and bottom (`hjust = 0.5, margin = margin(t = .25, b = .25, unit = "cm")`). He made the same tweaks to the caption, with the exception of adjusting the font size. And finally, Abdoul Madjid adjusted the size and bolding of the individual map labels using `strip.text`.
 
@@ -778,7 +778,15 @@ map_with_more_legend_tweaks +
 
 The resulting map shows up in Figure \@ref(fig:map-with-text-tweaks) below.
 
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
 ```{r map-with-text-tweaks, ref.label = "map-with-text-tweaks-code", fig.cap = "The COVID map with tweaks to the title, captions, and strip text"}
+```
+
+```{r results='asis'}
+save_figure_for_nostarch()
 ```
 
 ```{r}
@@ -809,7 +817,7 @@ map_with_text_tweaks <- map_with_more_legend_tweaks +
   )
 ```
 
-#### Tweaking the Theme: Grid Lines and Axis Text
+#### Tweaking the Theme: Grid Lines and Axis Text {-}
 
 Our map is looking good! Just a few tweaks left to get it close to Abdoul Madjid's original. By default, maps made with the `geom_sf()` function have axis text and lines to show longitude and latitude. Madjid removed them using the `element_blank()` function on `panel.grid` and `axis.text`.
 
@@ -843,7 +851,7 @@ map_with_grid_and_axis_tweaks <- map_with_text_tweaks +
   )
 ```
 
-#### Tweaking the Theme: Plot Background and Margins
+#### Tweaking the Theme: Plot Background and Margins {-}
 
 The last bit of tweaking that Abdoul Madjid did was to adjust the margins around the final set of maps and give the whole thing a light gray background. The former is done within `plot.margin` while the latter is done using `plot.background`. Setting the fill color of #e5e4e2 gives it that light gray background while the `color = NA` ensures there is no outline around the plot (without that code, it would have a black border).
 
