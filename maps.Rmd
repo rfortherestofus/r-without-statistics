@@ -34,7 +34,7 @@ save_image_for_nostarch(here::here("assets/covid-map.png"))
 
 In this chapter, we will begin by diving into geospatial data, giving you the minimum you need to know in order to make maps in R. We'll then walk through Abdoul Madjid's code, looking at the choices he made that resulted in this high-quality map. I then offer some guidance on where you can finding and working with geospatial data to make your own maps. The chapter concludes with some thoughts about why R is such a good tool for making maps.
 
-## The Briefest of Primers on Geospatial Data {-}
+# The Briefest of Primers on Geospatial Data {-}
 
 You don't need to be a GIS expert to make maps (I'm not and I do). But you do need to understand a few things about how geospatial data works. Here is the briefest of primers on geospatial data. 
 
@@ -80,15 +80,15 @@ save_image_for_nostarch(here::here("assets/sf-data.png"))
 
 Let's discuss each of these differences.
 
-### Metadata {-}
+## Metadata
 
-Above the main output, we see a section that starts with the text "Simple feature collection with 1 feature and 1 field." The feature here is the row and the field is the variable (`NAME`) that contains non-spatial data (the `geometry` column, which contains geospatial data, will be discussed below). This line, and the lines that follow, are metadata about the geospatial data in the `wyoming` object.
+Above the main output, we see a section that starts with the text "Simple feature collection with 1 feature and 1 field." The feature here is the row and the field is the variable (`NAME`) that contains non-spatial data (the `geometry` column, which contains geospatial data, will be discussed below). This line, and the lines that follow, are metadata about the geospatial data in the `wyoming` object. Let's look at each piece of the metadata.
 
-#### Geometry Type {-}
+### Geometry Type {-}
 
 The geometry type shows the type of geospatial data we're working with. POLYGON (geometry types are typically written in all caps) means a relatively simple shape that can be represented by a single polygon. We can use ggplot to display this data. Note that `geom_sf()` is a special geom designed to work with simple features (sf) data. 
 
-```{r wyoming-map-code, echo = TRUE, include = FALSE}
+```{r wyoming-map-code, echo = TRUE, eval = FALSE}
 wyoming %>%
   ggplot() +
   geom_sf()
@@ -235,11 +235,11 @@ wy_counties %>%
 save_figure_for_nostarch()
 ```
 
-#### Dimensions {-}
+### Dimensions {-}
 
 The next line we see in our geospatial data frame metadata is dimension. For our Wyoming data, we had the text `Dimension: XY`. Dimensions refer to the type of geospatial data we're working with. When we see `XY`, this means the data is two-dimensional. This is what we will see in all of the geospatial data used in this chapter. There are two other dimensions (`Z` and `M`) that you see much more rarely. Since `Z` and `M` are both less common and not relevant to the maps we're discussing in this chapter, I'll leave them for you to investigate further.
 
-#### Bounding Box {-}
+### Bounding Box {-}
 
 The penultimate element we see in the metadata is the bounding box. For our `wyoming` object, it looks like this:
 
@@ -247,7 +247,7 @@ The penultimate element we see in the metadata is the bounding box. For our `wyo
 
 A bounding box represents the smallest area in which we can fit all of our geospatial data. What we see in our metadata is the four corners of this bounding box. For Wyoming, the `ymin` value of 40.99475 and `ymax` value of 45.0059 represent the lowest and highest latitude, respectively, that the polygon that represents the state can fit into (the x values do the same for longitude). Bounding boxes are calculated automatically and are not typically something you have to worry about altering.
 
-#### Geodetic CRS {-}
+### Geodetic CRS {-}
 
 The final piece of metadata above our data frame is the "Geodetic CRS." This refers to the coordinate reference system (CRS) used to project our data when we plot it. The problem with representing any geospatial data is that we're projecting data used to represent the three-dimensional earth onto a two-dimensional map. Doing so requires us to choose a coordinate reference system that determines what type of projection to use when making our map. 
 
@@ -284,9 +284,9 @@ wy_counties %>%
 save_figure_for_nostarch()
 ```
 
-If you're curious about how to change projections when making maps of your own, fear not. I'll show you how to do so when we look at Abdoul Madjid's map. And if you want to know how to choose appropriate projections for your maps, check out the conclusion of the chapter.
+If you're curious about how to change projections when making maps of your own, fear not. You'll see how to do this when we look at Abdoul Madjid's map. And if you want to know how to choose appropriate projections for your maps, check out the conclusion of the chapter.
 
-### The `geometry` Column {-}
+## The `geometry` Column {-}
 
 In addition to the metadata above our data frame, there is another difference between geospatial data and traditional data frames. All simple features data has a `geometry` column. As you probably guessed from the name, this column holds the data needed to make our maps.
 
@@ -294,7 +294,7 @@ Think back to when you were a kid and you did connect-the-dots drawings. As you 
 
 If it sounds complicated, don't worry: you never have to worry about the details. The first time I looked in any depth at a geometry column was when I wrote this chapter. What you need to know is this: simple features data has a `geometry` column, and it's what ggplot uses to make maps.
 
-## How to Make High-Quality Maps {-}
+# Recreating the COVID Map {-}
 
 Now that we've explained the basics of geospatial data, let's make a map. All those concepts you just learned about geometry types, dimensions, bounding boxes, projections, and the `geometry` column will come into play as we return to the COVID-19 map that Abdoul Madjid made. Let's walk through the code Madjid used to make his map. I've made some small modifications to the code in order to make the final map fit on the page, but what you'll see below is nearly identical to the original code. 
 
@@ -308,7 +308,7 @@ library(zoo)
 library(colorspace)
 ```
 
-### Importing Our Data {-}
+## Importing Our Data {-}
 
 Next, let's import the data we need. There are three pieces of data we'll import:
 
@@ -358,7 +358,7 @@ usa_states_geom <- usa_sf() %>%
 
 Let's pause for a moment to plot our geospatial data. As we saw when making our maps of Wyoming, it only takes three lines to make a map from our simple features data.
 
-```{r echo = TRUE, eval = FALSE}
+```{r us-map-albers-projection-code, echo = TRUE, eval = FALSE}
 usa_states_geom %>%
   ggplot() +
   geom_sf()
@@ -370,10 +370,7 @@ In Figure \@ref(fig:us-map-albers-projection), we can see the curvature of the l
 print_nostarch_file_name()
 ```
 
-```{r us-map-albers-projection, fig.cap = "A map of the United States using the Albers equal-area conic convenience projection"}
-usa_states_geom %>%
-  ggplot() +
-  geom_sf()
+```{r us-map-albers-projection, ref.label = "us-map-albers-projection-code", fig.cap = "A map of the United States using the Albers equal-area conic convenience projection"}
 ```
 
 ```{r results='asis'}
@@ -395,7 +392,7 @@ usa_states_wgs84
 
 We can now use the same three lines of code (switching out `usa_states_geom` for `usa_states_wgs84`) to plot our map.
 
-```{r echo = TRUE, eval = FALSE}
+```{r us-map-wgs84-projection-code, echo = TRUE, eval = FALSE}
 usa_states_wgs84 %>%
   ggplot() +
   geom_sf()
@@ -407,10 +404,7 @@ If we take a look at the resulting map in Figure \@ref(fig:us-map-wgs84-projecti
 print_nostarch_file_name()
 ```
 
-```{r us-map-wgs84-projection, fig.cap = "A map of the United States using the WGS84 projection"}
-usa_states_wgs84 %>%
-  ggplot() +
-  geom_sf()
+```{r us-map-wgs84-projection, ref.label = "us-map-wgs84-projection-code", fig.cap = "A map of the United States using the WGS84 projection"}
 ```
 
 ```{r results='asis'}
@@ -419,7 +413,7 @@ save_figure_for_nostarch()
 
 There are many, many different projections you can use. The conclusion of this chapter talks about how to select appropriate projections when making your own maps.
 
-### Importing COVID Cases Data {-}
+## Calculating Daily COVID Cases {-}
 
 Next, we need to calculate the number of daily COVID cases. We have to do this because the `covid_data` data frame gives us cumulative cases by state. So, to calculate the number of cases per day for each state, Madjid grouped the data by state using the `group_by()` function, then created a new variable called `pd_cases`, which represents the number of cases in the previous day (he uses the `lag()` function  to create this variable). Some days do not have cases counts for the previous day so, in these cases, Madjid set the value as 0 using the `replace_na()` function. Finally, Madjid created a new variable called `daily_cases`. For this variable, he used the `case_when()` function to set up a condition: if the `cases` variable (cases on that day) is greater than the `pd_cases` variable (cases one day prior), then `daily_cases` is equal to `cases` minus `pd_cases`; otherwise, set `daily_cases` to be equal to 0. Since we grouped the data by state at the beginning, we must now remove this grouping using the `ungroup()` function. 
 
@@ -446,7 +440,7 @@ We can now take a look at the `covid_cases` data frame we created. The variable 
 covid_cases
 ```
 
-### Calculating Incidence Rate {-}
+## Calculating Incidence Rates {-}
 
 We're not quite done calculating values. The data that Madjid used to make his map was not daily case counts. Instead, it was a five-day rolling average of cases per 100,000 people. Madjid created a new data frame called `covid_cases_rm` (rm for rolling mean). The first step in its creation is to use the `rollmean()` function from the `zoo` package to create a `roll_cases` variable. The `k` argument is the number of days (five in order to calculate the five-day rolling average) and the `fill` argument determines what happens in cases like the first day where we can't calculate a five-day rolling mean because there are no days prior to this day (Madjid set these values to be NA). Here is that section of the code:
 
@@ -508,7 +502,7 @@ Let's now take a look at the `covid_cases_rm` data frame.
 covid_cases_rm
 ```
 
-### Adding Geospatial Data {-}
+## Adding Geospatial Data {-}
 
 We've now used two (COVID case data and state population data) of our three data sources to create the `covid_cases_rm` data frame that we'll use to make our map. Let's use our third data source: the geospatial data we saved as `usa_states_geom`. We start with this data frame and then merge our `covid_cases_rm` data frame into it, matching the `name` variable from `usa_states_geom` to the `state` variable in `covid_cases_rm`. Being able to merge together regular data frames with geospatial data is possible with simple features data, another mark in its favor. 
 
@@ -519,7 +513,7 @@ usa_states_geom %>%
 
 Next, Madjid created a new variable called `fancy_date`. As the name implies, it's a nicely formatted version of the date so that we get "Jan. 01" instead of "2021-01-01." The `format()` function does the formatting while the `fct_inorder()` function makes it so that the `fancy_date()` variable will display in order by date (rather than, say, putting August before January because it comes first alphabetically). Last, we use the `relocate()` function to put the `fancy_date` column next to the `date` column. We save this data frame as `usa_states_geom_covid`. 
 
-```{r}
+```{r echo = TRUE}
 usa_states_geom_covid <- usa_states_geom %>%
   left_join(covid_cases_rm, by = c("name" = "state")) %>%
   mutate(fancy_date = fct_inorder(format(date, "%b. %d"))) %>% 
@@ -532,7 +526,7 @@ If we take a look at the `usa_states_geom_covid` data frame, we can see the meta
 usa_states_geom_covid 
 ```
 
-### Recreating the COVID Map {-}
+## Making the Map {-}
 
 It was a lot of work to end up with the surprisingly simple data frame `usa_states_geom_covid`, but it's all we need in order to make our map. The data may be simple, but the code that Abdoul Madjid used to make his map is quite complex. Let's look at it in pieces. 
 
@@ -553,7 +547,7 @@ usa_states_geom_covid_six_days
 
 Second: the final product that Abdoul Madjid made is giant in order to fit all 365 days. I've had to change sizes of a few elements below to make them fit in this book. I've kept the overall structure of the code, but changed a few specific elements (for example, making text sizes smaller) so that everything fits.
 
-#### Making the Basic Map
+### Generating the Basic Map {-}
 
 Now that we have six days of data, let's make some maps. Abdoul Madjid's map-making code has three main parts:
 
@@ -563,7 +557,7 @@ Now that we have six days of data, let's make some maps. Abdoul Madjid's map-mak
 
 The three lines of code that we used above to make our Wyoming maps come back again, with some adornments to improve the quality of our map. Below, we can see that we're using `geom_sf()` to plot our geospatial data. Madjid modified a couple arguments, using `size = .05` to make the state borders less prominent and `color = "grey55"` to make the borders a medium grey color. Then, because he made one map for each day, he used the `facet_wrap()` function. The `vars(fancy_date)` code specifies that the `fancy_date` variable should be used to do the faceting (in other words, make one map for each day) and `strip.position = "bottom"` moves the labels "Jan. 01", "Jan. 02", and so on to the bottom of the maps. 
 
-```{r echo = TRUE, eval = FALSE}
+```{r basic-map-code, echo = TRUE, eval = FALSE}
 usa_states_geom_covid_six_days %>%
   ggplot() +
   geom_sf(
@@ -583,29 +577,18 @@ The resulting map can be seen in Figure \@ref(fig:basic-map).
 print_nostarch_file_name()
 ```
 
-```{r basic-map, fig.cap = "A map showing the incidence rate of COVID for the first six days of 2021"}
-usa_states_geom_covid_six_days %>%
-  ggplot() +
-  geom_sf(
-    aes(fill = incidence_rate),
-    size = .05,
-    color = "grey55"
-  ) +
-  facet_wrap(
-    vars(fancy_date),
-    strip.position = "bottom"
-  )
+```{r basic-map, ref.label = "basic-map-code", fig.cap = "A map showing the incidence rate of COVID for the first six days of 2021"}
 ```
 
 ```{r results='asis'}
 save_figure_for_nostarch()
 ```
 
-#### Changing Colors
+### Changing Colors and Beginning to Tweak the Legend
 
 Next, Madjid tweaked the colors of his maps. He used the `scale_fill_discrete_sequential()` function from the `colorspace` package to set the color scale. This function is quite similar to the `scale_fill_viridis_d()` function that Cédric Scherer and Georgios Karamanis used to make their drought data visualization in Chapter \@ref(data-viz-chapter). Both visualizations use the "rocket" palette, with the fill scale going from a tan at the low end to a black at the high end. Madjid then used the `name` argument to set the title for the legend. By default, it would use the variable name (`incidence_rate`), but Madjid improves it by using "COVID-19 INCIDENCE RATE" instead.
 
-```{r}
+```{r map-with-rocket-palette-code, echo = TRUE, eval = FALSE}
 usa_states_geom_covid_six_days %>%
   ggplot() +
   geom_sf(
@@ -629,22 +612,7 @@ Our in-progress map can be seen in Figure \@ref(fig:map-with-rocket-palette) bel
 print_nostarch_file_name()
 ```
 
-```{r map-with-rocket-palette, fig.cap = "The COVID map with the rocket palette added"}
-usa_states_geom_covid_six_days %>%
-  ggplot() +
-  geom_sf(
-    aes(fill = incidence_rate),
-    size = .05,
-    color = "grey55"
-  ) +
-  facet_wrap(
-    vars(fancy_date),
-    strip.position = "bottom"
-  ) +
-  scale_fill_discrete_sequential(
-    palette = "Rocket",
-    name = "COVID-19 INCIDENCE RATE"
-  )
+```{r map-with-rocket-palette, ref.label = "map-with-rocket-palette-code", fig.cap = "The COVID map with the rocket palette added"}
 ```
 
 ```{r results='asis'}
@@ -699,7 +667,7 @@ usa_states_geom_covid_six_days %>%
   )
 ```
 
-I'm saving the map as it is now as the object `map_with_legend_tweaks` so that we can add onto it below.
+If we view our map at this point, it won't actually look like much because the legend is currently quite large in relation to the maps. In order to change this, and to make some other tweaks to improve the look-and-feel of our maps, Madjid made multiple tweaks to the maps themselves. He did this using the `theme()` function from the `ggplot2` package. One benefit of making maps with ggplot is that all of the tweaks you use when making a regular plot can be carried over to your maps as well. Many of the tweaks within the `theme()` function below are similar to those seen in Chapter \@ref(data-viz-chapter). I'm saving the map as it is now as the object `map_with_legend_tweaks` so that we can add onto it below.
 
 ```{r}
 map_with_legend_tweaks <- usa_states_geom_covid_six_days %>%
@@ -742,17 +710,13 @@ map_with_legend_tweaks <- usa_states_geom_covid_six_days %>%
   )
 ```
 
-If we view our map at this point, it won't actually look like much because the legend is currently quite large in relation to the maps. In order to change this, and to make some other tweaks to improve the look-and-feel of our maps, Madjid made multiple tweaks to the maps themselves. He did this using the `theme()` function from the `ggplot2` package. One benefit of making maps with ggplot is that all of the tweaks you use when making a regular plot can be carried over to your maps as well. Many of the tweaks within the `theme()` function below are similar to those seen in Chapter \@ref(data-viz-chapter). 
-
-#### Tweaking the Theme
+### Tweaking the Theme: The Legend
 
 Let's review the changes that Abdoul Madjid made to his maps using ggplot themes. He began by applying `theme_minimal()` to his map. This removes the ugly gray background that ggplot applies to plots (and maps). He then applied additional tweaks using the `theme()` function. Let's start by looking at the tweaks to the legend. 
 
-##### Legend
-
 While the code in the `scale_fill_discrete_sequential()` function customized individual elements *within* the legend (for example, the size of the colored squares), the code below customizes the legend as a whole. Madjid moved the legend to the top of the maps using `legend.position = "top"` and added a bit of spacing around the legend with `legend.box.spacing = unit(.25, "cm")`.
 
-```{r echo = TRUE, include = FALSE}
+```{r map-with-more-legend-tweaks-code, echo = TRUE, eval = FALSE}
 map_with_legend_tweaks +
   theme_minimal() +
   theme(
@@ -767,13 +731,7 @@ We can see the result of these tweaks in Figure \@ref(fig:map-with-more-legend-t
 print_nostarch_file_name()
 ```
 
-```{r map-with-more-legend-tweaks, fig.cap = "The COVID map with additional tweaks to the legend"}
-map_with_legend_tweaks +
-  theme_minimal() +
-  theme(
-    legend.position = "top",
-    legend.box.spacing = unit(.25, "cm")
-  )
+```{r map-with-more-legend-tweaks, ref.label = "map-with-more-legend-tweaks-code", fig.cap = "The COVID map with additional tweaks to the legend"}
 ```
 
 ```{r results='asis'}
@@ -790,7 +748,7 @@ map_with_more_legend_tweaks <- map_with_legend_tweaks +
     legend.box.spacing = unit(.25, "cm"))
 ```
 
-##### Text
+### Tweaking the Theme: The Title, Caption, and Strip Text
 
 Next, Madjid made tweaks to the title and caption. Below, we added the title and caption using this `labs()` function. Then, we see how Madjid used the `theme()` function to tweak these elements as well as the label for each map ("Jan. 01", "Jan. 02", and so on). He makes all text use Times New Roman and makes it a nearly black color using the hex code #111111. This sets defaults for all text elements, but Madjid also made tweaks to individual elements as well. He set the size of the title to be 2.5 times that of other text elements (`size = rel(2.5)`), made it bold (`face = "bold"`) and centered (`hjust = 0.5`), and added 0.25 centimeter margins on the top and bottom (`hjust = 0.5, margin = margin(t = .25, b = .25, unit = "cm")`). He made the same tweaks to the caption, with the exception of adjusting the font size. And finally, Abdoul Madjid adjusted the size and bolding of the individual map labels using `strip.text`.
 
@@ -824,7 +782,7 @@ map_with_more_legend_tweaks +
 
 The resulting map shows up in Figure \@ref(fig:map-with-text-tweaks) below.
 
-```{r map-with-text-tweaks, ref.label = "map-with-texttweaks-code", fig.cap = "The COVID map with tweaks to the title, captions, and strip text"}
+```{r map-with-text-tweaks, ref.label = "map-with-text-tweaks-code", fig.cap = "The COVID map with tweaks to the title, captions, and strip text"}
 ```
 
 ```{r}
@@ -855,11 +813,11 @@ map_with_text_tweaks <- map_with_more_legend_tweaks +
   )
 ```
 
-##### Grid Lines and Axis Text
+### Tweaking the Theme: Grid Lines and Axis Text
 
 Our map is looking good! Just a few tweaks left to get it close to Abdoul Madjid's original. By default, maps made with the `geom_sf()` function have axis text and lines to show longitude and latitude. Madjid removed them using the `element_blank()` function on `panel.grid` and `axis.text`.
 
-```{r echo = TRUE, eval = FALSE}
+```{r map-with-grid-tweaks-code, echo = TRUE, eval = FALSE}
 map_with_text_tweaks +
   theme(
     panel.grid = element_blank(),
@@ -873,12 +831,7 @@ The result, seen in Figure \@ref(fig:map-with-grid-tweaks), is a much nicer-look
 print_nostarch_file_name()
 ```
 
-```{r map-with-grid-tweaks, fig.cap = "The COVID map without the grid lines and axis text"}
-map_with_text_tweaks +
-  theme(
-    panel.grid = element_blank(),
-    axis.text = element_blank()
-  )
+```{r map-with-grid-tweaks, ref.label = "map-with-grid-tweaks-code", fig.cap = "The COVID map without the grid lines and axis text"}
 ```
 
 ```{r results='asis'}
@@ -894,11 +847,11 @@ map_with_grid_and_axis_tweaks <- map_with_text_tweaks +
   )
 ```
 
-##### Background and Margin
+### Tweaking the Theme: Plot Background and Margins
 
 The last bit of tweaking that Abdoul Madjid did was to adjust the margins around the final set of maps and give the whole thing a light gray background. The former is done within `plot.margin` while the latter is done using `plot.background`. Setting the fill color of #e5e4e2 gives it that light gray background while the `color = NA` ensures there is no outline around the plot (without that code, it would have a black border).
 
-```{r echo = TRUE, eval = FALSE}
+```{r map-with-background-tweaks-code, echo = TRUE, eval = FALSE}
 map_with_grid_and_axis_tweaks +
   theme(
     plot.margin = margin(t = .25, 
@@ -917,30 +870,20 @@ And there we have it: Figure \@ref(fig:map-with-background-tweaks) our recreatio
 print_nostarch_file_name()
 ```
 
-```{r map-with-background-tweaks, fig.cap = "The COVID map with tweaks to the margins and the background color"}
-map_with_grid_and_axis_tweaks +
-  theme(
-    plot.margin = margin(t = .25, 
-                         r = .25, 
-                         b = .25, 
-                         l = .25, 
-                         unit = "cm"),
-    plot.background = element_rect(fill = "#e5e4e2", 
-                                   color = NA)
-  )
+```{r map-with-background-tweaks, ref.label = "map-with-background-tweaks-code", fig.cap = "The COVID map with tweaks to the margins and the background color"}
 ```
 
 ```{r results='asis'}
 save_figure_for_nostarch()
 ```
 
-## In Conclusion: R is a Map-Making Swiss Army Knife {-}
+# In Conclusion: R is a Map-Making Swiss Army Knife {-}
 
 If this chapter has inspired you to want to make your own maps in R, fantastic! As we've seen from Abdoul Madjid's work, you can use R both to gather and analyze geospatial data as well make maps it. R is a map-making Swiss army knife. 
 
 In the first part of this chapter, I gave you a quick overview of how geospatial data works. You may now be wondering: okay, great, but how do I actually make my own maps? Let's talk about where you can find geospatial data. 
 
-### Finding Geospatial Data {-}
+## Finding Geospatial Data {-}
 
 First, a reminder: we're exclusively discussing vector data in the simple features format. While there are other types of geospatial data, simple features data is the easiest to get started with. 
 
@@ -961,7 +904,7 @@ us_states %>%
 
 To prove that this is geospatial data like that we've seen throughout this chapter, let's make a map with it. I'll use the same three lines we've used throughout this chapter.
 
-```{r echo = TRUE, eval = FALSE}
+```{r eojson-us-map-code, echo = TRUE, eval = FALSE}
 us_states %>% 
   ggplot() +
   geom_sf() 
@@ -973,22 +916,21 @@ And there we have it: Figure \@ref(fig:geojson-us-map) shows a map of all 50 sta
 print_nostarch_file_name()
 ```
 
-```{r geojson-us-map, fig.cap = "A map of the United States made with GeoJSON data"}
-us_states %>% 
-  ggplot() +
-  geom_sf() 
+```{r geojson-us-map, ref.label = "eojson-us-map-code", fig.cap = "A map of the United States made with GeoJSON data"}
 ```
 
 ```{r results='asis'}
 save_figure_for_nostarch()
 ```
 
-Working with raw geosaptial data in this way is sometimes necessary. But not always. That's because there are R packages that provide functions to access geospatial data. Abdoul Madjid used the `usa_sf()` function from the `albersusa` package to bring in his geospatial data. Another package for accessing geospatial data related to the United States is called `tigris`. This package has a number of well-named functions for bringing in different types of data. One of these is the `states()` function. We can load the `tigris` package and run the `states()` function. Let's use the `cb = TRUE` argument to not use the most detailed shapefile and set the resolution to a more manageable "20m" (without these changes, the shapefile we'd get would be large and slow to work with). We then save the result as `states_tigris`.
+Working with raw geosaptial data in this way is sometimes necessary. But not always. That's because there are R packages that provide functions to access geospatial data. Abdoul Madjid used the `usa_sf()` function from the `albersusa` package to bring in his geospatial data. Another package for accessing geospatial data related to the United States is called `tigris`. This package has a number of well-named functions for bringing in different types of data. One of these is the `states()` function. We can load the `tigris` package and run the `states()` function. Let's use the `cb = TRUE` argument to not use the most detailed shapefile and set the resolution to a more manageable "20m" (without these changes, the shapefile we'd get would be large and slow to work with). We also set `progress_bar = FALSE` in order to not see messages that `tigris` shares while it loads data. We then save the result as `states_tigris`.
 
-```{r}
+```{r echo = TRUE}
 library(tigris)
 
-states_tigris <- states(cb = TRUE, resolution = "20m")
+states_tigris <- states(cb = TRUE, 
+                        resolution = "20m",
+                        progress_bar = FALSE)
 ```
 
 The `states_tigris` object has 14 variables, but let's just keep the `NAME` and `geometry` variables in order to make the output easier to read. Our output has 52 rows (referred to in the output as features): the 50 states as well as the District of Columbia and Puerto Rico.
@@ -1000,7 +942,7 @@ states_tigris %>%
 
 We can plot this as well, but before doing so, I'm going to use the `shift_geometry()` function from `tigris`. This will put Alaska, Hawaii, and Puerto Rico in places that it is easier to see all states. It also resizes these three states to make them easier to see on a map alongside the continental United States. This is similar to what the `usa_sf()` function from `albersusa` did above.
 
-```{r echo = TRUE, eval = FALSE}
+```{r tigris-us-map-code, echo = TRUE, eval = FALSE}
 states_tigris %>% 
   shift_geometry() %>%
   ggplot() +
@@ -1013,11 +955,7 @@ The map, using data and the `shift_geometry` function from the `tigris` package 
 print_nostarch_file_name()
 ```
 
-```{r tigris-us-map, fig.cap = "A map of the United States made with data from the tigris package"}
-states_tigris %>% 
-  shift_geometry() %>%
-  ggplot() +
-  geom_sf()
+```{r tigris-us-map, ref.label = "tigris-us-map-code", fig.cap = "A map of the United States made with data from the tigris package"}
 ```
 
 ```{r results='asis'}
@@ -1044,7 +982,7 @@ africa_countries %>%
 
 And we can plot our data on a map with the same three lines as always.
 
-```{r echo = TRUE, include = FALSE}
+```{r africa-map-code, echo = TRUE, eval = FALSE}
 africa_countries %>% 
   ggplot() +
   geom_sf()
@@ -1056,10 +994,7 @@ The resulting map shows up in Figure \@ref(fig:africa-map).
 print_nostarch_file_name()
 ```
 
-```{r africa-map, fig.cap = "A map of Africa made with data from the rnaturalearth package"}
-africa_countries %>% 
-  ggplot() +
-  geom_sf()
+```{r africa-map, ref.label = "africa-map-code", fig.cap = "A map of Africa made with data from the rnaturalearth package"}
 ```
 
 ```{r results='asis'}
@@ -1068,7 +1003,7 @@ save_figure_for_nostarch()
 
 If you need geospatial data, start by looking for a package like `albersusa`,  `tigris`, or `rnaturalearth`. If you can't find a package to access geospatial data, you can always fall back on using `read_sf()` from the `sf` package. No matter what, there is a way to get your geospatial data into R!
 
-### Using Appropriate Projections {-}
+## Using Appropriate Projections {-}
 
 Once you have access to geospatial data and are ready to map it, you need to think about which projection to use. If you're looking for a simple answer to this question, you're going to be disappointed. As Robin Lovelace, Jakub Nowosad, and Jannes Muenchow put it in their book *Geocomputation with R*, "the question of *which* CRS [to use] is tricky, and there is rarely a 'right' answer." 
 
@@ -1083,7 +1018,7 @@ africa_countries %>%
 
 The `suggest_top_crs` function returns the projection number 28232. We can now use this value in combination with the `st_transform` function in order to change the projection before we plot. 
 
-```{r echo = TRUE, include = FALSE}
+```{r africa-map-different-projection-code, echo = TRUE, eval = FALSE}
 africa_countries %>%
   st_transform(28232) %>% 
   ggplot() +
@@ -1096,18 +1031,14 @@ When we run this code, we see in Figure \@ref(fig:africa-map-different-projectio
 print_nostarch_file_name()
 ```
 
-```{r africa-map-different-projection, fig.cap = "A map of Africa made with projection number 28232"}
-africa_countries %>%
-  st_transform(28232) %>% 
-  ggplot() +
-  geom_sf()
+```{r africa-map-different-projection, ref.label = "africa-map-different-projection-code", fig.cap = "A map of Africa made with projection number 28232"}
 ```
 
 ```{r results='asis'}
 save_figure_for_nostarch()
 ```
 
-### Bring Your Existing R Skills to Geospatial Data {-}
+## Bring Your Existing R Skills to Geospatial Data {-}
 
 Abdoul Madjid's process for analyzing data involved a few steps: he began by doing analysis on traditional data frames (recall the data on COVID rates and that on state populations). Once he had done his analysis on these data frames, he merged them with his geospatial data to create the `usa_states_geom_covid` data frame that he used to make his map. The ability to merge traditional data frames with geospatial data is a huge benefit of working with simple features data. 
 
@@ -1137,7 +1068,7 @@ africa_countries %>%
 
 We can then take this code and pipe it into ggplot, setting the `fill` aesthetic property to be equal to `population_above_20_million`. 
 
-```{r echo = TRUE, eval = FALSE}
+```{r africa-map-20m-code, echo = TRUE, eval = FALSE}
 africa_countries %>% 
   select(name, pop_est) %>% 
   mutate(population_above_20_million = if_else(pop_est > 20000000, TRUE, FALSE)) %>% 
@@ -1151,7 +1082,7 @@ And we end up with the map in Figure \@ref(fig:africa-map-20m).
 print_nostarch_file_name()
 ```
 
-```{r africa-map-20m, fig.cap = "A map of Africa that highlights countries with populations above 20 million people"}
+```{r africa-map-20m, ref.label = "africa-map-20m-code", fig.cap = "A map of Africa that highlights countries with populations above 20 million people"}
 africa_countries %>% 
   select(name, pop_est) %>% 
   mutate(population_above_20_million = if_else(pop_est > 20000000, TRUE, FALSE)) %>% 
@@ -1165,7 +1096,7 @@ save_figure_for_nostarch()
 
 This is a simple example of the type of data wrangling and analysis you can do on simple features data. The larger lesson is this: all of the skills you've worked hard to develop to work with data in R will also serve you well when working with geospatial data. 
 
-### Why R is Best Tool for Making Maps {-}
+## Why R is Best Tool for Making Maps {-}
 
 This chapter has been a short, if exhausting, romp through the world of map-making in R. We've discussed the basics needed to understand geospatial data, seen how Abdoul Madjid applied this knowledge and principles of high-quality data visualization to make his map, learned how to get your own geospatial data, and how to project it appropriately to make your own maps. 
 
