@@ -34,7 +34,7 @@ save_image_for_nostarch(here::here("assets/covid-map.png"))
 
 In this chapter, we will begin by diving into geospatial data, giving you the minimum you need to know in order to make maps in R. We'll then walk through Abdoul Madjid's code, looking at the choices he made that resulted in this high-quality map. I then offer some guidance on where you can finding and working with geospatial data to make your own maps. The chapter concludes with some thoughts about why R is such a good tool for making maps.
 
-# The Briefest of Primers on Geospatial Data {-}
+## The Briefest of Primers on Geospatial Data {-}
 
 You don't need to be a GIS expert to make maps (I'm not and I do). But you do need to understand a few things about how geospatial data works. Here is the briefest of primers on geospatial data. 
 
@@ -78,11 +78,7 @@ knitr::include_graphics("assets/sf-data.png")
 save_image_for_nostarch(here::here("assets/sf-data.png"))
 ```
 
-Let's discuss each of these differences.
-
-## Metadata
-
-Above the main output, we see a section that starts with the text "Simple feature collection with 1 feature and 1 field." The feature here is the row and the field is the variable (`NAME`) that contains non-spatial data (the `geometry` column, which contains geospatial data, will be discussed below). This line, and the lines that follow, are metadata about the geospatial data in the `wyoming` object. Let's look at each piece of the metadata.
+Let's discuss each of these differences, starting with metadata. Above the main output, we see a section that starts with the text "Simple feature collection with 1 feature and 1 field." The feature here is the row and the field is the variable (`NAME`) that contains non-spatial data (the `geometry` column, which contains geospatial data, will be discussed below). This line, and the lines that follow, are metadata about the geospatial data in the `wyoming` object. Let's look at each piece of the metadata.
 
 ### Geometry Type {-}
 
@@ -286,7 +282,7 @@ save_figure_for_nostarch()
 
 If you're curious about how to change projections when making maps of your own, fear not. You'll see how to do this when we look at Abdoul Madjid's map. And if you want to know how to choose appropriate projections for your maps, check out the conclusion of the chapter.
 
-## The `geometry` Column {-}
+### The `geometry` Column {-}
 
 In addition to the metadata above our data frame, there is another difference between geospatial data and traditional data frames. All simple features data has a `geometry` column. As you probably guessed from the name, this column holds the data needed to make our maps.
 
@@ -294,7 +290,7 @@ Think back to when you were a kid and you did connect-the-dots drawings. As you 
 
 If it sounds complicated, don't worry: you never have to worry about the details. The first time I looked in any depth at a geometry column was when I wrote this chapter. What you need to know is this: simple features data has a `geometry` column, and it's what ggplot uses to make maps.
 
-# Recreating the COVID Map {-}
+## Recreating the COVID Map {-}
 
 Now that we've explained the basics of geospatial data, let's make a map. All those concepts you just learned about geometry types, dimensions, bounding boxes, projections, and the `geometry` column will come into play as we return to the COVID-19 map that Abdoul Madjid made. Let's walk through the code Madjid used to make his map. I've made some small modifications to the code in order to make the final map fit on the page, but what you'll see below is nearly identical to the original code. 
 
@@ -308,7 +304,7 @@ library(zoo)
 library(colorspace)
 ```
 
-## Importing Our Data {-}
+### Importing Our Data {-}
 
 Next, let's import the data we need. There are three pieces of data we'll import:
 
@@ -413,7 +409,7 @@ save_figure_for_nostarch()
 
 There are many, many different projections you can use. The conclusion of this chapter talks about how to select appropriate projections when making your own maps.
 
-## Calculating Daily COVID Cases {-}
+### Calculating Daily COVID Cases {-}
 
 Next, we need to calculate the number of daily COVID cases. We have to do this because the `covid_data` data frame gives us cumulative cases by state. So, to calculate the number of cases per day for each state, Madjid grouped the data by state using the `group_by()` function, then created a new variable called `pd_cases`, which represents the number of cases in the previous day (he uses the `lag()` function  to create this variable). Some days do not have cases counts for the previous day so, in these cases, Madjid set the value as 0 using the `replace_na()` function. Finally, Madjid created a new variable called `daily_cases`. For this variable, he used the `case_when()` function to set up a condition: if the `cases` variable (cases on that day) is greater than the `pd_cases` variable (cases one day prior), then `daily_cases` is equal to `cases` minus `pd_cases`; otherwise, set `daily_cases` to be equal to 0. Since we grouped the data by state at the beginning, we must now remove this grouping using the `ungroup()` function. 
 
@@ -440,7 +436,7 @@ We can now take a look at the `covid_cases` data frame we created. The variable 
 covid_cases
 ```
 
-## Calculating Incidence Rates {-}
+### Calculating Incidence Rates {-}
 
 We're not quite done calculating values. The data that Madjid used to make his map was not daily case counts. Instead, it was a five-day rolling average of cases per 100,000 people. Madjid created a new data frame called `covid_cases_rm` (rm for rolling mean). The first step in its creation is to use the `rollmean()` function from the `zoo` package to create a `roll_cases` variable. The `k` argument is the number of days (five in order to calculate the five-day rolling average) and the `fill` argument determines what happens in cases like the first day where we can't calculate a five-day rolling mean because there are no days prior to this day (Madjid set these values to be NA). Here is that section of the code:
 
@@ -502,7 +498,7 @@ Let's now take a look at the `covid_cases_rm` data frame.
 covid_cases_rm
 ```
 
-## Adding Geospatial Data {-}
+### Adding Geospatial Data {-}
 
 We've now used two (COVID case data and state population data) of our three data sources to create the `covid_cases_rm` data frame that we'll use to make our map. Let's use our third data source: the geospatial data we saved as `usa_states_geom`. We start with this data frame and then merge our `covid_cases_rm` data frame into it, matching the `name` variable from `usa_states_geom` to the `state` variable in `covid_cases_rm`. Being able to merge together regular data frames with geospatial data is possible with simple features data, another mark in its favor. 
 
@@ -526,7 +522,7 @@ If we take a look at the `usa_states_geom_covid` data frame, we can see the meta
 usa_states_geom_covid 
 ```
 
-## Making the Map {-}
+### Making the Map {-}
 
 It was a lot of work to end up with the surprisingly simple data frame `usa_states_geom_covid`, but it's all we need in order to make our map. The data may be simple, but the code that Abdoul Madjid used to make his map is quite complex. Let's look at it in pieces. 
 
@@ -877,13 +873,13 @@ print_nostarch_file_name()
 save_figure_for_nostarch()
 ```
 
-# In Conclusion: R is a Map-Making Swiss Army Knife {-}
+## In Conclusion: R is a Map-Making Swiss Army Knife {-}
 
 If this chapter has inspired you to want to make your own maps in R, fantastic! As we've seen from Abdoul Madjid's work, you can use R both to gather and analyze geospatial data as well make maps it. R is a map-making Swiss army knife. 
 
 In the first part of this chapter, I gave you a quick overview of how geospatial data works. You may now be wondering: okay, great, but how do I actually make my own maps? Let's talk about where you can find geospatial data. 
 
-## Finding Geospatial Data {-}
+### Finding Geospatial Data {-}
 
 First, a reminder: we're exclusively discussing vector data in the simple features format. While there are other types of geospatial data, simple features data is the easiest to get started with. 
 
@@ -1003,7 +999,7 @@ save_figure_for_nostarch()
 
 If you need geospatial data, start by looking for a package like `albersusa`,  `tigris`, or `rnaturalearth`. If you can't find a package to access geospatial data, you can always fall back on using `read_sf()` from the `sf` package. No matter what, there is a way to get your geospatial data into R!
 
-## Using Appropriate Projections {-}
+### Using Appropriate Projections {-}
 
 Once you have access to geospatial data and are ready to map it, you need to think about which projection to use. If you're looking for a simple answer to this question, you're going to be disappointed. As Robin Lovelace, Jakub Nowosad, and Jannes Muenchow put it in their book *Geocomputation with R*, "the question of *which* CRS [to use] is tricky, and there is rarely a 'right' answer." 
 
@@ -1038,7 +1034,7 @@ print_nostarch_file_name()
 save_figure_for_nostarch()
 ```
 
-## Bring Your Existing R Skills to Geospatial Data {-}
+### Bring Your Existing R Skills to Geospatial Data {-}
 
 Abdoul Madjid's process for analyzing data involved a few steps: he began by doing analysis on traditional data frames (recall the data on COVID rates and that on state populations). Once he had done his analysis on these data frames, he merged them with his geospatial data to create the `usa_states_geom_covid` data frame that he used to make his map. The ability to merge traditional data frames with geospatial data is a huge benefit of working with simple features data. 
 
@@ -1096,7 +1092,7 @@ save_figure_for_nostarch()
 
 This is a simple example of the type of data wrangling and analysis you can do on simple features data. The larger lesson is this: all of the skills you've worked hard to develop to work with data in R will also serve you well when working with geospatial data. 
 
-## Why R is Best Tool for Making Maps {-}
+### Why R is Best Tool for Making Maps {-}
 
 This chapter has been a short, if exhausting, romp through the world of map-making in R. We've discussed the basics needed to understand geospatial data, seen how Abdoul Madjid applied this knowledge and principles of high-quality data visualization to make his map, learned how to get your own geospatial data, and how to project it appropriately to make your own maps. 
 
