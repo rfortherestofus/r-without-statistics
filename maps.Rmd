@@ -1050,13 +1050,13 @@ africa_countries %>%
   geom_sf()
 ```
 
-The resulting map shows up in Figure \@ref(fig:geojson-us-map).
+The resulting map shows up in Figure \@ref(fig:africa-map).
 
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
-```{r geojson-us-map, fig.cap = "A map of Africa made with data from the rnaturalearth package"}
+```{r africa-map, fig.cap = "A map of Africa made with data from the rnaturalearth package"}
 africa_countries %>% 
   ggplot() +
   geom_sf()
