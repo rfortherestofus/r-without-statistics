@@ -103,8 +103,6 @@ save_figure_for_nostarch <- function(figure_height = 4) {
   
 }
 
-
-
 save_image_for_nostarch <- function(image_file, chap_number = chapter_number) {
   
   image_info <- magick::image_read(image_file) %>%
