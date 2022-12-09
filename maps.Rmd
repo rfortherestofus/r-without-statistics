@@ -32,7 +32,7 @@ knitr::include_graphics(here::here("assets/covid-map.png"))
 save_image_for_nostarch(here::here("assets/covid-map.png"))
 ```
 
-In this chapter, we will begin by diving into geospatial data, giving you the minimum you need to know in order to make maps in R. We'll then walk through Abdoul Madjid's code, looking at the choices he made that resulted in this high-quality map. I then offer some guidance on where you can finding and working with geospatial data to make your own maps. The chapter concludes with some thoughts about why R is such a good tool for making maps.
+In this chapter, we will begin by diving into geospatial data, giving you the minimum you need to know in order to make maps in R. We'll then walk through Abdoul Madjid's code, looking at the choices he made that resulted in this high-quality map. I then offer some guidance on where to find geospatial data and how to work with it to make your own maps. The chapter concludes with some thoughts about why R is such a good tool for making maps.
 
 ## The Briefest of Primers on Geospatial Data {-}
 
