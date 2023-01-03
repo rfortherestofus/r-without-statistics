@@ -970,7 +970,7 @@ The `tigris` package has functions to get geospatial data on counties, census tr
 
 If you're looking for data outside of the United States, fear not! The `rnaturalearth` package provides functions to import geospatial data from across the world. This package has a number of functions, but let's look at one: `ne_countries()`. This function gets geospatial data on countries throughout the world. I'm using two arguments in the code below: `returnclass = "sf"` to get data in simple features format and `continent = "Africa"` to only get some countries. I save the result to an object called `africa_countries`.
 
-```{r}
+```{r echo = TRUE}
 library(rnaturalearth)
 
 africa_countries <- ne_countries(returnclass = "sf",

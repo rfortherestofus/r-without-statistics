@@ -12,7 +12,7 @@ source("_common.R")
 
 # R is a Full-Fledged Map-Making Tool
 
-When I first started learning R, I had no idea it could make maps. I thought of R as a tool to work with numbers, not shapes. So I was surprised when I first saw people making maps with R. You absolutely can make maps in R. And not just prosaic maps. Beautiful maps that use high-quality design principles. Maps that are good enough to be featured in top media outlets. 
+When I first started learning R, I had no idea it could make maps. I thought of R as a tool to work with numbers, not shapes. So I was surprised when I saw people making maps with R. I've come to learn that you absolutely can make maps in R. And not just prosaic maps. Beautiful maps that use high-quality design principles. Maps that are good enough to be featured in top media outlets. 
 
 When people hear "maps," many immediately think of ArcGIS. But this tool is expensive, with business licenses for ArcGIS starting at $500 per year. Excel has added support for map-making in recent years, but features are limited (making maps based on street addresses, for example, is not possible). There is QGIS, an open-source tool similar to ArcGIS. But if you don't already use QGIS, you have to learn another tool. And, if you're working in R, the mental tax that comes from context switching between tools is significant. Learning to make maps in R means you can do everything, for free, in one tool. 
 
@@ -32,7 +32,7 @@ knitr::include_graphics(here::here("assets/covid-map.png"))
 save_image_for_nostarch(here::here("assets/covid-map.png"))
 ```
 
-In this chapter, we will begin by diving into geospatial data, giving you the minimum you need to know in order to make maps in R. We'll then walk through Abdoul Madjid's code, looking at the choices he made that resulted in this high-quality map. I then offer some guidance on where you can finding and working with geospatial data to make your own maps. The chapter concludes with some thoughts about why R is such a good tool for making maps.
+In this chapter, we will begin by diving into geospatial data, giving you the minimum you need to know in order to make maps in R. We'll then walk through Abdoul Madjid's code, looking at the choices he made that resulted in this high-quality map. I then offer some guidance on where to find geospatial data and how to work with it to make your own maps. The chapter concludes with some thoughts about why R is such a good tool for making maps.
 
 ## The Briefest of Primers on Geospatial Data {-}
 
@@ -411,7 +411,7 @@ There are many, many different projections you can use. The conclusion of this c
 
 ### Calculating Daily COVID Cases {-}
 
-Next, we need to calculate the number of daily COVID cases. We have to do this because the `covid_data` data frame gives us cumulative cases by state. So, to calculate the number of cases per day for each state, Madjid grouped the data by state using the `group_by()` function, then created a new variable called `pd_cases`, which represents the number of cases in the previous day (he uses the `lag()` function  to create this variable). Some days do not have cases counts for the previous day so, in these cases, Madjid set the value as 0 using the `replace_na()` function. Finally, Madjid created a new variable called `daily_cases`. For this variable, he used the `case_when()` function to set up a condition: if the `cases` variable (cases on that day) is greater than the `pd_cases` variable (cases one day prior), then `daily_cases` is equal to `cases` minus `pd_cases`; otherwise, set `daily_cases` to be equal to 0. Since we grouped the data by state at the beginning, we must now remove this grouping using the `ungroup()` function. 
+Next, we need to calculate the number of daily COVID cases. We have to do this because the `covid_data` data frame gives us cumulative cases by state. So, to calculate the number of cases per day for each state, Madjid grouped the data by state using the `group_by()` function, then created a new variable called `pd_cases`, which represents the number of cases in the previous day (he uses the `lag()` function  to create this variable). Some days do not have cases counts for the previous day so, in these cases, Madjid set the value as 0 using the `replace_na()` function. Finally, Madjid created a new variable called `daily_cases`. For this variable, he used the `case_when()` function to set up a condition: if the `cases` variable (cases on that day) is greater than the `pd_cases` variable (cases one day prior), then `daily_cases` is equal to `cases` minus `pd_cases`; otherwise, set `daily_cases` to be equal to 0. Since we grouped the data by state at the beginning, we must now remove this grouping using the `ungroup()` function before arranging our data by state and date. 
 
 ```{r echo = TRUE}
 covid_cases <- covid_data %>%
@@ -970,7 +970,7 @@ The `tigris` package has functions to get geospatial data on counties, census tr
 
 If you're looking for data outside of the United States, fear not! The `rnaturalearth` package provides functions to import geospatial data from across the world. This package has a number of functions, but let's look at one: `ne_countries()`. This function gets geospatial data on countries throughout the world. I'm using two arguments in the code below: `returnclass = "sf"` to get data in simple features format and `continent = "Africa"` to only get some countries. I save the result to an object called `africa_countries`.
 
-```{r}
+```{r echo = TRUE}
 library(rnaturalearth)
 
 africa_countries <- ne_countries(returnclass = "sf",
