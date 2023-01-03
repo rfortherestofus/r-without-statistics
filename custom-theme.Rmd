@@ -10,33 +10,33 @@ chapter_number <- 3
 source("_common.R")
 ```
 
-# Make Your Own Theme
+# Making Your Own Theme
 
-In 2017, BBC data journalist Nassos Stylianou was working with a backend developer on a particularly large data set. Nassos was primarily an Excel user at the time, but this data was too large for Excel. Seeing the developer work through the data with ease, a light bulb went off for Stylianou: if he and his data journalism team learned to use R, they could do this type of analysis on their own. 
+In 2018, BBC data journalists Nassos Stylianou and Clara Guibourg, along with their team, developed a custom ggplot theme that matches the BBC’s style. By introducing this bbplot package for others to use, they changed their organization’s culture, removed bottlenecks, and allowed the BBC to visualize data more creatively.
 
-This realization began a journey into R. This journey, which started with needing to analyze data too large for Excel to handle, would ultimately end up in a very different place. In 2018, Stylianou, his colleague Clara Guibourg, and their team created a custom ggplot theme to create plots that match the BBC style. The code in the `bbplot` package is a great example of the value of developing a custom theme. But the real story of the creation of `bbplot` is not just about technical tools. Through learning R and creating a custom theme for others to use, Nassos, Clara and their colleagues would change the culture, remove bottlenecks, and allow the BBC to be more creative with their data viz.
+To understand the significance of these changes, it’s helpful to know how things worked at the BBC before the introduction of `bbplot.` In the mid-2010s, journalists who wanted to make data visualization had two choices:
 
-To understand how big these changes were, it's helpful to understand what things looked like at the BBC before bbplot. In the mid-2010s, journalists at the BBC who wanted to make data visualization had two choices:
+1. They could use an internal tool. This tool could create data visualizations but was limited to the predefined charts it had been designed to generate.
 
-1. They could use an internal tool. This tool could create data visualization, but only the predefined charts it had been designed to generate. 
+1. They could use Excel to create mockups and then work with a graphic designer to finalize the charts. This approach led to better results, and was way more flexible, but required extensive, time-consuming back-and-forth with a designer. 
 
-1. They could use Excel to create mockups and then work with a graphic designer to finalize the charts. This approach led to better results, and was way more flexible, but required extensive back-and-forth with a designer. As Stylianou described it, working with a designer "is just a very time-consuming workflow if you think of how many visualizations the BBC does." 
+Neither of these choices was ideal, and they limited the BBC’s data visualization output. R freed the journalists from having to work with a designer. It wasn’t that the designers were bad (they weren’t), but ggplot allowed the journalists to explore different visualizations on their own. Working with a designer required the journalists to have a fully-formed idea that the designer could take and improve upon. 
 
-Neither of these choices was ideal. And this limited set of less-than-ideal choices led to a limited output of data viz.   
+As the team improved their ggplot skills, they realized that it might be possible to produce more than just exploratory data visualizations. Could they create production-ready charts in R that could go straight onto the BBC website? In this chapter, I discuss the power of custom ggplot themes. I then go through the code in the `bbplot` package to learn how custom themes work. I wrap up the chapter by exploring the impact that bbplot had, not only on a technical level, but also as a catalyst for a larger culture change.
 
-That would all change when Stylianou, Guibourg, and their colleagues realized that R, the tool they had decided to learn for data analysis, could also do data visualization. As they began playing around with ggplot, they quickly saw its power. Guibourg said she found it "immediately addictive when I started working with ggplot to make charts." No longer limited by the BBC's inflexible internal tool, she found that ggplot was "completely flexible in a way that was just completely new to me." 
+## The Power of a Theme {-}
 
-The biggest change, though, came from not having to work with a designer. Not because the designers were bad (they weren't), but because ggplot allowed the BBC data journalists to explore different visualizations on their own. Working with a designer required the journalists to have a fully-formed idea that the designer could take and improve upon. Working in ggplot allowed BBC data journalists to explore different data viz ideas. 
+As Stylianou, Guibourg, and their colleagues realized, so much of the work involved in making a professional chart consists of small tweaks. What font should you use? Where should the legend go? Should axes have titles? Should charts have grid lines? These questions may seem small, but they have a big impact on the final product. 
 
-Clara Guibourg believes this freedom is what explains the addictive quality of ggplot. As she told me, "even before we got anywhere near having a production-ready chart, just trying things out, visualizing things for the first time" was completely captivating. Having learned the basics of ggplot, she saw that "you can make like the simplest chart with just a couple of lines of code." Being able to explore different types of visualization on her own led Clara and others to produce more  data viz than they had previously. 
+And these are the types of questions to which a custom theme can provide answers. Custom themes force everyone who uses them follows style guidelines and ensures that all data visualization is on brand. What’s more, when more experienced R users in an organization make a custom theme, other less experienced users can take advantage of their work to make sure their plots follow organizational style guidelines. Custom themes, as we’ll see below when we dive into the bbplot code, involve a set of code that makes a set of small tweaks to all plots. Rather than forcing everyone to copy the long code to tweak each plot they make, putting this code into a custom theme allows everyone to apply the theme with one line of code. 
 
-As the BBC data journalism team improved their ggplot skills, they realized that it might be possible produce for more than just exploratory data viz. They had learned to use R for data analysis and they were starting to use it for exploratory data visualization. Could they go all the way and create production-ready charts in R that could go straight onto the BBC website? 
 
-Stylianou, Guibourg, and their colleagues set about looking into what would be involved in creating production-ready charts from R. They realized that so much of this work involved small tweaks. What font should they use? Where should the legend go? Should axes have titles? Should charts have grid lines? These questions may seem small but they have a big impact. Having consistent answers to them is what enabled BBC designers to turn Excel mockups into high-quality data viz ready to go on the website. As the BBC data journalism team dug further into ggplot, they realized that they might be able to write code to make their data viz production-ready. They realized that, if making production-ready charts required asking question about fonts, legends, axes, and grid lines, ggplot had the answer. And the answer was to make a custom theme. 
+## Using bbplot to Style a Penguin Plot {-}
 
-## Enter bbplot {-}
+The bbplot package has two functions: `bbc_style()` and `finalise_plot()`. The latter deals with things like adding the BBC logo, saving plots in the correct dimensions, and other tasks done after the plot is complete (we’ll discuss it a bit later on). For now, let’s look at the `bbc_style()` function, which applies a custom ggplot theme to any plot, making all plots look consistent and follow BBC style guidelines.
 
-In 2018, Stylianou, Guibourg, and others at the BBC developed a package called `bbplot`. This package has two functions: `bbc_style()` and `finalise_plot()`. The latter deals with things like adding the BBC logo, saving plots in the correct dimensions, and other tasks done after the plot is complete (we'll discuss it a bit later on). For now, let's look at the `bbc_style()` function. This function applies a custom ggplot theme to any plot, making all plots look consistent and follow BBC style guidelines. 
+
+## Creating an Example Plot {-}
 
 To show how this function works, let's create a plot. We'll do so using the `palmerpenguins` package, which has data on penguins living on three islands in Antarctica. To give you a sense of what this data looks like, let's load the `palmerpenguins` and `tidyverse` packages.
 
@@ -51,7 +51,7 @@ We now have data that we can work with in an object called `penguins`. Here's wh
 penguins
 ```
 
-To get our data in a more usable format, let's count how many penguins live on each island. We do this with the `count()` function from the `dplyr` package (one of several packages that are loaded when we load the `tidyverse`).
+To get our data in a more usable format, let’s count how many penguins live on each island. We do this with the `count()` function from the `dplyr` package (one of several packages that are loaded when we load the `tidyverse`). This gives us some simple data that we can use for plotting:
 
 ```{r echo = TRUE, include = FALSE}
 penguins %>%
@@ -72,41 +72,9 @@ penguins_summary <- penguins %>%
   count(island)
 ```
 
-Now that we've got some data to work with, we're ready to create a plot. Before showing what `bbplot` does, let's make a plot with ggplot defaults. Here is the code we'll use. We're using our `penguins_summary` data frame, putting the island on the x axis, the count of the number of penguins (n) on the y axis, and making each bar a different color with the fill aesthetic property. 
+Now that we’ve got some data to work with, we’re ready to create a plot. Before showing what `bbplot` does, let’s make our plot with the ggplot defaults. Here is the code we’ll use: 
 
 ```{r basic-penguins-plot, echo = TRUE, include = FALSE}
-ggplot(
-  data = penguins_summary,
-  aes(
-    x = island,
-    y = n,
-    fill = island
-  )
-) +
-  geom_col() +
-  labs(
-    title = "Number of Penguins",
-    subtitle = "Islands are in Antarctica",
-    caption = "Data from palmerpenguins package"
-  )
-```
-
-The resulting plot, seen in Figure \@ref(fig:basic-penguins-plot-plot), isn't the most aesthetically pleasing chart, but we'll be improving it soon!
-
-```{r results='asis'}
-print_nostarch_file_name()
-```
-
-```{r basic-penguins-plot-plot, ref.label = "basic-penguins-plot", echo = FALSE, fig.cap = "A chart with the default theme"}
-```
-
-```{r results='asis'}
-save_figure_for_nostarch(figure_height = 5)
-```
-
-We're going to use this plot multiple times (with some modifications each time). To simplify things, let's save it as an object called `penguins_plot`. 
-
-```{r echo = TRUE}
 penguins_plot <- ggplot(
   data = penguins_summary,
   aes(
@@ -123,9 +91,25 @@ penguins_plot <- ggplot(
   )
 ```
 
-### The `bbc_style()` function {-}  
+We use our `penguins_summary` data frame, putting the island on the x axis and the count of the number of penguins (n) on the y axis, and making each bar a different color with the fill aesthetic property. We’ll modify this plot multiple times, so to simplify this process, we save it as an object called penguins_plot. The resulting plot is seen in Figure \@ref(fig:basic-penguins-plot-plot).
 
-Now that we have a basic plot to work with, let's make it look like a BBC chart. To do this, we load the `bbplot` package. 
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
+```{r basic-penguins-plot-plot, echo = FALSE, fig.cap = "A chart with the default theme"}
+penguins_plot
+```
+
+```{r results='asis'}
+save_figure_for_nostarch(figure_height = 5)
+```
+
+It isn’t the most aesthetically pleasing chart. The gray background is ugly, the y axis title is hard to read because it’s angled, and the text size overall is quite small. But don’t worry: we’ll be improving it soon!
+
+### Applying the `bbc_style()` Function {-}  
+
+Now that we have a basic plot to work with, let's make it look like a BBC chart. To do this, we load the `bbplot` package:
 
 ```{r echo = TRUE}
 library(bbplot)
@@ -151,13 +135,11 @@ print_nostarch_file_name()
 save_figure_for_nostarch(figure_height = 5)
 ```
 
-Way different, right? Larger font size, legend on top, no axis titles, stripped down grid lines, and a white background – these are the major changes that the `bbc_style()` function makes. Let's look at them one by one. 
+Way different, right? Larger font size, legend on top, no axis titles, stripped down grid lines, and a white background. These are the major changes that the `bbc_style()` function makes. Let's look at them one by one. 
 
-Here's the code for the `bbc_style()` function (taken from the `bbplot` GitHub repository, found at https://github.com/bbc/bbplot). You may be a bit confused by the way some of the code is written. This is in part because it is the code used to create a function. The first line gives the function a name (`bbc_style`) and indicates that it is, in fact, a function definition. We'll discuss functions more in Chapter \@ref(functions).
+### Breaking Down the Custom Theme {-}
 
-You'll see that instead of loading the package `ggplot2` with the code `library(ggplot2)` and then using the `theme()` function, the code below uses `ggplot2::theme()`. This indicates that the `theme()` function comes from the `ggplot2` package. Writing code in this way is something that is done when making an R package, something we'll discuss in Chapter \@ref(custom-packages).
-
-I've made some minor formatting tweaks for readability. For example, you can see the comments in ALL CAPS, which show the category of modification that the section which follows makes. Fortunately for us, the code is organized nicely and allows us to see what each section does. 
+Here is the code for the bbc_style() function (taken from the `bbplot` GitHub repository at https://github.com/bbc/bbplot, with some minor tweaks for readability). The first line gives the function a name and indicates that what follows is, in fact, a function definition. We’ll discuss functions more in Chapter \@ref(functions).
 
 ```{r echo = TRUE}
 bbc_style <- function() {
@@ -243,17 +225,22 @@ bbc_style <- function() {
 }
 ```
 
-Nearly all of the code in the `bbc_style()` function exists within the `theme()` function from `ggplot2`. In the Chapter \@ref(data-viz-chapter), we saw how Cédric Scherer and Georgios Karamanis customized their plot by applying the `theme_light()` function. This a so-called complete theme, meaning you can call the function and will change the whole look-and-feel of your plot. After applying `theme_light()`, Scherer and Karamanis used the `theme()` function make additional tweaks. The `bbc_style()` theme does not use a complete theme to start. Instead, by jumping straight into the `theme()` function, they make tweaks to the ggplot defaults. As you can see, the `bbc_style()` function does a lot of tweaking. So, let's go through the changes it makes, section by section. 
+
+You'll see that instead of loading the package `ggplot2` with the code `library(ggplot2)` and then using the `theme()` function, the code below uses `ggplot2::theme()`. This indicates that the `theme()` function comes from the `ggplot2` package. Writing code in this way is something that is done when making an R package, something we'll discuss in Chapter \@ref(custom-packages).
+
+Nearly all of the code in the `bbc_style()` function exists within the `theme()` function from ggplot2. Remember from Chapter \@ref(data-viz-chapter) that `theme()` makes additional tweaks to an existing theme; it isn’t a complete theme like `theme_light()`, which will change the whole look-and-feel of your plot. In other words, by jumping straight into the `theme()` function, `bbc_style()` makes tweaks to the ggplot defaults. 
+
+As you can see, the `bbc_style()` function does a lot of tweaking. Let's go through the changes it makes, section by section. 
 
 ### Text Formatting {-}
 
-The first section of the code deals with text formatting. First, it defines a variable called "font" and assigns it the value "Helvetica." This allows later sections of code to simply write "font" rather than repeating "Helvetica" over and over again. And, if the team ever wanted to use a different font, they could simply change "Helvetica" to, say, "Comic Sans" and change all BBC plots (I suspect higher-ups at the BBC might not be on board). 
+The first code section formats the text. It defines a variable called `font` and assigns it the value `Helvetica.` This allows later sections to simply write font rather than repeating `Helvetica` over and over again. Also, if the BBC team ever wanted to use a different font, they could change `Helvetica` to, say, `Comic Sans` and update the font of all BBC plots (though I suspect higher-ups at the BBC might not be on board).
 
-```{r echo = TRUE}
+```{r echo = FALSE}
 font <- "Helvetica"
 ```
 
-Subsequent pieces of this section of the code make changes to the title, subtitle, and caption. The pattern used in code to make changes is as follows:
+Subsequent pieces of this section make changes to the title, subtitle, and caption using the following pattern:
 
 ```{r eval = FALSE, echo = TRUE}
 AREA_OF_CHART = ELEMENT_TYPE(
@@ -261,11 +248,9 @@ AREA_OF_CHART = ELEMENT_TYPE(
 )
 ```
 
-We begin by selecting an area of the chart (for example, `plot.title`). Then, we have to say what type of element it is. The options are `element_text()`, `element_line()`, `element_rect()`, and `element_blank()`. We'll deal with the other three later on. For now, we're working with `element_text()` to handle formatting of the title, subtitle, and caption since they're all text elements. Within the element type, we give values to properties. This can be, say, setting the font family (the property) to Helvetica (the value).
+We begin by selecting an area of the chart (for example, `plot.title`). Then, we say what type of element it is: `element_text()`, `element_line()`, `element_rect()`, or `element_blank()`. For now, we’re working with `element_text()` to handle formatting the title, subtitle, and caption. Within the element type, we give values to properties. This can be, say, setting the font family (the property) to Helvetica (the value).
 
-One of the main things that the `bbc_style()` function does is to bump up the text size. As Nassos put it to me, on a lot of plots made with ggplot, "font and the numbers are just so small." Increasing font size helps with legibility, especially when plots made using the `bbplot` package are viewed on smaller mobile devices. 
-
-The code first formats the title using Helvetica 28-point bold font in a nearly black color (that's the hex code #222222). The subtitle is 22-point Helvetica. Some spacing is added between the title and subtitle using the `margin()` function, which gives the spacing, in points, for the top (9), right (0), bottom (9), and left (0) sides. Finally, the caption is removed using the `element_blank()` function. This is done because the `finalise_plot()` function in the `bbplot` package adds elements, including a caption and the BBC logo to the bottom of plots. 
+One of the main things the `bbc_style()` function does is bump up the text size. Increasing font size helps with legibility, especially when plots made using the bbplot package are viewed on smaller mobile devices. The code first formats the title (with `plot.title`) using Helvetica 28-point bold font in a nearly black color (that’s the hex code #222222). The subtitle (using `plot.subtitle`) is 22-point Helvetica. Some spacing is added between the title and subtitle using the margin() function, which gives the spacing, in points, for the top (9), right (0), bottom (9), and left (0) sides. Finally, the caption (through the `plot.caption` argument) is removed using the `element_blank()` function. This is done because the `finalise_plot()` function in the `bbplot` package adds elements, including a caption and the BBC logo to the bottom of plots.
 
 ```{r penguins-plot-text-formatting, echo = TRUE, eval = FALSE}
 penguins_plot +
@@ -285,7 +270,7 @@ penguins_plot +
   )
 ```
 
-We can see these changes in Figure \@ref(fig:penguins-plot-text-formatting-plot) below.
+We can see these changes in Figure \@ref(fig:penguins-plot-text-formatting-plot).
 
 ```{r results='asis'}
 print_nostarch_file_name()
@@ -320,7 +305,7 @@ penguins_plot_text <- penguins_plot +
 
 ### Legend Formatting {-}
 
-Next, we deal with the legend. The code puts the legend on top of the plot, and left aligns the text within it. Then, it removes the legend background (this would only show up if the background color of the entire plot were different than the legend background), title, and legend key (this is a box that can show up around the boxes with the names of the islands). Finally, we make the legend text 18-point Helvetica with the same nearly black color. 
+Next, we deal with the legend, putting it on top of the plot and left-aligning the text within it. Then, we remove the legend background (which would show up only if the background color of the entire plot were different), title, and legend key (the borders on the red, green, and blue boxes that show the island names). Finally, we make the legend’s text 18-point Helvetica with the same nearly black color.
 
 ```{r penguins-plot-legend, echo = TRUE, eval = FALSE}
 penguins_plot_text +
@@ -371,7 +356,7 @@ penguins_plot_legend <- penguins_plot_text +
 
 ### Axis Formatting {-}
 
-Next up are the axes. The code first removes axis titles because, as Nassos told me, these tend to take up a lot of chart real estate and you can use the title and subtitle to make clear what the axes show. All text on axes becomes 18-point Helevetica nearly black. The text on the x axis (in our case, Biscoe, Dream, and Torgersen) gets a bit of spacing around it. And, finally, both axis ticks and axis lines are removed. 
+Next are the axes. The code first removes axis titles because, as Nassos told me, these tend to take up a lot of chart real estate, and you can use the title and subtitle to make it clear what the axes show. 
 
 ```{r penguins-plot-axes, echo = TRUE, eval = FALSE}
 penguins_plot_legend +
@@ -388,7 +373,8 @@ penguins_plot_legend +
   )
 ```
 
-We can see the changes to our axes in Figure \@ref(fig:penguins-plot-axes-plot).
+
+All text on axes becomes 18-point Helevetica and nearly black. The text on the x axis (in our case, Biscoe, Dream, and Torgersen) gets a bit of spacing around it. And, finally, we remove both axis ticks and axis lines. We can see the changes to our axes in Figure \@ref(fig:penguins-plot-axes-plot).
 
 ```{r results='asis'}
 print_nostarch_file_name()
@@ -420,7 +406,7 @@ penguins_plot_axes <- penguins_plot_legend +
 
 ### Grid Lines Formatting {-}
 
-Now that we've tweaked overall text formatting, the legend, and the axes, let's move onto grid lines. The approach here is fairly straightforward: remove all minor grid lines, remove major grid lines on the x axis, keeping only major grid lines on the y axis, but making them a light gray (using the #cbcbcb hex code). 
+Now that we’ve tweaked overall text formatting, the legend, and the axes, let’s move onto grid lines. The approach here is fairly straightforward: remove all minor grid lines and the major grid lines on the x axis, keeping only major grid lines on the y axis, but making them a light gray (using the #cbcbcb hex code).
 
 ```{r penguins-plot-gridlines, echo = TRUE, eval = FALSE}
 penguins_plot_axes +
@@ -457,7 +443,7 @@ penguins_plot_grid_lines <- penguins_plot_axes +
 
 ### Background Formatting {-}
 
-Of course, in the previous iteration of our plot, it still had a gray background. The `bbc_style()` function removes this with the following code.
+The previous iteration of our plot still had a gray background. The `bbc_style()` function removes this with the following code.
 
 ```{r penguins-plot-no-bg, echo = TRUE, eval = FALSE}
 penguins_plot_grid_lines +
@@ -479,11 +465,11 @@ print_nostarch_file_name()
 save_figure_for_nostarch(figure_height = 5)
 ```
 
+There we go! We’ve recreated the Penguin plot using the `bbc_style()` function. 
+
 ### Small Multiples Formatting {-}
 
-And there we go! We've now recreated the plot that we made above using the `bbc_style()` function. However, you may recall there is a bit more code in the `bbc_style()` function. This code deals with `strip.background` and `strip.text`. Both of these occur when we make small multiples charts. Small multiples is a common technique in data visualization, where, instead of making one chart that incorporates all of the available data, we break the chart into multiple charts in order to make the final results easier for the reader to comprehend. 
-
-Let's make an example small multiples chart to show what this looks like. I've used the code from the `bbc_style()` function to make Figure \@ref(fig:penguin-facetted-plot) below.
+However, you may recall that the function contains a bit more code, to modify strip.background and strip.text. These elements become relevant in small multiples charts like the one discussed in Chapter 2. Let’s turn our penguin chart into a small multiples chart to see these components of the BBC’s theme. I’ve used the code from the bbc_style() function, minus the sections that deal with small multiples, to make Figure \@ref(fig:penguin-facetted-plot).
 
 ```{r results='asis'}
 print_nostarch_file_name()
@@ -556,7 +542,9 @@ penguins %>%
 save_figure_for_nostarch(figure_height = 5)
 ```
 
-When we use the `facet_wrap()` function, we are left with one chart per island. But note that, by default, the text above each chart is noticeably smaller than the rest of the chart. And the gray background behind the text stands out when we have removed the gray background from other parts of the chart. 
+When we use the `facet_wrap()` function, to make a small multiples chart, we are left with one chart per island. But note that, by default, the text above each chart is noticeably smaller than the rest of the chart. And the gray background behind the text stands out when we have removed the gray background from other parts of the chart. The consistency we’ve worked toward is now gone, with small text that is out of proportion to the other text in the chart and a gray background that sticks out like a sore thumb in a chart with an all white background. 
+
+I’ve saved the code used to make Figure \@ref(fig:penguin-facetted-plot) as an object, `penguins_plot_weight.` We now use this object in order to show how to change the text that shows up above each small multiples chart (called the *strip* in ggplot): 
 
 ```{r}
 penguins_plot_weight <- penguins %>%
@@ -621,8 +609,6 @@ penguins_plot_weight <- penguins %>%
   )
 ```
 
-I've saved the code used to make Figure \@ref(fig:penguin-facetted-plot) as an object (`penguins_plot_weight`). We now use this object in order to show how to change the text that shows up above each small multiples chart (in ggplot this text is called the "strip"). We remove the background (or, more accurately, make it white) and make the text larger, bold, and left aligned (using `hjust = 0`). (I did have to make the text size slightly smaller to fit in the book and added code to make it bold, something done in the chart on carbon impact of food chart, though not seen in the `bbc_style()` code.) 
-
 ```{r penguins-plot-facetted-bbc, echo = TRUE, eval = FALSE}
 penguins_plot_weight +
   theme(
@@ -631,7 +617,7 @@ penguins_plot_weight +
   )
 ```
 
-The result shows up in Figure \@ref(fig:penguins-plot-facetted-bbc-plot).
+We remove the background (or, more accurately, color it white). Then we make the text larger, bold, and left aligned using `hjust = 0`. I did have to make the text size slightly smaller to fit in the book and added code to make it bold. You can see the result in Figure \@ref(fig: penguins-plot-facetted-bbc-plot).
 
 ```{r results='asis'}
 print_nostarch_file_name()
@@ -648,28 +634,18 @@ If you take a look at any chart on the BBC site, you'll see how similar it is to
 
 ### What About Colors? {-}
 
-You might be thinking: wait, what about the colors? Doesn't the theme change that? It's a common point of confusion. If we read the documentation for the `theme()` function, though, it becomes clearer why this is the case:
+You might be thinking: wait, what about the color of the bars? Doesn’t the theme change those? It’s a common point of confusion. If we read the documentation for the `theme()` function, though, it becomes clearer why this is the case:
 
 > Themes are a powerful way to customize the non-data components of your plots: i.e. titles, labels, fonts, background, gridlines, and legends.
 
-Color (or, technically, in the case of the bar charts we have made in this chapter, fill) is used in plots as an aesthetic property to show something about data. In our small multiples chart, for instance, fill is mapped to the island (Biscoe is salmon, Dream is green, and Torgersen is blue). As we saw in Chapter \@ref(data-viz-chapter), we can change fill using the various `scale_fill_` functions. It is because fill is tied to the data rather than being about the overall look-and-feel that ggplot themes do not, on their own, change this component of plots. 
+Color (or, technically, in the case of the bar charts we have made in this chapter, fill) is used in plots as an aesthetic property to show something about data. In our small multiples chart, for instance, fill is mapped to the island (Biscoe is salmon, Dream is green, and Torgersen is blue). As we saw in Chapter \@ref(data-viz-chapter), we can change fill using the various `scale_fill_` functions. It is because fill is tied to the data rather than being about the overall look-and-feel that ggplot themes do not, on their own, change this component of plots.
 
-## Code is the Catalyst for Culture Change {-}
+## In Conclusion: Code is the Catalyst for Culture Change {-}
 
-When Nassos Stylianou and Clara Guibourg started developing a custom theme for the BBC, they had one question: would they be able to create graphs in R that could go straight onto the BBC website? And, wouldn't you know, they succeeded! The creation of the `bbplot` package allowed them to make plots that had a consistent look-and-feel, followed BBC standards, and, most importantly, did not need help from a designer. 
+When Stylianou and Guibourg started developing a custom theme for the BBC, they had one question: would they be able to create graphs in R that could go directly onto the BBC website? And, wouldn’t you know, they succeeded! The `bbplot` package allowed them to make plots with a consistent look-and-feel that followed BBC standards and, most importantly, did not need help from a designer.
 
-Many of the principles of high-quality data visualization that we discussed in Chapter \@ref(data-viz-chapter) can be seen in this custom theme. In particular, the removal of extraneous elements (axis titles and grid lines, for instance) helps keep the focus on the data itself. And by creating a custom theme that only requires users to add a single line to their ggplot code, it became simple to get others on board. Telling users they could just append `bbc_style()` to their code and get a BBC-style plot was an eye-opener.
+You can see many of the principles of high-quality data visualization discussed in Chapter \@ref(data-viz-chapter) in this custom theme. In particular, the removal of extraneous elements (axis titles and grid lines, for instance) helps keep the focus on the data itself. And because applying the theme requires users to add only a single line to their ggplot code, it became simple to get others on board. Users had only to append `bbc_style()` to their code to produce a BBC-style plot.
 
-The development of the `bbplot` package would lead to significant changes at the BBC. It inspired Stylianou, Guibourg, and the other data journalists who created it to use ggplot more than before. Knowing that they had the flexibility of ggplot at their fingertips gave them license to explore. And knowing that they did not have to work with a designer to create production-ready graphics empowered them to make more and better graphics.
+Over time, others at the BBC noticed the data journalism team’s production-ready graphs and wanted to make their own. The team members set up R trainings for their colleagues and developed a “cookbook” (found at https://bbc.github.io/rcookbook/) that showed how to make various types of charts. Soon, the quality and quantity of BBC’s data visualization exploded. Stylianou told me, “I don’t think there’s been a day where someone at the BBC hasn’t used the package to produce a graphic.” 
 
-In addition to the `bbc_style()` function, the `bbplot` package also provides another function called `finalise_plot()` that adds a source at the bottom of the chart (recall how the `bbc_style()` function removed the caption), adds the BBC logo in the footer, and gives height, width, and file name options for saving the plot. These two functions combined allowed Nassos, Clara, and others to achieve their holy grail: creating production-ready graphs that could go straight from R to the BBC website. 
-
-The impact of `bbplot` would also come to be seen outside of the small team of data journalists that brought it to life. Others at the BBC saw how the data journalism team was now able to produce production-ready graphs and they wanted to do the same. This led the data journalism team to set up R trainings for their colleagues and to develop a "cookbook" (found at https://bbc.github.io/rcookbook/) that provided examples of how to make various types of charts. 
-
-These two resources led to a large increase in R users at the BBC. As Stylianou told me, they "spurred people a lot people outside of the data journalism team to take a real interest [in R]." Having `bbplot` made the value of R click for many people at the BBC. He continued:
-
-> There is no, "why am I doing this?" in their mind. It's is worth the pain [to learn R], because it is a pain at first. But seeing this graphic that a few months ago you would have had to do in this old process ... if you devote a bit of time each day, here are the five lines of code that you can run and you can [make a production-ready graphic] yourself.
-
-As so many more people at the BBC came to learn R, the quality and quantity of data visualization produced exploded. Stylianou told me, "I don't think there's been a day where someone at the BBC hasn't used the package to produce a graphic." The `bbplot` package came in particularly helpful during COVID. Being able to produce on-brand graphics on a quick turnaround was possible in a way it would not have been previously. 
-
-Reflecting on her experience, Guibourg attributes the successful transition to R at the BBC to its culture. As she put it, "I think that what helped me get started was that there was a really supportive environment internally at the BBC for learning." And, indeed, this same supportive culture that led Clara to organically explore what R was capable of was reinforced after she and the data journalism team released `bbplot`. The custom theme they developed enabled the creation of so many BBC graphics that otherwise never would have seen the light of day. A culture open to learning led the data journalism team to insights about the power of code. And this code then facilitated a culture change around how graphics are produced at the BBC. 
+Now that you’ve seen how custom ggplot themes work, I hope you might be inspired to make one of your own. As you’ve seen, custom themes are a set of small tweaks that you can apply to plots to give them a consistent look-and-feel. Developing a custom theme can take your data visualization from meh to wow. And, once you’ve written the code, it only takes one line of code to apply your custom theme. If a custom theme can transform the data visualization work of the BBC, imagine what it can do for you.
