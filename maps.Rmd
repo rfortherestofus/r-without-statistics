@@ -943,7 +943,7 @@ save_figure_for_nostarch()
 
 This is a simple example of the data wrangling and analysis you can perform on simple features data. The larger lesson is this: any skill you’ve developed for working with data in R will serve you well when working with geospatial data.
 
-### In Conclusion: R is a Map-Making Swiss Army Knife {-}
+## In Conclusion: R is a Map-Making Swiss Army Knife {-}
 
 In this short romp through the world of map-making in R, we discussed the basics of simple features geospatial data, reviewed how Abdoul Madjid applied this knowledge to make his map, discussed how to get your own geospatial data, and covered how to project it appropriately to make your own maps.
 
