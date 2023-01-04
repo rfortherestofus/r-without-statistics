@@ -1,4 +1,4 @@
-[Code etc](https://github.com/AbdoulMa/TidyTuesday/tree/main/2022_w1)
+[Code etc](https://github.com/AbdoulMa/TidyTuesday/tree/main/2022/2022_w1)
 
 ## Intro
 - You can make maps with R too
