@@ -484,7 +484,7 @@ The `scale_fill_discrete_sequential()` function from the `colorspace` package se
 Next, Madjid adds a title and caption using the `labs()` function. From there on, Madjid uses `theme_minimal()` (again, the same theme that Scherer and Karamanis used in Chapter \@ref(data-viz-chapter)) before making tweaks using the `theme()` function. These tweaks include: 
 
 - Setting the font and text color. 
-- Making the title and caption bold, adjusting their size, and the margins around them. 
+- Making the title and caption bold, adjusting their size, alignment, and the margins around them. 
 - Adjusting the size of the strip text (the *Jan 01*, *Jan 02*, and so on) and making it bold. 
 - Putting the legend on top of the maps and adding a bit of spacing around it.
 - Removing grid lines and the longitude and latitude lines.
