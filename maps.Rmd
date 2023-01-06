@@ -14,7 +14,7 @@ source("_common.R")
 
 When I first started learning R, I considered it a tool for working with numbers, not shapes, so I was surprised when I saw people using it to make maps. Abdoul Madjid, a developer, has been creating maps with R for several years. Recently, he used one to visualize rates of COVID-19 in the United States in 2021. 
 You might think you need specialized mapmaking software like ArcGIS to make maps, but this tool is expensive, and while Excel has added support for map-making in recent years, its features are limited (for example, you can’t use it to make maps based on street addresses). Even QGIS, an open source tool similar to ArcGIS, still requires learning new skills. 
- 
+
 Using R for map-making has benefits. It lets you perform all of your data manipulation tasks with one tool and apply the principles of high-quality data visualization discussed in Chapter \@ref(data-viz-chapter). For example, Madjid used R to obtain his data, analyze it, and make his COVID-19 map, which you can see in Figure \@ref(fig:madjid-covid-map).
 
 ```{r results='asis'}
@@ -239,23 +239,6 @@ wy_counties %>%
 save_figure_for_nostarch()
 ```
 
-To see how different a map that uses a different projection can look, check out another map of Wyoming counties, this time using what's known as the "Albers equal-area conic convenience projection." Whereas Wyoming looked perfectly horizontal in Figure \@ref(fig:wyoming-counties-map-wgs84) above, in Figure \@ref(fig:wyoming-counties-map-5070) below it appears to be tilted. 
-
-```{r results='asis'}
-print_nostarch_file_name()
-```
-
-```{r wyoming-counties-map-5070, fig.cap = "A map of Wyoming counties using the Albers equal-area conic convenience projection"}
-wy_counties %>%
-  st_transform(5070) %>%
-  ggplot() +
-  geom_sf()
-```
-
-```{r results='asis'}
-save_figure_for_nostarch()
-```
-
 If you’re curious about how to change projections when making maps of your own, fear not. You’ll see how to do this when we look at Abdoul Madjid’s map. And if you want to know how to choose appropriate projections for your maps, check out the conclusion of the chapter.
 
 ### The `geometry` Column {-}
@@ -463,7 +446,7 @@ Madjid’s map is giant, as it includes all 365 days. We’ll change the size of
 
 #### Generating the Basic Map {-}
 
-Now that we have six days of data, let’s make some maps. Abdoul Madjid’s map-making code has three main parts: generating the basic map, changing its colors, and tweaking the theme. We’ll revisit the three lines of code used to make our Wyoming maps, with some adornments to improve the quality of the visualization:  
+Now that we have six days of data, let’s make some maps. We’ll revisit the three lines of code used to make our Wyoming maps, with some adornments to improve the quality of the visualization:  
 
 ```{r basic-map-code, echo = TRUE, eval = FALSE}
 usa_states_geom_covid_six_days %>%
@@ -492,44 +475,22 @@ print_nostarch_file_name()
 save_figure_for_nostarch()
 ```
 
-#### Changing Colors and Beginning to Tweak the Legend {-}
+#### Applying Data Visualization Principles to the Map {-}
 
-Next, we’ll tweak the colors of the maps: 
+From here on out, all of the code that Abdoul Madjid uses is to improve the appearance of the maps. Many of the tweaks you will see below will feel familiar if you've read Chapter \@ref(data-viz-chapter). And that's a great benefit of making maps with ggplot: you can apply the same data visualization principles you learned when making charts to your maps as well. 
 
-```{r map-with-rocket-palette-code, echo = TRUE, eval = FALSE}
-usa_states_geom_covid_six_days %>%
-  ggplot() +
-  geom_sf(
-    aes(fill = incidence_rate),
-    size = .05,
-    color = "grey55"
-  ) +
-  facet_wrap(
-    vars(fancy_date),
-    strip.position = "bottom"
-  ) +
-  scale_fill_discrete_sequential(
-    palette = "Rocket",
-    name = "COVID-19 INCIDENCE RATE"
-  )
-```
+The `scale_fill_discrete_sequential()` function from the `colorspace` package sets the color scale. Madjid uses the "rocket" palette (the same palette that that Cédric Scherer and Georgios Karamanis used in Chapter \@ref(data-viz-chapter)) and changes the legend title to “COVID-19 INCIDENCE RATE.” Within the `guide_legend()` function, Madjid puts adjusts the position and alignment as well as text properties of the title. He also puts the colored squares in one row, adjusts their height and width, and tweaks the text properties of the labels  (the “>0,” “>5,” and so on).
 
-The scale_fill_discrete_sequential() function from the colorspace package sets the color scale. This function is quite similar to the scale_fill_viridis_d() function that Cédric Scherer and Georgios Karamanis used to make their drought data visualization in Chapter 2. Both visualizations use the “rocket” palette, with the fill scale going from a tan at the low end to a black at the high end. Madjid then used the name argument to set the title for the legend. By default, it would use the variable name (incidence_rate), but Madjid improves it by using “COVID-19 INCIDENCE RATE” instead. Our in-progress map can be seen in Figure \@ref(fig:map-with-rocket-palette) below.
+Next, Madjid adds a title and caption using the `labs()` function. From there on, Madjid uses `theme_minimal()` (again, the same theme that Scherer and Karamanis used in Chapter \@ref(data-viz-chapter)) before making tweaks using the `theme()` function. These tweaks include: 
 
-```{r results='asis'}
-print_nostarch_file_name()
-```
+- Setting the font and text color. 
+- Making the title and caption bold, adjusting their size, and the margins around them. 
+- Adjusting the size of the strip text (the *Jan 01*, *Jan 02*, and so on) and making it bold. 
+- Putting the legend on top of the maps and adding a bit of spacing around it.
+- Removing grid lines and the longitude and latitude lines.
+- Adding a bit of padding around the entire visualization and making the background a light gray.
 
-```{r map-with-rocket-palette, ref.label = "map-with-rocket-palette-code", fig.cap = "The COVID map with the rocket palette added"}
-```
-
-```{r results='asis'}
-save_figure_for_nostarch()
-```
-
-I’ve actually only shown a portion of the code that Abdoul Madjid used within the `scale_fill_discrete_sequential()` function. He also used the guide argument and the `guide_legend()` function to make tweaks to the legend. His code does the following: Puts the colored squares in one row (`nrow = 1`) rather than the default (all in a single column). Sets the height and width of each colored square (.3 centimeters for each). Sets the font family, size, and margin of both the labels (the “>0,” “>5,” and so on) with `label.theme` and the title (“COVID-19 INCIDENCE RATE”) with `title.theme`. Puts the title on top of the legend (`title.position = "top"`) and centers it (`title.hjust = .5`).
-
-```{r echo = TRUE, eval = FALSE}
+```{r final-map, echo = TRUE, eval = FALSE}
 usa_states_geom_covid_six_days %>%
   ggplot() +
   geom_sf(
@@ -545,6 +506,16 @@ usa_states_geom_covid_six_days %>%
     palette = "Rocket",
     name = "COVID-19 INCIDENCE RATE",
     guide = guide_legend(
+      title.position = "top",
+      title.hjust = .5,
+      title.theme = element_text(
+        family = "Times New Roman",
+        size = rel(9),
+        margin = margin(
+          b = .1,
+          unit = "cm"
+        )
+      ),
       nrow = 1,
       keyheight = unit(.3, "cm"),
       keywidth = unit(.3, "cm"),
@@ -555,112 +526,14 @@ usa_states_geom_covid_six_days %>%
           r = 5,
           unit = "pt"
         )
-      ),
-      title.theme = element_text(
-        family = "Times New Roman",
-        size = rel(9),
-        margin = margin(
-          b = .1,
-          unit = "cm"
-        )
-      ),
-      title.position = "top",
-      title.hjust = .5
+      )
     )
-  )
-```
-
-If we view our map at this point, it won’t actually look like much because the legend is currently quite large in relation to the maps. In order to change this, and to make some other tweaks to improve the look-and-feel of our maps, Madjid made multiple tweaks to the maps themselves. He did this using the `theme()` function from the `ggplot2` package. One benefit of making maps with ggplot is that all of the tweaks you use when making a regular plot can be carried over to your maps as well. Many of the tweaks within the `theme()` function below are similar to those seen in Chapter \@ref(data-viz-chapter). I’m saving the map as it is now as the object map_with_legend_tweaks so that we can add onto it below.
-
-```{r}
-map_with_legend_tweaks <- usa_states_geom_covid_six_days %>%
-  ggplot() +
-  geom_sf(
-    aes(fill = incidence_rate),
-    size = .05,
-    color = "transparent"
   ) +
-  facet_wrap(
-    vars(fancy_date),
-    strip.position = "bottom"
-  ) +
-  scale_fill_discrete_sequential(
-    palette = "Rocket",
-    name = "COVID-19 INCIDENCE RATE",
-    guide = guide_legend(
-      nrow = 1,
-      keyheight = unit(.3, "cm"),
-      keywidth = unit(.3, "cm"),
-      label.theme = element_text(
-        family = "Times New Roman",
-        size = rel(6),
-        margin = margin(
-          r = 5,
-          unit = "pt"
-        )
-      ),
-      title.theme = element_text(
-        family = "Times New Roman",
-        size = rel(9),
-        margin = margin(
-          b = .1,
-          unit = "cm"
-        )
-      ),
-      title.position = "top",
-      title.hjust = .5
-    )
-  )
-```
-
-#### Tweaking the Theme: The Legend {-}
-
-Let's review the changes that Abdoul Madjid made to his maps using ggplot themes. He began by applying `theme_minimal()` to his map. This removes the ugly gray background that ggplot applies to plots (and maps). He then applied additional tweaks using the `theme()` function. Let's start by looking at the tweaks to the legend. 
-
-While the code in the `scale_fill_discrete_sequential()` function customized individual elements *within* the legend (for example, the size of the colored squares), the code below customizes the legend as a whole. Madjid moved the legend to the top of the maps using `legend.position = "top"` and added a bit of spacing around the legend with `legend.box.spacing = unit(.25, "cm")`.
-
-```{r map-with-more-legend-tweaks-code, echo = TRUE, eval = FALSE}
-map_with_legend_tweaks +
-  theme_minimal() +
-  theme(
-    legend.position = "top",
-    legend.box.spacing = unit(.25, "cm")
-  )
-```
-
-We can see the result of these tweaks in Figure \@ref(fig:map-with-more-legend-tweaks) below.
-
-```{r results='asis'}
-print_nostarch_file_name()
-```
-
-```{r map-with-more-legend-tweaks, ref.label = "map-with-more-legend-tweaks-code", fig.cap = "The COVID map with additional tweaks to the legend"}
-```
-
-```{r results='asis'}
-save_figure_for_nostarch()
-```
-
-As I did above, I'm saving the map as it is at this point (in this case, to an object called `map_with_more_legend_tweaks`) to avoid having to reprint all of the code for each map (I do the same thing in the sections below).
-
-```{r}
-map_with_more_legend_tweaks <- map_with_legend_tweaks +
-  theme_minimal() +
-  theme(
-    legend.position = "top",
-    legend.box.spacing = unit(.25, "cm"))
-```
-
-#### Tweaking the Theme: The Title, Caption, and Strip Text {-}
-
-Next, Madjid made tweaks to the title and caption. Below, we added the title and caption using this `labs()` function. Then, we see how Madjid used the `theme()` function to tweak these elements as well as the label for each map ("Jan. 01", "Jan. 02", and so on). He makes all text use Times New Roman and makes it a nearly black color using the hex code #111111. This sets defaults for all text elements, but Madjid also made tweaks to individual elements as well. He set the size of the title to be 2.5 times that of other text elements (`size = rel(2.5)`), made it bold (`face = "bold"`) and centered (`hjust = 0.5`), and added 0.25 centimeter margins on the top and bottom (`hjust = 0.5, margin = margin(t = .25, b = .25, unit = "cm")`). He made the same tweaks to the caption, with the exception of adjusting the font size. And finally, Abdoul Madjid adjusted the size and bolding of the individual map labels using `strip.text`.
-
-```{r map-with-text-tweaks-code, echo = TRUE, eval = FALSE}
-map_with_more_legend_tweaks +
   labs(title = "2021 · A pandemic year",
        caption = "Incidence rates are calculated for 100,000 people in each state.
                   Inspired from a graphic in the DIE ZEIT newspaper of November 18, 2021.
                   Data from NY Times · Tidytuesday Week-1 2022 · Abdoul ISSA BIDA.") +
+  theme_minimal() +
   theme(
     text = element_text(family = "Times New Roman", 
                         color = "#111111"),
@@ -679,92 +552,11 @@ map_with_more_legend_tweaks +
                       b = .25, 
                       unit = "cm")),
     strip.text = element_text(size = rel(0.75), 
-                              face = "bold")
-  )
-```
-
-The resulting map shows up in Figure \@ref(fig:map-with-text-tweaks) below.
-
-```{r results='asis'}
-print_nostarch_file_name()
-```
-
-```{r map-with-text-tweaks, ref.label = "map-with-text-tweaks-code", fig.cap = "The COVID map with tweaks to the title, captions, and strip text"}
-```
-
-```{r results='asis'}
-save_figure_for_nostarch()
-```
-
-```{r}
-map_with_text_tweaks <- map_with_more_legend_tweaks +
-  labs(title = "2021 · A pandemic year",
-       caption = "Incidence rates are calculated for 100,000 people in each state.
-                  Inspired from a graphic in the DIE ZEIT newspaper of November 18, 2021.
-                  Data from NY Times · Tidytuesday Week-1 2022 · Abdoul ISSA BIDA.") +
-  theme(
-    text = element_text(family = "Times New Roman", 
-                        color = "#111111"),
-    plot.title = element_text(
-      size = rel(2.5),
-      face = "bold",
-      hjust = 0.5,
-      margin = margin(t = .25, 
-                      b = .25, 
-                      unit = "cm")
-    ),
-    plot.caption = element_text(
-      hjust = .5,
-      face = "bold",
-      margin = margin(t = .25, 
-                      b = .25, 
-                      unit = "cm")),
-    strip.text = element_text(size = rel(0.75), 
-                              face = "bold")
-  )
-```
-
-#### Tweaking the Theme: Grid Lines and Axis Text {-}
-
-Our map is looking good! Just a few tweaks left to get it close to Abdoul Madjid's original. By default, maps made with the `geom_sf()` function have axis text and lines to show longitude and latitude. Madjid removed them using the `element_blank()` function on `panel.grid` and `axis.text`.
-
-```{r map-with-grid-tweaks-code, echo = TRUE, eval = FALSE}
-map_with_text_tweaks +
-  theme(
+                              face = "bold"),
+    legend.position = "top",
+    legend.box.spacing = unit(.25, "cm"),
     panel.grid = element_blank(),
-    axis.text = element_blank()
-  )
-```
-
-The result, seen in Figure \@ref(fig:map-with-grid-tweaks), is a much nicer-looking set of maps. 
-
-```{r results='asis'}
-print_nostarch_file_name()
-```
-
-```{r map-with-grid-tweaks, ref.label = "map-with-grid-tweaks-code", fig.cap = "The COVID map without the grid lines and axis text"}
-```
-
-```{r results='asis'}
-save_figure_for_nostarch()
-```
-
-
-```{r}
-map_with_grid_and_axis_tweaks <- map_with_text_tweaks +
-  theme(
-    panel.grid = element_blank(),
-    axis.text = element_blank()
-  )
-```
-
-#### Tweaking the Theme: Plot Background and Margins {-}
-
-The last bit of tweaking that Abdoul Madjid did was to adjust the margins around the final set of maps and give the whole thing a light gray background. The former is done within `plot.margin` while the latter is done using `plot.background`. Setting the fill color of #e5e4e2 gives it that light gray background while the `color = NA` ensures there is no outline around the plot (without that code, it would have a black border).
-
-```{r map-with-background-tweaks-code, echo = TRUE, eval = FALSE}
-map_with_grid_and_axis_tweaks +
-  theme(
+    axis.text = element_blank(),
     plot.margin = margin(t = .25, 
                          r = .25, 
                          b = .25, 
@@ -773,15 +565,16 @@ map_with_grid_and_axis_tweaks +
     plot.background = element_rect(fill = "#e5e4e2", 
                                    color = NA)
   )
+
 ```
 
-And there we have it: Figure \@ref(fig:map-with-background-tweaks) shows our recreation of Abdoul Madjid's COVID-19 map.
+And there we have it: Figure \@ref(fig:final-map-map) shows our recreation of Abdoul Madjid’s COVID-19 map.
 
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
-```{r map-with-background-tweaks, ref.label = "map-with-background-tweaks-code", fig.cap = "The COVID map with tweaks to the margins and the background color"}
+```{r final-map-map, ref.label = "final-map", fig.cap = "Our recreation of Abdoul Madjid's map"}
 ```
 
 ```{r results='asis'}
