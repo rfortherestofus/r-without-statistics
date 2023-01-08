@@ -51,7 +51,6 @@ If you learn Rmd, easy to learn Quarto
 
 Small differences in syntax, but same idea
 
-
 # Conclusion
 
 RMarkdown is reproducibility
