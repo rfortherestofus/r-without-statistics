@@ -6,6 +6,7 @@
 
 - Contrast RMarkdown with typical workflow: in Rmd, data is fungible (add Jenny Bryan if you liked it meme) whereas with Excel/Word, data is what matters most (see also https://rmd4pharma.netlify.app/static/slides/01-rmd-anatomy.html#11)
 - Export to multiple formats (HTML, PDF, and Word most common but also others)
+- ![](https://cdn.myportfolio.com/45214904-6a61-4e23-98d6-b140f8654a40/5e4c9baf-f2de-4083-8a01-ecb556f56c21.png?h=b23c712b77fffa0f33142709a8a87245)
 
 ## Pieces of an RMarkdown document
 
@@ -63,4 +64,5 @@ RMarkdown is reproducibility
 
 > Um, so it helped me to be more creative and open with myself about things that I could do and make, um, that maybe before I would've just kind of noted them as a problem, but I wouldn't have had any kind of proactive thing to do about them. So I, I hope that it ends up being an empowering toolkit for a lot of people to be able to think to themselves like, okay, my organization needs this thing.
 
+Also helps you avoid copy-paste issues
 
