@@ -12,7 +12,7 @@ Sound familiar? If so, you're not alone. It's the workflow that many people use 
 
 You may be thinking: okay, but the multitool workflow can work for a one-time project, right? Maybe, but let's be honest: few projects are really one-time. Either you have to redo them the next month or you realize you forgot to include a few surveys in your original analysis or you realize you made a mistake in SPSS that means you need to redo steps one through six. 
 
-RMarkdown is the solution to this problem. RMarkdown combines data analysis, data visualization, and anything you can do with code (all the pieces you might do in SPSS and Excel in the multitool workflow above) alongside narrative text (the Word piece). Your combination code and text RMarkdown document can be exported to many formats, including Word, PDF, and HTML, so that you can share them with non-R users. 
+RMarkdown is the solution to this problem. It combines data analysis, data visualization, and anything you can do with code (all the pieces you might do in SPSS and Excel in the multitool workflow above) alongside narrative text (the Word piece). Your combination code and text RMarkdown document can be exported to many formats, including Word, PDF, and HTML, so that you can share them with non-R users. 
 
 By combining all of the pieces from the multitool workflow in a single tool, your workflow becomes way more efficient. Need to recreate that January report in February? Just rerun your code and you've got a new report, complete with the newest data. Need to add in a few surveys you missed at any point? Rerun your code and generate a new report. Need to fix an error in your analysis? Make the fix to your code, rerun it, and your corrected report is ready to go. 
 
@@ -93,20 +93,24 @@ You may be wondering what the `echo=FALSE` in the code chunk above is for. Code 
 
 In cases where you're using RMarkdown to generate a report for a non-R user, you likely want to hide the code, messages, and warnings but show output. You can do this in each code chunk, as above. There is also a special code chunk where we set global code chunk options. This code chunk has the `setup` and all global chunk options are set within it. The `echo = TRUE` option in the default content makes all code show up when we knit, unless this global chunk option is overwritten by an individual chunk option.
 
-```{r setup, include=FALSE}
+````markdown
+`r ''````{r pressure, echo=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+````
 
 In the document we've been working with, `echo` is set to TRUE at the global level. However, in the code chunk called `pressure`, this option is overwritten because of the `echo = FALSE`, which, as the text below it says, "prevent[s] printing of the R code that generated the plot."
 
 This may all feel very confusing so let me make it simple. In cases where you want to share results but hide code, messages, and warnings, my `setup` code chunk always looks like this:
 
- ```{r setup, include=FALSE}
+````markdown
+`r ''````{r pressure, echo=FALSE}
 knitr::opts_chunk$set(include = TRUE,
 echo = TRUE,
 message = FALSE,
 warning = FALSE)
 ```
+````
 
 Use that for your `setup` code chunk and you'll be all set.
 
