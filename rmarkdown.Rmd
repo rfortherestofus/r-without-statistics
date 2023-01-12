@@ -24,43 +24,103 @@ To create an RMarkdown document while working in RStudio, you go to File > New F
 
 [TODO: add screenshot]
 
-Hit OK and RStudio will create an RMarkdown document with some sample content. This document have several pieces, each of which we will discuss below. For now, though, let's skip straight to the finish line by doing what's called knitting our document. If we hit the knit button at the top of RStudio, our RMarkdown documents gets exported into whatever format we selected upon creating it.
+Hit OK and RStudio will create an RMarkdown document with some placeholder content. My first step is always to delete the content and replace it with my own. I'm going to create a report on penguins using data from the `palmerpenguins` package. Here is the content I'll add to my RMarkdown document.
 
-[TODO: Add knit screenshot]
+````{verbatim}
+---
+title: "Penguins Report"
+author: "David"
+date: "2023-01-12"
+output: word_document
+---
 
-If we made the output format Word, we now have a Word document that we can open. 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(include = TRUE, 
+                      echo = FALSE,
+                      message = FALSE,
+                      warning = FALSE)
+```
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+penguins <- read_csv("https://raw.githubusercontent.com/rfortherestofus/r-without-statistics/main/data/penguins-2007.csv")
+```
+
+
+# Introduction
+
+We are writing a report about the **Palmer Penguins**. These penguins are *really* amazing. There are three species:
+
+- Adelie
+- Gentoo
+- Chinstrap
+
+![](penguins.png)
+
+## Bill Length
+
+![](culmen_depth.png)
+
+We can make a histogram to see the distribution of bill lengths.
+
+```{r}
+penguins %>% 
+  ggplot(aes(x = bill_length_mm)) +
+  geom_histogram() +
+  theme_minimal()
+```
+
+
+
+```{r}
+average_bill_length <- penguins %>% 
+  summarize(avg_bill_length = mean(bill_length_mm,
+                                   na.rm = TRUE)) %>% 
+  pull(avg_bill_length)
+```
+
+The chart shows the distribution of bill lengths. The average bill length is `r average_bill_length` millimeters.
+````
+
+This document has several pieces, each of which we will discuss below. For now, though, let's skip straight to the finish line by doing what's called knitting (also known as rendering or, in more plain English, exporting) our document. If we hit the knit button at the top of RStudio, our RMarkdown document is converted into whatever format we selected upon creating it.
+
+[TODO: Add knit button screenshot]
+
+I set the output format to be Word so I now have a Word document that I can open. 
 
 [TODO: Add screenshot]
 
-The content in our RMarkdown document has now been converted into Word. There are some things that did not show up in RMarkdown but do in Word (the chart showing pressure and temperature, for example). This is because our RMarkdown document did not include this plot directly, but instead had the code needed to produce the plot, which is then produced when we export (or knit) our document. 
+There are some things that were not visible in RMarkdown but are in Word (the histogram, for example). This is because our RMarkdown document did not include this plot directly, but instead had the code needed to produce the plot, which is then produced when we knit our document. 
 
-If you use other tools to do your work, you are probably used to having everything visible in one place. If you write directly in a Word document, all of your text is visible right next to any charts that you add directly to this document. It may seem convoluted to have to constantly knit RMarkdown documents to Word, but this workflow is what allows us to update our reports at any point. This is known as reproducibility, and it is central to the value of RMarkdown. But before we discuss reproducibility in depth, let's make sure we understand how RMarkdown documents work.
+If you write directly in a Word document, all of your text is visible right next to any charts that you add directly to this document. It may seem convoluted to constantly knit RMarkdown documents to Word, but this workflow is what allows us to update our reports at any point with updated code or new data. This is known as reproducibility, and it is central to the value of RMarkdown. But before we discuss reproducibility in depth, let's make sure we understand how RMarkdown documents are structured.
 
 ## RMarkdown Documents Structure {-}
 
-In this document, as in all RMarkdown documents, there are three main pieces:
+All RMarkdown documents have three main pieces:
 
 1. YAML
 2. R code chunks
 3. Markdown text
 
-[TODO: add image]
+[TODO: add image showing each piece]
 
 Let's take these pieces one at a time.
 
 ### YAML {-}
 
-The YAML is the very first piece at the top of our RMarkdown document (the name YAML comes from the recursive acronym "YAML ain't markup language" whose meaning is not important for our purposes). With three dashes indicating its beginning and end, the text inside of the YAML contains metadata about the document. Remember how you were prompted to select a title, author, output format, and date? Those are now visible in the YAML. 
+The YAML is the very first piece at the top of our RMarkdown document (the name YAML comes from the recursive acronym "YAML ain't markup language" whose meaning is not important for our purposes). With three dashes indicating its beginning and end, the text inside of the YAML contains metadata about the RMarkdown document. My YAML, shown below, tell us the title, author, date, and the output format for when we knit.
 
-```{yaml}
+````{verbatim}
 ---
-title: "My Report"
-author: "David"
-date: "2023-01-11"
-output: html_document
+title: "Penguins Report"
+author: "David Keyes"
+date: "2023-01-12"
+output: word_document
 ---
-```
-
+````
 
 ### R Code Chunks {-}
 
@@ -68,22 +128,37 @@ Listen to the name RMarkdown and you get a sense of the other two pieces of an R
 
 If you've only ever worked in R script files (they use the extension .R), you'll need to reorient your thinking. In R script files everything is treated as code unless you comment it out by putting a # in front of it. In the code below, the first line is a comment while the second line is code.
 
-```{r}
-# Load the tidyverse
-library(tidyverse)
+```{r eval = FALSE}
+# Import our data
+data <- read_csv("data.csv")
 ```
 
-In RMarkdown, the situation is reversed. After the YAML, everything is treated as text unless we specify otherwise. And we do this specifying by creating what are known as code chunks. These start with three back ticks, followed by the lower case letter r surrounded by curly brackets (code chunks sometimes have names, given in the word that follows the r). Three back ticks indicate the end of the code chunk. Working in RStudio, code chunks have a light gray background. 
+In RMarkdown, the situation is reversed. After the YAML, everything is treated as text unless we specify otherwise. And we do this specifying by creating what are known as code chunks. These start with three back ticks, followed by the lower case letter r surrounded by curly brackets. Three back ticks indicate the end of the code chunk. 
+
+````{verbatim}
+```{r}
+library(tidyverse)
+```
+````
+
+Working in RStudio, code chunks have a light gray background. 
 
 [TODO: add image]
 
-Anything between the beginning and end of the code chunk is treated as R code. In the default content we get when we create a new RMarkdown document, let's look at a sample code chunk. This code chunk, which is named `pressure`, has code to make a plot of the object called `pressure`.  
+Anything between the beginning and end of the code chunk is treated as R code. The code in this code chunk will be run when we knit our document, giving us a histogram in our Word document.
 
-````markdown
-`r ''````{r pressure, echo=FALSE}
-plot(pressure)
+````{verbatim}
+```{r}
+penguins %>% 
+  ggplot(aes(x = bill_length_mm)) +
+  geom_histogram() +
+  theme_minimal()
 ```
 ````
+
+#### Code Chunk Options
+
+TODO: Adjust this section
 
 You may be wondering what the `echo=FALSE` in the code chunk above is for. Code chunks have options, which determine what happens when we knit our document. The `echo` option determines whether the code itself will show up in our Word, HTML, or PDF document when we knit. Other common options are:
 
@@ -93,8 +168,8 @@ You may be wondering what the `echo=FALSE` in the code chunk above is for. Code 
 
 In cases where you're using RMarkdown to generate a report for a non-R user, you likely want to hide the code, messages, and warnings but show output. You can do this in each code chunk, as above. There is also a special code chunk where we set global code chunk options. This code chunk has the `setup` and all global chunk options are set within it. The `echo = TRUE` option in the default content makes all code show up when we knit, unless this global chunk option is overwritten by an individual chunk option.
 
-````markdown
-`r ''````{r pressure, echo=FALSE}
+````{verbatim echo = TRUE}
+```{r pressure, echo=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 ````
@@ -103,9 +178,9 @@ In the document we've been working with, `echo` is set to TRUE at the global lev
 
 This may all feel very confusing so let me make it simple. In cases where you want to share results but hide code, messages, and warnings, my `setup` code chunk always looks like this:
 
-````markdown
-`r ''````{r pressure, echo=FALSE}
-knitr::opts_chunk$set(include = TRUE,
+````{verbatim}
+```{r pressure, echo=FALSE}
+knitr::opts_chunk$set(include = TRUE, 
 echo = TRUE,
 message = FALSE,
 warning = FALSE)
@@ -116,7 +191,27 @@ Use that for your `setup` code chunk and you'll be all set.
 
 ### Markdown Text {-}
 
-We've discussed the R portion of RMarkdown. Let's now discuss markdown. Markdown is a way to write using only plain text. If you look at the text sections in the default content of the RMarkdown document, you see
+We've discussed the R portion of RMarkdown. Let's now discuss markdown. Markdown is a way to write using only plain text. If you look at the text sections (they have a plain white background) in our RMarkdown document, you can see how markdown is converted into what we see in our Word document after knitting. 
+
+The text `# Introduction` in RMarkdown gets converted into a Heading 1 while `## Bill Length` becomes a Heading 2. You can go all the way down to Heading 6 by using six hashes. Working in RStudio headers are easy to find because they show up in blue.
+
+Text without anything before it becomes body text in Word. If you want to make words italics, add single asterisks around them (*really*). To make them bold, use double asterisks (**Palmer Penguins**).
+
+You can make lists by placing a dash at the beginning of a line and adding your text after it.
+
+````{verbatim echo = TRUE}
+- Adelie
+- Gentoo
+- Chinstrap
+````
+
+To make ordered lists you'd do the same but replacing the dashes with numbers. You can either put increasing numbers or, as I've done below, just keep repeating 1. On knitting, the numbers will be converted to 1, 2, 3, and so on.
+
+````{verbatim echo = TRUE}
+1. Adelie
+1. Gentoo
+1. Chinstrap
+````
 
 If you've never used markdown before, let me explain the why
 
