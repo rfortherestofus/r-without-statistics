@@ -213,9 +213,25 @@ To make ordered lists you'd do the same but replacing the dashes with numbers. Y
 1. Chinstrap
 ````
 
-If you've never used markdown before, let me explain the why
+You may be thinking at this point: why do I need to learn a new way to write? Hitting the B button for bold has worked just fine. There are two answers to this question. 
+
+The first answer is technical: R cannot hit the B button for you to make text bold in the process of knitting. If you want your knitted Word document to have bold text, you need a way to tell R that in the RMarkdown document itself. RMarkdown documents are plain text so we need a way *in plain text* to make knitted text bold. That's what markdown provides.
+
+The second answer to the question of why you need to use markdown is more conceptual: If we want to switch from a multitool workflow to a single, reproducible RMarkdown-based workflow, we need a way to remove all manual actions from the process. If you want to be able to create an RMarkdown document in January that you rerun in February to generate a new report, this process needs to happen without human involvement. It may feel like a bit of a hassle to have to learn markdown, but it opens up all sorts of possibilities.
 
 ### Inline R Code {-}
+
+I told you there were three main parts of an RMarkdown document (YAML, code chunks, and markdown text). There's one smaller piece called inline R code. To explain how it works, let's again compare our RMarkdown document with the knitted Word document. Specifically, let's look at the very end of each.
+
+The last sentence of my RMarkdown document looks like this:
+
+````{verbatim}
+The average bill length is `r average_bill_length` millimeters.
+````
+
+But the last sentence of my Word document simply says, "The average bill length is 43.9219298." How did this happen?
+
+If you look back at the RMarkdown document, you'll see the text `r average_bill_length`. 
 
 ## Example of Re-Running Code with New Data {-}
 
