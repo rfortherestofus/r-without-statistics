@@ -24,7 +24,7 @@ To create an RMarkdown document while working in RStudio, you go to File > New F
 
 [TODO: add screenshot]
 
-Hit OK and RStudio will create an RMarkdown document with some placeholder content. My first step is always to delete the content and replace it with my own. I'm going to create a report on penguins using data from the `palmerpenguins` package. Here is the content I'll add to my RMarkdown document.
+Hit OK and RStudio will create an RMarkdown document with some placeholder content. My first step is always to delete the content and replace it with my own. I'm going to create a report on penguins using data from the `palmerpenguins` package (for reasons that will become clear later, I've broken it into pieces by year; for now we're just using 2007 data). Here is the content I'll add to my RMarkdown document.
 
 ````{verbatim}
 ---
@@ -231,9 +231,36 @@ The average bill length is `r average_bill_length` millimeters.
 
 But the last sentence of my Word document simply says, "The average bill length is 43.9219298." How did this happen?
 
-If you look back at the RMarkdown document, you'll see the text `r average_bill_length`. 
+If you look back at the RMarkdown document, you'll see the text `knitr::inline_expr("average_bill_length")`. This is inline R code. Inline R code, as the name implies, allows us to use little bits of R code within markdown text. To create inline R code, you add a backtick and the lower case letter r. Your R code goes next, followed by a back tick at the end. In my inline R code, I'm telling R to print the value of the variable `average_bill_length`. If you're wondering where the variable comes from, take a look at the code chunk above the inline R code.
+
+````{verbatim}
+```{r}
+average_bill_length <- penguins %>% 
+  summarize(avg_bill_length = mean(bill_length_mm,
+                                   na.rm = TRUE)) %>% 
+  pull(avg_bill_length)
+```
+````
+
+ In that code, I'm calculating the average bill length and saving it as `average_bill_length`. Having created this variable, I can then use it in my inline R code.
+ 
+ The benefit of inline R code is that you avoid having to copy and paste in the value of the average bill length. Copying and pasting is both error-prone so using inline R code gets us around these issues. Just as important, using inline R code makes it possible to automatically calculate values on the fly whenever we re-knit our RMarkdown document. To show you how this works, let's make a new report using new data.
 
 ## Example of Re-Running Code with New Data {-}
+
+The report that we've been working with up to this point had data from 2007. To show where RMarkdown really shines, let's create a new report using 2008 data. To do this, I only need to change one line. I go from this:
+
+```{r eval = FALSE}
+penguins <- read_csv("https://raw.githubusercontent.com/rfortherestofus/r-without-statistics/main/data/penguins-2007.csv")
+```
+
+To this:
+
+```{r eval = FALSE}
+penguins <- read_csv("https://raw.githubusercontent.com/rfortherestofus/r-without-statistics/main/data/penguins-2008.csv")
+```
+
+Now that I've switched `penguins-2007.csv` to `penguins-2008.csv`, I can re-knit my report. When I do so, everything runs and I get a new Word document, complete with updated results. The histogram is based on 2008 data, as is the average bill length of 43.5412281. These are updated automatically because I've written code to generate them at any point. As long as the data has the same structure, we can regenerate a report and get the most up-to-date results with just a click of the knit button. 
 
 ### Best Practices {-}
 
