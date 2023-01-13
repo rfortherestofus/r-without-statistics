@@ -303,9 +303,9 @@ usa_states_geom <- usa_sf() %>%
   st_transform(us_laea_proj)
 ```
 
-The `usa_sf()` function from the `albersausa` package gives us simple features data for all US states (and, conveniently, places Alaska and Hawaii in locations, and at a scale, that make them easy to see). This data includes multiple variables, but we need only the state names, so we keep the name variable only.
+The `usa_sf()` function from the `albersusa` package gives us simple features data for all US states (and, conveniently, places Alaska and Hawaii in locations, and at a scale, that make them easy to see). This data includes multiple variables, but we need only the state names, so we keep the name variable only.
 
-We then used the `st_transform()` function from the `sf` package to change the coordinate reference system. The one used here comes from the `us_laea_proj` object, from the `alberusa` package. Remember the A*lbers equal-area conic convenience projection* we used to change the appearance of our Wyoming counties map? This is the same projection. 
+We then used the `st_transform()` function from the `sf` package to change the coordinate reference system. The one used here comes from the `us_laea_proj` object, from the `albersusa` package. Remember the *Albers equal-area conic convenience projection* we used to change the appearance of our Wyoming counties map? This is the same projection. 
 
 ### Calculating Daily COVID Cases {-}
 
