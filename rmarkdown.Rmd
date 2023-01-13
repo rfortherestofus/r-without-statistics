@@ -335,7 +335,7 @@ In 2022, a new publishing tool very similar to RMarkdown was released. Known as 
 
 As I write this book, Quarto is starting to gain more popularity. Over time, I suspect it will likely replace RMarkdown. But RMarkdown will never go away completely (its developers have made this promise). And, just as importantly, the concepts that you've learned about in this chapter apply to RMarkdown and to Quarto. Quarto documents have a YAML, code chunks, and markdown text. You can export Quarto documents to HTML, PDF, and Word documents. There are some minor differences in syntax between RMarkdown and Quarto documents, but if you know how to use RMarkdown you will be able to easily pick up Quarto as well.
 
-## Conclusion {-}
+## In Conclusion: RMarkdown Opens up All Sorts of Possibilities {-}
 
 We started this chapter with the example of a report that needs to be regenerated monthly. Hopefully the rest of the chapter has convinced you that using RMarkdown is a better approach than the SPSS to Excel to Word dance that so many people use. The reason RMarkdown is a better approach is because it is reproducible. We can reproduce a report every month because we've used a tool that make this possible. 
 
