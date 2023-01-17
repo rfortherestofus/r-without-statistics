@@ -8,7 +8,7 @@ Imagine this scenario. It's January, you've collected some surveys, and now you'
 4. Use Excel to make some charts.
 5. Write your report in Word, copying in your charts from Excel along the way.
 
-Sound familiar? If so, you're not alone. It's the workflow that many people use when doing data analysis. But what happens when new surveys roll in and you have to redo your analysis in February? Yup, back through steps one through six. Same thing in March. And April. You get the idea.
+Sound familiar? If so, you're not alone. It's the workflow that many people use when doing data analysis. But what happens when new surveys roll in and you have to redo your analysis in February? Yup, back through steps one through five. Same thing in March. And April. You get the idea.
 
 You may be thinking: okay, but the multitool workflow can work for a one-time project, right? Maybe, but let's be honest: few projects are really one-time. Either you have to redo them the next month or you realize you forgot to include a few surveys in your original analysis or you realize you made a mistake in SPSS that means you need to redo steps one through six. 
 
@@ -163,7 +163,7 @@ penguins %>%
 
 The histogram can be seen in Figure \@ref(fig:simple-histogram) below.
 
-```{r simple-histogram fig.cap = "A simple histogram"}
+```{r simple-histogram, fig.cap = "A simple histogram"}
 penguins %>% 
   ggplot(aes(x = bill_length_mm)) +
   geom_histogram() +
@@ -271,19 +271,19 @@ average_bill_length <- penguins %>%
 
  In that code, I'm calculating the average bill length and saving it as `average_bill_length`. Having created this variable, I can then use it in my inline R code.
  
- The benefit of inline R code is that you avoid having to copy and paste in the value of the average bill length. Copying and pasting is both error-prone so using inline R code gets us around these issues. Just as important, using inline R code makes it possible to automatically calculate values on the fly whenever we re-knit our R Markdown document. To show you how this works, let's make a new report using new data.
+ The benefit of inline R code is that you avoid having to copy and paste in the value of the average bill length. Copying and pasting is error-prone so using inline R code gets us around these issues. Just as important, using inline R code makes it possible to automatically calculate values on the fly whenever we re-knit our R Markdown document. To show you how this works, let's make a new report using new data.
 
 ## Example of Re-Running Code with New Data {-}
 
 The report that we've been working with up to this point had data from 2007. To show where R Markdown really shines, let's create a new report using 2008 data. To do this, I only need to change one line. I go from this:
 
-```{r eval = FALSE}
+```{r eval = FALSE, echo = TRUE}
 penguins <- read_csv("https://raw.githubusercontent.com/rfortherestofus/r-without-statistics/main/data/penguins-2007.csv")
 ```
 
 To this:
 
-```{r eval = FALSE}
+```{r eval = FALSE, echo = TRUE}
 penguins <- read_csv("https://raw.githubusercontent.com/rfortherestofus/r-without-statistics/main/data/penguins-2008.csv")
 ```
 
@@ -297,9 +297,13 @@ The histogram is based on 2008 data, as is the average bill length of 43.5412281
 
 Now that we've discussed how R Markdown works, let's talk about how to use it well. 
 
-First, let's discuss the two different ways your can run code within an R Markdown document. The first is what we've discussed in this chapter: knitting the entire document. A second way is to run code chunks manually (also known as running code interactively). Hitting the little green play button at the top right of a code chunk will run its contents. And you can hit command/control (on Mac/Windows) + enter to run pieces of code, just like in an R script file. Running code interactively is a good way to test that pieces work before you knit the entire document. 
+First, let's discuss the two different ways your can run code within an R Markdown document. The first is what we've discussed in this chapter: knitting the entire document. A second way is to run code chunks manually (also known as interactively). Hitting the little green play button at the top right of a code chunk will run its contents. The down arrow next to it will run all code down to that point.
 
-The one downside to running code interactively is that you can sometimes make mistakes that lead your R Markdown document to be unknittable [TODO: change word]. That is because, in order to knit, an R Markdown document must have all code within it. If you are working interactively and, say, load data in a separate file, you will be unable to knit your R Markdown document. To keep things simple, keep all code within your R Markdown document.
+[TODO: add screenshot]
+
+And you can hit command/control (on Mac/Windows) + enter to run pieces of code, just like in an R script file. Running code interactively is a good way to test that pieces work before you knit the entire document. 
+
+The one downside to running code interactively is that you can sometimes make mistakes that make your R Markdown document fail to knit. That is because, in order to knit, an R Markdown document must have all code within it. If you are working interactively and, say, load data in a separate file, you will be unable to knit your R Markdown document. When working in R Markdown, always keep all code within a single document.
 
 Related, all code must be in the right order. Knitting an R Markdown document causes code to be from top to bottom. An R Markdown document that looks like this, for example, will give you an error if you try to knit it:
 
@@ -335,21 +339,25 @@ library(tidyverse)
 ```
 ````
 
-This happens because you are attempting to use `tidyverse` functions (`read_csv()` as well as various ggplot functions) before you load the `tidyverse` package. If you look back at the penguin report I made, it loaded the `tidyverse`, then imported data, then plotted. This R Markdown document can be knitted because everything is in the correct order. 
+This happens because you are attempting to use `tidyverse` functions (`read_csv()` as well as various ggplot functions) before you load the `tidyverse` package. 
 
-Alison Hill, one of the most prolific R Markdown educators, tells her students to "knit early and often." This practice makes it easier to isolate issues that make knitting fail. 
+[TODO: Add screenshot to show the issue]
+
+If you look back at the penguin report I made, it loaded the `tidyverse`, then imported data, then plotted. This R Markdown document can be knitted because everything is in the correct order. 
+
+Alison Hill, one of the most prolific R Markdown educators, tells her students to "knit early and often." This practice makes it easier to isolate issues that make knitting fail. TODO: Add more from Alison here or at least add more context to explain this point
 
 ## Quarto {-}
 
-In 2022, a new publishing tool very similar to R Markdown was released. Known as Quarto, this tool is designed to do what R Markdown has done for R and extend this to other languages (Python, Julia, and others). In addition to cross-language functionality, Quarto has a number of other features (see quarto.org to learn more).
+In 2022, a new publishing tool similar to R Markdown was released. Known as Quarto, this tool is designed to take what R Markdown has done for R and extend it to other languages (Python, Julia, and Observable JS). In addition to cross-language functionality, Quarto has a number of other features.
 
-As I write this book, Quarto is starting to gain more popularity. Over time, I suspect it will likely replace R Markdown. But R Markdown will never go away completely (its developers have made this promise). And, just as importantly, the concepts that you've learned about in this chapter apply to R Markdown and to Quarto. Quarto documents have a YAML, code chunks, and markdown text. You can export Quarto documents to HTML, PDF, and Word documents. There are some minor differences in syntax between R Markdown and Quarto documents, but if you know how to use R Markdown you will be able to easily pick up Quarto as well.
+As I write this book, Quarto is starting to gain more and more traction. Over time, I suspect it will likely replace R Markdown. But R Markdown will never go away completely (its developers have made this promise). And, just as importantly, the concepts that you've learned about in this chapter apply to R Markdown and to Quarto. Quarto documents have a YAML, code chunks, and markdown text. You can export Quarto documents to HTML, PDF, and Word documents. There are some minor differences in syntax between R Markdown and Quarto documents, but if you know how to use R Markdown you will be able to easily pick up Quarto as well. The documentation at quarto.org is a great place to get started with Quarto if you are so inclined.
 
 ## In Conclusion: R Markdown Opens up All Sorts of Possibilities {-}
 
-We started this chapter with the example of a report that needs to be regenerated monthly. Hopefully the rest of the chapter has convinced you that using R Markdown is a better approach than the SPSS to Excel to Word dance that so many people use. The reason R Markdown is a better approach is because it is reproducible. We can reproduce a report every month because we've used a tool that make this possible. 
+We started this chapter with the example of a report that needs to be regenerated monthly. Hopefully the rest of the chapter has convinced you that using R Markdown is a better approach than the SPSS to Excel to Word dance that so many people use. R Markdown better because it is reproducible. We can reproduce a report every month because we've used a tool that makes this possible. 
 
-Working with R Markdown require a mindset shift. In the multitool approach, you'd be devastated if you lost the Word document where you were writing your report. With R Markdown, it's not the knitted Word document that matters – it's the R Markdown document we care about. Or, as Jenny Bryan and Jim Hester put it: 
+Working with R Markdown requires a mindset shift. In the multitool approach, you'd be devastated if you lost the Word document where you were writing your report. With R Markdown, it's not the knitted Word document that matters – it's the R Markdown document we care about. Or, as Jenny Bryan and Jim Hester put it in meme form: 
 
 ![](https://rstats.wtf/img/if-you-liked-it-you-should-have-saved-the-source-for-it.jpg)
 
