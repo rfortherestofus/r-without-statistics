@@ -16,6 +16,8 @@ R Markdown is the solution to this problem. It combines data analysis, data visu
 
 By combining all of the pieces from the multitool workflow in a single tool, your workflow becomes way more efficient. Need to recreate that January report in February? Just rerun your code and you've got a new report, complete with the newest data. Need to add in a few surveys you missed at any point? Rerun your code and generate a new report. Need to fix an error in your analysis? Make the fix to your code, rerun it, and your corrected report is ready to go. 
 
+I interviewed Alison Hill to learn more about R Markdown from both a technical and conceptual perspective. Hill is currently Director of Knowledge, Product Strategy at Voltron Data, but previously worked at Posit (the company that makes the RStudio editor) doing all sorts of development and education work on R Markdown. Bits of her wisdom are sprinkled throughout, both in direct quotes and general knowledge about how R Markdown works.
+
 In this chapter, we'll begin by breaking down the pieces of R Markdown documents. We'll then talk about some potential pitfalls and best practices when using R Markdown. And we'll conclude with some reflections on the value of the R Markdown workflow.
 
 ## How R Markdown Works {-}
@@ -256,9 +258,7 @@ The last sentence of my R Markdown document looks like this:
 The average bill length is `r average_bill_length` millimeters.
 ````
 
-But the last sentence of my Word document simply says, "The average bill length is 43.9219298." How did this happen?
-
-If you look back at the R Markdown document, you'll see the text `knitr::inline_expr("average_bill_length")`. [TODO: make this work] This is inline R code. To create inline R code, you add a backtick and the lower case letter r. Your R code goes next, followed by a back tick at the end. In my inline R code, I'm telling R to print the value of the variable `average_bill_length`. If you're wondering where the variable comes from, take a look at the code chunk above the inline R code.
+But the last sentence of my Word document simply says, "The average bill length is 43.9219298." How did this happen? To create inline R code, you add a backtick and the lower case letter r. Your R code goes next, followed by a back tick at the end. In my inline R code, I'm telling R to print the value of the variable `average_bill_length`. If you're wondering where the variable comes from, take a look at the code chunk above the inline R code.
 
 ````{verbatim echo = TRUE}
 ```{r}
@@ -345,7 +345,9 @@ This happens because you are attempting to use `tidyverse` functions (`read_csv(
 
 If you look back at the penguin report I made, it loaded the `tidyverse`, then imported data, then plotted. This R Markdown document can be knitted because everything is in the correct order. 
 
-Alison Hill, one of the most prolific R Markdown educators, tells her students to "knit early and often." This practice makes it easier to isolate issues that make knitting fail. TODO: Add more from Alison here or at least add more context to explain this point
+Alison Hill, one of the most prolific R Markdown educators, tells her students to "knit early and often." This practice makes it easier to isolate issues that make knitting fail. Hill describes her typical R Markdown workflow as: 
+
+> [spending] 75% of my time working and iterating on a new document, on a new analysis with a new data set. And then 25% of my time I would knit to check [that the R Markdown document works].
 
 ## Quarto {-}
 
@@ -357,7 +359,7 @@ As I write this book, Quarto is starting to gain more and more traction. Over ti
 
 We started this chapter with the example of a report that needs to be regenerated monthly. Hopefully the rest of the chapter has convinced you that using R Markdown is a better approach than the SPSS to Excel to Word dance that so many people use. R Markdown better because it is reproducible. We can reproduce a report every month because we've used a tool that makes this possible. 
 
-Working with R Markdown requires a mindset shift. In the multitool approach, you'd be devastated if you lost the Word document where you were writing your report. With R Markdown, it's not the knitted Word document that matters – it's the R Markdown document we care about. Or, as Jenny Bryan and Jim Hester put it in meme form: 
+Working with R Markdown requires a mindset shift. In the multitool approach, you'd be devastated if you lost the Word document where you were writing your report. With R Markdown, it's not the knitted Word document that matters – it's the R Markdown document we care about. As Alison Hill puts it, "you preserve the source and you edit that and then you can render when you need to." Or, as Jenny Bryan and Jim Hester put it in meme form: 
 
 ![](https://rstats.wtf/img/if-you-liked-it-you-should-have-saved-the-source-for-it.jpg)
 
@@ -366,5 +368,7 @@ This mindset shift can take some getting used to, but, trust me, it's worth the 
 ![](https://cdn.myportfolio.com/45214904-6a61-4e23-98d6-b140f8654a40/4898fb61-98e9-4923-8725-6813d4de2d82.png?h=a96d7c4cfbf9bd5fb65a0740af2d2c79)
 
 Best of all, working with R Markdown makes it possible to do things in seconds that would have previously taken hours. In a world where making a single report requires three tools and five steps, you may be disinclined to spend energy on this task. But if you can generate reports on the fly with R Markdown, it opens up all sorts of possibilities. As Alison Hill puts it, "your ideas start to expand about what you can do and what you can make and what your job actually entails."
+
+Reflecting on her days as a research scientist, Hill says that being able to produce updated reports on demand is one of the greatest benefits of R Markdown. She'd often receive data over time. With R Markdown, she could write code in a way that worked with partial data (allowing her to avoid the last-minute rush common in a multitool workflow) and could be re-run at any time. As she told me, "I knew I could go ahead and start working on it before the data was final, final, final, because you never know when it's gonna be final."
 
 We've just scratched the surface of what R Markdown can do. The next chapter will show how you can use it to instantly generate hundreds of reports. Magic indeed!
