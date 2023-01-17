@@ -13,31 +13,31 @@ Make sure people keep browser open after call so video can finalize uploading
 
 # Bio
 
-Alison Hill is the Director of Knowledge at Voltron Data. Prior to this role, she worked in data science and education roles at IBM and RStudio and was a professor at Oregon Health and Science University. With a PhD in Developmental Psychology, Quantitative Methods and Evaluation from Vanderbilt University, Alison has long taken a keen interest in helping people use RMarkdown to make their work more efficient, more accurate, and more reproducible. 
+Alison Hill is the Director of Knowledge at Voltron Data. Prior to this role, she worked in data science and education roles at IBM and RStudio and was a professor at Oregon Health and Science University. With a PhD in Developmental Psychology, Quantitative Methods and Evaluation from Vanderbilt University, Alison has long taken a keen interest in helping people use R Markdown to make their work more efficient, more accurate, and more reproducible. 
 
 # Background
 
 ## When did you start using R? What switched for you when you did so?
 
-## How do you define RMarkdown?
+## How do you define R Markdown?
 
-## You, more than anyone I know, are really interested in RMarkdown. Why? 
+## You, more than anyone I know, are really interested in R Markdown. Why? 
 
-## RMarkdown is often referred to as a form of literate programming. What does literate programming mean and what is the value of it?  
+## R Markdown is often referred to as a form of literate programming. What does literate programming mean and what is the value of it?  
 
-## One critique I hear a lot is that learning R takes a long time. What makes it worth it? In particular, in what ways do you think RMarkdown makes it worth it?
+## One critique I hear a lot is that learning R takes a long time. What makes it worth it? In particular, in what ways do you think R Markdown makes it worth it?
 
-# RMarkdown
+# R Markdown
 
-This section is based on the [slides](https://rmd4pharma.netlify.app/static/slides/01-rmd-anatomy.html) from your RMarkdown for Pharma talk.
+This section is based on the [slides](https://rmd4pharma.netlify.app/static/slides/01-rmd-anatomy.html) from your R Markdown for Pharma talk.
 
 [Repo](https://github.com/apreshill/rmd4pharma/)
 
-## You talk about needing to change your mental model when working with RMarkdown. Explain this?
+## You talk about needing to change your mental model when working with R Markdown. Explain this?
 
 Taken from [slide 11](https://rmd4pharma.netlify.app/static/slides/01-rmd-anatomy.html#11)
 
-## Explain the pieces of an RMarkdown document. 
+## Explain the pieces of an R Markdown document. 
 
 We'll walk through [01-explore.Rmd](https://rstudio.cloud/spaces/94994/project/4104474)
 
@@ -63,16 +63,16 @@ This line uses inline R code:
 
 Explain what inline R code is, how it works here, and why it's useful.
 
-## When you're working in RMarkdown, how often do you knit your whole document vs running individual code chunks?
+## When you're working in R Markdown, how often do you knit your whole document vs running individual code chunks?
 
 ## You talk about knitting early and often. Why? 
 
-## Are there any other things people should understand about working with RMarkdown? 
+## Are there any other things people should understand about working with R Markdown? 
 
 # Wrap up
 
-## Quarto was recently announced as a next-generation scientific and technical publishing system. What is the relationship between Quarto and RMarkdown likely to be in your view?
+## Quarto was recently announced as a next-generation scientific and technical publishing system. What is the relationship between Quarto and R Markdown likely to be in your view?
 
-## Where can people learn more about RMarkdown if they want to get started with it? 
+## Where can people learn more about R Markdown if they want to get started with it? 
 
 ## And where can people learn more about your work?

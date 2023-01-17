@@ -33,7 +33,7 @@ Previously worked at NZ Ministry of Health, leading analytics team focused on CO
 
 ## You've said that early on, the response consisted of a massive number of R scripts. Give me a sense of the scope and what types of things those scripts were doing.
 
-## In addition to R, you used RMarkdown a lot. How so? And what benefits did it offer? 
+## In addition to R, you used R Markdown a lot. How so? And what benefits did it offer? 
 
 ## Can you give an example of an analysis that was run regularly? Explain what this would have looked like without R.
 

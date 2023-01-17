@@ -352,7 +352,7 @@ var _leaflet2 = _interopRequireDefault(_leaflet);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-// In RMarkdown's self-contained mode, we don't have a way to carry around the
+// In R Markdown's self-contained mode, we don't have a way to carry around the
 // images that Leaflet needs but doesn't load into the page. Instead, we'll use
 // the unpkg CDN.
 if (typeof _leaflet2["default"].Icon.Default.imagePath === "undefined") {

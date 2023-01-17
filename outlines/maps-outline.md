@@ -44,7 +44,7 @@ Nuts and bolts
 - Where to find geo data
 
 Conceptual
-- Use the tool you're already using (same as making tables in RMarkdown files) 
+- Use the tool you're already using (same as making tables in R Markdown files) 
 - But it's not just that you should use R because you're using it for other things. It's better than other tools.
 - You can do more flexible things than with Excel
 - You have the flexibility of ArcGIS without the cost

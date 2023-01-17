@@ -63,21 +63,21 @@ Chapter 4 will explore ways to make high-quality tables. Tables are often used, 
 
 Moving beyond individual design elements, the second section of the book will focus on ways to communicate results. 
 
-#### Chapter 5: Use RMarkdown Instead to Communicate Efficiently and Accurately
+#### Chapter 5: Use R Markdown Instead to Communicate Efficiently and Accurately
 
 Many people start using R as a direct replacement for other tools. But R can do more than simply run analyses that you might do in Excel, SPSS, or some other tool. 
 
-[One of R's unique differentiators is RMarkdown](https://rfortherestofus.com/2019/03/r-killer-feature-rmarkdown/). RMarkdown allows you to combine code and text. While this may not sound impressive, this combination allows you to automate reporting. Instead of having to, say, run analyses in SPSS, generate charts in Excel, and then write reports in Word, we can do all of our work in R — and rerun our code at any point to regenerate reports. 
+[One of R's unique differentiators is R Markdown](https://rfortherestofus.com/2019/03/r-killer-feature-rmarkdown/). R Markdown allows you to combine code and text. While this may not sound impressive, this combination allows you to automate reporting. Instead of having to, say, run analyses in SPSS, generate charts in Excel, and then write reports in Word, we can do all of our work in R — and rerun our code at any point to regenerate reports. 
 
-In this chapter, I'll interview [Alison Hill](https://www.apreshill.com/about/). Alison has written and spoken extensively about the range of things you can do with RMarkdown. We'll discuss the benefits of RMarkdown and some of the unique ways you can use it.
+In this chapter, I'll interview [Alison Hill](https://www.apreshill.com/about/). Alison has written and spoken extensively about the range of things you can do with R Markdown. We'll discuss the benefits of R Markdown and some of the unique ways you can use it.
 
-#### Chapter 6: Use RMarkdown to Instantly Generate Hundreds of Reports 
+#### Chapter 6: Use R Markdown to Instantly Generate Hundreds of Reports 
 
-RMarkdown is useful if you're producing a single report. It's especially useful when you're producing multiple reports. The process of parameterized reporting allows you to do this. In this chapter, I'll interview [Aaron Williams](https://twitter.com/awunderground), data scientist at the Urban Institute, about [how the prominent organization uses parameterized to create state-level reports](https://urban-institute.medium.com/iterated-fact-sheets-with-r-markdown-d685eb4eafce).
+R Markdown is useful if you're producing a single report. It's especially useful when you're producing multiple reports. The process of parameterized reporting allows you to do this. In this chapter, I'll interview [Aaron Williams](https://twitter.com/awunderground), data scientist at the Urban Institute, about [how the prominent organization uses parameterized to create state-level reports](https://urban-institute.medium.com/iterated-fact-sheets-with-r-markdown-d685eb4eafce).
 
-#### Chapter 7: Create Beautiful Presentations with RMarkdown
+#### Chapter 7: Create Beautiful Presentations with R Markdown
 
-The beauty of RMarkdown is that you can create one document and then export it to multiple formats. One format is presentations. In this chapter, I'll interview [Silvia Canelón](https://www.silviacanelon.com) about how to make slides using the `xaringan` package. Building on Silvia's 2020 talk [Sharing Your Work with xaringan](https://spcanelon.github.io/xaringan-basics-and-beyond/index.html), the interview will discuss how to make slides in R and how you can, with a few small tweaks, make a set of slides that follow your organization's branding guidelines.
+The beauty of R Markdown is that you can create one document and then export it to multiple formats. One format is presentations. In this chapter, I'll interview [Silvia Canelón](https://www.silviacanelon.com) about how to make slides using the `xaringan` package. Building on Silvia's 2020 talk [Sharing Your Work with xaringan](https://spcanelon.github.io/xaringan-basics-and-beyond/index.html), the interview will discuss how to make slides in R and how you can, with a few small tweaks, make a set of slides that follow your organization's branding guidelines.
 
 #### Chapter 8: Share Results Online
 
@@ -160,7 +160,7 @@ There are some competitive books on specific topics covered in R Without Statist
 
 - [Geocomputation with R](https://geocompr.robinlovelace.net) by Robin Lovelace, Jakub Nowosad, and Jannes Muenchow
 
-## RMarkdown
+## R Markdown
 
 - [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/) by Yihui Xie, J. J. Allaire, and Garrett Grolemund
 - [R Markdown Cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/) by Yihui Xie, Christophe Dervieux, Emily Riederer

@@ -14,7 +14,7 @@
 - [ ] Tables
 
 ### November
-- [ ] RMarkdown
+- [ ] R Markdown
 
 ### December
 - [ ] Presentations

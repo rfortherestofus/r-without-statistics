@@ -13,7 +13,7 @@ Tables
 	2. Don't just dump data into tables
 	3. If you look at news orgs, they have nicely designed tables
 	4. Sample principles of data viz apply to table design as well
-1. Why R is a great tool to make tables (reference RMarkdown chapter)
+1. Why R is a great tool to make tables (reference R Markdown chapter)
 	2. It's where you're already working
 	3. No copy paste errors
 	4. Word defaults are bad

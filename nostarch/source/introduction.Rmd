@@ -159,7 +159,7 @@ My own use of R is an example of this. I think of my work with R in three bucket
 knitr::include_graphics(here::here("assets/psc-sample.png"))
 ```
 
-**Communicate** by doing reporting with RMarkdown: moving away from the inefficient and error-prone workflow of using multiple tools to create reports by instead doing it all in the one tool that I think of as [R's killer feature](https://rfortherestofus.com/2019/03/r-killer-feature-rmarkdown/). 
+**Communicate** by doing reporting with R Markdown: moving away from the inefficient and error-prone workflow of using multiple tools to create reports by instead doing it all in the one tool that I think of as [R's killer feature](https://rfortherestofus.com/2019/03/r-killer-feature-rmarkdown/). 
 
 A typical workflow looks like this:
 

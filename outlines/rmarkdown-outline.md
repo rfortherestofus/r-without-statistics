@@ -2,20 +2,20 @@
 
 - Scenario where someone does survey and goes from SPSS > Excel > Word, but then you have to redo report every month
 
-# How RMarkdown Works
+# How R Markdown Works
 
-- Contrast RMarkdown with typical workflow: in Rmd, data is fungible (add Jenny Bryan if you liked it meme) whereas with Excel/Word, data is what matters most (see also https://rmd4pharma.netlify.app/static/slides/01-rmd-anatomy.html#11)
+- Contrast R Markdown with typical workflow: in Rmd, data is fungible (add Jenny Bryan if you liked it meme) whereas with Excel/Word, data is what matters most (see also https://rmd4pharma.netlify.app/static/slides/01-rmd-anatomy.html#11)
 - Export to multiple formats (HTML, PDF, and Word most common but also others)
 - ![](https://cdn.myportfolio.com/45214904-6a61-4e23-98d6-b140f8654a40/5e4c9baf-f2de-4083-8a01-ecb556f56c21.png?h=b23c712b77fffa0f33142709a8a87245)
 
-## Pieces of an RMarkdown document
+## Pieces of an R Markdown document
 
 ### YAML
 
 
 ### Text
 
-It's the markdown in RMarkdown
+It's the markdown in R Markdown
 
 - Regular text
 - Headers
@@ -54,7 +54,7 @@ Small differences in syntax, but same idea
 
 # Conclusion
 
-RMarkdown is reproducibility
+R Markdown is reproducibility
 
 > The whole point is that you preserve the source and you save the source and you, uh, you edit that and then you can Reinder when you need to. And that's that reproducibility. - Alison Hill interview
 

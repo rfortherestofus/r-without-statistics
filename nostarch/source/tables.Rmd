@@ -21,7 +21,7 @@ And since we're visualizing data, we should care about design. Need proof that g
 
 We saw in Chapter \@ref(data-viz-chapter) that a few simple but significant tweaks can drastically improve the quality of our graphs. In this chapter, we'll see that a little bit of work can go a long way toward improving our tables. 
 
-The good news for you is that R is a great tool for making high-quality tables. If you are writing reports in RMarkdown (which you can learn about in \@ref(rmarkdown-chapter)), you can write code that will generate a table when you export your document. Working with the same tool to generate tables alongside your text and data visualization means you don't have to copy and paste your data, running the risk of human error. 
+The good news for you is that R is a great tool for making high-quality tables. If you are writing reports in R Markdown (which you can learn about in \@ref(rmarkdown-chapter)), you can write code that will generate a table when you export your document. Working with the same tool to generate tables alongside your text and data visualization means you don't have to copy and paste your data, running the risk of human error. 
 
 Generating tables in Microsoft Word, the tool that many use to make tables, has other potential pitfalls. Claus Wilke found that his version of Word had 105 built-in table styles. Of those, around 80 percent violated some key principles of table design. Wilke writes: 
 
@@ -655,4 +655,4 @@ Add-on packages like `gtExtras` are common in the table-making landscape. If you
 
 No matter which package you use to make tables, it's essential to treat them as worthy of as much thought as data visualization (because, let me remind you, tables *are* data visualization). Good tables are well designed; they are not data dumps. And fortunately for us, R is well-suited to making well designed tables. The `gt` package, as we've repeatedly seen, has good defaults built in. Oftentimes, you don't need to change much to end up with high-quality tables. 
 
-And it's not just that we have good packages to make tables. R is a great tool for making tables because it's the tool you're already using to create your reports (especially if you're using RMarkdown, a tool we discuss in \@ref(rmarkdown-chapter)). What better than using just a few lines of code to make publication-ready tables? 
+And it's not just that we have good packages to make tables. R is a great tool for making tables because it's the tool you're already using to create your reports (especially if you're using R Markdown, a tool we discuss in \@ref(rmarkdown-chapter)). What better than using just a few lines of code to make publication-ready tables? 

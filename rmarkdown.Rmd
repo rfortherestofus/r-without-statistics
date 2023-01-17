@@ -1,4 +1,4 @@
-# Use RMarkdown to Communicate Accurately and Efficiently {#rmarkdown-chapter}
+# Use R Markdown to Communicate Accurately and Efficiently {#rmarkdown-chapter}
 
 Imagine this scenario. It's January, you've collected some surveys, and now you're ready to do your data analysis and write up your results. Your workflow looks something like this:
 
@@ -12,23 +12,23 @@ Sound familiar? If so, you're not alone. It's the workflow that many people use 
 
 You may be thinking: okay, but the multitool workflow can work for a one-time project, right? Maybe, but let's be honest: few projects are really one-time. Either you have to redo them the next month or you realize you forgot to include a few surveys in your original analysis or you realize you made a mistake in SPSS that means you need to redo steps one through six. 
 
-RMarkdown is the solution to this problem. It combines data analysis, data visualization, and anything you can do with code (all the pieces you might do in SPSS and Excel in the multitool workflow) alongside narrative text (the Word piece). Your combination code and text RMarkdown document can be exported to many formats, including Word, PDF, and HTML, so that you can share them with non-R users. 
+R Markdown is the solution to this problem. It combines data analysis, data visualization, and anything you can do with code (all the pieces you might do in SPSS and Excel in the multitool workflow) alongside narrative text (the Word piece). Your combination code and text R Markdown document can be exported to many formats, including Word, PDF, and HTML, so that you can share them with non-R users. 
 
 By combining all of the pieces from the multitool workflow in a single tool, your workflow becomes way more efficient. Need to recreate that January report in February? Just rerun your code and you've got a new report, complete with the newest data. Need to add in a few surveys you missed at any point? Rerun your code and generate a new report. Need to fix an error in your analysis? Make the fix to your code, rerun it, and your corrected report is ready to go. 
 
-In this chapter, we'll begin by breaking down the pieces of RMarkdown documents. We'll then talk about some potential pitfalls and best practices when using RMarkdown. And we'll conclude with some reflections on the value of the RMarkdown workflow.
+In this chapter, we'll begin by breaking down the pieces of R Markdown documents. We'll then talk about some potential pitfalls and best practices when using R Markdown. And we'll conclude with some reflections on the value of the R Markdown workflow.
 
-## How RMarkdown Works {-}
+## How R Markdown Works {-}
 
-To create an RMarkdown document while working in RStudio, you go to File > New File > RMarkdown. You can choose the title, author, and date as well as your default output format (HTML, PDF, or Word). All of these can be changed later. 
+To create an R Markdown document while working in RStudio, you go to File > New File > R Markdown. You can choose the title, author, and date as well as your default output format (HTML, PDF, or Word). All of these can be changed later. 
 
 [TODO: add screenshot]
 
-Hit OK and RStudio will create an RMarkdown document with some placeholder content. 
+Hit OK and RStudio will create an R Markdown document with some placeholder content. 
 
 [TODO: Add screenshot of placeholder content]
 
-My first step is always to delete the content and replace it with my own. I'm going to create a report on penguins using data from the `palmerpenguins` package (for reasons that will become clear later, I've broken it into pieces by year; for now we're just using 2007 data). Here is the content I'll add to my RMarkdown document.
+My first step is always to delete the content and replace it with my own. I'm going to create a report on penguins using data from the `palmerpenguins` package (for reasons that will become clear later, I've broken it into pieces by year; for now we're just using 2007 data). Here is the content I'll add to my R Markdown document.
 
 ````{verbatim}
 ---
@@ -88,7 +88,7 @@ average_bill_length <- penguins %>%
 The chart shows the distribution of bill lengths. The average bill length is `r average_bill_length` millimeters.
 ````
 
-This document has several pieces, each of which we will discuss below. For now, though, let's skip straight to the finish line by doing what's called knitting (also known as rendering or, in plain English, exporting) our document. If we hit the knit button at the top of RStudio, our RMarkdown document is converted into whatever format we selected upon creating it.
+This document has several pieces, each of which we will discuss below. For now, though, let's skip straight to the finish line by doing what's called knitting (also known as rendering or, in plain English, exporting) our document. If we hit the knit button at the top of RStudio, our R Markdown document is converted into whatever format we selected upon creating it.
 
 [TODO: Add knit button screenshot]
 
@@ -96,13 +96,13 @@ I set the output format to be Word (see the line at the top that says "`output_f
 
 [TODO: Add screenshot]
 
-There are some things that were not visible in RMarkdown but are in Word (the histogram, for example). This is because our RMarkdown document does not include this plot directly, but instead has the code needed to produce the plot, which is then produced when we knit our document. 
+There are some things that were not visible in R Markdown but are in Word (the histogram, for example). This is because our R Markdown document does not include this plot directly, but instead has the code needed to produce the plot, which is then produced when we knit our document. 
 
-It may seem convoluted to constantly knit RMarkdown documents to Word, but this workflow is what allows us to update our reports at any point with updated code or new data. This is known as reproducibility, and it is central to the value of RMarkdown. But before we discuss reproducibility in depth, let's make sure we understand how RMarkdown documents are structured.
+It may seem convoluted to constantly knit R Markdown documents to Word, but this workflow is what allows us to update our reports at any point with updated code or new data. This is known as reproducibility, and it is central to the value of R Markdown. But before we discuss reproducibility in depth, let's make sure we understand how R Markdown documents are structured.
 
-## RMarkdown Documents Structure {-}
+## R Markdown Documents Structure {-}
 
-All RMarkdown documents have three main pieces:
+All R Markdown documents have three main pieces:
 
 1. YAML
 2. R code chunks
@@ -116,7 +116,7 @@ Let's take these pieces one at a time.
 
 ### YAML {-}
 
-The YAML is the very first piece at the top of our RMarkdown document (the name YAML comes from the recursive acronym "YAML ain't markup language" whose meaning is not important for our purposes). With three dashes indicating its beginning and end, the text inside of the YAML contains metadata about the RMarkdown document. My YAML, shown below, tell us the title, author, date, and the output format for when we knit.
+The YAML is the very first piece at the top of our R Markdown document (the name YAML comes from the recursive acronym "YAML ain't markup language" whose meaning is not important for our purposes). With three dashes indicating its beginning and end, the text inside of the YAML contains metadata about the R Markdown document. My YAML, shown below, tell us the title, author, date, and the output format for when we knit.
 
 ````{verbatim}
 ---
@@ -129,7 +129,7 @@ output: word_document
 
 ### R Code Chunks {-}
 
-Listen to the name RMarkdown and you get a sense of the other two pieces of an RMarkdown document: R code and markdown text. Let's discuss the R code first.
+Listen to the name R Markdown and you get a sense of the other two pieces of an R Markdown document: R code and markdown text. Let's discuss the R code first.
 
 If you've only ever worked in R script files (they use the extension .R), you'll need to reorient your thinking. In R script files everything is treated as code unless you comment it out by putting a # in front of it. In the code below, the first line is a comment while the second line is code.
 
@@ -138,7 +138,7 @@ If you've only ever worked in R script files (they use the extension .R), you'll
 data <- read_csv("data.csv")
 ```
 
-In RMarkdown, the situation is reversed. After the YAML, everything is treated as text unless we specify otherwise. And we do this specifying by creating what are known as code chunks. These start with three back ticks, followed by the lower case letter r surrounded by curly brackets. Three back ticks indicate the end of the code chunk. 
+In R Markdown, the situation is reversed. After the YAML, everything is treated as text unless we specify otherwise. And we do this specifying by creating what are known as code chunks. These start with three back ticks, followed by the lower case letter r surrounded by curly brackets. Three back ticks indicate the end of the code chunk. 
 
 ````{verbatim}
 ```{r}
@@ -163,7 +163,7 @@ penguins %>%
 
 #### Code Chunk Options
 
-There is one special code chunk at the top of each RMarkdown document. It is known as the `setup` code chunk and it gives instructions for what happens when knitting a document. These instructions, more commonly known as code chunk options, determine what happens when we knit our document: 
+There is one special code chunk at the top of each R Markdown document. It is known as the `setup` code chunk and it gives instructions for what happens when knitting a document. These instructions, more commonly known as code chunk options, determine what happens when we knit our document: 
 
 `echo`: Do you want to show the code itself in our knitted document? 
 
@@ -177,7 +177,7 @@ TODO: Add screenshot
 
 TODO: Add screenshot
 
-This may all feel very confusing so let me make it simple. In cases where you're using RMarkdown to generate a report for a non-R user, you likely want to hide the code, messages, and warnings but show output. To do this, have your `setup` code chunk look like mine in the report I'm creating:
+This may all feel very confusing so let me make it simple. In cases where you're using R Markdown to generate a report for a non-R user, you likely want to hide the code, messages, and warnings but show output. To do this, have your `setup` code chunk look like mine in the report I'm creating:
 
 ````{verbatim}
 ```{r setup, include=FALSE}
@@ -202,9 +202,9 @@ penguins %>%
 
 ### Markdown Text {-}
 
-We've discussed the R portion of RMarkdown. Let's now discuss markdown. Markdown is a way to write using only plain text. If you look at the text sections (they have a plain white background) in our RMarkdown document, you can see how markdown is converted into what we see in our Word document after knitting. 
+We've discussed the R portion of R Markdown. Let's now discuss markdown. Markdown is a way to write using only plain text. If you look at the text sections (they have a plain white background) in our R Markdown document, you can see how markdown is converted into what we see in our Word document after knitting. 
 
-The text `# Introduction` in RMarkdown gets converted into a Heading 1 while `## Bill Length` becomes a Heading 2. 
+The text `# Introduction` in R Markdown gets converted into a Heading 1 while `## Bill Length` becomes a Heading 2. 
 
 [TODO: Add screenshot to show relationship between two]
 
@@ -234,13 +234,13 @@ To make ordered lists you'd do the same but replacing the dashes with numbers. Y
 
 [TODO: Add screenshot to show relationship between two]
 
-You may be thinking at this point: why do I need to learn a new way to write? Hitting the B button for bold has always worked just fine. The answer is that R cannot hit the B button for you to make text bold in the process of knitting. If you want your knitted Word document to have bold text, you need a way to tell R that in the RMarkdown document itself. RMarkdown documents are plain text so we need a way *in plain text* to make knitted text bold. If we want to switch from a multitool workflow to a single, reproducible RMarkdown-based workflow, we need a way to remove all manual actions from the process. It may feel like a bit of a hassle to have to learn markdown, but it opens up all sorts of possibilities.
+You may be thinking at this point: why do I need to learn a new way to write? Hitting the B button for bold has always worked just fine. The answer is that R cannot hit the B button for you to make text bold in the process of knitting. If you want your knitted Word document to have bold text, you need a way to tell R that in the R Markdown document itself. R Markdown documents are plain text so we need a way *in plain text* to make knitted text bold. If we want to switch from a multitool workflow to a single, reproducible R Markdown-based workflow, we need a way to remove all manual actions from the process. It may feel like a bit of a hassle to have to learn markdown, but it opens up all sorts of possibilities.
 
 ### Inline R Code {-}
 
-I told you there were three main parts of an RMarkdown document (YAML, code chunks, and markdown text). There's one smaller piece called inline R code. As the name implies, inline R code allows us to use little bits of R code within markdown text. To explain how it works, let's again compare our RMarkdown document with the knitted Word document. Specifically, let's look at the very end of each.
+I told you there were three main parts of an R Markdown document (YAML, code chunks, and markdown text). There's one smaller piece called inline R code. As the name implies, inline R code allows us to use little bits of R code within markdown text. To explain how it works, let's again compare our R Markdown document with the knitted Word document. Specifically, let's look at the very end of each.
 
-The last sentence of my RMarkdown document looks like this:
+The last sentence of my R Markdown document looks like this:
 
 ````{verbatim}
 The average bill length is `r average_bill_length` millimeters.
@@ -248,7 +248,7 @@ The average bill length is `r average_bill_length` millimeters.
 
 But the last sentence of my Word document simply says, "The average bill length is 43.9219298." How did this happen?
 
-If you look back at the RMarkdown document, you'll see the text `knitr::inline_expr("average_bill_length")`. [TODO: make this work] This is inline R code. To create inline R code, you add a backtick and the lower case letter r. Your R code goes next, followed by a back tick at the end. In my inline R code, I'm telling R to print the value of the variable `average_bill_length`. If you're wondering where the variable comes from, take a look at the code chunk above the inline R code.
+If you look back at the R Markdown document, you'll see the text `knitr::inline_expr("average_bill_length")`. [TODO: make this work] This is inline R code. To create inline R code, you add a backtick and the lower case letter r. Your R code goes next, followed by a back tick at the end. In my inline R code, I'm telling R to print the value of the variable `average_bill_length`. If you're wondering where the variable comes from, take a look at the code chunk above the inline R code.
 
 ````{verbatim}
 ```{r}
@@ -261,11 +261,11 @@ average_bill_length <- penguins %>%
 
  In that code, I'm calculating the average bill length and saving it as `average_bill_length`. Having created this variable, I can then use it in my inline R code.
  
- The benefit of inline R code is that you avoid having to copy and paste in the value of the average bill length. Copying and pasting is both error-prone so using inline R code gets us around these issues. Just as important, using inline R code makes it possible to automatically calculate values on the fly whenever we re-knit our RMarkdown document. To show you how this works, let's make a new report using new data.
+ The benefit of inline R code is that you avoid having to copy and paste in the value of the average bill length. Copying and pasting is both error-prone so using inline R code gets us around these issues. Just as important, using inline R code makes it possible to automatically calculate values on the fly whenever we re-knit our R Markdown document. To show you how this works, let's make a new report using new data.
 
 ## Example of Re-Running Code with New Data {-}
 
-The report that we've been working with up to this point had data from 2007. To show where RMarkdown really shines, let's create a new report using 2008 data. To do this, I only need to change one line. I go from this:
+The report that we've been working with up to this point had data from 2007. To show where R Markdown really shines, let's create a new report using 2008 data. To do this, I only need to change one line. I go from this:
 
 ```{r eval = FALSE}
 penguins <- read_csv("https://raw.githubusercontent.com/rfortherestofus/r-without-statistics/main/data/penguins-2007.csv")
@@ -283,15 +283,15 @@ Now that I've switched `penguins-2007.csv` to `penguins-2008.csv`, I can re-knit
 
 The histogram is based on 2008 data, as is the average bill length of 43.5412281. These are updated automatically because every time I hit knit, the code is rerun, regenerating plots and recalculating values. As long as the data has the same structure, an updated report is just a click of the knit button away. 
 
-### Best Practices for Working with RMarkdown {-}
+### Best Practices for Working with R Markdown {-}
 
-Now that we've discussed how RMarkdown works, let's talk about how to use it well. 
+Now that we've discussed how R Markdown works, let's talk about how to use it well. 
 
-First, let's discuss the two different ways your can run code within an RMarkdown document. The first is what we've discussed in this chapter: knitting the entire document. A second way is to run code chunks manually (also known as running code interactively). Hitting the little green play button at the top right of a code chunk will run its contents. And you can hit command/control (on Mac/Windows) + enter to run pieces of code, just like in an R script file. Running code interactively is a good way to test that pieces work before you knit the entire document. 
+First, let's discuss the two different ways your can run code within an R Markdown document. The first is what we've discussed in this chapter: knitting the entire document. A second way is to run code chunks manually (also known as running code interactively). Hitting the little green play button at the top right of a code chunk will run its contents. And you can hit command/control (on Mac/Windows) + enter to run pieces of code, just like in an R script file. Running code interactively is a good way to test that pieces work before you knit the entire document. 
 
-The one downside to running code interactively is that you can sometimes make mistakes that lead your RMarkdown document to be unknittable [TODO: change word]. That is because, in order to knit, an RMarkdown document must have all code within it. If you are working interactively and, say, load data in a separate file, you will be unable to knit your RMarkdown document. To keep things simple, keep all code within your RMarkdown document.
+The one downside to running code interactively is that you can sometimes make mistakes that lead your R Markdown document to be unknittable [TODO: change word]. That is because, in order to knit, an R Markdown document must have all code within it. If you are working interactively and, say, load data in a separate file, you will be unable to knit your R Markdown document. To keep things simple, keep all code within your R Markdown document.
 
-Related, all code must be in the right order. Knitting an RMarkdown document causes code to be from top to bottom. An RMarkdown document that looks like this, for example, will give you an error if you try to knit it:
+Related, all code must be in the right order. Knitting an R Markdown document causes code to be from top to bottom. An R Markdown document that looks like this, for example, will give you an error if you try to knit it:
 
 ````{verbatim}
 ---
@@ -325,21 +325,21 @@ library(tidyverse)
 ```
 ````
 
-This happens because you are attempting to use `tidyverse` functions (`read_csv()` as well as various ggplot functions) before you load the `tidyverse` package. If you look back at the penguin report I made, it loaded the `tidyverse`, then imported data, then plotted. This RMarkdown document can be knitted because everything is in the correct order. 
+This happens because you are attempting to use `tidyverse` functions (`read_csv()` as well as various ggplot functions) before you load the `tidyverse` package. If you look back at the penguin report I made, it loaded the `tidyverse`, then imported data, then plotted. This R Markdown document can be knitted because everything is in the correct order. 
 
-Alison Hill, one of the most prolific RMarkdown educators, tells her students to "knit early and often." This practice makes it easier to isolate issues that make knitting fail. 
+Alison Hill, one of the most prolific R Markdown educators, tells her students to "knit early and often." This practice makes it easier to isolate issues that make knitting fail. 
 
 ## Quarto {-}
 
-In 2022, a new publishing tool very similar to RMarkdown was released. Known as Quarto, this tool is designed to do what RMarkdown has done for R and extend this to other languages (Python, Julia, and others). In addition to cross-language functionality, Quarto has a number of other features (see quarto.org to learn more).
+In 2022, a new publishing tool very similar to R Markdown was released. Known as Quarto, this tool is designed to do what R Markdown has done for R and extend this to other languages (Python, Julia, and others). In addition to cross-language functionality, Quarto has a number of other features (see quarto.org to learn more).
 
-As I write this book, Quarto is starting to gain more popularity. Over time, I suspect it will likely replace RMarkdown. But RMarkdown will never go away completely (its developers have made this promise). And, just as importantly, the concepts that you've learned about in this chapter apply to RMarkdown and to Quarto. Quarto documents have a YAML, code chunks, and markdown text. You can export Quarto documents to HTML, PDF, and Word documents. There are some minor differences in syntax between RMarkdown and Quarto documents, but if you know how to use RMarkdown you will be able to easily pick up Quarto as well.
+As I write this book, Quarto is starting to gain more popularity. Over time, I suspect it will likely replace R Markdown. But R Markdown will never go away completely (its developers have made this promise). And, just as importantly, the concepts that you've learned about in this chapter apply to R Markdown and to Quarto. Quarto documents have a YAML, code chunks, and markdown text. You can export Quarto documents to HTML, PDF, and Word documents. There are some minor differences in syntax between R Markdown and Quarto documents, but if you know how to use R Markdown you will be able to easily pick up Quarto as well.
 
-## In Conclusion: RMarkdown Opens up All Sorts of Possibilities {-}
+## In Conclusion: R Markdown Opens up All Sorts of Possibilities {-}
 
-We started this chapter with the example of a report that needs to be regenerated monthly. Hopefully the rest of the chapter has convinced you that using RMarkdown is a better approach than the SPSS to Excel to Word dance that so many people use. The reason RMarkdown is a better approach is because it is reproducible. We can reproduce a report every month because we've used a tool that make this possible. 
+We started this chapter with the example of a report that needs to be regenerated monthly. Hopefully the rest of the chapter has convinced you that using R Markdown is a better approach than the SPSS to Excel to Word dance that so many people use. The reason R Markdown is a better approach is because it is reproducible. We can reproduce a report every month because we've used a tool that make this possible. 
 
-Working with RMarkdown require a mindset shift. In the multitool approach, you'd be devastated if you lost the Word document where you were writing your report. With RMarkdown, it's not the knitted Word document that matters – it's the RMarkdown document we care about. Or, as Jenny Bryan and Jim Hester put it: 
+Working with R Markdown require a mindset shift. In the multitool approach, you'd be devastated if you lost the Word document where you were writing your report. With R Markdown, it's not the knitted Word document that matters – it's the R Markdown document we care about. Or, as Jenny Bryan and Jim Hester put it: 
 
 ![](https://rstats.wtf/img/if-you-liked-it-you-should-have-saved-the-source-for-it.jpg)
 
@@ -347,6 +347,6 @@ This mindset shift can take some getting used to, but, trust me, it's worth the 
 
 ![](https://cdn.myportfolio.com/45214904-6a61-4e23-98d6-b140f8654a40/4898fb61-98e9-4923-8725-6813d4de2d82.png?h=a96d7c4cfbf9bd5fb65a0740af2d2c79)
 
-Best of all, working with RMarkdown makes it possible to do things in seconds that would have previously taken hours. In a world where making a single report requires three tools and five steps, you may be disinclined to spend energy on this task. But if you can generate reports on the fly with RMarkdown, it opens up all sorts of possibilities. As Alison Hill puts it, "your ideas start to expand about what you can do and what you can make and what your job actually entails."
+Best of all, working with R Markdown makes it possible to do things in seconds that would have previously taken hours. In a world where making a single report requires three tools and five steps, you may be disinclined to spend energy on this task. But if you can generate reports on the fly with R Markdown, it opens up all sorts of possibilities. As Alison Hill puts it, "your ideas start to expand about what you can do and what you can make and what your job actually entails."
 
-We've just scratched the surface of what RMarkdown can do. The next chapter will show how you can use it to instantly generate hundreds of reports. Magic indeed!
+We've just scratched the surface of what R Markdown can do. The next chapter will show how you can use it to instantly generate hundreds of reports. Magic indeed!
