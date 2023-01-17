@@ -1,3 +1,10 @@
+
+```{r}
+i <- 1
+chapter_number <- 6
+source("_common.R")
+```
+
 # Use R Markdown to Communicate Accurately and Efficiently {#rmarkdown-chapter}
 
 Imagine this scenario. It's January, you've collected some surveys, and now you're ready to do your data analysis and write up your results. Your workflow looks something like this:
@@ -69,7 +76,6 @@ knitr::opts_chunk$set(include = TRUE,
 
 ```{r}
 library(tidyverse)
-library(palmerpenguins)
 ```
 
 ```{r}
@@ -322,9 +328,9 @@ average_bill_length <- penguins %>%
 ```
 ````
 
- In that code, I'm calculating the average bill length and saving it as `average_bill_length`. Having created this variable, I can then use it in my inline R code.
+In that code, I'm calculating the average bill length and saving it as `average_bill_length`. Having created this variable, I can then use it in my inline R code.
  
- The benefit of inline R code is that you avoid having to copy and paste in the value of the average bill length. Copying and pasting is error-prone so using inline R code gets us around these issues. Just as important, using inline R code makes it possible to automatically calculate values on the fly whenever we re-knit our R Markdown document. To show you how this works, let's make a new report using new data.
+The benefit of inline R code is that you avoid having to copy and paste in the value of the average bill length. Copying and pasting is error-prone so using inline R code gets us around these issues. Just as important, using inline R code makes it possible to automatically calculate values on the fly whenever we re-knit our R Markdown document. To show you how this works, let's make a new report using new data.
 
 ## Example of Re-Running Code with New Data {-}
 
