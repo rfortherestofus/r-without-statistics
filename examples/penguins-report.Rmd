@@ -29,11 +29,7 @@ We are writing a report about the **Palmer Penguins**. These penguins are *reall
 - Gentoo
 - Chinstrap
 
-![](penguins.png)
-
 ## Bill Length
-
-![](culmen_depth.png)
 
 We can make a histogram to see the distribution of bill lengths.
 

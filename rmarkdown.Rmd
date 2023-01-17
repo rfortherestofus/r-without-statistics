@@ -24,7 +24,7 @@ In this chapter, we'll begin by breaking down the pieces of R Markdown documents
 
 To create an R Markdown document while working in RStudio, you go to File > New File > R Markdown. You can choose the title, author, and date as well as your default output format (HTML, PDF, or Word). All of these can be changed later. 
 
-[TODO: add screenshot]
+[todo: add screenshot]
 
 Hit OK and RStudio will create an R Markdown document with some placeholder content. 
 
@@ -64,11 +64,7 @@ We are writing a report about the **Palmer Penguins**. These penguins are *reall
 - Gentoo
 - Chinstrap
 
-![](penguins.png)
-
 ## Bill Length
-
-![](culmen_depth.png)
 
 We can make a histogram to see the distribution of bill lengths.
 
