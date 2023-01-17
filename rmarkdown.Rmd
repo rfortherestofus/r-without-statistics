@@ -30,7 +30,7 @@ Hit OK and RStudio will create an R Markdown document with some placeholder cont
 
 My first step is always to delete the content and replace it with my own. I'm going to create a report on penguins using data from the `palmerpenguins` package (for reasons that will become clear later, I've broken it into pieces by year; for now we're just using 2007 data). Here is the content I'll add to my R Markdown document.
 
-````{verbatim}
+````{verbatim echo = TRUE}
 ---
 title: "Penguins Report"
 author: "David"
@@ -98,7 +98,7 @@ I set the output format to be Word (see the line at the top that says "`output_f
 
 There are some things that were not visible in R Markdown but are in Word (the histogram, for example). This is because our R Markdown document does not include this plot directly, but instead has the code needed to produce the plot, which is then produced when we knit our document. 
 
-It may seem convoluted to constantly knit R Markdown documents to Word, but this workflow is what allows us to update our reports at any point with updated code or new data. This is known as reproducibility, and it is central to the value of R Markdown. But before we discuss reproducibility in depth, let's make sure we understand how R Markdown documents are structured.
+It may seem convoluted to constantly knit R Markdown documents to Word, but this workflow is what allows us to update our reports at any point with updated code or new data. This is known as *reproducibility*, and it is central to the value of R Markdown. But before we discuss reproducibility in depth, let's make sure we understand how R Markdown documents are structured.
 
 ## R Markdown Documents Structure {-}
 
@@ -114,11 +114,11 @@ Each document has one YAML, but multiple code chunks and sections of markdown te
 
 Let's take these pieces one at a time.
 
-### YAML {-}
+### The YAML {-}
 
 The YAML is the very first piece at the top of our R Markdown document (the name YAML comes from the recursive acronym "YAML ain't markup language" whose meaning is not important for our purposes). With three dashes indicating its beginning and end, the text inside of the YAML contains metadata about the R Markdown document. My YAML, shown below, tell us the title, author, date, and the output format for when we knit.
 
-````{verbatim}
+````{verbatim echo = TRUE}
 ---
 title: "Penguins Report"
 author: "David Keyes"
@@ -133,14 +133,14 @@ Listen to the name R Markdown and you get a sense of the other two pieces of an 
 
 If you've only ever worked in R script files (they use the extension .R), you'll need to reorient your thinking. In R script files everything is treated as code unless you comment it out by putting a # in front of it. In the code below, the first line is a comment while the second line is code.
 
-```{r eval = FALSE}
+```{r eval = FALSE, echo = TRUE}
 # Import our data
 data <- read_csv("data.csv")
 ```
 
 In R Markdown, the situation is reversed. After the YAML, everything is treated as text unless we specify otherwise. And we do this specifying by creating what are known as code chunks. These start with three back ticks, followed by the lower case letter r surrounded by curly brackets. Three back ticks indicate the end of the code chunk. 
 
-````{verbatim}
+````{verbatim echo = TRUE}
 ```{r}
 library(tidyverse)
 ```
@@ -152,7 +152,7 @@ Working in RStudio, code chunks have a light gray background.
 
 Anything between the beginning and end of the code chunk is treated as R code when we knit. The code in this code chunk will give us a histogram in our Word document.
 
-````{verbatim}
+````{verbatim echo = TRUE}
 ```{r}
 penguins %>% 
   ggplot(aes(x = bill_length_mm)) +
@@ -161,26 +161,35 @@ penguins %>%
 ```
 ````
 
-#### Code Chunk Options
+The histogram can be seen in Figure \@ref(fig:simple-histogram) below.
+
+```{r simple-histogram fig.cap = "A simple histogram"}
+penguins %>% 
+  ggplot(aes(x = bill_length_mm)) +
+  geom_histogram() +
+  theme_minimal()
+```
+
+#### Code Chunk Options {-}
 
 There is one special code chunk at the top of each R Markdown document. It is known as the `setup` code chunk and it gives instructions for what happens when knitting a document. These instructions, more commonly known as code chunk options, determine what happens when we knit our document: 
 
-`echo`: Do you want to show the code itself in our knitted document? 
+- `echo`: Do you want to show the code itself in our knitted document? 
 
-`include`: Do you want to show the output of the code chunk? 
+- `include`: Do you want to show the output of the code chunk? 
 
-`message`: Do you want to include any messages that code generates? An example of such messages include this message that shows up when you run `library(tidyverse)`:
+- `message`: Do you want to include any messages that code generates? An example of such messages include this message that shows up when you run `library(tidyverse)`:
 
 TODO: Add screenshot
  
-`warning`: Do you want to include any messages that code generates? TODO: add example
+- `warning`: Do you want to include any messages that code generates? TODO: add example
 
 TODO: Add screenshot
 
-This may all feel very confusing so let me make it simple. In cases where you're using R Markdown to generate a report for a non-R user, you likely want to hide the code, messages, and warnings but show output. To do this, have your `setup` code chunk look like mine in the report I'm creating:
+This may all feel very confusing so let's keep it simple. In cases where you're using R Markdown to generate a report for a non-R user, you likely want to hide the code, messages, and warnings but show output. To do this, have your `setup` code chunk look like mine in the report I'm creating:
 
-````{verbatim}
-```{r setup, include=FALSE}
+````{verbatim echo = TRUE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(include = TRUE, 
                       echo = FALSE,
                       message = FALSE,
@@ -190,7 +199,7 @@ knitr::opts_chunk$set(include = TRUE,
 
 These options in the `setup` code chunk apply to all code chunks below, unless you override them individually. If I wanted my Word document to show both the plot itself as well as the code used to make it, I could set `echo = TRUE` for that code chunk (`include` is already set to `TRUE` in my `setup` code chunk so I don't need to specify that again). 
 
-````{verbatim}
+````{verbatim echo = TRUE}
 ```{r echo = TRUE}
 penguins %>% 
   ggplot(aes(x = bill_length_mm)) +
@@ -198,7 +207,6 @@ penguins %>%
   theme_minimal()
 ```
 ````
-
 
 ### Markdown Text {-}
 
@@ -224,6 +232,8 @@ You can make lists by placing a dash at the beginning of a line and adding your 
 - Chinstrap
 ````
 
+[TODO: Add screenshot to show relationship between two]
+
 To make ordered lists you'd do the same but replacing the dashes with numbers. You can either put increasing numbers or, as I've done below, just keep repeating 1. On knitting, the numbers will be converted to 1, 2, 3, and so on.
 
 ````{verbatim echo = TRUE}
@@ -234,7 +244,7 @@ To make ordered lists you'd do the same but replacing the dashes with numbers. Y
 
 [TODO: Add screenshot to show relationship between two]
 
-You may be thinking at this point: why do I need to learn a new way to write? Hitting the B button for bold has always worked just fine. The answer is that R cannot hit the B button for you to make text bold in the process of knitting. If you want your knitted Word document to have bold text, you need a way to tell R that in the R Markdown document itself. R Markdown documents are plain text so we need a way *in plain text* to make knitted text bold. If we want to switch from a multitool workflow to a single, reproducible R Markdown-based workflow, we need a way to remove all manual actions from the process. It may feel like a bit of a hassle to have to learn markdown, but it opens up all sorts of possibilities.
+You may be thinking at this point: this seems very complicated for just writing some simple text. Why do I need to learn a new way to write? Hitting the B button for bold has always worked just fine. The answer is that R cannot hit the B button for you to make text bold in the process of knitting. If you want your knitted Word document to have bold text, you need a way to tell R that in the R Markdown document itself. R Markdown documents are plain text so we need a way *in plain text* to make knitted text bold. If we want to switch from a multitool workflow to a single, reproducible R Markdown-based workflow, we need to remove all manual actions from the process. It may feel like a bit of a hassle to have to learn markdown, but it opens up all sorts of possibilities.
 
 ### Inline R Code {-}
 
@@ -242,7 +252,7 @@ I told you there were three main parts of an R Markdown document (YAML, code chu
 
 The last sentence of my R Markdown document looks like this:
 
-````{verbatim}
+````{verbatim echo = TRUE}
 The average bill length is `r average_bill_length` millimeters.
 ````
 
@@ -250,7 +260,7 @@ But the last sentence of my Word document simply says, "The average bill length 
 
 If you look back at the R Markdown document, you'll see the text `knitr::inline_expr("average_bill_length")`. [TODO: make this work] This is inline R code. To create inline R code, you add a backtick and the lower case letter r. Your R code goes next, followed by a back tick at the end. In my inline R code, I'm telling R to print the value of the variable `average_bill_length`. If you're wondering where the variable comes from, take a look at the code chunk above the inline R code.
 
-````{verbatim}
+````{verbatim echo = TRUE}
 ```{r}
 average_bill_length <- penguins %>% 
   summarize(avg_bill_length = mean(bill_length_mm,
@@ -293,7 +303,7 @@ The one downside to running code interactively is that you can sometimes make mi
 
 Related, all code must be in the right order. Knitting an R Markdown document causes code to be from top to bottom. An R Markdown document that looks like this, for example, will give you an error if you try to knit it:
 
-````{verbatim}
+````{verbatim echo = TRUE}
 ---
 title: "Penguins Report"
 author: "David Keyes"
