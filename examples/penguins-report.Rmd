@@ -41,7 +41,6 @@ penguins %>%
 ```
 
 
-
 ```{r}
 average_bill_length <- penguins %>% 
   summarize(avg_bill_length = mean(bill_length_mm,
