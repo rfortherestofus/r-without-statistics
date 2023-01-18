@@ -177,7 +177,7 @@ Let's take these pieces one at a time.
 
 The YAML is the very first piece at the top of our R Markdown document (the name YAML comes from the recursive acronym "YAML ain't markup language" whose meaning is not important for our purposes). With three dashes indicating its beginning and end, the text inside of the YAML contains metadata about the R Markdown document. My YAML, shown below, tell us the title, author, date, and the output format for when we knit.
 
-````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
+````{verbatim echo = TRUE, eval = FALSE, lang = "yaml"}
 ---
 title: "Penguins Report"
 author: "David Keyes"
@@ -192,14 +192,16 @@ Listen to the name R Markdown and you get a sense of the other two pieces of an 
 
 If you've only ever worked in R script files (they use the extension .R), you'll need to reorient your thinking. In R script files everything is treated as code unless you comment it out by putting a # in front of it. In the code below, the first line is a comment while the second line is code.
 
-```{r eval = FALSE, echo = TRUE}
+````{verbatim echo = TRUE, eval = FALSE}
+```{r}
 # Import our data
 data <- read_csv("data.csv")
 ```
+````
 
 In R Markdown, the situation is reversed. After the YAML, everything is treated as text unless we specify otherwise. And we do this specifying by creating what are known as code chunks. These start with three back ticks, followed by the lower case letter r surrounded by curly brackets. Three back ticks indicate the end of the code chunk. 
 
-````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
+````{verbatim echo = TRUE, eval = FALSE}
 ```{r}
 library(tidyverse)
 ```
@@ -216,7 +218,7 @@ penguins %>%
 ```
 ````
 
-The histogram can be seen in Figure \@ref(fig:simple-histogram) below.
+The histogram can made from this code can be seen in Figure \@ref(fig:simple-histogram) below.
 
 ```{r simple-histogram, fig.cap = "A simple histogram"}
 penguins %>% 
@@ -235,21 +237,24 @@ There is one special code chunk at the top of each R Markdown document. It is kn
 
 - `message`: Do you want to include any messages that code generates? An example of such messages include this message that shows up when you run `library(tidyverse)`:
 
-```{r results='asis'}
-print_nostarch_file_name(file_type_to_print = "png")
-```
-
-```{r tidyverse-message, out.width="100%", fig.cap="The message given when you load the tidyverse package"}
-knitr::include_graphics(here::here("assets/tidyverse-message.png"))
-```
-
-```{r results='asis'}
-save_image_for_nostarch(here::here("assets/tidyverse-message.png"))
-```
+````{verbatim echo = TRUE}
+── Attaching core tidyverse packages ───── tidyverse 1.3.2.9000 ──
+✔ dplyr     1.0.10     ✔ readr     2.1.3 
+✔ forcats   0.5.2      ✔ stringr   1.5.0 
+✔ ggplot2   3.4.0      ✔ tibble    3.1.8 
+✔ lubridate 1.9.0      ✔ tidyr     1.2.1 
+✔ purrr     1.0.1      
+── Conflicts───── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+````
  
-- `warning`: Do you want to include any messages that code generates? TODO: add example
+ 
+- `warning`: Do you want to include any messages that code generates? Here is the message you get when creating a histogram using `geom_histogram()`:
 
-TODO: Add screenshot
+````{verbatim echo = TRUE}
+`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+````
 
 This may all feel very confusing so let's keep it simple. In cases where you're using R Markdown to generate a report for a non-R user, you likely want to hide the code, messages, and warnings but show output. To do this, have your `setup` code chunk look like mine in the report I'm creating:
 
@@ -275,7 +280,19 @@ penguins %>%
 
 ### Markdown Text {-}
 
-We've discussed the R portion of R Markdown. Let's now discuss markdown. Markdown is a way to write using only plain text. If you look at the text sections (they have a plain white background) in our R Markdown document, you can see how markdown is converted into what we see in our Word document after knitting. 
+We've discussed the R portion of R Markdown. Let's now discuss markdown. Markdown is a way to write using only plain text. If you look at the text sections (they have a plain white background) in our R Markdown document, you can see how markdown is converted into what we see in our Word document after knitting. Figure \@ref(fig:markdown-text-to-word) highlights the equivalent sections in our R Markdown and Word documents.
+
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
+
+```{r markdown-text-to-word, out.width="100%", fig.cap="Markdown text in R Markdown and its equivalent in a knitted Word document"}
+knitr::include_graphics(here::here("assets/markdown-text-to-word.png"))
+```
+
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/markdown-text-to-word.png"))
+```
 
 The text `# Introduction` in R Markdown gets converted into a Heading 1 while `## Bill Length` becomes a Heading 2. You can go all the way down to Heading 6 by using six hashes. Working in RStudio headers are easy to find because they show up in blue.
 
@@ -296,20 +313,6 @@ To make ordered lists you'd do the same but replacing the dashes with numbers. Y
 1. Gentoo
 1. Chinstrap
 ````
-
-You can see examples of what headers, bold, italics, and lists look like in markdown text and when knitted to a Word document in Figure \@ref(fig:markdown-text-to-word) below.
-
-```{r results='asis'}
-print_nostarch_file_name(file_type_to_print = "png")
-```
-
-```{r markdown-text-to-word, out.width="100%", fig.cap="Markdown text in R Markdown and its equivalent in a knitted Word document"}
-knitr::include_graphics(here::here("assets/markdown-text-to-word.png"))
-```
-
-```{r results='asis'}
-save_image_for_nostarch(here::here("assets/markdown-text-to-word.png"))
-```
 
 You may be thinking at this point: this seems very complicated for just writing some simple text. Why do I need to learn a new way to write? Hitting the B button for bold has always worked just fine. The answer is that R cannot hit the B button for you to make text bold in the process of knitting. If you want your knitted Word document to have bold text, you need a way to tell R that in the R Markdown document itself. R Markdown documents are plain text so we need a way *in plain text* to make knitted text bold. If we want to switch from a multitool workflow to a single, reproducible R Markdown-based workflow, we need to remove all manual actions from the process. It may feel like a bit of a hassle to have to learn markdown, but it opens up all sorts of possibilities.
 
@@ -358,7 +361,7 @@ Now that I've switched `penguins-2007.csv` to `penguins-2008.csv`, I can re-knit
 print_nostarch_file_name(file_type_to_print = "png")
 ```
 
-```{r penguins-report-2008, out.width="100%", fig.cap="CAPTION HERE"}
+```{r penguins-report-2008, out.width="100%", fig.cap="The knitted Word document with 2008 data"}
 knitr::include_graphics(here::here("assets/penguins-report-2008.png"))
 ```
 
@@ -378,7 +381,7 @@ First, let's discuss the two different ways your can run code within an R Markdo
 print_nostarch_file_name(file_type_to_print = "png")
 ```
 
-```{r code-chunk-buttons-annotated, out.width="100%", fig.cap="CAPTION HERE"}
+```{r code-chunk-buttons-annotated, out.width="100%", fig.cap="The buttons on code chunks in RStudio"}
 knitr::include_graphics(here::here("assets/code-chunk-buttons-annotated.png"))
 ```
 
@@ -439,19 +442,15 @@ save_image_for_nostarch(here::here("assets/rmarkdown-order-annotated.png"))
 
 If you look back at the penguin report I made, it loaded the `tidyverse`, then imported data, then plotted. This R Markdown document can be knitted because everything is in the correct order. 
 
-Alison Hill, one of the most prolific R Markdown educators, tells her students to "knit early and often." This practice makes it easier to isolate issues that make knitting fail. Hill describes her typical R Markdown workflow as: 
-
-> [spending] 75% of my time working and iterating on a new document, on a new analysis with a new data set. And then 25% of my time I would knit to check [that the R Markdown document works].
+Alison Hill, one of the most prolific R Markdown educators, tells her students to "knit early and often." This practice makes it easier to isolate issues that make knitting fail. Hill describes her typical R Markdown workflow as "[spending] 75% of my time working and iterating on a new document and then 25% of my time [knitting] to check [that the R Markdown document works]."
 
 ## Quarto {-}
 
-In 2022, a new publishing tool similar to R Markdown was released. Known as Quarto, this tool is designed to take what R Markdown has done for R and extend it to other languages (Python, Julia, and Observable JS). In addition to cross-language functionality, Quarto has a number of other features.
-
-As I write this book, Quarto is starting to gain more and more traction. Over time, I suspect it will likely replace R Markdown. But R Markdown will never go away completely (its developers have made this promise). And, just as importantly, the concepts that you've learned about in this chapter apply to R Markdown and to Quarto. Quarto documents have a YAML, code chunks, and markdown text. You can export Quarto documents to HTML, PDF, and Word documents. There are some minor differences in syntax between R Markdown and Quarto documents, but if you know how to use R Markdown you will be able to easily pick up Quarto as well. The documentation at quarto.org is a great place to get started with Quarto if you are so inclined.
+In 2022, a new publishing tool similar to R Markdown was released. Known as Quarto, this tool is designed to take what R Markdown has done for R and extend it to other languages (Python, Julia, and Observable JS). As I write this book, Quarto is starting to gain more and more traction. Over time, I suspect it will likely replace R Markdown. But R Markdown will never go away completely (its developers have made this promise). And, just as importantly, the concepts that you've learned about in this chapter apply to R Markdown and to Quarto. Quarto documents have a YAML, code chunks, and markdown text. You can export Quarto documents to HTML, PDF, and Word documents. There are some minor differences in syntax between R Markdown and Quarto documents, but if you know how to use R Markdown you will be able to easily pick up Quarto as well. The documentation at quarto.org is a great place to read more about all of the Quarto features and learn how to get started using it. 
 
 ## In Conclusion: R Markdown Opens up All Sorts of Possibilities {-}
 
-We started this chapter with the example of a report that needs to be regenerated monthly. Hopefully the rest of the chapter has convinced you that using R Markdown is a better approach than the SPSS to Excel to Word dance that so many people use. R Markdown better because it is reproducible. We can reproduce a report every month because we've used a tool that makes this possible. 
+We started this chapter with the example of a report that needs to be regenerated monthly. I hope the rest of the chapter has convinced you that using R Markdown is a better approach than the SPSS to Excel to Word dance that so many people use. R Markdown better because it is reproducible. We can reproduce a report every month because we've used a tool that makes this possible. 
 
 Working with R Markdown requires a mindset shift. In the multitool approach, you'd be devastated if you lost the Word document where you were writing your report. With R Markdown, it's not the knitted Word document that matters – it's the R Markdown document we care about. As Alison Hill puts it, "you preserve the source and you edit that and then you can render when you need to." Or, as Jenny Bryan and Jim Hester, as part of their rstats.wtf workshop, put it:
 
@@ -459,7 +458,7 @@ Working with R Markdown requires a mindset shift. In the multitool approach, you
 print_nostarch_file_name(file_type_to_print = "png")
 ```
 
-```{r if-you-liked-ot, out.width="100%", fig.cap="Meme explaining why you should save your source and not care about knitted documents"}
+```{r if-you-liked-ot, out.width="100%", fig.cap="A meme explaining why you should save your source and not care about knitted documents"}
 knitr::include_graphics(here::here("assets/if-you-liked-it-you-should-have-saved-the-source-for-it.jpg"))
 ```
 
@@ -467,7 +466,7 @@ knitr::include_graphics(here::here("assets/if-you-liked-it-you-should-have-saved
 save_image_for_nostarch(here::here("assets/if-you-liked-it-you-should-have-saved-the-source-for-it.jpg"))
 ```
 
-This mindset shift can take some getting used to, but, trust me, it's worth the effort. Being able to produce reports on demand every month can, as Allison Horst suggests, lead others to see you as a wizard.
+This mindset shift can take some getting used to, but, trust me, it's worth the effort. Being able to produce reports on demand every month can, as illustrator Allison Horst suggests, lead others to see you as a wizard.
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -481,8 +480,8 @@ knitr::include_graphics(here::here("assets/allison-horst-rmd.png"))
 save_image_for_nostarch(here::here("assets/allison-horst-rmd.png"))
 ```
 
-Best of all, working with R Markdown makes it possible to do things in seconds that would have previously taken hours. In a world where making a single report requires three tools and five steps, you may be disinclined to spend energy on this task. But if you can generate reports on the fly with R Markdown, it opens up all sorts of possibilities. As Alison Hill puts it, "your ideas start to expand about what you can do and what you can make and what your job actually entails."
+Best of all, working with R Markdown makes it possible to do things in seconds that would have previously taken hours. In a world where making a single report requires three tools and five steps, you may be disinclined to work on it. But if you can generate reports on the fly with R Markdown, it opens up all sorts of possibilities. As Alison Hill puts it, "your ideas start to expand about what you can do and what you can make and what your job actually entails."
 
-Reflecting on her days as a research scientist, Hill says that being able to produce updated reports on demand is one of the greatest benefits of R Markdown. She'd often receive data over time. With R Markdown, she could write code in a way that worked with partial data (allowing her to avoid the last-minute rush common in a multitool workflow) and could be re-run at any time. As she told me, "I knew I could go ahead and start working on it before the data was final, final, final, because you never know when it's gonna be final."
+Prior to working for Posit, Alison Hill was a research scientist who used R Markdown regularly. Reflecting on this period, Hill says that being able to produce updated reports on demand is one of the greatest benefits of R Markdown. She'd often receive data over time. With R Markdown, she could write code in a way that worked with partial data (allowing her to avoid the last-minute rush common in a multitool workflow) and could be re-run at any time. As she told me, "I knew I could go ahead and start working on it before the data was final, final, final, because you never know when it's gonna be final."
 
-We've just scratched the surface of what R Markdown can do. The next chapter will show how you can use it to instantly generate hundreds of reports. Magic indeed!
+In this chapter, we've just scratched the surface of what R Markdown can do. The next chapter will show how you can use it to instantly generate hundreds of reports. Magic indeed!
