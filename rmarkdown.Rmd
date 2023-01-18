@@ -35,7 +35,7 @@ In this chapter, we'll begin by breaking down the pieces of R Markdown documents
 
 ## How R Markdown Works {-}
 
-To create an R Markdown document while working in RStudio, you go to File > New File > R Markdown. You can choose the title, author, and date as well as your default output format (HTML, PDF, or Word). All of these can be changed later. 
+To create an R Markdown document while working in RStudio, you go to File > New File > R Markdown. You can choose the title, author, and date as well as your default output format (HTML, PDF, or Word). All of these can be changed later. Figure \@ref(fig:new-rmd) shows how to create a new R Markdown document.
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -49,7 +49,7 @@ knitr::include_graphics(here::here("assets/new-rmd.png"))
 save_image_for_nostarch(here::here("assets/new-rmd.png"))
 ```
 
-Hit OK and RStudio will create an R Markdown document with some placeholder content. 
+Hit OK and RStudio will create an R Markdown document with some placeholder content, as seen in Figure \@ref(fig:default-rmd-content).
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -117,7 +117,7 @@ average_bill_length <- penguins %>%
 The chart shows the distribution of bill lengths. The average bill length is `r average_bill_length` millimeters.
 ````
 
-This document has several pieces, each of which we will discuss below. For now, though, let's skip straight to the finish line by doing what's called knitting (also known as rendering or, in plain English, exporting) our document. If we hit the knit button at the top of RStudio, our R Markdown document is converted into whatever format we selected upon creating it.
+This document has several pieces, each of which we will discuss below. For now, though, let's skip straight to the finish line by doing what's called knitting (also known as rendering or, in plain English, exporting) our document. If we hit the knit button at the top of RStudio, our R Markdown document is converted into whatever format we selected upon creating it. Figure \@ref(fig:knit-button) shows where to find the Knit button.
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -131,7 +131,7 @@ knitr::include_graphics(here::here("assets/knit-button.png"))
 save_image_for_nostarch(here::here("assets/knit-button.png"))
 ```
 
-I set the output format to be Word (see the line at the top that says "`output_format: word_document`" so I now have a Word document. 
+I set the output format to be Word (see the line at the top that says "`output_format: word_document`" so I now have a Word document. You can see what it looks like in Figure \@ref(fig:rmd-output-word-doc).
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -157,7 +157,7 @@ All R Markdown documents have three main pieces:
 2. R code chunks
 3. Markdown text
 
-Each document has one YAML, but multiple code chunks and sections of markdown text. 
+Each document has one YAML, but multiple code chunks and sections of markdown text. Figure \@ref(fig:rmarkdown-pieces) shows all of the pieces of an R Markdown document.
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -306,13 +306,19 @@ You can make lists by placing a dash at the beginning of a line and adding your 
 - Chinstrap
 ````
 
-To make ordered lists you'd do the same but replacing the dashes with numbers. You can either put increasing numbers or, as I've done below, just keep repeating 1. On knitting, the numbers will be converted to 1, 2, 3, and so on.
+To make ordered lists you'd do the same but replacing the dashes with numbers. You can either put increasing numbers or, as I've done below, just keep repeating 1.
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 1. Adelie
 1. Gentoo
 1. Chinstrap
 ````
+
+On knitting, the numbers will be converted to 1, 2, 3 like so:
+
+1. Adelie
+1. Gentoo
+1. Chinstrap
 
 You may be thinking at this point: this seems very complicated for just writing some simple text. Why do I need to learn a new way to write? Hitting the B button for bold has always worked just fine. The answer is that R cannot hit the B button for you to make text bold in the process of knitting. If you want your knitted Word document to have bold text, you need a way to tell R that in the R Markdown document itself. R Markdown documents are plain text so we need a way *in plain text* to make knitted text bold. If we want to switch from a multitool workflow to a single, reproducible R Markdown-based workflow, we need to remove all manual actions from the process. It may feel like a bit of a hassle to have to learn markdown, but it opens up all sorts of possibilities.
 
@@ -355,7 +361,7 @@ To this:
 penguins <- read_csv("https://raw.githubusercontent.com/rfortherestofus/r-without-statistics/main/data/penguins-2008.csv")
 ```
 
-Now that I've switched `penguins-2007.csv` to `penguins-2008.csv`, I can re-knit my report. When I do so, everything runs and I get a new Word document, complete with updated results. 
+Now that I've switched `penguins-2007.csv` to `penguins-2008.csv`, I can re-knit my report. When I do so, everything runs and I get a new Word document, complete with updated results. Figure \@ref(fig:penguins-report-2008) shows our new knitted Word document.
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -375,7 +381,7 @@ The histogram is based on 2008 data, as is the average bill length of 43.5412281
 
 Now that we've discussed how R Markdown works, let's talk about how to use it well. 
 
-First, let's discuss the two different ways your can run code within an R Markdown document. The first is what we've discussed in this chapter: knitting the entire document. A second way is to run code chunks manually (also known as interactively). Hitting the little green play button at the top right of a code chunk will run its contents. The down arrow next to it will run all code down to that point.
+First, let's discuss the two different ways your can run code within an R Markdown document. The first is what we've discussed in this chapter: knitting the entire document. A second way is to run code chunks manually (also known as interactively). Hitting the little green play button at the top right of a code chunk will run its contents. The down arrow next to it will run all code down to that point. We can see these buttons in Figure \@ref(fig:code-chunk-buttons-annotated) below.
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -426,7 +432,7 @@ library(tidyverse)
 ```
 ````
 
-This happens because you are attempting to use `tidyverse` functions (`read_csv()` as well as various ggplot functions) before you load the `tidyverse` package. 
+This happens because you are attempting to use `tidyverse` functions (`read_csv()` as well as various ggplot functions) before you load the `tidyverse` package. Figure \@ref(fig:rmarkdown-order-annotated) highlights the problem.
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -452,7 +458,7 @@ In 2022, a new publishing tool similar to R Markdown was released. Known as Quar
 
 We started this chapter with the example of a report that needs to be regenerated monthly. I hope the rest of the chapter has convinced you that using R Markdown is a better approach than the SPSS to Excel to Word dance that so many people use. R Markdown better because it is reproducible. We can reproduce a report every month because we've used a tool that makes this possible. 
 
-Working with R Markdown requires a mindset shift. In the multitool approach, you'd be devastated if you lost the Word document where you were writing your report. With R Markdown, it's not the knitted Word document that matters – it's the R Markdown document we care about. As Alison Hill puts it, "you preserve the source and you edit that and then you can render when you need to." Or, as Jenny Bryan and Jim Hester, as part of their rstats.wtf workshop, put it:
+Working with R Markdown requires a mindset shift. In the multitool approach, you'd be devastated if you lost the Word document where you were writing your report. With R Markdown, it's not the knitted Word document that matters – it's the R Markdown document we care about. As Alison Hill puts it, "you preserve the source and you edit that and then you can render when you need to." Or, as Jenny Bryan and Jim Hester, as part of their rstats.wtf workshop, put it in Figure \@ref(fig:if-you-liked-it):
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -466,7 +472,7 @@ knitr::include_graphics(here::here("assets/if-you-liked-it-you-should-have-saved
 save_image_for_nostarch(here::here("assets/if-you-liked-it-you-should-have-saved-the-source-for-it.jpg"))
 ```
 
-This mindset shift can take some getting used to, but, trust me, it's worth the effort. Being able to produce reports on demand every month can, as illustrator Allison Horst suggests, lead others to see you as a wizard.
+This mindset shift can take some getting used to, but, trust me, it's worth the effort. Being able to produce reports on demand every month can, as illustrator Allison Horst suggests in Figure \@ref(fig:allison-horst-rmd), lead others to see you as a wizard.
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")

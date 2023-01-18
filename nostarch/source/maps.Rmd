@@ -10,9 +10,10 @@ chapter_number <- 4
 source("_common.R")
 ```
 
-# Creating Maps
+# Creating Maps {#maps-chapter}
 
 When I first started learning R, I considered it a tool for working with numbers, not shapes, so I was surprised when I saw people using it to make maps. Abdoul Madjid, a developer, has been creating maps with R for several years. Recently, he used one to visualize rates of COVID-19 in the United States in 2021. 
+
 You might think you need specialized mapmaking software like ArcGIS to make maps, but this tool is expensive, and while Excel has added support for map-making in recent years, its features are limited (for example, you can’t use it to make maps based on street addresses). Even QGIS, an open source tool similar to ArcGIS, still requires learning new skills. 
 
 Using R for map-making has benefits. It lets you perform all of your data manipulation tasks with one tool and apply the principles of high-quality data visualization discussed in Chapter \@ref(data-viz-chapter). For example, Madjid used R to obtain his data, analyze it, and make his COVID-19 map, which you can see in Figure \@ref(fig:madjid-covid-map).
@@ -51,7 +52,7 @@ wyoming <- states(progress_bar = FALSE) %>%
 wyoming
 ```
 
-You can see that the data has two columns, one for the state name (NAME) and another called geometry. This data looks like the data frames you’re used to encountering, aside from two major differences: There’s a bunch of metadata above the data frame, and our simple features data contains geographical data in avariable called `geometry.` The metadata begins with the text “Simple feature collection with 1 feature and 1 field” (because the `geometry` column must be present in order for a data frame to be geospatial data it is not counted as a field). The feature referenced here is the row, and the field is the `NAME` variable, which contains non-spatial data (the `geometry` column will be discussed below). This line, and the lines that follow, are metadata about the geospatial data in the `wyoming` object. Let’s look at each part of this simple features data.
+You can see that the data has two columns, one for the state name (NAME) and another called geometry. This data looks like the data frames you’re used to encountering, aside from two major differences: There’s a bunch of metadata above the data frame, and our simple features data contains geographical data in a variable called `geometry.` The metadata begins with the text “Simple feature collection with 1 feature and 1 field” (because the `geometry` column must be present in order for a data frame to be geospatial data it is not counted as a field). The feature referenced here is the row, and the field is the `NAME` variable, which contains non-spatial data (the `geometry` column will be discussed below). This line, and the lines that follow, are metadata about the geospatial data in the `wyoming` object. Let’s look at each part of this simple features data.
 
 ### Geometry Type {-}
 
@@ -76,7 +77,7 @@ print_nostarch_file_name()
 save_figure_for_nostarch()
 ```
 
-`POLYGON` is one of several geometry types that sf data can be used to represent. Others include:
+`POLYGON` is one of several geometry types that `sf` data can be used to represent. 
 
 Other geometry types used in simple feature data include `POINT`, to display elements such as a pin on a map that represents a single location. Figure \@ref(fig:ev-stations-map) is a map showing the location of a single electric vehicle charging station in Wyoming.
 
@@ -231,6 +232,7 @@ print_nostarch_file_name()
 
 ```{r wyoming-counties-map-wgs84, fig.cap = "A map of Wyoming counties using the WGS84 projection"}
 wy_counties %>%
+  sf::st_transform(albersusa::us_laea_proj) %>%
   ggplot() +
   geom_sf()
 ```
@@ -301,9 +303,9 @@ usa_states_geom <- usa_sf() %>%
   st_transform(us_laea_proj)
 ```
 
-The `usa_sf()` function from the `albersausa` package gives us simple features data for all US states (and, conveniently, places Alaska and Hawaii in locations, and at a scale, that make them easy to see). This data includes multiple variables, but we need only the state names, so we keep the name variable only.
+The `usa_sf()` function from the `albersusa` package gives us simple features data for all US states (and, conveniently, places Alaska and Hawaii in locations, and at a scale, that make them easy to see). This data includes multiple variables, but we need only the state names, so we keep the name variable only.
 
-We then used the `st_transform()` function from the `sf` package to change the coordinate reference system. The one used here comes from the `us_laea_proj` object, from the `alberusa` package. Remember the A*lbers equal-area conic convenience projection* we used to change the appearance of our Wyoming counties map? This is the same projection. 
+We then used the `st_transform()` function from the `sf` package to change the coordinate reference system. The one used here comes from the `us_laea_proj` object, from the `albersusa` package. Remember the *Albers equal-area conic convenience projection* we used to change the appearance of our Wyoming counties map? This is the same projection. 
 
 ### Calculating Daily COVID Cases {-}
 
@@ -484,7 +486,7 @@ The `scale_fill_discrete_sequential()` function from the `colorspace` package se
 Next, Madjid adds a title and caption using the `labs()` function. From there on, Madjid uses `theme_minimal()` (again, the same theme that Scherer and Karamanis used in Chapter \@ref(data-viz-chapter)) before making tweaks using the `theme()` function. These tweaks include: 
 
 - Setting the font and text color. 
-- Making the title and caption bold, adjusting their size, and the margins around them. 
+- Making the title and caption bold, adjusting their size, alignment, and the margins around them. 
 - Adjusting the size of the strip text (the *Jan 01*, *Jan 02*, and so on) and making it bold. 
 - Putting the legend on top of the maps and adding a bit of spacing around it.
 - Removing grid lines and the longitude and latitude lines.
