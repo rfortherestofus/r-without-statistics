@@ -1,1 +1,120 @@
-# Use R Markdown to Instantly Generate Hundreds of Reports 
+# Use R Markdown to Instantly Generate Hundreds of Reports {#parameterized-reports-chapter}
+
+In mid-2020, staff at the Urban Institute were tasked with developing State Fiscal Briefs. The Urban Institute is a well-respected Washington D.C.-based think tank that regularly produces economic and social policy research. These State Fiscal Briefs were designed to provide an overview of the fiscal situation of all U.S. states and the District of Columbia. At a time when COVID-19 had brought much economic activity to a halt, these briefs would show just how bad the situation had become. 
+
+For Urban Institute staff, the main challenge was how to produce these reports. Each one would have extensive text as well as multiple charts. Creating the reports by hand was not feasible. They needed a way to automate the process. Fortunately, the Urban Institute has a strong cadre of R users. Three of them – Safia Sayed, Livia Mucciolo, and Aaron Williams – worked together to create the State Fiscal Briefs using parameterized reporting, a technique that uses R Markdown to make multiple reports simultaneously. Parameterized reporting allowed them to make beautiful reports that could be embedded on the Urban Institute website.
+
+TODO: Add screenshot of reports
+
+In this chapter, I'll begin by explaining what parameterized reporting is. We'll then work through a simplified version of the code that the Urban Institute used to demonstrate parameterized reporting in action. We'll conclude some reflections on the value of parameterized reporting. Throughout the chapter, you'll hear insights about parameterized reporting from my interview with Sayed, Mucciolo, and Williams. 
+
+## How Parameterized Reporting Works {-}
+
+If you've ever had to make multiple reports at the same time, you know what a drag it can be. Especially if you're using the multi-tool workflow described in Chapter \@ref(rmarkdown-chapter) (analysis in SPSS, data visualization in Excel, report writing in Word), it can take a long time to make just one report. Take that amount of work and multiply it by ten, 20, 50 or, in the case of the team at the Urban Institute, 51 and it can start to feel overwhelming. 
+
+Parameterized reporting is the solution to this problem. The overall process for making parameterized reports looks like this:
+
+1. Make a report template in R Markdown
+2. Add a parameter (for example, state) in the YAML of your R Markdown document
+3. Use that parameter to generate a report for one state
+4. Create a separate R script file with a function to knit your report for one state
+5. Run this function for all states
+
+It might sound a bit complicated so let's show it in action. I've taken the code that the Urban Institute staff used to make their State Fiscal Briefs and simplified it significantly. And, instead of focusing on fiscal data, I've used data you may be more familiar with: COVID-19 rates. We can see the R Markdown document below. 
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
+---
+title: "Urban Institute COVID Report"
+output: html_document
+params:
+  state: "Alabama"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      warning = FALSE,
+                      message = FALSE)
+```
+
+```{r}
+library(tidyverse)
+library(urbnthemes)
+library(here)
+library(scales)
+
+set_urbn_defaults(style = "print")
+```
+
+# `r params$state`
+
+```{r}
+cases <- tibble(state.name) %>%
+  rbind(state.name = "District of Columbia") %>%
+  left_join(read_csv(here("data", "united_states_covid19_cases_deaths_and_testing_by_state.csv"), skip = 2),
+            by = c("state.name" = "State/Territory")) %>%
+  select(total_cases = `Total Cases`, state.name,
+         cases_per_100000 = `Case Rate per 100000`) %>%
+  mutate(cases_per_100000 = parse_number(cases_per_100000)) %>% 
+  mutate(case_rank = rank(-cases_per_100000, ties.method = "min"))
+```
+
+```{r}
+state_text <- if_else(params$state == "District of Columbia", str_glue("the District of Columbia"), str_glue("state of {params$state}"))
+
+state_cases_per_100000 <- cases %>%
+  filter(state.name == params$state) %>% 
+  pull(cases_per_100000) %>% 
+  comma()
+
+state_cases_rank <- cases %>%
+  filter(state.name == params$state) %>% 
+  pull(case_rank)
+```
+
+In `r state_text`, there were `r state_cases_per_100000` cases per 100,000 people in the last seven days. This puts `r params$state` at number `r state_cases_rank` of 50 states and the District of Columbia. 
+
+
+```{r fig.height = 8}
+cases %>% 
+  mutate(highlight_state = if_else(state.name == params$state, "Y", "N")) %>% 
+  mutate(state.name = fct_reorder(state.name, cases_per_100000)) %>% 
+  ggplot(aes(x = cases_per_100000,
+             y = state.name,
+             fill = highlight_state)) +
+  geom_col() +
+  scale_x_continuous(labels = comma_format()) +
+  theme(legend.position = "none") +
+  labs(y = NULL,
+       x = "Cases per 100,000")
+```
+````
+
+TODO: Quick walkthrough of doc
+
+TODO: Add screenshot of knitted HTML doc
+
+If you've read chapter \@ref(rmarkdown-chapter), you should recognize the combination of YAML, R code chunks, and markdown text. There's even some inline R code. The one piece that you haven't seen is the two lines in the YAML that look like this:
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
+params:
+  state: "Alabama"
+````
+
+These lines allow us to define a variable, in this case `state`. We can then use this variable throughout the rest of our R Markdown document using this syntax: `params$variable_name` (replacing `variable_name` with `state` or any name you set in the YAML). Take a look at this line:
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
+# `r params$state`
+````
+
+Where we see `params$state` in our inline R code, this is converted to Alabama when we knit (it also becomes a Heading 1 because the line starts with a hash). You can see the result in Figure \@ref(fig:TODO).
+
+TODO: Show knitted version
+
+These variables created using `params` in our YAML are the parameters that give parameterized reporting its name. We can see them used in other places as well. Take a look at this section from the last code chunk. This creates a variable called `highlight_state`. Working in the `cases` data frame, we check if the `state.name` is equal to `params$state`. If it is, `highlight_state` gets the value "Y". If not, it gets "N." 
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "r"}
+cases %>% 
+  mutate(highlight_state = if_else(state.name == params$state, "Y", "N"))
+````
+
+Later down, our ggplot code uses the `highlight_state` variable for the `fill` aesthetic. What this means is that, when we create our bar chart, the state that is in our variable `params$state` (Alabama) is highlighted in yellow while all of the other states are blue.

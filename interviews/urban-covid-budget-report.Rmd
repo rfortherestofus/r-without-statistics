@@ -24,7 +24,7 @@ set_urbn_defaults(style = "print")
 
 ```{r}
 cases <- tibble(state.name) %>%
-  bind_rows("District of Columbia") %>%
+  rbind(state.name = "District of Columbia") %>%
   left_join(read_csv(here("data", "united_states_covid19_cases_deaths_and_testing_by_state.csv"), skip = 2),
             by = c("state.name" = "State/Territory")) %>%
   select(total_cases = `Total Cases`, state.name,
