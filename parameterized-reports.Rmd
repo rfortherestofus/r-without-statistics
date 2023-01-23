@@ -145,7 +145,7 @@ We've now seen how setting a parameter in the YAML gives us the ability to dynam
 
 Your first thought might be to manually update the YAML. Indeed you could go in, change Alabama to Alaska, and knit again in order to get a report for that state. You could do this same thing for all states, but it would be tedious, and we're trying to avoid tedium. 
 
-### Creating an R Script File to Render Multiple Reports
+### Creating an R Script File to Render Multiple Reports {-}
 
 At this point, we're going to move out of R Markdown and into an R script file. The first thing to know is that, while you've seen how to knit an R Markdown document using the Knit button, you can do the same thing with code. There is a package called `rmarkdown` and a function within it called `render()`. If I load the `rmarkdown` package and then use the `render()` function, as in the code below, the resulting HTML document will show up.
 
@@ -227,4 +227,22 @@ params = list(state = "Alaska"))
 # And so on for all states
 ```
 
-Being able to tell R to run the Alabama row to generate its report, then the Alaska row, and so on is a huge time-saver. If I run the `pwalk(reports, render)` code, in short order I'll see 51 HTML documents appear. And each one will be a report for that state, complete with text and charts customized for that state.  
+Being able to tell R to run the Alabama row to generate its report, then the Alaska row, and then all other states is a huge time-saver. If I run the `pwalk(reports, render)` code, I quickly see 51 HTML documents appear. And each one will be a report for that state, complete with a customized graph and accompanying text. 
+
+## Best Practices for Working with Parameterized Reporting {-}
+
+Working with parameterized reporting is incredibly powerful. It can also present some challenges. I asked team at the Urban Institute for their thoughts on best practices for parameterized reporting. Their feedback focused on one topic: considering outliers. 
+
+The first example they gave is one we have already seen: Washington D.C. In a project making state-level reports Washington D.C. is an outlier in that it is not technically a state. Having done extensive parameterized reporting, the Urban Institute team knew that they would need to alter the language in the text so that it didn't talk about Washington D.C. as a state. As we saw above, a quick `if_else()` statement made this possible.
+
+Another best practice that the Urban Institute team recommends is to manually generate reports with the shortest and longest value of the parameter you're working with (in the State Fiscal Briefs, this would be Iowa and District of Columbia). Making and reviewing these reports manually allows you to see places where the length of the text may cause unexpected results. Titles in charts can be cut off, text may run onto multiple lines, messing up page breaks in PDF reports, and so on. A few minutes of manual work early on can make the automated process of generating multiple reports much smoother in the end.
+
+## In Conclusion: Parameterized Reporting TODO
+
+In this chapter, we've worked through the example of the State Fiscal Briefs that the Urban Institute team made using parameterized reporting. Automating the production of 51 reports was huge time-saver, though at this scale, it would still be feasible to make these reports by hand. 
+
+Near the end of our interview, Aaron Williams gave me an example of another project the Urban Institute team works on. This project involves making county-level reports. There are over 3,000 counties in the United States. Making these reports by hand is simply not feasible. With parameterized reporting, though, it is the same exact process to make 3,000 reports as it is to make 51. Parameterized reporting isn't just a fun tool. It makes new options for reporting possible. 
+
+Beyond opening up new possibilities, parameterized reporting also makes your work more accurate. If the Urban Institute were to make these reports using, say, Excel and Word, there would be a ton of copying and pasting. Humans are fallible, and mistakes occur no matter how hard we try to avoid them. Computers do not make copy-paste errors. Letting them handle the tedious work of making multiple reports reduces the chance of error significantly.
+
+In Chapter \@ref(rmarkdown-chapter), I talked about reproducibility as 

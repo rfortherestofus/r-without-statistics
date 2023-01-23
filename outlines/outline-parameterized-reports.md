@@ -49,4 +49,4 @@ Work in render.R
 - Safia: "And so, using our markdown made it not only quicker, but much more accurate, and we were able to pull in more information because of that and make more interesting calculations and observations."
 - Aaron: "It makes it something that's more sustainable. You're not having to plug the data index cell, make sure your cell references are correct. There's always a cell reference error. Um, and then, you know, copy that as a p and g or whatever into the document. Maybe you have to do that eight times per state. Right? That's just not sustainable."
 - Livia: " I think there's a, um, uh, you know, upfront there's a lot more, uh, labor and time that's put into it because you're, you know, writing all the code, you're cleaning out the data. So that you have everything that you need. Um, but in the long run it's a lot faster."
-- Your template can be dynamic enough to include some differences (see `state_text`). 
+- Your template can be dynamic enough to include some differences (see `state_text`)
