@@ -464,7 +464,7 @@ Working with R Markdown requires a mindset shift. In the multi-tool approach, yo
 print_nostarch_file_name(file_type_to_print = "png")
 ```
 
-```{r if-you-liked-ot, out.width="100%", fig.cap="A meme explaining why you should save your source and not care about knitted documents"}
+```{r if-you-liked-it, out.width="100%", fig.cap="A meme explaining why you should save your source and not care about knitted documents"}
 knitr::include_graphics(here::here("assets/if-you-liked-it-you-should-have-saved-the-source-for-it.jpg"))
 ```
 
