@@ -56,9 +56,9 @@ Parameterized reporting is the solution to this problem. The process for making 
 
 This five-step process can generate dozens, hundreds, even thousands of reports at once.
 
-### Creating an R Markdown Document with Parameters
+### Creating an R Markdown Document with Parameters {-}
 
-It might sound a bit complicated so let's show it in action. I've taken the code that the Urban Institute staff used to make their State Fiscal Briefs and simplified it significantly. And, instead of focusing on fiscal data, I've used data you may be more familiar with: COVID-19 rates (the data is from mid-2022 TODO check this). We can see the R Markdown document below. 
+It might sound a bit complicated so let's show it in action. I've taken the code that the Urban Institute staff used to make their State Fiscal Briefs and simplified it significantly. And, instead of focusing on fiscal data, I've used data you may be more familiar with: COVID-19 rates (the data is from mid-2022). We can see the R Markdown document below. 
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 ---
@@ -110,7 +110,6 @@ state_cases_rank <- cases %>%
 In `r state_text`, there were `r state_cases_per_100000` cases per 100,000 people in the last seven days. This puts `r params$state` at number `r state_cases_rank` of 50 states and the District of Columbia. 
 
 ```{r fig.height = 8}
-# TODO: Explain set_urbn_defaults()
 set_urbn_defaults(style = "print")
 
 cases %>% 
@@ -201,7 +200,19 @@ cases %>%
   select(state.name, highlight_state)
 ```
 
-Later down, our ggplot code uses the `highlight_state` variable for the `fill` aesthetic. What this means is that, when we create our bar chart, the state that is in our variable `params$state` (Alabama) is highlighted in yellow while all of the other states are blue.
+Later down, our ggplot code uses the `highlight_state` variable for the `fill` aesthetic. What this means is that, when we create our bar chart, the state that is in our variable `params$state` (Alabama) is highlighted in yellow while all of the other states are blue. If you're eagle-eyed, you may have noticed a reference to the `urbnthemes` package and the line of code that says `set_urbn_defaults(style = "print")`. This package provides a custom ggplot theme for all graphs and the `set_urbn_defaults(style = "print")` line applies that theme (in a slightly different way than we saw in Chapter \@ref(custom-theme-chapter), but with the same end result). The Urban Institute-styled chart with Alabama highlighted is seen in Figure \@ref(fig:alabama-covid-chart) below.
+
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
+
+```{r alabama-covid-chart, out.width="100%", fig.cap="The chart showing Alabama higlighted"}
+knitr::include_graphics(here::here("assets/alabama-covid-chart.png"))
+```
+
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/alabama-covid-chart.png"))
+```
 
 We've now seen how setting a parameter in the YAML gives us the ability to dynamically generate text and charts in our knitted report. But we've only generated one report so far. How can we now create all 51 reports? Your first thought might be to manually update the YAML. You could go in, change Alabama to Alaska, and knit again in order to get a report for that state. You could do this same thing for all states. But it would be tedious, and we're trying to avoid that. Let's automate it.
 
@@ -277,8 +288,6 @@ save_image_for_nostarch(here::here("assets/params-named-list.png"))
 
 Once we've created the `reports` tibble, we're ready for our third and final step: creating all of our reports. The code that generates all of the reports is only two lines. We use the `pwalk()` function from the `purrr` package. This function has two arguments: 1) a data frame (`reports` in our case), and 2) a function to run on each row of this data frame (`render` though note that you do not include open and close parentheses typically seen with functions).
 
-TODO: Include further info on no parentheses? https://twitter.com/christophcsmith/status/1616585865601626112
-
 ```{r echo = TRUE, eval = FALSE}
 pwalk(reports, render)
 ```
@@ -322,7 +331,6 @@ reports <- tibble(
 # Generate all of our reports
 reports %>%
   pwalk(render)
-
 ```
 
 
@@ -336,7 +344,7 @@ The first example they gave is one we have already seen: Washington D.C. In a pr
 
 Another best practice that the Urban Institute team recommends is to manually generate reports with the shortest and longest value of the parameter you're working with (in the State Fiscal Briefs, this would be Iowa and District of Columbia). Making and reviewing these reports manually allows you to see places where the length of the text may cause unexpected results. Titles in charts can be cut off, page breaks may be messed up by text that runs onto multiple lines, and so on. A few minutes of manual review early on can make the automated process of generating multiple reports much smoother in the end.
 
-## In Conclusion: Parameterized Reporting TODO add rest of title
+## In Conclusion: Parameterized Reporting Opens up New Reporting Possibilities {-}
 
 In this chapter, we've worked through the example of the State Fiscal Briefs that the Urban Institute team made using parameterized reporting. Automating the production of 51 reports was a huge time-saver, though at this scale, it still *would* be feasible to make these reports by hand. But near the end of our interview, Aaron Williams gave me an example of another project the Urban Institute team works on. This project involves making county-level reports. With over 3,000 counties in the United States, making these reports by hand is not realistic. With parameterized reporting, though, it is the same exact process to make 3,000 reports as it is to make 51. Parameterized reporting isn't just a fun tool. It makes new reporting options possible. 
 
