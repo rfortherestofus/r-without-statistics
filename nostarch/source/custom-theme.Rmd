@@ -10,7 +10,7 @@ chapter_number <- 3
 source("_common.R")
 ```
 
-# Making Your Own Theme
+# Making Your Own Theme {#custom-theme-chapter}
 
 In 2018, BBC data journalists Nassos Stylianou and Clara Guibourg, along with their team, developed a custom ggplot theme that matches the BBC’s style. By introducing this bbplot package for others to use, they changed their organization’s culture, removed bottlenecks, and allowed the BBC to visualize data more creatively.
 

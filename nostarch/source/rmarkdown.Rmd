@@ -296,7 +296,7 @@ save_image_for_nostarch(here::here("assets/markdown-text-to-word.png"))
 
 The text `# Introduction` in R Markdown gets converted into a Heading 1 while `## Bill Length` becomes a Heading 2. You can go all the way down to Heading 6 by using six hashes. Working in RStudio headers are easy to find because they show up in blue.
 
-Text without anything before it becomes body text in Word. If you want to make words italics, add single asterisks around them (*really*). To make them bold, use double asterisks (**Palmer Penguins**).
+Text without anything before it becomes body text in Word. If you want to make words italics, add single asterisks around them (\*really\*). To make them bold, use double asterisks (\*\*Palmer Penguins\*\*).
 
 You can make lists by placing a dash at the beginning of a line and adding your text after it.
 
@@ -464,7 +464,7 @@ Working with R Markdown requires a mindset shift. In the multi-tool approach, yo
 print_nostarch_file_name(file_type_to_print = "png")
 ```
 
-```{r if-you-liked-ot, out.width="100%", fig.cap="A meme explaining why you should save your source and not care about knitted documents"}
+```{r if-you-liked-it, out.width="100%", fig.cap="A meme explaining why you should save your source and not care about knitted documents"}
 knitr::include_graphics(here::here("assets/if-you-liked-it-you-should-have-saved-the-source-for-it.jpg"))
 ```
 
@@ -488,6 +488,6 @@ save_image_for_nostarch(here::here("assets/allison-horst-rmd.png"))
 
 Best of all, working with R Markdown makes it possible to do things in seconds that would have previously taken hours. In a world where making a single report requires three tools and five steps, you may be disinclined to work on it. But if you can generate reports on the fly with R Markdown, it opens up all sorts of possibilities. As Alison Hill puts it, "your ideas start to expand about what you can do and what you can make and what your job actually entails."
 
-Prior to working for Posit, Alison Hill was a research scientist who used R Markdown regularly. Reflecting on this period, Hill says that being able to produce updated reports on demand is one of the greatest benefits of R Markdown. She'd often receive data over time. With R Markdown, she could write code in a way that worked with partial data (allowing her to avoid the last-minute rush common in a multi-tool workflow) and could be re-run at any time. As she told me, "I knew I could go ahead and start working on it before the data was final, final, final, because you never know when it's gonna be final."
+Prior to working for Posit, Alison Hill was a research scientist who used R Markdown regularly. Reflecting on this period, Hill says that being able to produce updated reports on demand is one of the greatest benefits of R Markdown. She'd often receive data over time. With R Markdown, she could write code in a way that worked with partial data (allowing her to avoid the last-minute rush common in a multi-tool workflow) and could be re-run at any time. As she told me, "I knew I could go ahead and start working on it before the data was final, final, final, because you never know when it's going to be final."
 
 In this chapter, we've just scratched the surface of what R Markdown can do. The next chapter will show how you can use it to instantly generate hundreds of reports. Magic indeed!
