@@ -14,39 +14,42 @@ source("_common.R")
 cases <- tibble(state.name) %>%
   rbind(state.name = "District of Columbia") %>%
   left_join(read_csv("https://raw.githubusercontent.com/rfortherestofus/urban-parameterized-report/main/united_states_covid19_cases_deaths_and_testing_by_state.csv", skip = 2),
-            by = c("state.name" = "State/Territory")) %>%
-  select(total_cases = `Total Cases`, state.name,
-         cases_per_100000 = `Case Rate per 100000`) %>%
-  mutate(cases_per_100000 = parse_number(cases_per_100000)) %>% 
+    by = c("state.name" = "State/Territory")
+  ) %>%
+  select(
+    total_cases = `Total Cases`, state.name,
+    cases_per_100000 = `Case Rate per 100000`
+  ) %>%
+  mutate(cases_per_100000 = parse_number(cases_per_100000)) %>%
   mutate(case_rank = rank(-cases_per_100000, ties.method = "min"))
 ```
 
 
-# Generate Hundreds of Reports at Once with R Markdown {#parameterized-reports-chapter}
+# Generate Multiple Reports at Once with Parameterized Reporting {#parameterized-reports-chapter}
 
-In mid-2020, staff at the Urban Institute were tasked with developing State Fiscal Briefs. The Urban Institute, a well-respected Washington D.C.-based think tank, regularly produces economic and social policy research and these State Fiscal Briefs were designed to provide an overview of the fiscal situation of all U.S. states and the District of Columbia. At a time when COVID-19 had brought much economic activity to a halt, these reports would show just how bad their fiscal situation had become. 
+In mid-2020, staff at the Urban Institute were tasked with developing State Fiscal Briefs. The Urban Institute, a Washington D.C.-based think tank, regularly produces economic and social policy research and the State Fiscal Briefs were designed to provide an overview of the fiscal situation of all U.S. states as well as the District of Columbia. At a time when COVID-19 had brought much economic activity to a halt, these reports would show just how bad their fiscal situation had become. 
 
-For Urban Institute staff, the main challenge was how to produce these reports. Each one would have extensive text and multiple charts. Creating the reports by hand was not feasible. They needed a way to automate the process. Fortunately, the Urban Institute has a strong cadre of R users. Three of them – Safia Sayed, Livia Mucciolo, and Aaron Williams – worked together to create the State Fiscal Briefs using parameterized reporting, a technique that uses R Markdown to make multiple reports simultaneously. Parameterized reporting allowed them to make 51 beautiful reports that could be embedded on the Urban Institute website.
+For Urban Institute staff, the main challenge was how to produce these reports. Each one would have extensive text and multiple charts so creating the reports by hand was not feasible. They needed a way to automate the process. Fortunately, the Urban Institute has a strong cadre of R users. Three of them – Safia Sayed, Livia Mucciolo, and Aaron Williams – worked together to create the State Fiscal Briefs using parameterized reporting, a technique that uses R Markdown to make multiple reports simultaneously. Parameterized reporting allowed them to make 51 beautiful reports that could be embedded on the Urban Institute website. A snippet of three of these reports is shown in Figure \@ref(fig:state-fiscal-briefs).
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
 ```
 
-```{r alabama-state-fiscal-brief, out.width="100%", fig.cap="A screenshot of the Alabama State Fiscal Brief"}
-knitr::include_graphics(here::here("assets/state-fiscal-brief-alabama.png"))
+```{r state-fiscal-briefs, out.width="100%", fig.cap="A portion of three of the State Fiscal Briefs"}
+knitr::include_graphics(here::here("assets/state-fiscal-briefs.png"))
 ```
 
 ```{r results='asis'}
-save_image_for_nostarch(here::here("assets/state-fiscal-brief-alabama.png"))
+save_image_for_nostarch(here::here("assets/state-fiscal-briefs.png"))
 ```
 
-In this chapter, I'll begin by explaining what parameterized reporting is. We'll then work through a simplified version of the code that the Urban Institute used in order to demonstrate parameterized reporting in action. We'll conclude with some reflections on the value of parameterized reporting. Throughout the chapter, you'll hear insights about parameterized reporting from my interview with Sayed, Mucciolo, and Williams. 
+In this chapter, I'll begin by explaining what parameterized reporting is. We'll then work through a simplified version of the type of code that the Urban Institute used in order to demonstrate parameterized reporting in action. We'll conclude with some reflections on the value of parameterized reporting. Throughout the chapter, you'll hear insights about parameterized reporting from my interview with the Urban Institute staff members Sayed, Mucciolo, and Williams. 
 
 ## How Parameterized Reporting Works {-}
 
-If you've ever had to make multiple reports at the same time, you know what a drag it can be. Especially if you're using the multi-tool workflow described in Chapter \@ref(rmarkdown-chapter) (analysis in SPSS, data visualization in Excel, report writing in Word), it can take a long time to make just one report. Take that amount of work and multiply it by ten, 20, 50 or, in the case of the team at the Urban Institute, 51 and it can start to feel overwhelming. 
+If you've ever had to make multiple reports at the same time, you know what a drag it can be. Especially if you're using the multi-tool workflow described in Chapter \@ref(rmarkdown-chapter) (analysis in SPSS, data visualization in Excel, report writing in Word), it can take a long time to make just one report. Take that amount of work and multiply it by 10, 20, 50 or, in the case of the team at the Urban Institute, 51 and it can start to feel overwhelming. Parameterized reporting is the solution to this problem.
 
-Parameterized reporting is the solution to this problem. The process for making parameterized reports looks like this:
+The workflow for making parameterized reports looks like this:
 
 1. Make a report template in R Markdown
 2. Add a parameter (for example, state) in the YAML of your R Markdown document
@@ -54,7 +57,7 @@ Parameterized reporting is the solution to this problem. The process for making 
 4. Create a separate R script file with a function to knit your report for one state
 5. Run this function for all states
 
-This five-step process can generate dozens, hundreds, even thousands of reports at once.
+This five-step workflow can generate dozens, hundreds, even thousands of reports at once.
 
 ### Creating an R Markdown Document with Parameters {-}
 
@@ -69,9 +72,11 @@ params:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE,
-                      warning = FALSE,
-                      message = FALSE)
+knitr::opts_chunk$set(
+  echo = FALSE,
+  warning = FALSE,
+  message = FALSE
+)
 ```
 
 ```{r}
@@ -87,10 +92,13 @@ library(scales)
 cases <- tibble(state.name) %>%
   rbind(state.name = "District of Columbia") %>%
   left_join(read_csv("united_states_covid19_cases_deaths_and_testing_by_state.csv", skip = 2),
-            by = c("state.name" = "State/Territory")) %>%
-  select(total_cases = `Total Cases`, state.name,
-         cases_per_100000 = `Case Rate per 100000`) %>%
-  mutate(cases_per_100000 = parse_number(cases_per_100000)) %>% 
+    by = c("state.name" = "State/Territory")
+  ) %>%
+  select(
+    total_cases = `Total Cases`, state.name,
+    cases_per_100000 = `Case Rate per 100000`
+  ) %>%
+  mutate(cases_per_100000 = parse_number(cases_per_100000)) %>%
   mutate(case_rank = rank(-cases_per_100000, ties.method = "min"))
 ```
 
@@ -98,12 +106,12 @@ cases <- tibble(state.name) %>%
 state_text <- if_else(params$state == "District of Columbia", str_glue("the District of Columbia"), str_glue("state of {params$state}"))
 
 state_cases_per_100000 <- cases %>%
-  filter(state.name == params$state) %>% 
-  pull(cases_per_100000) %>% 
+  filter(state.name == params$state) %>%
+  pull(cases_per_100000) %>%
   comma()
 
 state_cases_rank <- cases %>%
-  filter(state.name == params$state) %>% 
+  filter(state.name == params$state) %>%
   pull(case_rank)
 ```
 
@@ -112,21 +120,25 @@ In `r state_text`, there were `r state_cases_per_100000` cases per 100,000 peopl
 ```{r fig.height = 8}
 set_urbn_defaults(style = "print")
 
-cases %>% 
-  mutate(highlight_state = if_else(state.name == params$state, "Y", "N")) %>% 
-  mutate(state.name = fct_reorder(state.name, cases_per_100000)) %>% 
-  ggplot(aes(x = cases_per_100000,
-             y = state.name,
-             fill = highlight_state)) +
+cases %>%
+  mutate(highlight_state = if_else(state.name == params$state, "Y", "N")) %>%
+  mutate(state.name = fct_reorder(state.name, cases_per_100000)) %>%
+  ggplot(aes(
+    x = cases_per_100000,
+    y = state.name,
+    fill = highlight_state
+  )) +
   geom_col() +
   scale_x_continuous(labels = comma_format()) +
   theme(legend.position = "none") +
-  labs(y = NULL,
-       x = "Cases per 100,000")
+  labs(
+    y = NULL,
+    x = "Cases per 100,000"
+  )
 ```
 ````
 
-If we knit this document, we end up with a simple HTML document.
+If we knit this document, we end up with a simple HTML document, seen in Figure \@ref(fig:alabama-covid-report).
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -138,6 +150,12 @@ knitr::include_graphics(here::here("assets/alabama-covid-report.png"))
 
 ```{r results='asis'}
 save_image_for_nostarch(here::here("assets/alabama-covid-report.png"))
+```
+
+All of the text and charts in our report come the `cases` data frame. Let's take a look at that so we can keep it in mind throughout the chapter.
+
+```{r}
+cases
 ```
 
 Returning to the R Markdown document, the combination of YAML, R code chunks, and markdown text should look familiar if you've read chapter \@ref(rmarkdown-chapter). There's even some inline R code. The one piece that you haven't seen is the two lines in the YAML that look like this:
@@ -167,7 +185,7 @@ knitr::include_graphics(here::here("assets/alabama-covid-report-header.png"))
 save_image_for_nostarch(here::here("assets/alabama-covid-report-header.png"))
 ```
 
-These variables created using `params` in our YAML are the parameters that give parameterized reporting its name. This use of our parameter to dynamically generate text using inline R code also shows up later on. Take a look at this code:
+This variable created using `params` in our YAML is the parameter that gives parameterized reporting its name. This use of our parameter to dynamically generate text using inline R code also shows up later on. Take a look at this code:
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 In `r state_text`, there were `r state_cases_per_100000` cases per 100,000 people in the last seven days. This puts `r params$state` at number `r state_cases_rank` of 50 states and the District of Columbia. 
@@ -185,28 +203,43 @@ state_text <- if_else(params$state == "District of Columbia", str_glue("the Dist
 
 This line of code says that, if `params$states` is District of Columbia, then make `state_text` equal to "the District of Columbia." If `params$state` does not equal District of Columbia, then `state_text` gets the value "state of Alabama" (or whatever the state name is). This allows us to put `state_text` in a sentence and have it work no matter whether our state parameter is a state or the District of Columbia. 
 
+The values of the `state_cases_per_100000` and `state_cases_rank` variables are also calcualted dynamically using our `state` parameter. This section of code shows how we filter the `cases` data frame (which has data for all states) to keep just the data for the state in `params$state`. We then use the `pull()` function to get a single value and do a bit of formatting with the `comma()` function from the `scales` package to make `state_cases_per_100000` show up as 26,573 (rather than 26573) before putting these variables into our inline R code.
+
+```{r echo = TRUE, eval = FALSE}
+state_cases_per_100000 <- cases %>%
+  filter(state.name == params$state) %>%
+  pull(cases_per_100000) %>%
+  comma()
+
+state_cases_rank <- cases %>%
+  filter(state.name == params$state) %>%
+  pull(case_rank)
+```
+
+Writing sentences using inline R code that dynamically updates based on the value of our parameter allows us to create a report for any state with numbers specific to that state.
+
 We can see them our parameter used in other places as well. Take a look at this section from the last code chunk. This creates a variable called `highlight_state`. Working in the `cases` data frame, we check if the `state.name` is equal to `params$state`. If it is, `highlight_state` gets the value "Y". If not, it gets "N." 
 
 ```{r echo = TRUE, eval = FALSE}
-cases %>% 
+cases %>%
   mutate(highlight_state = if_else(state.name == params$state, "Y", "N"))
 ```
 
 We can see what the relevant columns in our data look like after these two lines:
 
 ```{r}
-cases %>% 
-  mutate(highlight_state = if_else(state.name == params$state, "Y", "N")) %>% 
+cases %>%
+  mutate(highlight_state = if_else(state.name == params$state, "Y", "N")) %>%
   select(state.name, highlight_state)
 ```
 
-Later down, our ggplot code uses the `highlight_state` variable for the `fill` aesthetic. What this means is that, when we create our bar chart, the state that is in our variable `params$state` (Alabama) is highlighted in yellow while all of the other states are blue. If you're eagle-eyed, you may have noticed a reference to the `urbnthemes` package and the line of code that says `set_urbn_defaults(style = "print")`. This package provides a custom ggplot theme for all graphs and the `set_urbn_defaults(style = "print")` line applies that theme (in a slightly different way than we saw in Chapter \@ref(custom-theme-chapter), but with the same end result). The Urban Institute-styled chart with Alabama highlighted is seen in Figure \@ref(fig:alabama-covid-chart) below.
+Later down, our ggplot code uses the `highlight_state` variable for the `fill` aesthetic. What this means is that, when we create our bar chart, the state that is in our variable `params$state` (Alabama) is highlighted in yellow while all of the other states are blue. If you're eagle-eyed, you may have noticed a reference to the `urbnthemes` package and the line of code that says `set_urbn_defaults(style = "print")`. This package provides a custom ggplot theme for all graphs and the `set_urbn_defaults(style = "print")` line applies that theme (in a slightly different way than we saw in Chapter \@ref(custom-theme-chapter), but with the same result). The Urban Institute-styled chart with Alabama highlighted is seen in Figure \@ref(fig:alabama-covid-chart) below.
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
 ```
 
-```{r alabama-covid-chart, out.width="100%", fig.cap="The chart showing Alabama higlighted"}
+```{r alabama-covid-chart, out.width="100%", fig.cap="A bar chart showing Alabama higlighted"}
 knitr::include_graphics(here::here("assets/alabama-covid-chart.png"))
 ```
 
@@ -214,11 +247,11 @@ knitr::include_graphics(here::here("assets/alabama-covid-chart.png"))
 save_image_for_nostarch(here::here("assets/alabama-covid-chart.png"))
 ```
 
-We've now seen how setting a parameter in the YAML gives us the ability to dynamically generate text and charts in our knitted report. But we've only generated one report so far. How can we now create all 51 reports? Your first thought might be to manually update the YAML. You could go in, change Alabama to Alaska, and knit again in order to get a report for that state. You could do this same thing for all states. But it would be tedious, and we're trying to avoid that. Let's automate it.
+We've now seen how setting a parameter in the YAML gives us the ability to dynamically generate text and charts in our knitted report. But we've only generated one report so far. How can we now create all 51 reports? Your first thought might be to manually update the YAML. You could go in, change Alabama to Alaska, and knit again in order to get a report for that state. You could then do this same thing for all states. But it would be tedious, and we're trying to avoid that. Let's automate it instead.
 
 ### Creating an R Script File to Render Multiple Reports {-}
 
-At this point, we're going to move out of R Markdown and into an R script file. The first thing to know is that, while you've seen how to knit an R Markdown document using the Knit button, you can do the same thing with code. There is a package called `rmarkdown` and a function within it called `render()`. If I load the `rmarkdown` package and then use the `render()` function, as in the code below, the resulting HTML document will be generated.
+At this point, we're going to move out of R Markdown and into an R script file (I tend to call mine `render.R`). The first thing to know is that, while you've seen how to knit an R Markdown document using the Knit button, you can do the same thing with code. There is a package called `rmarkdown` and a function within it called `render()`. If I load the `rmarkdown` package and then use the `render()` function, as in the code below, the resulting HTML document will be generated.
 
 ```{r echo = TRUE, eval = FALSE}
 library(rmarkdown)
@@ -228,25 +261,31 @@ render(input = "urban-covid-budget-report.Rmd")
 Using this code, our HTML document will be called `urban-covid-budget-report.html` (the same name as the R Markdown document, but replacing the .Rmd with .html). We can change its name by using the `output_file` argument in the `render()` function. 
 
 ```{r echo = TRUE, eval = FALSE}
-render(input = "urban-covid-budget-report.Rmd",
-output_file = "Alabama.html")
+render(
+  input = "urban-covid-budget-report.Rmd",
+  output_file = "Alabama.html"
+)
 ```
 
-We can also tell the `render()` function to use parameters we give it (arguments we provide here override those in the R Markdown document itself). This code would tell R to use Alaska for our `state` parameter and save the resulting HTML file as Alaska.html. 
+We can also tell the `render()` function to use parameters we give it (parameters we provide here override those in the R Markdown document itself). This code would tell R to use Alaska for our `state` parameter and save the resulting HTML file as Alaska.html. 
 
 ```{r echo = TRUE, eval = FALSE}
-render(input = "urban-covid-budget-report.Rmd",
-output_file = "Alaska.html",
-parms = list(state = "Alaska"))
+render(
+  input = "urban-covid-budget-report.Rmd",
+  output_file = "Alaska.html",
+  parms = list(state = "Alaska")
+)
 ```
 
-This approach works, but to get all 51 reports, we'd still have to manually change the state name in our YAML and update the `render()` function each time before we run it. Still too manual. Things really get interesting when we write code that generates all reports for us automatically. We do this in three steps:
+This approach works, but to get all 51 reports, we'd still have to manually change the state name in our YAML and update the `render()` function each time before we run it. Things really get interesting when we write code that generates all reports for us automatically. We do this in three steps.
+
+#### Step 1: Create a Vector of All States {-}
 
 First, we create a vector (in colloquial terms, a list of items) of all state names and the District of Columbia. The team at the Urban Institute does this by using the built-in dataset `state.name`, which has all 50 state names in a vector. They turn it into a `tibble` (for our purposes, the same thing as a data frame) and then use the `rbind()` function to add on the District of Columbia. Finally, they use the `pull()` function to get one single column and save this as `state`. 
 
 ```{r echo = TRUE, eval = TRUE}
 state <- tibble(state.name) %>%
-  rbind("District of Columbia") %>% 
+  rbind("District of Columbia") %>%
   pull(state.name)
 ```
 
@@ -256,13 +295,15 @@ We can see what `state` looks like below.
 state
 ```
 
+#### Step 2: Create a Tibble with Data to Render All Reports {-}
+
 The second step is to create a tibble with information needed to render all 51 reports. We do this by creating an object called `reports`. This object has multiple arguments that we can pass to the `render()` function. Above, we used `render()` with the `input` and `output_file` arguments, but you can also pass the `params` argument to give it parameters to use when knitting. The code below generates a tibble with 51 rows and three variables. 
 
 ```{r echo = TRUE, eval = TRUE}
 reports <- tibble(
   input = "urban-covid-budget-report.Rmd",
   output_file = str_glue("{state}.html"),
-  params = map(state, ~list(state = .))
+  params = map(state, ~ list(state = .))
 )
 ```
 
@@ -272,7 +313,7 @@ In all rows, the `input` variable is set to `urban-covid-budget-report.Rmd`. The
 reports
 ```
 
-If we look at the `reports` tibble, we can see these variables. The `params` variable just shows up as `<named list [1]>`, but if we open it in the viewer (you can do so by clicking the name `reports` in your Environment tab in RStudio), we can see the output more clearly.
+If we look at the `reports` tibble, we can see these variables. The `params` variable just shows up as `<named list>`, but if we open it in the viewer (you can do so by clicking the name `reports` in your Environment tab in RStudio), we can see the output more clearly. Figure \@ref(fig:params-named-list) shows this.
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -286,7 +327,9 @@ knitr::include_graphics(here::here("assets/params-named-list.png"))
 save_image_for_nostarch(here::here("assets/params-named-list.png"))
 ```
 
-Once we've created the `reports` tibble, we're ready for our third and final step: creating all of our reports. The code that generates all of the reports is only two lines. We use the `pwalk()` function from the `purrr` package. This function has two arguments: 1) a data frame (`reports` in our case), and 2) a function to run on each row of this data frame (`render` though note that you do not include open and close parentheses typically seen with functions).
+#### Step 3: Render All of the Reports {-}
+
+Once we've created the `reports` tibble, we're ready for our third and final step: rendering all of our reports. The code that generates all of the reports is only one line. We use the `pwalk()` function from the `purrr` package. This function has two arguments: 1) a data frame or tibble (`reports` in our case), and 2) a function to run on each row of this tibble (`render` though note that you do not include open and close parentheses typically seen with functions).
 
 ```{r echo = TRUE, eval = FALSE}
 pwalk(reports, render)
@@ -295,13 +338,23 @@ pwalk(reports, render)
 When we run this code, it runs the `render()` function for each row in `reports`, each time passing in the values for `input`, `output_file`, and `params`. It is the equivalent of typing out code like this that runs the `render()` function for each of the 51 states:
 
 ```{r echo = TRUE, eval = FALSE}
-render(input = "urban-covid-budget-report.Rmd",
-output_file = "Alabama.html",
-params = list(state = "Alabama"))
+render(
+  input = "urban-covid-budget-report.Rmd",
+  output_file = "Alabama.html",
+  params = list(state = "Alabama")
+)
 
-render(input = "urban-covid-budget-report.Rmd",
-output_file = "Alaska.html",
-params = list(state = "Alaska"))
+render(
+  input = "urban-covid-budget-report.Rmd",
+  output_file = "Alaska.html",
+  params = list(state = "Alaska")
+)
+
+render(
+  input = "urban-covid-budget-report.Rmd",
+  output_file = "Arizona.html",
+  params = list(state = "Arizona")
+)
 
 # And so on for all states
 ```
@@ -315,7 +368,7 @@ library(rmarkdown)
 
 # Create a vector of all states and the District of Columbia
 state <- tibble(state.name) %>%
-  rbind("District of Columbia") %>% 
+  rbind("District of Columbia") %>%
   pull(state.name)
 
 # Create a tibble with information on the:
@@ -325,16 +378,14 @@ state <- tibble(state.name) %>%
 reports <- tibble(
   input = "urban-covid-budget-report.Rmd",
   output_file = str_glue("{state}.html"),
-  params = map(state, ~list(state = .))
+  params = map(state, ~ list(state = .))
 )
 
 # Generate all of our reports
-reports %>%
-  pwalk(render)
+pwalk(reports, render)
 ```
 
-
-Being able to tell R to run the Alabama row to generate its report, then the Alaska row, and then all other states is a huge time-saver. If I run the `pwalk(reports, render)` code, I will quickly see 51 HTML documents appear. And each one will be a report for that state, complete with a customized graph and accompanying text. 
+Being able to tell R to run the Alabama row to generate its report, then the Alaska row, then the Arizona row, and then all other states is a huge time-saver. If I run the `pwalk(reports, render)` code, I will quickly see 51 HTML documents appear. And each one will be a report for that state, complete with a customized graph and accompanying text. 
 
 ## Best Practices for Working with Parameterized Reporting {-}
 
@@ -342,14 +393,14 @@ Working with parameterized reporting is incredibly powerful. It can also present
 
 The first example they gave is one we have already seen: Washington D.C. In a project making state-level reports, Washington D.C. is an outlier because it is not technically a state. Having done extensive parameterized reporting, the Urban Institute team knew that they would need to alter the language in the text so that it didn't talk about Washington D.C. as a state. As we saw above, a quick `if_else()` statement made it possible to avoid referring to Washington D.C. as a state in the inline R code.
 
-Another best practice that the Urban Institute team recommends is to manually generate reports with the shortest and longest value of the parameter you're working with (in the State Fiscal Briefs, this would be Iowa and District of Columbia). Making and reviewing these reports manually allows you to see places where the length of the text may cause unexpected results. Titles in charts can be cut off, page breaks may be messed up by text that runs onto multiple lines, and so on. A few minutes of manual review early on can make the automated process of generating multiple reports much smoother in the end.
+Another best practice that the Urban Institute team recommends is to manually generate and review reports with the shortest and longest text length of the parameter you're working with (in the State Fiscal Briefs, this would be Iowa and District of Columbia). Making and reviewing these reports manually allows you to see places where the length of the text may cause unexpected results. Titles in charts can be cut off, page breaks in PDF or Word documents may be messed up by text that runs onto multiple lines, and so on. A few minutes of manual review early on can make the automated process of generating multiple reports much smoother in the end.
 
-## In Conclusion: Parameterized Reporting Opens up New Reporting Possibilities {-}
+## In Conclusion: Parameterized Reporting Makes New Reporting Options Possible {-}
 
-In this chapter, we've worked through the example of the State Fiscal Briefs that the Urban Institute team made using parameterized reporting. Automating the production of 51 reports was a huge time-saver, though at this scale, it still *would* be feasible to make these reports by hand. But near the end of our interview, Aaron Williams gave me an example of another project the Urban Institute team works on. This project involves making county-level reports. With over 3,000 counties in the United States, making these reports by hand is not realistic. With parameterized reporting, though, it is the same exact process to make 3,000 reports as it is to make 51. Parameterized reporting isn't just a fun tool. It makes new reporting options possible. 
+In this chapter, we've worked through the example of the State Fiscal Briefs that the Urban Institute team made using parameterized reporting. Automating the production of 51 reports was a huge time-saver, though at this scale, it still would be feasible to make these reports by hand. But near the end of our interview, Aaron Williams gave me an example of another project the Urban Institute team works on. This project involves making county-level reports. With over 3,000 counties in the United States, making these reports by hand is not realistic. With parameterized reporting, though, it is the same exact process to make 3,000 reports as it is to make 51. Parameterized reporting makes new reporting options possible. 
 
-Beyond opening up new possibilities, parameterized reporting also makes your work more accurate. If the Urban Institute were to make these reports using, say, Excel and Word, there would be a ton of copying and pasting. Humans are fallible, and mistakes occur no matter how hard we try to avoid them. Computers, on the other hand, do not make copy-paste errors. Letting computers handle the tedious work of making multiple reports significantly reduces the chance of error. As Safia Sayed told me, "using R Markdown made it not only quicker, but much more accurate, and we were able to pull in more information because of that and make more interesting calculations and observations."
+Parameterized reporting also makes your work more accurate. If the Urban Institute were to make these reports using, say, SPSS, Excel, and Word, there would be a ton of copying and pasting between programs. Humans are fallible, and mistakes occur no matter how hard we try to avoid them. Computers, on the other hand, do not make copy-paste errors. Letting computers handle the tedious work of making multiple reports significantly reduces the chance of error. As Safia Sayed told me, "using R Markdown made it not only quicker, but much more accurate, and we were able to pull in more information because of that and make more interesting calculations and observations."
 
-In Chapter \@ref(rmarkdown-chapter), I talked about reproducibility as being able to update a monthly report. Parameterized reporting is another example of reproducibility. Not only can we reproduce reports across time, we can also reproduce them across all states (or any other parameter). It's just another example of how R doesn't simple replace other tools, but make things you had never previously considered suddenly feel possible. 
+In Chapter \@ref(rmarkdown-chapter), I talked about reproducibility as being able to update a monthly report. Parameterized reporting is another example of reproducibility. Not only can we reproduce reports across time, we can also reproduce them across all states (or any other parameter). It's just another example of how R doesn't simply replace other tools, but makes things you had previously considered impossible suddenly feel possible. 
 
 As with many things with R, when you're starting out it can feel like a heavy lift to produce reports using parameterized reporting. Initially, it is. You have to make sure that your code works not just for, say, one state, but for all 51. There can be challenges with outliers. You have to master the syntax to knit your reports from an R script file. But once you have your R Markdown document and accompanying R script file for rendering, it is straightforward to produce multiple reports at once. It may be more work in the beginning, but it is far, far less work in the end.
