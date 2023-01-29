@@ -1,10 +1,10 @@
 # References
 
-Presentation: https://spcanelon.github.io/xaringan-basics-and-beyond/index.html
+[Presentation](https://spcanelon.github.io/xaringan-basics-and-beyond/index.html) 
 
-Basics slides: https://spcanelon.github.io/xaringan-basics-and-beyond/slides/day-01-basics.html#1
+[Basics slides](https://spcanelon.github.io/xaringan-basics-and-beyond/slides/day-01-basics.html#1) 
 
-Basics slides code: https://github.com/spcanelon/xaringan-basics-and-beyond/blob/main/slides/day-01-basics.Rmd
+[Basics slides code](https://github.com/spcanelon/xaringan-basics-and-beyond/blob/main/slides/day-01-basics.Rmd) 
 
 # Intro
 
