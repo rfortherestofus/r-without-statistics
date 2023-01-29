@@ -1,0 +1,25 @@
+<!-- /vendor/statamic/forms/fields/radio.antlers.html -->
+<fieldset
+    class="flex
+        {{ inline
+            ? 'space-x-4'
+            : 'flex-col space-y-4'
+        }}"
+    :aria-invalid="errors.hasOwnProperty('{{ handle }}')"
+    aria-describedBy="{{ handle }}"
+>
+    {{ foreach:options as="value|label" }}
+        <label class="inline-flex items-center">
+            <input
+                class="mr-2 border-neutral text-primary focus-visible:border-primary focus-visible:ring focus-visible:ring-primary motion-safe:transition"
+                type="radio"
+                name="{{ handle }}"
+                value="{{ value }}"
+                {{ js_attributes }}
+                {{ (old === value) ?= 'checked' }}
+            >
+            {{ trans :key="label" }}
+        </label>
+    {{ /foreach:options }}
+</fieldset>
+<!-- End: /vendor/statamic/forms/fields/radio.antlers.html -->

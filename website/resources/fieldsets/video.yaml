@@ -1,0 +1,28 @@
+title: Video
+fields:
+  -
+    handle: youtube_url
+    field:
+      placeholder: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+      input_type: url
+      type: text
+      localizable: true
+      width: 50
+      listable: hidden
+      display: 'Video'
+      instructions: "YouTube or Vimeo URL."
+      instructions_position: below
+  -
+    handle: size
+    field: common.size
+    config:
+      localizable: true
+      width: 50
+  -
+    handle: caption
+    field:
+      input_type: text
+      type: text
+      localizable: true
+      listable: hidden
+      display: Caption
