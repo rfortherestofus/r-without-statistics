@@ -39,8 +39,14 @@ return [
     */
 
     'copy' => [
-        public_path('css') => 'css',
-        public_path('js') => 'js',
+        public_path('_headers') => '_headers',
+        public_path('_redirects') => '_redirects',
+        public_path('assets') => 'assets',
+        public_path('build') => 'build',
+        public_path('favicons') => 'favicons',
+        public_path('social_images') => 'social_images',
+        public_path('visuals') => 'visuals',
+        
     ],
 
     'symlinks' => [
