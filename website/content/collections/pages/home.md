@@ -1,7 +1,7 @@
 ---
 id: home
 blueprint: page
-template: home
+
 title: Home
 updated_by: 7aa2cbfd-67eb-4231-ad84-85a30697d1a4
 updated_at: 1675034787
