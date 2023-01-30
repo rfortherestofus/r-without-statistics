@@ -16,6 +16,7 @@
         "laravel/sanctum": "^2.14",
         "laravel/tinker": "^2.7",
         "statamic/cms": "3.4.*",
+        "statamic/ssg": "^1.3",
         "studio1902/statamic-peak-commands": "^1.0"
     },
     "require-dev": {
