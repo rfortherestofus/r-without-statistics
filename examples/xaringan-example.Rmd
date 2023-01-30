@@ -2,7 +2,7 @@
 title: "Penguins Report"
 author: "David Keyes"
 date: "2024-01-12"
-output: word_document
+output: xaringan::moon_reader
 ---
 
 ```{r setup, include=FALSE}
@@ -20,28 +20,46 @@ library(tidyverse)
 penguins <- read_csv("https://raw.githubusercontent.com/rfortherestofus/r-without-statistics/main/data/penguins-2008.csv")
 ```
 
+---
+
+class: center, middle
+background-image: url("penguins.jpg")
+
+## Penguins
+
+
+
+
+---
 
 # Introduction
 
 We are writing a report about the **Palmer Penguins**. These penguins are *really* amazing. There are three species:
 
 - Adelie
+
+--
+
 - Gentoo
+
+--
+
 - Chinstrap
 
 ---
+
+class: center
 
 ## Bill Length
 
 We can make a histogram to see the distribution of bill lengths.
 
-```{r}
+```{r fig.height = 4}
 penguins %>% 
   ggplot(aes(x = bill_length_mm)) +
   geom_histogram() +
   theme_minimal()
 ```
-
 
 ```{r}
 average_bill_length <- penguins %>% 

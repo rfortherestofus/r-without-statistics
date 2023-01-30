@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>R Without Statistics</title>
+
+    <meta name="author" content="David Keyes" />
+  
+   <meta name="description" content="<p>Since R was invented in 1993, it has become a widely used programming language for statistical analysis. From academia to the tech world and beyond, R is used for a wide range of statistical analysis. R Without Statistics will show ways that R can be used beyond complex statistical analysis. Readers will learn about a range of uses for R, many of which they have likely never even considered.</p>" />
+   <meta name="generator" content="placeholder" />
+  <meta property="og:title" content="R Without Statistics" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="<a href="https://book.rwithoutstatistics.com" class="uri">https://book.rwithoutstatistics.com</a>" />
+  <meta property="og:image" content="<a href="https://book.rwithoutstatistics.com" class="uri">https://book.rwithoutstatistics.com</a>/mock-cover.png" />
+  <meta property="og:description" content="<p>Since R was invented in 1993, it has become a widely used programming language for statistical analysis. From academia to the tech world and beyond, R is used for a wide range of statistical analysis. R Without Statistics will show ways that R can be used beyond complex statistical analysis. Readers will learn about a range of uses for R, many of which they have likely never even considered.</p>" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="R Without Statistics" />
+  
+  <meta name="twitter:description" content="<p>Since R was invented in 1993, it has become a widely used programming language for statistical analysis. From academia to the tech world and beyond, R is used for a wide range of statistical analysis. R Without Statistics will show ways that R can be used beyond complex statistical analysis. Readers will learn about a range of uses for R, many of which they have likely never even considered.</p>" />
+  <meta name="twitter:image" content="<a href="https://book.rwithoutstatistics.com" class="uri">https://book.rwithoutstatistics.com</a>/mock-cover.png" />
+  <!-- JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script>
+    <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet" />
+    <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script>
+    <script src="libs/bs3compat-0.4.1/transition.js"></script>
+    <script src="libs/bs3compat-0.4.1/tabs.js"></script>
+    <script src="libs/bs3compat-0.4.1/bs3compat.js"></script>
+    <link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet" />
+    <script src="libs/bs4_book-1.0.0/bs4_book.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script>
+
+  <!-- CSS -->
+  <style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+      <link rel="stylesheet" href="style.css" />
+  
+</head>
+
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<!--bookdown:title:start-->
+<!--bookdown:title:end-->
+
+<!--bookdown:toc:start-->
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book">
+    <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">R Without Statistics</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+      </form>
+
+      <nav aria-label="Table of contents">
+        <h2>Table of contents</h2>
+        <div id="book-toc"></div>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="#">View book source <i class="fab fa-github"></i></a></li></p>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="col-sm-12 col-md-9 col-lg-7" id="content">
+<!--bookdown:toc:end-->
+<!--bookdown:body:start-->
+<div id="date-2022-10-06" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> date: “2022-10-06”</h1>
+<p>Placeholder</p>
+<!--chapter:end:index.Rmd-->
+</div>
+<div id="part-introduction" class="section level1 unnumbered">
+<h1 class="unnumbered">(PART*) Introduction</h1>
+<!--chapter:end:part-introduction.Rmd-->
+</div>
+<div id="why-r-without-statistics" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Why R Without Statistics?</h1>
+<p>Placeholder</p>
+<div id="how-i-came-to-use-r" class="section level2 unnumbered">
+<h2 class="unnumbered">How I Came to Use R</h2>
+</div>
+<div id="code-is-just-a-written-record-of-your-work" class="section level2 unnumbered">
+<h2 class="unnumbered">Code is Just a Written Record of Your Work</h2>
+</div>
+<div id="r-can-do-much-more-than-just-statistics" class="section level2 unnumbered">
+<h2 class="unnumbered">R Can Do Much More Than Just Statistics</h2>
+</div>
+<div id="how-this-book-works" class="section level2 unnumbered">
+<h2 class="unnumbered">How This Book Works</h2>
+</div>
+<div id="a-favor-to-ask" class="section level2 unnumbered">
+<h2 class="unnumbered">A Favor to Ask</h2>
+<!--chapter:end:introduction.Rmd-->
+</div>
+</div>
+<div id="part-illuminate" class="section level1 unnumbered">
+<h1 class="unnumbered">(PART*) Illuminate</h1>
+<!--chapter:end:part-illuminate.Rmd-->
+</div>
+<div id="data-viz-chapter" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Principles of Data Visualization</h1>
+<p>Placeholder</p>
+<div id="the-drought-visualization" class="section level2 unnumbered">
+<h2 class="unnumbered">The Drought Visualization</h2>
+</div>
+<div id="the-grammar-of-graphics" class="section level2 unnumbered">
+<h2 class="unnumbered">The Grammar of Graphics</h2>
+</div>
+<div id="working-with-ggplot2" class="section level2 unnumbered">
+<h2 class="unnumbered">Working With ggplot2</h2>
+<div id="the-first-layer-mapping-data-to-aesthetic-properties" class="section level3 unnumbered">
+<h3 class="unnumbered">The First Layer: Mapping Data to Aesthetic Properties</h3>
+</div>
+<div id="the-second-layer-choosing-the-geoms" class="section level3 unnumbered">
+<h3 class="unnumbered">The Second Layer: Choosing the geoms</h3>
+</div>
+<div id="the-third-layer-altering-aesthetic-properties" class="section level3 unnumbered">
+<h3 class="unnumbered">The Third Layer: Altering Aesthetic Properties</h3>
+</div>
+<div id="the-fourth-layer-setting-a-theme" class="section level3 unnumbered">
+<h3 class="unnumbered">The Fourth Layer: Setting a Theme</h3>
+</div>
+</div>
+<div id="recreating-the-drought-visualization-with-ggplot" class="section level2 unnumbered">
+<h2 class="unnumbered">Recreating the Drought Visualization with ggplot</h2>
+</div>
+<div id="ggplot-is-your-data-viz-secret-weapon" class="section level2 unnumbered">
+<h2 class="unnumbered">ggplot is Your Data Viz Secret Weapon</h2>
+<!--chapter:end:data-viz.Rmd-->
+</div>
+</div>
+<div id="making-your-own-theme" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Making Your Own Theme</h1>
+<p>Placeholder</p>
+<div id="the-power-of-a-theme" class="section level2 unnumbered">
+<h2 class="unnumbered">The Power of a Theme</h2>
+</div>
+<div id="using-bbplot-to-style-a-penguin-plot" class="section level2 unnumbered">
+<h2 class="unnumbered">Using bbplot to Style a Penguin Plot</h2>
+</div>
+<div id="creating-an-example-plot" class="section level2 unnumbered">
+<h2 class="unnumbered">Creating an Example Plot</h2>
+<div id="applying-the-bbc_style-function" class="section level3 unnumbered">
+<h3 class="unnumbered">Applying the <code>bbc_style()</code> Function</h3>
+</div>
+<div id="breaking-down-the-custom-theme" class="section level3 unnumbered">
+<h3 class="unnumbered">Breaking Down the Custom Theme</h3>
+</div>
+<div id="text-formatting" class="section level3 unnumbered">
+<h3 class="unnumbered">Text Formatting</h3>
+</div>
+<div id="legend-formatting" class="section level3 unnumbered">
+<h3 class="unnumbered">Legend Formatting</h3>
+</div>
+<div id="axis-formatting" class="section level3 unnumbered">
+<h3 class="unnumbered">Axis Formatting</h3>
+</div>
+<div id="grid-lines-formatting" class="section level3 unnumbered">
+<h3 class="unnumbered">Grid Lines Formatting</h3>
+</div>
+<div id="background-formatting" class="section level3 unnumbered">
+<h3 class="unnumbered">Background Formatting</h3>
+</div>
+<div id="small-multiples-formatting" class="section level3 unnumbered">
+<h3 class="unnumbered">Small Multiples Formatting</h3>
+</div>
+<div id="what-about-colors" class="section level3 unnumbered">
+<h3 class="unnumbered">What About Colors?</h3>
+</div>
+</div>
+<div id="in-conclusion-code-is-the-catalyst-for-culture-change" class="section level2 unnumbered">
+<h2 class="unnumbered">In Conclusion: Code is the Catalyst for Culture Change</h2>
+<!--chapter:end:custom-theme.Rmd-->
+</div>
+</div>
+<div id="creating-maps" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Creating Maps</h1>
+<p>Placeholder</p>
+<div id="the-briefest-of-primers-on-geospatial-data" class="section level2 unnumbered">
+<h2 class="unnumbered">The Briefest of Primers on Geospatial Data</h2>
+<div id="geometry-type" class="section level3 unnumbered">
+<h3 class="unnumbered">Geometry Type</h3>
+</div>
+<div id="the-dimensions" class="section level3 unnumbered">
+<h3 class="unnumbered">The Dimensions</h3>
+</div>
+<div id="bounding-box" class="section level3 unnumbered">
+<h3 class="unnumbered">Bounding Box</h3>
+</div>
+<div id="the-geodetic-crs" class="section level3 unnumbered">
+<h3 class="unnumbered">The Geodetic CRS</h3>
+</div>
+<div id="the-geometry-column" class="section level3 unnumbered">
+<h3 class="unnumbered">The <code>geometry</code> Column</h3>
+</div>
+</div>
+<div id="recreating-the-covid-map" class="section level2 unnumbered">
+<h2 class="unnumbered">Recreating the COVID Map</h2>
+<div id="importing-the-data" class="section level3 unnumbered">
+<h3 class="unnumbered">Importing the Data</h3>
+</div>
+<div id="calculating-daily-covid-cases" class="section level3 unnumbered">
+<h3 class="unnumbered">Calculating Daily COVID Cases</h3>
+</div>
+<div id="calculating-incidence-rates" class="section level3 unnumbered">
+<h3 class="unnumbered">Calculating Incidence Rates</h3>
+</div>
+<div id="adding-geospatial-data" class="section level3 unnumbered">
+<h3 class="unnumbered">Adding Geospatial Data</h3>
+</div>
+<div id="making-the-map" class="section level3 unnumbered">
+<h3 class="unnumbered">Making the Map</h3>
+<div id="generating-the-basic-map" class="section level4 unnumbered">
+<h4 class="unnumbered">Generating the Basic Map</h4>
+</div>
+<div id="changing-colors-and-beginning-to-tweak-the-legend" class="section level4 unnumbered">
+<h4 class="unnumbered">Changing Colors and Beginning to Tweak the Legend</h4>
+</div>
+<div id="tweaking-the-theme-the-legend" class="section level4 unnumbered">
+<h4 class="unnumbered">Tweaking the Theme: The Legend</h4>
+</div>
+<div id="tweaking-the-theme-the-title-caption-and-strip-text" class="section level4 unnumbered">
+<h4 class="unnumbered">Tweaking the Theme: The Title, Caption, and Strip Text</h4>
+</div>
+<div id="tweaking-the-theme-grid-lines-and-axis-text" class="section level4 unnumbered">
+<h4 class="unnumbered">Tweaking the Theme: Grid Lines and Axis Text</h4>
+</div>
+<div id="tweaking-the-theme-plot-background-and-margins" class="section level4 unnumbered">
+<h4 class="unnumbered">Tweaking the Theme: Plot Background and Margins</h4>
+</div>
+</div>
+</div>
+<div id="making-your-own-maps" class="section level2 unnumbered">
+<h2 class="unnumbered">Making Your Own Maps</h2>
+<div id="importing-raw-data" class="section level3 unnumbered">
+<h3 class="unnumbered">Importing Raw Data</h3>
+</div>
+<div id="accessing-geospatial-data-using-r-functions" class="section level3 unnumbered">
+<h3 class="unnumbered">Accessing Geospatial Data Using R Functions</h3>
+</div>
+<div id="using-appropriate-projections" class="section level3 unnumbered">
+<h3 class="unnumbered">Using Appropriate Projections</h3>
+</div>
+<div id="bring-your-existing-r-skills-to-geospatial-data" class="section level3 unnumbered">
+<h3 class="unnumbered">Bring Your Existing R Skills to Geospatial Data</h3>
+</div>
+<div id="in-conclusion-r-is-a-map-making-swiss-army-knife" class="section level3 unnumbered">
+<h3 class="unnumbered">In Conclusion: R is a Map-Making Swiss Army Knife</h3>
+<!--chapter:end:maps.Rmd-->
+</div>
+</div>
+</div>
+<div id="make-high-quality-tables" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Make High-Quality Tables</h1>
+<p>Placeholder</p>
+<div id="table-design-principles" class="section level2 unnumbered">
+<h2 class="unnumbered">Table Design Principles</h2>
+<div id="principle-one-minimize-clutter" class="section level3 unnumbered">
+<h3 class="unnumbered">Principle One: Minimize Clutter</h3>
+</div>
+<div id="principle-two-differentiate-the-header-from-the-body" class="section level3 unnumbered">
+<h3 class="unnumbered">Principle Two: Differentiate the Header from the Body</h3>
+</div>
+<div id="principle-three-align-appropriately" class="section level3 unnumbered">
+<h3 class="unnumbered">Principle Three: Align Appropriately</h3>
+</div>
+<div id="principle-four-use-the-right-level-of-precision" class="section level3 unnumbered">
+<h3 class="unnumbered">Principle Four: Use the Right Level of Precision</h3>
+</div>
+<div id="principle-five-use-color-intentionally" class="section level3 unnumbered">
+<h3 class="unnumbered">Principle Five: Use Color Intentionally</h3>
+</div>
+<div id="principle-six-add-data-visualization-where-appropriate" class="section level3 unnumbered">
+<h3 class="unnumbered">Principle Six: Add Data Visualization Where Appropriate</h3>
+</div>
+</div>
+<div id="conclusion" class="section level2 unnumbered">
+<h2 class="unnumbered">Conclusion</h2>
+<!--chapter:end:tables.Rmd-->
+</div>
+</div>
+<div id="part-communicate" class="section level1 unnumbered">
+<h1 class="unnumbered">(PART*) Communicate</h1>
+<!--chapter:end:part-communicate.Rmd-->
+</div>
+<div id="rmarkdown-chapter" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> Communicating with R Markdown</h1>
+<p>Placeholder</p>
+<div id="how-r-markdown-works" class="section level2 unnumbered">
+<h2 class="unnumbered">How R Markdown Works</h2>
+</div>
+<div id="document-structure" class="section level2 unnumbered">
+<h2 class="unnumbered">Document Structure</h2>
+<div id="the-yaml-metadata" class="section level3 unnumbered">
+<h3 class="unnumbered">The YAML Metadata</h3>
+</div>
+<div id="the-code-chunks" class="section level3 unnumbered">
+<h3 class="unnumbered">The Code Chunks</h3>
+<div id="code-chunk-options" class="section level4 unnumbered">
+<h4 class="unnumbered">Code Chunk Options</h4>
+</div>
+</div>
+<div id="markdown-text" class="section level3 unnumbered">
+<h3 class="unnumbered">Markdown Text</h3>
+</div>
+<div id="inline-r-code" class="section level3 unnumbered">
+<h3 class="unnumbered">Inline R Code</h3>
+</div>
+<div id="running-code-chunks-interactively" class="section level3 unnumbered">
+<h3 class="unnumbered">Running Code Chunks Interactively</h3>
+</div>
+</div>
+<div id="quarto" class="section level2 unnumbered">
+<h2 class="unnumbered">Quarto</h2>
+</div>
+<div id="in-conclusion-r-markdown-opens-up-all-sorts-of-possibilities" class="section level2 unnumbered">
+<h2 class="unnumbered">In Conclusion: R Markdown Opens up All Sorts of Possibilities</h2>
+<!--chapter:end:rmarkdown.Rmd-->
+</div>
+</div>
+<div id="parameterized-reports-chapter" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> Generate Multiple Reports at Once with Parameterized Reporting</h1>
+<p>Placeholder</p>
+<div id="how-parameterized-reporting-works" class="section level2 unnumbered">
+<h2 class="unnumbered">How Parameterized Reporting Works</h2>
+<div id="creating-an-r-markdown-document-with-parameters" class="section level3 unnumbered">
+<h3 class="unnumbered">Creating an R Markdown Document with Parameters</h3>
+</div>
+<div id="creating-an-r-script-file-to-render-multiple-reports" class="section level3 unnumbered">
+<h3 class="unnumbered">Creating an R Script File to Render Multiple Reports</h3>
+<div id="step-1-create-a-vector-of-all-states" class="section level4 unnumbered">
+<h4 class="unnumbered">Step 1: Create a Vector of All States</h4>
+</div>
+<div id="step-2-create-a-tibble-with-data-to-render-all-reports" class="section level4 unnumbered">
+<h4 class="unnumbered">Step 2: Create a Tibble with Data to Render All Reports</h4>
+</div>
+<div id="step-3-render-all-of-the-reports" class="section level4 unnumbered">
+<h4 class="unnumbered">Step 3: Render All of the Reports</h4>
+</div>
+</div>
+</div>
+<div id="best-practices-for-working-with-parameterized-reporting" class="section level2 unnumbered">
+<h2 class="unnumbered">Best Practices for Working with Parameterized Reporting</h2>
+</div>
+<div id="in-conclusion-parameterized-reporting-makes-new-reporting-options-possible" class="section level2 unnumbered">
+<h2 class="unnumbered">In Conclusion: Parameterized Reporting Makes New Reporting Options Possible</h2>
+<!--chapter:end:parameterized-reports.Rmd-->
+</div>
+</div>
+<div id="create-beautiful-presentations-with-rmarkdown" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> Create Beautiful Presentations with RMarkdown</h1>
+<!--chapter:end:presentations.Rmd-->
+</div>
+<div id="make-websites-to-share-results-online" class="section level1" number="10">
+<h1><span class="header-section-number">10</span> Make Websites to Share Results Online</h1>
+<ul>
+<li>When to do static vs when you need Shiny</li>
+</ul>
+<!--chapter:end:websites.Rmd-->
+</div>
+<div id="part-automate" class="section level1 unnumbered">
+<h1 class="unnumbered">(PART*) Automate</h1>
+<!--chapter:end:part-automate.Rmd-->
+</div>
+<div id="access-up-to-date-census-data-with-the-tidycensus-package" class="section level1" number="11">
+<h1><span class="header-section-number">11</span> Access Up to Date Census Data with the <code>tidycensus</code> Package</h1>
+<!--chapter:end:tidycensus.Rmd-->
+</div>
+<div id="pull-in-survey-results-as-soon-as-they-come-in" class="section level1" number="12">
+<h1><span class="header-section-number">12</span> Pull in Survey Results as Soon as They Come In</h1>
+<!--chapter:end:qualtrics.Rmd-->
+</div>
+<div id="functions" class="section level1" number="13">
+<h1><span class="header-section-number">13</span> Stop Copying and Pasting Code by Creating Your Own Functions</h1>
+<p><a href="https://twitter.com/hadleywickham/status/1574373127349575680" class="uri">https://twitter.com/hadleywickham/status/1574373127349575680</a></p>
+<!--chapter:end:functions.Rmd-->
+</div>
+<div id="custom-packages" class="section level1" number="14">
+<h1><span class="header-section-number">14</span> Bundle Your Functions Together in Your Own R Package</h1>
+<!--chapter:end:custom-packages.Rmd-->
+</div>
+<div id="part-conclusion" class="section level1 unnumbered">
+<h1 class="unnumbered">(PART*) Conclusion</h1>
+<!--chapter:end:part-conclusion.Rmd-->
+</div>
+<div id="come-for-the-data-stay-for-the-community" class="section level1" number="15">
+<h1><span class="header-section-number">15</span> Come for the Data, Stay for the Community</h1>
+<!--chapter:end:conclusion.Rmd-->
+</div>
+<!--bookdown:body:end-->
+  </main>
+
+  <div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page">
+      <h2>On this page</h2>
+      <div id="book-on-this-page"></div>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          <li><a id="book-source" href="#">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="#">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5">
+  <div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>R Without Statistics</strong>" was written by David Keyes. </p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+
+
+</body>
+
+</html>

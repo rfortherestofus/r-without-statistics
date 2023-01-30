@@ -24,15 +24,11 @@ Familiar markdown pieces (headings, bold, italics, etc)
 
 Unique syntax of xaringan (--- for new slides, -- for incremental slides, ??? for presenter notes)
 
-Background images
+Columns with .left[] and .right[]
 
 Aligning things with CSS class center/middle
 
-Columns with .left[] and .right[]
-
-Add tables
-
-Add plots
+Background images
 
 Change fonts
 
