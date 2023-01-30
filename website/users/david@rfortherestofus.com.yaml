@@ -1,0 +1,8 @@
+name: 'David Keyes'
+super: true
+id: 7aa2cbfd-67eb-4231-ad84-85a30697d1a4
+password_hash: $2y$10$TTRickyOVG68hIcrADQ4JO7JPyXITXUa1AZOjgEN9VJ7hQZx.5vvK
+preferences:
+  collections:
+    pages:
+      after_save: continue_editing

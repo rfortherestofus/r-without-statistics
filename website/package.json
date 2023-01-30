@@ -1,30 +1,31 @@
 {
+  "private": true,
   "scripts": {
-    "start": "npm-run-all --parallel css eleventy browsersync",
-    "eleventy": "eleventy --watch",
-    "debug": "set DEBUG=* & eleventy",
-    "css": "postcss src/static/css/tailwind.css --o _site/static/css/style.css --watch",
-    "build": "cross-env NODE_ENV=production eleventy && cross-env NODE_ENV=production tailwindcss -i src/static/css/tailwind.css -o _site/static/css/style.css",
-    "browsersync": "browser-sync start --server '_site' --files '_site' --port 8080 --no-notify --no-open"
+    "dev": "vite",
+    "watch": "vite",
+    "build": "vite build",
+    "production": "vite build"
+  },
+  "author": "Studio 1902",
+  "license": "MIT",
+  "dependencies": {
+    "@alpinejs/collapse": "^3.11.1",
+    "@alpinejs/focus": "^3.11.1",
+    "@alpinejs/persist": "^3.11.1",
+    "alpinejs": "^3.11.1",
+    "focus-visible": "^5.2.0"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^1.0.0",
-    "@11ty/eleventy-plugin-syntaxhighlight": "^3.1.3",
-    "@tailwindcss/typography": "^0.5.0",
-    "alpinejs": "^3.7.1",
-    "browser-sync": "^2.27.7",
-    "cross-env": "^7.0.3",
-    "cssnano": "^5.0.15",
-    "html-minifier": "^4.0.0",
-    "js-yaml": "^4.1.0",
-    "luxon": "^2.3.0",
-    "npm-run-all": "^4.1.5",
-    "postcss-cli": "^9.1.0",
-    "prismjs": "^1.26.0",
-    "tailwindcss": "^3.0.13"
-  },
-  "dependencies": {
-    "autoprefixer": "^10.4.2",
-    "postcss": "^8.4.5"
+    "@tailwindcss/forms": "^0.5.3",
+    "@tailwindcss/typography": "^0.5.9",
+    "autoprefixer": "10.4.13",
+    "glob-all": "^3.3.1",
+    "laravel-vite-plugin": "^0.7.3",
+    "postcss": "^8.4.21",
+    "postcss-focus-visible": "^8.0.1",
+    "postcss-import": "^15.1.0",
+    "resolve-url-loader": "^5.0.0",
+    "tailwindcss": "^3.2.4",
+    "vite": "^4.0.4"
   }
 }

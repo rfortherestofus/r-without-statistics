@@ -1,18 +1,26 @@
+//--------------------------------------------------------------------------
+// Tailwind configuration
+//--------------------------------------------------------------------------
+//
+// Use the Tailwind configuration to completely define the current sites
+// design system by adding and extending to Tailwinds default utility
+// classes. Various aspects of the config are split inmultiple files.
+//
+
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./**/*.html"],
-  theme: {
-    fontFamily: {
-      sans: ['IBM Plex Sans', 'sans-serif'],
-      serif: ['IBM Plex Serif', 'serif'],
-      mono: ['IBM Plex Mono', 'mono'],
-    },
-    container: {
-      center: true,
-    },
-    extend: {
-      colors: {},
-    },
-  },
-  variants: {},
-  plugins: [require("@tailwindcss/typography")],
-};
+  // The various configurable Tailwind configuration files.
+  presets: [
+    require('tailwindcss/defaultConfig'),
+    require('./tailwind.config.typography.js'),
+    require('./tailwind.config.peak.js'),
+    require('./tailwind.config.site.js'),
+  ],
+  // Configure files to scan for utility classes (JIT).
+  content: [
+    './resources/views/**/*.blade.php',
+    './resources/views/**/*.html',
+    './resources/js/**/*.js',
+  ],
+  safelist: []
+}

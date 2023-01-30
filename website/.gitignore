@@ -1,11 +1,16 @@
-_site/
-_tmp/
-.DS_Store
-node_modules/
-.vscode/
-*git/
-package-lock.json
+/node_modules
+/public/hot
+/public/storage
+/public/vendor/statamic
+/public/img/
+/public/static/
+/storage/*.key
+/vendor
 .env
-
-# Local Netlify folder
-.netlify
+.env.backup
+.phpunit.result.cache
+.antlers.json
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
