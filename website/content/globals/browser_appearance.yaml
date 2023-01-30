@@ -1,0 +1,11 @@
+title: 'Browser appearance'
+data:
+  disable_telephone_detection: false
+  disable_email_detection: false
+  disable_address_detection: false
+  use_theme_color: false
+  apple_mobile_web_app: false
+  android_mobile_web_app: false
+  use_favicons: true
+  svg: favicon.svg
+  ios_color: '#FFFFFF'

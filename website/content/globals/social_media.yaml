@@ -1,0 +1,15 @@
+title: 'Social media'
+data:
+  social_media:
+    -
+      id: trJdEAn4
+      handle: rfortherestofus/r-without-statistics
+      prefix: 'https://www.github.com/'
+      type: github
+      enabled: true
+    -
+      id: ldicp8wq
+      handle: dgkeyes
+      prefix: 'https://www.twitter.com/'
+      type: twitter
+      enabled: true
