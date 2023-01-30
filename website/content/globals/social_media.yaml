@@ -2,13 +2,14 @@ title: 'Social media'
 data:
   social_media:
     -
-      id: lbki4z8e
-      handle: 'https://mastodon.social/@robdekort'
-      type: mastodon
-      enabled: true
-    -
       id: trJdEAn4
-      handle: studio1902
+      handle: rfortherestofus/r-without-statistics
       prefix: 'https://www.github.com/'
       type: github
+      enabled: true
+    -
+      id: ldicp8wq
+      handle: dgkeyes
+      prefix: 'https://www.twitter.com/'
+      type: twitter
       enabled: true
