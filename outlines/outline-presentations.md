@@ -40,6 +40,7 @@ Custom CSS (colors and fonts)
 - xaringanExtra
 - existing themes (e.g. R-Ladies)
 
+
 # Advantages of xaringan
 
 - It's where you're already working with data so no copy-paste issues

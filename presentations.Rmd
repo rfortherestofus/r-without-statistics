@@ -302,5 +302,100 @@ TODO: https://show.rfor.us/cmsHyylq
 
 ### Customizing our Slides {-}
 
-One issue with the slide we just made is that it's hard to read the word "Penguins."
+One issue with the slide we just made is that it's hard to read the word "Penguins." It would probably be best if we could make the text bigger and a different color. To do this, we need to use some CSS, the language used to style HTML documents (remember, when we knit our `xaringan` presentation, we end up with an HTML document). If you're thinking, "I'm reading this book to learn R, not CSS," don't worry. You just have to know a bit of CSS to make tweaks to your slides.
 
+To add custom CSS, I'm going to create a code chunk. To tell R Markdown that this code chunk has CSS, not R, I put CSS in between the curly brackets. I can then add CSS like this to tell R Markdown to make the h2 (the second-level header) 150px and white. I have to add the `.remark-slide-content` before the h2 in order to make sure we target the specific element in our presentation (remark comes from remark.js, a JavaScript library to make presentations that `xaringan` uses under the hood).
+
+```{css}
+.remark-slide-content h2 {
+  font-size: 150px;
+  color: white;
+}
+```
+
+We can see our slide in Figure \@ref(fig:TODO).
+
+TODO: penguins-report.png
+
+If I wanted to change the font, I could do so with some additional CSS. The first line of this code will make a font called Inter available to us. The two lines I added will make the h2 use the Inter font and make it bold. 
+
+```{css}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+.remark-slide-content h2 {
+  font-size: 150px;
+  color: white;
+	font-family: Inter;
+  font-weight: bold;
+}
+```
+
+The slide with bold Inter font is visible in Figure \@ref(fig:TODO).
+
+TODO: penguins-report-inter.png
+
+Because `xaringan` slides are built as HTML documents, the sky is the limit in terms of customizing them with CSS. Of course, you have to know the ins and outs of CSS and if you're reading this book, this probably isn't a skill you possess. Fortunately, there are two ways you can customize your slides without knowing CSS.
+
+R users have made `xaringan` themes that you can use as well. If you run this code, you will get a list of all of these themes.
+
+```{r}
+names(xaringan:::list_css())
+```
+
+
+TODO: Add output
+
+You can then choose a theme you'd like to use. To use the theme, you adjust your YAML as follows. This code tells `xaringan` to use the default CSS as well as customizations made in the metropolis and metropolis-fonts CSS files (these come bundled with `xaringan` so you don't need to do anything beyond installing the package to access them).
+
+```{yaml}
+---
+title: "Penguins Report"
+author: "David Keyes"
+date: "2024-01-12"
+output:
+  xaringan::moon_reader:
+    css: [default, metropolis, metropolis-fonts]
+---
+```
+
+You can see how this theme changes the look-and-feel of our slides in Figure \@ref(fig:TODO) below.
+
+TODO: Add xaringan-metropolis.png
+
+If writing custom CSS is the totally flexible but more challenging option to tweaking your `xaringan` slides, using a custom theme is way simpler but a lot less flexible. A nice middle ground is to use the `xaringanthemer` package by Garrick Aden-Buie. This package has several built-in themes and also allows you to easily create your own custom `xaringan` theme. After installing the `xaringanthemer` package, you adjust the css line in your YAML to use the `xaringan-themer.css` file.
+
+```{yaml}
+---
+title: "Penguins Report"
+author: "David Keyes"
+date: "2024-01-12"
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+---
+```
+
+With this in place, you can now customize your slides by using the `style_xaringan()` function. This function has over 60 arguments, allowing you to tweak nearly any part of your `xaringan` slides. To make the same changes that we made above with custom CSS, I'll use just a few. One particularly nice thing about the `xaringanthemer` package is that you can use any font available on Google Fonts by simply adding its name to `header_font_family` or any other similar argument (no need to run the line above that made the Inter font available to us).  
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+
+style_xaringan(
+  header_h2_font_size = "150px",
+  header_color = "white",
+  header_font_weight = "bold",
+  header_font_family = "Inter"
+)
+```
+
+I could show you what my slide with the penguin image background looks like, but trust me, it's exactly identical to the slide we made previously with custom CSS.
+
+## In Conclusion: The Advantages of `xaringan` {-}
+
+Now that we've discussed how to use `xaringan`, let's talk a bit about why you might consider switching to it for your presentations. In my conversation with Silvia Canelón, she brought up three main reasons.
+
+First, if you're already working in R and R Markdown, being able to produce slides in the same tool is a game changer. Say you've written a report that you've knitted to a Word document. You can now reuse your code from that R Markdown document and use it to make figures, tables, and more in your `xaringan` slides. 
+
+Second, because `xaringan` creates slides as HTML documents, you can post them online (we'll discuss ways to do this in Chapter \@ref(fig:websites-chapter)). No need to email or print out your slides for your viewers. Just share the link to your slides and you're done.
+
+The third benefit of using `xaringan` is accessibility. People with limited vision are able to access HTML documents in ways that make them accessible. As Canelón put it to me, "when [people] have the HTML version of the slides, they have some control over what it looks like." They can increase the text size or use screen readers. Making presentations with `xaringan` isn't just a cool trick. It also means more people can engage with your slides. 
