@@ -2,32 +2,15 @@
 title: "Penguins Report"
 author: "David Keyes"
 date: "2024-01-12"
-output:
-  xaringan::moon_reader:
-    css: xaringan-themer.css
+output: xaringan::moon_reader
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(
-  include = TRUE,
-  echo = FALSE,
-  message = FALSE,
-  warning = FALSE
-)
+knitr::opts_chunk$set(include = TRUE, 
+                      echo = FALSE,
+                      message = FALSE,
+                      warning = FALSE)
 ```
-
-
-```{r xaringan-themer, include=FALSE, warning=FALSE}
-library(xaringanthemer)
-
-style_xaringan(
-  header_h2_font_size = "150px",
-  header_color = "white",
-  header_font_weight = "bold",
-  header_font_family = "Inter"
-)
-```
-
 
 ```{r}
 library(tidyverse)
@@ -36,18 +19,6 @@ library(tidyverse)
 ```{r}
 penguins <- read_csv("https://raw.githubusercontent.com/rfortherestofus/r-without-statistics/main/data/penguins-2008.csv")
 ```
-
----
-
-class: center, middle
-background-image: url("penguins.jpg")
-
-## Penguins
-
-
-
-
----
 
 # Introduction
 
@@ -65,25 +36,24 @@ We are writing a report about the **Palmer Penguins**. These penguins are *reall
 
 ---
 
-class: center
-
 ## Bill Length
 
 We can make a histogram to see the distribution of bill lengths.
 
-```{r fig.height = 4}
-penguins %>%
+```{r}
+penguins %>% 
   ggplot(aes(x = bill_length_mm)) +
   geom_histogram() +
   theme_minimal()
 ```
 
+
 ```{r}
-average_bill_length <- penguins %>%
+average_bill_length <- penguins %>% 
   summarize(avg_bill_length = mean(bill_length_mm,
-    na.rm = TRUE
-  )) %>%
+                                   na.rm = TRUE)) %>% 
   pull(avg_bill_length)
 ```
 
 The chart shows the distribution of bill lengths. The average bill length is `r average_bill_length` millimeters.
+

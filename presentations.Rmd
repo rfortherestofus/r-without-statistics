@@ -1,20 +1,32 @@
+```{r}
+i <- 1
+chapter_number <- 8
+source("_common.R")
+```
+
 # Create Beautiful Presentations with R Markdown 
 
 Remember how we talked in Chapter \@ref(rmarkdown-chapter) about the multi-tool workflow from SPSS to Excel to Word? That leaves out one of the most common tools in many people's workflow: PowerPoint. Reporting happens in presentations as often as it does in Word-based reports. 
 
-In Chapter \@ref(rmarkdown-chapter), we talked about the R Markdown-based workflow having the benefit of keeping everything in one tool. You may be wondering at this point if creating presentations will require us to add another tool, like PowerPoint. Do you need to do your analysis, data visualization, and table making in R and then copy everything to PowerPoint by hand? No! The good news is that R has robust presentation-making capabilities. 
+In Chapter \@ref(rmarkdown-chapter), we talked about the R Markdown-based workflow having the benefit of keeping everything in one tool. You may be wondering at this point if creating presentations will require us to add another tool, like PowerPoint. Do you need to do your analysis, data visualization, and table making in R and then copy everything to PowerPoint by hand? No! R has robust presentation-making capabilities. 
 
-In this chapter, we'll learn how to make presentations in R using the `xaringan` package. This package, which uses R Markdown to make presentations, is one of several you can use to make slides, but it is the most widely used. To learn more about the capabilities of `xaringan` I spoke with Silvia Canelón, a data analyst in the Urban Health Lab at the University of Pennsylvania. Canelón has done extensive teaching on the `xaringan` package and thought deeply about its benefits. As you'll hear in this chapter, these benefits go beyond making nice-looking slides. 
+In this chapter, we'll learn how to make presentations in R using the `xaringan` package. This package, which uses R Markdown to make presentations, is one of several you can use to make slides, but it is the most widely used. To learn more about the capabilities of `xaringan`, I spoke with Silvia Canelón, a data analyst in the Urban Health Lab at the University of Pennsylvania. Canelón has done extensive teaching on the `xaringan` package and has thought deeply about its benefits. As you'll hear in this chapter, these benefits include but also go well beyond making good-looking slides. 
 
 ## How `xaringan` Works {-} 
 
-To get started with `xaringan`, you need to first install the package using the standard approach: `install.packages("xaringan")`. Once it is installed, you can now go to File > New File > R Markdown. When you do this, you'll be presented with the screen seen in Figure \@ref(fig:TODO). 
+To get started with `xaringan`, you need to first install the package using the standard approach: `install.packages("xaringan")`. Once it is installed, you can now go to File > New File > R Markdown. You're probably thinking that you want to go to the Presentation tab. Doing so will give you several options for making slides, as you can see in Figure \@ref(fig:new-rmarkdown-presentation).
 
-TODO: Add screenshot https://show.rfor.us/GbnwfWK2
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
 
-You're probably thinking that you want to go to the Presentation tab. Doing so will give you several options for making slides, as you can see in Figure \@ref(fig:TODO).
+```{r new-rmarkdown-presentation, out.width="100%", fig.cap="The options presented to create a new presentation"}
+knitr::include_graphics(here::here("assets/new-rmarkdown-presentation.png"))
+```
 
-TODO: Add screenshot
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/new-rmarkdown-presentation.png"))
+```
 
 These are other formats you can use to make slides (and yes, you can knit an R Markdown document to PowerPoint). However, if you want to make a presentation with `xaringan` (and, as I will explain below, I think it's the best option), you should go to the From Template tab. From there, scroll down until you find the template called Ninja Presentation. Select that, hit OK, and you'll get a blank R Markdown document. Just as when we created a regular R Markdown document, creating a new `xaringan` presentation will give us some default content. I'm going to delete that and add my own contents which you can see below.
 
@@ -71,17 +83,38 @@ average_bill_length <- penguins %>%
 The chart shows the distribution of bill lengths. The average bill length is `r average_bill_length` millimeters.
 ````
 
-This code should look familiar because it is exactly the same as the R Markdown document we created in Chapter \@ref(rmarkdown-chapter) with one line changed in the YAML. Instead of  `output: word_document` we now have `output: xaringan::moon_reader`. With this change, we will now get slides rather than a Word document. Let's try hitting the Knit button to see what it looks like. When I hit Knit, I get an HTML file with the same name as R Markdown document (in my case, `xaringan-example.Rmd` and `xaringan-example.html`). This is the first thing to know about `xaringan`: the slides it produces are HTML files. It may seem odd to get slides as HTML files, but it's got several advantages over formats like PowerPoint, as we'll see below. If I open up the HTML document, I see Figure \@ref(fig:TODO).
+This code should look familiar because it is exactly the same as the R Markdown document we created in Chapter \@ref(rmarkdown-chapter) with one line changed in the YAML. Instead of  `output: word_document` we now have `output: xaringan::moon_reader`. With this change, we will now get slides rather than a Word document. Let's try hitting the Knit button to see what it looks like. When I hit Knit, I get an HTML file with the same name as R Markdown document (in my case, `xaringan-example.Rmd` and `xaringan-example.html`). This is the first thing to know about `xaringan`: the slides it produces are HTML files. It may seem odd to get slides as HTML files, but it offers several advantages over formats like PowerPoint, as we'll see below. If I open up the HTML document, I see Figure \@ref(fig:penguins-report-slide-1).
 
-TODO: Add screenshot
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
 
-If we scroll to the next slide with the right arrow key, we'll see content that looks familiar. Figure \@ref(fig:TODO) shows this slide, which has the same text and a cut-off version of the histogram we made in Chapter \@ref(rmarkdown-chapter).
+```{r penguins-report-slide-1, out.width="100%", fig.cap="The first slide of my presentation"}
+knitr::include_graphics(here::here("assets/penguins-report-slide-1.png"))
+```
 
-TODO: Add screenshot
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/penguins-report-slide-1.png"))
+```
 
-This slide shows us two things:
+If we scroll to the next slide with the right arrow key, we'll see content that looks familiar. Figure \@ref(fig:penguins-report-slide-2) shows this slide, which has the same text and a cut-off version of the histogram we made in Chapter \@ref(rmarkdown-chapter).
+
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
+
+```{r penguins-report-slide-2, out.width="100%", fig.cap="The second slide of my presentation"}
+knitr::include_graphics(here::here("assets/penguins-report-slide-2.png"))
+```
+
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/penguins-report-slide-2.png"))
+```
+
+At this point, we've learned two things about how `xaringan` works:
 
 1. **The overall syntax for making slides with `xaringan` is nearly identical to that used to make reports with R Markdown.** We copied in the content of our R Markdown document, changed one line, and we see the same output, just in slide format. The YAML, markdown text, and code chunks work exactly the same. 
+
 2. **We need to make a few tweaks to make our content fit on our slides.** When we're working in an R Markdown document that will be knitted to Word, its length doesn't matter because reports can be one page or 100 pages. Working with `xaringan`, however, we need to be conscientious about how much content will fit on one slide. Our cut-off histogram shows us what happens without doing this. Let's fix it.
 
 ### Breaking Content Across Slides {-}
@@ -89,7 +122,6 @@ This slide shows us two things:
 Let's make our histogram fully visible by putting it on its own slide. To make a new slide, we add three dashes at any point in our R Markdown document. I've copied the relevant portion of the document and added these dashes. 
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
-
 ---
 
 ## Bill Length
@@ -104,14 +136,25 @@ penguins %>%
 ```
 ````
 
-If I knit again, what was one slide is now broke into two: an Introduction slide and a Bill Length slide. We can see both in Figure \@ref(fig:TODO).
+If I knit again, what was one slide is now broken into two: an Introduction slide and a Bill Length slide. We can see both in Figure \@ref(fig:penguins-report-2-pages).
 
-TODO: Add screenshot
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
+
+```{r penguins-report-2-pages, out.width="100%", fig.cap="The presentation broken into two slides"}
+knitr::include_graphics(here::here("assets/penguins-report-2-pages.png"))
+```
+
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/penguins-report-2-pages.png"))
+```
+
+
 
 If I look closely, I can see that the bottom of histogram is ever so slightly cut off. I can fix this by adjusting its size. We do this using the code chunk option `fig.height` as follows:
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
-
 ---
 
 ## Bill Length
@@ -130,7 +173,7 @@ Doing this makes the histogram fit on the slide and also reveals the text that w
 
 ### Incrementally Revealing Content {-}
 
-When presenting, it's often useful to only show a portion of the content on each slide at a time (TODO: awk language). Let's say, for example, we know that when we're presenting the first slide, we want to talk a bit about each penguin species. Rather than have all three visible when we open this slide, it would be nice to have the names come up one at a time. We can do this using what `xaringan` calls incremental reveal. 
+When presenting, it's often useful to only show a portion of the content on each slide at a time. Let's say, for example, we know that when we're presenting the first slide, we want to talk a bit about each penguin species. Rather than have all three species visible when we open this slide, it would be nice to have the names come up one at a time. We can do this using what `xaringan` calls incremental reveal. 
 
 To use this feature, we put two dashes between any content we want to incrementally reveal. This code, for example, will let us show Adelie on the screen, then Adelie and Gentoo, then Adelie, Gentoo, and Chinstrap.
 
@@ -151,13 +194,23 @@ We are writing a report about the **Palmer Penguins**. These penguins are *reall
 
 ````
 
-When presenting your slides, you'll use the right arrow to incrementally reveal the species. We can see what this looks like in Figure \@ref(fig:TODO).
+When presenting your slides, you'll use the right arrow to incrementally reveal the species. We can see what this looks like in Figure \@ref(fig:incremental-reveal).
 
-TODO: Add all three slides
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
+
+```{r incremental-reveal, out.width="100%", fig.cap="One slide shown with incremental reveal"}
+knitr::include_graphics(here::here("assets/incremental-reveal.png"))
+```
+
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/incremental-reveal.png"))
+```
 
 ### Aligning Content {-}
 
-When designing your presentation, you'll likely want to control the alignment of content. We do this by adding what are known as content classes. You can surround any content with the classes `.left[]`, `right[]`, and `center[]` to align them. For example, on our slide that creates a histogram and associated text, we could put `.center[]` around the code chunk that makes the histogram:
+When designing your presentation, you'll also likely want to control the alignment of content. We do this by adding what are known as content classes. You can surround any content with the classes `.left[]`, `right[]`, and `center[]` to align them. For example, on our slide that creates a histogram and associated text, we could put `.center[]` around the code chunk that makes the histogram:
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 ## Bill Length
@@ -183,9 +236,19 @@ average_bill_length <- penguins %>%
 The chart shows the distribution of bill lengths. The average bill length is `r average_bill_length` millimeters.
 ````
 
-Doing this would center the chart on our slide, as we can see in Figure \@ref(fig:TODO).
+Doing this would center the chart on our slide, as we can see in Figure \@ref(fig:center-chart).
 
-TODO: https://show.rfor.us/WVStZhvT
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
+
+```{r center-chart, out.width="100%", fig.cap="A slide with the chart centered"}
+knitr::include_graphics(here::here("assets/center-chart.png"))
+```
+
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/center-chart.png"))
+```
 
 There are also built-in options to make two-column layouts. Adding `pull-left[]` and `pull-right[]` in this way will make two equally spaced columns.
 
@@ -215,9 +278,20 @@ The chart shows the distribution of bill lengths. The average bill length is `r 
 ]
 ````
 
-We can see what this looks like in Figure \@ref(fig:TODO) below.
+We can see what this looks like in Figure \@ref(fig:slide-two-columns) below.
 
-https://show.rfor.us/vRl3dFxy
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
+
+```{r slide-two-columns, out.width="100%", fig.cap="A slide with two columns"}
+knitr::include_graphics(here::here("assets/slide-two-columns.png"))
+```
+
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/slide-two-columns.png"))
+```
+
 
 You can also use the content classes `.left-column[]` and `.right-column[]` to make a layout with a narrow left column and wide right column. The code below puts the text on the left and the histogram on the right.
 
@@ -247,9 +321,21 @@ The chart shows the distribution of bill lengths. The average bill length is `r 
 ]
 ````
 
-We can see the slide output in Figure \@ref(fig:TODO).
+We can see the slide output in Figure \@ref(fig:slide-two-columns-v2).
 
-TODO: https://show.rfor.us/97G1w5GQ
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
+
+```{r slide-two-columns-v2, out.width="100%", fig.cap="A slide with a smaller left column and a larger right column"}
+knitr::include_graphics(here::here("assets/slide-two-columns-v2.png"))
+```
+
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/slide-two-columns-v2.png"))
+```
+
+
 
 In addition to aligning particular pieces of content on slides, we can also everything using the `.left`, `right`, and `center` classes. To do this, you specify the class right after the three dashes that indicate a new slide and before any content. 
 
@@ -279,11 +365,23 @@ average_bill_length <- penguins %>%
 The chart shows the distribution of bill lengths. The average bill length is `r average_bill_length` millimeters.
 ````
 
-Doing this would give us a fully-centered slide, as seen in Figure \@ref(fig:TODO) below.
+Doing this would give us a fully-centered slide, as seen in Figure \@ref(fig:slide-centered) below.
 
-TODO: https://show.rfor.us/gVTzYbbl
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
 
-You can also use the class `.middle` to vertically center the slide.
+```{r slide-centered, out.width="100%", fig.cap="A fully centered slide"}
+knitr::include_graphics(here::here("assets/slide-centered.png"))
+```
+
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/slide-centered.png"))
+```
+
+
+
+You can also use the class `.middle` to vertically center the slide, as we'll see in the next section.
 
 ### Adding Background Images to Slides {-}
 
@@ -296,15 +394,26 @@ background-image: url("penguins.jpg")
 ## Penguins
 ````
 
-Doing this gives me a slide with a picture of penguins in the background with the text Penguins in front of it. Figure \@ref(fig:TODO) shows the output.
+Doing this gives me a slide with a picture of penguins in the background with the text Penguins in front of it. Figure \@ref(fig:xaringan-background-image) shows the output.
 
-TODO: https://show.rfor.us/cmsHyylq
 
-### Customizing our Slides {-}
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
+
+```{r xaringan-background-image, out.width="100%", fig.cap="A slide that uses a background image"}
+knitr::include_graphics(here::here("assets/xaringan-background-image.png"))
+```
+
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/xaringan-background-image.png"))
+```
+
+### Customizing our Slides Further {-}
 
 One issue with the slide we just made is that it's hard to read the word "Penguins." It would probably be best if we could make the text bigger and a different color. To do this, we need to use some CSS, the language used to style HTML documents (remember, when we knit our `xaringan` presentation, we end up with an HTML document). If you're thinking, "I'm reading this book to learn R, not CSS," don't worry. You just have to know a bit of CSS to make tweaks to your slides.
 
-To add custom CSS, I'm going to create a code chunk. To tell R Markdown that this code chunk has CSS, not R, I put CSS in between the curly brackets. I can then add CSS like this to tell R Markdown to make the h2 (the second-level header) 150px and white. I have to add the `.remark-slide-content` before the h2 in order to make sure we target the specific element in our presentation (remark comes from remark.js, a JavaScript library to make presentations that `xaringan` uses under the hood).
+To add custom CSS, I'm going to create a code chunk. To tell R Markdown that this code chunk contains CSS, not R, I put the text "css" in between the curly brackets. I can then add CSS like this to tell R Markdown to make the h2 (the second-level header) 150px and white. I have to add the `.remark-slide-content` before the h2 in order to make sure we target the specific element in our presentation (remark comes from remark.js, a JavaScript library to make presentations that `xaringan` uses under the hood).
 
 ```{css}
 .remark-slide-content h2 {
@@ -313,11 +422,21 @@ To add custom CSS, I'm going to create a code chunk. To tell R Markdown that thi
 }
 ```
 
-We can see our slide in Figure \@ref(fig:TODO).
+We can see our slide in Figure \@ref(fig:penguins-report).
 
-TODO: penguins-report.png
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
 
-If I wanted to change the font, I could do so with some additional CSS. The first line of this code will make a font called Inter available to us. The two lines I added will make the h2 use the Inter font and make it bold. 
+```{r penguins-report, out.width="100%", fig.cap="The title slide with changes to the font to make the text more visible"}
+knitr::include_graphics(here::here("assets/penguins-report.png"))
+```
+
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/penguins-report.png"))
+```
+
+If I wanted to change the font, I could do so with some additional CSS. The first line of this code will make a font called Inter available to use in our slides (we do this because not everyone has this font installed on their computers). The two lines I added will make the h2 use the Inter font and make it bold. 
 
 ```{css}
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
@@ -330,22 +449,35 @@ If I wanted to change the font, I could do so with some additional CSS. The firs
 }
 ```
 
-The slide with bold Inter font is visible in Figure \@ref(fig:TODO).
+The slide with bold Inter font is visible in Figure \@ref(fig:penguins-report-inter).
 
-TODO: penguins-report-inter.png
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
 
-Because `xaringan` slides are built as HTML documents, the sky is the limit in terms of customizing them with CSS. Of course, you have to know the ins and outs of CSS and if you're reading this book, this probably isn't a skill you possess. Fortunately, there are two ways you can customize your slides without knowing CSS.
+```{r penguins-report-inter, out.width="100%", fig.cap="The title slide with changes to the font to make the text more visible"}
+knitr::include_graphics(here::here("assets/penguins-report-inter.png"))
+```
+
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/penguins-report-inter.png"))
+```
+
+Because `xaringan` slides are built as HTML documents, the sky is the limit in terms of customizing them with CSS. Of course, you have to know the ins and outs of CSS, and if you're reading this book, this probably isn't a skill you possess. Fortunately, there are two ways you can customize your slides without knowing CSS.
 
 R users have made `xaringan` themes that you can use as well. If you run this code, you will get a list of all of these themes.
+
+```{r eval = FALSE, echo = TRUE}
+names(xaringan:::list_css())
+```
+
+Doing this will show the following output:
 
 ```{r}
 names(xaringan:::list_css())
 ```
 
-
-TODO: Add output
-
-You can then choose a theme you'd like to use. To use the theme, you adjust your YAML as follows. This code tells `xaringan` to use the default CSS as well as customizations made in the metropolis and metropolis-fonts CSS files (these come bundled with `xaringan` so you don't need to do anything beyond installing the package to access them).
+You can then choose a theme you'd like to use. To use the theme, you adjust your YAML as follows. This code tells `xaringan` to use the default CSS as well as customizations made in the `metropolis` and `metropolis-fonts` CSS files (these come bundled with `xaringan` so you don't need to do anything beyond installing the package to access them).
 
 ```{yaml}
 ---
@@ -358,9 +490,19 @@ output:
 ---
 ```
 
-You can see how this theme changes the look-and-feel of our slides in Figure \@ref(fig:TODO) below.
+You can see how this theme changes the look-and-feel of our slides in Figure \@ref(fig:xaringan-metropolis) below.
 
-TODO: Add xaringan-metropolis.png
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
+
+```{r xaringan-metropolis, out.width="100%", fig.cap="A slide using the metropolis theme"}
+knitr::include_graphics(here::here("assets/xaringan-metropolis.png"))
+```
+
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/xaringan-metropolis.png"))
+```
 
 If writing custom CSS is the totally flexible but more challenging option to tweaking your `xaringan` slides, using a custom theme is way simpler but a lot less flexible. A nice middle ground is to use the `xaringanthemer` package by Garrick Aden-Buie. This package has several built-in themes and also allows you to easily create your own custom `xaringan` theme. After installing the `xaringanthemer` package, you adjust the css line in your YAML to use the `xaringan-themer.css` file.
 
@@ -375,7 +517,7 @@ output:
 ---
 ```
 
-With this in place, you can now customize your slides by using the `style_xaringan()` function. This function has over 60 arguments, allowing you to tweak nearly any part of your `xaringan` slides. To make the same changes that we made above with custom CSS, I'll use just a few. One particularly nice thing about the `xaringanthemer` package is that you can use any font available on Google Fonts by simply adding its name to `header_font_family` or any other similar argument (no need to run the line above that made the Inter font available to us).  
+With this in place, you can now customize your slides by using the `style_xaringan()` function. This function has over 60 arguments, allowing you to tweak nearly any part of your `xaringan` slides. To make the same changes that we made above with custom CSS, I'll use just a few of the arguments. One particularly nice thing about the `xaringanthemer` package is that you can use any font available on Google Fonts by simply adding its name to `header_font_family` or any other similar argument (no need to run the line above that made the Inter font available to us). Here's how I would make the same changes that I made with custom CSS above.
 
 ```{r xaringan-themer, include=FALSE, warning=FALSE}
 library(xaringanthemer)
@@ -398,4 +540,4 @@ First, if you're already working in R and R Markdown, being able to produce slid
 
 Second, because `xaringan` creates slides as HTML documents, you can post them online (we'll discuss ways to do this in Chapter \@ref(fig:websites-chapter)). No need to email or print out your slides for your viewers. Just share the link to your slides and you're done.
 
-The third benefit of using `xaringan` is accessibility. People with limited vision are able to access HTML documents in ways that make them accessible. As Canelón put it to me, "when [people] have the HTML version of the slides, they have some control over what it looks like." They can increase the text size or use screen readers. Making presentations with `xaringan` isn't just a cool trick. It also means more people can engage with your slides. 
+The third benefit of using `xaringan` is accessibility. As Canelón put it to me, "when [people] have the HTML version of the slides, they have some control over what it looks like." People with limited vision are able to access HTML documents in ways that are accessible to them. They can also increase the text size or use screen readers. Making presentations with `xaringan` isn't just a cool trick. It also means more people can engage with your slides. 
