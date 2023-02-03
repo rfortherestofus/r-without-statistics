@@ -70,6 +70,10 @@ font-weight: 700;
   margin: 0rem -0.5rem 1rem -0.5rem;
 }
 
+.figure img {
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
 blockquote {
     border-left: 0.5rem solid #eee;
     padding-left: 1.5rem;

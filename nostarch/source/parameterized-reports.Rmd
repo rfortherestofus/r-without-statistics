@@ -14,7 +14,7 @@ source("_common.R")
 cases <- tibble(state.name) %>%
   rbind(state.name = "District of Columbia") %>%
   left_join(read_csv("https://raw.githubusercontent.com/rfortherestofus/urban-parameterized-report/main/united_states_covid19_cases_deaths_and_testing_by_state.csv", skip = 2),
-    by = c("state.name" = "State/Territory")
+            by = c("state.name" = "State/Territory")
   ) %>%
   select(
     total_cases = `Total Cases`, state.name,
@@ -65,13 +65,13 @@ It might sound a bit complicated so let's show it in action. I've taken the code
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 ---
-title: "Urban Institute COVID Report"
+  title: "Urban Institute COVID Report"
 output: html_document
 params:
   state: "Alabama"
 ---
-
-```{r setup, include=FALSE}
+  
+  ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   echo = FALSE,
   warning = FALSE,
@@ -91,7 +91,10 @@ library(scales)
 ```{r}
 cases <- tibble(state.name) %>%
   rbind(state.name = "District of Columbia") %>%
-  left_join(read_csv("united_states_covid19_cases_deaths_and_testing_by_state.csv", skip = 2),
+  left_join(
+    read_csv("united_states_covid19_cases_deaths_and_testing_by_state.csv",
+      skip = 2
+    ),
     by = c("state.name" = "State/Territory")
   ) %>%
   select(
@@ -162,7 +165,7 @@ Returning to the R Markdown document, the combination of YAML, R code chunks, an
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 params:
-  state: "Alabama"
+state: "Alabama"
 ````
 
 These lines allow us to define a variable, in this case `state`. We can then use this variable throughout the rest of our R Markdown document using this syntax: `params$variable_name` (replacing `variable_name` with `state` or any name you set in the YAML). Take a look at this line:
@@ -207,13 +210,13 @@ The values of the `state_cases_per_100000` and `state_cases_rank` variables are 
 
 ```{r echo = TRUE, eval = FALSE}
 state_cases_per_100000 <- cases %>%
-  filter(state.name == params$state) %>%
-  pull(cases_per_100000) %>%
-  comma()
+filter(state.name == params$state) %>%
+pull(cases_per_100000) %>%
+comma()
 
 state_cases_rank <- cases %>%
-  filter(state.name == params$state) %>%
-  pull(case_rank)
+filter(state.name == params$state) %>%
+pull(case_rank)
 ```
 
 Writing sentences using inline R code that dynamically updates based on the value of our parameter allows us to create a report for any state with numbers specific to that state.
@@ -222,15 +225,15 @@ We can see them our parameter used in other places as well. Take a look at this 
 
 ```{r echo = TRUE, eval = FALSE}
 cases %>%
-  mutate(highlight_state = if_else(state.name == params$state, "Y", "N"))
+mutate(highlight_state = if_else(state.name == params$state, "Y", "N"))
 ```
 
 We can see what the relevant columns in our data look like after these two lines:
 
 ```{r}
 cases %>%
-  mutate(highlight_state = if_else(state.name == params$state, "Y", "N")) %>%
-  select(state.name, highlight_state)
+mutate(highlight_state = if_else(state.name == params$state, "Y", "N")) %>%
+select(state.name, highlight_state)
 ```
 
 Later down, our ggplot code uses the `highlight_state` variable for the `fill` aesthetic. What this means is that, when we create our bar chart, the state that is in our variable `params$state` (Alabama) is highlighted in yellow while all of the other states are blue. If you're eagle-eyed, you may have noticed a reference to the `urbnthemes` package and the line of code that says `set_urbn_defaults(style = "print")`. This package provides a custom ggplot theme for all graphs and the `set_urbn_defaults(style = "print")` line applies that theme (in a slightly different way than we saw in Chapter \@ref(custom-theme-chapter), but with the same result). The Urban Institute-styled chart with Alabama highlighted is seen in Figure \@ref(fig:alabama-covid-chart) below.
@@ -239,7 +242,7 @@ Later down, our ggplot code uses the `highlight_state` variable for the `fill` a
 print_nostarch_file_name(file_type_to_print = "png")
 ```
 
-```{r alabama-covid-chart, out.width="100%", fig.cap="A bar chart showing Alabama higlighted"}
+```{r alabama-covid-chart, out.width="100%", fig.cap="A bar chart showing Alabama highlighted"}
 knitr::include_graphics(here::here("assets/alabama-covid-chart.png"))
 ```
 
@@ -262,8 +265,8 @@ Using this code, our HTML document will be called `urban-covid-budget-report.htm
 
 ```{r echo = TRUE, eval = FALSE}
 render(
-  input = "urban-covid-budget-report.Rmd",
-  output_file = "Alabama.html"
+input = "urban-covid-budget-report.Rmd",
+output_file = "Alabama.html"
 )
 ```
 
@@ -271,9 +274,9 @@ We can also tell the `render()` function to use parameters we give it (parameter
 
 ```{r echo = TRUE, eval = FALSE}
 render(
-  input = "urban-covid-budget-report.Rmd",
-  output_file = "Alaska.html",
-  parms = list(state = "Alaska")
+input = "urban-covid-budget-report.Rmd",
+output_file = "Alaska.html",
+parms = list(state = "Alaska")
 )
 ```
 
@@ -285,8 +288,8 @@ First, we create a vector (in colloquial terms, a list of items) of all state na
 
 ```{r echo = TRUE, eval = TRUE}
 state <- tibble(state.name) %>%
-  rbind("District of Columbia") %>%
-  pull(state.name)
+rbind("District of Columbia") %>%
+pull(state.name)
 ```
 
 We can see what `state` looks like below.
@@ -301,9 +304,9 @@ The second step is to create a tibble with information needed to render all 51 r
 
 ```{r echo = TRUE, eval = TRUE}
 reports <- tibble(
-  input = "urban-covid-budget-report.Rmd",
-  output_file = str_glue("{state}.html"),
-  params = map(state, ~ list(state = .))
+input = "urban-covid-budget-report.Rmd",
+output_file = str_glue("{state}.html"),
+params = map(state, ~ list(state = .))
 )
 ```
 
@@ -339,21 +342,21 @@ When we run this code, it runs the `render()` function for each row in `reports`
 
 ```{r echo = TRUE, eval = FALSE}
 render(
-  input = "urban-covid-budget-report.Rmd",
-  output_file = "Alabama.html",
-  params = list(state = "Alabama")
+input = "urban-covid-budget-report.Rmd",
+output_file = "Alabama.html",
+params = list(state = "Alabama")
 )
 
 render(
-  input = "urban-covid-budget-report.Rmd",
-  output_file = "Alaska.html",
-  params = list(state = "Alaska")
+input = "urban-covid-budget-report.Rmd",
+output_file = "Alaska.html",
+params = list(state = "Alaska")
 )
 
 render(
-  input = "urban-covid-budget-report.Rmd",
-  output_file = "Arizona.html",
-  params = list(state = "Arizona")
+input = "urban-covid-budget-report.Rmd",
+output_file = "Arizona.html",
+params = list(state = "Arizona")
 )
 
 # And so on for all states
@@ -368,17 +371,17 @@ library(rmarkdown)
 
 # Create a vector of all states and the District of Columbia
 state <- tibble(state.name) %>%
-  rbind("District of Columbia") %>%
-  pull(state.name)
+rbind("District of Columbia") %>%
+pull(state.name)
 
 # Create a tibble with information on the:
 # input R Markdown document
 # output HTML file
 # parameters needed to knit the document
 reports <- tibble(
-  input = "urban-covid-budget-report.Rmd",
-  output_file = str_glue("{state}.html"),
-  params = map(state, ~ list(state = .))
+input = "urban-covid-budget-report.Rmd",
+output_file = str_glue("{state}.html"),
+params = map(state, ~ list(state = .))
 )
 
 # Generate all of our reports
