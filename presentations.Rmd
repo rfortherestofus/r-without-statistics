@@ -498,7 +498,6 @@ print_nostarch_file_name(file_type_to_print = "png")
 
 ```{r xaringan-metropolis, out.width="100%", fig.cap="A slide using the metropolis theme"}
 knitr::include_graphics(here::here("assets/xaringan-metropolis.png"))
-
 ```
 
 ```{r results='asis'}
