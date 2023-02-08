@@ -35,6 +35,7 @@
 - How to automate updating of website
 
 # Conclusion
+- When to do static vs when you need Shiny
 - Quarto websites now too
 - Can use Netlify to host private repos and add password-protection
 

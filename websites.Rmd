@@ -1,3 +1,17 @@
 # Make Websites to Share Results Online {#websites-chapter} 
 
-- When to do static vs when you need Shiny
+In summer 2020, Matt Herman and his family moved from Brooklyn to Westchester County, New York. This was the first summer of the COVID pandemic, and Herman was shocked to see that the high-quality data put out by the City of New York was not replicated in Westchester County. At a time before vaccines were available, for many, daily decisions (should we take our child to the park?) depended on access to good data. 
+
+Matt Herman was not just any person with an interest in getting good COVID data. He was also the Deputy Director of the ChildStat Data Unit in the Office of Research and Analytics at the New York City Administration for Children’s Services. This handful of a title meant that he was skilled at working with data. With these skills, Herman realized that he could create a COVID Westchester County COVID data resource that he and others needed. The data was out there; it just needed someone to make it accessible.
+
+What Herman ended up creating was the Westchester Covid-19 (TODO: he uses Covid while I say COVID; make consistent?) Tracking website (TODO: add url). Built entirely in R, this website had charts, maps, tables, and text that summarized the latest COVID data for Westchester County. 
+
+TODO: Screenshot of website
+
+Best of all, the code that Herman wrote to make the website is just a set of R Markdown files, strung together with the `distill` package. You may not think of R as a tool for making websites, but it can make them quite well. If you already use R to work with your data, creating a website is a great way to share results.
+
+## An Overview of the `distill` Package
+
+There are a few different ways to make websites using R Markdown. There is the `blogdown` package, which uses the Hugo static site generator under the surface. It is imminently flexible, but finicky (updates to Hugo themes are notorious for breaking `blogdown` websites). For those looking for a simple option, the `distill` package is the way to go. It's what Matt Herman and many others have used to quickly and attractively get R Markdown-based websites up and running.
+
+To understand how `distill` works, think back to when we have knitted our R Markdown documents to HTML. These have all been one-offs, with a single R Markdown document generating a single HTML file. A website, on the other hand, is a collection of HTML files. The `distill` package is what enables us to use multiple R Markdown documents to create multiple HTML files, and have them all connected with a navigation menu and more.
