@@ -105,16 +105,136 @@ navbar:
  TODO: Figure out what description does
  
  Finally, we have the `title` and `name`. The `title` parameter creates the title for the entire website and shows up in the top left of the navigation bar by the default. The `name` parameter TODO: Figure it out.
+
+## Build Site {-}
+
+So far, we've looked at our R Markdown documents and the `_site.yml` file. We haven't, however, created our website. There are three ways to do this. 
+
+The first option is to use the Build Website button, which can be found in the Build tab of the top right pane on RStudio.
+
+TODO: Add screenshot
+
+The second option to create your website is to use the function `rmarkdown::render_site()`. You can run this in the console or in an R script file. 
+
+The third option, applicable if you're working in RStudio, is to use the keyboard shortcut command/control (Mac/Windows) + shift + B. 
+
+All three options will render all of the R Markdown documents and add the top navigation bar to them, with the options specified in the `_site.yml` file. To find the rendered files, look in the output directory you specified (for us, that was `docs`). Open up any HTML file and you'll find your website.
  
 ## Custom CSS {-}
+
+Websites made with `distill` tend to look similar (it's the tradeoff of working with a simple approach). But you can change how your website looks using some custom CSS. The `distill` package even provides a function to simplify the process.
+
+To get started, the easiest approach is to run the `create_theme()` function from `distill`. Doing so will create a file called `theme.css`, which we can see below.
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "css"}
+/* base variables */
+
+/* Edit the CSS properties in this file to create a custom
+   Distill theme. Only edit values in the right column
+   for each row; values shown are the CSS defaults.
+   To return any property to the default,
+   you may set its value to: unset
+   All rows must end with a semi-colon.                      */
+
+/* Optional: embed custom fonts here with `@import`          */
+/* This must remain at the top of this file.                 */
+
+html {
+  /*-- Main font sizes --*/
+  --title-size:      50px;
+  --body-size:       1.06rem;
+  --code-size:       14px;
+  --aside-size:      12px;
+  --fig-cap-size:    13px;
+  /*-- Main font colors --*/
+  --title-color:     #000000;
+  --header-color:    rgba(0, 0, 0, 0.8);
+  --body-color:      rgba(0, 0, 0, 0.8);
+  --aside-color:     rgba(0, 0, 0, 0.6);
+  --fig-cap-color:   rgba(0, 0, 0, 0.6);
+  /*-- Specify custom fonts ~~~ must be imported above   --*/
+  --heading-font:    sans-serif;
+  --mono-font:       monospace;
+  --body-font:       sans-serif;
+  --navbar-font:     sans-serif;  /* websites + blogs only */
+}
+
+/*-- ARTICLE METADATA --*/
+d-byline {
+  --heading-size:    0.6rem;
+  --heading-color:   rgba(0, 0, 0, 0.5);
+  --body-size:       0.8rem;
+  --body-color:      rgba(0, 0, 0, 0.8);
+}
+
+/*-- ARTICLE TABLE OF CONTENTS --*/
+.d-contents {
+  --heading-size:    18px;
+  --contents-size:   13px;
+}
+
+/*-- ARTICLE APPENDIX --*/
+d-appendix {
+  --heading-size:    15px;
+  --heading-color:   rgba(0, 0, 0, 0.65);
+  --text-size:       0.8em;
+  --text-color:      rgba(0, 0, 0, 0.5);
+}
+
+/*-- WEBSITE HEADER + FOOTER --*/
+/* These properties only apply to Distill sites and blogs  */
+
+.distill-site-header {
+  --title-size:       18px;
+  --text-color:       rgba(255, 255, 255, 0.8);
+  --text-size:        15px;
+  --hover-color:      white;
+  --bkgd-color:       #0F2E3D;
+}
+
+.distill-site-footer {
+  --text-color:       rgba(255, 255, 255, 0.8);
+  --text-size:        15px;
+  --hover-color:      white;
+  --bkgd-color:       #0F2E3D;
+}
+
+/*-- Additional custom styles --*/
+/* Add any additional CSS rules below                      */
+````
+
+Within that file, there are a set of what are known as CSS variables. Most of them have names that clearly show their purpose. Our `theme.css` file contains the default values for our CSS variables. If we want to make tweaks, we simply change them. For example, I've taken a section of the `theme.css` file and made the title and text size larger and made the background color a light blue.
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
+.distill-site-header {
+  --title-size:       28px;
+  --text-color:       rgba(255, 255, 255, 0.8);
+  --text-size:        20px;
+  --hover-color:      white;
+  --bkgd-color:       #6cabdd;
+}
+````
+
+Before we rebuild our site to see these changes, we need to do one other thing: tell `distill` to use this custom CSS when rendering. We do this by adding this line in the `_site.yml` file: `theme: theme.css`. Now we can generate our site again using any of the three options above. The website with our CSS tweaks can be seen in Figure \@ref(fig:TODO) below.
+
+![](assets/covid-website-css-tweaks.png)
+
+As you can see in the `theme.css` file, there are a lot of CSS variables we can change to tweak the appearance of our website. Playing around with them and rebuilding your site is a great way to figure out what does what.
  
 ## Adding Content to Our Website {-}
- 
- Now that we understand how a `distill` website works, let's add some content to ours. 
- 
+
+We've just been talking about customizing our website. But if we look at our website, it only has placeholder content, and there's not much of it. Let's talk now about adding content to our `distill` website.
+
+The advantage of creating content in a `distill` website, of course, is that you do it just as you would with any other R Markdown document. All of the markdown text and code chunks that we discussed in Chapter \@ref(rmarkdown-chapter) will work in `distill` as well. 
+  
  - Look back at Matt Herman website
 
 ## Interactive Graphics {-}
+
+- ggiraph
+- tables
+
+## Layouts {-}
 
 ## Hosting {-}
 
