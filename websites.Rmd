@@ -1,17 +1,121 @@
 # Make Websites to Share Results Online {#websites-chapter} 
 
-In summer 2020, Matt Herman and his family moved from Brooklyn to Westchester County, New York. This was the first summer of the COVID pandemic, and Herman was shocked to see that the high-quality data put out by the City of New York was not replicated in Westchester County. At a time before vaccines were available, for many, daily decisions (should we take our child to the park?) depended on access to good data. 
+In summer 2020, Matt Herman and his family moved from Brooklyn to Westchester County, New York. It was the first summer of the COVID pandemic, and Herman was shocked to see that the high-quality data put out by the City of New York was not replicated in Westchester County. At a time before vaccines were available, many daily choices depended on access to good data. Not having it made simple decisions, like whether to take a child to the park, feel impossible to make
 
-Matt Herman was not just any person with an interest in getting good COVID data. He was also the Deputy Director of the ChildStat Data Unit in the Office of Research and Analytics at the New York City Administration for Children’s Services. This handful of a title meant that he was skilled at working with data. With these skills, Herman realized that he could create a COVID Westchester County COVID data resource that he and others needed. The data was out there; it just needed someone to make it accessible.
+Matt Herman was not just any person with an interest in COVID data. He was also, at the time, the Deputy Director of the ChildStat Data Unit in the Office of Research and Analytics at the New York City Administration for Children’s Services. This handful of a title meant that he was skilled at working with data. And with these skills, Herman realized that he could create a COVID Westchester County COVID data resource that he and others needed. The data was out there; it just needed someone to make it accessible.
 
-What Herman ended up creating was the Westchester Covid-19 (TODO: he uses Covid while I say COVID; make consistent?) Tracking website (TODO: add url). Built entirely in R, this website had charts, maps, tables, and text that summarized the latest COVID data for Westchester County. 
+What Herman ended up creating was the Westchester Covid-19 (TODO: he uses Covid while I say COVID; make consistent?) Tracking website (TODO: add url). Built entirely in R, this website had charts, maps, tables, and text that summarized the latest COVID data for Westchester County. Although the website is no longer consistently updated, it shows what is possible with R. 
 
 TODO: Screenshot of website
 
-Best of all, the code that Herman wrote to make the website is just a set of R Markdown files, strung together with the `distill` package. You may not think of R as a tool for making websites, but it can make them quite well. If you already use R to work with your data, creating a website is a great way to share results.
+The code that Herman wrote to make the website is just a set of R Markdown files, strung together with the `distill` package. You may not think of R as a tool for making websites, but it can make them quite well. If you already use R to work with your data, creating a website is a great way to share results.
 
-## An Overview of the `distill` Package
+In this chapter, I'll explain the basics of how `distill` works by creating a simple website with it (the Westchester Covid-19  website that Matt Herman created is complicated so I'll use examples from it, but won't walk through it line by line). Within this website, we'll show how to create things like different page layouts, navigation menus, interactive graphics, and more. We'll then discuss how to use GitHub Pages to host your website for free. We'll conclude with some reflections on why the `distill` package to make websites is a great option for R users looking to get their results online.
 
-There are a few different ways to make websites using R Markdown. There is the `blogdown` package, which uses the Hugo static site generator under the surface. It is imminently flexible, but finicky (updates to Hugo themes are notorious for breaking `blogdown` websites). For those looking for a simple option, the `distill` package is the way to go. It's what Matt Herman and many others have used to quickly and attractively get R Markdown-based websites up and running.
+## Creating a Website With the `distill` Package {-}
 
-To understand how `distill` works, think back to when we have knitted our R Markdown documents to HTML. These have all been one-offs, with a single R Markdown document generating a single HTML file. A website, on the other hand, is a collection of HTML files. The `distill` package is what enables us to use multiple R Markdown documents to create multiple HTML files, and have them all connected with a navigation menu and more.
+There are a few different ways to make websites using R Markdown. There is the `blogdown` package, which uses the Hugo static site generator under the surface. It is imminently flexible but finicky (updates to Hugo themes are notorious for breaking `blogdown` websites). For those looking for a simple option, the `distill` package is the way to go. It's what Matt Herman and many others have used to quickly and attractively get R Markdown-based websites up and running.
+
+To understand how `distill` works, think back to when we have knitted our R Markdown documents to HTML (for example, in chapter \@ref(rmarkdown-chapter). These have all been one-offs, with a single R Markdown document generating a single HTML file. A website, on the other hand, is a collection of HTML files. The `distill` package is what enables us to use multiple R Markdown documents to create multiple HTML files, and have them all connected with a navigation menu and more.
+
+To create a `distill` website, you'll first need to install the package using `install.packages("distill")`. Once you've done that, the easiest way to start a `distill` website project is to go to File > New Project > New Directory. Once you get the menu visible in Figure \@ref(fig:TODO), scroll down and select Distill Website.
+
+TODO: Add screenshot
+
+Once you do that, you'll see the menu in Figure \@ref(fig:TODO).
+
+TODO: Add screenshot
+
+Here, in addition to specifying the directory and subdirectory where your project will live on your computer, you'll also want to give your website a title. You can also select Configure for GitHub Pages if you'd like. GitHub Pages is an easy way to get your website online, and I'll show how it works below. I'm going to create a new website called COVID Website and select the option to configure it for GitHub Pages.
+
+Let's now take a look at the files in our project. In addition to the `covid-website.Rproj` file that indicates we're working in an RStudio project, we've got two R Markdown documents (`about.Rmd` and `index.Rmd`), a `_site.yml` file, and a `docs` folder. The `docs` folder is where the rendered HTML files that make up our website will go, and we'll talk about them later. Let's look at the two R Markdown documents and the `_site.yml` file.
+
+## Working with R Markdown Documents in `distill` {-}
+
+If we open up the `index.Rmd` file, we see the following code. 
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
+---
+title: "COVID Website"
+description: |
+  Welcome to the website. I hope you enjoy it!
+site: distill::distill_website
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+# Learn more about creating websites with Distill at:
+# https://rstudio.github.io/distill/website.html
+
+# Learn more about publishing to GitHub Pages at:
+# https://rstudio.github.io/distill/publish_website.html#github-pages
+
+```
+````
+
+For the most part, this looks like a standard R Markdown document. In the YAML, we can see a couple differences with other R Markdown documents we've worked with: the `description` parameter and the line that says `site: distill::distill_website`. The `description` specifies text that will go below the title of each page, as seen in Figure \@ref(fig:TODO).
+
+TODO: Add screenshot
+
+The `site: distill::distill_website` specifies that the R Markdown document is the root page of a `distill` website. This means that when we knit, R Markdown knows to create a website, rather than an individual HTML file.
+
+On top of these two new parameters, we also are missing one parameter that we've seen in other R Markdown documents. This is the `output` parameter, which we've used to specify the output format of our R Markdown document on knitting. The reason we don't have this `output` parameter in our R Markdown documents is that we specify the output for the entire website in our `_site.yml` file.
+
+## Setting Options for Our Website with `_site.yml` {-}
+
+The promise of `distill` is that it we can make several R Markdown documents and string them together. To do this, we need a place to tell R which R Markdown documents make up the website, what the knitted files should look like, what the website should be called, and more. This all happens in the `_site.yml` file. If we open up the `_site.yml` file, we see the following code. 
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "yaml"}
+name: "covid-website"
+title: "COVID Website"
+description: |
+  COVID Website
+output_dir: "docs"
+navbar:
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html
+output: distill::distill_article
+````
+
+Let's actually go backwards through this file, starting with the `output: distill::distill_article` line. This line specifies that all R Markdown documents should be rendered using the `distill_article` format. This format, which we'll discuss more below, allows for things such as layouts of different widths, asides (parenthetical items that live in a sidebar next to the main content), easily customizable CSS, and more.
+
+Next, let's look at the `navbar` section. This, as you might guess from the name, is where we define the top navigation bar on our website. Our navigation bar is placed on the right side (swapping `right` for `left` would switch its position) with two pages: Home and About. Figure \@ref(fig:TODO) below highlights the navigation bar created from our code.
+
+TODO: Add screenshot of navbar
+
+Breaking down this code, the `text` parameter determines what shows up in the menu. For example, if I wanted to change "About" to "About this Website", I would change this portion of the `_site.yml` to this:
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "yaml"}
+navbar:
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "About this Website"
+      href: about.html
+````
+
+ The `href` parameter determines where the text in the navigation bar links to. You'll probably have noticed that the HTML files linked to have the same names as our R Markdown documents. This is because of the behavior we saw in Chapter \@ref(rmarkdown-chapter), where the names of HTML files are the same as the R Markdown documents used to create them, swapping out `.Rmd` for `.html`. 
+ 
+ Moving up, the `output_dir` parameter determines where the rendered HTML files live when we generate our website. The `docs` directory is listed here because we selected the Configure for GitHub Pages option when creating our website (more on this below). However, you can change the output directory to any folder you choose.
+ 
+ TODO: Figure out what description does
+ 
+ Finally, we have the `title` and `name`. The `title` parameter creates the title for the entire website and shows up in the top left of the navigation bar by the default. The `name` parameter TODO: Figure it out.
+ 
+## Custom CSS {-}
+ 
+## Adding Content to Our Website {-}
+ 
+ Now that we understand how a `distill` website works, let's add some content to ours. 
+ 
+ - Look back at Matt Herman website
+
+## Interactive Graphics {-}
+
+## Hosting {-}
+
+## Conclusion {-}
