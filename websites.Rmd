@@ -50,7 +50,6 @@ knitr::opts_chunk$set(echo = FALSE)
 
 # Learn more about publishing to GitHub Pages at:
 # https://rstudio.github.io/distill/publish_website.html#github-pages
-
 ```
 ````
 
@@ -226,15 +225,119 @@ As you can see in the `theme.css` file, there are a lot of CSS variables we can 
 We've just been talking about customizing our website. But if we look at our website, it only has placeholder content, and there's not much of it. Let's talk now about adding content to our `distill` website.
 
 The advantage of creating content in a `distill` website, of course, is that you do it just as you would with any other R Markdown document. All of the markdown text and code chunks that we discussed in Chapter \@ref(rmarkdown-chapter) will work in `distill` as well. 
-  
- - Look back at Matt Herman website
 
-## Interactive Graphics {-}
+I've written some code that creates a chart and a map on our COVID website. After the YAML and `setup` code chunk, we load three packages: `tidyverse` for data import, manipulation, and plotting (with ggplot), `janitor` for the `clean_names()` function, which makes our variable names easier to work with, and `tigris`, which allows us to import geospatial data on states. In the next code chunk, we import and clean the data. We then make a chart of four states (for legibility in this book) and follow this up by making a map of COVID rates in the most recent data (which so happens to be February 13, 2023, the day on which I'm writing this). 
+
+TODO: Update date
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
+---
+title: "COVID Website"
+description: "Information about COVID rates in the United States over time"
+site: distill::distill_website
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      warning = FALSE,
+                      message = FALSE)
+```
+
+```{r}
+# Load packages
+
+library(tidyverse)
+library(janitor)
+library(tigris)
+```
+
+```{r}
+# Import data
+
+us_states <- states(cb = TRUE, 
+                    resolution = "20m",
+                    progress_bar = FALSE) %>%
+  shift_geometry() %>% 
+  clean_names() %>% 
+  select(geoid, name) %>% 
+  rename(state = name) %>% 
+  filter(state %in% state.name)
+
+covid_data <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/rolling-averages/us-states.csv") %>% 
+  filter(state %in% state.name) %>% 
+  mutate(geoid = str_remove(geoid, "USA-")) 
+```
+
+```{r}
+# Make chart
+
+covid_data %>% 
+  filter(state %in% c("Alabama",
+                      "Alaska",
+                      "Arizona",
+                      "Arkansas")) %>% 
+  ggplot(aes(x = date,
+             y = deaths_avg_per_100k,
+             group = state,
+             color = deaths_avg_per_100k)) +
+  geom_line() +
+  scale_color_viridis_c(option = "rocket") +
+  theme_minimal() +
+  theme(legend.position = "none",
+        panel.grid.minor = element_blank(),
+        axis.title = element_blank()) +
+  facet_wrap(~state,
+             nrow = 2)
+```
+
+```{r}
+# Make map
+
+most_recent <- us_states %>% 
+  left_join(covid_data, by = "state") %>% 
+  slice_max(order_by = date,
+            n = 1) 
+
+most_recent %>% 
+  ggplot(aes(fill = deaths_avg_per_100k)) +
+  geom_sf() +
+  scale_fill_viridis_c(option = "rocket") +
+  labs(fill = "Deaths per\n100,000 people") +
+  theme_void()
+```
+````
+
+TODO: Add screenshot of website covid-website-with-chart-and-map.png
+
+
+
+## Making Our Content Interactive {-}
 
 - ggiraph
 - tables
 
 ## Layouts {-}
+
+
+
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
+```{r layout = "l-page"}
+# Make map
+
+most_recent <- us_states %>% 
+  left_join(covid_data, by = "state") %>% 
+  slice_max(order_by = date,
+            n = 1) 
+
+most_recent %>% 
+  ggplot(aes(fill = deaths_avg_per_100k)) +
+  geom_sf() +
+  scale_fill_viridis_c(option = "rocket") +
+  labs(fill = "Deaths per\n100,000 people") +
+  theme_void()
+```
+````
 
 ## Hosting {-}
 
