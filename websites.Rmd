@@ -226,7 +226,17 @@ We've just been talking about customizing our website. But if we look at our web
 
 The advantage of creating content in a `distill` website, of course, is that you do it just as you would with any other R Markdown document. All of the markdown text and code chunks that we discussed in Chapter \@ref(rmarkdown-chapter) will work in `distill` as well. 
 
-I've written some code that creates a chart and a map on our COVID website. After the YAML and `setup` code chunk, we load three packages: `tidyverse` for data import, manipulation, and plotting (with ggplot), `janitor` for the `clean_names()` function, which makes our variable names easier to work with, and `tigris`, which allows us to import geospatial data on states. In the next code chunk, we import and clean the data. We then make a chart of four states (for legibility in this book) and follow this up by making a map of COVID rates in the most recent data (which so happens to be February 13, 2023, the day on which I'm writing this). 
+I've written some code that creates a table, a map, and a chart on our COVID website. After the YAML and `setup` code chunk, we load several packages: 
+
+1. `tidyverse` for data import, manipulation, and plotting (with ggplot)
+1. `janitor` for the `clean_names()` function, which makes our variable names easier to work with 
+1. `tigris` to import geospatial data on states
+1. `gt` for making nice tables, as discussed in \@ref(tables-chapter)
+1. `lubridate` to which makes working with dates easier
+
+In the next code chunk, we import and clean the data. We also create a variable called `most_recent_day`, which allow us to use inline R code to put an always-up-to-date latest day in our text (see the header directly below this code chunk). 
+
+We then make a table that shows the death rates per 100,000 people in four states (the table would be long if we showed all 50 states). Next, we make a map of this same data, but for all states. Finally, we make a chart that shows COVID death rates over time (for legibility in this book, we only show four states).
 
 TODO: Update date
 
@@ -249,6 +259,8 @@ knitr::opts_chunk$set(echo = FALSE,
 library(tidyverse)
 library(janitor)
 library(tigris)
+library(gt)
+library(lubridate)
 ```
 
 ```{r}
@@ -266,29 +278,40 @@ us_states <- states(cb = TRUE,
 covid_data <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/rolling-averages/us-states.csv") %>% 
   filter(state %in% state.name) %>% 
   mutate(geoid = str_remove(geoid, "USA-")) 
+
+most_recent_day <- covid_data %>% 
+  slice_max(order_by = date,
+            n = 1) %>% 
+  distinct(date) %>% 
+  mutate(date_nice_format = str_glue("{month(date, label = TRUE, abbr = FALSE)} {day(date)}, {year(date)}")) %>% 
+  pull(date_nice_format)
 ```
 
+# COVID Death Rates as of `r most_recent_day`
+
+This table shows COVID death rates per 100,000 people in four states states.
+
 ```{r}
-# Make chart
+# Make table
 
 covid_data %>% 
   filter(state %in% c("Alabama",
                       "Alaska",
                       "Arizona",
                       "Arkansas")) %>% 
-  ggplot(aes(x = date,
-             y = deaths_avg_per_100k,
-             group = state,
-             color = deaths_avg_per_100k)) +
-  geom_line() +
-  scale_color_viridis_c(option = "rocket") +
-  theme_minimal() +
-  theme(legend.position = "none",
-        panel.grid.minor = element_blank(),
-        axis.title = element_blank()) +
-  facet_wrap(~state,
-             nrow = 2)
+  slice_max(order_by = date,
+            n = 1) %>% 
+  select(state, deaths_avg_per_100k) %>% 
+  arrange(state) %>% 
+  set_names("State", "Death rate") %>% 
+  gt() %>% 
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_column_labels()
+  )
 ```
+
+We can see this same death rate data for all states on a map.
 
 ```{r}
 # Make map
@@ -305,21 +328,46 @@ most_recent %>%
   labs(fill = "Deaths per\n100,000 people") +
   theme_void()
 ```
+
+# COVID Death Rates Over Time
+
+The following chart shows COVID death rates from the start of COVID in early 2020 until `r most_recent_day`.
+
+```{r}
+# Make chart
+
+covid_data %>% 
+  filter(state %in% c("Alabama",
+                      "Alaska",
+                      "Arizona",
+                      "Arkansas")) %>% 
+  ggplot(aes(x = date,
+             y = deaths_avg_per_100k,
+             group = state,
+             color = deaths_avg_per_100k)) +
+  geom_line() +
+  scale_color_viridis_c(option = "rocket") +
+  theme_minimal() +
+  labs(title = "Deaths per 100,000 people over time") +
+  theme(legend.position = "none",
+        plot.title.position = "plot",
+        plot.title = element_text(face = "bold"),
+        panel.grid.minor = element_blank(),
+        axis.title = element_blank()) +
+  facet_wrap(~state,
+             nrow = 2)
+```
 ````
 
-TODO: Add screenshot of website covid-website-with-chart-and-map.png
+We can see what this website looks like in \@ref(fig:TODO) below.
 
-
-
-## Making Our Content Interactive {-}
-
-- ggiraph
-- tables
+TODO: Add screenshot of website covid-website-static-page.png
 
 ## Layouts {-}
 
+One nice feature of `distill` is the ability to make certain code chunks output wider widths. To show how this works, let's focus on our map. Because many states are quite small, especially in the northeast, it's a bit challenging to see them. If we could make the entire map bigger, that would be helpful. 
 
-
+The `distill` package has three layouts that you can apply to a code chunk to make its output wider: `l-body-outset` (a bit wider than default), `l-page` (wider still), and `l-screen` (full screen). Let's apply `l-page` to the map code chunk as follows:
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 ```{r layout = "l-page"}
@@ -338,6 +386,26 @@ most_recent %>%
   theme_void()
 ```
 ````
+
+Doing this makes our map wider (and taller), and, as a result, much easier to read. You can see what the entire page looks like in Figure \@ref(fig:TODO) below.
+
+TODO: Add covid-website-static-page-wide-map.png
+
+## Making Our Content Interactive {-}
+
+Up to this point, all of the conte we've added to our website has been static. There is none of the interactivity common in websites. Since we're developing a website, it makese sense to take advantage of the medium. Matt Herman uses interactive graphics and maps on his Westchester County COVID website. Figure \@ref(fig:TODO), for example, shows a simple tooltip that allows the user to see results for any single day.
+
+TODO: Add screenshot
+
+And Herman also makes interactive tables, allowing the user to scroll through the data and sort by any of the variables in it.
+
+TODO: Add screenshot
+
+Let's add some interactivity to our website.
+
+
+
+
 
 ## Hosting {-}
 
