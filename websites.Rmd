@@ -344,9 +344,9 @@ covid_data %>%
   ggplot(aes(x = date,
              y = deaths_avg_per_100k,
              group = state,
-             color = deaths_avg_per_100k)) +
-  geom_line() +
-  scale_color_viridis_c(option = "rocket") +
+             fill = deaths_avg_per_100k)) +
+  geom_col() +
+  scale_fill_viridis_c(option = "rocket") +
   theme_minimal() +
   labs(title = "Deaths per 100,000 people over time") +
   theme(legend.position = "none",
@@ -389,7 +389,8 @@ most_recent %>%
 
 Doing this makes our map wider (and taller), and, as a result, much easier to read. You can see what the entire page looks like in Figure \@ref(fig:TODO) below.
 
-TODO: Add covid-website-static-page-wide-map.png
+TODO: Add covid-website-static-page-wide-map.png 
+TODO: Update this and previous screenshot because I switched to bar chart
 
 ## Making Our Content Interactive {-}
 
@@ -397,15 +398,103 @@ Up to this point, all of the conte we've added to our website has been static. T
 
 TODO: Add screenshot
 
-And Herman also makes interactive tables, allowing the user to scroll through the data and sort by any of the variables in it.
+Herman also makes interactive tables with the `DT` package, allowing the user to scroll through the data and sort by any of the variables in it.
 
 TODO: Add screenshot
 
-Let's add some interactivity to our website.
+Let's add some interactivity to our national COVID website. We'll begin by making our table interactive. Remember how we had to only include four states in order to keep our table from getting super long? With an interactive table, we can avoid this. The `reactable` package is a great option for interactive tables. If we swap out the `gt` package code we used to make our static table with the `reactable()` function, we can show all states. 
+
+```{r}
+covid_data %>% 
+  slice_max(order_by = date,
+            n = 1) %>% 
+  select(state, deaths_avg_per_100k) %>% 
+  arrange(state) %>% 
+  set_names("State", "Death rate") %>% 
+  reactable()
+```
+
+The `reactable` package shows ten rows by default, with pagination added below our table, as seen in Figure \@ref(fig:TODO).
+
+TODO: Add screenshot
+
+The `reactable()` function also enables sorting by default. Although we used the `arrange()` function in our code above to sort by state name, if users click the "Death rate" column, the table will be sorted by that variable. Figure \@ref(fig:TODO) shows this.
+
+TODO: Add screenshot
+
+We can also give our chart some interactivity. To do this, we'll use the same package that Matt Herman uses: `plotly`. The basic idea with `plotly` is this: create a plot with ggplot and save it as an object. Then, pass it to the `ggplotly()` function, which turns it into an interactive plot. Here's how it would work with my chart showing COVID death rates over time.
+
+```{r}
+library(plotly)
+
+covid_chart <- covid_data %>% 
+  filter(state %in% c("Alabama",
+                      "Alaska",
+                      "Arizona",
+                      "Arkansas")) %>% 
+  ggplot(aes(x = date,
+             y = deaths_avg_per_100k,
+             group = state,
+             fill = deaths_avg_per_100k)) +
+  geom_col() +
+  scale_fill_viridis_c(option = "rocket") +
+  theme_minimal() +
+  labs(title = "Deaths per 100,000 people over time") +
+  theme(legend.position = "none",
+        plot.title.position = "plot",
+        plot.title = element_text(face = "bold"),
+        panel.grid.minor = element_blank(),
+        axis.title = element_blank()) +
+  facet_wrap(~state,
+             nrow = 2)
 
 
+ggplotly(covid_chart)
+```
+
+With this code, I get an interactive chart. But the tooltip that users see on hover (see Figure \@ref(fig:TODO) below) is cluttered and overwhelming because the `ggplotly()` function shows all data by default. 
+
+TODO: Add screenshot
+
+To make our tooltip more informative, we can also create a single variable and then tell `ggplotly()` to just use this. Below, I begin by creating a `date_nice_format` variable so that we get, say, January 1, 2021 instead of 2021-01-01. I then combine this with the state and death rates (`deaths_avg_per_100k`) variables, saving my result as `tooltip_text`. I then add a new aesthetic property in the `ggplot()` function: `text = tooltip_text`. On its own, this doesn't do anything. But when I add `tooltip = "tooltip_text"` to the `ggplotly()` function, it changes the tooltip.
+
+TODO: Add numbers in No Starch book in code places below
+
+```{r}
+covid_chart <- covid_data %>% 
+  filter(state %in% c("Alabama",
+                      "Alaska",
+                      "Arizona",
+                      "Arkansas")) %>% 
+    mutate(date_nice_format = str_glue("{month(date, label = TRUE, abbr = FALSE)} {day(date)}, {year(date)}")) %>% 
+  mutate(tooltip_text = str_glue("{state}<br>{date_nice_format}<br>{deaths_avg_per_100k} per 100,000 people")) %>% 
+  ggplot(aes(x = date,
+             y = deaths_avg_per_100k,
+             group = state,
+             text = tooltip_text,
+             fill = deaths_avg_per_100k)) +
+  geom_col() +
+  scale_fill_viridis_c(option = "rocket") +
+  theme_minimal() +
+  labs(title = "Deaths per 100,000 people over time") +
+  theme(legend.position = "none",
+        plot.title.position = "plot",
+        plot.title = element_text(face = "bold"),
+        panel.grid.minor = element_blank(),
+        axis.title = element_blank()) +
+  facet_wrap(~state,
+             nrow = 2)
 
 
+ggplotly(covid_chart,
+                 tooltip = "tooltip_text")
+```
+
+Figure \@ref(fig:TODO) shows what our new tooltip looks like: a simple summary of the state, nicely formatted date, and death rate on that day.
+
+TODO: Add screenshot
+
+Adding interactivity in this way is a great way to take advantage of the medium of a website. Users who might feel overwhelmed looking at the static chart can explore the interactive version, hovering to see a summary of the results on any single day.
 
 ## Hosting {-}
 
