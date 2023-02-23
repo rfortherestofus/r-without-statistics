@@ -498,4 +498,35 @@ Adding interactivity in this way is a great way to take advantage of the medium 
 
 ## Hosting {-}
 
+Making a website is great, but you need a way to share it. There are various ways to do this, ranging from quite simple to quite complex. 
+
+The simplest solution is to zip up of the files in your `docs` folder (or whatever folder you put your rendered website in) and emailing your ZIP file to others. They can unzip it and open the HTML files in their browser. This works fine if you know you won't want to make changes to the data or styling of your website. But, as we discussed in \@ref(rmarkdown-chapter), what we think of as a one-time project rarely is.
+
+A better approach is to put your entire `docs` folder in a place where others can see it. This could be an internal network, Dropbox, Google Drive, Box, or something similar. This has the advantage of being simple to implement while allowing you to only give access to those you want to see your website. You can evan automate the process of copying your `docs` folder to various online file sharing sites using R packages: the `r2drop2` (TOOD: check name) package works with Dropbox, `googledrive` works with Google Drive, and `boxr` works with Box. In the past, I have written code like that below, which renders my site before copying the `docs` folder to Google Drive. Having your code to render and upload it to Google Drive all in one file means you can just run your entire file, generating and uploading your website in one go.
+
+```{r eval = FALSE, echo = TRUE}
+library(rmarkdown)
+library(fs)
+library(googledrive)
+
+# Render the website
+render_site()
+
+# Copy the `docs` folder to Google Drive
+# TODO: Add code
+```
+
+The most complicated yet most powerful solution is to use what's known as *continuous deployment*. TODO: check on definition of this. The idea behind continuous deployment is that, each time you commit your code to GitHub (or a similar service for posting code online), it deploys to a website you have set up. Learning to use GitHub is an investment, but being able to host your website for free makes it worth the time and effort. 
+Here's how this works. GitHub has a service called GitHub Pages. Most of the time, when you look a file on GitHub, it shows you the source code that underlies it. If you look at an HTML file, you see the HTML code. GitHub Pages, on the other hand, doesn't show you the code of HTML files, it shows you the rendered HTML files. This is what we want when we create a website. 
+
+To host your website on GitHub Pages, you'll need to first push your code to GitHub. Once you have a repository set up there, you'll go to it, then go to the Settings tab. From there, what you see should look like Figure \@ref(fig:TODO).
+
+TODO: Add screenshot gh-pages.png
+
+On this screen, you now choose how you want GitHub to deploy the raw HTML into a rendered website. The easiest approach is to keep the default source ("Deploy from a branch") and then select your default branch (for me, that's `main`). You then select a directory where the HTML files you want to be rendered are found. You have two options: `root` or `docs`. My files are in `docs` so I'll choose that. Do you remember, way back in the beginning, how we told RStudio to configure our website for GitHub pages? Doing so put our HTML files in the `docs` folder because that is one place that GitHub Pages looks for such files. After we hit save, wait a few minutes, and GitHub will show us a URL where it is now hosting our website.
+
+TODO: Add screenshot
+
+The best part about hosting your website on GitHub Pages is that, any time you make updates to your code or data, the website will update as well. If I were to run my code next week, render my website again, and push it to GitHub, GitHub Pages would automatically update the website it serves online. RMarkdown-based websites made with `distill`, combined with continuous deployment powered by GitHub Pages, makes building and maintaining websites a snap.
+
 ## Conclusion {-}
