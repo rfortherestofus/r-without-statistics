@@ -83,7 +83,7 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 ````
 
-For the most part, this looks like a standard R Markdown document. In the YAML, we can see a couple differences with other R Markdown documents we've worked with: the `description` parameter and the line that says `site: distill::distill_website`. The `description` specifies text that will go below the title of each page, as seen in Figure \@ref(fig:TODO).
+For the most part, this looks like a standard R Markdown document. In the YAML, we can see a couple differences with other R Markdown documents we've worked with: the `description` parameter and the line that says `site: distill::distill_website`. The `description` specifies text that will go below the title of each page, as seen in Figure \@ref(fig:website-description.png).
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -107,7 +107,7 @@ The promise of `distill` is that it we can make several R Markdown documents and
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "yaml"}
 name: "covid-website"
-title: "Information about COVID rates in the United States over time"
+title: "COVID Website"
 description: |
   COVID Website
 output_dir: "docs"
@@ -149,27 +149,41 @@ navbar:
 
  The `href` parameter determines where the text in the navigation bar links to. You'll probably have noticed that the HTML files linked to have the same names as our R Markdown documents. This is because of the behavior we saw in Chapter \@ref(rmarkdown-chapter), where the names of HTML files are the same as the R Markdown documents used to create them, swapping out `.Rmd` for `.html`. 
  
- Moving up in the `_site.yml` file, the `output_dir` parameter determines where the rendered HTML files live when we generate our website. The `docs` directory is listed here because we selected the Configure for GitHub Pages option when creating our website (more on this below). However, you can change the output directory to any folder you choose.
- 
- TODO: Figure out what description does
- 
- Finally, we have the `title` and `name`. The `title` parameter creates the title for the entire website and shows up in the top left of the navigation bar by the default. The `name` parameter TODO: Figure it out.
+ Moving up in the `_site.yml` file, the `output_dir` parameter determines where the rendered HTML files live when we generate our website. The `docs` directory is listed here because we selected the Configure for GitHub Pages option when creating our website (more on this below). However, you can change the output directory to any folder you choose. The `description` parameter provides a short description of the website that will show up in search results. Finally, we have the `title` and `name`. The `title` parameter creates the title for the entire website and shows up in the top left of the navigation bar by the default. The `name` parameter determines the URL for your website (if you don't change anything, it will be the name of the directory where your `distill` project lives).
 
 ## Building our Site {-}
 
 So far, we've looked at our R Markdown documents and the `_site.yml` file. We haven't, however, created our website. There are three ways to do this. 
 
-The first option is to use the Build Website button, which can be found in the Build tab of the top right pane on RStudio.
+The first option is to use the Build Website button, which can be found in the Build tab of the top right pane on RStudio, seen in Figure \@ref(fig:build-website) below.
 
-TODO: Add screenshot
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
 
-The second option to create your website is to use the function `rmarkdown::render_site()`. You can run this in the console or in an R script file. 
+```{r build-website, out.width="100%", fig.cap="The build website button"}
+knitr::include_graphics(here::here("assets/build-website.png"))
+```
 
-The third option, applicable if you're working in RStudio, is to use the keyboard shortcut command/control (Mac/Windows) + shift + B. 
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/build-website.png"))
+```
 
-All three options will render all of the R Markdown documents and add the top navigation bar to them, with the options specified in the `_site.yml` file. To find the rendered files, look in the output directory you specified (for us, that was `docs`). Open up any HTML file and you'll find your website.
+The second option to create your website is to use the function `rmarkdown::render_site()`. You can run this in the console or in an R script file. The third option, applicable if you're working in RStudio, is to use the keyboard shortcut command/control (Mac/Windows) + shift + B. 
 
-TODO: Add screenshot of website
+All three options will render all of the R Markdown documents and add the top navigation bar to them, with the options specified in the `_site.yml` file. To find the rendered files, look in the output directory you specified (for us, that was `docs`). Open up any HTML file and you'll find your website, which should look like Figure \@ref(fig:covid-website-default-content).
+
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
+
+```{r covid-website-default-content, out.width="100%", fig.cap="The COVID website with default content"}
+knitr::include_graphics(here::here("assets/covid-website-default-content.png"))
+```
+
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/covid-website-default-content.png"))
+```
  
 ## Custom CSS {-}
 
@@ -284,9 +298,19 @@ navbar:
 output: distill::distill_article
 ````
 
-Now we can generate our site again using any of the three options above. The website with our CSS tweaks can be seen in Figure \@ref(fig:TODO) below.
+Now we can generate our site again using any of the three options above. The website with our CSS tweaks can be seen in Figure \@ref(fig:covid-website-css-tweaks) below.
 
-![](assets/covid-website-css-tweaks.png)
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
+
+```{r covid-website-css-tweaks, out.width="100%", fig.cap="The COVID website with tweaks to the CSS"}
+knitr::include_graphics(here::here("assets/covid-website-css-tweaks.png"))
+```
+
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/covid-website-css-tweaks.png"))
+```
 
 As you can see in the `theme.css` file, there are a lot of CSS variables we can change to tweak the appearance of our website. Playing around with them and rebuilding your site is a great way to figure out what does what.
  
@@ -308,7 +332,6 @@ In the next code chunk, we import and clean the data. We also create a variable 
 
 We then make a table that shows the death rates per 100,000 people in four states (the table would be long if we showed all 50 states). Next, we make a map of this same data, but for all states. Finally, we make a chart that shows COVID death rates over time (for legibility in this book, we only show four states).
 
-TODO: Update date
 TODO: Add numbers to annotate code in Word version
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
@@ -430,9 +453,19 @@ covid_data %>%
 ```
 ````
 
-We can see what this website looks like in \@ref(fig:TODO) below.
+We can see what this website looks like in \@ref(fig:covid-website-static-page) below.
 
-TODO: Add screenshot of website covid-website-static-page.png
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
+
+```{r covid-website-static-page, out.width="100%", fig.cap="The COVID website with a table, map, and chart"}
+knitr::include_graphics(here::here("assets/covid-website-static-page.png"))
+```
+
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/covid-website-static-page.png"))
+```
 
 ## Using Different Layouts {-}
 
@@ -458,20 +491,49 @@ most_recent %>%
 ```
 ````
 
-Doing this makes our map wider (and taller), and, as a result, much easier to read. You can see what the entire page looks like in Figure \@ref(fig:TODO) below.
+Doing this makes our map wider (and taller), and, as a result, much easier to read. You can see what the entire page looks like in Figure \@ref(fig:covid-website-static-page-wide-map) below.
 
-TODO: Add covid-website-static-page-wide-map.png 
-TODO: Update this and previous screenshot because I switched to bar chart
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
+
+```{r covid-website-static-page-wide-map, out.width="100%", fig.cap="The COVID website with the map made larger"}
+knitr::include_graphics(here::here("assets/covid-website-static-page-wide-map.png"))
+```
+
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/covid-website-static-page-wide-map.png"))
+```
 
 ## Making Our Content Interactive {-}
 
-Up to this point, all of the content we've added to our website has been static. There is none of the interactivity common in websites. Since we're developing a website, it makes sense to take advantage of the medium. Matt Herman uses interactive graphics and maps on his Westchester County COVID website. Figure \@ref(fig:TODO), for example, shows a simple tooltip that allows the user to see results for any single day.
+Up to this point, all of the content we've added to our website has been static. There is none of the interactivity common in websites. Since we're developing a website, it makes sense to take advantage of the medium. Matt Herman uses interactive graphics and maps on his Westchester County COVID website. Figure \@ref(fig:westchester-website-tooltip), for example, shows a simple tooltip that allows the user to see results for any single day.
 
-TODO: Add screenshot
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
 
-Herman also makes interactive tables with the `DT` package, allowing the user to scroll through the data and sort by any of the variables in it.
+```{r westchester-website-tooltip, out.width="100%", fig.cap="Interactive tooltips showing new cases by day"}
+knitr::include_graphics(here::here("assets/westchester-website-tooltip.png"))
+```
 
-TODO: Add screenshot
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/westchester-website-tooltip.png"))
+```
+
+Herman also makes interactive tables with the `DT` package, allowing the user to scroll through the data and sort by any of the variables in it. The table can be seen in Figure \@ref(fig:dt-table.png).
+
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
+
+```{r dt-table, out.width="100%", fig.cap="An interactive table made with the DT package"}
+knitr::include_graphics(here::here("assets/dt-table.png"))
+```
+
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/dt-table.png"))
+```
 
 Let's add some interactivity to our national COVID website. We'll begin by making our table interactive. Remember how we had to only include four states in order to keep our table from getting super long? With an interactive table, we can avoid this. The `reactable` package, like the `DT` package, is a great option for interactive tables. If we swap out the `gt` package code we used to make our static table with the `reactable()` function, we can show all states. 
 
@@ -485,13 +547,33 @@ covid_data %>%
   reactable()
 ```
 
-The `reactable` package shows ten rows by default, with pagination added below our table, as seen in Figure \@ref(fig:TODO).
+The `reactable` package shows ten rows by default, with pagination added below our table, as seen in Figure \@ref(fig:covid-website-reactable).
 
-TODO: Add screenshot
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
 
-The `reactable()` function also enables sorting by default. Although we used the `arrange()` function in our code above to sort by state name, if users click the "Death rate" column, the table will be sorted by that variable. Figure \@ref(fig:TODO) shows this.
+```{r covid-website-reactable, out.width="100%", fig.cap="An interactive table built with reactable"}
+knitr::include_graphics(here::here("assets/covid-website-reactable.png"))
+```
 
-TODO: Add screenshot
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/covid-website-reactable.png"))
+```
+
+The `reactable()` function also enables sorting by default. Although we used the `arrange()` function in our code above to sort by state name, if users click the "Death rate" column, the table will be sorted by that variable. Figure \@ref(fig:covid-website-reactable-sorted) shows this.
+
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
+
+```{r covid-website-reactable-sorted, out.width="100%", fig.cap="The table sorted by death rate"}
+knitr::include_graphics(here::here("assets/covid-website-reactable-sorted.png"))
+```
+
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/covid-website-reactable-sorted.png"))
+```
 
 We can also give our chart some interactivity. To do this, we'll use the same package that Matt Herman uses: `plotly`. The basic idea with `plotly` is this: create a plot with ggplot and save it as an object. Then, pass it to the `ggplotly()` function, which turns it into an interactive plot. Here's how it would work with my chart showing COVID death rates over time.
 
@@ -523,9 +605,19 @@ covid_chart <- covid_data %>%
 ggplotly(covid_chart)
 ```
 
-With this code, I get an interactive chart. But the tooltip that users see on hover (see Figure \@ref(fig:TODO) below) is cluttered and overwhelming because the `ggplotly()` function shows all data by default. 
+With this code, I get an interactive chart. But the tooltip that users see on hover (see Figure \@ref(fig:covid-website-messy-tooltips) below) is cluttered and overwhelming because the `ggplotly()` function shows all data by default. 
 
-TODO: Add screenshot
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
+
+```{r covid-website-messy-tooltips, out.width="100%", fig.cap="Messy tooltips on our COVID death rates graph"}
+knitr::include_graphics(here::here("assets/covid-website-messy-tooltips.png"))
+```
+
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/covid-website-messy-tooltips.png"))
+```
 
 To make our tooltip more informative, we can also create a single variable and then tell `ggplotly()` to just use this. Below, I begin by creating a `date_nice_format` variable so that we get, say, January 1, 2021 instead of 2021-01-01. I then combine this with the state and death rates (`deaths_avg_per_100k`) variables, saving my result as `tooltip_text`. I then add a new aesthetic property in the `ggplot()` function: `text = tooltip_text`. On its own, this doesn't do anything. But when I add `tooltip = "tooltip_text"` to the `ggplotly()` function, it changes the tooltip.
 
@@ -561,9 +653,19 @@ ggplotly(covid_chart,
                  tooltip = "tooltip_text")
 ```
 
-Figure \@ref(fig:TODO) shows what our new tooltip looks like: a simple summary of the state, nicely formatted date, and death rate on that day.
+Figure \@ref(fig:covid-website-tooltip) shows what our new tooltip looks like: a simple summary of the state, nicely formatted date, and death rate on that day.
 
-TODO: Add screenshot
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
+
+```{r covid-website-tooltip, out.width="100%", fig.cap="Easy to read interactive tooltips on the COVID death rate chart"}
+knitr::include_graphics(here::here("assets/covid-website-tooltip.png"))
+```
+
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/covid-website-tooltip.png"))
+```
 
 Adding interactivity in this way is a great way to take advantage of the medium of a website. Users who might feel overwhelmed looking at the static chart can explore the interactive version, hovering to see a summary of the results on any single day.
 
@@ -573,31 +675,56 @@ Making a website is great, but you also need a way to share it. There are variou
 
 The simplest solution is to zip up of the files in your `docs` folder (or whatever folder you put your rendered website in) and emailing your ZIP file to others. They can unzip it and open the HTML files in their browser. This works fine if you know you won't want to make changes to the data or styling of your website. But, as we discussed in \@ref(rmarkdown-chapter), what we think of as a one-time project rarely is.
 
-A better approach is to put your entire `docs` folder in a place where others can see it. This could be an internal network, Dropbox, Google Drive, Box, or something similar. This has the advantage of being simple to implement while allowing you to only give access to those you want to see your website. You can even automate the process of copying your `docs` folder to various online file sharing sites using R packages: the `rdrop2` package works with Dropbox, `googledrive` works with Google Drive, and `boxr` works with Box. In the past, I have written code like that below, which renders my site before copying the `docs` folder to Google Drive. Having your code to render and upload it to Google Drive all in one file means you can just run your entire file, generating and uploading your website in one go.
+A better approach is to put your entire `docs` folder in a place where others can see it. This could be an internal network, Dropbox, Google Drive, Box, or something similar. This has the advantage of being simple to implement while allowing you to only give access to those you want to see your website. You can even automate the process of copying your `docs` folder to various online file sharing sites using R packages: the `rdrop2` package works with Dropbox, `googledrive` works with Google Drive, and `boxr` works with Box. In the past, I have written code like that below, which renders my site, uses the `dir_ls()` function from the `fs` package to identify all files in the `docs` directory, and then uploads these files to Dropbox. Having your code to render and upload it to Dropbox all in one file means you can just run your entire file, generating and uploading your website in one go.
 
 ```{r eval = FALSE, echo = TRUE}
+library(tidyverse)
 library(rmarkdown)
 library(fs)
-library(googledrive)
+library(rdrop2)
 
 # Render the website
 render_site()
 
-# Copy the `docs` folder to Google Drive
-# TODO: Add code
+# Upload to Dropbox
+website_files <- dir_ls(path = "docs",
+                        type = "file",
+                        recurse = TRUE)
+
+walk(website_files, drop_upload, path = "COVID Website")
 ```
 
 The most complicated yet most powerful solution is to use what's known as *continuous deployment*. TODO: check on definition of this. The idea behind continuous deployment is that, each time you commit your code to GitHub (or a similar service for posting code online), it deploys to a website you have set up. Learning to use GitHub is an investment (the book *Happy Git and GitHub for the useR* by Jenny Bryan is a great resource), but being able to host your website for free makes it worth the time and effort. 
 
 Here's how this works. GitHub has a service called GitHub Pages. Most of the time, when you look at a file on GitHub, it shows you its underlying source code. If you look at an HTML file, you see the HTML code. GitHub Pages, on the other hand, doesn't show you the code of HTML files, it shows you the rendered HTML files. This is what we want when we create a website. 
 
-To host your website on GitHub Pages, you'll need to first push your code to GitHub. Once you have a repository set up there, you'll go to it, then go to the Settings tab. From there, what you see should look like Figure \@ref(fig:TODO).
+To host your website on GitHub Pages, you'll need to first push your code to GitHub. Once you have a repository set up there, you'll go to it, then go to the Settings tab. From there, what you see should look like Figure \@ref(fig:gh-pages.png).
 
-TODO: Add screenshot gh-pages.png
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
 
-On this screen, you now choose how you want GitHub to deploy the raw HTML into a rendered website. The easiest approach is to keep the default source ("Deploy from a branch") and then select your default branch (usually `main` or `master`). You then select a directory where the HTML files you want to be rendered are found. You have two options: `root` or `docs`. My files are in `docs` so I'll choose that. Do you remember, way back in the beginning, how we told RStudio to configure our website for GitHub pages? Doing so put our HTML files in the `docs` folder because that is one place that GitHub Pages looks for such files. After we hit save, wait a few minutes, and GitHub will show us a URL where it is now hosting our website.
+```{r gh-pages, out.width="100%", fig.cap="Setting up GitHub Pages"}
+knitr::include_graphics(here::here("assets/gh-pages.png"))
+```
 
-TODO: Add screenshot
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/gh-pages.png"))
+```
+
+On this screen, you now choose how you want GitHub to deploy the raw HTML into a rendered website. The easiest approach is to keep the default source ("Deploy from a branch") and then select your default branch (usually `main` or `master`). You then select a directory where the HTML files you want to be rendered are found. You have two options: `root` or `docs`. My files are in `docs` so I'll choose that. Do you remember, way back in the beginning, how we told RStudio to configure our website for GitHub pages? Doing so put our HTML files in the `docs` folder because that is one place that GitHub Pages looks for such files. After we hit save, wait a few minutes, and GitHub will show us a URL like that in Figure \@ref(fig:gh-pages-published) where our website now lives.
+
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
+
+```{r gh-pages-published, out.width="100%", fig.cap="The location of our website published with GitHub Pages"}
+knitr::include_graphics(here::here("assets/gh-pages-published.png"))
+```
+
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/gh-pages-published.png"))
+```
 
 The best part about hosting your website on GitHub Pages is that, any time you make updates to your code or data, the website will update as well. If I were to run my code next week, render my website again, and push it to GitHub, GitHub Pages would automatically update the website it serves online. RMarkdown-based websites made with `distill`, combined with continuous deployment powered by GitHub Pages, makes building and maintaining websites a snap.
 
