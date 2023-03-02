@@ -1,30 +1,60 @@
 # Make Websites to Share Results Online {#websites-chapter} 
 
-In summer 2020, Matt Herman and his family moved from Brooklyn to Westchester County, New York. It was the first summer of the COVID pandemic, and Herman was shocked to see that the high-quality data put out by the City of New York was not replicated in Westchester County. At a time before vaccines were available, many daily choices depended on access to good data. Not having it made simple decisions, like whether to take a child to the park, feel impossible to make
+In summer 2020, Matt Herman and his family moved from Brooklyn to Westchester County, New York. It was the first summer of the COVID pandemic, and Herman was shocked to see that the high-quality data put out by the City of New York was not replicated in Westchester County. At a time before vaccines were available, daily choices depended on access to good data. Not having it made simple decisions, like whether to take children to the park, feel impossible.
 
 Matt Herman was not just any person with an interest in COVID data. He was also, at the time, the Deputy Director of the ChildStat Data Unit in the Office of Research and Analytics at the New York City Administration for Children’s Services. This handful of a title meant that he was skilled at working with data. And with these skills, Herman realized that he could create a COVID Westchester County COVID data resource that he and others needed. The data was out there; it just needed someone to make it accessible.
 
-What Herman ended up creating was the Westchester Covid-19 (TODO: he uses Covid while I say COVID; make consistent?) Tracking website (TODO: add url). Built entirely in R, this website had charts, maps, tables, and text that summarized the latest COVID data for Westchester County. Although the website is no longer consistently updated, it shows what is possible with R. 
+What Herman ended up creating was the Westchester Covid-19 (TODO: he uses Covid while I say COVID; make consistent?) Tracking website. Built entirely in R, this website had charts, maps, tables, and text that summarized the latest COVID data for Westchester County. Although the website is no longer consistently updated, it is still available at https://westchester-covid.mattherman.info/, and it shows what is possible with R. 
 
-TODO: Screenshot of website
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
 
-The code that Herman wrote to make the website is just a set of R Markdown files, strung together with the `distill` package. You may not think of R as a tool for making websites, but it can make them quite well. If you already use R to work with your data, creating a website is a great way to share results.
+```{r westchester-website-screenshot, out.width="100%", fig.cap="A screenshot of the Westchester COVID-19 website"}
+knitr::include_graphics(here::here("assets/westchester-website.png"))
+```
 
-In this chapter, I'll explain the basics of how `distill` works by creating a simple website with it (the Westchester Covid-19  website that Matt Herman created is complicated so I'll use examples from it, but won't walk through it line by line). Within this website, we'll show how to create things like different page layouts, navigation menus, interactive graphics, and more. We'll then discuss how to use GitHub Pages to host your website for free. We'll conclude with some reflections on why the `distill` package to make websites is a great option for R users looking to get their results online.
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/westchester-website.png"))
+```
+
+The code that Herman wrote to make the website is a set of R Markdown files, strung together with the `distill` package. You may not think of R as a tool for making websites, but it can make them quite well – and `distill` makes it straightforward to do so. If you already use R to work with your data, creating a website is a great way to share results.
+
+In this chapter, I'll explain the basics of how `distill` works by creating a simple website with it (the Westchester Covid-19  website that Matt Herman created is quite complicated so I'll use examples from it, but won't walk through it line by line). Within this website, we'll show how to create things like different page layouts, navigation menus, interactive graphics, and more. We'll then discuss how to use GitHub Pages to host your website for free. We'll conclude with some reflections on why the `distill` package to make websites is a great option for R users looking to get their results online.
 
 ## Creating a Website With the `distill` Package {-}
 
-There are a few different ways to make websites using R Markdown. There is the `blogdown` package, which uses the Hugo static site generator under the surface. It is imminently flexible but finicky (updates to Hugo themes are notorious for breaking `blogdown` websites). For those looking for a simple option, the `distill` package is the way to go. It's what Matt Herman and many others have used to quickly and attractively get R Markdown-based websites up and running.
+There are a few different ways to make websites using R Markdown (Quarto, the language-agnostic version of R Markdown, can also make websites). There is the `blogdown` package, which uses the Hugo static site generator under the surface. It is imminently flexible but finicky (updates to Hugo themes are notorious for breaking `blogdown` websites). For those looking for a simple option, the `distill` package is the way to go. It's what Matt Herman and many others have used to quickly and attractively get R Markdown-based websites up and running.
 
 To understand how `distill` works, think back to when we have knitted our R Markdown documents to HTML (for example, in chapter \@ref(rmarkdown-chapter). These have all been one-offs, with a single R Markdown document generating a single HTML file. A website, on the other hand, is a collection of HTML files. The `distill` package is what enables us to use multiple R Markdown documents to create multiple HTML files, and have them all connected with a navigation menu and more.
 
-To create a `distill` website, you'll first need to install the package using `install.packages("distill")`. Once you've done that, the easiest way to start a `distill` website project is to go to File > New Project > New Directory. Once you get the menu visible in Figure \@ref(fig:TODO), scroll down and select Distill Website.
+To create a `distill` website, you'll first need to install the package using `install.packages("distill")`. Once you've done that, the easiest way to start a `distill` website project is to go to File > New Project > New Directory. Once you get the menu visible in Figure \@ref(fig:new-distill-website), scroll down and select Distill Website.
 
-TODO: Add screenshot
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
 
-Once you do that, you'll see the menu in Figure \@ref(fig:TODO).
+```{r new-distill-website, out.width="100%", fig.cap="Menu to create a new distill website"}
+knitr::include_graphics(here::here("assets/new-distill-website.png"))
+```
 
-TODO: Add screenshot
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/new-distill-website.png"))
+```
+
+Once you do that, you'll see the menu in Figure \@ref(fig:create-distill-website).
+
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
+
+```{r create-distill-website, out.width="100%", fig.cap="Giving your distill website a name"}
+knitr::include_graphics(here::here("assets/create-distill-website.png"))
+```
+
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/create-distill-website.png"))
+```
 
 Here, in addition to specifying the directory and subdirectory where your project will live on your computer, you'll also want to give your website a title. You can also select Configure for GitHub Pages if you'd like. GitHub Pages is an easy way to get your website online, and I'll show how it works below. I'm going to create a new website called COVID Website and select the option to configure it for GitHub Pages.
 
@@ -55,7 +85,17 @@ knitr::opts_chunk$set(echo = FALSE)
 
 For the most part, this looks like a standard R Markdown document. In the YAML, we can see a couple differences with other R Markdown documents we've worked with: the `description` parameter and the line that says `site: distill::distill_website`. The `description` specifies text that will go below the title of each page, as seen in Figure \@ref(fig:TODO).
 
-TODO: Add screenshot
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
+
+```{r website-description, out.width="100%", fig.cap="The default website description"}
+knitr::include_graphics(here::here("assets/website-description.png"))
+```
+
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/website-description.png"))
+```
 
 The `site: distill::distill_website` specifies that the R Markdown document is the root page of a `distill` website. This means that when we knit, R Markdown knows to create a website, rather than an individual HTML file.
 
@@ -63,11 +103,11 @@ On top of these two new parameters, we also are missing one parameter that we've
 
 ## Setting Options for Our Website with `_site.yml` {-}
 
-The promise of `distill` is that it we can make several R Markdown documents and string them together. To do this, we need a place to tell R which R Markdown documents make up the website, what the knitted files should look like, what the website should be called, and more. This all happens in the `_site.yml` file. If we open up the `_site.yml` file, we see the following code. 
+The promise of `distill` is that it we can make several R Markdown documents and combine them into a website. To do this, we need a place to tell R which R Markdown documents make up the website, what the knitted files should look like, what the website should be called, and more. This all happens in the `_site.yml` file. If we open up the `_site.yml` file, we see the following code. 
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "yaml"}
 name: "covid-website"
-title: "COVID Website"
+title: "Information about COVID rates in the United States over time"
 description: |
   COVID Website
 output_dir: "docs"
@@ -80,13 +120,23 @@ navbar:
 output: distill::distill_article
 ````
 
-Let's actually go backwards through this file, starting with the `output: distill::distill_article` line. This line specifies that all R Markdown documents should be rendered using the `distill_article` format. This format, which we'll discuss more below, allows for things such as layouts of different widths, asides (parenthetical items that live in a sidebar next to the main content), easily customizable CSS, and more.
+Let's go backwards through this file, starting with the `output: distill::distill_article` line. This line specifies that all R Markdown documents should be rendered using the `distill_article` format. This format, which we'll discuss more below, allows for things such as layouts of different widths, asides (parenthetical items that live in a sidebar next to the main content), easily customizable CSS, and more.
 
-Next, let's look at the `navbar` section. This, as you might guess from the name, is where we define the top navigation bar on our website. Our navigation bar is placed on the right side (swapping `right` for `left` would switch its position) with two pages: Home and About. Figure \@ref(fig:TODO) below highlights the navigation bar created from our code.
+Next, let's look at the `navbar` section. This, as you might guess from the name, is where we define the top navigation bar on our website. Our navigation bar is placed on the right side (swapping `right` for `left` would switch its position) with two pages: Home and About. Figure \@ref(fig:navbar) below highlights the navigation bar created from our code.
 
-TODO: Add screenshot of navbar
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
 
-Breaking down this code, the `text` parameter determines what shows up in the menu. For example, if I wanted to change "About" to "About this Website", I would change this portion of the `_site.yml` to this:
+```{r navbar, out.width="100%", fig.cap="The website navigation bar"}
+knitr::include_graphics(here::here("assets/navbar.png"))
+```
+
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/navbar.png"))
+```
+
+Breaking down the `navbar` code, the `text` parameter determines what shows up in the menu. For example, if I wanted to change "About" to "About this Website", I would change this portion of the `_site.yml` to this:
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "yaml"}
 navbar:
@@ -99,13 +149,13 @@ navbar:
 
  The `href` parameter determines where the text in the navigation bar links to. You'll probably have noticed that the HTML files linked to have the same names as our R Markdown documents. This is because of the behavior we saw in Chapter \@ref(rmarkdown-chapter), where the names of HTML files are the same as the R Markdown documents used to create them, swapping out `.Rmd` for `.html`. 
  
- Moving up, the `output_dir` parameter determines where the rendered HTML files live when we generate our website. The `docs` directory is listed here because we selected the Configure for GitHub Pages option when creating our website (more on this below). However, you can change the output directory to any folder you choose.
+ Moving up in the `_site.yml` file, the `output_dir` parameter determines where the rendered HTML files live when we generate our website. The `docs` directory is listed here because we selected the Configure for GitHub Pages option when creating our website (more on this below). However, you can change the output directory to any folder you choose.
  
  TODO: Figure out what description does
  
  Finally, we have the `title` and `name`. The `title` parameter creates the title for the entire website and shows up in the top left of the navigation bar by the default. The `name` parameter TODO: Figure it out.
 
-## Build Site {-}
+## Building our Site {-}
 
 So far, we've looked at our R Markdown documents and the `_site.yml` file. We haven't, however, created our website. There are three ways to do this. 
 
@@ -118,6 +168,8 @@ The second option to create your website is to use the function `rmarkdown::rend
 The third option, applicable if you're working in RStudio, is to use the keyboard shortcut command/control (Mac/Windows) + shift + B. 
 
 All three options will render all of the R Markdown documents and add the top navigation bar to them, with the options specified in the `_site.yml` file. To find the rendered files, look in the output directory you specified (for us, that was `docs`). Open up any HTML file and you'll find your website.
+
+TODO: Add screenshot of website
  
 ## Custom CSS {-}
 
@@ -214,7 +266,25 @@ Within that file, there are a set of what are known as CSS variables. Most of th
 }
 ````
 
-Before we rebuild our site to see these changes, we need to do one other thing: tell `distill` to use this custom CSS when rendering. We do this by adding this line in the `_site.yml` file: `theme: theme.css`. Now we can generate our site again using any of the three options above. The website with our CSS tweaks can be seen in Figure \@ref(fig:TODO) below.
+Before we rebuild our site to see these changes, we need to do one other thing: tell `distill` to use this custom CSS when rendering. We do this by adding this line in the `_site.yml` file: `theme: theme.css`. Our `_site.yml` will now look like this:
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "yaml"}
+name: "covid-website"
+title: "COVID Website"
+description: |
+  COVID Website
+theme: theme.css
+output_dir: "docs"
+navbar:
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html
+output: distill::distill_article
+````
+
+Now we can generate our site again using any of the three options above. The website with our CSS tweaks can be seen in Figure \@ref(fig:TODO) below.
 
 ![](assets/covid-website-css-tweaks.png)
 
@@ -222,11 +292,11 @@ As you can see in the `theme.css` file, there are a lot of CSS variables we can 
  
 ## Adding Content to Our Website {-}
 
-We've just been talking about customizing our website. But if we look at our website, it only has placeholder content, and there's not much of it. Let's talk now about adding content to our `distill` website.
+So far, we've only been talking about customizing what our website looks like. But if we look at our website, it only has placeholder content, and there's not much of it. Let's talk now about adding content to our `distill` website.
 
 The advantage of creating content in a `distill` website, of course, is that you do it just as you would with any other R Markdown document. All of the markdown text and code chunks that we discussed in Chapter \@ref(rmarkdown-chapter) will work in `distill` as well. 
 
-I've written some code that creates a table, a map, and a chart on our COVID website. After the YAML and `setup` code chunk, we load several packages: 
+I've written some code below that creates a table, a map, and a chart on our COVID website. After the YAML and `setup` code chunk, we load several packages: 
 
 1. `tidyverse` for data import, manipulation, and plotting (with ggplot)
 1. `janitor` for the `clean_names()` function, which makes our variable names easier to work with 
@@ -239,6 +309,7 @@ In the next code chunk, we import and clean the data. We also create a variable 
 We then make a table that shows the death rates per 100,000 people in four states (the table would be long if we showed all 50 states). Next, we make a map of this same data, but for all states. Finally, we make a chart that shows COVID death rates over time (for legibility in this book, we only show four states).
 
 TODO: Update date
+TODO: Add numbers to annotate code in Word version
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 ---
@@ -363,7 +434,7 @@ We can see what this website looks like in \@ref(fig:TODO) below.
 
 TODO: Add screenshot of website covid-website-static-page.png
 
-## Layouts {-}
+## Using Different Layouts {-}
 
 One nice feature of `distill` is the ability to make certain code chunks output wider widths. To show how this works, let's focus on our map. Because many states are quite small, especially in the northeast, it's a bit challenging to see them. If we could make the entire map bigger, that would be helpful. 
 
@@ -394,7 +465,7 @@ TODO: Update this and previous screenshot because I switched to bar chart
 
 ## Making Our Content Interactive {-}
 
-Up to this point, all of the conte we've added to our website has been static. There is none of the interactivity common in websites. Since we're developing a website, it makese sense to take advantage of the medium. Matt Herman uses interactive graphics and maps on his Westchester County COVID website. Figure \@ref(fig:TODO), for example, shows a simple tooltip that allows the user to see results for any single day.
+Up to this point, all of the content we've added to our website has been static. There is none of the interactivity common in websites. Since we're developing a website, it makes sense to take advantage of the medium. Matt Herman uses interactive graphics and maps on his Westchester County COVID website. Figure \@ref(fig:TODO), for example, shows a simple tooltip that allows the user to see results for any single day.
 
 TODO: Add screenshot
 
@@ -402,7 +473,7 @@ Herman also makes interactive tables with the `DT` package, allowing the user to
 
 TODO: Add screenshot
 
-Let's add some interactivity to our national COVID website. We'll begin by making our table interactive. Remember how we had to only include four states in order to keep our table from getting super long? With an interactive table, we can avoid this. The `reactable` package is a great option for interactive tables. If we swap out the `gt` package code we used to make our static table with the `reactable()` function, we can show all states. 
+Let's add some interactivity to our national COVID website. We'll begin by making our table interactive. Remember how we had to only include four states in order to keep our table from getting super long? With an interactive table, we can avoid this. The `reactable` package, like the `DT` package, is a great option for interactive tables. If we swap out the `gt` package code we used to make our static table with the `reactable()` function, we can show all states. 
 
 ```{r}
 covid_data %>% 
@@ -458,7 +529,7 @@ TODO: Add screenshot
 
 To make our tooltip more informative, we can also create a single variable and then tell `ggplotly()` to just use this. Below, I begin by creating a `date_nice_format` variable so that we get, say, January 1, 2021 instead of 2021-01-01. I then combine this with the state and death rates (`deaths_avg_per_100k`) variables, saving my result as `tooltip_text`. I then add a new aesthetic property in the `ggplot()` function: `text = tooltip_text`. On its own, this doesn't do anything. But when I add `tooltip = "tooltip_text"` to the `ggplotly()` function, it changes the tooltip.
 
-TODO: Add numbers in No Starch book in code places below
+TODO: Add code annotation numbers in No Starch book in code places below
 
 ```{r}
 covid_chart <- covid_data %>% 
@@ -498,11 +569,11 @@ Adding interactivity in this way is a great way to take advantage of the medium 
 
 ## Hosting {-}
 
-Making a website is great, but you need a way to share it. There are various ways to do this, ranging from quite simple to quite complex. 
+Making a website is great, but you also need a way to share it. There are various ways to do this, ranging from quite simple to quite complex. 
 
 The simplest solution is to zip up of the files in your `docs` folder (or whatever folder you put your rendered website in) and emailing your ZIP file to others. They can unzip it and open the HTML files in their browser. This works fine if you know you won't want to make changes to the data or styling of your website. But, as we discussed in \@ref(rmarkdown-chapter), what we think of as a one-time project rarely is.
 
-A better approach is to put your entire `docs` folder in a place where others can see it. This could be an internal network, Dropbox, Google Drive, Box, or something similar. This has the advantage of being simple to implement while allowing you to only give access to those you want to see your website. You can evan automate the process of copying your `docs` folder to various online file sharing sites using R packages: the `r2drop2` (TOOD: check name) package works with Dropbox, `googledrive` works with Google Drive, and `boxr` works with Box. In the past, I have written code like that below, which renders my site before copying the `docs` folder to Google Drive. Having your code to render and upload it to Google Drive all in one file means you can just run your entire file, generating and uploading your website in one go.
+A better approach is to put your entire `docs` folder in a place where others can see it. This could be an internal network, Dropbox, Google Drive, Box, or something similar. This has the advantage of being simple to implement while allowing you to only give access to those you want to see your website. You can even automate the process of copying your `docs` folder to various online file sharing sites using R packages: the `rdrop2` package works with Dropbox, `googledrive` works with Google Drive, and `boxr` works with Box. In the past, I have written code like that below, which renders my site before copying the `docs` folder to Google Drive. Having your code to render and upload it to Google Drive all in one file means you can just run your entire file, generating and uploading your website in one go.
 
 ```{r eval = FALSE, echo = TRUE}
 library(rmarkdown)
@@ -516,14 +587,15 @@ render_site()
 # TODO: Add code
 ```
 
-The most complicated yet most powerful solution is to use what's known as *continuous deployment*. TODO: check on definition of this. The idea behind continuous deployment is that, each time you commit your code to GitHub (or a similar service for posting code online), it deploys to a website you have set up. Learning to use GitHub is an investment, but being able to host your website for free makes it worth the time and effort. 
-Here's how this works. GitHub has a service called GitHub Pages. Most of the time, when you look a file on GitHub, it shows you the source code that underlies it. If you look at an HTML file, you see the HTML code. GitHub Pages, on the other hand, doesn't show you the code of HTML files, it shows you the rendered HTML files. This is what we want when we create a website. 
+The most complicated yet most powerful solution is to use what's known as *continuous deployment*. TODO: check on definition of this. The idea behind continuous deployment is that, each time you commit your code to GitHub (or a similar service for posting code online), it deploys to a website you have set up. Learning to use GitHub is an investment (the book *Happy Git and GitHub for the useR* by Jenny Bryan is a great resource), but being able to host your website for free makes it worth the time and effort. 
+
+Here's how this works. GitHub has a service called GitHub Pages. Most of the time, when you look at a file on GitHub, it shows you its underlying source code. If you look at an HTML file, you see the HTML code. GitHub Pages, on the other hand, doesn't show you the code of HTML files, it shows you the rendered HTML files. This is what we want when we create a website. 
 
 To host your website on GitHub Pages, you'll need to first push your code to GitHub. Once you have a repository set up there, you'll go to it, then go to the Settings tab. From there, what you see should look like Figure \@ref(fig:TODO).
 
 TODO: Add screenshot gh-pages.png
 
-On this screen, you now choose how you want GitHub to deploy the raw HTML into a rendered website. The easiest approach is to keep the default source ("Deploy from a branch") and then select your default branch (for me, that's `main`). You then select a directory where the HTML files you want to be rendered are found. You have two options: `root` or `docs`. My files are in `docs` so I'll choose that. Do you remember, way back in the beginning, how we told RStudio to configure our website for GitHub pages? Doing so put our HTML files in the `docs` folder because that is one place that GitHub Pages looks for such files. After we hit save, wait a few minutes, and GitHub will show us a URL where it is now hosting our website.
+On this screen, you now choose how you want GitHub to deploy the raw HTML into a rendered website. The easiest approach is to keep the default source ("Deploy from a branch") and then select your default branch (usually `main` or `master`). You then select a directory where the HTML files you want to be rendered are found. You have two options: `root` or `docs`. My files are in `docs` so I'll choose that. Do you remember, way back in the beginning, how we told RStudio to configure our website for GitHub pages? Doing so put our HTML files in the `docs` folder because that is one place that GitHub Pages looks for such files. After we hit save, wait a few minutes, and GitHub will show us a URL where it is now hosting our website.
 
 TODO: Add screenshot
 
