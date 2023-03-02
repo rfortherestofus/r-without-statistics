@@ -1,10 +1,16 @@
+```{r}
+i <- 1
+chapter_number <- 9
+source("_common.R")
+```
+
 # Make Websites to Share Results Online {#websites-chapter} 
 
 In summer 2020, Matt Herman and his family moved from Brooklyn to Westchester County, New York. It was the first summer of the COVID pandemic, and Herman was shocked to see that the high-quality data put out by the City of New York was not replicated in Westchester County. At a time before vaccines were available, daily choices depended on access to good data. Not having it made simple decisions, like whether to take children to the park, feel impossible.
 
 Matt Herman was not just any person with an interest in COVID data. He was also, at the time, the Deputy Director of the ChildStat Data Unit in the Office of Research and Analytics at the New York City Administration for Children’s Services. This handful of a title meant that he was skilled at working with data. And with these skills, Herman realized that he could create a COVID Westchester County COVID data resource that he and others needed. The data was out there; it just needed someone to make it accessible.
 
-What Herman ended up creating was the Westchester Covid-19 (TODO: he uses Covid while I say COVID; make consistent?) Tracking website. Built entirely in R, this website had charts, maps, tables, and text that summarized the latest COVID data for Westchester County. Although the website is no longer consistently updated, it is still available at https://westchester-covid.mattherman.info/, and it shows what is possible with R. 
+What Herman ended up creating was the Westchester Covid-19 Tracking website. Built entirely in R, this website had charts, maps, tables, and text that summarized the latest COVID data for Westchester County. Although the website is no longer consistently updated, it is still available at https://westchester-covid.mattherman.info/, and it shows what is possible with R. 
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -24,7 +30,7 @@ In this chapter, I'll explain the basics of how `distill` works by creating a si
 
 ## Creating a Website With the `distill` Package {-}
 
-There are a few different ways to make websites using R Markdown (Quarto, the language-agnostic version of R Markdown, can also make websites). There is the `blogdown` package, which uses the Hugo static site generator under the surface. It is imminently flexible but finicky (updates to Hugo themes are notorious for breaking `blogdown` websites). For those looking for a simple option, the `distill` package is the way to go. It's what Matt Herman and many others have used to quickly and attractively get R Markdown-based websites up and running.
+There are a few different ways to make websites using R Markdown. There is the `blogdown` package, which uses the Hugo static site generator under the surface. It is imminently flexible but finicky (updates to Hugo themes are notorious for breaking `blogdown` websites). For those looking for a simple option, the `distill` package is the way to go. It's what Matt Herman and many others have used to quickly and attractively get R Markdown-based websites up and running.
 
 To understand how `distill` works, think back to when we have knitted our R Markdown documents to HTML (for example, in chapter \@ref(rmarkdown-chapter). These have all been one-offs, with a single R Markdown document generating a single HTML file. A website, on the other hand, is a collection of HTML files. The `distill` package is what enables us to use multiple R Markdown documents to create multiple HTML files, and have them all connected with a navigation menu and more.
 
@@ -332,8 +338,6 @@ In the next code chunk, we import and clean the data. We also create a variable 
 
 We then make a table that shows the death rates per 100,000 people in four states (the table would be long if we showed all 50 states). Next, we make a map of this same data, but for all states. Finally, we make a chart that shows COVID death rates over time (for legibility in this book, we only show four states).
 
-TODO: Add numbers to annotate code in Word version
-
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 ---
 title: "COVID Website"
@@ -537,7 +541,9 @@ save_image_for_nostarch(here::here("assets/dt-table.png"))
 
 Let's add some interactivity to our national COVID website. We'll begin by making our table interactive. Remember how we had to only include four states in order to keep our table from getting super long? With an interactive table, we can avoid this. The `reactable` package, like the `DT` package, is a great option for interactive tables. If we swap out the `gt` package code we used to make our static table with the `reactable()` function, we can show all states. 
 
-```{r}
+```{r eval = FALSE, echo = TRUE}
+library(reactable)
+
 covid_data %>% 
   slice_max(order_by = date,
             n = 1) %>% 
@@ -577,7 +583,7 @@ save_image_for_nostarch(here::here("assets/covid-website-reactable-sorted.png"))
 
 We can also give our chart some interactivity. To do this, we'll use the same package that Matt Herman uses: `plotly`. The basic idea with `plotly` is this: create a plot with ggplot and save it as an object. Then, pass it to the `ggplotly()` function, which turns it into an interactive plot. Here's how it would work with my chart showing COVID death rates over time.
 
-```{r}
+```{r eval = FALSE, echo = TRUE}
 library(plotly)
 
 covid_chart <- covid_data %>% 
@@ -621,9 +627,7 @@ save_image_for_nostarch(here::here("assets/covid-website-messy-tooltips.png"))
 
 To make our tooltip more informative, we can also create a single variable and then tell `ggplotly()` to just use this. Below, I begin by creating a `date_nice_format` variable so that we get, say, January 1, 2021 instead of 2021-01-01. I then combine this with the state and death rates (`deaths_avg_per_100k`) variables, saving my result as `tooltip_text`. I then add a new aesthetic property in the `ggplot()` function: `text = tooltip_text`. On its own, this doesn't do anything. But when I add `tooltip = "tooltip_text"` to the `ggplotly()` function, it changes the tooltip.
 
-TODO: Add code annotation numbers in No Starch book in code places below
-
-```{r}
+```{r eval = FALSE, echo = TRUE}
 covid_chart <- covid_data %>% 
   filter(state %in% c("Alabama",
                       "Alaska",
@@ -694,11 +698,9 @@ website_files <- dir_ls(path = "docs",
 walk(website_files, drop_upload, path = "COVID Website")
 ```
 
-The most complicated yet most powerful solution is to use what's known as *continuous deployment*. TODO: check on definition of this. The idea behind continuous deployment is that, each time you commit your code to GitHub (or a similar service for posting code online), it deploys to a website you have set up. Learning to use GitHub is an investment (the book *Happy Git and GitHub for the useR* by Jenny Bryan is a great resource), but being able to host your website for free makes it worth the time and effort. 
+The most complicated yet most powerful solution is to use GitHub Pages (or a similar static hosting service). The idea is that, each time you commit your code to GitHub (or a similar service for posting code online), it deploys to a website you have set up. Learning to use GitHub is an investment (the book *Happy Git and GitHub for the useR* by Jenny Bryan is a great resource), but being able to host your website for free makes it worth the time and effort. 
 
-Here's how this works. GitHub has a service called GitHub Pages. Most of the time, when you look at a file on GitHub, it shows you its underlying source code. If you look at an HTML file, you see the HTML code. GitHub Pages, on the other hand, doesn't show you the code of HTML files, it shows you the rendered HTML files. This is what we want when we create a website. 
-
-To host your website on GitHub Pages, you'll need to first push your code to GitHub. Once you have a repository set up there, you'll go to it, then go to the Settings tab. From there, what you see should look like Figure \@ref(fig:gh-pages.png).
+Here's how this works. Most of the time, when you look at a file on GitHub, it shows you its underlying source code. If you look at an HTML file, you see the HTML code. GitHub Pages, on the other hand, doesn't show you the code of HTML files, it shows you the rendered HTML files. This is what we want when we create a website. To host your website on GitHub Pages, you'll need to first push your code to GitHub. Once you have a repository set up there, you'll go to it, then go to the Settings tab. From there, what you see should look like Figure \@ref(fig:gh-pages.png).
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -726,6 +728,17 @@ knitr::include_graphics(here::here("assets/gh-pages-published.png"))
 save_image_for_nostarch(here::here("assets/gh-pages-published.png"))
 ```
 
-The best part about hosting your website on GitHub Pages is that, any time you make updates to your code or data, the website will update as well. If I were to run my code next week, render my website again, and push it to GitHub, GitHub Pages would automatically update the website it serves online. RMarkdown-based websites made with `distill`, combined with continuous deployment powered by GitHub Pages, makes building and maintaining websites a snap.
+The best part about hosting your website on GitHub Pages is that, any time you make updates to your code or data, the website will update as well. If I were to run my code next week, render my website again, and push it to GitHub, GitHub Pages would automatically update the website it serves online. RMarkdown-based websites made with `distill`, combined with GitHub Pages, makes building and maintaining websites a snap.
 
 ## Conclusion {-}
+
+During my conversation with Matt Herman, I asked him a basic but important question: why did you build the Westchester County COVID-19 website using R? Why not use a more well-known process for building websites? Herman's answer was twofold.
+
+Herman first said that staying within R just made sense because it was where he was already doing everything else. "As a pretty strong R user," he said, "I was doing all of my data collection and manipulation and wrangling and visualization and R. Then I could also just stay in R to create the website and to create stuff that I couldn't make myself in HTML or JavaScript." 
+
+The second reason Herman chose to build his website in R builds on the first. He's not a front-end web developer and his familiarity with HTML and Javascript is limited. But, using `distill`, `plotly`, and `DT`, he can get the benefit of HTML and Javascript because "these R packages have wrapped the JavaScript libraries." If you look at the source code of the website Herman created, you'll see sophisticated HTML and Javascript. But because the packages he uses convert R code into HTML and Javascript, he is able to build websites he would not otherwise be capable of building. 
+
+Since we spoke, Herman has continued building websites with R. 
+He and and current his colleagues at the Justice Center at the Council of State Governments, have made a great website using Quarto, the language-agnostic version of R Markdown. This website, found at https://projects.csgjusticecenter.org/tools-for-states-to-address-crime/, highlights crime trends throughout the United States using many of the same techniques we've discussed in this chapter. 
+
+No matter which specific packages you use, using R gives you a quick way to develop complex websites without having to be a sophisticated front-end web developer. The websites look good and communicate well. They are one more way that R can help you share your results with the world.
