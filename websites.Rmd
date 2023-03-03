@@ -10,7 +10,7 @@ In summer 2020, Matt Herman moved with his family from Brooklyn to Westchester C
 
 Matt Herman was not just any person with an interest in COVID data. He was also, at the time, the Deputy Director of the ChildStat Data Unit in the Office of Research and Analytics at the New York City Administration for Children’s Services. This handful of a title meant that he was skilled at working with data. And with these skills, Herman realized that he could create a COVID Westchester County COVID data resource that he and others needed. The data was out there; it just needed someone to make it accessible.
 
-What Herman ended up creating was the Westchester COVID-19 Tracking website. Built entirely in R, this website had charts, maps, tables, and text that summarized the latest COVID data for Westchester County. Although the website is no longer consistently updated, it is still available at https://westchester-covid.mattherman.info/ (a screenshot is in Fugure \@ref(fig:westchester-website-screenshot)), and it shows what is possible with R. 
+What Herman ended up creating was the Westchester COVID-19 Tracking website. Built entirely in R, this website had charts, maps, tables, and text that summarized the latest COVID data for Westchester County. Although the website is no longer consistently updated, it is still available at https://westchester-covid.mattherman.info/ (a screenshot is in Figure \@ref(fig:westchester-website-screenshot)), and it shows what is possible with R. 
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -455,7 +455,7 @@ covid_data %>%
 ```
 ````
 
-We can see what this website looks like in \@ref(fig:covid-website-static-page) below.
+We can see what this website looks like in Figure \@ref(fig:covid-website-static-page) below.
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -523,7 +523,7 @@ knitr::include_graphics(here::here("assets/westchester-website-tooltip.png"))
 save_image_for_nostarch(here::here("assets/westchester-website-tooltip.png"))
 ```
 
-Herman also makes interactive tables with the `DT` package, allowing the user to scroll through the data and sort by any of the variables in it by clicking on its name. The table can be seen in Figure \@ref(fig:dt-table.png).
+Herman also makes interactive tables with the `DT` package, allowing the user to scroll through the data and sort by any of the variables in it by clicking on its name. The table can be seen in Figure \@ref(fig:dt-table).
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
