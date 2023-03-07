@@ -1,0 +1,96 @@
+---
+title: "Google Sheets Example Report"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      warning = FALSE,
+                      message = FALSE)
+```
+
+
+```{r}
+library(tidyverse)
+library(janitor)
+library(googlesheets4)
+library(gt)
+```
+
+```{r}
+# Import data from Google Sheets
+survey_data_raw <- read_sheet("https://docs.google.com/spreadsheets/d/1AR0_RcFBg8wdiY4Cj-k8vRypp_txh27MyZuiRdqScog/edit?usp=sharing")
+```
+
+```{r}
+# Clean data
+survey_data_clean <- survey_data_raw %>%
+  clean_names() %>%
+  mutate("participant_id" = as.character(row_number())) %>%
+  rename("age" = "how_old_are_you",
+         "like_games" = "do_you_like_to_play_video_games",
+         "game_types" = "what_kind_of_games_do_you_like",
+         "favorite_game" = "whats_your_favorite_game",
+         "music_genres" = "what_are_some_music_genres_that_you_like",
+         "favorite_artist" = "whos_your_favorite_artist") %>%
+  relocate(participant_id, .before = "age") %>%
+  mutate(age = factor(age, levels = c("Under 18", "18-24", "25-34", "35-44", "45-54", "55-64", "Over 65")))
+```
+
+# Respondent Demographics
+
+```{r}
+# Calculate number of respondents
+number_of_respondents <- nrow(survey_data_clean)
+```
+
+We received responses from `r number_of_respondents` respondents. Their ages are below.
+
+```{r}
+survey_data_clean %>% 
+  select(participant_id, age) %>% 
+  gt() %>% 
+  cols_label(
+    participant_id = "Participant ID",
+    age = "Age"
+  ) %>% 
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_column_labels()
+  ) %>% 
+  cols_align(
+    align = "left",
+    columns = everything()
+  ) %>% 
+  cols_width(
+    participant_id ~ px(200),
+    age ~ px(700)
+  ) 
+```
+
+# Video Games
+
+We asked if respondents liked video games. Their responses are below.
+
+```{r}
+survey_data_clean %>%
+  count(like_games) %>% 
+  ggplot(aes(x = like_games,
+             y = n,
+             fill = like_games)) +
+  geom_col() +
+  scale_fill_manual(values = c(
+    "No" = "#6cabdd",
+    "Yes" = "#ff7400"
+  )) +
+  labs(title = "How Many People Like Video Games?", 
+       x = NULL,
+       y = "Number of Participants") +
+  theme_minimal(base_size = 16) +
+  theme(legend.position = "none",
+        panel.grid.minor = element_blank(),
+        panel.grid.major.x = element_blank(),
+        axis.title.y = element_blank(),
+        plot.title = element_text(face = "bold",
+                                  hjust = 0.5))
+```
