@@ -49,6 +49,7 @@ save_image_for_nostarch(here::here("assets/video-game-survey-data.png"))
 The `googlesheets4` package has a function called `read_sheet()` that allows you to pull in data directly from a Google Sheet. We can import this data using this function:
 
 ```{r}
+library(googlesheets4)
 gs4_deauth()
 ```
 
