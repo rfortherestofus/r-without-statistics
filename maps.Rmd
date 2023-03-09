@@ -42,17 +42,17 @@ In the past, working with geospatial data meant mastering competing standards, e
 ```{r}
 # This code chunk is just to create the data
 
-library(tigris)
-library(sf)
-
-wyoming <- states(progress_bar = FALSE) %>%
-  st_transform("WGS84") %>%
-  select(NAME) %>%
-  filter(NAME == "Wyoming") %>%
-  st_cast(to = "POLYGON")
-
-wyoming %>% 
-  st_write("data/wyoming.geojson")
+# library(tigris)
+# library(sf)
+#
+# wyoming <- states(progress_bar = FALSE) %>%
+#   st_transform("WGS84") %>%
+#   select(NAME) %>%
+#   filter(NAME == "Wyoming") %>%
+#   st_cast(to = "POLYGON")
+# 
+# wyoming %>% 
+#   st_write("data/wyoming.geojson")
 ```
 
 You can see that the data has two columns, one for the state name (NAME) and another called geometry. This data looks like the data frames you’re used to encountering, aside from two major differences: There’s a bunch of metadata above the data frame, and our simple features data contains geographical data in a variable called `geometry.` The metadata begins with the text “Simple feature collection with 1 feature and 1 field” (because the `geometry` column must be present in order for a data frame to be geospatial data it is not counted as a field). The feature referenced here is the row, and the field is the `NAME` variable, which contains non-spatial data (the `geometry` column will be discussed below). This line, and the lines that follow, are metadata about the geospatial data in the `wyoming` object. Let’s look at each part of this simple features data.
@@ -139,6 +139,7 @@ save_figure_for_nostarch()
 # wy_roads %>%
 #   filter(linearid == 11010932011560) %>%
 #   st_write("data/wyoming-highway-30.geojson")
+# 
 # wy_roads %>%
 #   st_write("data/wyoming-roads.geojson")
 ```
