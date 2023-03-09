@@ -521,7 +521,15 @@ The ggplot2 R package (which I, like nearly everyone in the data visualization w
 
 ### The First Layer: Mapping Data to Aesthetic Properties {-}
 
-When creating a graph with ggplot, we begin by mapping data to aesthetic properties. All this really means is that we use things like the x or y axis, color, and size (the so-called aesthetic properties) to represent variables. To make this concrete, we’ll use the data on life expectancy in Afghanistan, introduced in the previous section, to generate a plot. Here’s what this data looks like:
+When creating a graph with ggplot, we begin by mapping data to aesthetic properties. All this really means is that we use things like the x or y axis, color, and size (the so-called aesthetic properties) to represent variables. To make this concrete, we’ll use the data on life expectancy in Afghanistan, introduced in the previous section, to generate a plot. We can create this data with the following code:
+
+```{r echo = TRUE}
+library(tidyverse)
+
+gapminder_10_rows <- read_csv("https://data.rwithoutstatistics.com/data/gapminder_10_rows.csv")
+```
+
+Here’s what the `gapminder_10_rows` data frame looks like:
 
 ```{r}
 gapminder_10_rows
@@ -760,6 +768,14 @@ We could improve the plot we’ve been working on in many ways. But rather than 
 ## Recreating the Drought Visualization with ggplot {-}
 
 The drought visualization code relies on a combination of ggplot fundamentals and some less-well-known tweaks that make it really shine. In order to understand how Scherer and Karamanis made their data visualization, we’ll start out with a simplified version of their code. We’ll build it up layer by layer, adding elements as we go. 
+
+First, let’s import the data. Scherer and Karamanis do this with the `import()` function from the `rio` package. This function is helpful because the data they are working with is in JSON format, which can be complicated to work with. The `rio` package simplifies it into just one line:
+
+```{r echo = TRUE}
+library(rio)
+
+dm_perc_cat_hubs_raw <- import("https://data.rwithoutstatistics.com/dm_export_20000101_20210909_perc_cat_hubs.json"))
+```
 
 ### Plotting One Region and Year {-}
 
