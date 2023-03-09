@@ -106,7 +106,7 @@ print_nostarch_file_name()
 #   slice(1) %>% 
 #   st_write("data/wyoming-one-ev-station.geojson")
 
-wyoming_one_ev_station <- read_sf("")
+wyoming_one_ev_station <- read_sf("https://data.rwithoutstatistics.com/wyoming-one-ev-station.geojson")
 
 ggplot() +
   geom_sf(data = wyoming) +
