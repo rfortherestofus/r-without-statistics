@@ -199,7 +199,7 @@ print_nostarch_file_name()
 ```{r wyoming-roads-map, fig.cap = "A map of all major roads in Wyoming"}
 wyoming_roads <- read_sf("https://data.rwithoutstatistics.com/wyoming-roads.geojson")
 
-wy_roads %>%
+wyoming_roads %>%
   ggplot() +
   geom_sf(data = wyoming) +
   geom_sf(
@@ -212,16 +212,29 @@ wy_roads %>%
 save_figure_for_nostarch()
 ```
 
-Lastly, we could use MULTIPOLYGON data to, for example, depict a state made up of multiple polygons. To see what I mean, take a look at a map of Wyoming’s counties. The following simple features data represents the 23 counties in the state: 
+```{r}
+# This is just to bring the data the first time
+
+# wy_counties <- counties(state = "Wyoming",
+#                         progress_bar = FALSE) %>%
+#   st_transform("WGS84") %>%
+#   select(NAME)
+# 
+# wy_counties %>%
+#   st_write("data/wyoming-counties.geojson")
+```
+
+Lastly, we could use MULTIPOLYGON data to, for example, depict a state made up of multiple polygons. To see what I mean, take a look at a map of Wyoming’s counties. We can import this data with the following code:
 
 ```{r}
-wy_counties <- counties(state = "Wyoming",
-                        progress_bar = FALSE) %>%
-  st_transform("WGS84") %>%
-  select(NAME)
-
-wy_counties
+wyoming_counties <- read_sf("https://data.rwithoutstatistics.com/wyoming-counties.geojson")
 ```
+The following simple features data represents the 23 counties in the state: 
+
+```{r}
+wyoming_counties
+```
+
 
 We can see that the geometry type of this data is `MULTIPOLYGON`. In addition, the repeated `MULTIPOLYGON` text in the geometry column indicates that each row contains a shape of type `MULTIPOLYGON`. Figure \@ref(fig:wyoming-counties-map) is a map made with this data. 
 
@@ -306,7 +319,7 @@ Next, let’s import the data we need. We require three pieces of data: COVID ra
 First, we import COVID data. This data comes directly from *The New York Times*, which publishes daily case rates by state as a CSV file on its GitHub account. I’ve dropped the `fips` variable; Federal Information Processing Standards (FIPS) are numeric codes used to represent states, but we can reference states by their names instead:
 
 ```{r echo = TRUE}
-covid_data <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv") %>%
+covid_data <- read_csv("https://data.rwithoutstatistics.com/covid-us-states.csv") %>%
   select(-fips)
 ```
 
@@ -319,7 +332,7 @@ covid_data
 Madjid’s map shows per capita rates (rates per 100,000 people) rather than absolute rates (the rates without consideration for a state’s population). So, to recreate his maps, we need to obtain data on each state’s population. Madjid downloaded this data as a CSV:  
 
 ```{r echo = TRUE}
-usa_states <- read_csv("data/population-by-state.csv") %>%
+usa_states <- read_csv("https://data.rwithoutstatistics.com/population-by-state.csv") %>%
   select(State, Pop)
 ```
 
