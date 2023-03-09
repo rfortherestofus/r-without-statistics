@@ -42,9 +42,9 @@ In the past, working with geospatial data meant mastering competing standards, e
 ```{r}
 # This code chunk is just to create the data
 
-# library(tigris)
-# library(sf)
-#
+library(tigris)
+library(sf)
+
 # wyoming <- states(progress_bar = FALSE) %>%
 #   st_transform("WGS84") %>%
 #   select(NAME) %>%
