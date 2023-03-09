@@ -774,7 +774,7 @@ First, let’s import the data. Scherer and Karamanis do this with the `import()
 ```{r echo = TRUE}
 library(rio)
 
-dm_perc_cat_hubs_raw <- import("https://data.rwithoutstatistics.com/dm_export_20000101_20210909_perc_cat_hubs.json"))
+dm_perc_cat_hubs_raw <- import("https://data.rwithoutstatistics.com/dm_export_20000101_20210909_perc_cat_hubs.json")
 ```
 
 ### Plotting One Region and Year {-}
