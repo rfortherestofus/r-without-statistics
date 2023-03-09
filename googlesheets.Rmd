@@ -4,7 +4,12 @@ chapter_number <- 10
 source("_common.R")
 ```
 
-# Pull in Survey Results as Soon as They Come In {#googlesheets-chapter}
+```{r}
+library(googlesheets4)
+gs4_deauth()
+```
+
+# Automatically Access the Latest Data {#googlesheets-chapter}
 
 In 2020, Meghan Harris started a job at the Primary Care Research Institute at the University of Buffalo. Her title was Data Integration Specialist, which was both generic and an accurate representation of the work she would do. One of the projects Harris worked on during her time in this job was looking at people affected by opioid use disorder, and data for this project came from a variety of surveys, all of which fed into a series of Google Sheets. She started her new job faced with a jumble of Google Sheets, tasked with helping the organization to make sense of and use its data. 
 
@@ -12,7 +17,7 @@ For many people, especially those working in tools like SPSS, SAS, or Stata, the
 
 If R Markdown is an improvement on the typical multitool workflow discussed in Chapter \@ref(rmarkdown-chapter), using the `googlesheets4` package to access data directly from Google Sheets represents a similar improvement compared to downloading data each time you want to update a report. Rather than going through multiple steps (downloading data, copying it into your project, adjusting your code so it imports the new data), you can write code so that it automatically brings in new data directly from Google Sheets. Whenever you need to update your report, simply run your code and the report, generated with the latest data, will be created.
 
-In this chapter I'll demonstrate how to use the `googlesheets4` package works with a simple example. This example, using fake data on video game preferences, is one that Meghan Harris created to mirror her work with opioid survey data (which, for obvious reasons, is confidential). We'll then conclude with some reflections on how connecting directly to data sources such as Google Sheets through R code can improve your workflow.
+In this chapter I'll use a simple example to demonstrate how the `googlesheets4` package works. This example, using fake data on video game preferences, is one that Meghan Harris created to mirror her work with opioid survey data (which, for obvious reasons, is confidential). We'll then conclude with some reflections on how connecting directly to data sources such as Google Sheets through R can improve your workflow.
 
 ## Using the `googlesheets4` Package to Bring in Up-to-Date Data {-}
 
@@ -30,7 +35,7 @@ knitr::include_graphics(here::here("assets/tidyverse-access-r.png"))
 save_image_for_nostarch(here::here("assets/tidyverse-access-r.png"))
 ```
 
-The most important thing is to check the box for "See, edit, create, and delete all your Google Sheets spreadsheets" (it is unchecked when you first get to this screen). This will ensure that R is able to access data from your Google Sheets account. Hit Continue and you'll be given the message "Authentication complete. Please close this page and return to R." The `googlesheets4` package will now save your credentials so that you can use them in the future without having to authenticate each time. 
+The most important thing is to check the box for "See, edit, create, and delete all your Google Sheets spreadsheets". This will ensure that R is able to access data from your Google Sheets account. Hit Continue and you'll be given the message "Authentication complete. Please close this page and return to R." The `googlesheets4` package will now save your credentials so that you can use them in the future without having to authenticate each time. 
 
 Now that we've connected R to our Google account, we can import data. We'll import fake data that Meghan Harris created on video preferences. You can see in Figure \@ref(fig:video-game-survey-data) what it looks like in Google Sheets.
 
@@ -46,12 +51,7 @@ knitr::include_graphics(here::here("assets/video-game-survey-data.png"))
 save_image_for_nostarch(here::here("assets/video-game-survey-data.png"))
 ```
 
-The `googlesheets4` package has a function called `read_sheet()` that allows you to pull in data directly from a Google Sheet. We can import this data using this function:
-
-```{r}
-library(googlesheets4)
-gs4_deauth()
-```
+The `googlesheets4` package has a function called `read_sheet()` that allows you to pull in data directly from a Google Sheet. We can import this data with this function in the following way:
 
 
 ```{r echo = TRUE}
@@ -60,7 +60,7 @@ library(googlesheets4)
 survey_data_raw <- read_sheet("https://docs.google.com/spreadsheets/d/1AR0_RcFBg8wdiY4Cj-k8vRypp_txh27MyZuiRdqScog/edit?usp=sharing")
 ```
 
-We can take a look at our the `survey_data_raw` object to confirm that our data was imported. I'm using the `glimpse()` function from the `dplyr` package in order to make it easier to read as follows:
+We can take a look at the `survey_data_raw` object to confirm that our data was imported. I'm using the `glimpse()` function from the `dplyr` package in order to make it easier to read. 
 
 ```{r eval = FALSE, echo = TRUE}
 library(tidyverse)
@@ -197,7 +197,7 @@ save_image_for_nostarch(here::here("assets/video-game-report.png"))
 
 The R Markdown document here isn't revolutionary (it's the same types of things we saw in Chapter \@ref(rmarkdown-chapter)). What is different is the way we're importing our data. Because we're bringing it in directly from Google Sheets, there's no risk of, say, accidentally reading in the wrong CSV. Automating this step reduces the risk of error.
 
-The best part is that we can re-run our code at any point to bring in updated data. The `read_sheet()` function will look for all data on the Google Sheet we specify. Our survey had five responses today, but if we run it again tomorrow and it has additional responses, they will all be included in the import. If you use Google Forms to run your survey and have the results go to a Google Sheet, you can have an always up-to-date summary report simply by clicking the Knit button in RStudio.
+The best part is that we can re-run our code at any point to bring in updated data. The `read_sheet()` function will look for all data on the Google Sheet we specify. Our survey had five responses today, but if we run it again tomorrow and it has additional responses, they will all be included in the import. If you use Google Forms to run your survey and have the results go to a Google Sheet, you can have an always up-to-date summary report simply by clicking the Knit button in RStudio. That workflow is one that helped Meghan Harris to collect surveys and manage a wide range of data on opiod use disorder.
 
 ## Conclusion {-}
 
@@ -205,4 +205,4 @@ In this chapter, we've shown how you can use the `googlesheets4` package to impo
 
 This process of bringing in data directly from the source applies beyond Google Sheets. There are packages to bring in data directly from Excel365 (`Microsoft365R`), Qualtrics (`qualtRics `), Survey Monkey (`surveymonkey`), and other sources. Before hitting the "Download Data" button in your data collection tool of choice, it's worth looking into whether a package exists to import data directly into R. 
 
-For Meghan Harris, working directly with data in Google Sheets was a lifesaver. She used `googlesheets4` to bring in data in multiple Google Sheets. From there, she was able to streamline analysis and reporting, which ultimately had a big impact on her organization's work. Data that had once been largely unused because accessing it was so complicated came to inform research on opioid use disorder. Bringing in data from Google Sheets with a few lines of code may seem small at first, but it can have a big impact.
+For Meghan Harris, working directly with data in Google Sheets was a game-changer. She used `googlesheets4` to bring in data in multiple Google Sheets. From there, she was able to streamline analysis and reporting, which ultimately had a big impact on her organization's work. Data that had once been largely unused because accessing it was so complicated came to inform research on opioid use disorder. Bringing in data from Google Sheets with a few lines of code may seem small at first, but it can have a big impact.
