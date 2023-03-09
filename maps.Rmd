@@ -62,6 +62,8 @@ You can see that the data has two columns, one for the state name (NAME) and ano
 The geometry type represents the shape of the geospatial data we’re working with. These types are typically written in all caps. In this case, the relatively simple `POLYGON` type represents a single polygon. We can use ggplot to display this data by calling `geom_sf()`, a special geom designed to work with simple features data:
 
 ```{r wyoming-map-code, echo = TRUE, eval = FALSE}
+wyoming <- read_sf("https://data.rwithoutstatistics.com/wyoming.geojson")
+
 wyoming %>%
   ggplot() +
   geom_sf()
