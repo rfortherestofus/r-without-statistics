@@ -89,15 +89,24 @@ print_nostarch_file_name()
 ```
 
 ```{r ev-stations-map, fig.cap = "A map of a single electric vehicle charging station in Wyoming"}
-wy_ev_stations <- read_csv("data/ev-charging-stations.csv") %>%
-  janitor::clean_names() %>%
-  filter(state == "WY") %>%
-  filter(fuel_type_code == "ELEC") %>%
-  st_as_sf(
-    coords = c("x", "y"),
-    crs = "WGS84"
-  ) %>%
-  select(objectid)
+# wy_ev_stations <- read_csv("data/ev-charging-stations.csv") %>%
+#   janitor::clean_names() %>%
+#   filter(state == "WY") %>%
+#   filter(fuel_type_code == "ELEC") %>%
+#   st_as_sf(
+#     coords = c("x", "y"),
+#     crs = "WGS84"
+#   ) %>%
+#   select(objectid)
+# 
+# wy_ev_stations %>% 
+#   st_write("data/wyoming-all-ev-stations.geojson")
+# 
+# wy_ev_stations %>% 
+#   slice(1) %>% 
+#   st_write("data/wyoming-one-ev-station.geojson")
+
+wyoming_one_ev_station <- read_sf("")
 
 ggplot() +
   geom_sf(data = wyoming) +
