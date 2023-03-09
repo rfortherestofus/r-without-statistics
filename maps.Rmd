@@ -82,13 +82,9 @@ save_figure_for_nostarch()
 
 `POLYGON` is one of several geometry types that `sf` data can be used to represent. 
 
-Other geometry types used in simple feature data include `POINT`, to display elements such as a pin on a map that represents a single location. Figure \@ref(fig:ev-stations-map) is a map showing the location of a single electric vehicle charging station in Wyoming.
+```{r}
+# This code is just to get the data the first time
 
-```{r results='asis'}
-print_nostarch_file_name()
-```
-
-```{r ev-stations-map, fig.cap = "A map of a single electric vehicle charging station in Wyoming"}
 # wy_ev_stations <- read_csv("data/ev-charging-stations.csv") %>%
 #   janitor::clean_names() %>%
 #   filter(state == "WY") %>%
@@ -105,13 +101,21 @@ print_nostarch_file_name()
 # wy_ev_stations %>% 
 #   slice(1) %>% 
 #   st_write("data/wyoming-one-ev-station.geojson")
+```
 
+Other geometry types used in simple feature data include `POINT`, to display elements such as a pin on a map that represents a single location. Figure \@ref(fig:ev-stations-map) is a map showing the location of a single electric vehicle charging station in Wyoming.
+
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
+```{r ev-stations-map, fig.cap = "A map of a single electric vehicle charging station in Wyoming"}
 wyoming_one_ev_station <- read_sf("https://data.rwithoutstatistics.com/wyoming-one-ev-station.geojson")
 
 ggplot() +
   geom_sf(data = wyoming) +
   geom_sf(
-    data = slice(wy_ev_stations, 1),
+    data = wyoming_one_ev_station,
     shape = 21,
     fill = "#ff7400",
     color = "white",
@@ -123,6 +127,23 @@ ggplot() +
 save_figure_for_nostarch()
 ```
 
+```{r}
+# This is code just to import the data
+
+# wy_roads <- primary_secondary_roads(
+#   state = "Wyoming",
+#   progress_bar = FALSE
+# ) %>%
+#   janitor::clean_names()
+# 
+# wy_roads %>%
+#   filter(linearid == 11010932011560) %>%
+#   st_write("data/wyoming-highway-30.geojson")
+# wy_roads %>%
+#   st_write("data/wyoming-roads.geojson")
+```
+
+
 The `LINESTRING` geometry type is for set of points that can be connected with lines, often used to represent roads. The `LINESTRING` in Figure \@ref(fig:wy-roads-map) shows a section of US Highway 30 that runs through Wyoming.
 
 ```{r results='asis'}
@@ -130,14 +151,9 @@ print_nostarch_file_name()
 ```
 
 ```{r wy-roads-map, fig.cap = "A map of a section of U.S. Highway 30 running through Wyoming"}
-wy_roads <- primary_secondary_roads(
-  state = "Wyoming",
-  progress_bar = FALSE
-) %>%
-  janitor::clean_names()
+wyoming_highway_30 <- read_sf("data/wyoming-highway-30.geojson")
 
-wy_roads %>%
-  filter(linearid == 11010932011560) %>%
+wyoming_highway_30 %>%
   ggplot() +
   geom_sf(data = wyoming) +
   geom_sf(
@@ -157,11 +173,15 @@ print_nostarch_file_name()
 ```
 
 ```{r wyoming-ev-stations-map, fig.cap = "A map of all electric vehicle charging stations in Wyoming"}
+wyoming_all_ev_stations <- read_sf("data/wyoming-all-ev-stations.geojson")
+
 ggplot() +
   geom_sf(data = wyoming) +
   geom_sf(
-    data = wy_ev_stations,
-    color = "#ff7400",
+    data = wyoming_all_ev_stations,
+    fill = "#ff7400",
+    color = "white",
+    shape = 21,
     size = 3
   )
 ```
@@ -177,6 +197,8 @@ print_nostarch_file_name()
 ```
 
 ```{r wyoming-roads-map, fig.cap = "A map of all major roads in Wyoming"}
+wyoming_roads <- read_sf("https://data.rwithoutstatistics.com/wyoming-roads.geojson")
+
 wy_roads %>%
   ggplot() +
   geom_sf(data = wyoming) +
