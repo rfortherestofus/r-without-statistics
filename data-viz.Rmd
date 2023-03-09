@@ -526,7 +526,7 @@ When creating a graph with ggplot, we begin by mapping data to aesthetic propert
 ```{r echo = TRUE}
 library(tidyverse)
 
-gapminder_10_rows <- read_csv("https://data.rwithoutstatistics.com/data/gapminder_10_rows.csv")
+gapminder_10_rows <- read_csv("https://data.rwithoutstatistics.com/gapminder_10_rows.csv")
 ```
 
 Here’s what the `gapminder_10_rows` data frame looks like:
