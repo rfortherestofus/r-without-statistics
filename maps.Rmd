@@ -234,6 +234,7 @@ Lastly, we could use MULTIPOLYGON data to, for example, depict a state made up o
 ```{r}
 wyoming_counties <- read_sf("https://data.rwithoutstatistics.com/wyoming-counties.geojson")
 ```
+
 The following simple features data represents the 23 counties in the state: 
 
 ```{r}
@@ -248,7 +249,7 @@ print_nostarch_file_name()
 ```
 
 ```{r wyoming-counties-map, fig.cap = "A map of Wyoming counties"}
-wy_counties %>%
+wyoming_counties %>%
   ggplot() +
   geom_sf()
 ```
@@ -283,7 +284,7 @@ print_nostarch_file_name()
 ```
 
 ```{r wyoming-counties-map-wgs84, fig.cap = "A map of Wyoming counties using the WGS84 projection"}
-wy_counties %>%
+wyoming_counties %>%
   sf::st_transform(albersusa::us_laea_proj) %>%
   ggplot() +
   geom_sf()
