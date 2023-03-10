@@ -56,10 +56,6 @@ acs_2019_vars <- load_variables(year = 2019,
 hispanic_latino_2020 <- get_decennial(geography = "state", 
                                       variables = "P2_002N",
                                       year = 2020)
-
-
-
-
 ```
 
 ```{r}
