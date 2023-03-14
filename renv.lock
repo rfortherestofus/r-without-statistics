@@ -1,6 +1,6 @@
 {
   "R": {
-    "Version": "4.2.1",
+    "Version": "4.2.2",
     "Repositories": [
       {
         "Name": "CRAN",
@@ -177,6 +177,14 @@
       "Hash": "50c838a310445e954bc13f26f26a6ecf",
       "Requirements": []
     },
+    "audio": {
+      "Package": "audio",
+      "Version": "0.1-10",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "d0c2f6b09c666cc84cd64813f43a54fc",
+      "Requirements": []
+    },
     "backports": {
       "Package": "backports",
       "Version": "1.4.1",
@@ -210,6 +218,17 @@
         "ggplot2",
         "ggpubr",
         "png"
+      ]
+    },
+    "beepr": {
+      "Package": "beepr",
+      "Version": "1.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "b3158a579ecef0e8f7626f4dadc369d0",
+      "Requirements": [
+        "audio",
+        "stringr"
       ]
     },
     "bigD": {
@@ -2373,14 +2392,14 @@
       "Package": "tweetrmd",
       "Version": "0.0.9",
       "Source": "GitHub",
-      "Remotes": "rstudio/webshot2",
       "RemoteType": "github",
+      "Remotes": "rstudio/webshot2",
       "RemoteHost": "api.github.com",
       "RemoteRepo": "tweetrmd",
       "RemoteUsername": "gadenbuie",
       "RemoteRef": "HEAD",
       "RemoteSha": "075102b6a02fa4ea26741a9db7ca8afd728350a1",
-      "Hash": "1a923da23a8fd1f1361c46845aaf8452",
+      "Hash": "fe04c20cf375e2266e08010ebed4b6f5",
       "Requirements": [
         "htmltools",
         "httr",
