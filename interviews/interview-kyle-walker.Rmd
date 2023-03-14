@@ -61,16 +61,14 @@ hispanic_latino_2020 <- get_decennial(geography = "state",
 ```{r}
 get_decennial(geography = "state", 
               variables = c("P2_001N", "P2_002N"),
-              year = 2020) %>% 
-  view()
+              year = 2020)
 ```
 
 ```{r}
 get_decennial(geography = "state", 
               variables = c("P2_001N", "P2_002N"),
               output = "wide",
-              year = 2020) %>% 
-  view()
+              year = 2020)
 ```
 
 
@@ -115,14 +113,14 @@ get_decennial(geography = "state",
   arrange(desc(pct))
 ```
 
-## ACS data (median age by state)
+## ACS data (median age by tract)
 
 ```{r}
 get_acs(
   geography = "tract",
   state = "OR",
   variables = "B01002_001",
-  year = 2019,
+  year = 2020,
   survey = "acs5"
 )
 ```
