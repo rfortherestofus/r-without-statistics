@@ -12,18 +12,6 @@ It was tedious
 
 > It was on, on Twitter again, and someone had tweeted out kind of, I, I wish there were a package. That brought in census shape files into our, and automatically did that. And, um, a friend of mine, Eli NA who's, um, working out at the, uh, at UC Riverside, uh, said, well, Kyle, why don't you do that? And so I thought, sure, this has always been tedious. I don't like going to the census website every time and pulling the shape files.
 
-# What is an API?
-
-You can access data by downloading it
-
-You can access data if it's online with a direct link
-
-You can access data in multiple formats, groupings, etc using an API (`googlesheets4` is also an API package)
-
-`tidycensus` does a ton of work so you don't have to:
-
-> It will go to the appropriate endpoint, which is typically the data set, um, from which you're requesting data. It will communicate with that. The census website bring the data back. The data comes back in JSON format. So JavaScript, object notation, and then tidy census does all the work of tidying up that JSON for you.
-
 # How tidycensus works
 
 - Get API key
@@ -48,6 +36,18 @@ You can access data in multiple formats, groupings, etc using an API (`googleshe
 
 - Use `wide` argument
 - Can also use `pivot_wider()`
+
+# What is an API?
+
+You can access data by downloading it
+
+You can access data if it's online with a direct link
+
+You can access data in multiple formats, groupings, etc using an API (`googlesheets4` is also an API package)
+
+`tidycensus` does a ton of work so you don't have to:
+
+> It will go to the appropriate endpoint, which is typically the data set, um, from which you're requesting data. It will communicate with that. The census website bring the data back. The data comes back in JSON format. So JavaScript, object notation, and then tidy census does all the work of tidying up that JSON for you.
 
 # Conclusion
 
