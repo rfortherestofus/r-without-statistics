@@ -47,7 +47,7 @@ You can access data in multiple formats, groupings, etc using an API (`googleshe
 
 `tidycensus` does a ton of work so you don't have to:
 
-> It will go to the appropriate endpoint, which is typically the data set, um, from which you're requesting data. It will communicate with that. The census website bring the data back. The data comes back in JSON format. So JavaScript, object notation, and then tidy census does all the work of tidying up that JSON for you.
+> It will go to the appropriate endpoint, which is typically the data set, um, from which you're requesting data. It will communicate with that. The census website bring the data back. The data comes back in JSON format. So JavaScript, object notation, and then tidy census does all the work of tidying up that JSON for you.x
 
 # Conclusion
 

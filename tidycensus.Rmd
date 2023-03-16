@@ -7,6 +7,7 @@ editor_options:
 ```{r}
 library(tidyverse)
 library(tidycensus)
+library(tigris)
 ```
 
 
@@ -211,17 +212,128 @@ Let's switch now to accessing data from the American Community Survey (ACS). Thi
 1. It includes a wider range of questions.
 1. It is given to a sample of people rather than the entire population.
 
-Despite these differences, accessing data from the ACS is nearly identical to how we accessed Census data.
+Despite these differences, accessing data from the ACS is nearly identical to how we accessed Census data. Instead of `get_decennial()`, we use the function `get_acs()`, but the arguments are the same. Here I've identified a variable I'm interested in ("B01002_001", which shows median age) and am using it to get the data for each state.
 
-```{r}
-get_acs(
-  geography = "tract",
-  state = "OR",
-  variables = "B01002_001",
-  year = 2020,
-  survey = "acs5"
-)
+```{r eval = FALSE, echo = TRUE}
+get_acs(geography = "state",
+        variables = "B01002_001",
+        year = 2020)
 ```
 
+Here's what the output looks like:
 
+```{r}
+get_acs(geography = "state",
+        variables = "B01002_001",
+        year = 2020)
+```
+
+There are two differences we can see in the `get_acs()` output compared to that from `get_decennial()`:
+
+1. The `value` column in `get_decennial()` is now called `estimate`.
+1. We have an additional column called `moe` for margin of error.
+
+Both of these changes are because the ACS is given to a sample of the population. As a result, we don't have precise values, but rather estimates, which are extrapolations from the sample to the population as a whole. And with an estimate we also have a margin of error. In our state-level data, the margins of error are relatively low, but if you get data from smaller geographies, they tend to be higher. In cases where your margins of error are high relative to your estimates, you should interpret results with caution, as there is greater uncertainty about how well the data represents the population as a whole.
+
+#### Pipe directly into ggplot
+
+As we saw with Census data on the Asian population in the United States, once you access data using the `tidycensus` package, you can do whatever else you want. We calculated the Asian population as a percentage of the total above. Here we could take the data on median age and pipe it into ggplot in order to create a bar chart.
+
+```{r eval = FALSE, echo = TRUE}
+get_acs(geography = "state",
+        variables = "B01002_001",
+        year = 2020) %>% 
+  ggplot(aes(x = estimate,
+             y = NAME)) +
+  geom_col()
+```
+
+Figure TODO add figure number shows our bar chart.
+
+```{r}
+get_acs(geography = "state",
+        variables = "B01002_001",
+        year = 2020) %>% 
+  ggplot(aes(x = estimate,
+             y = NAME)) +
+  geom_col()
+```
+
+This chart is nothing special, but the fact that it takes just six lines of code to create most definitely is. 
+
+#### Geospatial data
+
+Kyle Walker's original motivation to build `tidycensus` came from wanting to make it easy to access demographic data, just as he had done with geospatial data in the `tigris` package. He succeeded. And one additional benefit of Walker working on both packages is that there is a tight integration between them. Using the `get_acs()` function, you can add set the `geometry` argument to `TRUE` and you will get both demographic and geospatial data.
+
+```{r eval = FALSE, echo = TRUE}
+get_acs(geography = "state",
+        variables = "B01002_001",
+        year = 2020,
+        geometry = TRUE) 
+```
+
+If we take a look at the resulting data, we can see that it has the metadata and `geometry` column of simple features objects that we saw in Chapter \@ref(maps-chapter).
+
+```{r}
+get_acs(geography = "state",
+        variables = "B01002_001",
+        year = 2020,
+        geometry = TRUE) 
+```
+
+We can pipe this data into ggplot to make a map with the following code.
+
+```{r eval = FALSE, echo = TRUE}
+get_acs(geography = "state",
+        variables = "B01002_001",
+        year = 2020,
+        geometry = TRUE) %>% 
+  ggplot(aes(fill = estimate)) +
+  geom_sf() +
+  scale_fill_viridis_c()
+```
+
+The resulting map, seen in Figure \@ref(fig:TODO) below, is less than ideal. The problem with it is that the Aleutian Islands in Alaska cross the 180 degree line of longitude, also known as the international date line. As a result, most of Alaska is on one side of the map while a small part is on the other side. What's more, both Hawaii and Puerto Rico, being decently far from the United States mainland, are hard to see.
+
+```{r}
+get_acs(geography = "state",
+        variables = "B01002_001",
+        year = 2020,
+        geometry = TRUE) %>% 
+  ggplot(aes(fill = estimate)) +
+  geom_sf() +
+  scale_fill_viridis_c()
+```
+
+Fortunately for us, Kyle Walker has a solution. If we load the `tigris` package, we can then use the `shift_geometry()` function to move Alaska, Hawaii, and Puerto Rico into places where they are more easily visible. We set the argument `preserve_area` to `FALSE` so that the giant state of Alaska is shrunk while Hawaii and Puerto Rico are made larger. 
+
+```{r eval = FALSE, echo = TRUE}
+library(tigris)
+
+get_acs(geography = "state",
+        variables = "B01002_001",
+        year = 2020,
+        geometry = TRUE) %>% 
+  shift_geometry(preserve_area = FALSE) %>% 
+  ggplot(aes(fill = estimate)) +
+  geom_sf() +
+  scale_fill_viridis_c()
+```
+
+This lack of precision in the exact sizes of the states is more than made up for by having an easier to read map, which we can see in Figure \@ref(fig:TODO).
+
+```{r}
+get_acs(geography = "state",
+        variables = "B01002_001",
+        year = 2020,
+        geometry = TRUE) %>% 
+  shift_geometry(preserve_area = FALSE) %>% 
+  ggplot(aes(fill = estimate)) +
+  geom_sf() +
+  scale_fill_viridis_c()
+```
+
+We've made a map that shows median age by state. But there's nothing to stop us from making the same map by county. Just change the `geography` argument to "county" and you'll get a map for all 3,000 plus counties. Chapter 2 of Kyle Walker's book *Analyzing US Census Data: Methods, Maps, and Models in R* discusses the various geographies available. There are also many more arguments in both the `get_decennial()` and `get_acs()` functions. We've only shown a few of the most common arguments. If you want to learn more, Walker's book is a great resource.
+
+## Conclusion
 
