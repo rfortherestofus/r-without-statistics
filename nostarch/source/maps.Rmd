@@ -40,16 +40,21 @@ In the past, working with geospatial data meant mastering competing standards, e
 
 
 ```{r}
+# This code chunk is just to create the data
+
 library(tigris)
 library(sf)
 
-wyoming <- states(progress_bar = FALSE) %>%
-  st_transform("WGS84") %>%
-  select(NAME) %>%
-  filter(NAME == "Wyoming") %>%
-  st_cast(to = "POLYGON")
+# wyoming <- states(progress_bar = FALSE) %>%
+#   st_transform("WGS84") %>%
+#   select(NAME) %>%
+#   filter(NAME == "Wyoming") %>%
+#   st_cast(to = "POLYGON")
+# 
+# wyoming %>% 
+#   st_write("data/wyoming.geojson")
 
-wyoming
+wyoming <- read_sf("https://data.rwithoutstatistics.com/wyoming.geojson")
 ```
 
 You can see that the data has two columns, one for the state name (NAME) and another called geometry. This data looks like the data frames you’re used to encountering, aside from two major differences: There’s a bunch of metadata above the data frame, and our simple features data contains geographical data in a variable called `geometry.` The metadata begins with the text “Simple feature collection with 1 feature and 1 field” (because the `geometry` column must be present in order for a data frame to be geospatial data it is not counted as a field). The feature referenced here is the row, and the field is the `NAME` variable, which contains non-spatial data (the `geometry` column will be discussed below). This line, and the lines that follow, are metadata about the geospatial data in the `wyoming` object. Let’s look at each part of this simple features data.
@@ -59,6 +64,8 @@ You can see that the data has two columns, one for the state name (NAME) and ano
 The geometry type represents the shape of the geospatial data we’re working with. These types are typically written in all caps. In this case, the relatively simple `POLYGON` type represents a single polygon. We can use ggplot to display this data by calling `geom_sf()`, a special geom designed to work with simple features data:
 
 ```{r wyoming-map-code, echo = TRUE, eval = FALSE}
+wyoming <- read_sf("https://data.rwithoutstatistics.com/wyoming.geojson")
+
 wyoming %>%
   ggplot() +
   geom_sf()
@@ -79,6 +86,27 @@ save_figure_for_nostarch()
 
 `POLYGON` is one of several geometry types that `sf` data can be used to represent. 
 
+```{r}
+# This code is just to get the data the first time
+
+# wy_ev_stations <- read_csv("data/ev-charging-stations.csv") %>%
+#   janitor::clean_names() %>%
+#   filter(state == "WY") %>%
+#   filter(fuel_type_code == "ELEC") %>%
+#   st_as_sf(
+#     coords = c("x", "y"),
+#     crs = "WGS84"
+#   ) %>%
+#   select(objectid)
+# 
+# wy_ev_stations %>% 
+#   st_write("data/wyoming-all-ev-stations.geojson")
+# 
+# wy_ev_stations %>% 
+#   slice(1) %>% 
+#   st_write("data/wyoming-one-ev-station.geojson")
+```
+
 Other geometry types used in simple feature data include `POINT`, to display elements such as a pin on a map that represents a single location. Figure \@ref(fig:ev-stations-map) is a map showing the location of a single electric vehicle charging station in Wyoming.
 
 ```{r results='asis'}
@@ -86,20 +114,12 @@ print_nostarch_file_name()
 ```
 
 ```{r ev-stations-map, fig.cap = "A map of a single electric vehicle charging station in Wyoming"}
-wy_ev_stations <- read_csv("data/ev-charging-stations.csv") %>%
-  janitor::clean_names() %>%
-  filter(state == "WY") %>%
-  filter(fuel_type_code == "ELEC") %>%
-  st_as_sf(
-    coords = c("x", "y"),
-    crs = "WGS84"
-  ) %>%
-  select(objectid)
+wyoming_one_ev_station <- read_sf("https://data.rwithoutstatistics.com/wyoming-one-ev-station.geojson")
 
 ggplot() +
   geom_sf(data = wyoming) +
   geom_sf(
-    data = slice(wy_ev_stations, 1),
+    data = wyoming_one_ev_station,
     shape = 21,
     fill = "#ff7400",
     color = "white",
@@ -111,6 +131,24 @@ ggplot() +
 save_figure_for_nostarch()
 ```
 
+```{r}
+# This is code just to import the data
+
+# wy_roads <- primary_secondary_roads(
+#   state = "Wyoming",
+#   progress_bar = FALSE
+# ) %>%
+#   janitor::clean_names()
+# 
+# wy_roads %>%
+#   filter(linearid == 11010932011560) %>%
+#   st_write("data/wyoming-highway-30.geojson")
+# 
+# wy_roads %>%
+#   st_write("data/wyoming-roads.geojson")
+```
+
+
 The `LINESTRING` geometry type is for set of points that can be connected with lines, often used to represent roads. The `LINESTRING` in Figure \@ref(fig:wy-roads-map) shows a section of US Highway 30 that runs through Wyoming.
 
 ```{r results='asis'}
@@ -118,14 +156,9 @@ print_nostarch_file_name()
 ```
 
 ```{r wy-roads-map, fig.cap = "A map of a section of U.S. Highway 30 running through Wyoming"}
-wy_roads <- primary_secondary_roads(
-  state = "Wyoming",
-  progress_bar = FALSE
-) %>%
-  janitor::clean_names()
+wyoming_highway_30 <- read_sf("data/wyoming-highway-30.geojson")
 
-wy_roads %>%
-  filter(linearid == 11010932011560) %>%
+wyoming_highway_30 %>%
   ggplot() +
   geom_sf(data = wyoming) +
   geom_sf(
@@ -145,11 +178,15 @@ print_nostarch_file_name()
 ```
 
 ```{r wyoming-ev-stations-map, fig.cap = "A map of all electric vehicle charging stations in Wyoming"}
+wyoming_all_ev_stations <- read_sf("data/wyoming-all-ev-stations.geojson")
+
 ggplot() +
   geom_sf(data = wyoming) +
   geom_sf(
-    data = wy_ev_stations,
-    color = "#ff7400",
+    data = wyoming_all_ev_stations,
+    fill = "#ff7400",
+    color = "white",
+    shape = 21,
     size = 3
   )
 ```
@@ -165,7 +202,9 @@ print_nostarch_file_name()
 ```
 
 ```{r wyoming-roads-map, fig.cap = "A map of all major roads in Wyoming"}
-wy_roads %>%
+wyoming_roads <- read_sf("https://data.rwithoutstatistics.com/wyoming-roads.geojson")
+
+wyoming_roads %>%
   ggplot() +
   geom_sf(data = wyoming) +
   geom_sf(
@@ -178,16 +217,30 @@ wy_roads %>%
 save_figure_for_nostarch()
 ```
 
-Lastly, we could use MULTIPOLYGON data to, for example, depict a state made up of multiple polygons. To see what I mean, take a look at a map of Wyoming’s counties. The following simple features data represents the 23 counties in the state: 
+```{r}
+# This is just to bring the data the first time
+
+# wy_counties <- counties(state = "Wyoming",
+#                         progress_bar = FALSE) %>%
+#   st_transform("WGS84") %>%
+#   select(NAME)
+# 
+# wy_counties %>%
+#   st_write("data/wyoming-counties.geojson")
+```
+
+Lastly, we could use MULTIPOLYGON data to, for example, depict a state made up of multiple polygons. To see what I mean, take a look at a map of Wyoming’s counties. We can import this data with the following code:
 
 ```{r}
-wy_counties <- counties(state = "Wyoming",
-                        progress_bar = FALSE) %>%
-  st_transform("WGS84") %>%
-  select(NAME)
-
-wy_counties
+wyoming_counties <- read_sf("https://data.rwithoutstatistics.com/wyoming-counties.geojson")
 ```
+
+The following simple features data represents the 23 counties in the state: 
+
+```{r}
+wyoming_counties
+```
+
 
 We can see that the geometry type of this data is `MULTIPOLYGON`. In addition, the repeated `MULTIPOLYGON` text in the geometry column indicates that each row contains a shape of type `MULTIPOLYGON`. Figure \@ref(fig:wyoming-counties-map) is a map made with this data. 
 
@@ -196,7 +249,7 @@ print_nostarch_file_name()
 ```
 
 ```{r wyoming-counties-map, fig.cap = "A map of Wyoming counties"}
-wy_counties %>%
+wyoming_counties %>%
   ggplot() +
   geom_sf()
 ```
@@ -231,7 +284,7 @@ print_nostarch_file_name()
 ```
 
 ```{r wyoming-counties-map-wgs84, fig.cap = "A map of Wyoming counties using the WGS84 projection"}
-wy_counties %>%
+wyoming_counties %>%
   sf::st_transform(albersusa::us_laea_proj) %>%
   ggplot() +
   geom_sf()
@@ -272,7 +325,7 @@ Next, let’s import the data we need. We require three pieces of data: COVID ra
 First, we import COVID data. This data comes directly from *The New York Times*, which publishes daily case rates by state as a CSV file on its GitHub account. I’ve dropped the `fips` variable; Federal Information Processing Standards (FIPS) are numeric codes used to represent states, but we can reference states by their names instead:
 
 ```{r echo = TRUE}
-covid_data <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv") %>%
+covid_data <- read_csv("https://data.rwithoutstatistics.com/covid-us-states.csv") %>%
   select(-fips)
 ```
 
@@ -285,7 +338,7 @@ covid_data
 Madjid’s map shows per capita rates (rates per 100,000 people) rather than absolute rates (the rates without consideration for a state’s population). So, to recreate his maps, we need to obtain data on each state’s population. Madjid downloaded this data as a CSV:  
 
 ```{r echo = TRUE}
-usa_states <- read_csv("data/population-by-state.csv") %>%
+usa_states <- read_csv("https://data.rwithoutstatistics.com/population-by-state.csv") %>%
   select(State, Pop)
 ```
 
