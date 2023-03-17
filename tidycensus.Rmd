@@ -337,3 +337,12 @@ We've made a map that shows median age by state. But there's nothing to stop us 
 
 ## Conclusion
 
+If you work with Census data, the `tidycensus` package is a huge timesaver. Rather than having to manually download data from the Census Bureau website, you can write R code that brings it in automatically, making it ready for analysis and reporting. 
+
+If you're looking for Census data from other countries, Chapter 12 of Walker's *Analyzing US Census Data* book gives examples of packages that can help. There are R packages to bring Census data from Canada, Kenya, Mexico, Brazil, and other countries. 
+
+What all of these packages (and the `googlesheets4` package discussed in \@ref(googlesheets-chapter)) have in common is that they use APIs to access data directly from its source. These packages are often referred to as "wrapper packages" because they wrap R code around the code needed to access data through APIs. You don't have to figure out how to access data through APIs yourself; you can just write some simple R code and the wrapper packages will convert your code into the complex code needed to bring in the data. In the case of `tidycensus`, it not only brings in the data, but it also formats it into a tidy format that is easy to work with.
+
+In talking with Kyle Walker, he nicely summarized the benefit of `tidycensus` , saying it does "all of the tedious aspects of getting census data so that you can focus on the fun aspects." He continued: "making maps is fun, analyzing data and finding out insights about your community is fun and interesting. But setting up a connector to an API or figuring out how to align columns ... it's more tedious." 
+
+This is the benefit of working with an open source tool like R. Because it is extensible, others can create packages to do things that would take you extraordinary amounts of time to do on your own. You don't need to figure on your own out how to access the Census Bureau API. You can simply rely on the hours and hours of work done by Kyle Walker and get all of the benefits of the `tidycensus` package. 
