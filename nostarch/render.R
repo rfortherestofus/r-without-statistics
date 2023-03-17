@@ -19,7 +19,7 @@ file_copy(path = source_files,
 # Copy data
 
 dir_copy(path = "data",
-         new_path = "nostarch/source",
+         new_path = "nostarch/source/data",
          overwrite = TRUE)
 
 # Make figure numbers show ------------------------------------------------
