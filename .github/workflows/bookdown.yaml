@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      CENSUS_API_KEY: ${{ secrets.CENSUS_API_KEY }}
       isExtPR: ${{ github.event.pull_request.head.repo.fork == true }}
     steps:
     
