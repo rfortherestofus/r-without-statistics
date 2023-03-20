@@ -4,6 +4,12 @@
 # example R options set globally
 options(width = 60)
 
+
+# Turn off scientific notation --------------------------------------------
+options(scipen = 999)
+options(pillar.sigfig = 5)
+
+
 # example chunk options set globally
 knitr::opts_chunk$set(
   comment = "#>",

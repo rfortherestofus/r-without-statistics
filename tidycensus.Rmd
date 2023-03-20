@@ -18,15 +18,15 @@ source("_common.R")
 
 # Access Census Data with the `tidycensus` Package {#tidycensus-chapter}
 
-If you've ever worked with data from the United States Census Bureau, you know what a hassle it can be. The typical process involves going to the Census Bureau website, finding the data you need, downloading it, and then analyzing it in your tool of choice. Working with Census Bureau data in this way involves a lot of pointing and clicking, and gets very tedious over time.
+If you've ever worked with data from the United States Census Bureau, you know what a hassle it can be. You've got to go to the Census Bureau website, find the data you need, download it, and then analyze it in your tool of choice. Working with Census Bureau data in this way involves a lot of pointing and clicking, and gets very tedious over time.
 
-That tedium is what drove Texas Christian University geographer Kyle Walker to develop a package to automate the process of bringing Census Bureau data into R. Walker had previously created a package called `tigris` (introduced in Chapter \@ref(maps-chapter)) to automatically bring in shape files from the Census Bureau. As he told me, "I was using `tigris` pretty heavily in my own work to bring in the spatial data, but I didn't have a seamless way to get the demographic data as well." Drawing on his experience developing `tigris`, Walker, along with co-author Matt Herman (yes, he of the Westchester COVID-19 website discussed in Chapter \@ref(websites-chapter)), would develop the `tidycensus` package, which allows R users to bring in data directly from various Census Bureau datasets. With `tidycensus`, a user can write just a few lines of code and get data on, say, the median income in all 3,000 plus counties in the United States. 
+This tedium is what drove Texas Christian University geographer Kyle Walker to develop a package to automate the process of bringing Census Bureau data into R. Walker had previously created a package called `tigris` (introduced in Chapter \@ref(maps-chapter)) to automatically bring in shape files from the Census Bureau. As he told me, "I was using `tigris` pretty heavily in my own work to bring in the spatial data, but I didn't have a seamless way to get the demographic data as well." Drawing on his experience developing `tigris`, Walker, along with co-author Matt Herman (yes, he of the Westchester COVID-19 website discussed in Chapter \@ref(websites-chapter)), would develop the `tidycensus` package, which allows R users to bring in data directly from various Census Bureau datasets. With `tidycensus`, a user can write just a few lines of code and get data on, say, the median income in all 3,000 plus counties in the United States. 
 
-In this chapter, we'll learn how the `tidycensus` package works. We'll do this using examples from two datasets that `tidyverse` makes it possible to work with: the decennial Census and the American Community Survey. We'll also show how we can use the data from these two sources for additional analysis and to make maps by accessing geospatial and demographic data simultaneously. While this chapter focuses on data from the United States Census Bureau, the conclusion lists other R packages that access analogous data for other countries. And finally, the conclusion highlights some of the reasons why using a package like `tidycensus` can improve your workflow. 
+In this chapter, we'll learn how the `tidycensus` package works. We'll do this using examples from two datasets that `tidyverse` makes it possible to work with: the every-ten-year (decennial) Census and the American Community Survey. We'll also show how we can use the data from these two sources for additional analysis and to make maps by accessing geospatial and demographic data simultaneously. While this chapter focuses on data from the United States Census Bureau, the conclusion lists other R packages that access analogous data from other countries. And finally, the conclusion highlights some of the reasons why using a package like `tidycensus` can improve your workflow. 
 
-## Using `tidycensus`
+## Using `tidycensus` {-}
 
-The `tidycensus` package is available on CRAN so you can install it as you would most packages: with `install.packages("tidycensus")`. In order to use `tidycensus` you must also get an API (application programming interface) key from the Census Bureau. This key, which is free, can be obtained by going to https://api.census.gov/data/key_signup.html and entering your details. Once you receive your API key by email, you need to put it in a place where `tidycensus` can find it. The `census_api_key()` function does this for you. Your best bet, after loading the `tidycensus` package, is to run the function as follows (replacing 123456789 with your actual API key):
+The `tidycensus` package is available on CRAN so you can install it as you would most packages using `install.packages("tidycensus")`. In order to use `tidycensus` you must also get an API (application programming interface) key from the Census Bureau. This key, which is free, can be obtained by going to https://api.census.gov/data/key_signup.html and entering your details. Once you receive your API key by email, you need to put it in a place where `tidycensus` can find it. The `census_api_key()` function does this for you. Your best bet, after loading the `tidycensus` package, is to run the function as follows (replacing 123456789 with your actual API key):
 
 ```{r eval = FALSE, echo = TRUE}
 library(tidycensus)
@@ -34,7 +34,7 @@ library(tidycensus)
 census_api_key("123456789", install = TRUE)
 ```
 
-The `install = TRUE` argument will save your API key in your `.Renviron` file (a file designed to keep confidential information like API keys). R will look for your API key there in the future so that you don't have to enter it every time you want to use `tidycensus`. 
+The `install = TRUE` argument will save your API key in your `.Renviron` file (a file designed to keep confidential information like API keys). The `tidycensus` will look for your API key there in the future so that you don't have to enter it every time you want to use the package.
 
 Having obtained and saved our API key, we're now ready to use `tidycensus` to access data. The Census Bureau puts out many datasets, several of which can be accessed using `tidycensus`. The most common datasets to access with `tidycensus` are the decennial Census and the American Community Survey (other datasets that can be accessed are discussed in Chapter 2 of Kyle Walker's book *Analyzing US Census Data: Methods, Maps, and Models in R*). 
 
@@ -73,14 +73,14 @@ Let's say we want to calculate the Asian population as a percentage of all peopl
 
 #### Identifying Variables {-}
 
-First, we'd need to know the variable names. I looked up the variable name for Asian population (P1_006N) without showing you how I did it. Let's backtrack so I can show you how to identify variable names. The `tidycensus` package has a function called `load_variables()` that shows us all of the variables from the decennial Census. If we run it with the argument `year` set to 2020 and `dataset` set to "pl" (pl refers to public law 94-171, which requires the Census to produce so-called redistricting summary data files every ten years).
+First, we'd need to know the variable names. I looked up the variable name for Asian population (`P1_006N`) without showing you how I did it. Let's backtrack so I can show you how to identify variable names. The `tidycensus` package has a function called `load_variables()` that shows us all of the variables from the decennial Census. If we run it with the argument `year` set to 2020 and `dataset` set to "pl" (pl refers to public law 94-171, which requires the Census to produce so-called redistricting summary data files every ten years).
 
 ```{r eval = FALSE, echo = TRUE}
 load_variables(year = 2020, 
                dataset = "pl")
 ```
 
-Running this code returns the name, label (description), and concept (category) of all variables available to us. Looking at this, we can see variable `P1_006N`. We can also see that variable `P1_001N` gives us the total population.
+Running this code returns the name, label (description), and concept (category) of all variables available to us. Looking at this, we can see variable `P1_006N` (it's cut off here, but in RStudio you'd see the full description). We can also see that variable `P1_001N` gives us the total population.
 
 ```{r}
 load_variables(year = 2020, 
@@ -163,12 +163,12 @@ get_decennial(geography = "state",
   group_by(NAME) %>% 
   mutate(pct = value / sum(value)) %>% 
   ungroup() %>% 
-  filter(variable == "asian_population")
+  filter(variable == "asian_population") 
 ```
 
 #### Using a Summary Variable {-}
 
-Kyle Walker knew that calculating summaries like this would be a common use case for `tidycensus`. So, to simplify things, he also gives us the `summary_var` argument that we can use within `get_decennial()`. Instead of putting "P1_001N" (total population) in the `variables` argument, we can instead use it with the `summary_var` argument as follows.
+Kyle Walker knew that calculating summaries like this would be a common use case for `tidycensus`. So, to simplify things, he gives us the `summary_var` argument that we can use within `get_decennial()`. Instead of putting "P1_001N" (total population) in the `variables` argument, we can instead use it with the `summary_var` argument as follows.
 
 ```{r eval = FALSE, echo = TRUE}
 get_decennial(geography = "state", 
@@ -188,7 +188,7 @@ get_decennial(geography = "state",
   arrange(NAME)
 ```
 
-With our data in this new format, we can calculate the Asian population as a percentage of the whole using slightly different code.
+With our data in this new format, we can calculate the Asian population as a percentage of the whole by dividing the `value` variable by the `summary_value` variable. 
 
 ```{r eval = FALSE, echo = TRUE}
 get_decennial(geography = "state", 
@@ -212,14 +212,14 @@ get_decennial(geography = "state",
 
 How you choose to calculate summary statistics is up to you. The good thing is that `tidycensus` makes it easy to do either way!
 
-### Working with American Community Survey Data
+### Working with American Community Survey Data {-}
 
 Let's switch now to accessing data from the American Community Survey (ACS). This survey, which is conducted every year, differs from the decennial Census in two major ways:
 
 1. It is given to a sample of people rather than the entire population.
 1. It includes a wider range of questions.
 
-Despite these differences, accessing data from the ACS is nearly identical to how we accessed Census data. Instead of `get_decennial()`, we use the function `get_acs()`, but the arguments are the same. Here I've identified a variable I'm interested in ("B01002_001", which shows median age) and am using it to get the data for each state.
+Despite these differences, accessing data from the ACS is nearly identical to how we access Census data. Instead of `get_decennial()`, we use the function `get_acs()`, but the arguments are the same. Here I've identified a variable I'm interested in (`B01002_001`, which shows median age) and am using it to get the data for each state.
 
 ```{r eval = FALSE, echo = TRUE}
 get_acs(geography = "state",
@@ -237,7 +237,7 @@ get_acs(geography = "state",
 
 There are two differences we can see in the `get_acs()` output compared to that from `get_decennial()`:
 
-1. The `value` column in `get_decennial()` is now called `estimate`.
+1. The `value` column in `get_decennial()` is called `estimate` with `get_acs()`.
 1. We have an additional column called `moe` for margin of error.
 
 Both of these changes are because the ACS is given to a sample of the population. As a result, we don't have precise values, but rather estimates, which are extrapolations from the sample to the population as a whole. And with an estimate comes a margin of error. In our state-level data, the margins of error are relatively low, but if you get data from smaller geographies, they tend to be higher. In cases where your margins of error are high relative to your estimates, you should interpret results with caution, as there is greater uncertainty about how well the data represents the population as a whole.
@@ -255,7 +255,11 @@ get_acs(geography = "state",
   geom_col()
 ```
 
-Figure \@ref(fig:median-age-chart) add figure number shows our bar chart.
+Figure \@ref(fig:median-age-chart) shows our bar chart.
+
+```{r results='asis'}
+print_nostarch_file_name()
+```
 
 ```{r median-age-chart, fig.height = 6, fig.cap = "A bar chart showing the median age in each state"}
 get_acs(geography = "state",
@@ -266,11 +270,15 @@ get_acs(geography = "state",
   geom_col()
 ```
 
+```{r results='asis'}
+save_figure_for_nostarch(figure_height = 6)
+```
+
 This chart is nothing special, but the fact that it takes just six lines of code to create most definitely is. 
 
 #### Using ACS Data to Make Maps {-}
 
-Kyle Walker's original motivation to build `tidycensus` came from wanting to make it easy to access demographic data, just as he had done with geospatial data in the `tigris` package. He succeeded. And one additional benefit of Walker working on both packages is that there is a tight integration between them. Using the `get_acs()` function, you can add set the `geometry` argument to `TRUE` and you will get both demographic and geospatial data (which, under the hood comes from `tigris`).
+Kyle Walker's original motivation to build `tidycensus` came from wanting to make it easy to access demographic data, just as he had done with geospatial data in the `tigris` package. He succeeded. And one additional benefit of Walker working on both packages is that there is a tight integration between them. Using the `get_acs()` function, you can set the `geometry` argument to `TRUE` and you will get both demographic and geospatial data (which, under the hood, actually comes from the `tigris` package).
 
 ```{r eval = FALSE, echo = TRUE}
 get_acs(geography = "state",
@@ -300,7 +308,11 @@ get_acs(geography = "state",
   scale_fill_viridis_c()
 ```
 
-The resulting map, seen in Figure \@ref(fig:median-age-map-bad) below, is less than ideal. The problem with it is that the Aleutian Islands in Alaska cross the 180 degree line of longitude, also known as the international date line. As a result, most of Alaska is on one side of the map while a small part is on the other side. What's more, both Hawaii and Puerto Rico, both being decently far from the United States mainland and relatively small, are hard to see.
+The resulting map, seen in Figure \@ref(fig:median-age-map-bad) below, is less than ideal. The problem with it is that the Aleutian Islands in Alaska cross the 180-degree line of longitude, also known as the international date line. As a result, most of Alaska is on one side of the map while a small part is on the other side. What's more, both Hawaii and Puerto Rico, both being decently far from the United States mainland and relatively small, are hard to see.
+
+```{r results='asis'}
+print_nostarch_file_name()
+```
 
 ```{r median-age-map-bad, fig.cap = "A hard-to-read map showing median age by state"}
 get_acs(geography = "state",
@@ -310,6 +322,10 @@ get_acs(geography = "state",
   ggplot(aes(fill = estimate)) +
   geom_sf() +
   scale_fill_viridis_c()
+```
+
+```{r results='asis'}
+save_figure_for_nostarch(figure_height = 5)
 ```
 
 Fortunately for us, Kyle Walker has a solution. If we load the `tigris` package, we can then use the `shift_geometry()` function to move Alaska, Hawaii, and Puerto Rico into places where they are more easily visible. We set the argument `preserve_area` to `FALSE` so that the giant state of Alaska is shrunk while Hawaii and Puerto Rico are made larger. 
@@ -329,6 +345,10 @@ get_acs(geography = "state",
 
 This lack of precision in the exact sizes of the states is more than made up for by having an easier to read map, which we can see in Figure \@ref(fig:median-age-map-good).
 
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
 ```{r median-age-map-good, fig.cap = "An easier-to-read map showing median age by state"}
 get_acs(geography = "state",
         variables = "B01002_001",
@@ -340,6 +360,10 @@ get_acs(geography = "state",
   scale_fill_viridis_c()
 ```
 
+```{r results='asis'}
+save_figure_for_nostarch(figure_height = 5)
+```
+
 We've made a map that shows median age by state. But there's nothing to stop us from making the same map by county. Just change the `geography` argument to "county" and you'll get a map for all 3,000 plus counties. Chapter 2 of Kyle Walker's book *Analyzing US Census Data: Methods, Maps, and Models in R* discusses the various geographies available. There are also many more arguments in both the `get_decennial()` and `get_acs()` functions. We've only shown a few of the most common arguments. If you want to learn more, Walker's book is a great resource.
 
 ## In Conclusion: `tidycensus` Takes Care of the Tedious Parts of Working with Census Data {-}
@@ -348,8 +372,8 @@ If you work with Census data, the `tidycensus` package is a huge timesaver. Rath
 
 If you're looking for Census data from other countries, Chapter 12 of Walker's *Analyzing US Census Data* book gives examples of packages that can help. There are R packages to bring Census data from Canada, Kenya, Mexico, Brazil, and other countries. 
 
-What all of these packages (and the `googlesheets4` package discussed in Chapter \@ref(googlesheets-chapter)) have in common is that they use APIs to access data directly from its source. These packages are often referred to as "wrapper packages" because they wrap R code around the code needed to access data through APIs. You don't have to figure out how to access data through APIs yourself; you can just write some simple R code and the wrapper packages convert your code into the complex code needed to bring in the data. In the case of `tidycensus`, it not only brings in the data, but also transforms it into a tidy format that is easy to work with.
+What all of these packages (and the `googlesheets4` package discussed in Chapter \@ref(googlesheets-chapter)) have in common is that they use application programming interfaces (APIs) to access data directly from its source. These packages are often referred to as "wrapper packages" because they wrap R code around the code needed to access data through APIs. You don't have to figure out how to access data through APIs yourself; you can just write some simple R code and the wrapper packages convert your code into the complex code needed to bring in the data. 
 
-In talking with Kyle Walker, he nicely summarized the benefit of `tidycensus` , saying it does "all of the tedious aspects of getting census data so that you can focus on the fun aspects." He continued: "making maps is fun, analyzing data and finding out insights about your community is fun and interesting. But setting up a connector to an API or figuring out how to align columns ... it's more tedious." 
+In talking with Kyle Walker, he nicely summarized the benefit of `tidycensus`, saying it does "all of the tedious aspects of getting census data so that you can focus on the fun aspects." He continued: "making maps is fun, analyzing data and finding out insights about your community is fun and interesting. But setting up a connector to an API or figuring out how to align columns [is] more tedious." 
 
-This is the benefit of working with an open source tool like R. Because it is extensible, others can create packages to do things that would take you extraordinary amounts of time to do on your own. You don't need to figure on your own out how to access the Census Bureau API by yourself. You can simply take advantage of the hours of work done by Kyle Walker and get all of the benefits of the `tidycensus` package. 
+This is the benefit of working with an open source tool like R. Because R is extensible, others can create packages to do things that would take you extraordinary amounts of time to do on your own. You don't need to figure on your own out how to access the Census Bureau API by yourself. You can simply take advantage of the hours of work done by Kyle Walker and get all of the benefits of the `tidycensus` package. 
