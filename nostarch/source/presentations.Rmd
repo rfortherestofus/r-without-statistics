@@ -33,7 +33,7 @@ These are other formats you can use to make slides (and yes, you can knit an R M
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
 ```
-∂
+
 ```{r new-xaringan-document, out.width="100%", fig.cap="The options presented to create a new presentation"}
 knitr::include_graphics(here::here("assets/new-xaringan-document.png"))
 ```

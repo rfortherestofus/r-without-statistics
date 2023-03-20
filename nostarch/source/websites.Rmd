@@ -371,7 +371,7 @@ us_states <- states(cb = TRUE,
   rename(state = name) %>% 
   filter(state %in% state.name)
 
-covid_data <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/rolling-averages/us-states.csv") %>% 
+covid_data <- read_csv("https://data.rwithoutstatistics.com/us-states-covid-rolling-average.csv") %>% 
   filter(state %in% state.name) %>% 
   mutate(geoid = str_remove(geoid, "USA-")) 
 
