@@ -3,9 +3,11 @@ output: html_document
 editor_options: 
   chunk_output_type: console
 ---
-# To include
 
+# Intro
 
+- You can make your own functions
+- Think of things you do a lot and don't want to have to remember exact syntax
 
 # Automatically viewing snippets of data in Excel
 
@@ -81,23 +83,18 @@ theme_dk <- function(show_grid_lines = TRUE,
   if (show_axis_titles == FALSE) {
     
     theme_dk <- theme_dk +
-      theme(axis.title = element_blank())
+      theme(axis.title = element_blank(),
+            axis.title.x = element_blank(),
+            axis.title.y = element_blank())
     
   }
   
   theme_dk
   
 }
+```
 
-penguins %>% 
-  count(island) %>% 
-  ggplot(aes(x = island,
-             y = n)) +
-  geom_col() +
-  labs(title = "Number of penguins on each island",
-       subtitle = "Data from palmerpenguins package") +
-  theme_dk()
-
+```{r}
 penguins %>% 
   ggplot(aes(x = bill_length_mm,
              y = bill_depth_mm,
@@ -111,10 +108,22 @@ penguins %>%
   scale_x_continuous(breaks = scales::pretty_breaks(n = 5)) +
   scale_y_continuous(breaks = scales::pretty_breaks(n = 5)) +
   scale_color_viridis_d() +
-  theme_dk(show_grid_lines = TRUE,
-           show_axis_titles = TRUE)
+  theme_dk()
 ```
 
+
+```{r}
+penguins %>% 
+  count(island) %>% 
+  ggplot(aes(x = island,
+             y = n)) +
+  geom_col() +
+  labs(title = "Number of penguins on each island",
+       subtitle = "Data from palmerpenguins package") +
+  theme_dk(show_grid_lines = FALSE,
+           show_axis_titles = FALSE)
+
+```
 
 # Automatically pulling in and formatting race/ethnicity data from ACS
 
@@ -147,3 +156,4 @@ get_acs_race_ethnicity(geography = "county",
 # Conclusion
 
 - It's tempting to see others' functions as real and your as not, but they're all the same thing
+- Next chapter will show how to create your own personal package to help you keep functions at the ready
