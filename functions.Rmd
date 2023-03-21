@@ -1,3 +1,42 @@
 # Stop Copying and Pasting Code by Creating Your Own Functions {#functions}
 
 https://twitter.com/hadleywickham/status/1574373127349575680
+
+```{r}
+percent <- function(.data, ..., .keep_n = F) {
+
+  df <- dplyr::count(.data, ...)
+  df <- dplyr::mutate(df, pct = n/sum(n))
+
+  if (.keep_n != T) {
+    df <- dplyr::select(df, -n)
+  }
+
+  return(df)
+}
+
+library(palmerpenguins)
+library(tidyverse)
+
+penguins %>% 
+  percent()
+
+```
+
+```{r}
+show_in_excel <- function(.data) {
+  
+  csv_file <- str_glue("{tempfile()}.csv")
+  
+  readr::write_csv(x = .data,
+                   file = csv_file,
+                   na = "")
+  
+  fs::file_show(path = csv_file)
+  
+}
+
+show_in_excel(penguins)
+```
+
+
