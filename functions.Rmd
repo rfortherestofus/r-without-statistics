@@ -1,42 +1,123 @@
-# Stop Copying and Pasting Code by Creating Your Own Functions {#functions}
+# Stop Copying and Pasting Code by Creating Your Own Functions {#functions-chapter}
 
-https://twitter.com/hadleywickham/status/1574373127349575680
+Bruno Rodrigues is an avid R user, but the same can not be said for all of his teammates. Rodrigues, who is head of the Department of Statistics and Data Strategy at the Ministry of Higher Education and Research in Luxembourg, needed a way to be able to easily share data with his non-R-user colleagues. So, being the avid R user that he is, he wrote some R code to help him with this task. Specifically, he wrote a function called `show_in_excel()` that would take data from R, save it as a CSV file, and open the CSV file in Excel (we'll explore it in depth below). From then on, whenever he needed to have his data in a CSV to share with colleagues, he could run his function. 
 
-```{r}
-percent <- function(.data, ..., .keep_n = F) {
+Rodrigues decided to make this function to avoid having to copy the code from one project to the next. When you start working in R regularly, you'll realize that code you've written in one place can be useful in other places as well. Initially, your inclination is to copy it over and reuse it. This is fine if you copy your code once, but if you find yourself copying it multiple times, it's time to think about making a function. Hadley Wickham, developer of the `tidyverse` set of packages, recommends creating a function once you've copied code three times. The advantage of creating a function is that, should you ever need to make changes to your code, you can do so in one place (if you copy code, you'd need to make changes in multiple places). This makes it much easier to maintain and improve your code over time. 
 
-  df <- dplyr::count(.data, ...)
-  df <- dplyr::mutate(df, pct = n/sum(n))
+The great thing about working in an open source language like R is that you can make your own functions. When you start out with R, you exclusively use functions created by others. But as you get more experience, you realize that you can make functions to do specific things you need to do. Creating functions is one of the best ways to improve the efficiency of your work in R. 
 
-  if (.keep_n != T) {
-    df <- dplyr::select(df, -n)
-  }
+In this chapter, we'll talk about how to make your own R functions. You'll learn how functions work by seeing Bruno Rodrigues's `show_in_excel()` function as well as two functions that I've created. By the end of the chapter, you'll be ready to start making your own functions.
 
-  return(df)
-}
+## How Functions Work {-}
 
-library(palmerpenguins)
+Let's go back to the `show_in_excel()` function that Bruno Rodrigues created (I'll be using a slightly simplified version of it throughout the chapter). We begin by loading the `tidyverse` and `fs` packages. We'll use the `tidyverse`, which you've seen throughout this book, to create a file name and save our CSV. The `fs` package will enable us to open the CSV file.
+
+```{r eval = FALSE, echo = TRUE}
 library(tidyverse)
-
-penguins %>% 
-  percent()
-
+library(fs)
 ```
 
-```{r}
-show_in_excel <- function(.data) {
+Functions have three pieces: 
+
+1. Name
+1. Body
+1. Arguments
+
+Before we look at the `show_in_excel()` function, let's look at a slightly altered version to help us understand how functions work. This function, called `show_in_excel_penguins()` opens the data on penguins that we saw in /@ref(rmarkdown-chapter) in Excel.
+
+```{r eval = FALSE, echo = TRUE}
+penguins <- read_csv("https://data.rwithoutstatistics.com/penguins-2007.csv")
+
+show_in_excel_penguins <- function() {
   
   csv_file <- str_glue("{tempfile()}.csv")
   
-  readr::write_csv(x = .data,
-                   file = csv_file,
-                   na = "")
+  write_csv(x = penguins,
+            file = csv_file,
+            na = "")
   
-  fs::file_show(path = csv_file)
+  file_show(path = csv_file)
   
 }
-
-show_in_excel(penguins)
 ```
 
+To understand how the function works, let's look at the first line. In this line, we begin by naming our function `show_in_excel_penguins`. We next use the assignment operator (`<-`) and `function()` to specify that `show_in_excel_penguins` is not a variable name, but a function name. There's an open curly bracket (`{`) at the end of the line, which indicates the start of the function body.
 
+```{r eval = FALSE, echo = TRUE}
+show_in_excel_penguins <- function() {
+```
+
+The meat of the function can be found in its body. This is all of the code in between the open and closed curly brackets. 
+
+```{r eval = FALSE, echo = TRUE}
+show_in_excel_penguins <- function() {
+  
+  # Function body goes here
+  
+}
+```
+
+In the case of the `show_in_excel_penguins()` function we've created, the body does three things:
+
+1. Creates a location for a CSV file to be saved using the `str_glue()` function combined with the `tempfile()` function. This creates a file a temporary location with the .csv extension and saves it as `csv_file`. 
+1. Writes the penguins data frame (the `x` argument in `write_csv()` refers to the data to be saved) to the location set in `csv_file`. We also make all NA values show up as blanks (by default, they will show up as the text "NA").
+1. Uses the `file_show` function to open the CSV file in Excel (or whichever program your computer uses to open CSV files by default).
+
+```{r eval = FALSE, echo = TRUE}
+csv_file <- str_glue("{tempfile()}.csv")
+  
+write_csv(x = penguins,
+          file = csv_file,
+          na = "")
+  
+file_show(path = csv_file)
+```
+
+If you wanted to use the `show_in_excel_penguins()` function, you would run the lines where you define the function. From there on out, any time you run the code `show_in_excel_penguins()`, R will open up the `penguins` data frame in Excel.
+
+Now, you're probably thinking: that doesn't seem like the most useful function. Why would I want to keep opening up the `penguins` data frame? You wouldn't, of course. To make your function more useful, we need to add arguments. Below is the actual code. Everything looks the same as our `show_in_excel_penguins()` function with one exception: the first line now says `function(data)`. Items listed within the parentheses of our function definition are arguments. If you look further down, you'll see one other change. Within `write_csv()`, instead of `x = penguins`, we now have `x = data`. This allows us to use the function with any data, not just `penguins`. 
+
+```{r eval = FALSE, echo = TRUE}
+show_in_excel <- function(data) {
+  
+  csv_file <- str_glue("{tempfile()}.csv")
+  
+  write_csv(x = data,
+            file = csv_file,
+            na = "")
+  
+  file_show(path = csv_file)
+  
+}
+```
+
+To use this function, you tell `show_in_excel()` what data to use and the function will open it in Excel. You can tell it to open the `penguins` data frame as follows:
+
+```{r eval = FALSE, echo = TRUE}
+show_in_excel(data = penguins)
+```
+
+But, having created the function with the `data` argument, we can run it with any data we want to. This code, for example, will import covid case data we saw in Chapter /@ref(websites-chapter) and open it in Excel.
+
+```{r eval = FALSE, echo = TRUE}
+covid_data <- read_csv("https://data.rwithoutstatistics.com/us-states-covid-rolling-average.csv")
+
+show_in_excel(data = covid_data)
+```
+
+You can also use this function in a pipeline. This code filters the `covid_data` data frame to only include data from California before opening that in Excel. 
+
+```{r}
+covid_data %>% 
+  filter(state == "California") %>% 
+  show_in_excel()
+```
+
+Bruno Rodrigues could have copied the code within the `show_in_excel()` function and re-run it every time he wanted to view his data in Excel. But, by creating a function, he creates the code once and can run it as many times as necessary.
+
+
+## ggplot theme {-}
+
+Functions are not limited to ...
+
+## Automatically pulling in and formatting race/ethnicity data from ACS {-}
