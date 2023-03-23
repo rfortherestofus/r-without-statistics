@@ -1,0 +1,159 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+# Intro
+
+- You can make your own functions
+- Think of things you do a lot and don't want to have to remember exact syntax
+
+# Automatically viewing snippets of data in Excel
+
+- https://twitter.com/brodriguesco/status/1447468259725434886
+
+## Arguments
+
+```{r}
+library(tidyverse)
+library(fs)
+
+show_in_excel <- function(data) {
+  
+  csv_file <- str_glue("{tempfile()}.csv")
+  
+  write_csv(x = data,
+            file = csv_file,
+            na = "")
+  
+  file_show(path = csv_file)
+  
+}
+
+show_in_excel(penguins)
+```
+
+## Can use function in pipe too
+
+```{r}
+library(tidyverse)
+
+penguins %>% 
+  filter(island == "Torgersen") %>% 
+  show_in_excel()
+```
+
+# ggplot theme
+
+- Defaults for arguments
+- Using if statements
+- What gets returned
+
+```{r}
+theme_dk <- function(show_grid_lines = TRUE,
+                     show_axis_titles = TRUE,
+                     theme_font = "Inter") {
+  
+  theme_dk <- theme_minimal(base_family = theme_font) +
+    theme(panel.grid.minor = element_blank(),
+          axis.ticks = element_blank(),
+          axis.title = element_text(size = 12,
+                                   color = "grey50"),
+          axis.title.x = element_text(margin = margin(t = 10)),
+          axis.title.y = element_text(margin = margin(r = 10)),
+          axis.text = element_text(size = 12,
+                                   color = "grey50"),
+          plot.title.position = "plot",
+          plot.title = element_text(size = 20,
+                                    face = "bold",
+                                    margin = margin(b = 8)),
+          plot.subtitle = element_text(size = 14,
+                                       color = "grey50"),
+          legend.text = element_text(size = 12),
+          legend.position = "top")
+  
+  if (show_grid_lines == FALSE) {
+    
+    theme_dk <- theme_dk +
+      theme(panel.grid.major = element_blank())
+    
+  }
+  
+  if (show_axis_titles == FALSE) {
+    
+    theme_dk <- theme_dk +
+      theme(axis.title = element_blank(),
+            axis.title.x = element_blank(),
+            axis.title.y = element_blank())
+    
+  }
+  
+  theme_dk
+  
+}
+```
+
+```{r}
+penguins %>% 
+  ggplot(aes(x = bill_length_mm,
+             y = bill_depth_mm,
+             color = island)) +
+  geom_point() +
+  labs(title = "A histogram of bill length and bill depth",
+       subtitle = "Data from palmerpenguins package",
+       x = "Bill Length",
+       y = "Bill Depth",
+       color = NULL) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 5)) +
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 5)) +
+  scale_color_viridis_d() +
+  theme_dk()
+```
+
+
+```{r}
+penguins %>% 
+  count(island) %>% 
+  ggplot(aes(x = island,
+             y = n)) +
+  geom_col() +
+  labs(title = "Number of penguins on each island",
+       subtitle = "Data from palmerpenguins package") +
+  theme_dk(show_grid_lines = FALSE,
+           show_axis_titles = FALSE)
+
+```
+
+# Automatically pulling in and formatting race/ethnicity data from ACS
+
+- Using ... for additional arguments
+
+```{r}
+library(janitor)
+
+get_acs_race_ethnicity <- function(...) {
+  
+  get_acs(...,
+          variables = c("White" = "B03002_003",
+                        "Black/African American" = "B03002_004",
+                        "American Indian/Alaska Native" = "B03002_005",
+                        "Asian" = "B03002_006",
+                        "Native Hawaiian/Pacific Islander" = "B03002_007",
+                        "Other race" = "B03002_008",
+                        "Multi-Race" = "B03002_009",
+                        "Hispanic/Latino" = "B03002_012")) %>%
+    clean_names() %>%
+    set_names(c("geoid", "geography", "population_group", "estimate", "moe"))
+  
+}
+
+get_acs_race_ethnicity(geography = "county",
+                       year = 2020)
+```
+
+
+# Conclusion
+
+- It's tempting to see others' functions as real and your as not, but they're all the same thing
+- Next chapter will show how to create your own personal package to help you keep functions at the ready
