@@ -115,9 +115,8 @@ covid_data %>%
 
 Bruno Rodrigues could have copied the code within the `show_in_excel()` function and re-run it every time he wanted to view his data in Excel. But, by creating a function, he creates the code once and can run it as many times as necessary.
 
-
 ## ggplot theme {-}
 
-Functions are not limited to ...
+In the `show_in_excel()` function, nothing is changed within R; it simply allows us to view data in Excel. A more common use case is to create a function that you use later on within your R code. A common example is creating your own ggplot theme. 
 
 ## Automatically pulling in and formatting race/ethnicity data from ACS {-}
