@@ -183,6 +183,8 @@ theme_dk <- function(show_grid_lines = TRUE,
 
 I can then apply my theme as you would any other ggplot theme.
 
+
+
 ```{r eval = FALSE, echo = TRUE}
 penguins %>% 
   ggplot(aes(x = bill_length_mm,
@@ -199,18 +201,26 @@ penguins %>%
 
 In Figure \@ref(fig:theme-dk-histogram) below, we can see what a histogram made with `theme_dk()` looks like using the same `penguins` data. 
 
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
 ```{r theme-dk-histogram, fig.cap = "A histogram made with my custom theme"}
 penguins %>% 
   ggplot(aes(x = bill_length_mm,
              y = bill_depth_mm,
              color = island)) +
   geom_point() +
-  labs(title = "A histogram of bill length and bill depth",
+  labs(title = "A histogram of bill length and depth",
        subtitle = "Data from palmerpenguins package",
        x = "Bill Length",
        y = "Bill Depth",
        color = NULL) +
   theme_dk()
+```
+
+```{r results='asis'}
+save_figure_for_nostarch(figure_height = 6)
 ```
 
 Let's now discuss how the custom ggplot theme function works. The first three lines define our function and provide two arguments: `show_grid_lines` and `show_axis_titles`. Whereas the `data` argument in `show_in_excel()` required us to give the function data, the arguments in `theme_dk()` have defaults built in. The lines `show_grid_lines = TRUE` and `show_axis_lines = TRUE` mean that grid lines and axis titles will be visible on our plot by default. 
@@ -275,6 +285,10 @@ penguins %>%
 
 When I use `theme_dk()` here, I set `show_grid_lines` and `show_axis_titles` to FALSE, removing those elements from our chart. We can see the result in Figure \@ref(fig:theme-dk-bar-chart).
 
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
 ```{r theme-dk-bar-chart, fig.cap = "A bar chart using my custom theme"}
 penguins %>% 
   count(island) %>% 
@@ -285,6 +299,10 @@ penguins %>%
        subtitle = "Data from palmerpenguins package") +
   theme_dk(show_grid_lines = FALSE,
            show_axis_titles = FALSE)
+```
+
+```{r results='asis'}
+save_figure_for_nostarch(figure_height = 6)
 ```
 
 Creating a function with default arguments allows us to set the options that we are most likely to want, while also giving us flexibility to change the arguments each time we use the function.
