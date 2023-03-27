@@ -130,7 +130,6 @@ penguins %>%
        subtitle = "Data from palmerpenguins package") +
   theme_dk(show_grid_lines = FALSE,
            show_axis_titles = FALSE)
-
 ```
 
 # Automatically pulling in and formatting race/ethnicity data from ACS
