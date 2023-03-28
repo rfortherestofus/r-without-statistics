@@ -7,7 +7,15 @@ editor_options:
 # Intro
 
 - You can make your own functions
+- Good so you don't have to copy things over from one project to the next
+	- "A good rule of thumb is to consider writing a function whenever you’ve copied and pasted a block of code more than twice (i.e. you now have three copies of the same code)."
 - Think of things you do a lot and don't want to have to remember exact syntax
+
+# How functions work
+
+- Name
+- Arguments
+- Body
 
 # Automatically viewing snippets of data in Excel
 
@@ -122,7 +130,6 @@ penguins %>%
        subtitle = "Data from palmerpenguins package") +
   theme_dk(show_grid_lines = FALSE,
            show_axis_titles = FALSE)
-
 ```
 
 # Automatically pulling in and formatting race/ethnicity data from ACS
@@ -157,3 +164,4 @@ get_acs_race_ethnicity(geography = "county",
 
 - It's tempting to see others' functions as real and your as not, but they're all the same thing
 - Next chapter will show how to create your own personal package to help you keep functions at the ready
+- Refer to R4DS
