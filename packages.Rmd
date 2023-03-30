@@ -1,0 +1,80 @@
+# Bundle Your Functions Together in Your Own R Package {#custom-packages}
+
+## Intro
+
+In the late 2010s, Travis Gerke and Garrick Aden-Buie were working on the Collaborative Data Services Core team at the Moffitt Cancer Center. Researchers throughout Moffitt needed to access data from databases, and Gerke and Aden-Buie were in charge of helping them. Gerke and Aden-Buie would write R code for each researcher. But they eventually realized that they were reusing the same code over and over. Why not instead share the code with the researchers themselves?
+
+In Chapter \@ref(functions-chapter), I said that creating functions was a better approach than copying code. That is true, but only partially so. The even better approach is to create those functions and then bundle them into a custom R package. That's exactly what Travis Gerke and Garrick Aden-Buie did. And by making a package with functions to access data from databases, they simplified their own work, and that of the researchers they supported. No longer did researchers have to ask Gerke and Aden-Buie for help. They could now install the package they had made and use its functions themselves. 
+
+In this chapter, I discuss how to make your own R package. While privacy concerns make it impossible to demonstrate the package that Travis Gerke and Garrick Aden-Buie made, they walked me through the development of a simple package that includes a custom ggplot theme. I've drawn from this conversation to show how I could take the `theme_dk()` function I made in Chapter \@ref(functions-chapter) and add it to a custom package. Making your own R package may seem daunting, but if you know how to make your own functions, you're halfway there. This chapter will get you the rest of the way there. 
+
+## Code walkthrough
+
+How do you know whether functions you write should be one-offs that stay in an individual project or merit being put into a package? The answer is simple: if you plan to use the function in multiple projects, put it into a package. The functions that Travis Gerke and Garrick Aden-Buie made to access databases can be used across multiple projects. In Chapter \@ref(functions-chapter), I made a custom ggplot theme. I can use this function in any project where I make data visualizations so it's a great candidate for a package as well.
+
+### Creating the Package {-}
+
+The simplest way to create a package in RStudio is to use the File menu, then select New Project. From there, select New Directory. You'll be given a list of options, one of which is R Package. Select that and you'll then need to give your package a name (I'm going to call mine `dk`) and decide where you want it to live on your computer. You can leave everything else as is.
+
+TODO: Add screenshot create-r-package.png
+
+RStudio will now create and open my package. There are a few files in our package already, including `hello.R`, which has a prebuilt function called `hello()` that, when run, prints the text "Hello, world!" in the console. This file is similar to the default content that is added to R Markdown documents. We can leave it for now (though we'll delete it later).
+
+Much of the work we'll do working with our package relies on the `usethis` and `devtools` packages. Install those using `install.packages()` if you don't already have them installed. Once you've done that, you're ready to add your own function to the package. 
+
+To do so, load the `usethis` package and then run the `use_r()` function. This function will create a file in the `R` directory with the name you give it as an argument. Running this code (I typically do this in the console since we don't need to save our code) will create a `theme.R` file:
+
+```{r}
+library(usethis)
+
+use_r("theme")
+```
+
+Now that I have this file, I can add code to it. I'll copy the `theme_dk()` function I created in Chapter \@ref(functions-chapter.R):
+
+```{r}
+theme_dk <- function(show_grid_lines = TRUE,
+                     show_axis_titles = TRUE) {
+  
+  custom_theme <- theme_minimal() +
+    theme(panel.grid.minor = element_blank(),
+          axis.ticks = element_blank(),
+          axis.title = element_text(size = 12,
+                                   color = "grey50"),
+          axis.title.x = element_text(margin = margin(t = 10)),
+          axis.title.y = element_text(margin = margin(r = 10)),
+          axis.text = element_text(size = 12,
+                                   color = "grey50"),
+          plot.title.position = "plot",
+          plot.title = element_text(size = 20,
+                                    face = "bold",
+                                    margin = margin(b = 8)),
+          plot.subtitle = element_text(size = 14,
+                                       color = "grey50"),
+          legend.text = element_text(size = 12),
+          legend.position = "top")
+  
+  if (show_grid_lines == FALSE) {
+    
+    custom_theme <- custom_theme +
+      theme(panel.grid.major = element_blank())
+    
+  }
+  
+  if (show_axis_titles == FALSE) {
+    
+    custom_theme <- custom_theme +
+      theme(axis.title = element_blank(),
+            axis.title.x = element_blank(),
+            axis.title.y = element_blank())
+    
+  }
+  
+  custom_theme
+  
+}
+```
+
+### Package dependencies
+
+## Conclusion

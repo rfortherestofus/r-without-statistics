@@ -12,10 +12,7 @@ Background on their work at Moffett
 - Accessing secure places is hard
 - So made a package
 
-Value of packages
-- Code in one place
-- Easy to manage dependencies
-- Documentation
+
 
 # Code walkthrough
 
@@ -70,6 +67,11 @@ Code > Insert roxygen skeleton
 - Use remotes::install_github()
 
 # Conclusion
+
+Value of packages
+- Code in one place
+- Easy to manage dependencies
+- Documentation
 
 Package is packaging up of various things needed to run code
 
