@@ -19,8 +19,6 @@ Background on their work at Moffett
 ## Creating functions
 
 - You make a theme in one project and someone else would like to use it
-- If you have a functions.R file you pass around, you're ready for a package 
-> Travis: Yeah, functions.R screams, "make a package"
 
 ## Starting the package
 
@@ -67,6 +65,9 @@ Code > Insert roxygen skeleton
 - Use remotes::install_github()
 
 # Conclusion
+
+- If you have a functions.R file you pass around, you're ready for a package 
+> Travis: Yeah, functions.R screams, "make a package"
 
 Value of packages
 - Code in one place

@@ -6,13 +6,13 @@ In the late 2010s, Travis Gerke and Garrick Aden-Buie were working on the Collab
 
 In Chapter \@ref(functions-chapter), I said that creating functions was a better approach than copying code. That is true, but only partially so. The even better approach is to create those functions and then bundle them into a custom R package. That's exactly what Travis Gerke and Garrick Aden-Buie did. And by making a package with functions to access data from databases, they simplified their own work, and that of the researchers they supported. No longer did researchers have to ask Gerke and Aden-Buie for help. They could now install the package they had made and use its functions themselves. 
 
-In this chapter, I discuss how to make your own R package. While privacy concerns make it impossible to demonstrate the package that Travis Gerke and Garrick Aden-Buie made, they walked me through the development of a simple package that includes a custom ggplot theme. I've drawn from this conversation to show how I could take the `theme_dk()` function I made in Chapter \@ref(functions-chapter) and add it to a custom package. Making your own R package may seem daunting, but if you know how to make your own functions, you're halfway there. This chapter will get you the rest of the way there. 
+In this chapter, I discuss how to make your own R package. While privacy concerns preclude me demonstrating the package that Travis Gerke and Garrick Aden-Buie made, they walked me through the development of a simple package that includes a custom ggplot theme. I've drawn from this conversation to show how I could take the `theme_dk()` function I made in Chapter \@ref(functions-chapter) and add it to a custom package. Making your own R package may seem daunting, but if you know how to make your own functions, you're halfway there. This chapter will get you the rest of the way there. 
 
-## Code walkthrough
+## How to Create a Package {-}
 
 How do you know whether functions you write should be one-offs that stay in an individual project or merit being put into a package? The answer is simple: if you plan to use the function in multiple projects, put it into a package. The functions that Travis Gerke and Garrick Aden-Buie made to access databases can be used across multiple projects. In Chapter \@ref(functions-chapter), I made a custom ggplot theme. I can use this function in any project where I make data visualizations so it's a great candidate for a package as well.
 
-### Creating the Package {-}
+### Starting the Package {-}
 
 The simplest way to create a package in RStudio is to use the File menu, then select New Project. From there, select New Directory. You'll be given a list of options, one of which is R Package. Select that and you'll then need to give your package a name (I'm going to call mine `dk`) and decide where you want it to live on your computer. You can leave everything else as is.
 
@@ -74,6 +74,167 @@ theme_dk <- function(show_grid_lines = TRUE,
   
 }
 ```
+
+Because we developed `theme_dk()` in Chapter \@ref(functions-chapter), we know it works. But there are some particularities about package development that we need to take into consideration. To test that our package works, run the function `check()` (first load the `devtools` package) in the console (this runs what is known as `R CMD check`). This function checks whether the package is developed correctly. This is important because you need to make sure that others can install your package on their system. Running `R CMD check` on the `dk` package gives us the following message:
+
+```
+── R CMD check results ──────────────────────────────────────────────────────────── dk 0.1.0 ────
+Duration: 9.5s
+
+❯ checking DESCRIPTION meta-information ... WARNING
+  Non-standard license specification:
+    What license is it under?
+  Standardizable: FALSE
+
+❯ checking for missing documentation entries ... WARNING
+  Undocumented code objects:
+    ‘theme_dk’
+  All user-level objects in a package should have documentation entries.
+  See chapter ‘Writing R documentation files’ in the ‘Writing R
+  Extensions’ manual.
+
+❯ checking R code for possible problems ... NOTE
+  theme_dk: no visible global function definition for ‘theme_minimal’
+  theme_dk: no visible global function definition for ‘theme’
+  theme_dk: no visible global function definition for ‘element_blank’
+  theme_dk: no visible global function definition for ‘element_text’
+  theme_dk: no visible global function definition for ‘margin’
+  Undefined global functions or variables:
+    element_blank element_text margin theme theme_minimal
+    
+0 errors ✔ | 2 warnings ✖ | 1 note ✖
+```
+
+Let's review the output from top to bottom. The line "0 errors ✔ | 2 warnings ✖ | 1 note ✖" gives us the three level of issues with our package. Errors are the most severe (meaning others won't be able to install your package), followed by warnings and notes (both of which may cause problems for others). It's best practice to eliminate all errors, warnings, and notes.
+
+Let's start with the note. The note shows up in this section:
+
+```
+❯ checking R code for possible problems ... NOTE
+  theme_dk: no visible global function definition for ‘theme_minimal’
+  theme_dk: no visible global function definition for ‘theme’
+  theme_dk: no visible global function definition for ‘element_blank’
+  theme_dk: no visible global function definition for ‘element_text’
+  theme_dk: no visible global function definition for ‘margin’
+  Undefined global functions or variables:
+    element_blank element_text margin theme theme_minimal
+```
+
+To understand what `R CMD check` is saying, we need to explain a bit about how packages work. When you install a package using the `install.packages()` function, it often takes a while. That's because, while you are telling R to install one package, that package likely uses functions from other packages. In order to have access to these functions, R will install these packages for you (they are known formally as dependencies). It would be a pain if, every time you installed package, you had to manually install any dependencies. But in order to make sure that the appropriate packages are installed for users, we have to make a few changes. 
+
+When we run `R CMD check` on our package, we are told that we have several "Undefined global functions or variables" and "no visible global function definition" for various functions. This is because we are attempting to use functions from the `ggplot2` package, but we haven't specified where these functions come from. I know that I can use this code because I know that I have `ggplot2` installed. But we can't assume that others will have `ggplot2` installed so we need to install it for them when they install the `dk` package. To do this, we use the `use_package()` function from the `usethis` package as follows:
+
+```{r eval = FALSE, echo = TRUE}
+use_package(package = "ggplot2")
+```
+
+It's important to note that, while I use the meta package `tidyverse` (which contains multiple packages, of which `ggplot2` is just one) when working on my own computer, when making your own package you want to only use individual packages. After I run this code (which I typically do in the console), I get the following message:
+
+```
+✔ Setting active project to '/Users/davidkeyes/Documents/Work/R Without Statistics/dk'
+✔ Adding 'ggplot2' to Imports field in DESCRIPTION
+• Refer to functions with `ggplot2::fun()`
+```
+
+The first tells me that it is working in the `dk` project. The second line  tells me that the DESCRIPTION file has been edited. This file provides meta information about the package we're developing. If we open up the DESCRIPTION file (it's in the root directory of our project), we see the following:
+
+```
+Package: dk
+Type: Package
+Title: What the Package Does (Title Case)
+Version: 0.1.0
+Author: Who wrote it
+Maintainer: The package maintainer <yourself@somewhere.net>
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+Imports:
+    ggplot2
+```
+
+Way down at the bottom, look for the line that says "Imports:" followed by "ggplot2" on the next line. This indicates that, when a user installs the `dk` package, the `ggplot2` package will also be installed for them. 
+
+We'll return to the DESCRIPTION file in a bit, but for now, let's return to this line: "Refer to functions with `ggplot2::fun()`". This is telling us that, in order to use functions in our package, we need to refer to them in a unique way. By specifying both the package name and the function name, you ensure that the correct function is used at all times. It is rare, but there are functions with identical names across multiple packages. Using this syntax avoids any ambiguity.
+
+Remember when we ran `R CMD check` and got this?
+
+```
+  Undefined global functions or variables:
+    element_blank element_text margin theme theme_minimal
+```
+
+This is because we were using functions without saying what package they come from. All of the functions listed here come from the `ggplot2` package so I can add `ggplot2::` before them as follows:
+
+```{r}
+theme_dk <- function(show_grid_lines = TRUE,
+                     show_axis_titles = TRUE) {
+
+  custom_theme <- ggplot2::theme_minimal() +
+    ggplot2::theme(panel.grid.minor = ggplot2::element_blank(),
+                   axis.ticks = ggplot2::element_blank(),
+                   axis.title = ggplot2::element_text(size = 12,
+                                                      color = "grey50"),
+                   axis.title.x = ggplot2::element_text(margin = ggplot2::margin(t = 10)),
+                   axis.title.y = ggplot2::element_text(margin = ggplot2::margin(r = 10)),
+                   axis.text = ggplot2::element_text(size = 12,
+                                                     color = "grey50"),
+                   plot.title.position = "plot",
+                   plot.title = ggplot2::element_text(size = 20,
+                                                      face = "bold",
+                                                      margin = ggplot2::margin(b = 8)),
+                   plot.subtitle = ggplot2::element_text(size = 14,
+                                                         color = "grey50"),
+                   legend.text = ggplot2::element_text(size = 12),
+                   legend.position = "top")
+
+  if (show_grid_lines == FALSE) {
+
+    custom_theme <- custom_theme +
+      ggplot2::theme(panel.grid.major = ggplot2::element_blank())
+
+  }
+
+  if (show_axis_titles == FALSE) {
+
+    custom_theme <- custom_theme +
+      ggplot2::theme(axis.title = ggplot2::element_blank(),
+                     axis.title.x = ggplot2::element_blank(),
+                     axis.title.y = ggplot2::element_blank())
+
+  }
+
+  custom_theme
+
+}
+```
+
+Now that I've specified that I'm using `ggplot2` functions, I can run the `check()` function again. 
+
+```
+❯ checking DESCRIPTION meta-information ... WARNING
+  Non-standard license specification:
+    What license is it under?
+  Standardizable: FALSE
+
+❯ checking for missing documentation entries ... WARNING
+  Undocumented code objects:
+    ‘theme_dk’
+  All user-level objects in a package should have documentation entries.
+  See chapter ‘Writing R documentation files’ in the ‘Writing R
+  Extensions’ manual.
+
+0 errors ✔ | 2 warnings ✖ | 0 notes ✔
+```
+
+When I do so, I now see that the notes have gone away. I still need to deal with the warnings. Let's do that next.
+
+### Documentation {-}
+
+
+
+
 
 ### Package dependencies
 
