@@ -273,34 +273,12 @@ Going down the Roxygen skeleton, we next see `@return`. This is where we tell th
 
 Below `@return` is `@export`. We don't need to change anything here.   Most functions in a package are known as "exported functions," meaning they are available to users of the package (in contrast, internal functions, which are only used by the package developers, do not have `@export` in the Roxygen skeleton). 
 
-The last section is `@examples`. This is where you can give examples of code that users can run to learn how the function works. I've taken the code from penguin bill length and depth histogram I made in Chapter \@ref(functions-chapter) and reused it here. 
-
-```
-#' @examples
-#' library(tidyverse)
-#' library(palmerpenguins)
-#'
-#' penguins %>%
-#'   ggplot(aes(x = bill_length_mm,
-#'             y = bill_depth_mm,
-#'             color = island)) +
-#'   geom_point() +
-#'   labs(title = "A histogram of bill length and bill depth",
-#'         subtitle = "Data from palmerpenguins package",
-#'         x = "Bill Length",
-#'         y = "Bill Depth",
-#'         color = NULL) +
-#'   theme_dk()
-```
-
-When I adjusted the `theme_dk()` function to work in a package, I had to add `ggplot2::` before all relevant functions. When creating examples in documentation, this isn't necessary. Since we're just showing others how to use the function, we can include functions without including the package they come from. We can need to also then load the appropriate packages, which I do in the first two lines.
+The last section is `@examples`. This is where you can give examples of code that users can run to learn how the function works. Doing this introduces some complexities so I'm going to skip it, but Chapter 17 of the second edition of Hadley Wickham and Jenny Bryan's book *R Packages* is a great place to learn about adding examples.
 
 Now that we've added the documentation with Roxygen, there's one more step. We can run `devtools::document()` in the console. This will do two things:
 
-1. Create a `theme_dk.Rd` file in the `man` directory. This file is the documentation of our `theme_dk()` function in the very specific format that R packages need. You're welcome to look at it, but can't change it since it is read only. The workflow outline above with Roxygen is a much easier way to generate `.Rd` files than doing so by hand.
+1. Create a `theme_dk.Rd` file in the `man` directory. This file is the documentation of our `theme_dk()` function in the very specific format that R packages need. You're welcome to look at it, but can't change it since it is read only. The workflow outlined above with Roxygen is a much easier way to generate `.Rd` files than doing so by hand.
 2. 
-
-- Rd stands for R documentation
 
 
 
