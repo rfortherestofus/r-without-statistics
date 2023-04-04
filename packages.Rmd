@@ -18,7 +18,7 @@ The simplest way to create a package in RStudio is to use the File menu, then se
 
 TODO: Add screenshot create-r-package.png
 
-RStudio will now create and open my package. There are a few files in our package already, including `hello.R`, which has a prebuilt function called `hello()` that, when run, prints the text "Hello, world!" in the console. This file is similar to the default content that is added to R Markdown documents. We can leave it for now (though we'll delete it later).
+RStudio will now create and open my package. There are a few files in our package already, including `hello.R`, which has a prebuilt function called `hello()` that, when run, prints the text "Hello, world!" in the console. This file is similar to the default content that is added to R Markdown documents. Let's get rid of a few files so we're starting with a clean slate. I'll delete `hello.R`, `NAMESPACE`, and the `hello.Rd` file in the `man` directory.
 
 Much of the work we'll do working with our package relies on the `usethis` and `devtools` packages. Install those using `install.packages()` if you don't already have them installed. Once you've done that, you're ready to add your own function to the package. 
 
@@ -230,7 +230,79 @@ Now that I've specified that I'm using `ggplot2` functions, I can run the `check
 
 When I do so, I now see that the notes have gone away. I still need to deal with the warnings. Let's do that next.
 
-### Documentation {-}
+### Adding Documentation {-}
+
+Let's look now at the "checking for missing documentation entries" warning. This warning is telling us that we need to add documentation of our `theme_dk()` function. One of the benefits of creating a package is that you can add documentation to help others use your code. In the same way that users can type `?theme_mimimal()` and see documentation about that function, we want them to also be able to type `theme_dk()` and learn how it works. 
+
+To create documentation for `theme_dk()`, place your cursor anywhere in the function. Then, go to the Code menu and select Insert Roxygen Skeleton (Roxygen is a way to create documentation of functions in R packages using a package called `roxygen2`), as seen in Figure \@ref(fig:TODO) below.
+
+TODO: Add screenshot insert-roxygen-skeleton.png
+
+Doing this will add some text above the `theme_dk()` function that looks like this: 
+
+```
+#' Title
+#'
+#' @param show_grid_lines 
+#' @param show_axis_titles 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+```
+
+This text is the skeleton of what is needed to create documentation of our function. The most notable feature is the `#'` at the start of each line. These are special comments that are used for Roxygen. We can now go in and edit the Roxygen text to create our documentation. Starting at the top, I'll replace Title with a sentence that describes my function.
+
+```
+#' David Keyes's custom ggplot theme 
+```
+
+Next, you can see lines with the text `@param`. Roxygen automatically looks at the arguments in our function and creates one line for each. On each line, we want to describe what the argument does. I can do this as follows.
+
+```
+#' @param show_grid_lines Should grid lines be shown (TRUE/FALSE)
+#' @param show_axis_titles Should axis titles be shown (TRUE/FALSE) 
+```
+
+Going down the Roxygen skeleton, we next see `@return`. This is where we tell the user what the `dk_theme()` function returns. In our case, it is a complete `ggplot2` theme, which I document as follows:
+
+```
+#' @return A complete ggplot2 theme
+```
+
+Below `@return` is `@export`. We don't need to change anything here.   Most functions in a package are known as "exported functions," meaning they are available to users of the package (in contrast, internal functions, which are only used by the package developers, do not have `@export` in the Roxygen skeleton). 
+
+The last section is `@examples`. This is where you can give examples of code that users can run to learn how the function works. I've taken the code from penguin bill length and depth histogram I made in Chapter \@ref(functions-chapter) and reused it here. 
+
+```
+#' @examples
+#' library(tidyverse)
+#' library(palmerpenguins)
+#'
+#' penguins %>%
+#'   ggplot(aes(x = bill_length_mm,
+#'             y = bill_depth_mm,
+#'             color = island)) +
+#'   geom_point() +
+#'   labs(title = "A histogram of bill length and bill depth",
+#'         subtitle = "Data from palmerpenguins package",
+#'         x = "Bill Length",
+#'         y = "Bill Depth",
+#'         color = NULL) +
+#'   theme_dk()
+```
+
+When I adjusted the `theme_dk()` function to work in a package, I had to add `ggplot2::` before all relevant functions. When creating examples in documentation, this isn't necessary. Since we're just showing others how to use the function, we can include functions without including the package they come from. We can need to also then load the appropriate packages, which I do in the first two lines.
+
+Now that we've added the documentation with Roxygen, there's one more step. We can run `devtools::document()` in the console. This will do two things:
+
+1. Create a `theme_dk.Rd` file in the `man` directory. This file is the documentation of our `theme_dk()` function in the very specific format that R packages need. You're welcome to look at it, but can't change it since it is read only. The workflow outline above with Roxygen is a much easier way to generate `.Rd` files than doing so by hand.
+2. 
+
+- Rd stands for R documentation
+
+
 
 
 
