@@ -84,7 +84,7 @@ Refer to chapter 2 of R Packages book for more info
 
 Accessing database as more complicated use case
 
-> Um, so yeah, I mean that, that's one, one key area where we're just having a package that would take take away the overhead of like, just setting up your session. And then, so the people got actually write code and, and kind of do the data queries day to day job instead of like handling administrative silliness.
+> Um, so yeah, I mean that, that's one, one key area where we're just having a package that would take away the overhead of like, just setting up your session. And then, so the people got actually write code and, and kind of do the data queries day to day job instead of like handling administrative silliness.
 
 More advanced users can bring along less experienced users
 
