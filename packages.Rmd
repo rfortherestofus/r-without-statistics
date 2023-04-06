@@ -1,38 +1,49 @@
-# Bundle Your Functions Together in Your Own R Package {#custom-packages}
+```{r}
+i <- 1
+chapter_number <- 13
+source("_common.R")
+```
 
-## Intro
 
-In the late 2010s, Travis Gerke and Garrick Aden-Buie were working on the Collaborative Data Services Core team at the Moffitt Cancer Center. Researchers throughout Moffitt needed to access data from databases, and Gerke and Aden-Buie were in charge of helping them. Gerke and Aden-Buie would write R code for each researcher. But they eventually realized that they were reusing the same code over and over. Why not instead share the code with the researchers themselves?
+# Bundle Your Functions Together in Your Own R Package {#packages-chapter}
 
-In Chapter \@ref(functions-chapter), I said that creating functions was a better approach than copying code. That is true, but only partially so. The even better approach is to create those functions and then bundle them into a custom R package. That's exactly what Travis Gerke and Garrick Aden-Buie did. And by making a package with functions to access data from databases, they simplified their own work, and that of the researchers they supported. No longer did researchers have to ask Gerke and Aden-Buie for help. They could now install the package they had made and use its functions themselves. 
+In the late 2010s, Travis Gerke and Garrick Aden-Buie were working on the Collaborative Data Services Core team at the Moffitt Cancer Center. Researchers throughout Moffitt needed to access data from several highly secure databases, and Gerke and Aden-Buie were in charge of helping them. Initially, Gerke and Aden-Buie would write R code for each researcher. But they quickly realized that they were reusing the same code over and over. Why not instead share the code with the researchers so they could run it themselves?
 
-In this chapter, I discuss how to make your own R package. While privacy concerns preclude me demonstrating the package that Travis Gerke and Garrick Aden-Buie made, they walked me through the development of a simple package that includes a custom ggplot theme. I've drawn from this conversation to show how I could take the `theme_dk()` function I made in Chapter \@ref(functions-chapter) and add it to a custom package. Making your own R package may seem daunting, but if you know how to make your own functions, you're halfway there. This chapter will get you the rest of the way there. 
+In Chapter \@ref(functions-chapter), I said that creating functions was a better approach than copying code. That is true, but only partially so. The even better approach is to create those functions and then bundle them into a custom R package. That's exactly what Travis Gerke and Garrick Aden-Buie did. And by making a package with functions to access databases, they simplified their own work, and that of the researchers they supported. No longer did researchers have to ask for help. They could now install the package Gerke and Aden-Buie had made and use its functions themselves. 
+
+In this chapter, I discuss how to make your own R package. While privacy concerns preclude me demonstrating the package that Travis Gerke and Garrick Aden-Buie made, they walked me through the development of a simple package that includes a custom ggplot theme. I've drawn from this conversation to show how I could take the `theme_dk()` function I made in Chapter \@ref(functions-chapter) and add it to my own package. Making your own R package may seem daunting, but if you know how to make your own functions, you're halfway there. This chapter will guide you through the rest of your journey to making your own package. 
 
 ## How to Create a Package {-}
 
-How do you know whether functions you write should be one-offs that stay in an individual project or merit being put into a package? The answer is simple: if you plan to use the function in multiple projects, put it into a package. As Travis Gerke put it to me, a `functions.R` file that you copy across projects "screams 'make a package.'" The functions that Gerke and Garrick Aden-Buie made to access databases can be used across multiple projects. In Chapter \@ref(functions-chapter), I made a custom ggplot theme. I can use this function in any project where I make data visualizations so it's a great candidate for a package as well.
+In Chapter \@ref(functions-chapter), I said you should make a function when you've copied code three times. How do you know whether functions you write should be put into a package? The answer is simple: if you plan to use the function in multiple projects, put it into a package. You may find yourself copying functions from one project to another. Or perhaps you have a set of functions you've saved in a `functions.R` file that you copy into each new project you work. Both are good indications that you're ready for a project (Travis Gerke said that a `functions.R` file "screams 'make a package'"). In Chapter \@ref(functions-chapter), I made a custom ggplot theme. I want to use `theme_dk()` in any project where I make data visualization so let's put it in a package.
 
 ### Starting the Package {-}
 
-The simplest way to create a package in RStudio is to use the File menu, then select New Project. From there, select New Directory. You'll be given a list of options, one of which is R Package. Select that and you'll then need to give your package a name (I'm going to call mine `dk`) and decide where you want it to live on your computer. You can leave everything else as is.
+To create a package in RStudio, go to the File menu, then select New Project. From there, select New Directory. You'll be given a list of options, one of which is R Package. Select that and you'll then need to give your package a name (I'm going to call mine `dk`) and decide where you want it to live on your computer. You can leave everything else as is.
 
-TODO: Add screenshot create-r-package.png
-
-RStudio will now create and open my package. There are a few files in our package already, including `hello.R`, which has a prebuilt function called `hello()` that, when run, prints the text "Hello, world!" in the console. This file is similar to the default content that is added to R Markdown documents. Let's get rid of it and a few other default files so we're starting with a clean slate. I'll delete `hello.R`, `NAMESPACE`, and the `hello.Rd` file in the `man` directory.
-
-Much of the work we'll do working with our package relies on the `usethis` and `devtools` packages. Install those using `install.packages()` if you don't already have them installed. Once you've done that, you're ready to add a function to the package. 
-
-To do so, load the `usethis` package and then run the `use_r()` function. This function will create a file in the `R` directory with the name you give it as an argument (all functions in a package go in files in the `R` folder). Running this code (I typically do this in the console since we don't need to save our code) will create a `theme.R` file:
-
-```{r}
-library(usethis)
-
-use_r("theme")
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
 ```
 
-Now that I have this file, I can add code to it. I'll copy the `theme_dk()` function I created in Chapter \@ref(functions-chapter.R):
+```{r rstudio-create-package, out.width="100%", fig.cap="The RStudio menu for creating your package"}
+knitr::include_graphics(here::here("assets/create-r-package.png"))
+```
 
-```{r}
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/create-r-package.png"))
+```
+
+RStudio will now create and open my package. There are a few files in the package already, including `hello.R`, which has a prebuilt function called `hello()` that, when run, prints the text "Hello, world!" in the console. Let's get rid of it and a few other default files so we're starting with a clean slate. I'll delete `hello.R`, `NAMESPACE`, and the `hello.Rd` file in the `man` directory.
+
+Much of the work we'll do working with our package relies on the `usethis` and `devtools` packages. Install those using `install.packages()` if you don't already have them installed. Once you've done that, you're ready to add a function to the package. To do so, run the `use_r()` function from the `usethis` package. I typically run functions from `usethis` and `devtools` in the console because I only need to run them once. I also tend to run them with the syntax `package::function()`, which makes it possible to use a function without loading the package (it's also how we have to refer to functions in our package, as we'll see below). Here's how I would run the `use_r()` function:
+
+```{r eval = FALSE, echo = TRUE}
+usethis::use_r("theme")
+```
+
+This function will create a file called `theme.R` in the `R` directory with the name you give it as an argument (all functions in a package go in files in the `R` folder). I can open up the file and add code to it. I'll begin by copying the `theme_dk()` function I created in Chapter \@ref(functions-chapter):
+
+```{r eval = FALSE, echo = TRUE}
 theme_dk <- function(show_grid_lines = TRUE,
                      show_axis_titles = TRUE) {
   
@@ -75,11 +86,11 @@ theme_dk <- function(show_grid_lines = TRUE,
 }
 ```
 
-Because we developed `theme_dk()` in Chapter \@ref(functions-chapter), we know it works. But there are some particularities about package development that we need to take into consideration. 
+Because we developed `theme_dk()` in Chapter \@ref(functions-chapter), we know it works. But we need to change it in a few ways to make it work in a package. The easiest way to figure out what changes we need to make is to use built-in tools to check that our package is built correctly.
 
 ### Checking our Package {-}
 
-To test that our package works, run the function `check()` (first load the `devtools` package) in the console (this runs what is known as `R CMD check`). This function checks whether the package is developed correctly. This is important because you need to make sure that others can install your package on their system. Running `R CMD check` on the `dk` package gives us a long message. The last part is the most important:
+To test that our package works, run the function `devtools::check()`. This runs what is known as `R CMD check`, which makes sure that others can install your package on their system. Running `R CMD check` on the `dk` package gives us a long message. The last part is the most important:
 
 ```
 ── R CMD check results ─────────────── dk 0.1.0 ────
@@ -109,9 +120,7 @@ Duration: 9.5s
 0 errors ✔ | 2 warnings ✖ | 1 note ✖
 ```
 
-Let's review the output from top to bottom. The line "0 errors ✔ | 2 warnings ✖ | 1 note ✖" gives us the three level of issues with our package. Errors are the most severe (meaning others won't be able to install your package), followed by warnings and notes (both of which may cause problems for others). It's best practice to eliminate all errors, warnings, and notes.
-
-Let's start with the note. The note shows up in this section:
+Let's review the output from bottom to top. The line "0 errors ✔ | 2 warnings ✖ | 1 note ✖" gives us the three levels of issues with our package. Errors are the most severe (meaning others won't be able to install your package), followed by warnings and notes (both of which may cause problems for others). It's best practice to eliminate all errors, warnings, and notes. Let's start with the note, which shows up in this section:
 
 ```
 ❯ checking R code for possible problems ... NOTE
@@ -126,17 +135,17 @@ Let's start with the note. The note shows up in this section:
 
 To understand what `R CMD check` is saying, we need to explain a bit about how packages work. 
 
-### Dependencies {-}
+### Adding Dependency Packages {-}
 
-When you install a package using the `install.packages()` function, it often takes a while. That's because, while you are telling R to install one package, that package likely uses functions from other packages. In order to have access to these functions, R will install these packages for you (they are known formally as dependencies). It would be a pain if, every time you installed package, you had to manually install any dependencies. But in order to make sure that the appropriate packages are installed for users, we have to make a few changes. 
+When you install a package using the `install.packages()` function, it often takes a while. That's because, while you are telling R to install one package, that single package likely uses functions from other packages. In order to have access to these functions, R will install these packages (known as dependencies) for you. It would be a pain if, every time you installed package, you had to manually install a whole set of dependencies. But in order to make sure that the appropriate packages are installed for any users of the `dk` package, we have to make a few changes. 
 
-When we run `R CMD check` on our package, we are told that we have several "Undefined global functions or variables" and "no visible global function definition" for various functions. This is because we are attempting to use functions from the `ggplot2` package, but we haven't specified where these functions come from. I know that I can use this code because I know that I have `ggplot2` installed. But we can't assume that others will have `ggplot2` installed so we need to install it for them when they install the `dk` package. To do this, we use the `use_package()` function from the `usethis` package as follows:
+When we run `R CMD check`, we are told that we have several "Undefined global functions or variables" and "no visible global function definition" for various functions. This is because we are attempting to use functions from the `ggplot2` package, but we haven't specified that these functions are from `ggplot2`. I can use this code because I have `ggplot2` installed, but we can't assume that others will have `ggplot2` installed. In order to ensure the code will work, we need to install `ggplot2` for users when they install the `dk` package. To do this, we run the `use_package()` function from the `usethis` package as follows:
 
 ```{r eval = FALSE, echo = TRUE}
-use_package(package = "ggplot2")
+usethis::use_package(package = "ggplot2")
 ```
 
-It's important to note that, while I use the meta package `tidyverse` (which contains multiple packages, of which `ggplot2` is just one) when working on my own computer, when making your own package you want to only use individual packages. After I run this code in the console, I get the following message:
+After I run the `use_package()` code in the console, I get the following message:
 
 ```
 ✔ Setting active project to '/Users/davidkeyes/Documents/Work/R Without Statistics/dk'
@@ -144,7 +153,7 @@ It's important to note that, while I use the meta package `tidyverse` (which con
 • Refer to functions with `ggplot2::fun()`
 ```
 
-The first line tells me that it is working in the `dk` project. The second line tells me that the DESCRIPTION file has been edited. This file provides meta information about the package we're developing. If we open up the DESCRIPTION file (it's in the root directory of our project), we see the following:
+The first line tells me that it is working in the `dk` project. The second line tells me that the `DESCRIPTION` file has been edited. This file provides meta information about the package we're developing. If we open up the `DESCRIPTION` file (it's in the root directory of our project), we see the following:
 
 ```
 Package: dk
@@ -162,20 +171,20 @@ Imports:
     ggplot2
 ```
 
-Way down at the bottom, look for the line that says "Imports:" followed by "ggplot2" on the next line. This indicates that, when a user installs the `dk` package, the `ggplot2` package will also be installed for them. 
+Way down at the bottom, look for the line that says "Imports:" followed by "ggplot2" on the next line. This indicates that, when a user installs the `dk` package, the `ggplot2` package will also be installed for them. It's important to note that, while I use the `tidyverse` package (this meta package contains multiple packages, of which `ggplot2` is just one) when working on my own computer, when making your own package you want to have it install the individual packages needed to make it run. 
 
-### foo::bar() {-}
+### Referring to Functions Correctly {-}
 
-We'll return to the DESCRIPTION file in a bit, but for now, let's take a look at this line: "Refer to functions with `ggplot2::fun()`". It is telling us that, in order to use functions in our package, we need to refer to them in a unique way. By specifying both the package name and the function name, you ensure that the correct function is used at all times. It is rare, but there are functions with identical names across multiple packages. Using this syntax avoids any ambiguity. Remember when we ran `R CMD check` and got this?
+We'll return to the DESCRIPTION file in a bit, but for now, let's take a look at this line: "Refer to functions with `ggplot2::fun()`". It is telling us that, in order to use functions from other packages in the `dk` package, we need to refer to them in a unique way. By specifying both the package name and the function name, you ensure that the correct function is used at all times. It is rare, but there are functions with identical names across multiple packages. Using this syntax avoids any ambiguity. Remember when we ran `R CMD check` and got this?
 
 ```
-  Undefined global functions or variables:
-    element_blank element_text margin theme theme_minimal
+Undefined global functions or variables:
+  element_blank element_text margin theme theme_minimal
 ```
 
 This is because we were using functions without saying what package they come from. All of the functions listed here come from the `ggplot2` package so I can add `ggplot2::` before them as follows:
 
-```{r}
+```{r eval = FALSE, echo = TRUE}
 theme_dk <- function(show_grid_lines = TRUE,
                      show_axis_titles = TRUE) {
 
@@ -218,7 +227,7 @@ theme_dk <- function(show_grid_lines = TRUE,
 }
 ```
 
-Now that I've specified that I'm using `ggplot2` functions, I can run the `check()` function again. 
+Now that I've specified that the various functions I'm using come from `ggplot2`, I can run the `devtools::check()` function again. When I do so, I now see that the notes have gone away. 
 
 ```
 ❯ checking DESCRIPTION meta-information ... WARNING
@@ -236,15 +245,25 @@ Now that I've specified that I'm using `ggplot2` functions, I can run the `check
 0 errors ✔ | 2 warnings ✖ | 0 notes ✔
 ```
 
-When I do so, I now see that the notes have gone away. I still need to deal with the warnings. Let's do that next.
+However, I can see that there are still two warnings that I need to deal with. Let's do that next.
 
 ### Adding Documentation {-}
 
-Let's look now at the "checking for missing documentation entries" warning. This warning is telling us that we need to add documentation of our `theme_dk()` function. One of the benefits of creating a package is that you can add documentation to help others use your code. In the same way that users can type `?theme_mimimal()` and see documentation about that function, we want them to also be able to type `theme_dk()` and learn how it works. 
+Let's look now at the "checking for missing documentation entries" warning. This warning is telling us that we need to add documentation of our `theme_dk()` function. One of the benefits of creating a package is that you can add documentation to help others use your code. In the same way that users can type `?theme_mimimal()` and see documentation about that function, we want them to also be able to type `?theme_dk()` and learn how it works. 
 
 To create documentation for `theme_dk()`, we'll use what's known as Roxygen, which is a way to create documentation of functions in R packages using a package called `roxygen2`. To get started, place your cursor anywhere in the function. Then, go to the Code menu and select Insert Roxygen Skeleton, as seen in Figure \@ref(fig:TODO) below.
 
-TODO: Add screenshot insert-roxygen-skeleton.png
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
+
+```{r excel-chart-chooser, out.width="100%", fig.cap="The menu item to insert Roxygen skeleton"}
+knitr::include_graphics(here::here("assets/insert-roxygen-skeleton.png"))
+```
+
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/insert-roxygen-skeleton.png"))
+```
 
 Doing this will add some text above the `theme_dk()` function that looks like this: 
 
@@ -260,7 +279,7 @@ Doing this will add some text above the `theme_dk()` function that looks like th
 #' @examples
 ```
 
-This text is the skeleton of what is needed to create documentation of the `theme_dk()` function. The most notable feature is the `#'` at the start of each line. These are special comments that are used for Roxygen. We can now go in and edit the Roxygen text to create our documentation. Starting at the top, I'll replace Title with a sentence that describes my function.
+This text is the skeleton of what is needed to create documentation of the `theme_dk()` function. Each line starts with the special characters `#'`, which indicate we're working with Roxygen. We can now go in and edit the Roxygen text to create our documentation. Starting at the top, I'll replace Title with a sentence that describes my function.
 
 ```
 #' David Keyes's custom ggplot theme 
@@ -279,15 +298,15 @@ Going down the Roxygen skeleton, we next see `@return`. This is where we tell th
 #' @return A complete ggplot2 theme
 ```
 
-Below `@return` is `@export`. We don't need to change anything here.   Most functions in a package are known as "exported functions," meaning they are available to users of the package (in contrast, internal functions, which are only used by the package developers, do not have `@export` in the Roxygen skeleton). 
+Below `@return` is `@export`. We don't need to change anything here. Most functions in a package are known as "exported functions," meaning they are available to users of the package (in contrast, internal functions, which are only used by the package developers, do not have `@export` in the Roxygen skeleton). 
 
 The last section is `@examples`. This is where you can give examples of code that users can run to learn how the function works. Doing this introduces some complexity and isn't required so I'm going to skip it. If you do want to learn more, Chapter 17 of the second edition of Hadley Wickham and Jenny Bryan's book *R Packages* is a great place to learn about adding examples.
 
-Now that we've added the documentation with Roxygen, there's one more step. We can run `devtools::document()` in the console. This will do two things:
+Now that we've added the documentation with Roxygen, there's one more step: running `devtools::document()`. This will do two things:
 
-**Create a `theme_dk.Rd` file in the `man` directory**. This file is the documentation of our `theme_dk()` function in the very specific format that R packages need. You're welcome to look at it, but you can't change it since it is read only. The workflow outlined above with Roxygen is a much easier way to generate `.Rd` files than doing so by hand.
+1. **Create a `theme_dk.Rd` file in the `man` directory**. This file is the documentation of our `theme_dk()` function in the very specific format that R packages require You're welcome to look at it, but you can't change it since it is read only. 
 
-**Create a NAMESPACE file**. This file lists the functions that your package makes available to users. My NAMESPACE file now looks like this:
+1. **Create a `NAMESPACE` file**. This file lists the functions that your package makes available to users. My NAMESPACE file now looks like this:
 
 ```
 # Generated by roxygen2: do not edit by hand
@@ -295,9 +314,9 @@ Now that we've added the documentation with Roxygen, there's one more step. We c
 export(theme_dk)
 ```
 
-My exported `theme_dk()` function is now almost ready for users. 
+The `theme_dk()` function is now almost ready for users. 
 
-### DESCRIPTION
+### Editing the `DESCRIPTION` File
 
 We can run `devtools::check()` again to see if we have fixed the issues that led to the warnings. Doing so shows that the warning about missing documentation is no longer there. However, we do still have one warning. 
 
@@ -310,7 +329,7 @@ We can run `devtools::check()` again to see if we have fixed the issues that led
 0 errors ✔ | 1 warning ✖ | 0 notes ✔
 ```
 
-This warning is telling us that we haven't given our package a license. For packages developed for the public, choosing a license is important (for information on how to choose the right one for you, see https://choosealicense.com/). It's less important since we're developing a package for our personal use, but we can still select one. I'll use the MIT license by running `usethis::use_mit_license()` in the console. Doing so returns the following:
+This warning is telling us that we haven't given our package a license. For packages made publicly available, choosing a license is important (for information on how to choose the right one for your package, see https://choosealicense.com/). It's less important since we're developing a package for our personal use, but we can still select one. I'll use the MIT license (it allows people to do essentially whatever they want with the code) by running `usethis::use_mit_license()` (the `usethis` package has similar functions for other common licenses). Doing so returns the following:
 
 ```
 ✔ Setting active project to '/Users/davidkeyes/Documents/Work/R Without Statistics/dk'
@@ -320,7 +339,7 @@ This warning is telling us that we haven't given our package a license. For pack
 ✔ Adding '^LICENSE\\.md$' to '.Rbuildignore'
 ```
 
-The `use_mit_license()` function handles a lot of the tedious parts of adding a license to our package. Most importantly for us, it specifies the license in the DESCRIPTION file. If I open up that file, I see the following (go down the line starting with License to see the result of the change we just made):
+The `use_mit_license()` function handles a lot of the tedious parts of adding a license to our package. Most importantly for us, it specifies the license in the `DESCRIPTION` file. If I open up that file, I can see confirmation that I've added the MIT license.
 
 ```
 Package: dk
@@ -339,7 +358,7 @@ Imports:
 RoxygenNote: 7.2.3
 ```
 
-There are many other licenses you can use and Chapter 13 of *R Packages* covers them. The DESCRIPTION file lists meta data about the package. We can make a few changes to change the Title, add an Author and Maintainer, and add a Description. The resulting DESCRIPTION file might look something like this:
+In addition to the license, the `DESCRIPTION` file contains meta data about the package. We can make a few changes to change the Title, add an Author and Maintainer, and add a Description. My final `DESCRIPTION` file might look something like this:
 
 ```
 Package: dk
@@ -364,19 +383,21 @@ Having made these changes, let's run `devtools::check()` one more time to make s
 0 errors ✔ | 0 warnings ✔ | 0 notes ✔
 ```
 
-Having developed our package, we're now ready to use it.
+We've not got a package with one working function in it. If you wanted to add additional functions, you would follow the same exact procedure:
 
-### Installing Package
+1. Create a new `.R` file with `usethis::use_r()` (you can also combine multiple functions in a single `.R` file).
+1. Developer your function using the `package::function()` syntax to refer to functions from other packages.
+1. Add any dependency packages with `use_package()`. 
+1. Add documentation of your function.
+1. Run `devtools::check()` to make sure you did everything correctly.
 
-When you're developing your own package, installing it for your own use is relatively straightforward. Simply run `devtools::install()` in your console and the package will be ready for you to use in any project. 
+Your package can contain a single function, like `dk`, or as many functions as you want. 
 
-Of course, if you're developing a package, you're likely doing it not just for yourself, but for others as well. There are many ways you can make your package accessible to others, but the most common is to use GitHub. The details of how to put your code on GitHub are beyond what we can cover here, but the book *Happy Git and GitHub for the useR* by Jenny Bryan is a great place to get started. I've pushed the `dk` package to GitHub and you can find it at https://github.com/dgkeyes/dk. If you or anyone else wants to install it, you can run the code `remotes::install_github("dgkeyes/dk")`. That's it! 
+### Installing the Package {-}
 
-For internal packages like the one that Travis Gerke and Garrick Aden-Buie developed at the Moffitt Cancer Center, you would use other strategies to distribute your package. But once users install your package, they have access to any functions within it. And any time you make changes to the package, you simply have others reinstall it and they'll have the most up-to-date functions ready for use.
+Having developed our package, we're now ready to install and use it. When you're developing your own package, installing it for your own use is relatively straightforward. Simply run `devtools::install()` and the package will be ready for you to use in any project. 
 
-### Example of running code with theme
-
-Once you or others install the `dk` package, anyone can just add the line `library(dk)` in any R code then use the `theme_dk()` function. We can recreate the penguin bill length and depth histogram from Chapter \@ref(functions-chapter) with the following code.
+Of course, if you're developing a package, you're likely doing it not just for yourself, but for others as well. The most common way to make your package available to others is with the code-sharing website GitHub. The details of how to put your code on GitHub are beyond what we can cover here, but the book *Happy Git and GitHub for the useR* by Jenny Bryan is a great place to get started. I've pushed the `dk` package to GitHub and you can find it at https://github.com/dgkeyes/dk. If you or anyone else wants to install it, simply run the code `remotes::install_github("dgkeyes/dk")` (make sure you have the `remotes` package installed first). Once you or others install the `dk` package, anyone can just add the line `library(dk)` in any R code then use the `theme_dk()` function. We can recreate the penguin bill length and depth histogram from Chapter \@ref(functions-chapter) with the following code.
 
 ```{r eval = FALSE, echo = TRUE}
 library(dk)
@@ -388,7 +409,7 @@ penguins %>%
              y = bill_depth_mm,
              color = island)) +
   geom_point() +
-  labs(title = "A histogram of bill length and bill depth",
+  labs(title = "A histogram of bill length and depth",
        subtitle = "Data from palmerpenguins package",
        x = "Bill Length",
        y = "Bill Depth",
@@ -396,9 +417,13 @@ penguins %>%
   theme_dk()
 ```
 
-Figure \@ref(fig:TODO) shows the visualization (which is identical to that seen in Figure \@ref(fig:TODO)) that this code produces. 
+Figure \@ref(fig:theme-dk-histogram-package) shows the visualization (which is identical to that seen in Figure \@ref(fig:theme-dk-histogram)) that this code produces. 
 
-```{r}
+```{r results='asis'}
+print_nostarch_file_name()
+```
+
+```{r theme-dk-histogram-package, fig.cap = "A histogram made with the `theme_dk()` function from the `dk` package"}
 library(dk)
 library(tidyverse)
 library(palmerpenguins)
@@ -408,7 +433,7 @@ penguins %>%
              y = bill_depth_mm,
              color = island)) +
   geom_point() +
-  labs(title = "A histogram of bill length and bill depth",
+  labs(title = "A histogram of bill length and depth",
        subtitle = "Data from palmerpenguins package",
        x = "Bill Length",
        y = "Bill Depth",
@@ -416,24 +441,24 @@ penguins %>%
   theme_dk()
 ```
 
-The histogram may be identical, but the process was not. While I had to manually define and run the code to create `theme_dk()` in Chapter \@ref(functions-chapter), here I only have to run `library(dk)` and I have access to the `theme_dk()` function. 
+```{r results='asis'}
+save_figure_for_nostarch(figure_height = 6)
+```
 
-## You're Already Ready to Make Your Own R Package {-}
+The histogram may be identical, but the process was not. While I had to manually define and run the code to create `theme_dk()` in Chapter \@ref(functions-chapter), here I only have to run `library(dk)` and I have access to the `theme_dk()` function. And the great thing is that, if I were to make changes to `theme_dk()`, users can simply reinstall the `dk` package to get access to the most up-to-date functions. 
 
-In my conversation with Travis Gerke and Garrick Aden-Buie of the Moffitt Cancer Center I had a realization: the name *package* just refers to packaging up of a few things that allow you and others to reliably run your code. Combine functions, automatic installation of dependency packages to ensure others can run your code, and documentation and you've got a package. If you write code to share with others, it may or may not work on their computer. If you put it in a package, it is almost guaranteed to work. 
+## In Conclusion: You're Already Ready to Make Your Own R Package {-}
 
-Creating your own R package may seem scary, but it's not as complicated as you might think. In 2021, experienced package developer and educator Malcolm Barrett gave a talk titled You're Already Ready: Zen and the Art of R Package Development. Its message resonates deeply with me:
+In my conversation with Travis Gerke and Garrick Aden-Buie of the Moffitt Cancer Center I had a realization: the name *package* refers to packaging up of several things that allow you and others to reliably run your code. A package is a set of functions, instructions to automatically install of dependency packages, and code documentation. If you write code that you share with others through a `functions.R` file, it may or may not work on their computer. They may not have the necessary packages installed. They may be confused about how arguments work and not know where to go. If you put your functions in a package, they are close to guaranteed to work. And users will have built-in documentation to help them use the functions on their own.
+
+Creating your own R package may seem scary, but it's not as complicated as you might think. In 2021, experienced package developer and educator Malcolm Barrett gave a talk titled "You're Already Ready: Zen and the Art of R Package Development." The abstract for the talk resonated deeply with me:
 
 > Many believe package development is too advanced for them or that they have nothing to offer. A fundamental belief in Zen is that you are already complete, that you already have everything you need. I’ll talk about why your project is already an R package, why you’re already an R package developer, and why you already have the skills to walk the path of development.
 
-I hope this chapter has helped you to see that if you know how to make your own functions, you're ready to make your own R package. And if you're ready to go deeper, I highly recommend Hadley Wickham and Jenny Bryan's book *R Packages*. 
+I hope, after reading this chapter, this message resonates with you as well. 
 
-## Conclusion {-}
+Making packages can help you as an individual. Creating a ggplot theme like I did in this chapter, for example, can allow you to easily use it on any data visualization you make. Packages can be especially beneficial for organizations. This is exactly what Travis Gerke and Garrick Aden-Buie found during their time at the Moffitt Cancer Center. Accessing databases was so complicated that many people got stuck at that point. But when Gerke and Aden-Buie provided them with a package that contained functions to easily access the databases, Moffitt researchers began to do more with R. Gerke described the transformation: "People got to actually write code and do the data queries instead of handling administrative silliness." Developing packages can allow more advanced users to help those with less experience using R. Aden-Buie told me that packages create "a number of gradual on-ramps for people who are getting more skills in coding." Because more people are able to use these on-ramps, they come to see the value of using code. 
 
-Making packages can help you as an individual. Creating a ggplot theme like I did in this chapter, for example, can allow you to easily use it on any data visualization you make. Packages can be especially beneficial for organizations. This is exactly what Travis Gerke and Garrick Aden-Buie found during their time at the Moffitt Cancer Center. Accessing databases was so complicated that many people got stuck at that point. But when Gerke and Aden-Buie provided them with functions to easily access the databases, Moffitt researchers began to do more. Gerke described the transformation: "People got to actually write code and do the data queries instead of handling administrative silliness."
+What's more, developing packages allows you as the package developer to shape how others work. Say you make a ggplot theme that follows the principles of high-quality data visualization (see Chapter \@ref(data-viz-chapter)). If you put this theme in a package, you can give others an easy way to follow these principles. Garrick Aden-Buie calls this a "happy path." If you create a package, you can guide people on the happy path that you think is best. Packages are a way to ensure that others use best practices without them even being aware they are doing so. 
 
-Developing packages can allow more advanced users to help those with less experience using R. Aden-Buie told me that packages create "a number of gradual on-ramps for people who are getting more skills in coding." Because more people are able to use these on-ramps, they come to see the value of using code. 
-
-What's more, developing packages allows you to shape how others work. Say you make a ggplot theme that follows the principles of high-quality data visualization (see Chapter \@ref(data-viz-chapter)). If you put it in a package, you can give others an easy way to use these principles. Garrick Aden-Buie calls this a "happy path." If you create a package, you can guide people on the happy path that you think is best. For more advanced users, packages are a way to ensure that others use best practices without them having to make conscious decisions to do so. 
-
-Making your own package is not as hard as you might think, allows you to help others, and encourages best practices. The effort it takes is worth it for the benefits that making your own package offers. 
+Making your own R package is not as hard as you might think and comes with many benefits. Packages make it easy to reuse code across projects, allow you to help others, and encourage best practices. If you haven't ever made your own R package, now's the time to give it a try.
