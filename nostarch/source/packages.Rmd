@@ -7,8 +7,6 @@ source("_common.R")
 
 # Bundle Your Functions Together in Your Own R Package {#packages-chapter}
 
-## Intro
-
 In the late 2010s, Travis Gerke and Garrick Aden-Buie were working on the Collaborative Data Services Core team at the Moffitt Cancer Center. Researchers throughout Moffitt needed to access data from several highly secure databases, and Gerke and Aden-Buie were in charge of helping them. Initially, Gerke and Aden-Buie would write R code for each researcher. But they quickly realized that they were reusing the same code over and over. Why not instead share the code with the researchers so they could run it themselves?
 
 In Chapter \@ref(functions-chapter), I said that creating functions was a better approach than copying code. That is true, but only partially so. The even better approach is to create those functions and then bundle them into a custom R package. That's exactly what Travis Gerke and Garrick Aden-Buie did. And by making a package with functions to access databases, they simplified their own work, and that of the researchers they supported. No longer did researchers have to ask for help. They could now install the package Gerke and Aden-Buie had made and use its functions themselves. 
@@ -253,13 +251,13 @@ However, I can see that there are still two warnings that I need to deal with. L
 
 Let's look now at the "checking for missing documentation entries" warning. This warning is telling us that we need to add documentation of our `theme_dk()` function. One of the benefits of creating a package is that you can add documentation to help others use your code. In the same way that users can type `?theme_mimimal()` and see documentation about that function, we want them to also be able to type `?theme_dk()` and learn how it works. 
 
-To create documentation for `theme_dk()`, we'll use what's known as Roxygen, which is a way to create documentation of functions in R packages using a package called `roxygen2`. To get started, place your cursor anywhere in the function. Then, go to the Code menu and select Insert Roxygen Skeleton, as seen in Figure \@ref(fig:TODO) below.
+To create documentation for `theme_dk()`, we'll use what's known as Roxygen, which is a way to create documentation of functions in R packages using a package called `roxygen2`. To get started, place your cursor anywhere in the function. Then, go to the Code menu and select Insert Roxygen Skeleton, as seen in Figure \@ref(fig:insert-roxygen-skeleton) below.
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
 ```
 
-```{r excel-chart-chooser, out.width="100%", fig.cap="The menu item to insert Roxygen skeleton"}
+```{r insert-roxygen-skeleton, out.width="100%", fig.cap="The menu item to insert Roxygen skeleton"}
 knitr::include_graphics(here::here("assets/insert-roxygen-skeleton.png"))
 ```
 
@@ -411,7 +409,7 @@ penguins %>%
              y = bill_depth_mm,
              color = island)) +
   geom_point() +
-  labs(title = "A histogram of bill length and bill depth",
+  labs(title = "A histogram of bill length and depth",
        subtitle = "Data from palmerpenguins package",
        x = "Bill Length",
        y = "Bill Depth",
@@ -435,7 +433,7 @@ penguins %>%
              y = bill_depth_mm,
              color = island)) +
   geom_point() +
-  labs(title = "A histogram of bill length and bill depth",
+  labs(title = "A histogram of bill length and depth",
        subtitle = "Data from palmerpenguins package",
        x = "Bill Length",
        y = "Bill Depth",
