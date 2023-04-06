@@ -28,7 +28,7 @@ rmd_files: [
   "googlesheets.Rmd",
   "tidycensus.Rmd",
   "functions.Rmd",
-  "custom-packages.Rmd",
+  "packages.Rmd",
    
    "part-conclusion.Rmd",
   "conclusion.Rmd"
