@@ -603,6 +603,21 @@
       "Hash": "8b708f296afd9ae69f450f9640be8990",
       "Requirements": []
     },
+    "dk": {
+      "Package": "dk",
+      "Version": "0.1.0",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "dgkeyes",
+      "RemoteRepo": "dk",
+      "RemoteRef": "main",
+      "RemoteSha": "2a3a3bef45c188f5e3ea9f82ec0ca25fa97b044c",
+      "Hash": "ee1712886f3d76539936822256a58b9b",
+      "Requirements": [
+        "ggplot2"
+      ]
+    },
     "dplyr": {
       "Package": "dplyr",
       "Version": "1.0.10",
