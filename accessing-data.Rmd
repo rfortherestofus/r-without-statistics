@@ -19,7 +19,7 @@ gs4_deauth()
 
 The switch from R Markdown to a multi-tool workflow can improve the quality of your work significantly. But R Markdown on its own does nothing to improve how you access data. In Chapter \@ref(rmarkdown-chapter) the data I worked with came from a CSV file. To get my data in CSV format, I still had to do manual work. And manual work is one thing we're working on avoiding. 
 
-Fortunately for us, R has many ways to help you not only automate reporting with R Markdown, but also automate the process of accessing data. In this chapter, I'll discuss two such approaches. The first uses the `googlesheets4` package to bring in data directly from Google Sheets. The second uses the `tidycensus` package to access data from the United States Census Bureau. If you access data from either of these sources, this chapter will help you learn to do so efficiently. But even if you don't use Google Sheets or the Census Bureau data, this chapter can still help. R has many packages to automate the process of accessing data from a wide variety of sources. Before you hit the export button to download your data as a CSV, see if you can find a package to automate accessing your data. Your data analysis and reporting will be more efficient and more accurate. 
+Fortunately for us, R has many ways to help you not only automate reporting with R Markdown, but also automate the process of accessing data. In this chapter, I'll discuss two such approaches. The first uses the `googlesheets4` package to bring in data directly from Google Sheets. The second uses the `tidycensus` package to access data from the United States Census Bureau. If you access data from either of these sources, this chapter will help you learn to do so efficiently. But even if you don't use Google Sheets or the Census Bureau data, this chapter can still help. R has many packages to automate the process of accessing data from a wide variety of sources (I discuss a few others below). Before you hit the export button to download your data as a CSV, see if you can find a package to automate accessing your data. Your data analysis and reporting will be more efficient and more accurate. 
 
 ## Importing Data from Google Sheets {-}
 
@@ -259,10 +259,10 @@ get_decennial(geography = "state",
 
 The resulting data frame has four variables: 
 
-- `GEOID` is the geographic identifier given by the Census Bureau for the state. Each state has a geographic identifier, as do all counties, census tracts, and all other geographies. 
-- `NAME` is the name of each state.
-- `variable` is the name of the variable we passed to the `get_decennial()` function.
-- `value` is the numeric value for the state and variable in each row. In our case, it represents the total Asian population in each state.
+1. `GEOID` is the geographic identifier given by the Census Bureau for the state. Each state has a geographic identifier, as do all counties, census tracts, and all other geographies. 
+1. `NAME` is the name of each state.
+1. `variable` is the name of the variable we passed to the `get_decennial()` function.
+1. `value` is the numeric value for the state and variable in each row. In our case, it represents the total Asian population in each state.
 
 Let's say we want to calculate the Asian population as a percentage of all people in each state. To do that, we'd need both the Asian population as well as the total population. How would we do this? 
 
