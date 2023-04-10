@@ -51,7 +51,7 @@ theme_dk <- function(show_grid_lines = TRUE,
     theme(panel.grid.minor = element_blank(),
           axis.ticks = element_blank(),
           axis.title = element_text(size = 12,
-                                   color = "grey50"),
+                                    color = "grey50"),
           axis.title.x = element_text(margin = margin(t = 10)),
           axis.title.y = element_text(margin = margin(r = 10)),
           axis.text = element_text(size = 12,
@@ -97,26 +97,26 @@ To test that our package works, run the function `devtools::check()`. This runs 
 Duration: 9.5s
 
 ❯ checking DESCRIPTION meta-information ... WARNING
-  Non-standard license specification:
-    What license is it under?
-  Standardizable: FALSE
+Non-standard license specification:
+What license is it under?
+Standardizable: FALSE
 
 ❯ checking for missing documentation entries ... WARNING
-  Undocumented code objects:
-    ‘theme_dk’
-  All user-level objects in a package should have documentation entries.
-  See chapter ‘Writing R documentation files’ in the ‘Writing R
-  Extensions’ manual.
+Undocumented code objects:
+‘theme_dk’
+All user-level objects in a package should have documentation entries.
+See chapter ‘Writing R documentation files’ in the ‘Writing R
+Extensions’ manual.
 
 ❯ checking R code for possible problems ... NOTE
-  theme_dk: no visible global function definition for ‘theme_minimal’
-  theme_dk: no visible global function definition for ‘theme’
-  theme_dk: no visible global function definition for ‘element_blank’
-  theme_dk: no visible global function definition for ‘element_text’
-  theme_dk: no visible global function definition for ‘margin’
-  Undefined global functions or variables:
-    element_blank element_text margin theme theme_minimal
-    
+theme_dk: no visible global function definition for ‘theme_minimal’
+theme_dk: no visible global function definition for ‘theme’
+theme_dk: no visible global function definition for ‘element_blank’
+theme_dk: no visible global function definition for ‘element_text’
+theme_dk: no visible global function definition for ‘margin’
+Undefined global functions or variables:
+element_blank element_text margin theme theme_minimal
+
 0 errors ✔ | 2 warnings ✖ | 1 note ✖
 ```
 
@@ -124,13 +124,13 @@ Let's review the output from bottom to top. The line "0 errors ✔ | 2 warnings 
 
 ```
 ❯ checking R code for possible problems ... NOTE
-  theme_dk: no visible global function definition for ‘theme_minimal’
-  theme_dk: no visible global function definition for ‘theme’
-  theme_dk: no visible global function definition for ‘element_blank’
-  theme_dk: no visible global function definition for ‘element_text’
-  theme_dk: no visible global function definition for ‘margin’
-  Undefined global functions or variables:
-    element_blank element_text margin theme theme_minimal
+theme_dk: no visible global function definition for ‘theme_minimal’
+theme_dk: no visible global function definition for ‘theme’
+theme_dk: no visible global function definition for ‘element_blank’
+theme_dk: no visible global function definition for ‘element_text’
+theme_dk: no visible global function definition for ‘margin’
+Undefined global functions or variables:
+element_blank element_text margin theme theme_minimal
 ```
 
 To understand what `R CMD check` is saying, we need to explain a bit about how packages work. 
@@ -163,12 +163,12 @@ Version: 0.1.0
 Author: Who wrote it
 Maintainer: The package maintainer <yourself@somewhere.net>
 Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Use four spaces when indenting paragraphs within the Description.
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
 Imports:
-    ggplot2
+ggplot2
 ```
 
 Way down at the bottom, look for the line that says "Imports:" followed by "ggplot2" on the next line. This indicates that, when a user installs the `dk` package, the `ggplot2` package will also be installed for them. It's important to note that, while I use the `tidyverse` package (this meta package contains multiple packages, of which `ggplot2` is just one) when working on my own computer, when making your own package you want to have it install the individual packages needed to make it run. 
@@ -179,7 +179,7 @@ We'll return to the DESCRIPTION file in a bit, but for now, let's take a look at
 
 ```
 Undefined global functions or variables:
-  element_blank element_text margin theme theme_minimal
+element_blank element_text margin theme theme_minimal
 ```
 
 This is because we were using functions without saying what package they come from. All of the functions listed here come from the `ggplot2` package so I can add `ggplot2::` before them as follows:
@@ -187,43 +187,49 @@ This is because we were using functions without saying what package they come fr
 ```{r eval = FALSE, echo = TRUE}
 theme_dk <- function(show_grid_lines = TRUE,
                      show_axis_titles = TRUE) {
-
+  
   custom_theme <- ggplot2::theme_minimal() +
     ggplot2::theme(panel.grid.minor = ggplot2::element_blank(),
                    axis.ticks = ggplot2::element_blank(),
                    axis.title = ggplot2::element_text(size = 12,
                                                       color = "grey50"),
-                   axis.title.x = ggplot2::element_text(margin = ggplot2::margin(t = 10)),
-                   axis.title.y = ggplot2::element_text(margin = ggplot2::margin(r = 10)),
+                   axis.title.x = ggplot2::element_text(
+                     margin = ggplot2::margin(t = 10)
+                   ),
+                   axis.title.y = ggplot2::element_text(
+                     margin = ggplot2::margin(r = 10)
+                   ),
                    axis.text = ggplot2::element_text(size = 12,
                                                      color = "grey50"),
                    plot.title.position = "plot",
-                   plot.title = ggplot2::element_text(size = 20,
-                                                      face = "bold",
-                                                      margin = ggplot2::margin(b = 8)),
+                   plot.title = 
+                     ggplot2::element_text(size = 20,
+                                           face = "bold",
+                                           margin = ggplot2::margin(b = 8)
+                     ),
                    plot.subtitle = ggplot2::element_text(size = 14,
                                                          color = "grey50"),
                    legend.text = ggplot2::element_text(size = 12),
                    legend.position = "top")
-
+  
   if (show_grid_lines == FALSE) {
-
+    
     custom_theme <- custom_theme +
       ggplot2::theme(panel.grid.major = ggplot2::element_blank())
-
+    
   }
-
+  
   if (show_axis_titles == FALSE) {
-
+    
     custom_theme <- custom_theme +
       ggplot2::theme(axis.title = ggplot2::element_blank(),
                      axis.title.x = ggplot2::element_blank(),
                      axis.title.y = ggplot2::element_blank())
-
+    
   }
-
+  
   custom_theme
-
+  
 }
 ```
 
@@ -231,16 +237,16 @@ Now that I've specified that the various functions I'm using come from `ggplot2`
 
 ```
 ❯ checking DESCRIPTION meta-information ... WARNING
-  Non-standard license specification:
-    What license is it under?
-  Standardizable: FALSE
+Non-standard license specification:
+What license is it under?
+Standardizable: FALSE
 
 ❯ checking for missing documentation entries ... WARNING
-  Undocumented code objects:
-    ‘theme_dk’
-  All user-level objects in a package should have documentation entries.
-  See chapter ‘Writing R documentation files’ in the ‘Writing R
-  Extensions’ manual.
+Undocumented code objects:
+‘theme_dk’
+All user-level objects in a package should have documentation entries.
+See chapter ‘Writing R documentation files’ in the ‘Writing R
+Extensions’ manual.
 
 0 errors ✔ | 2 warnings ✖ | 0 notes ✔
 ```
@@ -316,15 +322,15 @@ export(theme_dk)
 
 The `theme_dk()` function is now almost ready for users. 
 
-### Editing the `DESCRIPTION` File
+### Editing the `DESCRIPTION` File {-}
 
 We can run `devtools::check()` again to see if we have fixed the issues that led to the warnings. Doing so shows that the warning about missing documentation is no longer there. However, we do still have one warning. 
 
 ```
 ❯ checking DESCRIPTION meta-information ... WARNING
-  Non-standard license specification:
-    What license is it under?
-  Standardizable: FALSE
+Non-standard license specification:
+What license is it under?
+Standardizable: FALSE
 
 0 errors ✔ | 1 warning ✖ | 0 notes ✔
 ```
@@ -349,12 +355,12 @@ Version: 0.1.0
 Author: Who wrote it
 Maintainer: The package maintainer <yourself@somewhere.net>
 Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Use four spaces when indenting paragraphs within the Description.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
-    ggplot2
+ggplot2
 RoxygenNote: 7.2.3
 ```
 
@@ -368,12 +374,12 @@ Version: 0.1.0
 Author: David Keyes
 Maintainer: David Keyes <david@rfortherestofus.com>
 Description: A package with functions that David Keyes may find 
-    useful.
+useful.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
-    ggplot2
+ggplot2
 RoxygenNote: 7.2.3
 ```
 
