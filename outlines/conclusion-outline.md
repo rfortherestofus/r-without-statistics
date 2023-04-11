@@ -1,3 +1,12 @@
+# Overview
+
+- Stats got you into R
+- This book showed you what you can do without stats
+- Community will keep you with R
+	- Learning to program is hard
+	- Even when you're experienced, learning new stuff is hard
+
+
 # Learning to code is hard
 
 ## You will get frustrated
