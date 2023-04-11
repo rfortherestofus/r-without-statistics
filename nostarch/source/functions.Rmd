@@ -9,6 +9,7 @@ library(tidycensus)
 
 options(tigris_use_cache = TRUE)
 
+
 penguins <- read_csv("https://data.rwithoutstatistics.com/penguins-2007.csv")
 covid_data <- read_csv("https://data.rwithoutstatistics.com/us-states-covid-rolling-average.csv")
 ```
