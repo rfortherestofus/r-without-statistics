@@ -68,6 +68,13 @@ library(googlesheets4)
 survey_data_raw <- read_sheet("https://docs.google.com/spreadsheets/d/1AR0_RcFBg8wdiY4Cj-k8vRypp_txh27MyZuiRdqScog/edit?usp=sharing")
 ```
 
+```{r echo = TRUE}
+read_sheet("https://docs.google.com/spreadsheets/d/1AR0_RcFBg8wdiY4Cj-k8vRypp_txh27MyZuiRdqScog/edit?usp=sharing",
+           range = "Sheet1!B:E") %>% 
+  glimpse()
+```
+
+
 We can take a look at the `survey_data_raw` object to confirm that our data was imported. I'm using the `glimpse()` function from the `dplyr` package in order to make it easier to read. 
 
 ```{r eval = FALSE, echo = TRUE}
@@ -121,14 +128,17 @@ survey_data_raw <- read_sheet("https://docs.google.com/spreadsheets/d/1AR0_RcFBg
 # Clean data
 survey_data_clean <- survey_data_raw %>%
   clean_names() %>%
-  mutate("participant_id" = as.character(row_number())) %>%
-  rename("age" = "how_old_are_you",
-         "like_games" = "do_you_like_to_play_video_games",
-         "game_types" = "what_kind_of_games_do_you_like",
-         "favorite_game" = "whats_your_favorite_game") %>%
-  relocate(participant_id, .before = "age") %>%
+  mutate(participant_id = as.character(row_number())) %>%
+  relocate(participant_id, .before = age) %>%
+  rename(age = how_old_are_you,
+         like_games = do_you_like_to_play_video_games,
+         game_types = what_kind_of_games_do_you_like,
+         favorite_game = whats_your_favorite_game) %>%
   mutate(age = factor(age, levels = c("Under 18", "18-24", "25-34", "35-44", "45-54", "55-64", "Over 65")))
 ```
+
+
+
 
 # Respondent Demographics
 
@@ -391,7 +401,8 @@ get_decennial(geography = "state",
               summary_var = "P1_001N",
               year = 2020) %>% 
   arrange(NAME) %>% 
-  mutate(pct = value / summary_value)
+  mutate(pct = value / summary_value) %>% 
+  select(-summary_value)
 ```
 
 The resulting output is nearly identical.

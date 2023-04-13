@@ -4,7 +4,7 @@ chapter_number <- 13
 source("_common.R")
 ```
 
-# Come for the Data, Stay for the Community {#conclusion}
+# Come for the Statistics, Stay for the Community {#conclusion}
 
 I bet you initially learned R to do statistics. It's what brings in most people, and R is an undeniably excellent tool for statistical analysis. But I hope I've convinced you that R is much more than a tool for statistics. Throughout this book, we've seen how can R help you to:
 
@@ -72,11 +72,11 @@ In addition to R-Ladies, there are other organizations working to make the R com
 
 There are also places new and experienced users alike can find online and offline support. Social networks Twitter and Mastodon have a wide range of users who use the #rstats hashtag to discuss all things R. The online learning community known as R for Data Science (after the book of the same name) hosts a Slack community where users can ask questions and more experienced users provide answers. There are also local R user groups in cities around the world (many can be found on the website meetup.com) that host events. No matter your background or location, you can find a place in the R community.
 
-## Making the R Community Welcoming for Underrepresented Folks Helps Everyone {-}
+## Making the R Community Welcoming for Underrepresented People Helps Everyone {-}
 
 I'm a straight white male living in the wealthiest country in the world. It would be easy to think that efforts to make the R community welcoming make a difference to others, but not to me. That's simply not the case. To explain why, let me use what might initially seem like a far-flung example.
 
-In 1971, the city council of Berkeley, California authorized the construction of curb cuts at fifteen high-traffic street corners. This came after years of protests by disability rights activists, who argued that sidewalks without curb cuts were discriminatory because those in wheelchairs could not traverse them. After these curb cuts were built, people began to realize that they helped not only those in wheelchairs, but others as well. As disability activist Deborah Kaplan told the podcast 99 Percent Invisible in 2021,
+In 1971, the city council of Berkeley, California authorized the construction of curb cuts at fifteen high-traffic street corners. This came after years of protests by disability rights activists, who argued that sidewalks without curb cuts were discriminatory because those in wheelchairs could not traverse them. After these curb cuts were built, people began to realize that they helped not only those in wheelchairs, but others as well. As disability activist Deborah Kaplan told the podcast *99 Percent Invisible* in 2021,
 
 > What was originally thought of as something just for people in wheelchairs ended up being just taken for granted by everybody and used in ways that weren’t even originally anticipated for the benefit of many, many more people than originally thought of.
 

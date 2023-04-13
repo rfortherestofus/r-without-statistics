@@ -394,7 +394,8 @@ get_decennial(geography = "state",
               summary_var = "P1_001N",
               year = 2020) %>% 
   arrange(NAME) %>% 
-  mutate(pct = value / summary_value)
+  mutate(pct = value / summary_value) %>% 
+  select(-summary_value)
 ```
 
 The resulting output is nearly identical.
