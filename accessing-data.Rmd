@@ -121,14 +121,17 @@ survey_data_raw <- read_sheet("https://docs.google.com/spreadsheets/d/1AR0_RcFBg
 # Clean data
 survey_data_clean <- survey_data_raw %>%
   clean_names() %>%
-  mutate("participant_id" = as.character(row_number())) %>%
-  rename("age" = "how_old_are_you",
-         "like_games" = "do_you_like_to_play_video_games",
-         "game_types" = "what_kind_of_games_do_you_like",
-         "favorite_game" = "whats_your_favorite_game") %>%
-  relocate(participant_id, .before = "age") %>%
+  mutate(participant_id = as.character(row_number())) %>%
+  relocate(participant_id, .before = age) %>%
+  rename(age = how_old_are_you,
+         like_games = do_you_like_to_play_video_games,
+         game_types = what_kind_of_games_do_you_like,
+         favorite_game = whats_your_favorite_game) %>%
   mutate(age = factor(age, levels = c("Under 18", "18-24", "25-34", "35-44", "45-54", "55-64", "Over 65")))
 ```
+
+
+
 
 # Respondent Demographics
 
