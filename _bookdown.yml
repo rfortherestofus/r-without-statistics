@@ -8,7 +8,6 @@ language:
 rmd_files: [
   "index.Rmd",
   
-  "part-introduction.Rmd",
   "introduction.Rmd",
   
   "part-illuminate.Rmd",
