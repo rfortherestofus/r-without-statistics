@@ -68,13 +68,6 @@ library(googlesheets4)
 survey_data_raw <- read_sheet("https://docs.google.com/spreadsheets/d/1AR0_RcFBg8wdiY4Cj-k8vRypp_txh27MyZuiRdqScog/edit?usp=sharing")
 ```
 
-```{r echo = TRUE}
-read_sheet("https://docs.google.com/spreadsheets/d/1AR0_RcFBg8wdiY4Cj-k8vRypp_txh27MyZuiRdqScog/edit?usp=sharing",
-           range = "Sheet1!B:E") %>% 
-  glimpse()
-```
-
-
 We can take a look at the `survey_data_raw` object to confirm that our data was imported. I'm using the `glimpse()` function from the `dplyr` package in order to make it easier to read. 
 
 ```{r eval = FALSE, echo = TRUE}

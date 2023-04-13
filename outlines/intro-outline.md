@@ -1,4 +1,25 @@
-intro-outline
+# New
+
+- NZ COVID response
+	- Shows that R can do more than stats
+- R is more than just stats
+- Who book is for
+	- Prereqs
+- How book works
+	- Chapter structure
+	- Chapter overview
+- Favor to ask
+
+# Frances
+
+- Explain what the book contains
+- Explain who the intended audience is, and what kind of knowledge they need to understand the contents
+- Cover any prerequisites necessary to reading the book
+- List every chapter and briefly describe its contents
+
+
+
+# Original
 
 1. COVID arrives in rest of world, NZ watches
 2. NZ had system in place with R
