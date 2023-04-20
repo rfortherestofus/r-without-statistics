@@ -106,7 +106,8 @@ read.csv(file = "/Users/davidkeyes/Documents/population-by-state.csv",
 At this point, you might think to run the code in order to import your data. You can do so by selecting the line of code and hitting the Run button (or using the keyboard shortcut Command/Control + Enter on Mac/Windows). Running this code causes this text show up in the console pane. 
 
 ```{r}
-read.csv(file = "/Users/davidkeyes/Documents/population-by-state.csv")
+# read.csv(file = "/Users/davidkeyes/Documents/population-by-state.csv")
+read.csv("data/population-by-state.csv")
 ```
 
 This is R confirming that it read in the CSV file and showing us the data within it. You might think you are ready to work with your data in R. But in fact all you've done at this point is **display** the result of running the code that imports your data. To use the data again, you need to **save** the result of running the code to an object.
