@@ -160,7 +160,7 @@ save_image_for_nostarch(here::here("assets/tidyverse-installed.png"))
 
 Now that we've installed the `tidyverse` package, let's use it. While you only need to install packages once per computer, you need to load packages each time you restart RStudio. You can only use functions from the `tidyverse` package if you first run the line `library(tidyverse)`. I'll go back to my `sample-code.R` file and re-import my data using a function from the `tidyverse` package. 
 
-```{r echo = TRUE, include = FALSE}
+```{r echo = TRUE, eval = FALSE}
 library(tidyverse)
 
 population_data_2 <- read_csv(file = "/Users/davidkeyes/Documents/population-by-state.csv")
