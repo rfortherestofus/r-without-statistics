@@ -10,6 +10,7 @@ rmd_files: [
   
   "part-introduction.Rmd",
   "introduction.Rmd",
+  "howto.Rmd",
   
   "part-illuminate.Rmd",
   
