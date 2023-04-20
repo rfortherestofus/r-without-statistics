@@ -169,6 +169,10 @@ population_data_2 <- read_csv(file = "/Users/davidkeyes/Documents/population-by-
 At the top of my script I load the `tidyverse`. Then, I use the `read_csv()` function (note the `_` in place of the `.`) to import my data. This alternate function to import CSV files achieves the same goal of creating an object called `population_data_2`. If we type `population_data_2` and run the code (either by using the run button or the keyboard shortcut) you will see the output in the console. 
 
 ```{r}
+library(tidyverse)
+
+population_data_2 <- read_csv(file = "/Users/davidkeyes/Documents/population-by-state.csv")
+
 population_data_2
 ```
 
@@ -229,7 +233,7 @@ With this CSV file in my project, I can now import it more easily. As before, I'
 ```{r eval = FALSE, echo = TRUE}
 library(tidyverse)
 
-population_data <- read_csv(file = "population-by-state.csv")
+population_data_2 <- read_csv(file = "population-by-state.csv")
 ```
 
 I'm able to import the `population-by-state.csv` file in this way because the RStudio project sets the **working directory** to be the root of my project. With the working directory set in this way, all references to files are relative to the `.Rproj` file at the root of the project (this is where the name relative paths comes from). Now that we're working in a project, anyone can run this code because it imports the data from a location that they are guaranteed to have on their computer. 
