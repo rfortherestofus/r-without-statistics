@@ -171,7 +171,7 @@ At the top of my script I load the `tidyverse`. Then, I use the `read_csv()` fun
 ```{r}
 library(tidyverse)
 
-population_data_2 <- read_csv(file = "/Users/davidkeyes/Documents/population-by-state.csv")
+population_data_2 <- read_csv(file = "data/population-by-state.csv")
 
 population_data_2
 ```
