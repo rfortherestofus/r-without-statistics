@@ -276,7 +276,7 @@ We can also tell the `render()` function to use parameters we give it (parameter
 render(
 input = "urban-covid-budget-report.Rmd",
 output_file = "Alaska.html",
-parms = list(state = "Alaska")
+params = list(state = "Alaska")
 )
 ```
 
