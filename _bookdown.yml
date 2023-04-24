@@ -27,7 +27,6 @@ rmd_files: [
   
   "part-automate.Rmd",
   "accessing-data.Rmd",
-  "functions.Rmd",
   "packages.Rmd",
    
    "part-conclusion.Rmd",

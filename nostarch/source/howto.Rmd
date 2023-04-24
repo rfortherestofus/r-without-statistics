@@ -106,7 +106,8 @@ read.csv(file = "/Users/davidkeyes/Documents/population-by-state.csv",
 At this point, you might think to run the code in order to import your data. You can do so by selecting the line of code and hitting the Run button (or using the keyboard shortcut Command/Control + Enter on Mac/Windows). Running this code causes this text show up in the console pane. 
 
 ```{r}
-read.csv(file = "/Users/davidkeyes/Documents/population-by-state.csv")
+# read.csv(file = "/Users/davidkeyes/Documents/population-by-state.csv")
+read.csv("data/population-by-state.csv")
 ```
 
 This is R confirming that it read in the CSV file and showing us the data within it. You might think you are ready to work with your data in R. But in fact all you've done at this point is **display** the result of running the code that imports your data. To use the data again, you need to **save** the result of running the code to an object.
@@ -159,7 +160,7 @@ save_image_for_nostarch(here::here("assets/tidyverse-installed.png"))
 
 Now that we've installed the `tidyverse` package, let's use it. While you only need to install packages once per computer, you need to load packages each time you restart RStudio. You can only use functions from the `tidyverse` package if you first run the line `library(tidyverse)`. I'll go back to my `sample-code.R` file and re-import my data using a function from the `tidyverse` package. 
 
-```{r echo = TRUE, include = FALSE}
+```{r echo = TRUE, eval = FALSE}
 library(tidyverse)
 
 population_data_2 <- read_csv(file = "/Users/davidkeyes/Documents/population-by-state.csv")
@@ -168,6 +169,10 @@ population_data_2 <- read_csv(file = "/Users/davidkeyes/Documents/population-by-
 At the top of my script I load the `tidyverse`. Then, I use the `read_csv()` function (note the `_` in place of the `.`) to import my data. This alternate function to import CSV files achieves the same goal of creating an object called `population_data_2`. If we type `population_data_2` and run the code (either by using the run button or the keyboard shortcut) you will see the output in the console. 
 
 ```{r}
+library(tidyverse)
+
+population_data_2 <- read_csv(file = "data/population-by-state.csv")
+
 population_data_2
 ```
 
@@ -228,7 +233,7 @@ With this CSV file in my project, I can now import it more easily. As before, I'
 ```{r eval = FALSE, echo = TRUE}
 library(tidyverse)
 
-population_data <- read_csv(file = "population-by-state.csv")
+population_data_2 <- read_csv(file = "population-by-state.csv")
 ```
 
 I'm able to import the `population-by-state.csv` file in this way because the RStudio project sets the **working directory** to be the root of my project. With the working directory set in this way, all references to files are relative to the `.Rproj` file at the root of the project (this is where the name relative paths comes from). Now that we're working in a project, anyone can run this code because it imports the data from a location that they are guaranteed to have on their computer. 
@@ -242,7 +247,7 @@ summarize(.data = population_data_2,
           mean_population = mean(Pop))
 ```
 
-You can see that I'm using `population_data_2` with the `.data` argument, telling the `summarize()` function (which comes from the `tidyverse`) to use that data frame. The second half of the code creates a new variable called `mean_population`, which is calculated by using the `mean()` function on the `Pop` variable. Running this code will return the mean population of all states.
+You can see that I'm using `population_data_2` with the `.data` argument, telling the `summarize()` function (which comes from the `tidyverse`) to use that data frame. The second half of the code creates a new variable called `mean_population`, which is calculated by using the `mean()` function on the `Pop` variable. Running this code will return a tibble with a single variable (`mean_population`) that is of type double (meaning numeric) and has a value of 6433422, the mean population of all states. 
 
 ```{r}
 summarize(.data = population_data_2,
@@ -296,7 +301,7 @@ Help files can be a bit hard to decipher but at their core, they tell you what p
 
 In addition to providing help files in RStudio, many R packages have documentation websites. I find these easier to read and tend to use them when I am confused about how to use a function. In addition, many packages have longer articles known as vignettes that provide an overview of how the package works. Reading these can help you see how individual functions can be used in the context of a larger project. Every package I discuss in this book has a good documentation website. 
 
-## Conclusion: Invest Time in Learning R to Save Time Later {-}
+## In Conclusion: Invest Time Now to Learn R and Save Time Later {-}
 
 Getting started with R can be challenging. I myself experienced many frustrations early on that I've since realized are quite common. This chapter has, hopefully, helped you to see how you can get started with R. Understanding how functions, objects, packages, and projects work is key to ensuring that you can successfully use R to work with your data. 
 
