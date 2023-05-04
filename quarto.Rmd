@@ -14,5 +14,127 @@ In mid-2022, the team at Posit (the company that makes the RStudio editor, the `
 
 While the benefits of Quarto are clearest for non-R users, there are also many reasons why R users may want to use Quarto. I'll focus in this chapter on the benefits for R users who use RStudio. I'll begin by explaining how to set up and use Quarto. We'll focus on some of the most important differences between Quarto and R Markdown. I'll then demonstrate how to make each of the products we made in R Markdown with Quarto. Parameterized reporting, presentations, and websites are all things that Quarto can do, and this chapter will show you how.
 
+## Getting Started with Quarto {-}
+
+To get started with Quarto, we need to first install it. The good news is that newer versions of RStudio (2022.07.1 and later) come with Quarto installed. To check your RStudio version, click RStudio in the top menu bar, then click About RStudio.  If you have an older version of RStudio, update it now and Quarto will be installed for you.
+
+Once you have Quarto installed, you're ready to work with it. We'll create a Quarto document by clicking File > New File > Quarto Document. You'll see a menu, shown in Figure \@ref(fig:TODO), that looks like what you saw when creating an R Markdown document.
+
+TODO: Add screenshot
+
+I'll give my document a title and choose HTML as my output format. The engine option allows users to select a different way to render documents. I'll keep the default of `Knitr`, which is the same tool that R Markdown uses to render documents. I'll keep the Use visual markdown editor unchecked (this option allows you to use an interface that looks more like Microsoft Word). The Quarto document that is created has default content, just like R Markdown documents. 
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
+---
+title: "My Report"
+format: html
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
+
+You can add options to executable code like this 
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
+````
+
+Looking through our newly created Quarto document, you can see how similar Quarto and R Markdown are. Both have the same basic structure: YAML metadata, followed by a combination of markdown text and code chunks. 
+
+## Differences Between R Markdown and Quarto {-}
+
+Despite the similarities, there are some differences. In R Markdown, we would have created an HTML document with this YAML. 
+
+```
+---
+title: "My Report"
+output: html_document
+---
+```
+
+With Quarto, `output` is replaced with `format` and we write `html` instead of `html_document`.
+
+```
+---
+title: "My Report"
+format: html
+---
+```
+
+A second difference between R Markdown and Quarto is that the `setup` code chunk seen in the former does not exist in the latter. Recall from Chapter \@ref(rmarkdown-chapter) that the `setup` code chunk sets default options on things like whether we show code, charts and tables, and other elements in the rendered versions of our documents.  With Quarto, these options are set in the YAML. For example, if we want to hide code as well as all warnings and messages from out rendered document, we add them under `execute` in our YAML as follows:
+
+```
+---
+title: "My Report"
+format: html
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+```
+
+In R Markdown, if we want to override code chunk options from the `setup` code chunk, we do it as follows. The code chunk below would show both the code `2 * 2` as well as the output (4).
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
+```{r echo = TRUE}
+2 * 2
+```
+````
+
+With Quarto, we use a slightly different syntax to set chunk-level options. You can see below how the chunk option is not set within the curly brackets, but instead in the code chunk itself. We use the text `#|` (this is known as the **hash pipe**) at the start of a line to indicate that we are setting options. 
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
+```{r}
+#| echo: false
+2 * 2
+```
+````
+
+A final difference you're likely to see if you switch from R Markdown to Quarto is that two-word option names are separated by a dash rather than a period. R Markdown, for example, uses `fig.height` to determine the height of plots made in a code chunk.
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
+```{r fig.height = 10}
+library(palmerpenguins)
+library(tidyverse)
+
+ggplot(penguins, aes(x = bill_length_mm,
+                     y = bill_depth_mm)) +
+  geom_point()
+```
+````
+
+In contrast, Quarto uses `fig-height` (helpfully for those of us coming from R Markdown, `fig.height` and similar options with periods in them will continue to work). 
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
+```{r}
+#| fig-height: 10
+
+library(palmerpenguins)
+library(tidyverse)
+
+ggplot(penguins, aes(x = bill_length_mm,
+                     y = bill_depth_mm)) +
+  geom_point()
+```
+````
+
+A list of all code chunk options can be found on the Quarto website: https://quarto.org/docs/reference/cells/cells-knitr.html. 
+
+## New Features in Quarto {-}
+
 # Conclusion {-}
 
