@@ -52,11 +52,11 @@ You can add options to executable code like this
 The `echo: false` option disables the printing of code (only output is displayed).
 ````
 
-Looking through our newly created Quarto document, you can see how similar Quarto and R Markdown are. Both have the same basic structure: YAML metadata, followed by a combination of markdown text and code chunks. 
+There are some differences between R Markdown and Quarto and many things in common. Let's explore them.
 
-## Differences Between R Markdown and Quarto {-}
+## Comparing R Markdown and Quarto {-}
 
-Despite the similarities, there are some differences. In R Markdown, we would have created an HTML document with this YAML. 
+Looking through our newly created Quarto document, you can see how similar Quarto and R Markdown are overall. Both have the same basic structure: YAML metadata, followed by a combination of markdown text and code chunks. Despite the similarities, there are some differences. In R Markdown, we would have created an HTML document with this YAML. 
 
 ```
 ---
@@ -74,7 +74,7 @@ format: html
 ---
 ```
 
-A second difference between R Markdown and Quarto is that the `setup` code chunk seen in the former does not exist in the latter. Recall from Chapter \@ref(rmarkdown-chapter) that the `setup` code chunk sets default options on things like whether we show code, charts and tables, and other elements in the rendered versions of our documents.  With Quarto, these options are set in the YAML. For example, if we want to hide code as well as all warnings and messages from out rendered document, we add them under `execute` in our YAML as follows:
+A second difference between R Markdown and Quarto is that the `setup` code chunk seen in the former does not exist in the latter. Recall from Chapter \@ref(rmarkdown-chapter) that the `setup` code chunk sets default options on things like whether we show code, charts and tables, and other elements in the rendered versions of our documents. With Quarto, these options are set in the YAML. For example, if we want to hide code as well as all warnings and messages from out rendered document, we add them under `execute` in our YAML as follows (Quarto also allows you to write true and false in lower case):
 
 ```
 ---
@@ -87,7 +87,7 @@ execute:
 ---
 ```
 
-In R Markdown, if we want to override code chunk options from the `setup` code chunk, we do it as follows. The code chunk below would show both the code `2 * 2` as well as the output (4).
+In R Markdown, if we want to override options at the individual code chunk level, we do it as follows. The code chunk below would show both the code `2 * 2` as well as the output (4).
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 ```{r echo = TRUE}
@@ -95,7 +95,7 @@ In R Markdown, if we want to override code chunk options from the `setup` code c
 ```
 ````
 
-With Quarto, we use a slightly different syntax to set chunk-level options. You can see below how the chunk option is not set within the curly brackets, but instead in the code chunk itself. We use the text `#|` (this is known as the **hash pipe**) at the start of a line to indicate that we are setting options. 
+With Quarto, we use a slightly different syntax to set individual chunk-level options. You can see below how the chunk option is not set within the curly brackets, but instead in the code chunk itself. We use the text `#|` (this is known as the **hash pipe**) at the start of a line to indicate that we are setting options. 
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 ```{r}
@@ -104,7 +104,7 @@ With Quarto, we use a slightly different syntax to set chunk-level options. You 
 ```
 ````
 
-A final difference you're likely to see if you switch from R Markdown to Quarto is that two-word option names are separated by a dash rather than a period. R Markdown, for example, uses `fig.height` to determine the height of plots made in a code chunk.
+A final difference you're likely to see if you switch from R Markdown to Quarto is that option names that consist of two words are separated by a dash rather than a period. R Markdown, for example, uses the code chunk option `fig.height` to determine the height of plots.
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 ```{r fig.height = 10}
@@ -117,7 +117,7 @@ ggplot(penguins, aes(x = bill_length_mm,
 ```
 ````
 
-In contrast, Quarto uses `fig-height` (helpfully for those of us coming from R Markdown, `fig.height` and similar options with periods in them will continue to work). 
+In contrast, Quarto uses `fig-height` as follows. 
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 ```{r}
@@ -132,7 +132,25 @@ ggplot(penguins, aes(x = bill_length_mm,
 ```
 ````
 
-A list of all code chunk options can be found on the Quarto website: https://quarto.org/docs/reference/cells/cells-knitr.html. 
+Helpfully for those of us coming from R Markdown, `fig.height` and similar options with periods in them will continue to work if you forget to make the switch. A list of all code chunk options can be found on the Quarto website: https://quarto.org/docs/reference/cells/cells-knitr.html. 
+
+Rendering your Quarto document to HTML (or any other format) follows the same process as R Markdown. While you use the Knit button to render an R Markdown document, with Quarto the button is called Render. Figure \@ref(fig:TODO) shows both buttons.
+
+TODO: Add screenshot
+
+Clicking the Render button will turn the Quarto document I created above into an HTML file, seen in Figure \@ref(fig:TODO).
+
+TODO: Add screenshot
+
+As you've seen, the differences between R Markdown and Quarto are mostly around syntax. All of the general concepts you learned about generating reports with the single-tool workflow described in Chapter \@ref(rmarkdown-chapter) apply to Quarto as well.
+
+## Making Different Types of Outputs with Quarto {-}
+
+Now that you've learned how Quarto works, let's make a few different things with it. We'll go through the outputs that you've seen how to develop in Chapters \@ref(parameterized-reporting-chapter), \@ref(presentations-chapter), and \@ref(websites-chapter).
+
+## Parameterized Reporting with Quarto {-}
+
+Let's start with parameterized reporting.
 
 ## New Features in Quarto {-}
 

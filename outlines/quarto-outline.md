@@ -49,10 +49,10 @@ Differences
 	- [Hash pipe](https://rstudio-conf-2022.github.io/rmd-to-quarto/materials/3-computation/slides/computation.html#/generalizing-the-code-chunk-2)
 	- one-two vs one.two ([source](https://jthomasmock.github.io/quarto-in-two-hours/materials/03-computation-editors.html#/rmarkdown-vs-quarto))
 
+Rendering
 
 New features
 - [Multicolumn layouts](https://quarto.org/docs/authoring/article-layout.html)
-- Easily publish to Quarto Pub
 
 # How to make different things with Quarto
 
@@ -82,6 +82,9 @@ New features
 - Wider layouts
 	- https://quarto.org/docs/authoring/article-layout.html
 	- https://quarto.org/docs/output-formats/page-layout.html
+- Publishing
+	- Publish to GH pages
+	- Easily publish to Quarto Pub as additional option
 
 # Conclusion
 
