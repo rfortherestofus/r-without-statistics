@@ -65,10 +65,10 @@ It might sound a bit complicated so let's show it in action. I've taken the code
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 ---
-  title: "Urban Institute COVID Report"
+title: "Urban Institute COVID Report"
 output: html_document
 params:
-  state: "Alabama"
+state: "Alabama"
 ---
   
   ```{r setup, include=FALSE}

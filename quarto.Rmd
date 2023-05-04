@@ -148,11 +148,260 @@ As you've seen, the differences between R Markdown and Quarto are mostly around 
 
 Now that you've learned how Quarto works, let's make a few different things with it. We'll go through the outputs that you've seen how to develop in Chapters \@ref(parameterized-reporting-chapter), \@ref(presentations-chapter), and \@ref(websites-chapter).
 
-## Parameterized Reporting with Quarto {-}
+### Parameterized Reporting with Quarto {-}
 
-Let's start with parameterized reporting.
+Let's start with parameterized reporting. The process of making parameterized reports with Quarto is nearly identical to how it's done with R Markdown. Below, I've taken the R Markdown document used to make the Urban Institute COVID Report in Chapter \@ref(parameterized-reporting-chapter) and adapted it for Quarto. I did so by copying the `.Rmd` file and changing its extension to `.qmd`. From there, I made the following changes:
+
+1. Switched `output: html_document` to `format: html` in the YAML.
+2. Removed the `setup` code chunk and put the options that were there in the YAML.
+3. Switched the `fig.height` option in the last code chunk to `fig-height` and used the hash pipe. 
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
+---
+title: "Urban Institute COVID Report"
+format: html
+params:
+  state: "Alabama"
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r}
+library(tidyverse)
+library(urbnthemes)
+library(here)
+library(scales)
+```
+
+# `r params$state`
+
+```{r}
+cases <- tibble(state.name) %>%
+  rbind(state.name = "District of Columbia") %>%
+  left_join(read_csv("https://data.rwithoutstatistics.com/united_states_covid19_cases_deaths_and_testing_by_state.csv", skip = 2),
+            by = c("state.name" = "State/Territory")) %>%
+  select(total_cases = `Total Cases`, state.name,
+         cases_per_100000 = `Case Rate per 100000`) %>%
+  mutate(cases_per_100000 = parse_number(cases_per_100000)) %>% 
+  mutate(case_rank = rank(-cases_per_100000, ties.method = "min"))
+```
+
+```{r}
+state_text <- if_else(params$state == "District of Columbia", str_glue("the District of Columbia"), str_glue("state of {params$state}"))
+
+state_cases_per_100000 <- cases %>%
+  filter(state.name == params$state) %>% 
+  pull(cases_per_100000) %>% 
+  comma()
+
+state_cases_rank <- cases %>%
+  filter(state.name == params$state) %>% 
+  pull(case_rank)
+```
+
+In `r state_text`, there were `r state_cases_per_100000` cases per 100,000 people in the last seven days. This puts `r params$state` at number `r state_cases_rank` of 50 states and the District of Columbia. 
+
+```{r}
+#| fig-height: 8
+
+set_urbn_defaults(style = "print")
+
+cases %>% 
+  mutate(highlight_state = if_else(state.name == params$state, "Y", "N")) %>% 
+  mutate(state.name = fct_reorder(state.name, cases_per_100000)) %>% 
+  ggplot(aes(x = cases_per_100000,
+             y = state.name,
+             fill = highlight_state)) +
+  geom_col() +
+  scale_x_continuous(labels = comma_format()) +
+  theme(legend.position = "none") +
+  labs(y = NULL,
+       x = "Cases per 100,000")
+```
+````
+
+Despite these small differences, when rendered the report looks almost exactly the same as the one we produced in Chapter \@ref(parameterized-reporting-chapter). Also nearly identical is the process of creating one report for each state. We can take the `render.R` script file we used to make parameterized reports in Chapter \@ref(parameterized-reporting-chapter) and, with a few small tweaks, it works. In the updated `render.R` file below, I made the following tweaks:
+
+1. Load the `quarto` package instead of the `rmarkdown` package.
+2. Made the input file `urban-covid-budget-report.qmd` instead of `urban-covid-budget-report.Rmd`.
+3. In the `reports` tibble I created, used `execute_params` instead of `params`.
+4. On the last line, used the `quarto_render()` function instead of the `render()` function from the `markdown` package.
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "r"}
+# Load packages
+library(tidyverse)
+library(quarto)
+
+# Create a vector of all states and the District of Columbia
+state <- tibble(state.name) %>%
+  rbind("District of Columbia") %>% 
+  pull(state.name)
+
+# Create a tibble with information on the:
+# input R Markdown document
+# output HTML file
+# parameters needed to knit the document
+reports <- tibble(
+  input = "urban-covid-budget-report.qmd",
+  output_file = str_glue("{state}.html"),
+  execute_params = map(state, ~list(state = .))
+)
+
+# Generate all of our reports
+reports %>%
+  pwalk(quarto_render)
+````
+
+Just as in Chapter \@ref(parameterized-reporting-chapter), running this code will produce one report for each state. 
+
+### Presentations {-}
+
+Quarto can also produce presentations like those we made in Chapter \@ref(presentations-chapter). Again, the process is nearly identical to how we made slides with the `xaringan` package. To make a presentation with Quarto, click on File > New File > Quarto Presentation. You'll want to choose Reveal JS to make your slides and leave the Engine and Editor options untouched, as seen in Figure \@ref(fig:TODO).
+
+TODO: Add screenshot
+
+The slides we'll make use the reveal.js javascript library under the hood. Making slides in this format is the Quarto approach that is most similar to making slides with `xaringan`. Below I've taken the code used to make a presentation with `xaringan` in Chapter \@ref(presentations-chapter) and made a few updates to make it work with Quarto. 
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
+---
+title: "Penguins Report"
+author: "David Keyes"
+format: revealjs
+execute: 
+  echo: false
+  warning: false
+  message: false
+---
+
+# Introduction
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+penguins <- read_csv("https://raw.githubusercontent.com/rfortherestofus/r-without-statistics/main/data/penguins-2008.csv")
+```
+
+We are writing a report about the **Palmer Penguins**. These penguins are *really* amazing. There are three species:
+
+- Adelie
+- Gentoo
+- Chinstrap
+
+## Bill Length
+
+We can make a histogram to see the distribution of bill lengths.
+
+```{r}
+penguins %>% 
+  ggplot(aes(x = bill_length_mm)) +
+  geom_histogram() +
+  theme_minimal()
+```
+
+```{r}
+average_bill_length <- penguins %>% 
+  summarize(avg_bill_length = mean(bill_length_mm,
+                                   na.rm = TRUE)) %>% 
+  pull(avg_bill_length)
+```
+
+The chart shows the distribution of bill lengths. The average bill length is `r average_bill_length` millimeters.
+````
+
+When we render this, we get an HTML file with our slides, seen in Figure \@ref(fig:TODO) below. 
+
+TODO: Add screenshot
+
+Overall, the output looks similar to the default `xaringan` slides we made. However, remember how we had to manually add three dashes to make slides with `xaringan`? With Quarto, any first- or second-level headers make new slides (you can also use three dashes to make a slide break).
+
+Quarto slides also make it possible to incrementally reveal content. Bulleted and numbered lists can be made to incrementally reveal by default by adjusting the YAML. See here how I add `incremental: true` to the YAML.
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
+---
+title: "Penguins Report"
+author: "David Keyes"
+format: 
+  revealjs:
+	  incremental: true
+execute: 
+  echo: false
+  warning: false
+  message: false
+---
+````
+
+When I do this, the content in all lists in my presentation will be revealed one item at a time. You can also set just some lists to incrementally reveal using this format:
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
+::: {.incremental}
+- Adelie
+- Gentoo
+- Chinstrap
+:::
+````
+
+This pattern using `:::` to start and end a section creates a section in the resulting HTML file known as a `<div>`. The HTML `<div>` tag allows you to define properties within that section. In the code above, adding `{.incremental}` sets a custom CSS class that makes the list reveal incrementally. 
+
+We see a similar pattern when creating columns in Quarto slides. Let's say we want to create a slide with content in two columns, as in Figure \@ref(fig:TODO).
+
+TODO: Add screenshot.
+
+The code below is what I used to create the two-column slide. You'll see the `:::` as well as `::::`. This creates nested divs. We first have a `columns` class, which tells the HTML that all content within the `::::` should be laid out as columns. Then, we use `::: {.column width="50%"}` to start a div that takes up half of the width of the slide. With both `::::` and `:::`, we have to also have a matching closing `::::` and `:::` to indicate the end of the section.
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
+:::: {.columns}
+
+::: {.column width="50%"}
+Adelie
+:::
+
+::: {.column width="50%"}
+Gentoo
+:::
+
+::::
+````
+
+With `xaringan` we were also able to easily center content on our slides by surrounding it with `.center[]`. Doing the same thing in Quarto is slightly more complicated. Quarto has no built-in CSS class to center content so we need to define it ourselves. I begin by creating a CSS code chunk and creating a custom class called `center-slide`. Using a bit of CSS, I tell it to center align all content (despite it saying `text-align` you'll see that it also aligns images).
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "css"}
+```{css}
+.center-slide {
+	text-align: center;
+}
+```
+````
+
+I then apply the new `center-slide` class by putting it next to the title of the slide as follows.
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "css"}
+## Bill Length {.center-slide}
+````
+
+With our custom CSS applied, the slide now has all of its content centered, as seen in Figure \@ref(fig:TODO).
+
+TODO: Add screenshot
+
+Working in `xaringan` we added a background image to one of our slides. We can do the same in Quarto by applying the `background-image` attribute to a slide as follows.
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "css"}
+## Penguins {background-image="penguins.jpg"}
+````
+
+This will add a slide with the text Penguins in front of an image of penguins, as seen in Figure \@ref(fig:TODO).
+
+TODO: Add screenshot
+
+### Websites {-}
 
 ## New Features in Quarto {-}
+
+- Columns
+- Extensions
 
 # Conclusion {-}
 

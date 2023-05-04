@@ -1,0 +1,64 @@
+---
+title: "Penguins Report"
+author: "David Keyes"
+format: revealjs
+execute: 
+  echo: false
+  warning: false
+  message: false
+---
+
+
+
+# Introduction
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+penguins <- read_csv("https://raw.githubusercontent.com/rfortherestofus/r-without-statistics/main/data/penguins-2008.csv")
+```
+
+We are writing a report about the **Palmer Penguins**. These penguins are *really* amazing. There are three species:
+
+- Adelie
+- Gentoo
+- Chinstrap
+
+
+
+```{css}
+.center-slide {
+  text-align: center;
+}
+```
+
+## Bill Length {.center-slide}
+
+Officia enim culpa officia proident consectetur sit ea. Minim ipsum irure elit incididunt deserunt. 
+
+```{r}
+penguins %>% 
+  ggplot(aes(x = bill_length_mm)) +
+  geom_histogram() +
+  theme_minimal()
+```
+
+```{r}
+average_bill_length <- penguins %>% 
+  summarize(avg_bill_length = mean(bill_length_mm,
+                                   na.rm = TRUE)) %>% 
+  pull(avg_bill_length)
+```
+
+The chart shows the distribution of bill lengths. The average bill length is `r average_bill_length` millimeters.
+
+```{css}
+.text-white h2 {
+  color: white;
+  font-size: 100px;
+}
+```
+
+## Penguins {background-image="penguins.jpg"}

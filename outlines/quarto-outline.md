@@ -71,6 +71,7 @@ New features
 	- [Columns](https://quarto.org/docs/presentations/revealjs/#multiple-columns)
 - [Background images](https://quarto.org/docs/presentations/revealjs/#slide-backgrounds)
 - [Themes](https://quarto.org/docs/presentations/revealjs/themes.html)
+- [More](https://quarto.org/docs/reference/formats/presentations/revealjs.html)
 
 
 ## Websites
