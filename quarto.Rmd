@@ -396,6 +396,78 @@ This will add a slide with the text Penguins in front of an image of penguins, a
 
 TODO: Add screenshot
 
+We've started making some changes to the look-and-feel of our Quarto slides. The sky is the limit in terms of further customizations. As with `xaringan`, there are two main ways to customize your slides: 
+
+1. Using existing themes
+2. Changing the CSS
+
+Themes are the easiest way to change what your slides look like. Quarto has many themes you can apply by adding their name to your YAML as follows:
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
+---
+title: "Penguins Reports"
+format:
+  revealjs: 
+    theme: dark
+---
+````
+
+Using this theme will change from the default light theme to a dark theme, as seen in Figure \@ref(fig:TODO).
+
+TODO: Add screenshot
+
+To see the full list of available themes, go to https://quarto.org/docs/presentations/revealjs/themes.html.
+
+You can also write custom CSS to change your slides further. Quarto uses a type of CSS called Sass. The most important practical implication  of using Sass is that we can use variables in our CSS. There are a number of variables that we can target to make changes to our slides. If you recall how the `xaringanthemer` package allowed us to target things like `header_h2_font_size` and `header_color`, using pre-existing variables with Sass will feel very similar. 
+
+To start, I'll create a Sass file called `theme.scss` and add two sections to it as follows:
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "css"}
+/*-- scss:defaults --*/
+
+/*-- scss:rules --*/
+````
+
+In the `scss:defaults` section, we can use the Quarto Sass variables. For example, to change the color and size of second-level headers, I would add this code:
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "css"}
+/*-- scss:defaults --*/
+$presentation-heading-color: "red"
+$presentation-h2-font-size: 50px;
+
+/*-- scss:rules --*/
+````
+
+To apply these tweaks to my slides, I need to adjust my YAML to tell Quarto use my custom `theme.scss` file. I do this as follows:
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
+---
+title: "Penguins Reports"
+format:
+  revealjs: 
+    theme: theme.scss
+---
+````
+
+Figure \@ref(fig:TODO) shows the changes applied to my slides.
+
+TODO: Add screenshot
+
+The `scss:defaults` is for using available variables (the full list of variables is available at https://quarto.org/docs/presentations/revealjs/themes.html#sass-variables). The `sass:rules` is where you would add additional tweaks that can't be done by targeting variables. For example, I could take my code from above to center all of the content in a slide and add it to the `scss:defaults` section. 
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "css"}
+/*-- scss:defaults --*/
+$presentation-heading-color: red;
+$presentation-h2-font-size: 100px;
+
+/*-- scss:rules --*/
+.center-slide {
+  text-align: center;
+}
+````
+
+Because rendered Quarto slides are HTML documents, you can tweak them however you'd like with custom CSS. What's more, because our slides use reveal.js under the hood, all of the features built into that Javascript library work in Quarto. There are easy ways to add transitions, animations, interactive content, and much more. The demo Quarto presentation, available at https://quarto.org/docs/presentations/revealjs/demo/, shows many of these features in action. 
+
 ### Websites {-}
 
 ## New Features in Quarto {-}
