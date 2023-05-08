@@ -52,7 +52,7 @@ Differences
 Rendering
 
 New features
-- [Multicolumn layouts](https://quarto.org/docs/authoring/article-layout.html)
+- [Multicolumn layouts](https://quarto.org/docs/authoring/figures.html#figure-panels)
 
 # How to make different things with Quarto
 
