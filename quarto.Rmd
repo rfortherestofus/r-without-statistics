@@ -470,8 +470,317 @@ Because rendered Quarto slides are HTML documents, you can tweak them however yo
 
 ### Websites {-}
 
+Quarto can also make websites. In the same way that we were able to make slides without an external package like `xaringan`, we can also make websites without an external package like `distill`. To create a Quarto website, go to File > New Project. Then select New Project and you'll be presented with the menu in Figure \@ref(fig:TODO).
+
+TODO: Add screenshot
+
+Select Quarto website and you'll be prompted to choose a directory to place it in. Keep the default Engine (Knitr), check Create a git repository (this will only show up if you have already installed git) and leave everything else unchecked. Your screen should look like Figure \@ref(fig:TODO).
+
+TODO: Add screenshot
+
+Once you hit the Create Project button, you'll see a series of files created. There is an `index.qmd` and `about.qmd` file as well as a `_quarto.yml` and `styles.css` file. These files should sound familiar if you read Chapter \@ref(websites-chapter) on making websites with the `distill` package. The `.qmd ` files are where we'll add content; the `_quarto.yml` file is where we'll set options for the website as a whole; and the `styles.css` file is where we'll add CSS to customize the visual appearance of our website.
+
+#### Building our Website {-}
+
+Let's start with the `.qmd` files. If you open `index.qmd` or `about.qmd` and you'll see some default content. I'm going to delete the default content from the `index.qmd` and replace it with the content from website we made in Chapter \@ref(websites-chapter). The only element I have removed is the `layout = "l-page"` that we used to make a wider layout for the map (we'll discuss how to make different layouts in Quarto below).
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
+```{r}
+# Load packages
+
+library(tidyverse)
+library(janitor)
+library(tigris)
+library(gt)
+library(lubridate)
+library(reactable)
+```
+
+```{r}
+# Import data
+
+us_states <- states(cb = TRUE, 
+                    resolution = "20m",
+                    progress_bar = FALSE) %>%
+  shift_geometry() %>% 
+  clean_names() %>% 
+  select(geoid, name) %>% 
+  rename(state = name) %>% 
+  filter(state %in% state.name)
+
+covid_data <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/rolling-averages/us-states.csv") %>% 
+  filter(state %in% state.name) %>% 
+  mutate(geoid = str_remove(geoid, "USA-")) 
+
+most_recent_day <- covid_data %>% 
+  slice_max(order_by = date,
+            n = 1) %>% 
+  distinct(date) %>% 
+  mutate(date_nice_format = str_glue("{month(date, label = TRUE, abbr = FALSE)} {day(date)}, {year(date)}")) %>% 
+  pull(date_nice_format)
+```
+
+# COVID Death Rates as of `r most_recent_day`
+
+This table shows COVID death rates per 100,000 people in four states states.
+
+```{r}
+# Make table
+
+covid_data %>% 
+  slice_max(order_by = date,
+            n = 1) %>%
+  select(state, deaths_avg_per_100k) %>% 
+  arrange(state) %>% 
+  set_names("State", "Death rate") %>% 
+  reactable()
+```
+
+We can see this same death rate data for all states on a map.
+
+```{r}
+# Make map
+
+most_recent <- us_states %>% 
+  left_join(covid_data, by = "state") %>% 
+  slice_max(order_by = date,
+            n = 1) 
+
+most_recent %>% 
+  ggplot(aes(fill = deaths_avg_per_100k)) +
+  geom_sf() +
+  scale_fill_viridis_c(option = "rocket") +
+  labs(fill = "Deaths per\n100,000 people") +
+  theme_void()
+```
+
+# COVID Death Rates Over Time
+
+The following chart shows COVID death rates from the start of COVID in early 2020 until `r most_recent_day`.
+
+```{r}
+# Make chart
+
+library(plotly)
+
+covid_chart <- covid_data %>% 
+  filter(state %in% c("Alabama",
+                      "Alaska",
+                      "Arizona",
+                      "Arkansas")) %>% 
+  ggplot(aes(x = date,
+             y = deaths_avg_per_100k,
+             group = state,
+             fill = deaths_avg_per_100k)) +
+  geom_col() +
+  scale_fill_viridis_c(option = "rocket") +
+  theme_minimal() +
+  labs(title = "Deaths per 100,000 people over time") +
+  theme(legend.position = "none",
+        plot.title.position = "plot",
+        plot.title = element_text(face = "bold"),
+        panel.grid.minor = element_blank(),
+        axis.title = element_blank()) +
+  facet_wrap(~state,
+             nrow = 2)
+
+
+ggplotly(covid_chart)
+```
+````
+
+At this point, I could render the `index.qmd` file individually, but I know I want to render the entire website so let's do that. You can build a Quarto website just as you did a `distill` website. Look for the Build tab in the top right of RStudio and click the button that says Render Website. The rendered website should now appear in the Viewer pane on the bottom right panel of RStudio. If you go to the Files pane on the same panel you will also see that a _site_ folder has been created. If you go into this folder you will see all of the content in your rendered site. I'll open the `index.html` file in my web browser. You can see the website in Figure \@ref(fig:TODO).
+
+TODO: Add screenshot
+
+As you can see, there are a lot of warnings and messages that we don't want to show. In R Markdown we removed these in our `setup` code chunk, but with Quarto we do it in the YAML. I could add this code to the `index.qmd` YAML, as we did when making a presentation, to remove all code, warnings, and messages from the output:
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
+execute: 
+  echo: false
+  warning: false
+  message: false
+````
+
+However, doing this will only make changes to that one file. 
+
+#### Using the `_quarto.yml` file to Set Options for the Website {-}
+
+With `distill` we used the `_site.yml` file to make changes to all files in our website. In With Quarto, we use the `_quarto.yml` file for the same purpose. If open the `_quarto.yml` file, we see three sections:
+
+1. The top sets the project type (in this case, a website).
+2. The middle section is where we set the title of the website as a whole and determine the options for our navigation bar. 
+3. The bottom section deals with the appearance. 
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "yaml"}
+project:
+  type: website
+
+website:
+  title: "covid-website-quarto"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+````
+
+Let's start from the bottom. To remove code, warnings, and messages for all pages in our website, add the portion of the YAML to the `_quarto.yml` file. 
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "yaml"}
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+execute: 
+  echo: false
+  warning: false
+  message: false
+````
+
+If I now build the website again, I will see it, as in Figure \@ref(fig:TODO), with just the content I want to show. 
+
+TODO: Add screenshot
+
+You can add any additional options that you would add to a single `.qmd` file to this section of the `_quarto.yml` file and it will apply them across all pages of your website. 
+
+The other parts of this section of the `_quarto.yml` file deal with the appearance of rendered files. The line `theme: cosmo` tells Quarto use the cosmo theme. There are many themes available (the full list is available at https://quarto.org/docs/output-formats/html-themes.html) and I can choose a different one to show how it changes the output.
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "yaml"}
+format:
+  html:
+    theme: minty
+    css: styles.css
+    toc: true
+````
+
+This change results in changes to the colors and fonts on the website, as seen in Figure \@ref(fig:TODO).
+
+TODO: Add screenshot
+
+In addition to using pre-built themes, you can also customize your website with CSS. The `css: styles.css` section in the `_quarto.yml` file indicates that Quarto will use any CSS in the `styles.css` file when rendering. For example, I can add this to the `styles.css` to make first-level headers 50 pixels.
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "yaml"}
+h1 {
+  font-size: 50px;
+}
+````
+
+The re-rendered `index.html`, seen in Figure \@ref(fig:TODO), shows the large headings.
+
+TODO: Add screenshot
+
+An alternative approach to customizing your website is to use Sass variables. The process for using Sass variables in a `.scss` file is identical to that laid out above. For example, I can create a file called `styles.scss` and add a line like this to change the body background to be the same light green as the top navigation bar. 
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "yaml"}
+/*-- scss:defaults --*/
+$body-bg: #78c2ad;
+````
+
+To get Quarto to use this `styles.scss` file, I adjust the `theme` line as follows. 
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "yaml"}
+format:
+  html:
+		theme: [minty, styles.scss]
+    css: styles.css
+    toc: true
+````
+
+The syntax `theme: [minty, styles.scss]` tells Quarto to use the minty theme and then make any additional tweaks based on the `styles.scss` file. If I render my website again, I can see the light green background throughout. Figure \@ref(fig:TODO) shows the current version.
+
+TODO: Add screenshot
+
+Note that when you add a `.SCSS` file, the tweaks made in your CSS file are no longer applied. If you wanted to use those, you'd need to add them to the `styles.scss` file.
+
+The line `toc: true` creates a table of contents on the side of rendered HTML files, as seen in Figure \@ref(fig:TODO) below. 
+
+TODO: Add screenshot
+
+You can remove it by changing `true` to `false`. This section of the `_quarto.yml` file is where you would add any additional options, such as figure height. 
+
+The middle section of the `_quarto.yml` file deals with the title of the website as a whole as well as its navigation. I can change the title by adjusting that line. The `navbar` section functions nearly identically to how it did in Chapter \@ref(websites-chapter) when working with `distill`. The `href` is where you list the file you want to link to. The optional `text` line is where you manually specify the text that should show up for that link. Here are a couple changes to the default `_quarto.yml` to change the website title and the text for the About page link.
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "yaml"}
+website:
+  title: "Quarto COVID Website"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: about.qmd
+        text: About this Website
+````
+
+Finally, we come to the top section of the `_quarto.yml`. This is the most straightforward. The line `type: website` indicates that the current project is a website. You could make additions here (for example, you could add the line `output_dir: website` to have the website render in the `website` directory rather than the default `_site` directory), but that's not necessary.
+
+#### Layouts
+
+When we made our website with `distill` we used `layout = "l-page"` to make the map wider. We can accomplish the same thing with Quarto, though the syntax is slightly different. With Quarto, you can adjust the width of the output using the `:::` syntax we saw above to add HTML `<div>` tags. To make the map larger on our Quarto website,  we add `:::{.column-screen-inset}` at the beginning and `:::` at the end of the code block that makes it. 
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
+:::{.column-screen-inset}
+```{r}
+#| out-width: 100%
+# Make map
+
+most_recent <- us_states %>% 
+  left_join(covid_data, by = "state") %>% 
+  slice_max(order_by = date,
+            n = 1) 
+
+most_recent %>% 
+  ggplot(aes(fill = deaths_avg_per_100k)) +
+  geom_sf() +
+  scale_fill_viridis_c(option = "rocket") +
+  labs(fill = "Deaths per\n100,000 people") +
+  theme_void()
+```
+:::
+````
+
+Figure \@ref(fig:TODO) shows the wider map.
+
+TODO: Add screenshot 
+
+You may have noticed that I also added the line `#| out-width: 100%` in the code chunk. This is because we need to specify that the map should take up all of the available width. Without this line, the map would only take up a portion of the available width. There are a number of different output widths you can use (the full list is available at https://quarto.org/docs/authoring/article-layout.html).
+
+#### Hosting Your Quarto Website {-}
+
+Once we finished making our `distill` website in Chapter \@ref(websites-chapter), we talked about hosting it using GitHub Pages. You can do the same thing with a Quarto website. Recall that GitHub Pages requires you to publish your website based on the files in the root of your repository or in the `docs` folder. I'll do the latter by changing my `_quarto.yml` file so that the site outputs in the `docs` folder. To do this, I add a line to the top section of the `_quarto.yml` file.
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "yaml"}
+project:
+  type: website
+  output-dir: docs
+````
+
+Now, when I render my site, the HTML and other files show up in the `docs` directory. At this point, I can push my repository to GitHub, adjust the GitHub Pages settings as I did in Chapter \@ref(websites-chapter) and I will be given a URL where my Quarto website will live. 
+
 ## New Features in Quarto {-}
 
+As you've seen throughout this chapter, we can do everything we did with R Markdown in Quarto as well. Quarto also has some nice features that differentiate it from R Markdown. 
+
+One of these new features is being able to easily publish any type of HTML document (reports, slides, websites, and more) to a free service called Quarto Pub. Especially if you are not a GitHub user, this is a great option to get your materials online. To show you how Quarto Pub works, let me publish the website we just made to it. To get started, look for the Terminal tab on the bottom left panel of RStudio. Click it and at the prompt enter the text `quarto publish`. Doing so will bring up a list of ways you can publish your website. See Figure \@ref(fig:TODO) below.
+
+TODO: Add screenshot
+
+Press enter to select Quarto Pub. You'll then be asked to authorize. Type Y to do so, which will take you to quartopub.com. Sign up for an account (or sign in if you already have one). You should see a screen like Figure \@ref(fig:TODO), indicating that you have successfully signed in and authorized RStudio to connect with Quarto Pub.
+
+TODO: Add screenshot
+
+From there, you can return to RStudio. You'll be prompted to select a name for your website on Quarto Pub. The easiest thing is to select the same name as your project (in my case, that's `covid-website-quarto`). Enter the name and hit enter. The site will then be published and you will be taken to the site, as seen in Figure \@ref(fig:TODO).
+
+TODO: Add screenshot
+
+- Wiki
 - Columns
 - Extensions
 

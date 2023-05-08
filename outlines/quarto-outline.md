@@ -79,7 +79,7 @@ New features
 - Use Quarto projects to create site
 - Render
 - _quarto.yml vs _site.yml
-- Customize with themes or CSS/SCSS/SASS (https://quarto.org/docs/output-formats/html-themes.html)
+- Customize with themes or CSS/SASS (https://quarto.org/docs/output-formats/html-themes.html)
 - Wider layouts
 	- https://quarto.org/docs/authoring/article-layout.html
 	- https://quarto.org/docs/output-formats/page-layout.html
