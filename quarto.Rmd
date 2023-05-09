@@ -764,11 +764,7 @@ project:
 
 Now, when I render my site, the HTML and other files show up in the `docs` directory. At this point, I can push my repository to GitHub, adjust the GitHub Pages settings as I did in Chapter \@ref(websites-chapter) and I will be given a URL where my Quarto website will live. 
 
-## New Features in Quarto {-}
-
-As you've seen throughout this chapter, we can do everything we did with R Markdown in Quarto as well. Quarto also has some nice features that differentiate it from R Markdown. 
-
-One of these new features is being able to easily publish any type of HTML document (reports, slides, websites, and more) to a free service called Quarto Pub. Especially if you are not a GitHub user, this is a great option to get your materials online. To show you how Quarto Pub works, let me publish the website we just made to it. To get started, look for the Terminal tab on the bottom left panel of RStudio. Click it and at the prompt enter the text `quarto publish`. Doing so will bring up a list of ways you can publish your website. See Figure \@ref(fig:TODO) below.
+In addition to using GitHub Pages, Quarto has a free service called Quarto Pub that makes it straightforward to get your materials online. Especially if you are not a GitHub user, this is a great option to share your work. To show you how Quarto Pub works, let me publish the website we just made to it. To get started, look for the Terminal tab on the bottom left panel of RStudio. Click it and at the prompt enter the text `quarto publish`. Doing so will bring up a list of ways you can publish your website. See Figure \@ref(fig:TODO) below.
 
 TODO: Add screenshot
 
@@ -780,9 +776,14 @@ From there, you can return to RStudio. You'll be prompted to select a name for y
 
 TODO: Add screenshot
 
-- Wiki
-- Columns
-- Extensions
+When you make updates to your site, you can republish to Quarto Pub using the same technique. Quarto Pub is probably the easiest way to publish your HTML files made with Quarto.
 
 # Conclusion {-}
 
+As you've seen throughout this chapter, we can do everything we did with R Markdown in Quarto as well. You're probably wondering at this point whether you should use R Markdown or Quarto. It's a big question, and one many in the R community are thinking about. 
+
+The first thing to know is that R Markdown is not going away. If you already use R Markdown, you don't need to switch. As of the writing of this book, I still use R Markdown for most of my work. If you have developed a workflow that uses R Markdown, by all means stick with it. 
+
+If you are new to R and have never used R Markdown or Quarto, you may be a good candidate to start with Quarto. The developers of R Markdown have promised to continue its development, but have also said that features they develop for Quarto in the future may not be backported to R Markdown. So, if you're starting from scratch, my recommendation is to start with Quarto.
+
+My strongest recommendation, though, is to use either R Markdown or Quarto as opposed to the multitool workflow described in Chapter \@ref(rmarkdown-chapter). Either R Markdown or Quarto will help you work more efficiently and avoid inevitable errors that come from manual copying and pasting between tools. As you've seen throughout this chapter, the differences between R Markdown and Quarto are relatively small and moving between them is not overly complicated. The biggest impact you can have, though, is from switching away from a multitool workflow to a single-tool workflow. 
