@@ -4,25 +4,25 @@ chapter_number <- 10
 source("_common.R")
 ```
 
-# Embracing Quarto, the Next-Generation Tool for Reproducible Reporting
+# Quarto, the Next-Generation Tool for Reproducible Reporting
 
-In mid-2022, the team at Posit (the company that makes the RStudio editor, the `tidyverse`, and many other tools to support R programmers) made an announcement: they had developed a new tool called Quarto, which they described as the next-generation version of R Markdown. Why did Posit feel the need to develop a new tool for reproducible reporting? They cited a few reasons:
+In mid-2022, the team at Posit (the company that makes the RStudio editor, the `tidyverse`, and many other tools to support R programmers) made an announcement: they had developed a new tool called Quarto, which they described as the next-generation version of R Markdown. The Posit team explained a few of the reasons why they felt the need to develop a new tool for reproducible reporting:
 
 1. **More consistent syntax**: As you've seen in this book, the syntax used to create different outputs with R Markdown varies. For example, the `distill` package has layout options that don't work in `xaringan`. And `xaringan` uses three dashes to indicate new slides, while three dashes in other output formats would create a horizontal line. With Quarto, the idea is to make the syntax used to create different outputs more consistent. 
-2. **Support for multiple languages**: While R Markdown does work with languages such as Python, having the word R in the name was off-putting for non-R users. Creating a tool like Quarto was Posit's "attempt to bring R Markdown to everyone." What's more Quarto makes it straightforward for users to include code from multiple languages in a single document. 
+2. **Support for multiple languages**: While R Markdown does work with languages such as Python, having the word R in the name was off-putting for non-R users. Creating a tool like Quarto was Posit's "attempt to bring R Markdown to everyone." Quarto makes it straightforward for users to include code from multiple languages in a single document. 
 3. **Support for multiple code editors**: R Markdown is designed to work in the RStudio IDE. With the move to support additional languages, it was important to support the code editors that users of those languages prefer. Quarto works in RStudio as well as editors such as VS Code, JupyterLab, and others. 
 
-While the benefits of Quarto are clearest for non-R users, there are also many reasons why R users may want to use Quarto. I'll focus in this chapter on the benefits for R users who use RStudio. I'll begin by explaining how to set up and use Quarto. We'll focus on some of the most important differences between Quarto and R Markdown. I'll then demonstrate how to make each of the products we made in R Markdown with Quarto. Parameterized reporting, presentations, and websites are all things that Quarto can do, and this chapter will show you how.
+While the benefits of Quarto are clearest for non-R users, there are also many reasons why R users may want to use Quarto. I'll focus in this chapter on the benefits for R users who use RStudio. I'll begin by explaining how to set up and use Quarto. I'll go over some of the most important differences between Quarto and R Markdown. I'll then demonstrate how to make each of the products we made in previous chapters with R Markdown using Quarto. Parameterized reporting, presentations, and websites are all things that Quarto can do, and this chapter will show you how.
 
 ## Getting Started with Quarto {-}
 
-To get started with Quarto, we need to first install it. The good news is that newer versions of RStudio (2022.07.1 and later) come with Quarto installed. To check your RStudio version, click RStudio in the top menu bar, then click About RStudio.  If you have an older version of RStudio, update it now and Quarto will be installed for you.
+To get started with Quarto, we first need to make sure it is installed. The good news is that newer versions of RStudio (2022.07.1 and later) come with Quarto installed. To check your RStudio version, click RStudio in the top menu bar, then click About RStudio.  If you have an older version of RStudio, update it now and Quarto will be installed for you.
 
-Once you have Quarto installed, you're ready to work with it. We'll create a Quarto document by clicking File > New File > Quarto Document. You'll see a menu, shown in Figure \@ref(fig:TODO), that looks like what you saw when creating an R Markdown document.
+Once you have Quarto installed, you're ready to work with it. You can create a Quarto document by clicking File > New File > Quarto Document. You'll see a menu, shown in Figure \@ref(fig:TODO), that looks like what you saw when creating an R Markdown document.
 
 TODO: Add screenshot
 
-I'll give my document a title and choose HTML as my output format. The engine option allows users to select a different way to render documents. I'll keep the default of `Knitr`, which is the same tool that R Markdown uses to render documents. I'll keep the Use visual markdown editor unchecked (this option allows you to use an interface that looks more like Microsoft Word). The Quarto document that is created has default content, just like R Markdown documents. 
+I'll give my document a title and choose HTML as my output format. The engine option allows users to select a different way to render documents. I'll keep the default of `Knitr`, which is the same tool that R Markdown uses to render documents. I'll keep the Use visual markdown editor unchecked (this option allows you to use an interface that looks more like Microsoft Word, but I've found it finicky). The Quarto document that is created has default content, just like R Markdown documents. 
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 ---
@@ -74,7 +74,7 @@ format: html
 ---
 ```
 
-A second difference between R Markdown and Quarto is that the `setup` code chunk seen in the former does not exist in the latter. Recall from Chapter \@ref(rmarkdown-chapter) that the `setup` code chunk sets default options on things like whether we show code, charts and tables, and other elements in the rendered versions of our documents. With Quarto, these options are set in the YAML. For example, if we want to hide code as well as all warnings and messages from out rendered document, we add them under `execute` in our YAML as follows (Quarto also allows you to write true and false in lower case):
+A second difference between R Markdown and Quarto is that the `setup` code chunk seen in the former does not exist in the latter. Recall from Chapter \@ref(rmarkdown-chapter) that the `setup` code chunk sets default options on things like whether we show code, charts and tables, and other elements in the rendered versions of our documents. With Quarto, these options are set in the YAML. For example, if we want to hide code as well as all warnings and messages from our rendered document, we add them under `execute` in our YAML as follows (Quarto also allows you to write true and false in lower case):
 
 ```
 ---
@@ -87,7 +87,7 @@ execute:
 ---
 ```
 
-In R Markdown, if we want to override options at the individual code chunk level, we do it as follows. The code chunk below would show both the code `2 * 2` as well as the output (4).
+In R Markdown, if we want to override options at the individual code chunk level, we do it by adding them within the curly brackets that start a code chunk. The code chunk below would show both the code `2 * 2` as well as the output (4).
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 ```{r echo = TRUE}
@@ -138,7 +138,7 @@ Rendering your Quarto document to HTML (or any other format) follows the same pr
 
 TODO: Add screenshot
 
-Clicking the Render button will turn the Quarto document I created above into an HTML file, seen in Figure \@ref(fig:TODO).
+Clicking the Render button will turn the Quarto document I created above into an HTML file, as seen in Figure \@ref(fig:TODO).
 
 TODO: Add screenshot
 
@@ -146,7 +146,7 @@ As you've seen, the differences between R Markdown and Quarto are mostly around 
 
 ## Making Different Types of Outputs with Quarto {-}
 
-Now that you've learned how Quarto works, let's make a few different things with it. We'll go through the outputs that you've seen how to develop in Chapters \@ref(parameterized-reporting-chapter), \@ref(presentations-chapter), and \@ref(websites-chapter).
+Now that you've learned how Quarto works to create a simple document, let's make a few different things with it. We'll go through the outputs that you've learned to make in Chapters \@ref(parameterized-reporting-chapter), \@ref(presentations-chapter), and \@ref(websites-chapter).
 
 ### Parameterized Reporting with Quarto {-}
 
@@ -222,9 +222,9 @@ cases %>%
 ```
 ````
 
-Despite these small differences, when rendered the report looks almost exactly the same as the one we produced in Chapter \@ref(parameterized-reporting-chapter). Also nearly identical is the process of creating one report for each state. We can take the `render.R` script file we used to make parameterized reports in Chapter \@ref(parameterized-reporting-chapter) and, with a few small tweaks, it works. In the updated `render.R` file below, I made the following tweaks:
+Despite these small differences, the rendered report looks almost exactly the same as the one we produced in Chapter \@ref(parameterized-reporting-chapter). Also nearly identical is the process of creating one report for each state. We can take the `render.R` script file we used to make parameterized reports in Chapter \@ref(parameterized-reporting-chapter) and, with a few small tweaks, it works. In the updated `render.R` file below, I made the following tweaks:
 
-1. Load the `quarto` package instead of the `rmarkdown` package.
+1. Loaded the `quarto` package instead of the `rmarkdown` package.
 2. Made the input file `urban-covid-budget-report.qmd` instead of `urban-covid-budget-report.Rmd`.
 3. In the `reports` tibble I created, used `execute_params` instead of `params`.
 4. On the last line, used the `quarto_render()` function instead of the `render()` function from the `markdown` package.
@@ -316,7 +316,7 @@ When we render this, we get an HTML file with our slides, seen in Figure \@ref(f
 
 TODO: Add screenshot
 
-Overall, the output looks similar to the default `xaringan` slides we made. However, remember how we had to manually add three dashes to make slides with `xaringan`? With Quarto, any first- or second-level headers make new slides (you can also use three dashes to make a slide break).
+Overall, the output looks similar to the default `xaringan` slides we made. However, remember how we had to manually add three dashes to make slides with `xaringan`? With Quarto, any first- or second-level headers make new slides (you can also use three dashes to make a slide break) so I was able to remove these. 
 
 Quarto slides also make it possible to incrementally reveal content. Bulleted and numbered lists can be made to incrementally reveal by default by adjusting the YAML. See here how I add `incremental: true` to the YAML.
 
@@ -366,7 +366,11 @@ Gentoo
 ::::
 ````
 
-With `xaringan` we were also able to easily center content on our slides by surrounding it with `.center[]`. Doing the same thing in Quarto is slightly more complicated. Quarto has no built-in CSS class to center content so we need to define it ourselves. I begin by creating a CSS code chunk and creating a custom class called `center-slide`. Using a bit of CSS, I tell it to center align all content (despite it saying `text-align` you'll see that it also aligns images).
+If I were to render this, I'd get a slide that looks like Figure \@ref(fig:TODO).
+
+TODO: Add screenshot
+
+With `xaringan` we were also able to easily center content on our slides by surrounding it with `.center[]`. Doing the same thing in Quarto is slightly more complicated. Quarto has no built-in CSS class to center content so we need to create it ourselves. I begin by creating a CSS code chunk and creating a custom class called `center-slide`. Using a bit of CSS, I tell it to center align all content (despite it saying `text-align` you'll see that it also aligns images).
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "css"}
 ```{css}
@@ -386,7 +390,7 @@ With our custom CSS applied, the slide now has all of its content centered, as s
 
 TODO: Add screenshot
 
-Working in `xaringan` we added a background image to one of our slides. We can do the same in Quarto by applying the `background-image` attribute to a slide as follows.
+Working in `xaringan` we added a background image to one of our slides. We can do the same thing in Quarto by applying the `background-image` attribute to a slide as follows.
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "css"}
 ## Penguins {background-image="penguins.jpg"}
@@ -449,11 +453,11 @@ format:
 ---
 ````
 
-Figure \@ref(fig:TODO) shows the changes applied to my slides.
+Figure \@ref(fig:TODO) shows the changes applied to my rendered slides.
 
 TODO: Add screenshot
 
-The `scss:defaults` is for using available variables (the full list of variables is available at https://quarto.org/docs/presentations/revealjs/themes.html#sass-variables). The `sass:rules` is where you would add additional tweaks that can't be done by targeting variables. For example, I could take my code from above to center all of the content in a slide and add it to the `scss:defaults` section. 
+The `scss:defaults` section is for using available variables (the full list of variables is available at https://quarto.org/docs/presentations/revealjs/themes.html#sass-variables). The `sass:rules` section is where you would add additional tweaks that can't be done by targeting variables. For example, I could take my code from above to center all of the content in a slide and add it to the `scss:defaults` section. 
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "css"}
 /*-- scss:defaults --*/
@@ -482,7 +486,7 @@ Once you hit the Create Project button, you'll see a series of files created. Th
 
 #### Building our Website {-}
 
-Let's start with the `.qmd` files. If you open `index.qmd` or `about.qmd` and you'll see some default content. I'm going to delete the default content from the `index.qmd` and replace it with the content from website we made in Chapter \@ref(websites-chapter). The only element I have removed is the `layout = "l-page"` that we used to make a wider layout for the map (we'll discuss how to make different layouts in Quarto below).
+Let's start with the `.qmd` files. Open `index.qmd` or `about.qmd` and you'll see some default content. I'm going to delete the default content from the `index.qmd` and replace it with the content from website we made in Chapter \@ref(websites-chapter). The only element I have removed is the `layout = "l-page"` that we used to make a wider layout for the map (we'll discuss how to make different layouts in Quarto below).
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 ```{r}
@@ -589,7 +593,11 @@ ggplotly(covid_chart)
 ```
 ````
 
-At this point, I could render the `index.qmd` file individually, but I know I want to render the entire website so let's do that. You can build a Quarto website just as you did a `distill` website. Look for the Build tab in the top right of RStudio and click the button that says Render Website. The rendered website should now appear in the Viewer pane on the bottom right panel of RStudio. If you go to the Files pane on the same panel you will also see that a _site_ folder has been created. If you go into this folder you will see all of the content in your rendered site. I'll open the `index.html` file in my web browser. You can see the website in Figure \@ref(fig:TODO).
+At this point, I could render the `index.qmd` file individually, but I know I want to render the entire website so let's do that. You can build a Quarto website just as you did a `distill` website. Look for the Build tab in the top right of RStudio and click the button that says Render Website. Figure \@ref(fig:TODO) shows what you should see.
+
+TODO: Add screenshot
+
+The rendered website should now appear in the Viewer pane on the bottom right panel of RStudio. If you go to the Files pane on the same panel you will also see that a `_site` folder has been created. If you go into this folder you will see all of the content in your rendered site. I'll open the `index.html` file in my web browser. You can see the website in Figure \@ref(fig:TODO).
 
 TODO: Add screenshot
 
@@ -602,11 +610,11 @@ execute:
   message: false
 ````
 
-However, doing this will only make changes to that one file. 
+However, doing this will only make changes to that one file. Instead, we want to add them to the `_quarto.yml` file.
 
 #### Using the `_quarto.yml` file to Set Options for the Website {-}
 
-With `distill` we used the `_site.yml` file to make changes to all files in our website. In With Quarto, we use the `_quarto.yml` file for the same purpose. If open the `_quarto.yml` file, we see three sections:
+With `distill` we used the `_site.yml` file to make changes to all files in our website. In With Quarto, we use the `_quarto.yml` file for the same purpose. If you open the `_quarto.yml` file, you should see three sections:
 
 1. The top sets the project type (in this case, a website).
 2. The middle section is where we set the title of the website as a whole and determine the options for our navigation bar. 
@@ -631,7 +639,7 @@ format:
     toc: true
 ````
 
-Let's start from the bottom. To remove code, warnings, and messages for all pages in our website, add the portion of the YAML to the `_quarto.yml` file. 
+Let's start from the bottom. To remove code, warnings, and messages for all pages in our website, add the portion of the YAML we created above to the `_quarto.yml` file. The bottom section should now look like this:
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "yaml"}
 format:
@@ -651,7 +659,7 @@ TODO: Add screenshot
 
 You can add any additional options that you would add to a single `.qmd` file to this section of the `_quarto.yml` file and it will apply them across all pages of your website. 
 
-The other parts of this section of the `_quarto.yml` file deal with the appearance of rendered files. The line `theme: cosmo` tells Quarto use the cosmo theme. There are many themes available (the full list is available at https://quarto.org/docs/output-formats/html-themes.html) and I can choose a different one to show how it changes the output.
+The other parts of the bottom section of the `_quarto.yml` file deal with the appearance of rendered files. The line `theme: cosmo` tells Quarto use the cosmo theme. There are many themes available (the full list is available at https://quarto.org/docs/output-formats/html-themes.html) and I can choose a different one to show how it changes the output.
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "yaml"}
 format:
@@ -661,7 +669,7 @@ format:
     toc: true
 ````
 
-This change results in changes to the colors and fonts on the website, as seen in Figure \@ref(fig:TODO).
+Using the minty theme results in changes to the colors and fonts on the website, as seen in Figure \@ref(fig:TODO).
 
 TODO: Add screenshot
 
@@ -719,7 +727,7 @@ website:
         text: About this Website
 ````
 
-Finally, we come to the top section of the `_quarto.yml`. This is the most straightforward. The line `type: website` indicates that the current project is a website. You could make additions here (for example, you could add the line `output_dir: website` to have the website render in the `website` directory rather than the default `_site` directory), but that's not necessary.
+Finally, we come to the top section of the `_quarto.yml`. This is the most straightforward. The line `type: website` indicates that the current project is a website (other project types include books, wikis, and more). 
 
 #### Layouts
 
@@ -754,7 +762,7 @@ You may have noticed that I also added the line `#| out-width: 100%` in the code
 
 #### Hosting Your Quarto Website {-}
 
-Once we finished making our `distill` website in Chapter \@ref(websites-chapter), we talked about hosting it using GitHub Pages. You can do the same thing with a Quarto website. Recall that GitHub Pages requires you to publish your website based on the files in the root of your repository or in the `docs` folder. I'll do the latter by changing my `_quarto.yml` file so that the site outputs in the `docs` folder. To do this, I add a line to the top section of the `_quarto.yml` file.
+After we finished making our `distill` website in Chapter \@ref(websites-chapter), we discussed hosting it using GitHub Pages. You can do the same thing with a Quarto website. Recall that GitHub Pages requires you to publish your website based on the files in the root of your repository or in the `docs` folder. I'll do the latter by changing my `_quarto.yml` file so that the site outputs in the `docs` folder. To do this, I add a line to the top section of the `_quarto.yml` file.
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "yaml"}
 project:
@@ -764,7 +772,7 @@ project:
 
 Now, when I render my site, the HTML and other files show up in the `docs` directory. At this point, I can push my repository to GitHub, adjust the GitHub Pages settings as I did in Chapter \@ref(websites-chapter) and I will be given a URL where my Quarto website will live. 
 
-In addition to using GitHub Pages, Quarto has a free service called Quarto Pub that makes it straightforward to get your materials online. Especially if you are not a GitHub user, this is a great option to share your work. To show you how Quarto Pub works, let me publish the website we just made to it. To get started, look for the Terminal tab on the bottom left panel of RStudio. Click it and at the prompt enter the text `quarto publish`. Doing so will bring up a list of ways you can publish your website. See Figure \@ref(fig:TODO) below.
+In addition to using GitHub Pages, Quarto has a free service called Quarto Pub that makes it straightforward to get your materials online. Especially if you are not a GitHub user, this is a great option to publish your work. To show you how Quarto Pub works, let me publish the website we just made to it. To get started, look for the Terminal tab on the bottom left panel of RStudio. Click it and at the prompt enter the text `quarto publish` and hit enter. Doing so will bring up a list of ways you can publish your website. See Figure \@ref(fig:TODO) below.
 
 TODO: Add screenshot
 
@@ -778,12 +786,14 @@ TODO: Add screenshot
 
 When you make updates to your site, you can republish to Quarto Pub using the same technique. Quarto Pub is probably the easiest way to publish your HTML files made with Quarto.
 
-# Conclusion {-}
+## Conclusion: Should You Use R Markdown or Quarto? {-}
 
-As you've seen throughout this chapter, we can do everything we did with R Markdown in Quarto as well. You're probably wondering at this point whether you should use R Markdown or Quarto. It's a big question, and one many in the R community are thinking about. 
+As you've seen throughout this chapter, we can do everything we did with R Markdown in Quarto as well. And, unlike R Markdown, we didn't need to load any external packages to make different outputs. What's more, the syntax between different output formats is more consistent. For example, because you can make new slides in Quarto by adding first- or second-level headers, the Quarto documents you make to create reports should translate much more easily to presentations. 
+
+You're probably wondering at this point whether you should use R Markdown or Quarto. It's a big question, and one many in the R community are thinking about. 
 
 The first thing to know is that R Markdown is not going away. If you already use R Markdown, you don't need to switch. As of the writing of this book, I still use R Markdown for most of my work. If you have developed a workflow that uses R Markdown, by all means stick with it. 
 
-If you are new to R and have never used R Markdown or Quarto, you may be a good candidate to start with Quarto. The developers of R Markdown have promised to continue its development, but have also said that features they develop for Quarto in the future may not be backported to R Markdown. So, if you're starting from scratch, my recommendation is to start with Quarto.
+If you are new to R and have never used R Markdown or Quarto, you may be a good candidate to start with Quarto. The developers of R Markdown have promised to continue its development, but have also said that features they develop for Quarto in the future may not be backported to R Markdown. So, if you're starting from scratch, start with Quarto.
 
-My strongest recommendation, though, is to use either R Markdown or Quarto as opposed to the multitool workflow described in Chapter \@ref(rmarkdown-chapter). Either R Markdown or Quarto will help you work more efficiently and avoid inevitable errors that come from manual copying and pasting between tools. As you've seen throughout this chapter, the differences between R Markdown and Quarto are relatively small and moving between them is not overly complicated. The biggest impact you can have, though, is from switching away from a multitool workflow to a single-tool workflow. 
+My strongest recommendation, though, is to use either R Markdown or Quarto. As you've seen throughout this chapter, the differences between R Markdown and Quarto are relatively small and the impact on your workflow of switching should be minor. The major impact will come if you switch from a multi-tool workflow to a single tool workflow. Both R Markdown and Quarto can help you become more efficient, avoid manual errors, and share results in a wide variety of formats. 
