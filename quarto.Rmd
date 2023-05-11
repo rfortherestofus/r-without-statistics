@@ -16,7 +16,7 @@ While the benefits of Quarto are clearest for non-R users, there are also many r
 
 ## Getting Started with Quarto {-}
 
-To get started with Quarto, we first need to make sure it is installed. The good news is that newer versions of RStudio (2022.07.1 and later) come with Quarto installed. To check your RStudio version, click RStudio in the top menu bar, then click About RStudio.  If you have an older version of RStudio, update it now (repeat the steps outline in Chapter \@ref(#howto-chapter) on downloading RStudio) and Quarto will be installed for you.
+To get started with Quarto, we first need to make sure it is installed. The good news is that newer versions of RStudio (2022.07.1 and later) come with Quarto installed. To check your RStudio version, click RStudio in the top menu bar, then click About RStudio.  If you have an older version of RStudio, update it now (repeat the steps outlined in Chapter \@ref(howto-chapter) on downloading RStudio) and Quarto will be installed for you.
 
 Once you have Quarto installed, you're ready to work with it. You can create a Quarto document by clicking File > New File > Quarto Document. You'll see a menu, shown in Figure \@ref(fig:new-quarto-doc), that looks like what you saw when creating an R Markdown document.
 
@@ -240,7 +240,7 @@ cases %>%
 ```
 ````
 
-Despite these small differences, the rendered report looks almost exactly the same as the one we produced in Chapter \@ref(parameterized-reporting-chapter). Also nearly identical is the process of creating one report for each state. We can take the `render.R` script file we used to make parameterized reports in Chapter \@ref(parameterized-reporting-chapter) and, with a few small tweaks, it works. In the updated `render.R` file below, I made the following tweaks:
+Despite these small differences, the rendered report looks almost exactly the same as the one we produced in Chapter \@ref(parameterized-reports-chapter). Also nearly identical is the process of creating one report for each state. We can take the `render.R` script file we used to make parameterized reports in Chapter \@ref(parameterized-reporting-chapter) and, with a few small tweaks, it works. In the updated `render.R` file below, I made the following tweaks:
 
 1. Loaded the `quarto` package instead of the `rmarkdown` package.
 2. Made the input file `urban-covid-budget-report.qmd` instead of `urban-covid-budget-report.Rmd`.
@@ -272,9 +272,9 @@ reports %>%
   pwalk(quarto_render)
 ````
 
-Just as in Chapter \@ref(parameterized-reporting-chapter), running this code will produce one report for each state. 
+Just as in Chapter \@ref(parameterized-reports-chapter), running this code will produce one report for each state. 
 
-### Presentations {-}
+### Making Presentations with Quarto {-}
 
 Quarto can also produce presentations like those we made in Chapter \@ref(presentations-chapter). Again, the process is nearly identical to how we made slides with the `xaringan` package. To make a presentation with Quarto, click on File > New File > Quarto Presentation. You'll want to choose Reveal JS to make your slides and leave the Engine and Editor options untouched, as seen in Figure \@ref(fig:quarto-new-presentation).
 
@@ -346,7 +346,7 @@ When we render this, we get an HTML file with our slides, seen in Figure \@ref(f
 print_nostarch_file_name(file_type_to_print = "png")
 ```
 
-```{r quarto-slides, out.width="100%", fig.cap="TODO"}
+```{r quarto-slides, out.width="100%", fig.cap="Slides made with Quarto"}
 knitr::include_graphics(here::here("assets/quarto-slides.png"))
 ```
 
@@ -355,6 +355,8 @@ save_image_for_nostarch(here::here("assets/quarto-slides.png"))
 ```
 
 Overall, the output looks similar to the default `xaringan` slides we made. However, remember how we had to manually add three dashes to make slides with `xaringan`? With Quarto, any first- or second-level headers make new slides so I was able to remove these (though you can use three dashes to manually add slide breaks). 
+
+#### Incrementally Revealing Content {-}
 
 Quarto slides also make it possible to incrementally reveal content. Bulleted and numbered lists can be made to incrementally reveal by default by adjusting the YAML. See here how I add `incremental: true` to the YAML.
 
@@ -383,6 +385,8 @@ When I do this, the content in all lists in my presentation will be revealed one
 ````
 
 This pattern using `:::` to start and end a section creates a section in the resulting HTML file known as a `<div>`. The HTML `<div>` tag allows you to define properties within that section. In the code above, adding `{.incremental}` sets a custom CSS class that makes the list reveal incrementally. 
+
+#### Aligning Content {-}
 
 We see a similar pattern when creating columns in Quarto slides. Let's say we want to create a slide with content in two columns, as in Figure \@ref(fig:quarto-slides-two-columns).
 
@@ -456,6 +460,8 @@ knitr::include_graphics(here::here("assets/quarto-slide-centered.png"))
 save_image_for_nostarch(here::here("assets/quarto-slide-centered.png"))
 ```
 
+#### Adding Background Images to Slides {-}
+
 Working in `xaringan` we added a background image to one of our slides. We can do the same thing in Quarto by applying the `background-image` attribute to a slide as follows.
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "css"}
@@ -475,6 +481,8 @@ knitr::include_graphics(here::here("assets/quarto-slide-background-image.png"))
 ```{r results='asis'}
 save_image_for_nostarch(here::here("assets/quarto-slide-background-image.png"))
 ```
+
+#### Customizing Your Slides with Themes and CSS {-}
 
 We've started making some changes to the look-and-feel of our Quarto slides. The sky is the limit in terms of further customizations. As with `xaringan`, there are two main ways to customize your slides: 
 
@@ -568,7 +576,7 @@ $presentation-h1-font-size: 150px;
 
 Because rendered Quarto slides are HTML documents, you can tweak them however you'd like with custom CSS. What's more, because our slides use reveal.js under the hood, all of the features built into that Javascript library work in Quarto. There are easy ways to add transitions, animations, interactive content, and much more. The demo Quarto presentation, available at https://quarto.org/docs/presentations/revealjs/demo/, shows many of these features in action. 
 
-### Websites {-}
+### Making Websites with Quarto {-}
 
 Quarto can also make websites. In the same way that we were able to make slides without an external package like `xaringan`, we can also make websites without an external package like `distill`. To create a Quarto website, go to File > New Project. Then select New Directory and you'll be presented with the menu in Figure \@ref(fig:new-project).
 
@@ -600,7 +608,7 @@ save_image_for_nostarch(here::here("assets/create-quarto-website.png"))
 
 Once you hit the Create Project button, you'll see a series of files created. There is an `index.qmd` and `about.qmd` file as well as a `_quarto.yml` and `styles.css` file. These files should sound familiar if you read Chapter \@ref(websites-chapter) on making websites with the `distill` package. The `.qmd ` files are where we'll add content; the `_quarto.yml` file is where we'll set options for the website as a whole; and the `styles.css` file is where we'll add CSS to customize the visual appearance of our website.
 
-#### Building our Website {-}
+#### Building the Website {-}
 
 Let's start with the `.qmd` files. Open `index.qmd` or `about.qmd` and you'll see some default content. I'm going to delete the default content from the `index.qmd` and replace it with the content from website we made in Chapter \@ref(websites-chapter). The only element I have removed is the `layout = "l-page"` that we used to make a wider layout for the map (we'll discuss how to make different layouts in Quarto below).
 
@@ -715,7 +723,7 @@ At this point, I could render the `index.qmd` file individually, but I know I wa
 print_nostarch_file_name(file_type_to_print = "png")
 ```
 
-```{r render-website-button, out.width="100%", fig.cap="TODO"}
+```{r render-website-button, out.width="100%", fig.cap="The render website button"}
 knitr::include_graphics(here::here("assets/render-website-button.png"))
 ```
 
@@ -748,7 +756,7 @@ execute:
 
 However, doing this will only make changes to that one file. Instead, we want to add them to the `_quarto.yml` file.
 
-#### Using the `_quarto.yml` file to Set Options for the Website {-}
+#### Setting Options for the Website {-}
 
 With `distill` we used the `_site.yml` file to make changes to all files in our website. In With Quarto, we use the `_quarto.yml` file for the same purpose. If you open the `_quarto.yml` file, you should see three sections:
 
@@ -805,6 +813,8 @@ save_image_for_nostarch(here::here("assets/covid-website-no-messages.png"))
 
 You can add any additional options that you would add to a single `.qmd` file to this section of the `_quarto.yml` file and it will apply them across all pages of your website. 
 
+#### Changing the Appearance of the Website with Themes and CSS {-}
+
 The other parts of the bottom section of the `_quarto.yml` file deal with the appearance of rendered files. The line `theme: cosmo` tells Quarto use the cosmo theme (the default when making websites). There are many themes available (the full list is available at https://quarto.org/docs/output-formats/html-themes.html) and I can choose a different one to show how it changes the output.
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "yaml"}
@@ -859,7 +869,7 @@ An alternative approach to customizing your website is to use Sass variables. Th
 $body-bg: #eeeeee;
 ````
 
-To get Quarto to use this `styles.scss` file, I adjust the `theme` line as follows. 
+To get Quarto to use the `styles.scss` file, I adjust the `theme` line as follows. 
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "yaml"}
 format:
@@ -901,6 +911,8 @@ save_image_for_nostarch(here::here("assets/quarto-website-no-toc.png"))
 
 This section of the `_quarto.yml` file is where you would add any additional options, such as figure height. 
 
+#### Adjusting the Website Title and Navigation Bar {-}
+
 The middle section of the `_quarto.yml` file deals with the title of the website as a whole as well as its navigation. I can change the title by adjusting that line. The `navbar` section functions nearly identically to how it did in Chapter \@ref(websites-chapter) when working with `distill`. The `href` is where you list the file you want to link to. The optional `text` line is where you manually specify the text that should show up for that link. Here are a couple changes to the default `_quarto.yml` to change the website title and the text for the About page link.
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "yaml"}
@@ -920,7 +932,7 @@ Figure \@ref(fig:quarto-website-navbar-changes) shows these changes applied to t
 print_nostarch_file_name(file_type_to_print = "png")
 ```
 
-```{r quarto-website-navbar-changes, out.width="100%", fig.cap="The website with chnages to the navigation bar"}
+```{r quarto-website-navbar-changes, out.width="100%", fig.cap="The website with changes to the navigation bar"}
 knitr::include_graphics(here::here("assets/quarto-website-navbar-changes.png"))
 ```
 
@@ -932,7 +944,7 @@ The title on the home page is still covid-website-quarto, but you could change t
 
 Finally, we come to the top section of the `_quarto.yml`. This is the most straightforward. The line `type: website` indicates that the current project is a website (other project types include books, wikis, and more). 
 
-#### Layouts
+#### Creating Wider Layouts {-}
 
 When we made our website with `distill` we used `layout = "l-page"` to make the map wider. We can accomplish the same thing with Quarto, though the syntax is slightly different. With Quarto, you can adjust the width of the output using the `:::` syntax we saw above to add HTML `<div>` tags. To make the map larger on our Quarto website,  we add `:::{.column-screen-inset}` at the beginning and `:::` at the end of the code block that makes it. 
 

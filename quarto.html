@@ -146,21 +146,30 @@ The following objects are masked from 'package:base':
     attr, isFALSE</code></pre>
 </div>
 </div>
-<section id="embracing-quarto-the-next-generation-tool-for-reproducible-reporting" class="level1">
-<h1>Embracing Quarto, the Next-Generation Tool for Reproducible Reporting</h1>
-<p>In mid-2022, the team at Posit (the company that makes the RStudio editor, the <code>tidyverse</code>, and many other tools to support R programmers) made an announcement: they had developed a new tool called Quarto, which they described as the next-generation version of R Markdown. Why did Posit feel the need to develop a new tool for reproducible reporting? They cited a few reasons:</p>
+<section id="quarto-the-next-generation-tool-for-reproducible-reporting" class="level1">
+<h1>Quarto, the Next-Generation Tool for Reproducible Reporting</h1>
+<p>In mid-2022, the team at Posit (the company that makes the RStudio editor, the <code>tidyverse</code>, and many other tools to support R programmers) made an announcement: they had developed a new tool called Quarto, which they described as the next-generation version of R Markdown. The Posit team explained a few of the reasons why they felt the need to develop a new tool for reproducible reporting:</p>
 <ol type="1">
 <li><strong>More consistent syntax</strong>: As you’ve seen in this book, the syntax used to create different outputs with R Markdown varies. For example, the <code>distill</code> package has layout options that don’t work in <code>xaringan</code>. And <code>xaringan</code> uses three dashes to indicate new slides, while three dashes in other output formats would create a horizontal line. With Quarto, the idea is to make the syntax used to create different outputs more consistent.</li>
-<li><strong>Support for multiple languages</strong>: While R Markdown does work with languages such as Python, having the word R in the name was off-putting for non-R users. Creating a tool like Quarto was Posit’s “attempt to bring R Markdown to everyone.” What’s more Quarto makes it straightforward for users to include code from multiple languages in a single document.</li>
-<li><strong>Support for multiple code editors</strong>: R Markdown is designed to work in the RStudio IDE. With the move to support additional languages, it was important to support the code editors that users of those languages prefer. Quarto works in RStudio as well as editors such as VS Code, JupyterLab, and others.</li>
+<li><strong>Support for multiple languages</strong>: While R Markdown does work with languages such as Python, having the word R in the name was off-putting for non-R users. Creating a tool like Quarto was Posit’s “attempt to bring R Markdown to everyone.” Quarto makes it straightforward for users to include code from multiple languages in a single document.</li>
+<li><strong>Support for multiple code editors</strong>: R Markdown is designed to work in the RStudio IDE. With the move to support additional languages, it was important to support the code editors that users of those languages prefer. Quarto works in RStudio as well as editors such as VS Code and JupyterLab.</li>
 </ol>
-<p>While the benefits of Quarto are clearest for non-R users, there are also many reasons why R users may want to use Quarto. I’ll focus in this chapter on the benefits for R users who use RStudio. I’ll begin by explaining how to set up and use Quarto. We’ll focus on some of the most important differences between Quarto and R Markdown. I’ll then demonstrate how to make each of the products we made in R Markdown with Quarto. Parameterized reporting, presentations, and websites are all things that Quarto can do, and this chapter will show you how.</p>
+<p>While the benefits of Quarto are clearest for non-R users, there are also many reasons why R users may want to use Quarto. I’ll focus in this chapter on the benefits for R users who use RStudio. I’ll begin by explaining how to set up and use Quarto before going over some of the most important differences between Quarto and R Markdown. I’ll then demonstrate how to make each of the products we made in previous chapters with R Markdown using Quarto. Parameterized reporting, presentations, and websites are all things that Quarto can do, and this chapter will show you how.</p>
 <section id="getting-started-with-quarto" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="getting-started-with-quarto">Getting Started with Quarto</h2>
-<p>To get started with Quarto, we need to first install it. The good news is that newer versions of RStudio (2022.07.1 and later) come with Quarto installed. To check your RStudio version, click RStudio in the top menu bar, then click About RStudio. If you have an older version of RStudio, update it now and Quarto will be installed for you.</p>
-<p>Once you have Quarto installed, you’re ready to work with it. We’ll create a Quarto document by clicking File &gt; New File &gt; Quarto Document. You’ll see a menu, shown in Figure @ref(fig:TODO), that looks like what you saw when creating an R Markdown document.</p>
-<p>TODO: Add screenshot</p>
-<p>I’ll give my document a title and choose HTML as my output format. The engine option allows users to select a different way to render documents. I’ll keep the default of <code>Knitr</code>, which is the same tool that R Markdown uses to render documents. I’ll keep the Use visual markdown editor unchecked (this option allows you to use an interface that looks more like Microsoft Word). The Quarto document that is created has default content, just like R Markdown documents.</p>
+<p>To get started with Quarto, we first need to make sure it is installed. The good news is that newer versions of RStudio (2022.07.1 and later) come with Quarto installed. To check your RStudio version, click RStudio in the top menu bar, then click About RStudio. If you have an older version of RStudio, update it now (repeat the steps outline in Chapter @ref(#howto-chapter) on downloading RStudio) and Quarto will be installed for you.</p>
+<p>Once you have Quarto installed, you’re ready to work with it. You can create a Quarto document by clicking File &gt; New File &gt; Quarto Document. You’ll see a menu, shown in Figure @ref(fig:new-quarto-doc), that looks like what you saw when creating an R Markdown document.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/new-quarto-doc.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">The RStudio menu for creating a new Quarto document</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>I’ll give my document a title and choose HTML as my output format. The engine option allows users to select a different way to render documents. I’ll keep the default of <code>Knitr</code>, which is the same tool that R Markdown uses to render documents. I’ll keep the Use visual markdown editor unchecked (this option allows you to use an interface that looks more like Microsoft Word, but I’ve found it finicky). The Quarto document that is created has default content, just like R Markdown documents.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "My Report"</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
@@ -202,7 +211,7 @@ output: html_document
 title: "My Report"
 format: html
 ---</code></pre>
-<p>A second difference between R Markdown and Quarto is that the <code>setup</code> code chunk seen in the former does not exist in the latter. Recall from Chapter @ref(rmarkdown-chapter) that the <code>setup</code> code chunk sets default options on things like whether we show code, charts and tables, and other elements in the rendered versions of our documents. With Quarto, these options are set in the YAML. For example, if we want to hide code as well as all warnings and messages from out rendered document, we add them under <code>execute</code> in our YAML as follows (Quarto also allows you to write true and false in lower case):</p>
+<p>A second difference between R Markdown and Quarto is that the <code>setup</code> code chunk seen in the former does not exist in the latter. Recall from Chapter @ref(rmarkdown-chapter) that the <code>setup</code> code chunk sets default options on things like whether we show code, charts and tables, and other elements in the rendered versions of our documents. With Quarto, these options are set in the YAML. For example, if we want to hide code as well as all warnings and messages from our rendered document, we add them under <code>execute</code> in our YAML as follows (Quarto also allows you to write <code>true</code> and <code>false</code> in lower case):</p>
 <pre><code>---
 title: "My Report"
 format: html
@@ -211,11 +220,11 @@ execute:
   warning: false
   message: false
 ---</code></pre>
-<p>In R Markdown, if we want to override options at the individual code chunk level, we do it as follows. The code chunk below would show both the code <code>2 * 2</code> as well as the output (4).</p>
+<p>In R Markdown, if we want to override options at the individual code chunk level, we do it by adding them within the curly brackets that start a code chunk. The code chunk below would show both the code <code>2 * 2</code> as well as the output (4).</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r echo = TRUE}</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="dv">2</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>With Quarto, we use a slightly different syntax to set individual chunk-level options. You can see below how the chunk option is not set within the curly brackets, but instead in the code chunk itself. We use the text <code>#|</code> (this is known as the <strong>hash pipe</strong>) at the start of a line to indicate that we are setting options.</p>
+<p>With Quarto, we use a slightly different syntax to set individual chunk-level options. You can see below how the chunk option is not set within the curly brackets, but instead in the code chunk itself. We use the text <code>#|</code> (known as the <strong>hash pipe</strong>) at the start of a line to indicate that we are setting options.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="dv">2</span></span>
@@ -241,15 +250,23 @@ execute:
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span>
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Helpfully for those of us coming from R Markdown, <code>fig.height</code> and similar options with periods in them will continue to work if you forget to make the switch. A list of all code chunk options can be found on the Quarto website: https://quarto.org/docs/reference/cells/cells-knitr.html.</p>
-<p>Rendering your Quarto document to HTML (or any other format) follows the same process as R Markdown. While you use the Knit button to render an R Markdown document, with Quarto the button is called Render. Figure @ref(fig:TODO) shows both buttons.</p>
-<p>TODO: Add screenshot</p>
-<p>Clicking the Render button will turn the Quarto document I created above into an HTML file, seen in Figure @ref(fig:TODO).</p>
-<p>TODO: Add screenshot</p>
+<p>Rendering your Quarto document to HTML (or any other format) follows the same process as R Markdown. While you use the Knit button to render an R Markdown document, with Quarto the button is called Render. Figure @ref(fig:render-button) shows the Render button.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/render-button.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">The Render button</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Clicking the Render button will turn the Quarto document into an HTML file, Word document, or any other output format you select.</p>
 <p>As you’ve seen, the differences between R Markdown and Quarto are mostly around syntax. All of the general concepts you learned about generating reports with the single-tool workflow described in Chapter @ref(rmarkdown-chapter) apply to Quarto as well.</p>
 </section>
 <section id="making-different-types-of-outputs-with-quarto" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="making-different-types-of-outputs-with-quarto">Making Different Types of Outputs with Quarto</h2>
-<p>Now that you’ve learned how Quarto works, let’s make a few different things with it. We’ll go through the outputs that you’ve seen how to develop in Chapters @ref(parameterized-reporting-chapter), @ref(presentations-chapter), and @ref(websites-chapter).</p>
+<p>Now that you’ve learned how Quarto works to create a simple document, let’s make a few different things with it. We’ll go through the outputs that you’ve learned to make in Chapters @ref(parameterized-reporting-chapter), @ref(presentations-chapter), and @ref(websites-chapter).</p>
 <section id="parameterized-reporting-with-quarto" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="parameterized-reporting-with-quarto">Parameterized Reporting with Quarto</h3>
 <p>Let’s start with parameterized reporting. The process of making parameterized reports with Quarto is nearly identical to how it’s done with R Markdown. Below, I’ve taken the R Markdown document used to make the Urban Institute COVID Report in Chapter @ref(parameterized-reporting-chapter) and adapted it for Quarto. I did so by copying the <code>.Rmd</code> file and changing its extension to <code>.qmd</code>. From there, I made the following changes:</p>
@@ -321,9 +338,9 @@ execute:
 <span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="cn">NULL</span>,</span>
 <span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Cases per 100,000"</span>)</span>
 <span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Despite these small differences, when rendered the report looks almost exactly the same as the one we produced in Chapter @ref(parameterized-reporting-chapter). Also nearly identical is the process of creating one report for each state. We can take the <code>render.R</code> script file we used to make parameterized reports in Chapter @ref(parameterized-reporting-chapter) and, with a few small tweaks, it works. In the updated <code>render.R</code> file below, I made the following tweaks:</p>
+<p>Despite these small differences, the rendered report looks almost exactly the same as the one we produced in Chapter @ref(parameterized-reporting-chapter). Also nearly identical is the process of creating one report for each state. We can take the <code>render.R</code> script file we used to make parameterized reports in Chapter @ref(parameterized-reporting-chapter) and, with a few small tweaks, it works. In the updated <code>render.R</code> file below, I made the following tweaks:</p>
 <ol type="1">
-<li>Load the <code>quarto</code> package instead of the <code>rmarkdown</code> package.</li>
+<li>Loaded the <code>quarto</code> package instead of the <code>rmarkdown</code> package.</li>
 <li>Made the input file <code>urban-covid-budget-report.qmd</code> instead of <code>urban-covid-budget-report.Rmd</code>.</li>
 <li>In the <code>reports</code> tibble I created, used <code>execute_params</code> instead of <code>params</code>.</li>
 <li>On the last line, used the <code>quarto_render()</code> function instead of the <code>render()</code> function from the <code>markdown</code> package.</li>
@@ -354,8 +371,17 @@ execute:
 </section>
 <section id="presentations" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="presentations">Presentations</h3>
-<p>Quarto can also produce presentations like those we made in Chapter @ref(presentations-chapter). Again, the process is nearly identical to how we made slides with the <code>xaringan</code> package. To make a presentation with Quarto, click on File &gt; New File &gt; Quarto Presentation. You’ll want to choose Reveal JS to make your slides and leave the Engine and Editor options untouched, as seen in Figure @ref(fig:TODO).</p>
-<p>TODO: Add screenshot</p>
+<p>Quarto can also produce presentations like those we made in Chapter @ref(presentations-chapter). Again, the process is nearly identical to how we made slides with the <code>xaringan</code> package. To make a presentation with Quarto, click on File &gt; New File &gt; Quarto Presentation. You’ll want to choose Reveal JS to make your slides and leave the Engine and Editor options untouched, as seen in Figure @ref(fig:quarto-new-presentation).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/quarto-new-presentation.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">The RStudio menu to make a new Quarto presentation</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
 <p>The slides we’ll make use the reveal.js javascript library under the hood. Making slides in this format is the Quarto approach that is most similar to making slides with <code>xaringan</code>. Below I’ve taken the code used to make a presentation with <code>xaringan</code> in Chapter @ref(presentations-chapter) and made a few updates to make it work with Quarto.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Penguins Report"</span></span>
@@ -404,9 +430,18 @@ execute:
 <span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a>The chart shows the distribution of bill lengths. The average bill length is <span class="in">`r average_bill_length`</span> millimeters.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>When we render this, we get an HTML file with our slides, seen in Figure @ref(fig:TODO) below.</p>
-<p>TODO: Add screenshot</p>
-<p>Overall, the output looks similar to the default <code>xaringan</code> slides we made. However, remember how we had to manually add three dashes to make slides with <code>xaringan</code>? With Quarto, any first- or second-level headers make new slides (you can also use three dashes to make a slide break).</p>
+<p>When we render this, we get an HTML file with our slides, seen in Figure @ref(fig:quarto-slides) below.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/quarto-slides.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Slides made with Quarto</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Overall, the output looks similar to the default <code>xaringan</code> slides we made. However, remember how we had to manually add three dashes to make slides with <code>xaringan</code>? With Quarto, any first- or second-level headers make new slides so I was able to remove these (though you can use three dashes to manually add slide breaks).</p>
 <p>Quarto slides also make it possible to incrementally reveal content. Bulleted and numbered lists can be made to incrementally reveal by default by adjusting the YAML. See here how I add <code>incremental: true</code> to the YAML.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Penguins Report"</span></span>
@@ -426,21 +461,45 @@ execute:
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Chinstrap</span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>:::</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This pattern using <code>:::</code> to start and end a section creates a section in the resulting HTML file known as a <code>&lt;div&gt;</code>. The HTML <code>&lt;div&gt;</code> tag allows you to define properties within that section. In the code above, adding <code>{.incremental}</code> sets a custom CSS class that makes the list reveal incrementally.</p>
-<p>We see a similar pattern when creating columns in Quarto slides. Let’s say we want to create a slide with content in two columns, as in Figure @ref(fig:TODO).</p>
-<p>TODO: Add screenshot.</p>
+<p>We see a similar pattern when creating columns in Quarto slides. Let’s say we want to create a slide with content in two columns, as in Figure @ref(fig:quarto-slides-two-columns).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/quarto-slides-two-columns.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">A slide with two columns</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
 <p>The code below is what I used to create the two-column slide. You’ll see the <code>:::</code> as well as <code>::::</code>. This creates nested divs. We first have a <code>columns</code> class, which tells the HTML that all content within the <code>::::</code> should be laid out as columns. Then, we use <code>::: {.column width="50%"}</code> to start a div that takes up half of the width of the slide. With both <code>::::</code> and <code>:::</code>, we have to also have a matching closing <code>::::</code> and <code>:::</code> to indicate the end of the section.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>:::: {.columns}</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>::: {.column width="50%"}</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>Adelie</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>::: {.column width="50%"}</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>Gentoo</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm)) <span class="sc">+</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>::::</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>With <code>xaringan</code> we were also able to easily center content on our slides by surrounding it with <code>.center[]</code>. Doing the same thing in Quarto is slightly more complicated. Quarto has no built-in CSS class to center content so we need to define it ourselves. I begin by creating a CSS code chunk and creating a custom class called <code>center-slide</code>. Using a bit of CSS, I tell it to center align all content (despite it saying <code>text-align</code> you’ll see that it also aligns images).</p>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>::: {.column width="50%"}</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> bill_depth_mm)) <span class="sc">+</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>::::</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>With <code>xaringan</code> we were also able to easily center content on our slides by surrounding it with <code>.center[]</code>. Doing the same thing in Quarto is slightly more complicated. Quarto has no built-in CSS class to center content so we need to create it ourselves. I begin by creating a CSS code chunk and creating a custom class called <code>center-slide</code>. Using a bit of CSS, I tell it to center align all content (despite it saying <code>text-align</code> you’ll see that it also aligns images).</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>```{css}</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">.center-slide</span> {</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">text-align</span>: <span class="dv">center</span><span class="op">;</span></span>
@@ -448,12 +507,30 @@ execute:
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>I then apply the new <code>center-slide</code> class by putting it next to the title of the slide as follows.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>## Bill Length {<span class="fu">.center-slide</span>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>With our custom CSS applied, the slide now has all of its content centered, as seen in Figure @ref(fig:TODO).</p>
-<p>TODO: Add screenshot</p>
-<p>Working in <code>xaringan</code> we added a background image to one of our slides. We can do the same in Quarto by applying the <code>background-image</code> attribute to a slide as follows.</p>
+<p>With our custom CSS applied, the slide now has all of its content centered, as seen in Figure @ref(fig:quarto-slide-centered).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/quarto-slide-centered.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">A slide with the content centered</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Working in <code>xaringan</code> we added a background image to one of our slides. We can do the same thing in Quarto by applying the <code>background-image</code> attribute to a slide as follows.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>## Penguins {background-image="penguins<span class="fu">.jpg</span>"}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This will add a slide with the text Penguins in front of an image of penguins, as seen in Figure @ref(fig:TODO).</p>
-<p>TODO: Add screenshot</p>
+<p>This will add a slide with the text Penguins in front of an image of penguins, as seen in Figure @ref(fig:quarto-slide-background-image).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/quarto-slide-background-image.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">A slide with a background image</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
 <p>We’ve started making some changes to the look-and-feel of our Quarto slides. The sky is the limit in terms of further customizations. As with <code>xaringan</code>, there are two main ways to customize your slides:</p>
 <ol type="1">
 <li>Using existing themes</li>
@@ -461,23 +538,32 @@ execute:
 </ol>
 <p>Themes are the easiest way to change what your slides look like. Quarto has many themes you can apply by adding their name to your YAML as follows:</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Penguins Reports"</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Penguins Report"</span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co">  revealjs: </span></span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co">    theme: dark</span></span>
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Using this theme will change from the default light theme to a dark theme, as seen in Figure @ref(fig:TODO).</p>
-<p>TODO: Add screenshot</p>
+<p>Using this theme will change from the default light theme to a dark theme. The title slide with the dark theme applied can be seen in Figure @ref(fig:quarto-slide-dark).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/quarto-slide-dark.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">A slide with the dark theme applied</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
 <p>To see the full list of available themes, go to https://quarto.org/docs/presentations/revealjs/themes.html.</p>
 <p>You can also write custom CSS to change your slides further. Quarto uses a type of CSS called Sass. The most important practical implication of using Sass is that we can use variables in our CSS. There are a number of variables that we can target to make changes to our slides. If you recall how the <code>xaringanthemer</code> package allowed us to target things like <code>header_h2_font_size</code> and <code>header_color</code>, using pre-existing variables with Sass will feel very similar.</p>
 <p>To start, I’ll create a Sass file called <code>theme.scss</code> and add two sections to it as follows:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">/*-- scss:defaults --*/</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">/*-- scss:rules --*/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>In the <code>scss:defaults</code> section, we can use the Quarto Sass variables. For example, to change the color and size of second-level headers, I would add this code:</p>
+<p>In the <code>scss:defaults</code> section, we can use the Quarto Sass variables. For example, to change the color and size of first-level headers, I would add this code:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">/*-- scss:defaults --*/</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>$presentation-heading-color<span class="in">: "red</span>"</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>$presentation-h2-font-size<span class="in">: 50px;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>$presentation-heading-color<span class="in">: red</span>;</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>$presentation-h1-font-size<span class="in">: 150px;</span></span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co">/*-- scss:rules --*/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>To apply these tweaks to my slides, I need to adjust my YAML to tell Quarto use my custom <code>theme.scss</code> file. I do this as follows:</p>
@@ -487,12 +573,21 @@ execute:
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co">  revealjs: </span></span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co">    theme: theme.scss</span></span>
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Figure @ref(fig:TODO) shows the changes applied to my slides.</p>
-<p>TODO: Add screenshot</p>
-<p>The <code>scss:defaults</code> is for using available variables (the full list of variables is available at https://quarto.org/docs/presentations/revealjs/themes.html#sass-variables). The <code>sass:rules</code> is where you would add additional tweaks that can’t be done by targeting variables. For example, I could take my code from above to center all of the content in a slide and add it to the <code>scss:defaults</code> section.</p>
+<p>Figure @ref(fig:quarto-slide-scss) shows the changes applied to my rendered slides.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/quarto-slide-scss.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">A slide with custom CSS applied to it</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The <code>scss:defaults</code> section is for using available variables (the full list of variables is available at https://quarto.org/docs/presentations/revealjs/themes.html#sass-variables). The <code>sass:rules</code> section is where you would add additional tweaks that can’t be done by targeting variables. For example, I could take my code from above to center all of the content in a slide and add it to the <code>scss:defaults</code> section.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">/*-- scss:defaults --*/</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>$presentation-heading-color<span class="in">: red</span>;</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>$presentation-h2-font-size<span class="in">: 100px;</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>$presentation-h1-font-size<span class="in">: 150px;</span></span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co">/*-- scss:rules --*/</span></span>
 <span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="fu">.center-slide</span> {</span>
@@ -502,14 +597,32 @@ execute:
 </section>
 <section id="websites" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="websites">Websites</h3>
-<p>Quarto can also make websites. In the same way that we were able to make slides without an external package like <code>xaringan</code>, we can also make websites without an external package like <code>distill</code>. To create a Quarto website, go to File &gt; New Project. Then select New Project and you’ll be presented with the menu in Figure @ref(fig:TODO).</p>
-<p>TODO: Add screenshot</p>
-<p>Select Quarto website and you’ll be prompted to choose a directory to place it in. Keep the default Engine (Knitr), check Create a git repository (this will only show up if you have already installed git) and leave everything else unchecked. Your screen should look like Figure @ref(fig:TODO).</p>
-<p>TODO: Add screenshot</p>
+<p>Quarto can also make websites. In the same way that we were able to make slides without an external package like <code>xaringan</code>, we can also make websites without an external package like <code>distill</code>. To create a Quarto website, go to File &gt; New Project. Then select New Directory and you’ll be presented with the menu in Figure @ref(fig:new-project).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/new-project.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">The RStudio new project menu</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Select Quarto website and you’ll be prompted to choose a directory to place it in. Keep the default Engine (Knitr), check Create a git repository (this will only show up if you have already installed git) and leave everything else unchecked. Your screen should look like Figure @ref(fig:create-quarto-website).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/create-quarto-website.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">The RStudio menu to create a Quarto website</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
 <p>Once you hit the Create Project button, you’ll see a series of files created. There is an <code>index.qmd</code> and <code>about.qmd</code> file as well as a <code>_quarto.yml</code> and <code>styles.css</code> file. These files should sound familiar if you read Chapter @ref(websites-chapter) on making websites with the <code>distill</code> package. The <code>.qmd</code> files are where we’ll add content; the <code>_quarto.yml</code> file is where we’ll set options for the website as a whole; and the <code>styles.css</code> file is where we’ll add CSS to customize the visual appearance of our website.</p>
 <section id="building-our-website" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="building-our-website">Building our Website</h4>
-<p>Let’s start with the <code>.qmd</code> files. If you open <code>index.qmd</code> or <code>about.qmd</code> and you’ll see some default content. I’m going to delete the default content from the <code>index.qmd</code> and replace it with the content from website we made in Chapter @ref(websites-chapter). The only element I have removed is the <code>layout = "l-page"</code> that we used to make a wider layout for the map (we’ll discuss how to make different layouts in Quarto below).</p>
+<p>Let’s start with the <code>.qmd</code> files. Open <code>index.qmd</code> or <code>about.qmd</code> and you’ll see some default content. I’m going to delete the default content from the <code>index.qmd</code> and replace it with the content from website we made in Chapter @ref(websites-chapter). The only element I have removed is the <code>layout = "l-page"</code> that we used to make a wider layout for the map (we’ll discuss how to make different layouts in Quarto below).</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Load packages</span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -615,18 +728,38 @@ execute:
 <span id="cb25-103"><a href="#cb25-103" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-104"><a href="#cb25-104" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(covid_chart)</span>
 <span id="cb25-105"><a href="#cb25-105" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>At this point, I could render the <code>index.qmd</code> file individually, but I know I want to render the entire website so let’s do that. You can build a Quarto website just as you did a <code>distill</code> website. Look for the Build tab in the top right of RStudio and click the button that says Render Website. The rendered website should now appear in the Viewer pane on the bottom right panel of RStudio. If you go to the Files pane on the same panel you will also see that a <em>site</em> folder has been created. If you go into this folder you will see all of the content in your rendered site. I’ll open the <code>index.html</code> file in my web browser. You can see the website in Figure @ref(fig:TODO).</p>
-<p>TODO: Add screenshot</p>
+<p>At this point, I could render the <code>index.qmd</code> file individually, but I know I want to render the entire website so let’s do that. You can build a Quarto website just as you did a <code>distill</code> website. Look for the Build tab in the top right of RStudio and click the button that says Render Website. Figure @ref(fig:render-website-button) shows what you should see.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/render-website-button.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">The render website button</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The rendered website should now appear in the Viewer pane on the bottom right panel of RStudio. If you go to the Files pane on the same panel you will also see that a <code>_site</code> folder has been created. If you go into this folder you will see all of the content in your rendered site. I’ll open the <code>index.html</code> file in my web browser. You can see the website in Figure @ref(fig:covid-website-messages).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/covid-website-messages.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">The Quarto website with warnings and messages</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
 <p>As you can see, there are a lot of warnings and messages that we don’t want to show. In R Markdown we removed these in our <code>setup</code> code chunk, but with Quarto we do it in the YAML. I could add this code to the <code>index.qmd</code> YAML, as we did when making a presentation, to remove all code, warnings, and messages from the output:</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="an">execute:</span><span class="co"> </span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  echo: false</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  warning: false</span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  message: false</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>However, doing this will only make changes to that one file.</p>
+<p>However, doing this will only make changes to that one file. Instead, we want to add them to the <code>_quarto.yml</code> file.</p>
 </section>
 <section id="using-the-_quarto.yml-file-to-set-options-for-the-website" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="using-the-_quarto.yml-file-to-set-options-for-the-website">Using the <code>_quarto.yml</code> file to Set Options for the Website</h4>
-<p>With <code>distill</code> we used the <code>_site.yml</code> file to make changes to all files in our website. In With Quarto, we use the <code>_quarto.yml</code> file for the same purpose. If open the <code>_quarto.yml</code> file, we see three sections:</p>
+<p>With <code>distill</code> we used the <code>_site.yml</code> file to make changes to all files in our website. In With Quarto, we use the <code>_quarto.yml</code> file for the same purpose. If you open the <code>_quarto.yml</code> file, you should see three sections:</p>
 <ol type="1">
 <li>The top sets the project type (in this case, a website).</li>
 <li>The middle section is where we set the title of the website as a whole and determine the options for our navigation bar.</li>
@@ -648,7 +781,7 @@ execute:
 <span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> cosmo</span></span>
 <span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">css</span><span class="kw">:</span><span class="at"> styles.css</span></span>
 <span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Let’s start from the bottom. To remove code, warnings, and messages for all pages in our website, add the portion of the YAML to the <code>_quarto.yml</code> file.</p>
+<p>Let’s start from the bottom. To remove code, warnings, and messages for all pages in our website, add the portion of the YAML we created above to the <code>_quarto.yml</code> file. The bottom section should now look like this:</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> cosmo</span></span>
@@ -658,38 +791,84 @@ execute:
 <span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">echo</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
 <span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">warning</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
 <span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">message</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>If I now build the website again, I will see it, as in Figure @ref(fig:TODO), with just the content I want to show.</p>
-<p>TODO: Add screenshot</p>
+<p>If I now build the website again, I will see it, as in Figure @ref(fig:covid-website-no-messages), with just the content I want to show.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/covid-website-no-messages.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">The website with warnings and messages removed</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
 <p>You can add any additional options that you would add to a single <code>.qmd</code> file to this section of the <code>_quarto.yml</code> file and it will apply them across all pages of your website.</p>
-<p>The other parts of this section of the <code>_quarto.yml</code> file deal with the appearance of rendered files. The line <code>theme: cosmo</code> tells Quarto use the cosmo theme. There are many themes available (the full list is available at https://quarto.org/docs/output-formats/html-themes.html) and I can choose a different one to show how it changes the output.</p>
+<p>The other parts of the bottom section of the <code>_quarto.yml</code> file deal with the appearance of rendered files. The line <code>theme: cosmo</code> tells Quarto use the cosmo theme (the default when making websites). There are many themes available (the full list is available at https://quarto.org/docs/output-formats/html-themes.html) and I can choose a different one to show how it changes the output.</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> minty</span></span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">css</span><span class="kw">:</span><span class="at"> styles.css</span></span>
 <span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This change results in changes to the colors and fonts on the website, as seen in Figure @ref(fig:TODO).</p>
-<p>TODO: Add screenshot</p>
-<p>In addition to using pre-built themes, you can also customize your website with CSS. The <code>css: styles.css</code> section in the <code>_quarto.yml</code> file indicates that Quarto will use any CSS in the <code>styles.css</code> file when rendering. For example, I can add this to the <code>styles.css</code> to make first-level headers 50 pixels.</p>
+<p>Using the minty theme results in changes to the colors and fonts on the website, as seen in Figure @ref(fig:covid-website-minty).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/covid-website-minty.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">The website with the minty theme</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In addition to using pre-built themes, you can also customize your website with CSS. The <code>css: styles.css</code> section in the <code>_quarto.yml</code> file indicates that Quarto will use any CSS in the <code>styles.css</code> file when rendering. For example, I can add this to the <code>styles.css</code> to make first-level headers red and 50 pixels.</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="at">h1 {</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">font-size</span><span class="kw">:</span><span class="at"> 50px;</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="at">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The re-rendered <code>index.html</code>, seen in Figure @ref(fig:TODO), shows the large headings.</p>
-<p>TODO: Add screenshot</p>
-<p>An alternative approach to customizing your website is to use Sass variables. The process for using Sass variables in a <code>.scss</code> file is identical to that laid out above. For example, I can create a file called <code>styles.scss</code> and add a line like this to change the body background to be the same light green as the top navigation bar.</p>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">color</span><span class="kw">:</span><span class="at"> red;</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">font-size</span><span class="kw">:</span><span class="at"> 50px;</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="at">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The re-rendered <code>index.html</code>, seen in Figure @ref(fig:covid-website-custom-css), shows the large red headings.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/covid-website-custom-css.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">The website with custom CSS applied</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>An alternative approach to customizing your website is to use Sass variables. The process for using Sass variables in a <code>.scss</code> file is identical to that laid out above. For example, I can create a file called <code>styles.scss</code> and add a line like this to change the body background to be a light gray color.</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="at">/*-- scss:defaults --*/</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">$body-bg</span><span class="kw">:</span><span class="co"> #78c2ad;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">$body-bg</span><span class="kw">:</span><span class="co"> #eeeeee;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>To get Quarto to use this <code>styles.scss</code> file, I adjust the <code>theme</code> line as follows.</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">minty</span><span class="kw">,</span><span class="at"> styles.scss</span><span class="kw">]</span></span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">css</span><span class="kw">:</span><span class="at"> styles.css</span></span>
 <span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The syntax <code>theme: [minty, styles.scss]</code> tells Quarto to use the minty theme and then make any additional tweaks based on the <code>styles.scss</code> file. If I render my website again, I can see the light green background throughout. Figure @ref(fig:TODO) shows the current version.</p>
-<p>TODO: Add screenshot</p>
+<p>The syntax <code>theme: [minty, styles.scss]</code> tells Quarto to use the minty theme and then make any additional tweaks based on the <code>styles.scss</code> file. If I render my website again, I can see the light gray background throughout. Figure @ref(fig:quarto-website-scss) shows the current version.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/quarto-website-scss.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">The website with custom CSS applied through styles.scss</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
 <p>Note that when you add a <code>.SCSS</code> file, the tweaks made in your CSS file are no longer applied. If you wanted to use those, you’d need to add them to the <code>styles.scss</code> file.</p>
-<p>The line <code>toc: true</code> creates a table of contents on the side of rendered HTML files, as seen in Figure @ref(fig:TODO) below.</p>
-<p>TODO: Add screenshot</p>
-<p>You can remove it by changing <code>true</code> to <code>false</code>. This section of the <code>_quarto.yml</code> file is where you would add any additional options, such as figure height.</p>
+<p>The line <code>toc: true</code> creates a table of contents on the side of rendered HTML files that you can see in the screenshots above. You can remove it by changing <code>true</code> to <code>false</code>, as seen in Figure @ref(fig:quarto-website-no-toc) below.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/quarto-website-no-toc.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">The website without the table of contents on pages</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This section of the <code>_quarto.yml</code> file is where you would add any additional options, such as figure height.</p>
 <p>The middle section of the <code>_quarto.yml</code> file deals with the title of the website as a whole as well as its navigation. I can change the title by adjusting that line. The <code>navbar</code> section functions nearly identically to how it did in Chapter @ref(websites-chapter) when working with <code>distill</code>. The <code>href</code> is where you list the file you want to link to. The optional <code>text</code> line is where you manually specify the text that should show up for that link. Here are a couple changes to the default <code>_quarto.yml</code> to change the website title and the text for the About page link.</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">website</span><span class="kw">:</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Quarto COVID Website"</span></span>
@@ -699,7 +878,19 @@ execute:
 <span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">text</span><span class="kw">:</span><span class="at"> Home</span></span>
 <span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">href</span><span class="kw">:</span><span class="at"> about.qmd</span></span>
 <span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">text</span><span class="kw">:</span><span class="at"> About this Website</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Finally, we come to the top section of the <code>_quarto.yml</code>. This is the most straightforward. The line <code>type: website</code> indicates that the current project is a website. You could make additions here (for example, you could add the line <code>output_dir: website</code> to have the website render in the <code>website</code> directory rather than the default <code>_site</code> directory), but that’s not necessary.</p>
+<p>Figure @ref(fig:quarto-website-navbar-changes) shows these changes applied to the website.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/quarto-website-navbar-changes.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">The website with chnages to the navigation bar</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The title on the home page is still covid-website-quarto, but you could change that in the <code>index.qmd</code> file.</p>
+<p>Finally, we come to the top section of the <code>_quarto.yml</code>. This is the most straightforward. The line <code>type: website</code> indicates that the current project is a website (other project types include books, wikis, and more).</p>
 </section>
 <section id="layouts" class="level4">
 <h4 class="anchored" data-anchor-id="layouts">Layouts</h4>
@@ -723,33 +914,70 @@ execute:
 <span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>:::</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Figure @ref(fig:TODO) shows the wider map.</p>
-<p>TODO: Add screenshot</p>
+<p>Figure @ref(fig:quarto-website-wide-section) shows the wider map.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/quarto-website-wide-section.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">The website with a wider section</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
 <p>You may have noticed that I also added the line <code>#| out-width: 100%</code> in the code chunk. This is because we need to specify that the map should take up all of the available width. Without this line, the map would only take up a portion of the available width. There are a number of different output widths you can use (the full list is available at https://quarto.org/docs/authoring/article-layout.html).</p>
 </section>
 <section id="hosting-your-quarto-website" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="hosting-your-quarto-website">Hosting Your Quarto Website</h4>
-<p>Once we finished making our <code>distill</code> website in Chapter @ref(websites-chapter), we talked about hosting it using GitHub Pages. You can do the same thing with a Quarto website. Recall that GitHub Pages requires you to publish your website based on the files in the root of your repository or in the <code>docs</code> folder. I’ll do the latter by changing my <code>_quarto.yml</code> file so that the site outputs in the <code>docs</code> folder. To do this, I add a line to the top section of the <code>_quarto.yml</code> file.</p>
+<p>After we finished making our <code>distill</code> website in Chapter @ref(websites-chapter), we discussed hosting it using GitHub Pages. You can do the same thing with a Quarto website. Recall that GitHub Pages requires you to publish your website based on the files in the root of your repository or in the <code>docs</code> folder. I’ll do the latter by changing my <code>_quarto.yml</code> file so that the site outputs in the <code>docs</code> folder. To do this, I add a line to the top section of the <code>_quarto.yml</code> file.</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">project</span><span class="kw">:</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> website</span></span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">output-dir</span><span class="kw">:</span><span class="at"> docs</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Now, when I render my site, the HTML and other files show up in the <code>docs</code> directory. At this point, I can push my repository to GitHub, adjust the GitHub Pages settings as I did in Chapter @ref(websites-chapter) and I will be given a URL where my Quarto website will live.</p>
-<p>In addition to using GitHub Pages, Quarto has a free service called Quarto Pub that makes it straightforward to get your materials online. Especially if you are not a GitHub user, this is a great option to share your work. To show you how Quarto Pub works, let me publish the website we just made to it. To get started, look for the Terminal tab on the bottom left panel of RStudio. Click it and at the prompt enter the text <code>quarto publish</code>. Doing so will bring up a list of ways you can publish your website. See Figure @ref(fig:TODO) below.</p>
-<p>TODO: Add screenshot</p>
-<p>Press enter to select Quarto Pub. You’ll then be asked to authorize. Type Y to do so, which will take you to quartopub.com. Sign up for an account (or sign in if you already have one). You should see a screen like Figure @ref(fig:TODO), indicating that you have successfully signed in and authorized RStudio to connect with Quarto Pub.</p>
-<p>TODO: Add screenshot</p>
-<p>From there, you can return to RStudio. You’ll be prompted to select a name for your website on Quarto Pub. The easiest thing is to select the same name as your project (in my case, that’s <code>covid-website-quarto</code>). Enter the name and hit enter. The site will then be published and you will be taken to the site, as seen in Figure @ref(fig:TODO).</p>
-<p>TODO: Add screenshot</p>
-<p>When you make updates to your site, you can republish to Quarto Pub using the same technique. Quarto Pub is probably the easiest way to publish your HTML files made with Quarto.</p>
+<p>In addition to using GitHub Pages, Quarto has a free service called Quarto Pub that makes it straightforward to get your materials online. Especially if you are not a GitHub user, this is a great option to publish your work. To show you how Quarto Pub works, let me publish the website we just made to it. To get started, look for the Terminal tab on the bottom left panel of RStudio. Click it and at the prompt enter the text <code>quarto publish</code> and hit enter. Doing so will bring up a list of ways you can publish your website. See Figure @ref(fig:quarto-publish) below.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/quarto-publish.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">The list of providers to publish your Quarto website</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Press enter to select Quarto Pub. You’ll then be asked to authorize. Type Y to do so, which will take you to quartopub.com. Sign up for an account (or sign in if you already have one). You should see a screen like Figure @ref(fig:quarto-pub-authorize), indicating that you have successfully signed in and authorized RStudio to connect with Quarto Pub.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/quarto-pub-authorize.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">The confirmation screen from Quarto Pub</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>From there, you can return to RStudio. You’ll be prompted to select a name for your website on Quarto Pub. The easiest thing is to select the same name as your project (in my case, that’s <code>quarto-website-covid</code>). Enter the name and hit enter. The site will then be published and you will be taken to the site, as seen in Figure @ref(fig:quarto-pub-website).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/quarto-pub-website.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">The website published on Quarto Pub</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>When you make updates to your site, you can republish to Quarto Pub using the same steps. Quarto Pub is probably the easiest way to publish your HTML files made with Quarto.</p>
 </section>
 </section>
 </section>
 <section id="conclusion-should-you-use-r-markdown-or-quarto" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="conclusion-should-you-use-r-markdown-or-quarto">Conclusion: Should You Use R Markdown or Quarto?</h2>
-<p>As you’ve seen throughout this chapter, we can do everything we did with R Markdown in Quarto as well. You’re probably wondering at this point whether you should use R Markdown or Quarto. It’s a big question, and one many in the R community are thinking about.</p>
+<p>As you’ve seen throughout this chapter, we can do everything we did with R Markdown in Quarto as well. And, unlike R Markdown, we didn’t need to load any external packages to make different outputs. What’s more, the syntax between different output formats is more consistent. For example, because you can make new slides in Quarto by adding first- or second-level headers, the Quarto documents you make to create reports should translate much more easily to presentations.</p>
+<p>You’re probably wondering at this point whether you should use R Markdown or Quarto. It’s a big question, and one many in the R community are thinking about.</p>
 <p>The first thing to know is that R Markdown is not going away. If you already use R Markdown, you don’t need to switch. As of the writing of this book, I still use R Markdown for most of my work. If you have developed a workflow that uses R Markdown, by all means stick with it.</p>
-<p>If you are new to R and have never used R Markdown or Quarto, you may be a good candidate to start with Quarto. The developers of R Markdown have promised to continue its development, but have also said that features they develop for Quarto in the future may not be backported to R Markdown. So, if you’re starting from scratch, my recommendation is to start with Quarto.</p>
-<p>My strongest recommendation, though, is to use either R Markdown or Quarto as opposed to the multitool workflow described in Chapter @ref(rmarkdown-chapter). Either R Markdown or Quarto will help you work more efficiently and avoid inevitable errors that come from manual copying and pasting between tools. As you’ve seen throughout this chapter, the differences between R Markdown and Quarto are relatively small and moving between them is not overly complicated. The biggest impact you can have, though, is from switching away from a multitool workflow to a single-tool workflow.</p>
+<p>If you are new to R and have never used R Markdown or Quarto, you may be a good candidate to start with Quarto. The developers of R Markdown have promised to continue its development, but have also said that features they develop for Quarto in the future may not be backported to R Markdown. So, if you’re starting from scratch, start with Quarto.</p>
+<p>My strongest recommendation, though, is to use either R Markdown or Quarto. As you’ve seen throughout this chapter, the differences between R Markdown and Quarto are relatively small and the impact on your workflow of switching should be minor. The major impact will come if you switch from a multi-tool workflow to a single tool workflow. Both R Markdown and Quarto can help you become more efficient, avoid manual errors, and share results in a wide variety of formats.</p>
 </section>
 </section>
 

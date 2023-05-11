@@ -403,12 +403,12 @@ Version: 0.1.0
 Author: Who wrote it
 Maintainer: The package maintainer <yourself@somewhere.net>
 Description: More about what it does (maybe more than one line)
-Use four spaces when indenting paragraphs within the Description.
+    Use four spaces when indenting paragraphs within the Description.
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
 Imports:
-ggplot2
+    ggplot2
 ```
 
 Way down at the bottom, look for the line that says "Imports:" followed by "ggplot2" on the next line. This indicates that, when a user installs the `dk` package, the `ggplot2` package will also be installed for them. It's important to note that, while I use the `tidyverse` package (this meta package contains multiple packages, of which `ggplot2` is just one) when working on my own computer, when making your own package you want to have it install the individual packages needed to make it run. 
@@ -595,13 +595,12 @@ Version: 0.1.0
 Author: Who wrote it
 Maintainer: The package maintainer <yourself@somewhere.net>
 Description: More about what it does (maybe more than one line)
-Use four spaces when indenting paragraphs within the Description.
+    Use four spaces when indenting paragraphs within the Description.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
-ggplot2
-RoxygenNote: 7.2.3
+    ggplot2
 ```
 
 In addition to the license, the `DESCRIPTION` file contains meta data about the package. We can make a few changes to change the Title, add an Author and Maintainer, and add a Description. My final `DESCRIPTION` file might look something like this:
@@ -614,13 +613,12 @@ Version: 0.1.0
 Author: David Keyes
 Maintainer: David Keyes <david@rfortherestofus.com>
 Description: A package with functions that David Keyes may find 
-useful.
+    useful.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
-ggplot2
-RoxygenNote: 7.2.3
+    ggplot2
 ```
 
 Having made these changes, let's run `devtools::check()` one more time to make sure everything is in order. When I do so, I get exactly what I hope to see:
