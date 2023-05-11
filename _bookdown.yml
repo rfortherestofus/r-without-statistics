@@ -24,6 +24,7 @@ rmd_files: [
   "parameterized-reports.Rmd",
   "presentations.Rmd",
   "websites.Rmd",
+  "quarto.Rmd",
   
   "part-automate.Rmd",
   "accessing-data.Rmd",
