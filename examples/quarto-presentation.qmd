@@ -1,16 +1,13 @@
 ---
 title: "Penguins Report"
-author: "David Keyes"
-format: 
-  revealjs:
+format:
+  revealjs: 
     theme: theme.scss
 execute: 
   echo: false
   warning: false
   message: false
 ---
-
-
 
 # Introduction
 
@@ -28,10 +25,15 @@ We are writing a report about the **Palmer Penguins**. These penguins are *reall
 - Gentoo
 - Chinstrap
 
+```{css}
+.center-slide {
+	text-align: center;
+}
+```
 
 ## Bill Length {.center-slide}
 
-Officia enim culpa officia proident consectetur sit ea. Minim ipsum irure elit incididunt deserunt. 
+We can make a histogram to see the distribution of bill lengths.
 
 ```{r}
 penguins %>% 
@@ -49,5 +51,30 @@ average_bill_length <- penguins %>%
 
 The chart shows the distribution of bill lengths. The average bill length is `r average_bill_length` millimeters.
 
+---
+
+:::: {.columns}
+
+::: {.column width="50%"}
+```{r}
+penguins %>% 
+  ggplot(aes(x = bill_length_mm)) +
+  geom_histogram() +
+  theme_minimal()
+```
+
+:::
+
+::: {.column width="50%"}
+```{r}
+penguins %>% 
+  ggplot(aes(x = bill_depth_mm)) +
+  geom_histogram() +
+  theme_minimal()
+```
+
+:::
+
+::::
 
 ## Penguins {background-image="penguins.jpg"}
