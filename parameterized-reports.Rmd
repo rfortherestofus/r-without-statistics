@@ -13,7 +13,7 @@ source("_common.R")
 ```{r}
 cases <- tibble(state.name) %>%
   rbind(state.name = "District of Columbia") %>%
-  left_join(read_csv("https://raw.githubusercontent.com/rfortherestofus/urban-parameterized-report/main/united_states_covid19_cases_deaths_and_testing_by_state.csv", skip = 2),
+  left_join(read_csv("https://data.rwithoutstatistics.com/united_states_covid19_cases_deaths_and_testing_by_state.csv", skip = 2),
             by = c("state.name" = "State/Territory")
   ) %>%
   select(
