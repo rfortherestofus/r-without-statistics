@@ -2,7 +2,9 @@
 title: "Penguins Report"
 author: "David Keyes"
 date: "2024-01-12"
-output: xaringan::moon_reader
+output: 
+  xaringan::moon_reader:
+    css: xaringan-themer.css
 ---
 
 ```{r setup, include=FALSE}
@@ -12,13 +14,37 @@ knitr::opts_chunk$set(include = TRUE,
                       warning = FALSE)
 ```
 
+```{r xaringan-themer}
+library(xaringanthemer)
+
+style_xaringan(
+  header_h2_font_size = "150px",
+  header_color = "white",
+  header_font_weight = "bold",
+  header_font_family = "Inter"
+)
+```
+
 ```{r}
 library(tidyverse)
 ```
 
+
 ```{r}
 penguins <- read_csv("https://raw.githubusercontent.com/rfortherestofus/r-without-statistics/main/data/penguins-2008.csv")
 ```
+
+```{r}
+library(xaringanthemer)
+
+style_xaringan(
+  header_h2_font_size = "150px",
+  header_color = "white",
+  header_font_weight = "bold",
+  header_font_family = "Inter"
+)
+```
+
 
 # Introduction
 
@@ -57,3 +83,10 @@ average_bill_length <- penguins %>%
 
 The chart shows the distribution of bill lengths. The average bill length is `r average_bill_length` millimeters.
 
+---
+
+class: center, middle
+background-image: url("penguins.jpg")
+
+
+## Penguins
