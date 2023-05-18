@@ -26,6 +26,8 @@ Learn-more-content
 - Getting Started course
 - Modern Dive chapter 1
 
+
+
 # Data Viz
 
 ## Exercises
@@ -74,7 +76,7 @@ Learn-more-content
 
 ## Learn More
 
-- [Ten Guidelines for Better Tables $](https://ggplot2-book.org/polishing.html)
+[Ten Guidelines for Better Tables $](https://doi.org/10.1017/bca.2020.11)
 	- [Twitter thread summarizing paper](https://twitter.com/jschwabish/status/1290323581881266177?lang=en)
 	- [Tom Mock article](https://themockup.blog/posts/2020-09-04-10-table-rules-in-r/)
 - [Albert Rapp Creating beautiful tables in R with {gt}](https://gt.albert-rapp.de/)
