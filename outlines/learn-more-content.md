@@ -129,7 +129,6 @@ Learn-more-content
 ## Learn More
 
 - [Automated survey reporting with googlesheets4, pins, and R Markdown](https://posit.co/blog/automated-survey-reporting/)
-
 - [Analyzing US Census Data: Methods, Maps, and Models in R](https://walker-data.com/census-r/)
 - [Accessing and Analyzing US Census Data in R - Hour 1 - Getting Started with tidycensus](https://www.youtube.com/watch?v=Lk60xLfT6Dg&ab_channel=JohnDeWitt)
 
