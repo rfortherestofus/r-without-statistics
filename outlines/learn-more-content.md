@@ -1,4 +1,95 @@
+# Crash Course
+
+Statistical Inference via Data Science: A ModernDive into R and the Tidyverse by Chester Ismay and Albert Y. Kim (CRC Press, 2020). https://moderndive.com/
+
+Getting Started with R course. https://rfortherestofus.com/courses/getting-started/
+
+# Data Viz
+
+Data Visualization: A Practical Introduction by Kieran Healy (Princeton University Press, 2018). https://socviz.co
+
+Fundamentals of Data Visualization by Claus Wilke (O'Reilly Media, 2019). https://clauswilke.com/dataviz/
+
+ggplot2: Elegant Graphics for Data Analysis by Hadley Wickham, Danielle Navarro, and Thomas Lin Pedersen (Springer, Forthcoming). https://ggplot2-book.org
+
+Graphic Design with ggplot2 by Cédric Scherer (CRC Press, Forthcoming)
+
+The Glamour of Graphics course by Will Chase. https://rfortherestofus.com/courses/glamour/
+
+# Custom Themes
+
+BBC Visual and Data Journalism cookbook for R graphics (2019). https://bbc.github.io/rcookbook/
+
+How the BBC Visual and Data Journalism team works with graphics in R by BBC Visual and Data Journalism team (2019). https://medium.com/bbc-visual-and-data-journalism/how-the-bbc-visual-and-data-journalism-team-works-with-graphics-in-r-ed0b35693535
+
+# Maps
+
+Geocomputation with R by Robin Lovelace, Jakub Nowosad, and Jannes Muenchow (CRC Press, 2019). https://r.geocompx.org/
+
+Chapter 7 (Draw Maps) of Data Visualization: A Practical Introduction by Kieran Healy (Princeton University Press, 2018). https://socviz.co
+
+Lessons on Space from Data Visualization: Use R, ggplot2, and the principles of graphic design to create beautiful and truthful visualizations of data course by Andrew Weiss (2022). https://datavizs22.classes.andrewheiss.com/content/12-content/
+
+# Tables
+
+Ten Guidelines for Better Tables by Jon Schwabish (Journal of Benefit-Cost Analysis, 2020). https://doi.org/10.1017/bca.2020.11
+
+10+ Guidelines for Better Tables in R by Tom Mock (2020). https://themockup.blog/posts/2020-09-04-10-table-rules-in-r/
+
+Creating beautiful tables in R with {gt} by Albert Rapp (2022). https://gt.albert-rapp.de/
+
+# R Markdown
+
+R Markdown: The Definitive Guide by Yihui Xie, J. J. Allaire, and Garrett Grolemund (CRC Press, 2019). https://bookdown.org/yihui/rmarkdown/
+
+R Markdown Cookbook by Yihui Xie, Christophe Dervieux, Emily Riederer (CRC Press, 2021). https://bookdown.org/yihui/rmarkdown-cookbook/
+
+# Parameterized Reporting
+
+Using R Markdown to Track and Publish State Data by Data@Urban team (2021). https://urban-institute.medium.com/using-r-markdown-to-track-and-publish-state-data-d1291bfa1ec0 
+
+Iterated fact sheets with R Markdown by Data@Urban team (2018). https://urban-institute.medium.com/iterated-fact-sheets-with-r-markdown-d685eb4eafce
+
+# xaringan
+
+Sharing Your Work with `xaringan`: An Introduction to `xaringan` for Presentations: The Basics and Beyond by Silvia Canelón (2020). https://spcanelon.github.io/xaringan-basics-and-beyond/index.html
+
+Professional, Polished, Presentable: Making Great Slides with `xaringan` workshop materials by Garrick Aden-Buie, Silvia Canelón, and Shannon Pileggi (2021). https://presentable-user2021.netlify.app/
+
+Meet `xaringan`: Making slides in R Markdown by Alison Hill (2019). https://arm.rbind.io/slides/xaringan.html
+
+Chapter 7 (`xaringan` Presentations) of R Markdown: The Definitive Guide by Yihui Xie, J. J. Allaire, and Garrett Grolemund (CRC Press, 2019). https://bookdown.org/yihui/rmarkdown/
+
+# Websites
+
+Building a blog with `distill` by Tom Mock (2020). https://themockup.blog/posts/2020-08-01-building-a-blog-with-distill/
+
+The Distillery website showcasing websites made with `distill`. https://distillery.rbind.io/
+
+# Quarto
+
+Get Started with Quarto workshop materials by Tom Mock (2022). https://jthomasmock.github.io/quarto-in-two-hours/
+
+From R Markdown to Quarto workshop materials by Andrew Bray, Rebecca Barter, Silvia Canelón, Christophe Dervieu, Devin Pastor, and Tatsu Shigeta (2022). https://rstudio-conf-2022.github.io/rmd-to-quarto/
+
+# Accessing Online Data
+
+Automated survey reporting with googlesheets4, pins, and R Markdown by Isabella Velásquez and Curtis Kephart (2022). https://posit.co/blog/automated-survey-reporting/
+
+Analyzing US Census Data: Methods, Maps, and Models in R by Kyle Walker (CRC Press, 2023). https://walker-data.com/census-r/
+
+# Packages
+
+R Packages, Second Edition by Hadley Wickham and Jennifer Bryan (O'Reilly Media, Forthcoming). https://r-pkgs.org/
+
+Package Development with R course by Malcolm Barrett. https://rfortherestofus.com/courses/package-development-course/
+
 Learn-more-content
+
+
+---
+
+
 
 # Overview of Exercises
 
