@@ -4,7 +4,7 @@ chapter_number <- 10
 source("_common.R")
 ```
 
-# Quarto, the Next-Generation Tool for Reproducible Reporting
+# Quarto, the Next-Generation Tool for Reproducible Reporting {#quarto-chapter}
 
 In mid-2022, the team at Posit (the company that makes the RStudio editor, the `tidyverse`, and many other tools to support R programmers) made an announcement: they had developed a new tool called Quarto, which they described as the next-generation version of R Markdown. The Posit team explained a few of the reasons why they felt the need to develop a new tool for reproducible reporting:
 
