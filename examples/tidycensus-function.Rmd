@@ -1,0 +1,86 @@
+---
+title: "Tidycensus Function"
+output: word_document
+date: "2023-06-06"
+---
+
+```{r warning=FALSE, message=FALSE, echo = FALSE}
+source(here::here("_common.R"))
+```
+
+
+
+## Creating a Function to Automatically Format Race and Ethnicity Data {-}
+
+Let's take a look at one more custom function that I've created. As we saw in Chapter \@ref(tidycensus-chapter), we can use the `tidycensus` package to easily pull in data directly from the United States Census Bureau. As we also saw in that same chapter, it can be hard to remember the names of variables. I regularly want to access data on population by race and ethnicity from the American Community Survey, but I never remember which variables I need to access to do so. I've created the `get_acs_race_ethnicity()` function to help me.
+
+```{r echo = TRUE}
+library(tidycensus)
+
+get_acs_race_ethnicity <- function(...) {
+  
+  get_acs(...,
+          variables = c("White" = "B03002_003",
+                        "Black/African American" = "B03002_004",
+                        "American Indian/Alaska Native" = "B03002_005",
+                        "Asian" = "B03002_006",
+                        "Native Hawaiian/Pacific Islander" = "B03002_007",
+                        "Other race" = "B03002_008",
+                        "Multi-Race" = "B03002_009",
+                        "Hispanic/Latino" = "B03002_012")) 
+  
+}
+```
+
+Much of the code in this function will look familiar: it uses the `get_acs()` function to bring in data. And it gives names to the variables (for example, "Asian" instead of "B03002_006"). But the novel piece is the `...` (pronounced "dot-dot-dot") used within `function()` and within `get_acs()`. To explain what this is, let's talk about why it exists. I created the `get_acs_race_ethnicity()` function to do two things: 
+
+1. Bring in data on population by race and ethnicity. 
+
+1. Give my variables more meaningful names. 
+
+What `get_acs_race_ethnicity()` does not do is determine the geography needed. Do I want to get data at the state level, say, the county level, or the Census tract level? I could add an argument for this, but I'd just be recreating arguments that already exist in the `get_acs()` function. See below for what this would look like.
+
+```{r echo = TRUE, eval = FALSE}
+get_acs_race_ethnicity <- function(my_geography) {
+  
+  get_acs(geography = my_geography,
+          variables = c("White" = "B03002_003",
+                        "Black/African American" = "B03002_004",
+                        "American Indian/Alaska Native" = "B03002_005",
+                        "Asian" = "B03002_006",
+                        "Native Hawaiian/Pacific Islander" = "B03002_007",
+                        "Other race" = "B03002_008",
+                        "Multi-Race" = "B03002_009",
+                        "Hispanic/Latino" = "B03002_012")) 
+  
+}
+```
+
+As we saw in Chapter \@ref(tidycensus-chapter), the `get_acs()` function has many arguments. I don't want to repeat them all as arguments in my `get_acs_race_ethnicity()` function, and the `...` allows us to avoid doing so. By putting `...` in the `get_acs_race_ethnicity()` function, any arguments listed there are then passed to the `get_acs()` function (note the `...` there as well). I can then run this code to set the `geography` to state. 
+
+```{r eval = FALSE, echo = TRUE}
+get_acs_race_ethnicity(geography = "state")
+```
+
+Which would return the following:
+
+```{r}
+get_acs_race_ethnicity(geography = "state")
+```
+
+I could run my `get_acs_race_ethnicity()` function again and add `geometry = TRUE` as follows. 
+
+```{r eval = FALSE, echo = TRUE}
+get_acs_race_ethnicity(geography = "state",
+                       geometry = TRUE)
+```
+
+My `get_acs_race_ethnicity()` function will now return geospatial data alongside my demographic data. 
+
+```{r}
+get_acs_race_ethnicity(geography = "state",
+                       geometry = TRUE,
+                       progress_bar = FALSE)
+```
+
+The `...` allows me to create my own function and pass any arguments from it to another function without repeating all of the child function's arguments, giving me flexibility while maintaining brevity.
