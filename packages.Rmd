@@ -123,184 +123,182 @@ covid_data %>%
 
 Bruno Rodrigues could have copied the code within the `show_in_excel()` function and re-run it every time he wanted to view his data in Excel. But, by creating a function, he creates the code once and can run it as many times as necessary.
 
-## Creating a ggplot Theme Function {-}
+## Creating a Function to Automatically Format Race and Ethnicity Data {-}
 
-Let's look at one more function to make sure you understand how functions work. In the `show_in_excel()` function, nothing is changed within R; it simply allows us to view data in Excel. A more typical use case is to create a function that you use while working in R to do something to your data or, in the case below, plots. A common example is creating your own ggplot theme. 
+Let's look at one more function to make sure you understand how functions work. As we saw in Chapter \@ref(tidycensus-chapter), we can use the `tidycensus` package to easily pull in data directly from the United States Census Bureau. As we also saw in that same chapter, it can be hard to remember the names of variables. I regularly want to access data on population by race and ethnicity from the American Community Survey, but I never remember which variables I need to access to do so. I've created the `get_acs_race_ethnicity()` function to help me. I'll walk through its development step-by-step in order to show some important concepts about making functions.
 
-We've seen ggplot themes in Chapters \@ref(data-viz-chapter) and \@ref(maps-chapter), but these uses were one-offs. Chapter \@ref(custom-theme-chapter) showed how the BBC made a custom theme to be used across projects. This multi-project use case shows the value of creating a function. Rather than copying your ggplot theme code from one project to the next, you can create it once and use it across all projects.
-
-Below, we can see a custom theme that I've created for myself. Called `theme_dk()`, this function sets the defaults that I like to use in my plots, including removing axis ticks, adjusting the font size of axis titles as well as the plot title and subtitle, and putting the legend above the plot and increasing its font size. 
+A first version of this function might look like this. My `get_acs_race_ethnicity()` function calls the `get_acs()` function from `tidycensus`, getting data at the state level. Instead of returning the default output, it relabels the race and ethnicity groups from the hard-to-remember variable names to actual names, such as White and Black/African American. The `get_acs_race_ethnicity()` function saves the result of the `get_acs()` call as an object called `race_ethnicity_data`. And then, at the bottom of the function, the line with `race_ethnicity_data` on its own returns that data when the function is run. 
 
 ```{r echo = TRUE}
-theme_dk <- function(show_grid_lines = TRUE,
-                     show_axis_titles = TRUE) {
+library(tidycensus)
+
+get_acs_race_ethnicity <- function() {
   
-  custom_theme <- theme_minimal() +
-    theme(panel.grid.minor = element_blank(),
-          axis.ticks = element_blank(),
-          axis.title = element_text(size = 12,
-                                   color = "grey50"),
-          axis.title.x = element_text(margin = margin(t = 10)),
-          axis.title.y = element_text(margin = margin(r = 10)),
-          axis.text = element_text(size = 12,
-                                   color = "grey50"),
-          plot.title.position = "plot",
-          plot.title = element_text(size = 20,
-                                    face = "bold",
-                                    margin = margin(b = 8)),
-          plot.subtitle = element_text(size = 14,
-                                       color = "grey50"),
-          legend.text = element_text(size = 12),
-          legend.position = "top")
+  race_ethnicity_data <- get_acs(geography = "state",
+                                 variables = c("White" = "B03002_003",
+                                               "Black/African American" = "B03002_004",
+                                               "American Indian/Alaska Native" = "B03002_005",
+                                               "Asian" = "B03002_006",
+                                               "Native Hawaiian/Pacific Islander" = "B03002_007",
+                                               "Other race" = "B03002_008",
+                                               "Multi-Race" = "B03002_009",
+                                               "Hispanic/Latino" = "B03002_012")) 
+
+  race_ethnicity_data
   
-  if (show_grid_lines == FALSE) {
+}
+```
+
+Once I define this function, I can now run it in the future as follows:
+
+```{r eval = FALSE, echo = TRUE}
+get_acs_race_ethnicity()
+```
+
+Doing so will return the data, with easy to read race and ethnicity group names.
+
+```{r}
+get_acs_race_ethnicity()
+```
+
+When I use this function, I sometimes like to have my variables names returned in a consistent syntax. To do this, I could use the `clean_names()` function from the `janitor` package, which makes all variable names use snake case (that is all words lower case and underscores between words). In our example above, I'd like use the variable name `geoid` rather than `GEOID`. However, I want to leave myself the option to keep the original variable names. 
+To do this, I need to add an argument to my function. Below, I've added the `clean_variable_names` argument to the `get_acs_race_ethnicity()` function. I've also specified that it should be `FALSE` by default. Then, in the function body, I set up an `if` statement. If the `clean_variable_names` argument is TRUE, the line `race_ethnicity_data <- clean_names(race_ethnicity_data)` is run, overwriting `race_ethnicity_data` with a version that has snake case names. If the `clean_variable_names` argument is FALSE, `race_ethnicity_data` is unchanged. 
+
+```{r echo = TRUE}
+get_acs_race_ethnicity <- function(clean_variable_names = FALSE) {
+  
+  race_ethnicity_data <- get_acs(geography = "state",
+                                 variables = c("White" = "B03002_003",
+                                               "Black/African American" = "B03002_004",
+                                               "American Indian/Alaska Native" = "B03002_005",
+                                               "Asian" = "B03002_006",
+                                               "Native Hawaiian/Pacific Islander" = "B03002_007",
+                                               "Other race" = "B03002_008",
+                                               "Multi-Race" = "B03002_009",
+                                               "Hispanic/Latino" = "B03002_012")) 
+
+  if (clean_variable_names == TRUE) {
     
-    custom_theme <- custom_theme +
-      theme(panel.grid.major = element_blank())
+    race_ethnicity_data <- clean_names(race_ethnicity_data)
     
   }
   
-  if (show_axis_titles == FALSE) {
+  race_ethnicity_data
+  
+}
+```
+
+If I run `get_acs_race_ethnicity()`, nothing will change because `clean_variable_names` is FALSE by default. However, if I want to set `clean_variable_names` to TRUE, I can do it as follows:
+
+```{r eval = FALSE, echo = TRUE}
+get_acs_race_ethnicity(clean_variable_names = TRUE)
+```
+
+And this will return my data with clean variable names. 
+
+```{r}
+get_acs_race_ethnicity(clean_variable_names = TRUE)
+```
+In my `get_acs_race_ethnicity()` function above, I made a choice to get the data at the state level using `geography = "state"` within the `get_acs()` function. But what if I want to get the data at the county level? Or the census tract level? These are all possible with `get_acs()`, but I've written my `get_acs_race_ethnicity()` function in a way that is not flexible enough to allow this. 
+
+Your first thought on how to do this might involve adding an additional argument for the geography. Something like the code below, which adds a `my_geography` argument and then uses it within the `get_acs()` function. 
+
+```{r echo = TRUE, eval = FALSE}
+get_acs_race_ethnicity <- function(clean_variable_names = FALSE,
+                                   my_geography) {
+  
+  race_ethnicity_data <- get_acs(geography = my_geography,
+                                 variables = c("White" = "B03002_003",
+                                               "Black/African American" = "B03002_004",
+                                               "American Indian/Alaska Native" = "B03002_005",
+                                               "Asian" = "B03002_006",
+                                               "Native Hawaiian/Pacific Islander" = "B03002_007",
+                                               "Other race" = "B03002_008",
+                                               "Multi-Race" = "B03002_009",
+                                               "Hispanic/Latino" = "B03002_012")) 
+  
+  if (clean_variable_names == TRUE) {
     
-    custom_theme <- custom_theme +
-      theme(axis.title = element_blank(),
-            axis.title.x = element_blank(),
-            axis.title.y = element_blank())
+    race_ethnicity_data <- clean_names(race_ethnicity_data)
     
   }
   
-  custom_theme
+  race_ethnicity_data
   
 }
 ```
 
-I can then apply my theme as I would any other ggplot theme.
+But what if I want to also select the year? Well, I could add an argument for that as well. As we saw in Chapter \@ref(tidycensus-chapter), the `get_acs()` function has many arguments. I don't want to repeat them all as arguments in my `get_acs_race_ethnicity()` function, and the `...` allows us to avoid doing so. By putting `...` in the `get_acs_race_ethnicity()` function, any arguments listed there are then passed to the `get_acs()` function (note the `...` there as well). 
 
-```{r eval = FALSE, echo = TRUE}
-penguins %>% 
-  ggplot(aes(x = bill_length_mm,
-             y = bill_depth_mm,
-             color = island)) +
-  geom_point() +
-  labs(title = "A histogram of bill length and bill depth",
-       subtitle = "Data from palmerpenguins package",
-       x = "Bill Length",
-       y = "Bill Depth",
-       color = NULL) +
-  theme_dk()
-```
-
-In Figure \@ref(fig:theme-dk-histogram) below, we can see what a histogram made with `theme_dk()` looks like using the same `penguins` data. 
-
-```{r results='asis'}
-print_nostarch_file_name()
-```
-
-```{r theme-dk-histogram, fig.cap = "A histogram made with my custom theme"}
-penguins %>% 
-  ggplot(aes(x = bill_length_mm,
-             y = bill_depth_mm,
-             color = island)) +
-  geom_point() +
-  labs(title = "A histogram of bill length and depth",
-       subtitle = "Data from palmerpenguins package",
-       x = "Bill Length",
-       y = "Bill Depth",
-       color = NULL) +
-  theme_dk()
-```
-
-```{r results='asis'}
-save_figure_for_nostarch(figure_height = 6)
-```
-
-Let's now discuss how the custom ggplot theme function works. The first three lines define our function and provide two arguments: `show_grid_lines` and `show_axis_titles`. Whereas the `data` argument in `show_in_excel()` required us to give the function data, the arguments in `theme_dk()` have defaults built in. The lines `show_grid_lines = TRUE` and `show_axis_lines = TRUE` mean that grid lines and axis titles will be visible on our plot by default. 
-
-The first piece of the code in `theme_dk()` starts with `theme_minimal()` (for more on the specifics of making a custom theme refer to how the `bbc_style()` function was created in Chapter \@ref(custom-theme-chapter)). The changes that are then made with the `theme()` function are saved as an object called `custom_theme`.
-
-```{r eval = FALSE, echo = TRUE}
-custom_theme <- theme_minimal() +
-  theme(panel.grid.minor = element_blank(),
-        axis.ticks = element_blank(),
-        axis.title = element_text(size = 12,
-                                  color = "grey50"),
-        axis.title.x = element_text(margin = margin(t = 10)),
-        axis.title.y = element_text(margin = margin(r = 10)),
-        axis.text = element_text(size = 12,
-                                 color = "grey50"),
-        plot.title.position = "plot",
-        plot.title = element_text(size = 20,
-                                  face = "bold",
-                                  margin = margin(b = 8)),
-        plot.subtitle = element_text(size = 14,
-                                     color = "grey50"),
-        legend.text = element_text(size = 12),
-        legend.position = "top")
-```
-
-One difference between `theme_dk()` and `bbc_style()` is that `theme_dk()` is a bit more flexibile. I do this using two `if` statements. While I defined the default plot to show grid lines and axis titles, if the user sets the `show_grid_lines` and `show_axis_titles` arguments to FALSE, those elements will be removed. The `if` statements test whether `show_grid_lines` and `show_axis_titles` are set to TRUE. If so, it changes the `custom_theme` object. At the end of the function, we do what's called returning an object. In this case, we return the `custom_theme` object, meaning that `custom_theme`, with or without our changes to grid lines and axis titles is returned, making it available to use in our plot.
-
-```{r eval = FALSE}
-if (show_grid_lines == FALSE) {
-    
-    custom_theme <- custom_theme +
-      theme(panel.grid.major = element_blank())
-    
-}
+```{r echo = TRUE}
+get_acs_race_ethnicity <- function(clean_variable_names = FALSE,
+                                   ...) {
   
-if (show_axis_titles == FALSE) {
+  race_ethnicity_data <- get_acs(...,
+                                 variables = c("White" = "B03002_003",
+                                               "Black/African American" = "B03002_004",
+                                               "American Indian/Alaska Native" = "B03002_005",
+                                               "Asian" = "B03002_006",
+                                               "Native Hawaiian/Pacific Islander" = "B03002_007",
+                                               "Other race" = "B03002_008",
+                                               "Multi-Race" = "B03002_009",
+                                               "Hispanic/Latino" = "B03002_012")) 
+  
+  if (clean_variable_names == TRUE) {
     
-    custom_theme <- custom_theme +
-      theme(axis.title = element_blank(),
-            axis.title.x = element_blank(),
-            axis.title.y = element_blank())
+    race_ethnicity_data <- clean_names(race_ethnicity_data)
     
+  }
+  
+  race_ethnicity_data
+  
 }
-
-custom_theme
 ```
 
-To show an example of when we might want to remove grid lines and axis titles, I'll create a simple bar chart of the number of penguins on each island. 
+I can then run this code to set the `geography` to state. 
 
 ```{r eval = FALSE, echo = TRUE}
-penguins %>% 
-  count(island) %>% 
-  ggplot(aes(x = island,
-             y = n)) +
-  geom_col() +
-  labs(title = "Number of penguins on each island",
-       subtitle = "Data from palmerpenguins package") +
-  theme_dk(show_grid_lines = FALSE,
-           show_axis_titles = FALSE)
+get_acs_race_ethnicity(geography = "state")
 ```
 
-When I use `theme_dk()` here, I set `show_grid_lines` and `show_axis_titles` to FALSE, removing those elements from our chart. We can see the result in Figure \@ref(fig:theme-dk-bar-chart).
+Which would return the following:
 
-```{r results='asis'}
-print_nostarch_file_name()
+```{r}
+get_acs_race_ethnicity(geography = "state")
 ```
 
-```{r theme-dk-bar-chart, fig.cap = "A bar chart using my custom theme"}
-penguins %>% 
-  count(island) %>% 
-  ggplot(aes(x = island,
-             y = n)) +
-  geom_col() +
-  labs(title = "Number of penguins on each island",
-       subtitle = "Data from palmerpenguins package") +
-  theme_dk(show_grid_lines = FALSE,
-           show_axis_titles = FALSE)
+Or I could switch this to get data by counties. 
+
+```{r eval = FALSE, echo = TRUE}
+get_acs_race_ethnicity(geography = "state")
 ```
 
-```{r results='asis'}
-save_figure_for_nostarch(figure_height = 6)
+Which would return the following:
+
+```{r}
+get_acs_race_ethnicity(geography = "county")
 ```
 
-Creating a function with default arguments allows us to set the options that we are most likely to want, while also giving us flexibility to change the arguments each time we use the function.
+I could also run my `get_acs_race_ethnicity()` function again and add `geometry = TRUE` as follows. 
+
+```{r eval = FALSE, echo = TRUE}
+get_acs_race_ethnicity(geography = "county",
+                       geometry = TRUE)
+```
+
+My `get_acs_race_ethnicity()` function will now return geospatial data alongside my demographic data. 
+
+```{r}
+get_acs_race_ethnicity(geography = "state",
+                       geometry = TRUE,
+                       progress_bar = FALSE)
+```
+
+The `...` allows me to create my own function and pass any arguments from it to another function without repeating all of the child function's arguments, giving me flexibility while maintaining brevity.
 
 ## How to Create a Package {-}
 
-Hadley Wickham, developer of the `tidyverse` set of packages, recommends creating a function once you've copied code three times. There's another step on the road to coding efficiency: bundling your functions into a package. How do you know whether functions you write are good candidates for a package? The answer is simple: if you plan to use the function in multiple projects, put it into a package. You may find yourself copying functions from one project to another. Or perhaps you have a set of functions you've saved in a `functions.R` file that you copy into each new project you work. Both are good indications that you're ready for a project (Travis Gerke of the Moffitt Cancer Center said that a `functions.R` file "screams 'make a package'"). The `theme_dk()` function I made is an example of this. I can use it in any project where I make data visualization so let's put it in a package.
+Hadley Wickham, developer of the `tidyverse` set of packages, recommends creating a function once you've copied code three times. There's another step on the road to coding efficiency: bundling your functions into a package. How do you know whether functions you write are good candidates for a package? The answer is simple: if you plan to use the function in multiple projects, put it into a package. You may find yourself copying functions from one project to another. Or perhaps you have a set of functions you've saved in a `functions.R` file that you copy into each new project you work. Both are good indications that you're ready for a project (Travis Gerke of the Moffitt Cancer Center said that a `functions.R` file "screams 'make a package'"). The `get_acs_race_ethnicity()` function I made is an example of this. I can use it in any of the projects I work on where I need race and ethnicity data.
 
 ### Starting the Package {-}
 
@@ -323,10 +321,10 @@ RStudio will now create and open my package. There are a few files in the packag
 Much of the work we'll do working with our package relies on the `usethis` and `devtools` packages. Install those using `install.packages()` if you don't already have them installed. Once you've done that, you're ready to add a function to the package. To do so, run the `use_r()` function from the `usethis` package. I typically run functions from `usethis` and `devtools` in the console because I only need to run them once. I also tend to run them with the syntax `package::function()`, which makes it possible to use a function without loading the package (it's also how we have to refer to functions in our package, as we'll see below). Here's how I would run the `use_r()` function:
 
 ```{r eval = FALSE, echo = TRUE}
-usethis::use_r("theme")
+usethis::use_r("acs")
 ```
 
-This function will create a file called `theme.R` in the `R` directory with the name you give it as an argument (all functions in a package go in files in the `R` folder). I can open up the file and add code to it. I'll begin by copying the `theme_dk()` function I created. We know `theme_dk()` works, but we need to change it in a few ways to make it work in a package. The easiest way to figure out what changes we need to make is to use built-in tools to check that our package is built correctly.
+This function will create a file called `acs.R` in the `R` directory with the name you give it as an argument (all functions in a package go in files in the `R` folder). I can open up the file and add code to it. I'll begin by copying the last version of the `get_acs_race_ethnicity()` function I created (the one with the `...`). We know `get_acs_race_ethnicity()` works, but we need to change it in a few ways to make it work in a package. The easiest way to figure out what changes we need to make is to use built-in tools to check that our package is built correctly.
 
 ### Checking our Package {-}
 
@@ -334,28 +332,27 @@ To test that our package works, run the function `devtools::check()` (typically 
 
 ```
 ── R CMD check results ─────────────── dk 0.1.0 ────
-Duration: 9.5s
+Duration: 4s
 
 ❯ checking DESCRIPTION meta-information ... WARNING
-Non-standard license specification:
-What license is it under?
-Standardizable: FALSE
+  Non-standard license specification:
+    What license is it under?
+  Standardizable: FALSE
 
 ❯ checking for missing documentation entries ... WARNING
-Undocumented code objects:
-‘theme_dk’
-All user-level objects in a package should have documentation entries.
-See chapter ‘Writing R documentation files’ in the ‘Writing R
-Extensions’ manual.
+  Undocumented code objects:
+    ‘get_acs_race_ethnicity’
+  All user-level objects in a package should have documentation entries.
+  See chapter ‘Writing R documentation files’ in the ‘Writing R
+  Extensions’ manual.
 
 ❯ checking R code for possible problems ... NOTE
-theme_dk: no visible global function definition for ‘theme_minimal’
-theme_dk: no visible global function definition for ‘theme’
-theme_dk: no visible global function definition for ‘element_blank’
-theme_dk: no visible global function definition for ‘element_text’
-theme_dk: no visible global function definition for ‘margin’
-Undefined global functions or variables:
-element_blank element_text margin theme theme_minimal
+  get_acs_race_ethnicity: no visible global function definition for
+    ‘get_acs’
+  get_acs_race_ethnicity: no visible global function definition for
+    ‘clean_names’
+  Undefined global functions or variables:
+    clean_names get_acs
 
 0 errors ✔ | 2 warnings ✖ | 1 note ✖
 ```
@@ -364,13 +361,12 @@ Let's review the output from bottom to top. The line "0 errors ✔ | 2 warnings 
 
 ```
 ❯ checking R code for possible problems ... NOTE
-theme_dk: no visible global function definition for ‘theme_minimal’
-theme_dk: no visible global function definition for ‘theme’
-theme_dk: no visible global function definition for ‘element_blank’
-theme_dk: no visible global function definition for ‘element_text’
-theme_dk: no visible global function definition for ‘margin’
-Undefined global functions or variables:
-element_blank element_text margin theme theme_minimal
+  get_acs_race_ethnicity: no visible global function definition for
+    ‘get_acs’
+  get_acs_race_ethnicity: no visible global function definition for
+    ‘clean_names’
+  Undefined global functions or variables:
+    clean_names get_acs
 ```
 
 To understand what `R CMD check` is saying, we need to explain a bit about how packages work. 
@@ -379,21 +375,29 @@ To understand what `R CMD check` is saying, we need to explain a bit about how p
 
 When you install a package using the `install.packages()` function, it often takes a while. That's because, while you are telling R to install one package, that single package likely uses functions from other packages. In order to have access to these functions, R will install these packages (known as dependencies) for you. It would be a pain if, every time you installed package, you had to manually install a whole set of dependencies. But in order to make sure that the appropriate packages are installed for any users of the `dk` package, we have to make a few changes. 
 
-When we run `R CMD check`, we are told that we have several "Undefined global functions or variables" and "no visible global function definition" for various functions. This is because we are attempting to use functions from the `ggplot2` package, but we haven't specified that these functions are from `ggplot2`. I can use this code because I have `ggplot2` installed, but we can't assume that others will have `ggplot2` installed. In order to ensure the code will work, we need to install `ggplot2` for users when they install the `dk` package. To do this, we run the `use_package()` function from the `usethis` package as follows:
+When we run `R CMD check`, we are told that we have several "Undefined global functions or variables" and "no visible global function definition" for various functions. This is because we are attempting to use functions from the `tidycensus` and `janitor` packages, but we haven't specified where these functions come from. I can use this code because I have `tidycensus` and `janitor` installed, but we can't assume that others will have these packages installed. In order to ensure the code will work, we need to install `tidycensus` and `janitor` for users when they install the `dk` package. To do this, we run the `use_package()` function from the `usethis` package as follows:
 
 ```{r eval = FALSE, echo = TRUE}
-usethis::use_package(package = "ggplot2")
+usethis::use_package(package = "tidycensus")
+usethis::use_package(package = "janitor")
 ```
 
-After I run the `use_package()` code in the console, I get the following message:
+After I run `usethis::use_package(package = "tidycensus")` in the console, I get the following message:
 
 ```
 ✔ Setting active project to '/Users/davidkeyes/Documents/Work/R Without Statistics/dk'
-✔ Adding 'ggplot2' to Imports field in DESCRIPTION
-• Refer to functions with `ggplot2::fun()`
+✔ Adding 'tidycensus' to Imports field in DESCRIPTION
+• Refer to functions with `tidycensus::fun()`
 ```
 
-The first line tells me that it is working in the `dk` project. The second line tells me that the `DESCRIPTION` file has been edited. This file provides meta information about the package we're developing. If we open up the `DESCRIPTION` file (it's in the root directory of our project), we see the following:
+The first line tells me that it is working in the `dk` project. The second line tells me that the `DESCRIPTION` file has been edited. This file provides meta information about the package we're developing. When I run the `usethis::use_package(package = "janitor")` line, I'll get something very similar:
+
+```
+✔ Adding 'janitor' to Imports field in DESCRIPTION
+• Refer to functions with `janitor::fun()`
+```
+
+If we open up the `DESCRIPTION` file (it's in the root directory of our project), we see the following:
 
 ```
 Package: dk
@@ -407,86 +411,63 @@ Description: More about what it does (maybe more than one line)
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
-Imports:
-    ggplot2
+Imports: 
+    janitor,
+    tidycensus
 ```
 
-Way down at the bottom, look for the line that says "Imports:" followed by "ggplot2" on the next line. This indicates that, when a user installs the `dk` package, the `ggplot2` package will also be installed for them. It's important to note that, while I use the `tidyverse` package (this meta package contains multiple packages, of which `ggplot2` is just one) when working on my own computer, when making your own package you want to have it install the individual packages needed to make it run. 
+Way down at the bottom, look for the line that says "Imports:" followed by "janitor" and "tidycensus" on the next line. This indicates that, when a user installs the `dk` package, these two packages will also be installed for them. 
 
 ### Referring to Functions Correctly {-}
 
-We'll return to the DESCRIPTION file in a bit, but for now, let's take a look at this line: "Refer to functions with `ggplot2::fun()`". It is telling us that, in order to use functions from other packages in the `dk` package, we need to refer to them in a unique way. By specifying both the package name and the function name, you ensure that the correct function is used at all times. It is rare, but there are functions with identical names across multiple packages. Using this syntax avoids any ambiguity. Remember when we ran `R CMD check` and got this?
+We'll return to the DESCRIPTION file in a bit, but for now, let's take a look at this line: "Refer to functions with `tidycensus::fun()`" and "Refer to functions with `janitor::fun()`". It is telling us that, in order to use functions from other packages in the `dk` package, we need to refer to them in a unique way. By specifying both the package name and the function name, you ensure that the correct function is used at all times. It is rare, but there are functions with identical names across multiple packages. Using this syntax avoids any ambiguity. Remember when we ran `R CMD check` and got this?
 
 ```
 Undefined global functions or variables:
-element_blank element_text margin theme theme_minimal
+    clean_names get_acs
 ```
 
-This is because we were using functions without saying what package they come from. All of the functions listed here come from the `ggplot2` package so I can add `ggplot2::` before them as follows:
+This is because we were using functions without saying what package they come from. The `clean_names()` function comes from the `janitor` package and `get_acs()` comes from `tidycensus` so I need to add the package names before each in my function. 
 
-```{r eval = FALSE, echo = TRUE}
-theme_dk <- function(show_grid_lines = TRUE,
-                     show_axis_titles = TRUE) {
+```{r echo = TRUE, eval = FALSE}
+get_acs_race_ethnicity <- function(clean_variable_names = FALSE,
+                                   ...) {
   
-  custom_theme <- ggplot2::theme_minimal() +
-    ggplot2::theme(panel.grid.minor = ggplot2::element_blank(),
-                   axis.ticks = ggplot2::element_blank(),
-                   axis.title = ggplot2::element_text(size = 12,
-                                                      color = "grey50"),
-                   axis.title.x = ggplot2::element_text(
-                     margin = ggplot2::margin(t = 10)
-                   ),
-                   axis.title.y = ggplot2::element_text(
-                     margin = ggplot2::margin(r = 10)
-                   ),
-                   axis.text = ggplot2::element_text(size = 12,
-                                                     color = "grey50"),
-                   plot.title.position = "plot",
-                   plot.title = 
-                     ggplot2::element_text(size = 20,
-                                           face = "bold",
-                                           margin = ggplot2::margin(b = 8)
-                     ),
-                   plot.subtitle = ggplot2::element_text(size = 14,
-                                                         color = "grey50"),
-                   legend.text = ggplot2::element_text(size = 12),
-                   legend.position = "top")
+  race_ethnicity_data <- tidycensus::get_acs(...,
+                                 variables = c("White" = "B03002_003",
+                                               "Black/African American" = "B03002_004",
+                                               "American Indian/Alaska Native" = "B03002_005",
+                                               "Asian" = "B03002_006",
+                                               "Native Hawaiian/Pacific Islander" = "B03002_007",
+                                               "Other race" = "B03002_008",
+                                               "Multi-Race" = "B03002_009",
+                                               "Hispanic/Latino" = "B03002_012")) 
   
-  if (show_grid_lines == FALSE) {
+  if (clean_variable_names == TRUE) {
     
-    custom_theme <- custom_theme +
-      ggplot2::theme(panel.grid.major = ggplot2::element_blank())
+    race_ethnicity_data <- janitor::clean_names(race_ethnicity_data)
     
   }
   
-  if (show_axis_titles == FALSE) {
-    
-    custom_theme <- custom_theme +
-      ggplot2::theme(axis.title = ggplot2::element_blank(),
-                     axis.title.x = ggplot2::element_blank(),
-                     axis.title.y = ggplot2::element_blank())
-    
-  }
-  
-  custom_theme
+  race_ethnicity_data
   
 }
 ```
 
-Now that I've specified that the various functions I'm using come from `ggplot2`, I can run the `devtools::check()` function again. When I do so, I now see that the notes have gone away. 
+Now that I've specified the packages the functions come from, I can run `devtools::check()` again. When I do so, I now see that the notes have gone away. 
 
 ```
 ❯ checking DESCRIPTION meta-information ... WARNING
-Non-standard license specification:
-What license is it under?
-Standardizable: FALSE
+  Non-standard license specification:
+    What license is it under?
+  Standardizable: FALSE
 
 ❯ checking for missing documentation entries ... WARNING
-Undocumented code objects:
-‘theme_dk’
-All user-level objects in a package should have documentation entries.
-See chapter ‘Writing R documentation files’ in the ‘Writing R
-Extensions’ manual.
+  Undocumented code objects:
+    ‘get_acs_race_ethnicity’
+  All user-level objects in a package should have documentation entries.
+  See chapter ‘Writing R documentation files’ in the ‘Writing R
+  Extensions’ manual.
 
 0 errors ✔ | 2 warnings ✖ | 0 notes ✔
 ```
@@ -495,9 +476,9 @@ However, I can see that there are still two warnings that I need to deal with. L
 
 ### Adding Documentation {-}
 
-Let's look now at the "checking for missing documentation entries" warning. This warning is telling us that we need to add documentation of our `theme_dk()` function. One of the benefits of creating a package is that you can add documentation to help others use your code. In the same way that users can type `?theme_mimimal()` and see documentation about that function, we want them to also be able to type `?theme_dk()` and learn how it works. 
+Let's look now at the "checking for missing documentation entries" warning. This warning is telling us that we need to add documentation of our `get_acs_race_ethnicity()` function. One of the benefits of creating a package is that you can add documentation to help others use your code. In the same way that users can type `?theme_mimimal()` and see documentation about that function, we want them to also be able to type `?get_acs_race_ethnicity()` and learn how it works. 
 
-To create documentation for `theme_dk()`, we'll use what's known as Roxygen, which is a way to create documentation of functions in R packages using a package called `roxygen2`. To get started, place your cursor anywhere in the function. Then, go to the Code menu and select Insert Roxygen Skeleton, as seen in Figure \@ref(fig:insert-roxygen-skeleton) below.
+To create documentation for `get_acs_race_ethnicity()`, we'll use what's known as Roxygen, which is a way to create documentation of functions in R packages using a package called `roxygen2`. To get started, place your cursor anywhere in the function. Then, go to the Code menu and select Insert Roxygen Skeleton, as seen in Figure \@ref(fig:insert-roxygen-skeleton) below.
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -511,13 +492,13 @@ knitr::include_graphics(here::here("assets/insert-roxygen-skeleton.png"))
 save_image_for_nostarch(here::here("assets/insert-roxygen-skeleton.png"))
 ```
 
-Doing this will add some text above the `theme_dk()` function that looks like this: 
+Doing this will add some text above the `get_acs_race_ethnicity()` function that looks like this: 
 
 ```
 #' Title
 #'
-#' @param show_grid_lines 
-#' @param show_axis_titles 
+#' @param clean_variable_names 
+#' @param ... 
 #'
 #' @return
 #' @export
@@ -525,42 +506,42 @@ Doing this will add some text above the `theme_dk()` function that looks like th
 #' @examples
 ```
 
-This text is the skeleton of what is needed to create documentation of the `theme_dk()` function. Each line starts with the special characters `#'`, which indicate we're working with Roxygen. We can now go in and edit the Roxygen text to create our documentation. Starting at the top, I'll replace Title with a sentence that describes my function.
+This text is the skeleton of what is needed to create documentation of the `get_acs_race_ethnicity()` function. Each line starts with the special characters `#'`, which indicate we're working with Roxygen. We can now go in and edit the Roxygen text to create our documentation. Starting at the top, I'll replace Title with a sentence that describes my function.
 
 ```
-#' David Keyes's custom ggplot theme 
+#' Access race and ethnicity data from the American Community Survey
 ```
 
-Next, you can see lines with the text `@param`. Roxygen automatically looks at the arguments in our function and creates a line for each one. On each line, we want to describe what the argument does. I can do this as follows.
+Next, you can see lines with the text `@param`. Roxygen automatically looks at the arguments in our function and creates a line for each one. On the first line, we describe what the `clean_variable_names` argument does. On the second, we specify that the `...` will pass additional arguments to the `tidycensus::get_acs()` function. 
 
 ```
-#' @param show_grid_lines Should grid lines be shown (TRUE/FALSE)
-#' @param show_axis_titles Should axis titles be shown (TRUE/FALSE) 
+#' @param clean_variable_names Should variable names be cleaned (i.e. snake case)
+#' @param ... Other arguments passed to tidycensus::get_acs()
 ```
 
-Going down the Roxygen skeleton, we next see `@return`. This is where we tell the user what the `dk_theme()` function returns. In our case, it is a complete `ggplot2` theme, which I document as follows:
+Going down the Roxygen skeleton, we next see `@return`. This is where we tell the user what the `get_acs_race_ethnicity()` function returns. In our case, it is a tibble, which I document as follows:
 
 ```
-#' @return A complete ggplot2 theme
+#' @return A tibble with five variables: GEOID, NAME, variable, estimate, and moe
 ```
 
 Below `@return` is `@export`. We don't need to change anything here. Most functions in a package are known as "exported functions," meaning they are available to users of the package (in contrast, internal functions, which are only used by the package developers, do not have `@export` in the Roxygen skeleton). 
 
-The last section is `@examples`. This is where you can give examples of code that users can run to learn how the function works. Doing this introduces some complexity and isn't required so I'm going to skip it. If you do want to learn more, Chapter 17 of the second edition of Hadley Wickham and Jenny Bryan's book *R Packages* is a great place to learn about adding examples.
+The last section is `@examples`. This is where you can give examples of code that users can run to learn how the function works. Doing this introduces some complexity and isn't required so I'm going to delete it. If you do want to learn more, Chapter 17 of the second edition of Hadley Wickham and Jenny Bryan's book *R Packages* is a great place to learn about adding examples.
 
 Now that we've added the documentation with Roxygen, there's one more step: running `devtools::document()`. This will do two things:
 
-1. **Create a `theme_dk.Rd` file in the `man` directory**. This file is the documentation of our `theme_dk()` function in the very specific format that R packages require You're welcome to look at it, but you can't change it since it is read only. 
+1. **Create a `get_acs_race_ethnicity.Rd` file in the `man` directory**. This file is the documentation of our `get_acs_race_ethnicity()` function in the very specific format that R packages require You're welcome to look at it, but you can't change it since it is read only. 
 
 1. **Create a `NAMESPACE` file**. This file lists the functions that your package makes available to users. My NAMESPACE file now looks like this:
 
 ```
 # Generated by roxygen2: do not edit by hand
 
-export(theme_dk)
+export(get_acs_race_ethnicity)
 ```
 
-The `theme_dk()` function is now almost ready for users. 
+The `get_acs_race_ethnicity()` function is now almost ready for users. 
 
 ### Editing the `DESCRIPTION` File {-}
 
@@ -568,9 +549,9 @@ We can run `devtools::check()` again to see if we have fixed the issues that led
 
 ```
 ❯ checking DESCRIPTION meta-information ... WARNING
-Non-standard license specification:
-What license is it under?
-Standardizable: FALSE
+  Non-standard license specification:
+    What license is it under?
+  Standardizable: FALSE
 
 0 errors ✔ | 1 warning ✖ | 0 notes ✔
 ```
@@ -599,8 +580,9 @@ Description: More about what it does (maybe more than one line)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-Imports:
-    ggplot2
+Imports: 
+    janitor,
+    tidycensus
 ```
 
 In addition to the license, the `DESCRIPTION` file contains meta data about the package. We can make a few changes to change the Title, add an Author and Maintainer, and add a Description. My final `DESCRIPTION` file might look something like this:
@@ -641,55 +623,7 @@ Your package can contain a single function, like `dk`, or as many functions as y
 
 Having developed our package, we're now ready to install and use it. When you're developing your own package, installing it for your own use is relatively straightforward. Simply run `devtools::install()` and the package will be ready for you to use in any project. 
 
-Of course, if you're developing a package, you're likely doing it not just for yourself, but for others as well. The most common way to make your package available to others is with the code-sharing website GitHub. The details of how to put your code on GitHub are beyond what we can cover here, but the book *Happy Git and GitHub for the useR* by Jenny Bryan is a great place to get started. I've pushed the `dk` package to GitHub and you can find it at https://github.com/dgkeyes/dk. If you or anyone else wants to install it, simply run the code `remotes::install_github("dgkeyes/dk")` (make sure you have the `remotes` package installed first). Once you or others install the `dk` package, anyone can just add the line `library(dk)` in any R code then use the `theme_dk()` function. We can recreate the penguin bill length and depth histogram from Chapter \@ref(functions-chapter) with the following code.
-
-```{r eval = FALSE, echo = TRUE}
-library(dk)
-library(tidyverse)
-library(palmerpenguins)
-
-penguins %>% 
-  ggplot(aes(x = bill_length_mm,
-             y = bill_depth_mm,
-             color = island)) +
-  geom_point() +
-  labs(title = "A histogram of bill length and depth",
-       subtitle = "Data from palmerpenguins package",
-       x = "Bill Length",
-       y = "Bill Depth",
-       color = NULL) +
-  theme_dk()
-```
-
-Figure \@ref(fig:theme-dk-histogram-package) shows the visualization (which is identical to that seen in Figure \@ref(fig:theme-dk-histogram)) that this code produces. 
-
-```{r results='asis'}
-print_nostarch_file_name()
-```
-
-```{r theme-dk-histogram-package, fig.cap = "A histogram made with the `theme_dk()` function from the `dk` package"}
-library(dk)
-library(tidyverse)
-library(palmerpenguins)
-
-penguins %>% 
-  ggplot(aes(x = bill_length_mm,
-             y = bill_depth_mm,
-             color = island)) +
-  geom_point() +
-  labs(title = "A histogram of bill length and depth",
-       subtitle = "Data from palmerpenguins package",
-       x = "Bill Length",
-       y = "Bill Depth",
-       color = NULL) +
-  theme_dk()
-```
-
-```{r results='asis'}
-save_figure_for_nostarch(figure_height = 6)
-```
-
-The histogram may be identical, but the process is not. While I had to manually define and run the code to create `theme_dk()` in Chapter \@ref(functions-chapter), here I only have to run `library(dk)` and I have access to the `theme_dk()` function. And the great thing is that, if I were to make changes to `theme_dk()`, users can simply reinstall the `dk` package to get access to the most up-to-date functions. 
+Of course, if you're developing a package, you're likely doing it not just for yourself, but for others as well. The most common way to make your package available to others is with the code-sharing website GitHub. The details of how to put your code on GitHub are beyond what we can cover here, but the book *Happy Git and GitHub for the useR* by Jenny Bryan is a great place to get started. I've pushed the `dk` package to GitHub and you can find it at https://github.com/dgkeyes/dk. If you or anyone else wants to install it, simply run the code `remotes::install_github("dgkeyes/dk")` (make sure you have the `remotes` package installed first). Once you or others install the `dk` package, anyone can just add the line `library(dk)` in any R code then use the `get_acs_race_ethnicity()` function. And the great thing is that, if I were to make changes to `get_acs_race_ethnicity()` or any other function, users can simply reinstall the `dk` package to get access to the most up-to-date functions. 
 
 ## In Conclusion: You're Already Ready to Make Your Own R Package {-}
 

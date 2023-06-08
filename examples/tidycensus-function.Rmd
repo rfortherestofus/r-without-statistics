@@ -8,8 +8,6 @@ date: "2023-06-06"
 source(here::here("_common.R"))
 ```
 
-
-
 ## Creating a Function to Automatically Format Race and Ethnicity Data {-}
 
 Let's take a look at one more custom function that I've created. As we saw in Chapter \@ref(tidycensus-chapter), we can use the `tidycensus` package to easily pull in data directly from the United States Census Bureau. As we also saw in that same chapter, it can be hard to remember the names of variables. I regularly want to access data on population by race and ethnicity from the American Community Survey, but I never remember which variables I need to access to do so. I've created the `get_acs_race_ethnicity()` function to help me.
