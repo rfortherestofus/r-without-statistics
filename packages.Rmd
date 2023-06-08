@@ -125,7 +125,7 @@ Bruno Rodrigues could have copied the code within the `show_in_excel()` function
 
 ## Creating a Function to Automatically Format Race and Ethnicity Data {-}
 
-Let's look at one more function to make sure you understand how functions work. As we saw in Chapter \@ref(tidycensus-chapter), we can use the `tidycensus` package to easily pull in data directly from the United States Census Bureau. As we also saw in that same chapter, it can be hard to remember the names of variables. I regularly want to access data on population by race and ethnicity from the American Community Survey, but I never remember which variables I need to access to do so. I've created the `get_acs_race_ethnicity()` function to help me. I'll walk through its development step-by-step in order to show some important concepts about making functions.
+Let's look at one more function to make sure you understand how functions work. As we saw in Chapter \@ref(accessing-data-chapter), we can use the `tidycensus` package to easily pull in data directly from the United States Census Bureau. As we also saw in that same chapter, it can be hard to remember the names of variables. I regularly want to access data on population by race and ethnicity from the American Community Survey, but I never remember which variables I need to access to do so. I've created the `get_acs_race_ethnicity()` function to help me. I'll walk through its development step-by-step in order to show some important concepts about making functions.
 
 A first version of this function might look like this. My `get_acs_race_ethnicity()` function calls the `get_acs()` function from `tidycensus`, getting data at the state level. Instead of returning the default output, it relabels the race and ethnicity groups from the hard-to-remember variable names to actual names, such as White and Black/African American. The `get_acs_race_ethnicity()` function saves the result of the `get_acs()` call as an object called `race_ethnicity_data`. And then, at the bottom of the function, the line with `race_ethnicity_data` on its own returns that data when the function is run. 
 
@@ -228,7 +228,7 @@ get_acs_race_ethnicity <- function(clean_variable_names = FALSE,
 }
 ```
 
-But what if I want to also select the year? Well, I could add an argument for that as well. As we saw in Chapter \@ref(tidycensus-chapter), the `get_acs()` function has many arguments. I don't want to repeat them all as arguments in my `get_acs_race_ethnicity()` function, and the `...` allows us to avoid doing so. By putting `...` in the `get_acs_race_ethnicity()` function, any arguments listed there are then passed to the `get_acs()` function (note the `...` there as well). 
+But what if I want to also select the year? Well, I could add an argument for that as well. As we saw in Chapter \@ref(accessing-data-chapter), the `get_acs()` function has many arguments. I don't want to repeat them all as arguments in my `get_acs_race_ethnicity()` function, and the `...` allows us to avoid doing so. By putting `...` in the `get_acs_race_ethnicity()` function, any arguments listed there are then passed to the `get_acs()` function (note the `...` there as well). 
 
 ```{r echo = TRUE}
 get_acs_race_ethnicity <- function(clean_variable_names = FALSE,
