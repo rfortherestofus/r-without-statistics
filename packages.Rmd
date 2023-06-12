@@ -1,10 +1,10 @@
 ```{r}
 i <- 1
-chapter_number <- 11
+chapter_number <- 12
 source("_common.R")
 ```
 
-# Create Your Own R Package {#packages-chapter}
+# Creating Your Own R Packages {#packages-chapter}
 
 This chapter discusses how to make your own R functions and packages. You’ll learn how to define your own functions, including the parameters they should accept. Then you’ll create a package, add code and dependencies to it, write its documentation, and choose the license under which to release it.  
 
@@ -49,7 +49,7 @@ show_in_excel_penguins <- function() {
 }
 ```
 
-We load the tidyverse and fs packages. We’ll use tidyverse to create a filename for the CSV file and save it. The fs package will enable us to open the CSV file in Excel (or whichever program your computer uses to open CSV files by default).
+We load the `tidyverse` and `fs` packages. We’ll use `tidyverse` to create a filename for the CSV file and save it. The `fs` package will enable us to open the CSV file in Excel (or whichever program your computer uses to open CSV files by default).
 
 We give the function a name, then use the assignment operator (`<-`) and `function()` to specify that `show_in_excel_penguins` is not a variable name but a function name. The open curly bracket (`{`) at the end of the line indicates the start of the function body, where the meat of the function can be found. In our case, the body does three things:
 
@@ -97,13 +97,13 @@ Notice that the first line now says `function(data)`. Items listed within the pa
 
 To use this function, you would tell `show_in_excel()` what data to use, and the function would open the data in Excel. For example, you can tell it to open the `penguins` data frame as follows:
 
-```{r echo = TRUE}
+```{r echo = TRUE, eval = FALSE}
 show_in_excel(data = penguins)
 ```
 
-Having created the function with the `data` argument, we can run it with any data we want to. This code, for example, will import COVID case data we saw in Chapter \@ref(website-chapter) and open it in Excel:
+Having created the function with the `data` argument, we can run it with any data we want to. This code, for example, will import COVID case data we saw in Chapter \@ref(websites-chapter) and open it in Excel:
 
-```{r echo = TRUE}
+```{r echo = TRUE, eval = FALSE}
 covid_data <- read_csv("https://data.rwithoutstatistics.com/us-states-covid-rolling-average.csv")
 
 show_in_excel(data = covid_data)
@@ -111,12 +111,11 @@ show_in_excel(data = covid_data)
 
 You can also use this function at the end of a pipeline. This code filters the `covid_data` data frame to include only data from California before opening it in Excel:
 
-```{r}
+```{r echo = TRUE, eval = FALSE}
 covid_data %>% 
   filter(state == "California") %>% 
   show_in_excel()
 ```
-
 
 Bruno Rodrigues could have copied the code within the `show_in_excel()` function and re-run it every time he wanted to view his data in Excel. But, by creating a function, he was able to write the code just once and then run it as many times as necessary.
 
@@ -205,7 +204,7 @@ In my `get_acs_race_ethnicity()` function above, I made a choice to get the data
 
 Your first thought on how to do this might involve adding an additional argument for the geography. Something like the code below, which adds a `my_geography` argument and then uses it within the `get_acs()` function. 
 
-```{r echo = TRUE, eval = FALSE}
+```{r echo = TRUE}
 get_acs_race_ethnicity <- function(clean_variable_names = FALSE,
                                    my_geography) {
   
@@ -269,7 +268,7 @@ Which would return the following:
 get_acs_race_ethnicity(geography = "state")
 ```
 
-Or I could switch this to get data by counties. 
+Or I could switch this to get data by county. 
 
 ```{r eval = FALSE, echo = TRUE}
 get_acs_race_ethnicity(geography = "state")
@@ -330,14 +329,14 @@ RStudio will now create and open the package. It should already contain a few fi
 
 All functions in a package should go in separate files in the *R* folder. To add these files to the package automatically and test that they work correctly, we’ll use the `usethis` and `devtools` packages. Install them using `install.packages()` if you don’t already have them installed:
 
-```{r echo = TRUE}
+```{r echo = TRUE, eval = FALSE}
 install.packages("usethis")
 install.packages("devtools")
 ```
 
 To add a function to the package, run the `use_r()` function from the usethis package in the console. 
 
-```{r}
+```{r echo = TRUE, eval = FALSE}
 usethis::use_r("acs")
 ```
 
@@ -376,7 +375,7 @@ clean_names get_acs
 
 Let's review the output from bottom to top. The line "0 errors ✔ | 2 warnings ✖ | 1 note ✖" gives us the three levels of issues with our package. Errors are the most severe, as they mean others won’t be able to install your package, while warnings and notes may cause problems for others. It’s best practice to eliminate all errors, warnings, and notes. 
 
-Let’s start with the note at 1. To understand what `R CMD check` is saying, we need to explain a bit about how packages work. When you install a package using the `install.packages()` function, it often takes a while. That’s because, while you are telling R to install one package, that single package likely uses functions from other packages. In order to have access to these functions, R will install these packages (known as dependencies) for you. It would be a pain if, every time you installed package, you had to manually install a whole set of dependencies. But in order to make sure that the appropriate packages are installed for any users of the `dk` package, we have to make a few changes.
+Let’s start with the note. To understand what `R CMD check` is saying, we need to explain a bit about how packages work. When you install a package using the `install.packages()` function, it often takes a while. That’s because, while you are telling R to install one package, that single package likely uses functions from other packages. In order to have access to these functions, R will install these packages (known as dependencies) for you. It would be a pain if, every time you installed package, you had to manually install a whole set of dependencies. But in order to make sure that the appropriate packages are installed for any users of the `dk` package, we have to make a few changes.
 
 When we run `R CMD check`, we are told that we have several “Undefined global functions or variables” and “no visible global function definition” for various functions. This is because we are attempting to use functions from the `tidycensus` and `janitor` packages, but we haven’t specified that these functions are from `tidycensus` and `janitor` I can use this code because I have `tidycensus` and `janitor` installed, but we can’t assume that others will have them installed. 
 
@@ -577,13 +576,13 @@ Title: David Keyes's Personal Package
 Version: 0.1.0
 Author: David Keyes
 Maintainer: David Keyes <david@rfortherestofus.com>
-Description: A package with functions that David Keyes may find 
-useful.
+    Description: A package with functions that David Keyes may find 
+    useful.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
-ggplot2
+    ggplot2
 ```
 
 Having made these changes, let's run `devtools::check()` one more time to make sure everything is in order:
@@ -610,16 +609,15 @@ You’ve now got a package with one working function in it. If you wanted to add
 
 Your package can contain a single function, like dk, or as many functions as you want.
 
-
 ### Installing the Package {-}
 
 Having developed the package, we’re now ready to install and use it. When you’re developing your own package, installing it for your own use is relatively straightforward. Simply run `devtools::install()` and the package will be ready for you to use in any project.
 
 Of course, if you’re developing a package, you’re likely doing it not just for yourself, but for others as well. The most common way to make your package available to others is with the code-sharing website GitHub. The details of how to put your code on GitHub are beyond what we can cover here, but the book *Happy Git and GitHub for the useR* by Jenny Bryan is a great place to get started. 
 
-I’ve pushed the `dk` package to GitHub, and you can find it at https://github.com/dgkeyes/dk. If you or anyone else wants to install it, first make sure you have the `remotes` package installed. This package, which can be installed by running `install.packages("remotes")`, allows you to install packages from a wide range of locations, including GitHub. Once you've installed the `remotes` package, you can run the code `remotes::install_github("dgkeyes/dk")` in the console to install the `dk` package. 
+I’ve pushed the `dk` package to GitHub, and you can find it at *https://github.com/dgkeyes/dk*. If you or anyone else wants to install it, first make sure you have the `remotes` package installed. This package, which can be installed by running `install.packages("remotes")`, allows you to install packages from a wide range of locations, including GitHub. Once you've installed the `remotes` package, you can run the code `remotes::install_github("dgkeyes/dk")` in the console to install the `dk` package. 
 
-## In Conclusion: You're Already Ready to Make Your Own R Package {-}
+## Conclusion {-}
 
 Packages are useful because they let you bundle several elements needed to reliably run your code: a set of functions, instructions to automatically install dependency packages, and code documentation. 
 
