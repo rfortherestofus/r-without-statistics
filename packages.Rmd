@@ -6,17 +6,19 @@ source("_common.R")
 
 # Create Your Own R Package {#packages-chapter}
 
-In the late 2010s, Travis Gerke and Garrick Aden-Buie were working on the Collaborative Data Services Core team at the Moffitt Cancer Center. Researchers throughout Moffitt needed to access data from several highly secure databases, and Gerke and Aden-Buie were in charge of helping them. Initially, Gerke and Aden-Buie would write R code for each researcher. But they quickly realized that they were reusing the same code over and over. Why not instead share the code with the researchers so they could run it themselves?
+This chapter discusses how to make your own R functions and packages. You’ll learn how to define your own functions, including the parameters they should accept. Then you’ll create a package, add code and dependencies to it, write its documentation, and choose the license under which to release it.  
 
-Travis Gerke and Garrick Aden-Buie made a package with functions to access databases. In the process they simplified their own work and improved the work of the researchers they supported. No longer did researchers have to ask for help. They could now install the package Gerke and Aden-Buie had made and use its functions themselves. 
+Saving your code as functions and then distributing these functions in packages can have numerous benefits. First, packages make your code easier for others to use. For example, when researchers at the Moffitt Cancer Center needed to access code from a database, data scientists Travis Gerke and Garrick Aden-Buie used to write R code for each researcher, but they quickly realized they were reusing the same code over and over. Instead, they made a package with functions for accessing databases. Now researchers no longer had to ask for help. They could install the package Gerke and Aden-Buie had made and use its functions themselves.
 
-In this chapter, I discuss how to make your own R package. While privacy concerns preclude me demonstrating the package that Travis Gerke and Garrick Aden-Buie made, they walked me through the development of a simple package that includes a custom ggplot theme. Before getting into package making, though, we'll look at making functions. We've talked about functions throughout this book, but in this chapter I'll show you how you can make your own functions. Making your own functions can have a huge improvement on your coding efficiency. And bundling your functions into a custom package can help you work with others using shared code. 
+What’s more, developing packages allows you to shape how others work. Say you make a ggplot theme that follows the principles of high-quality data visualization discussed in Chapter \@ref(data-viz-chapter). If you put this theme in a package, you can give others an easy way to follow these principles. Functions and packages can help you work with others using shared code.
 
 ## Creating Your Own Functions {-}
 
-Let's begin by taking an example of a relatively simple function. It comes from Bruno Rodrigues, head of the Department of Statistics and Data Strategy at the Ministry of Higher Education and Research in Luxembourg. Rodrigues is an avid R user, but the same cannot be said for all of his teammates. So he needs a way to be able to easily share data with his non-R-user colleagues. Being the avid R user that he is, he wrote some R code to help him with this task. Specifically, he wrote a function called `show_in_excel()` that would take a data frame from R, save it as a CSV file, and open the CSV file in Excel. From then on, whenever he needed to have his data in a CSV to share with colleagues, he could run his function and share away. 
+Hadley Wickham, developer of the tidyverse set of packages, recommends creating a function once you’ve copied some code three times. Functions have three pieces: a name, a body, and arguments. 
 
-Let's look at the `show_in_excel()` function that Bruno Rodrigues created. We begin by loading the `tidyverse` and `fs` packages. We'll use the `tidyverse`, which you've seen throughout this book, to create a file name and save our CSV. The `fs` package will enable us to open the CSV file in Excel (or whichever program your computer uses to open CSV files by default).
+### Writing a Simple Function {-}
+
+Let’s begin by taking an example of a relatively simple function. This function, called show_in_excel_penguins(), opens the data about penguins that we used in Chapter \@ref(rmarkdown-chapter) in Excel. We begin by importing the data with the `read_csv()` function before creating the `show_in_excel_penguins()` function:
 
 ```{r eval = FALSE, echo = TRUE}
 library(tidyverse)
@@ -47,81 +49,76 @@ show_in_excel_penguins <- function() {
 }
 ```
 
-To understand how our function works, take a look at the first line. In this line, we begin by giving our function a **name**: `show_in_excel_penguins`. We next use the assignment operator (`<-`) and `function()` to specify that `show_in_excel_penguins` is not a variable name, but a function name. There's an open curly bracket (`{`) at the end of the line, which indicates the start of the function **body**.
+We load the tidyverse and fs packages. We’ll use tidyverse to create a filename for the CSV file and save it. The fs package will enable us to open the CSV file in Excel (or whichever program your computer uses to open CSV files by default).
 
-```{r eval = FALSE, echo = TRUE}
-show_in_excel_penguins <- function() {
+We give the function a name, then use the assignment operator (`<-`) and `function()` to specify that `show_in_excel_penguins` is not a variable name but a function name. The open curly bracket (`{`) at the end of the line indicates the start of the function body, where the meat of the function can be found. In our case, the body does three things:
+
+1. Creates a location for a CSV file to be saved using the str_glue() function combined with the tempfile() function. This creates a file at a temporary location with the *.csv* extension and saves it as `csv_file`.
+
+1. Writes penguins to the location set in `csv_file`. The x argument in `write_csv()` refers to the data frame to be saved. We also make all `NA` values show up as blanks. By default, they will show up as the text *NA*.
+
+1. Uses the `file_show()` function from the `fs` package to open the temporarily created CSV file in Excel.
+
+If you wanted to use the `show_in_excel_penguins()` function, you would run the lines where you define the function. Highlight the lines where you define the function and hit command/control (Mac/Windows) and Enter at the same time and you will see the function show up in your global environment, as seen in Figure \@ref(fig:function-in-global-environment).
+
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
 ```
 
-The meat of the function can be found in its body. This is all of the code in between the open and closed curly brackets. 
-
-```{r eval = FALSE, echo = TRUE}
-show_in_excel_penguins <- function() {
-  
-  # Function body goes here
-  
-}
+```{r function-in-global-environment, out.width="100%", fig.cap="The function we created in the global environment"}
+knitr::include_graphics(here::here("assets/function-in-global-environment.png"))
 ```
 
-In the case of the `show_in_excel_penguins()` function we've created, the body does three things:
-
-1. Creates a location for a CSV file to be saved using the `str_glue()` function combined with the `tempfile()` function. This creates a file at a temporary location with the .csv extension and saves it as `csv_file`. 
-
-1. Writes `penguins` (the `x` argument in `write_csv()` refers to the data frame to be saved) to the location set in `csv_file`. We also make all `NA` values show up as blanks (by default, they will show up as the text "NA").
-
-1. Uses the `file_show` function from the `fs` package to open the temporarily created CSV file in Excel.
-
-```{r eval = FALSE, echo = TRUE}
-csv_file <- str_glue("{tempfile()}.csv")
-  
-write_csv(x = penguins,
-          file = csv_file,
-          na = "")
-  
-file_show(path = csv_file)
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/function-in-global-environment.png"))
 ```
 
-If you wanted to use the `show_in_excel_penguins()` function, you would run the lines where you define the function. From there on out, any time you run the code `show_in_excel_penguins()`, R will open up the `penguins` data frame in Excel.
+From there on out, any time you run the code `show_in_excel_penguins()`, R will open up the penguins data frame in Excel.
 
-Now, you're probably thinking: that doesn't seem like the most useful function. Why would I want to keep opening up the `penguins` data frame? You wouldn't, of course. To make your function more useful, we need to add arguments. Below is a slightly simplified version of the actual code that Bruno Rodrigues used. Everything looks the same as our `show_in_excel_penguins()` function with one exception: the first line now says `function(data)`. Items listed within the parentheses of our function definition are **arguments**. If you look further down, you'll see one other change. Within `write_csv()`, instead of `x = penguins`, we now have `x = data`. This allows us to use the function with any data, not just `penguins`. 
+### Adding Arguments {-}
+
+Now, you’re probably thinking that the function we wrote doesn’t seem very useful. All it does it open the `penguins` data frame. Why would you want to keep doing that? A more practical function would let you open any data in Excel so you can use it in a variety of contexts. 
+
+The `show_in_excel()` function takes any data frame from R, saves it as a CSV file, and opens the CSV file in Excel. Bruno Rodrigues, head of the Department of Statistics and Data Strategy at the Ministry of Higher Education and Research in Luxembourg, wrote it to easily share data with his non-R-user colleagues. Whenever he needed data in a CSV file, he could run his function.
+
+To make such a function, we need to add arguments. Below is a slightly simplified version of the actual code that Bruno Rodrigues used. It looks the same as our `show_in_excel_penguins()` function, with two exceptions: 
 
 ```{r echo = TRUE}
 show_in_excel <- function(data) {
-  
   csv_file <- str_glue("{tempfile()}.csv")
-  
   write_csv(x = data,
             file = csv_file,
             na = "")
-  
   file_show(path = csv_file)
-  
 }
 ```
 
-To use this function, you tell `show_in_excel()` what data to use and the function will open it in Excel. You can tell it to open the `penguins` data frame as follows:
+Notice that the first line now says `function(data)`. Items listed within the parentheses of our function definition are arguments. If you look further down, you’ll see another change. Within `write_csv()`, instead of `x = penguins`, we now use the line `x = data`. This allows us to use the function with any data, not just `penguins`.
 
-```{r eval = FALSE, echo = TRUE}
+To use this function, you would tell `show_in_excel()` what data to use, and the function would open the data in Excel. For example, you can tell it to open the `penguins` data frame as follows:
+
+```{r echo = TRUE}
 show_in_excel(data = penguins)
 ```
 
-But, having created the function with the `data` argument, we can run it with any data we want to. This code, for example, will import COVID case data we saw in Chapter \@ref(websites-chapter) and open it in Excel.
+Having created the function with the `data` argument, we can run it with any data we want to. This code, for example, will import COVID case data we saw in Chapter \@ref(website-chapter) and open it in Excel:
 
-```{r eval = FALSE, echo = TRUE}
+```{r echo = TRUE}
 covid_data <- read_csv("https://data.rwithoutstatistics.com/us-states-covid-rolling-average.csv")
 
 show_in_excel(data = covid_data)
 ```
 
-You can also use this function at the end of a pipeline. This code filters the `covid_data` data frame to only include data from California before opening it in Excel. 
+You can also use this function at the end of a pipeline. This code filters the `covid_data` data frame to include only data from California before opening it in Excel:
 
-```{r eval = FALSE, echo = TRUE}
+```{r}
 covid_data %>% 
   filter(state == "California") %>% 
   show_in_excel()
 ```
 
-Bruno Rodrigues could have copied the code within the `show_in_excel()` function and re-run it every time he wanted to view his data in Excel. But, by creating a function, he creates the code once and can run it as many times as necessary.
+
+Bruno Rodrigues could have copied the code within the `show_in_excel()` function and re-run it every time he wanted to view his data in Excel. But, by creating a function, he was able to write the code just once and then run it as many times as necessary.
 
 ## Creating a Function to Automatically Format Race and Ethnicity Data {-}
 
@@ -143,7 +140,7 @@ get_acs_race_ethnicity <- function() {
                                                "Other race" = "B03002_008",
                                                "Multi-Race" = "B03002_009",
                                                "Hispanic/Latino" = "B03002_012")) 
-
+  
   race_ethnicity_data
   
 }
@@ -161,7 +158,7 @@ Doing so will return the data, with easy to read race and ethnicity group names.
 get_acs_race_ethnicity()
 ```
 
-When I use this function, I sometimes like to have my variables names returned in a consistent syntax. To do this, I could use the `clean_names()` function from the `janitor` package, which makes all variable names use snake case (that is all words lower case and underscores between words). In our example above, I'd like use the variable name `geoid` rather than `GEOID`. However, I want to leave myself the option to keep the original variable names. 
+When I use this function, I sometimes like to have my variables names returned in a consistent syntax. To do this, I could use the `clean_names()` function from the `janitor` package, which makes all variable names use snake case (that is all words lower case and underscores between words). In our example above, I'd like to use the variable name `geoid` rather than `GEOID`. However, I want to leave myself the option to keep the original variable names. 
 To do this, I need to add an argument to my function. Below, I've added the `clean_variable_names` argument to the `get_acs_race_ethnicity()` function. I've also specified that it should be `FALSE` by default. Then, in the function body, I set up an `if` statement. If the `clean_variable_names` argument is TRUE, the line `race_ethnicity_data <- clean_names(race_ethnicity_data)` is run, overwriting `race_ethnicity_data` with a version that has snake case names. If the `clean_variable_names` argument is FALSE, `race_ethnicity_data` is unchanged. 
 
 ```{r echo = TRUE}
@@ -176,7 +173,7 @@ get_acs_race_ethnicity <- function(clean_variable_names = FALSE) {
                                                "Other race" = "B03002_008",
                                                "Multi-Race" = "B03002_009",
                                                "Hispanic/Latino" = "B03002_012")) 
-
+  
   if (clean_variable_names == TRUE) {
     
     race_ethnicity_data <- clean_names(race_ethnicity_data)
@@ -199,6 +196,11 @@ And this will return my data with clean variable names.
 ```{r}
 get_acs_race_ethnicity(clean_variable_names = TRUE)
 ```
+
+Now that you've seen how to add arguments in both the `show_in_excel()` and `get_acs_race_ethnicity()` functions, let's talk about how you can pass arguments from the function you make to another function.
+
+### Using `...` to Pass Arguments to Another Function {-}
+
 In my `get_acs_race_ethnicity()` function above, I made a choice to get the data at the state level using `geography = "state"` within the `get_acs()` function. But what if I want to get the data at the county level? Or the census tract level? These are all possible with `get_acs()`, but I've written my `get_acs_race_ethnicity()` function in a way that is not flexible enough to allow this. 
 
 Your first thought on how to do this might involve adding an additional argument for the geography. Something like the code below, which adds a `my_geography` argument and then uses it within the `get_acs()` function. 
@@ -294,15 +296,21 @@ get_acs_race_ethnicity(geography = "state",
                        progress_bar = FALSE)
 ```
 
-The `...` allows me to create my own function and pass any arguments from it to another function without repeating all of the child function's arguments, giving me flexibility while maintaining brevity.
+The `...` allows me to create my own function and pass any arguments from it to another function without repeating all of the child function's arguments. This gives me flexibility while maintaining brevity.
+
+Now that we've discussed how to make functions, let's talk about how to put them into a package. 
 
 ## How to Create a Package {-}
 
-Hadley Wickham, developer of the `tidyverse` set of packages, recommends creating a function once you've copied code three times. There's another step on the road to coding efficiency: bundling your functions into a package. How do you know whether functions you write are good candidates for a package? The answer is simple: if you plan to use the function in multiple projects, put it into a package. You may find yourself copying functions from one project to another. Or perhaps you have a set of functions you've saved in a `functions.R` file that you copy into each new project you work. Both are good indications that you're ready for a project (Travis Gerke of the Moffitt Cancer Center said that a `functions.R` file "screams 'make a package'"). The `get_acs_race_ethnicity()` function I made is an example of this. I can use it in any of the projects I work on where I need race and ethnicity data.
+Packages bundle your functions so you can use them in multiple projects. If you find yourself copying functions from one project to another, or perhaps have a set of functions you’ve saved in a `functions.R` file that you copy into each new project, these are good indications that you should make a package. 
+
+While you can run the functions from a `functions.R` file in your own environment, this code in may not work on someone else’s computer. Other users may not have the necessary packages installed, or they may be confused about how your functions’ arguments work and not know where to go for help. If you put your functions in a package, they are more likely to work, as they include necessary dependencies. R packages also contain built-in documentation to help them use the functions on their own.
+
+The `get_acs_race_ethnicity()` function I made is an example of this. I can use it in any project where I need race and ethnicity data.
 
 ### Starting the Package {-}
 
-To create a package in RStudio, go to the File menu, then select New Project. From there, select New Directory. You'll be given a list of options, one of which is R Package. Select that and you'll then need to give your package a name (I'm going to call mine `dk`) and decide where you want it to live on your computer. You can leave everything else as is.
+To create a package in RStudio, go to the File menu, then select New Project. From there, select New Directory. You'll be given a list of options, one of which is R Package. Select it, and give your package a name. In Figure \@ref(fig:rstudio-create-package) I've called mine `dk`. Also decide where you want it to live on your computer. You can leave everything else as is.
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -316,73 +324,71 @@ knitr::include_graphics(here::here("assets/create-r-package.png"))
 save_image_for_nostarch(here::here("assets/create-r-package.png"))
 ```
 
-RStudio will now create and open my package. There are a few files in the package already, including `hello.R`, which has a prebuilt function called `hello()` that, when run, prints the text "Hello, world!" in the console. Let's get rid of it and a few other default files so we're starting with a clean slate. I'll delete `hello.R`, `NAMESPACE`, and the `hello.Rd` file in the `man` directory.
+RStudio will now create and open the package. It should already contain a few files, including `hello.R`, which has a pre-built function called `hello()` that, when run, prints the text “Hello, world!” in the console. Let’s get rid of it and a few other default files so we can start with a clean slate. Delete *hello.R*, *NAMESPACE*, and *hello.Rd* in the *man* directory.
 
-Much of the work we'll do working with our package relies on the `usethis` and `devtools` packages. Install those using `install.packages()` if you don't already have them installed. Once you've done that, you're ready to add a function to the package. To do so, run the `use_r()` function from the `usethis` package. I typically run functions from `usethis` and `devtools` in the console because I only need to run them once. I also tend to run them with the syntax `package::function()`, which makes it possible to use a function without loading the package (it's also how we have to refer to functions in our package, as we'll see below). Here's how I would run the `use_r()` function:
+### Adding Functions with `use_r()` {-}
 
-```{r eval = FALSE, echo = TRUE}
+All functions in a package should go in separate files in the *R* folder. To add these files to the package automatically and test that they work correctly, we’ll use the `usethis` and `devtools` packages. Install them using `install.packages()` if you don’t already have them installed:
+
+```{r echo = TRUE}
+install.packages("usethis")
+install.packages("devtools")
+```
+
+To add a function to the package, run the `use_r()` function from the usethis package in the console. 
+
+```{r}
 usethis::use_r("acs")
 ```
 
-This function will create a file called `acs.R` in the `R` directory with the name you give it as an argument (all functions in a package go in files in the `R` folder). I can open up the file and add code to it. I'll begin by copying the last version of the `get_acs_race_ethnicity()` function I created (the one with the `...`). We know `get_acs_race_ethnicity()` works, but we need to change it in a few ways to make it work in a package. The easiest way to figure out what changes we need to make is to use built-in tools to check that our package is built correctly.
+The `package::function()` syntax makes it possible to use the function without loading the package. This function should create a file called `acs.R` in the R directory with the name you give it as an argument. The name of the file itself doesn't really matter, but choosing something that gives an indication of the functions within it is good practice. Now you can open the file and add code to it. Copy the `get_acs_race_ethnicity()` function to the package.
 
-### Checking our Package {-}
+### Checking our Package with `devtools` {-}
 
-To test that our package works, run the function `devtools::check()` (typically done in the console). This runs what is known as `R CMD check`, which makes sure that others can install your package on their system. Running `R CMD check` on the `dk` package gives us a long message. The last part is the most important:
+We need to change the `get_acs_race_ethnicity()` in a few ways to make it work in a package. The easiest way to figure out what changes we need to make is to use built-in tools to check that our package is built correctly. Run the function `devtools::check()` in the console to perform what is known as R CMD check, which makes sure that others can install your package on their system. Running `R CMD check` on the `dk` package gives us a long message. The last part is the most important:
 
 ```
 ── R CMD check results ─────────────── dk 0.1.0 ────
 Duration: 4s
 
 ❯ checking DESCRIPTION meta-information ... WARNING
-  Non-standard license specification:
-    What license is it under?
-  Standardizable: FALSE
+Non-standard license specification:
+What license is it under?
+Standardizable: FALSE
 
 ❯ checking for missing documentation entries ... WARNING
-  Undocumented code objects:
-    ‘get_acs_race_ethnicity’
-  All user-level objects in a package should have documentation entries.
-  See chapter ‘Writing R documentation files’ in the ‘Writing R
-  Extensions’ manual.
+Undocumented code objects:
+‘get_acs_race_ethnicity’
+All user-level objects in a package should have documentation entries.
+See chapter ‘Writing R documentation files’ in the ‘Writing R
+Extensions’ manual.
 
 ❯ checking R code for possible problems ... NOTE
-  get_acs_race_ethnicity: no visible global function definition for
-    ‘get_acs’
-  get_acs_race_ethnicity: no visible global function definition for
-    ‘clean_names’
-  Undefined global functions or variables:
-    clean_names get_acs
+get_acs_race_ethnicity: no visible global function definition for
+‘get_acs’
+get_acs_race_ethnicity: no visible global function definition for
+‘clean_names’
+Undefined global functions or variables:
+clean_names get_acs
 
 0 errors ✔ | 2 warnings ✖ | 1 note ✖
 ```
 
-Let's review the output from bottom to top. The line "0 errors ✔ | 2 warnings ✖ | 1 note ✖" gives us the three levels of issues with our package. Errors are the most severe (meaning others won't be able to install your package), followed by warnings and notes (both of which may cause problems for others). It's best practice to eliminate all errors, warnings, and notes. Let's start with the note, which shows up in this section:
+Let's review the output from bottom to top. The line "0 errors ✔ | 2 warnings ✖ | 1 note ✖" gives us the three levels of issues with our package. Errors are the most severe, as they mean others won’t be able to install your package, while warnings and notes may cause problems for others. It’s best practice to eliminate all errors, warnings, and notes. 
 
-```
-❯ checking R code for possible problems ... NOTE
-  get_acs_race_ethnicity: no visible global function definition for
-    ‘get_acs’
-  get_acs_race_ethnicity: no visible global function definition for
-    ‘clean_names’
-  Undefined global functions or variables:
-    clean_names get_acs
-```
+Let’s start with the note at 1. To understand what `R CMD check` is saying, we need to explain a bit about how packages work. When you install a package using the `install.packages()` function, it often takes a while. That’s because, while you are telling R to install one package, that single package likely uses functions from other packages. In order to have access to these functions, R will install these packages (known as dependencies) for you. It would be a pain if, every time you installed package, you had to manually install a whole set of dependencies. But in order to make sure that the appropriate packages are installed for any users of the `dk` package, we have to make a few changes.
 
-To understand what `R CMD check` is saying, we need to explain a bit about how packages work. 
+When we run `R CMD check`, we are told that we have several “Undefined global functions or variables” and “no visible global function definition” for various functions. This is because we are attempting to use functions from the `tidycensus` and `janitor` packages, but we haven’t specified that these functions are from `tidycensus` and `janitor` I can use this code because I have `tidycensus` and `janitor` installed, but we can’t assume that others will have them installed. 
 
 ### Adding Dependency Packages {-}
 
-When you install a package using the `install.packages()` function, it often takes a while. That's because, while you are telling R to install one package, that single package likely uses functions from other packages. In order to have access to these functions, R will install these packages (known as dependencies) for you. It would be a pain if, every time you installed package, you had to manually install a whole set of dependencies. But in order to make sure that the appropriate packages are installed for any users of the `dk` package, we have to make a few changes. 
-
-When we run `R CMD check`, we are told that we have several "Undefined global functions or variables" and "no visible global function definition" for various functions. This is because we are attempting to use functions from the `tidycensus` and `janitor` packages, but we haven't specified where these functions come from. I can use this code because I have `tidycensus` and `janitor` installed, but we can't assume that others will have these packages installed. In order to ensure the code will work, we need to install `tidycensus` and `janitor` for users when they install the `dk` package. To do this, we run the `use_package()` function from the `usethis` package as follows:
+To ensure the package’s code will work, we need to install `tidycensus` and `janitor` for users when they install the `dk` package. To do this, run the `use_package()` function from the `usethis` package in the console:
 
 ```{r eval = FALSE, echo = TRUE}
 usethis::use_package(package = "tidycensus")
-usethis::use_package(package = "janitor")
 ```
 
-After I run `usethis::use_package(package = "tidycensus")` in the console, I get the following message:
+You should get the following message:
 
 ```
 ✔ Setting active project to '/Users/davidkeyes/Documents/Work/R Without Statistics/dk'
@@ -390,14 +396,14 @@ After I run `usethis::use_package(package = "tidycensus")` in the console, I get
 • Refer to functions with `tidycensus::fun()`
 ```
 
-The first line tells me that it is working in the `dk` project. The second line tells me that the `DESCRIPTION` file has been edited. This file provides meta information about the package we're developing. When I run the `usethis::use_package(package = "janitor")` line, I'll get something very similar:
+You'll then need to run `usethis::use_package(package = "tidycensus")`, which should give you the following output:
 
 ```
 ✔ Adding 'janitor' to Imports field in DESCRIPTION
 • Refer to functions with `janitor::fun()`
 ```
 
-If we open up the `DESCRIPTION` file (it's in the root directory of our project), we see the following:
+The "Setting active project ..." line tells me that it is working in the `dk` project. The second line in both outputs tells me that the *DESCRIPTION* file has been edited. This file provides meta information about the package we’re developing. If you open the *DESCRIPTION* file in the root directory of your project, you should see the following:
 
 ```
 Package: dk
@@ -416,15 +422,15 @@ Imports:
     tidycensus
 ```
 
-Way down at the bottom, look for the line that says "Imports:" followed by "janitor" and "tidycensus" on the next line. This indicates that, when a user installs the `dk` package, these two packages will also be installed for them. 
+Look for the imports way down at the bottom of the file. This indicates that, when a user installs the `dk` package, the `tidycensus` and `janitor` packages will also be installed for them. 
 
 ### Referring to Functions Correctly {-}
 
-We'll return to the DESCRIPTION file in a bit, but for now, let's take a look at this line: "Refer to functions with `tidycensus::fun()`" and "Refer to functions with `janitor::fun()`". It is telling us that, in order to use functions from other packages in the `dk` package, we need to refer to them in a unique way. By specifying both the package name and the function name, you ensure that the correct function is used at all times. It is rare, but there are functions with identical names across multiple packages. Using this syntax avoids any ambiguity. Remember when we ran `R CMD check` and got this?
+The R CMD check output also included this line: “Refer to functions with `ggplot2::fun()`”. This tells us that, in order to use functions from other packages in the `dk` package, we need to specifying both the package name and the function name to ensure that the correct function is used at all times. In rare occasions, you’ll find functions with identical names used across multiple packages, and this syntax avoids ambiguity. Remember when we ran `R CMD check` and got this?
 
 ```
 Undefined global functions or variables:
-    clean_names get_acs
+clean_names get_acs
 ```
 
 This is because we were using functions without saying what package they come from. The `clean_names()` function comes from the `janitor` package and `get_acs()` comes from `tidycensus` so I need to add the package names before each in my function. 
@@ -434,14 +440,14 @@ get_acs_race_ethnicity <- function(clean_variable_names = FALSE,
                                    ...) {
   
   race_ethnicity_data <- tidycensus::get_acs(...,
-                                 variables = c("White" = "B03002_003",
-                                               "Black/African American" = "B03002_004",
-                                               "American Indian/Alaska Native" = "B03002_005",
-                                               "Asian" = "B03002_006",
-                                               "Native Hawaiian/Pacific Islander" = "B03002_007",
-                                               "Other race" = "B03002_008",
-                                               "Multi-Race" = "B03002_009",
-                                               "Hispanic/Latino" = "B03002_012")) 
+                                             variables = c("White" = "B03002_003",
+                                                           "Black/African American" = "B03002_004",
+                                                           "American Indian/Alaska Native" = "B03002_005",
+                                                           "Asian" = "B03002_006",
+                                                           "Native Hawaiian/Pacific Islander" = "B03002_007",
+                                                           "Other race" = "B03002_008",
+                                                           "Multi-Race" = "B03002_009",
+                                                           "Hispanic/Latino" = "B03002_012")) 
   
   if (clean_variable_names == TRUE) {
     
@@ -458,16 +464,16 @@ Now that I've specified the packages the functions come from, I can run `devtool
 
 ```
 ❯ checking DESCRIPTION meta-information ... WARNING
-  Non-standard license specification:
-    What license is it under?
-  Standardizable: FALSE
+Non-standard license specification:
+What license is it under?
+Standardizable: FALSE
 
 ❯ checking for missing documentation entries ... WARNING
-  Undocumented code objects:
-    ‘get_acs_race_ethnicity’
-  All user-level objects in a package should have documentation entries.
-  See chapter ‘Writing R documentation files’ in the ‘Writing R
-  Extensions’ manual.
+Undocumented code objects:
+‘get_acs_race_ethnicity’
+All user-level objects in a package should have documentation entries.
+See chapter ‘Writing R documentation files’ in the ‘Writing R
+Extensions’ manual.
 
 0 errors ✔ | 2 warnings ✖ | 0 notes ✔
 ```
@@ -476,21 +482,9 @@ However, I can see that there are still two warnings that I need to deal with. L
 
 ### Adding Documentation {-}
 
-Let's look now at the "checking for missing documentation entries" warning. This warning is telling us that we need to add documentation of our `get_acs_race_ethnicity()` function. One of the benefits of creating a package is that you can add documentation to help others use your code. In the same way that users can type `?theme_mimimal()` and see documentation about that function, we want them to also be able to type `?get_acs_race_ethnicity()` and learn how it works. 
+Take a look at the “checking for missing documentation entries” warning. This warning tells us that we need to add documentation of the `get_acs_race_ethnicity()` function. One of the benefits of creating a package is that you can add documentation to help others use your code. In the same way that users can enter `?get_acs()` and see documentation about that function, we want them to be able to enter `?get_acs_race_ethnicity()` to learn how it works.
 
-To create documentation for `get_acs_race_ethnicity()`, we'll use what's known as Roxygen, which is a way to create documentation of functions in R packages using a package called `roxygen2`. To get started, place your cursor anywhere in the function. Then, go to the Code menu and select Insert Roxygen Skeleton, as seen in Figure \@ref(fig:insert-roxygen-skeleton) below.
-
-```{r results='asis'}
-print_nostarch_file_name(file_type_to_print = "png")
-```
-
-```{r insert-roxygen-skeleton, out.width="100%", fig.cap="The menu item to insert Roxygen skeleton"}
-knitr::include_graphics(here::here("assets/insert-roxygen-skeleton.png"))
-```
-
-```{r results='asis'}
-save_image_for_nostarch(here::here("assets/insert-roxygen-skeleton.png"))
-```
+To create documentation for `get_acs_race_ethnicity()`, we’ll use Roxygen, a way to document functions in R packages using a package called `roxygen2.` To get started, place your cursor anywhere in the function. Then, go to the **Code** menu in RStudio and select **Insert Roxygen Skeleton**. Doing this should add text above the `get_acs_race_ethnicity()` function that looks like this:
 
 Doing this will add some text above the `get_acs_race_ethnicity()` function that looks like this: 
 
@@ -506,34 +500,34 @@ Doing this will add some text above the `get_acs_race_ethnicity()` function that
 #' @examples
 ```
 
-This text is the skeleton of what is needed to create documentation of the `get_acs_race_ethnicity()` function. Each line starts with the special characters `#'`, which indicate we're working with Roxygen. We can now go in and edit the Roxygen text to create our documentation. Starting at the top, I'll replace Title with a sentence that describes my function.
+This text is the documentation’s skeleton. Each line starts with the special characters `#'`, which indicate we’re working with Roxygen. We can now edit the text to create our documentation. Begin by replacing `Title` with a sentence that describes the function:
 
 ```
 #' Access race and ethnicity data from the American Community Survey
 ```
 
-Next, you can see lines with the text `@param`. Roxygen automatically looks at the arguments in our function and creates a line for each one. On the first line, we describe what the `clean_variable_names` argument does. On the second, we specify that the `...` will pass additional arguments to the `tidycensus::get_acs()` function. 
+Next, you can see lines with the text `@param`. Roxygen automatically looks at the arguments in our function and creates a line for each one. 
+
+Next are lines beginning with the text `@param`. Roxygen automatically locates the arguments in the function and creates a line for each one. On the first line, we describe what the `clean_variable_names` argument does. On the second, we specify that the `...` will pass additional arguments to the `tidycensus::get_acs()` function. 
 
 ```
 #' @param clean_variable_names Should variable names be cleaned (i.e. snake case)
 #' @param ... Other arguments passed to tidycensus::get_acs()
 ```
 
-Going down the Roxygen skeleton, we next see `@return`. This is where we tell the user what the `get_acs_race_ethnicity()` function returns. In our case, it is a tibble, which I document as follows:
+The `@return` line should tell the user what the `get_acs_race_ethnicity()` function returns. In our case, it returns data, which I document as follows:
 
 ```
 #' @return A tibble with five variables: GEOID, NAME, variable, estimate, and moe
 ```
 
-Below `@return` is `@export`. We don't need to change anything here. Most functions in a package are known as "exported functions," meaning they are available to users of the package (in contrast, internal functions, which are only used by the package developers, do not have `@export` in the Roxygen skeleton). 
+Below `@return` is `@export`. We don’t need to change anything here. Most functions in a package are known as *exported functions*, meaning they are available to users of the package. In contrast, internal functions, which are only used by the package developers, do not have `@export` in the Roxygen skeleton.
 
-The last section is `@examples`. This is where you can give examples of code that users can run to learn how the function works. Doing this introduces some complexity and isn't required so I'm going to delete it. If you do want to learn more, Chapter 17 of the second edition of Hadley Wickham and Jenny Bryan's book *R Packages* is a great place to learn about adding examples.
+The last section is `@examples`. This is where you can give examples of code that users can run to learn how the function works. Doing this introduces some complexity and isn’t required, so we’ll skip it here. If you do want to learn more, the second edition of Hadley Wickham and Jenny Bryan’s book *R Packages* is a great place to learn about adding examples.
 
-Now that we've added the documentation with Roxygen, there's one more step: running `devtools::document()`. This will do two things:
+Now that we’ve added the documentation with Roxygen, run `devtools::document()` in the console. This will create a `get_acs_race_ethnicity.Rd` documentation file in the *man* directory using the very specific format that R packages require You’re welcome to look at it, but you can’t change it, since it is read only.
 
-1. **Create a `get_acs_race_ethnicity.Rd` file in the `man` directory**. This file is the documentation of our `get_acs_race_ethnicity()` function in the very specific format that R packages require You're welcome to look at it, but you can't change it since it is read only. 
-
-1. **Create a `NAMESPACE` file**. This file lists the functions that your package makes available to users. My NAMESPACE file now looks like this:
+Running the function should also create a *NAMESPACE* file, which lists the functions that your package makes available to users. It should look like this:
 
 ```
 # Generated by roxygen2: do not edit by hand
@@ -543,20 +537,22 @@ export(get_acs_race_ethnicity)
 
 The `get_acs_race_ethnicity()` function is now almost ready for users. 
 
-### Editing the `DESCRIPTION` File {-}
+### Adding a License and Metadata {-}
 
-We can run `devtools::check()` again to see if we have fixed the issues that led to the warnings. Doing so shows that the warning about missing documentation is no longer there. However, we do still have one warning. 
+Try running `devtools::check()` again to see if we’ve fixed the issues that led to the warnings. The warning about missing documentation should no longer be there. However, we do still have one warning:
 
 ```
 ❯ checking DESCRIPTION meta-information ... WARNING
-  Non-standard license specification:
-    What license is it under?
-  Standardizable: FALSE
+Non-standard license specification:
+What license is it under?
+Standardizable: FALSE
 
 0 errors ✔ | 1 warning ✖ | 0 notes ✔
 ```
 
-This warning is telling us that we haven't given our package a license. For packages made publicly available, choosing a license is important (for information on how to choose the right one for your package, see https://choosealicense.com/). It's less important since we're developing a package for our personal use, but we can still select one. I'll use the MIT license (it allows people to do essentially whatever they want with the code) by running `usethis::use_mit_license()` (the `usethis` package has similar functions for other common licenses). Doing so returns the following:
+This warning tells us that we haven’t given our package a license. If you plan to make your package publicly available, choosing a license is important because it tells other people what they can and cannot do with your code. For information about how to choose the right license for your package, see *https://choosealicense.com/*. 
+
+In this example, we use the MIT license. which allows people to do essentially whatever they want with your code, by running `usethis::use_mit_license()`. The `usethis` package has similar functions for other common licenses. Doing so returns the following:
 
 ```
 ✔ Setting active project to '/Users/davidkeyes/Documents/Work/R Without Statistics/dk'
@@ -566,26 +562,13 @@ This warning is telling us that we haven't given our package a license. For pack
 ✔ Adding '^LICENSE\\.md$' to '.Rbuildignore'
 ```
 
-The `use_mit_license()` function handles a lot of the tedious parts of adding a license to our package. Most importantly for us, it specifies the license in the `DESCRIPTION` file. If I open up that file, I can see confirmation that I've added the MIT license.
+The `use_mit_license()` function handles a lot of the tedious parts of adding a license to our package. Most importantly for us, it specifies the license in the *DESCRIPTION* file. If you open it, you should see a confirmation that you’ve added the MIT license:
 
 ```
-Package: dk
-Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
 License: MIT + file LICENSE
-Encoding: UTF-8
-LazyData: true
-Imports: 
-    janitor,
-    tidycensus
 ```
 
-In addition to the license, the `DESCRIPTION` file contains meta data about the package. We can make a few changes to change the Title, add an Author and Maintainer, and add a Description. My final `DESCRIPTION` file might look something like this:
+In addition to the license, the *DESCRIPTION* file contains metadata about the package. We can make a few changes to change the title and add an author, a maintainer, and a description. The final *DESCRIPTION* file might look something like this:
 
 ```
 Package: dk
@@ -595,48 +578,51 @@ Version: 0.1.0
 Author: David Keyes
 Maintainer: David Keyes <david@rfortherestofus.com>
 Description: A package with functions that David Keyes may find 
-    useful.
+useful.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
-    ggplot2
+ggplot2
 ```
 
-Having made these changes, let's run `devtools::check()` one more time to make sure everything is in order. When I do so, I get exactly what I hope to see:
+Having made these changes, let's run `devtools::check()` one more time to make sure everything is in order:
 
 ```
 0 errors ✔ | 0 warnings ✔ | 0 notes ✔
 ```
 
-We've not got a package with one working function in it. If you wanted to add additional functions, you would follow the same exact procedure:
+We get exactly what we hoped to see.
 
-1. Create a new `.R` file with `usethis::use_r()` (you can also combine multiple functions in a single `.R` file).
-1. Developer your function using the `package::function()` syntax to refer to functions from other packages.
-1. Add any dependency packages with `use_package()`. 
+### Adding Additional Functions {-}
+
+You’ve now got a package with one working function in it. If you wanted to add additional functions, you would follow the same procedure:
+
+1. Create a new *.R* file with `usethis::use_r()` or copy another function to the existing *.R* file.
+
+1. Develop your function using the `package::function()` syntax to refer to functions from other packages.
+
+1. Add any dependency packages with `use_package()`.
+
 1. Add documentation of your function.
+
 1. Run `devtools::check()` to make sure you did everything correctly.
 
-Your package can contain a single function, like `dk`, or as many functions as you want. 
+Your package can contain a single function, like dk, or as many functions as you want.
+
 
 ### Installing the Package {-}
 
-Having developed our package, we're now ready to install and use it. When you're developing your own package, installing it for your own use is relatively straightforward. Simply run `devtools::install()` and the package will be ready for you to use in any project. 
+Having developed the package, we’re now ready to install and use it. When you’re developing your own package, installing it for your own use is relatively straightforward. Simply run `devtools::install()` and the package will be ready for you to use in any project.
 
-Of course, if you're developing a package, you're likely doing it not just for yourself, but for others as well. The most common way to make your package available to others is with the code-sharing website GitHub. The details of how to put your code on GitHub are beyond what we can cover here, but the book *Happy Git and GitHub for the useR* by Jenny Bryan is a great place to get started. I've pushed the `dk` package to GitHub and you can find it at https://github.com/dgkeyes/dk. If you or anyone else wants to install it, simply run the code `remotes::install_github("dgkeyes/dk")` (make sure you have the `remotes` package installed first). Once you or others install the `dk` package, anyone can just add the line `library(dk)` in any R code then use the `get_acs_race_ethnicity()` function. And the great thing is that, if I were to make changes to `get_acs_race_ethnicity()` or any other function, users can simply reinstall the `dk` package to get access to the most up-to-date functions. 
+Of course, if you’re developing a package, you’re likely doing it not just for yourself, but for others as well. The most common way to make your package available to others is with the code-sharing website GitHub. The details of how to put your code on GitHub are beyond what we can cover here, but the book *Happy Git and GitHub for the useR* by Jenny Bryan is a great place to get started. 
+
+I’ve pushed the `dk` package to GitHub, and you can find it at https://github.com/dgkeyes/dk. If you or anyone else wants to install it, first make sure you have the `remotes` package installed. This package, which can be installed by running `install.packages("remotes")`, allows you to install packages from a wide range of locations, including GitHub. Once you've installed the `remotes` package, you can run the code `remotes::install_github("dgkeyes/dk")` in the console to install the `dk` package. 
 
 ## In Conclusion: You're Already Ready to Make Your Own R Package {-}
 
-In my conversation with Travis Gerke and Garrick Aden-Buie of the Moffitt Cancer Center I had a realization: the name *package* refers to packaging up of several things that allow you and others to reliably run your code. A package is a set of functions, instructions to automatically install of dependency packages, and code documentation. If you write code that you share with others through a `functions.R` file, it may or may not work on their computer. They may not have the necessary packages installed. They may be confused about how arguments work and not know where to go. If you put your functions in a package, they are close to guaranteed to work. And users will have built-in documentation to help them use the functions on their own.
+Packages are useful because they let you bundle several elements needed to reliably run your code: a set of functions, instructions to automatically install dependency packages, and code documentation. 
 
-Creating your own R package may seem scary, but it's not as complicated as you might think. In 2021, experienced package developer and educator Malcolm Barrett gave a talk titled "You're Already Ready: Zen and the Art of R Package Development." The abstract for the talk resonated deeply with me:
+Creating your own R package is especially beneficial when you’re working for an organization, as they can allow advanced R users to help those with less experience. When Gerke and Aden-Buie provided researchers at the Moffitt Cancer Center with a package that contained functions for easily accessing their databases, the researchers began use R more creatively. 
 
-> Many believe package development is too advanced for them or that they have nothing to offer. A fundamental belief in Zen is that you are already complete, that you already have everything you need. I’ll talk about why your project is already an R package, why you’re already an R package developer, and why you already have the skills to walk the path of development.
-
-I hope, after reading this chapter, this message resonates with you as well. 
-
-Making packages can help you as an individual. Creating a ggplot theme like I did in this chapter, for example, can allow you to easily use it on any data visualization you make. Packages can be especially beneficial for organizations. This is exactly what Travis Gerke and Garrick Aden-Buie found during their time at the Moffitt Cancer Center. Accessing databases was so complicated that many people got stuck at that point. But when Gerke and Aden-Buie provided them with a package that contained functions to easily access the databases, Moffitt researchers began to do more with R. Gerke described the transformation: "People got to actually write code and do the data queries instead of handling administrative silliness." Developing packages can allow more advanced users to help those with less experience using R. Aden-Buie told me that packages create "a number of gradual on-ramps for people who are getting more skills in coding." Because more people are able to use these on-ramps, they come to see the value of using code. 
-
-What's more, developing packages allows you as the package developer to shape how others work. Say you make a ggplot theme that follows the principles of high-quality data visualization (see Chapter \@ref(data-viz-chapter)). If you put this theme in a package, you can give others an easy way to follow these principles. Garrick Aden-Buie calls this a "happy path." If you create a package, you can guide people on the happy path that you think is best. Packages are a way to ensure that others use best practices without them even being aware they are doing so. 
-
-Making your own R package is not as hard as you might think and comes with many benefits. Packages make it easy to reuse functions across projects, allow you to help others, and encourage best practices. If you haven't ever made your own R package, now's the time to give it a try.
+If you create a package, you can also guide people to use R in the way you think is best. Packages are a way to ensure that others follow best practices (without even being aware they are doing so). They make it easy to reuse functions across projects, help others, and adhere to a consistent style.
