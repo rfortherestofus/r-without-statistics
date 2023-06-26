@@ -33,6 +33,7 @@ jobs:
           R -e 'install.packages("ragg")'
           R -e 'install.packages("svglite")'
           R -e 'install.packages("webshot2")'
+          R -e 'install.packages("class")'
 
       - name: Cache bookdown results
         uses: actions/cache@v2
