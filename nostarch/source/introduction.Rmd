@@ -1,4 +1,4 @@
-# Introduction
+# Introduction {-}
 
 In early 2020, countries across the world struggled to contain the spread of COVID. One country, though, succeeded where others did not: New Zealand. There are many reasons why New Zealand was so successful in tackling COVID. One of these was R (yes, R). 
 
