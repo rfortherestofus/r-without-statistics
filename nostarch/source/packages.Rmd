@@ -130,15 +130,20 @@ library(tidycensus)
 
 get_acs_race_ethnicity <- function() {
   
-  race_ethnicity_data <- get_acs(geography = "state",
-                                 variables = c("White" = "B03002_003",
-                                               "Black/African American" = "B03002_004",
-                                               "American Indian/Alaska Native" = "B03002_005",
-                                               "Asian" = "B03002_006",
-                                               "Native Hawaiian/Pacific Islander" = "B03002_007",
-                                               "Other race" = "B03002_008",
-                                               "Multi-Race" = "B03002_009",
-                                               "Hispanic/Latino" = "B03002_012")) 
+  race_ethnicity_data <-
+    get_acs(
+      geography = "state",
+      variables = c(
+        "White" = "B03002_003",
+        "Black/African American" = "B03002_004",
+        "American Indian/Alaska Native" = "B03002_005",
+        "Asian" = "B03002_006",
+        "Native Hawaiian/Pacific Islander" = "B03002_007",
+        "Other race" = "B03002_008",
+        "Multi-Race" = "B03002_009",
+        "Hispanic/Latino" = "B03002_012"
+      )
+    )
   
   race_ethnicity_data
   
@@ -163,18 +168,22 @@ To do this, I need to add an argument to my function. Below, I've added the `cle
 ```{r echo = TRUE}
 get_acs_race_ethnicity <- function(clean_variable_names = FALSE) {
   
-  race_ethnicity_data <- get_acs(geography = "state",
-                                 variables = c("White" = "B03002_003",
-                                               "Black/African American" = "B03002_004",
-                                               "American Indian/Alaska Native" = "B03002_005",
-                                               "Asian" = "B03002_006",
-                                               "Native Hawaiian/Pacific Islander" = "B03002_007",
-                                               "Other race" = "B03002_008",
-                                               "Multi-Race" = "B03002_009",
-                                               "Hispanic/Latino" = "B03002_012")) 
+  race_ethnicity_data <-
+    get_acs(
+      geography = "state",
+      variables = c(
+        "White" = "B03002_003",
+        "Black/African American" = "B03002_004",
+        "American Indian/Alaska Native" = "B03002_005",
+        "Asian" = "B03002_006",
+        "Native Hawaiian/Pacific Islander" = "B03002_007",
+        "Other race" = "B03002_008",
+        "Multi-Race" = "B03002_009",
+        "Hispanic/Latino" = "B03002_012"
+      )
+    )
   
   if (clean_variable_names == TRUE) {
-    
     race_ethnicity_data <- clean_names(race_ethnicity_data)
     
   }
@@ -208,18 +217,22 @@ Your first thought on how to do this might involve adding an additional argument
 get_acs_race_ethnicity <- function(clean_variable_names = FALSE,
                                    my_geography) {
   
-  race_ethnicity_data <- get_acs(geography = my_geography,
-                                 variables = c("White" = "B03002_003",
-                                               "Black/African American" = "B03002_004",
-                                               "American Indian/Alaska Native" = "B03002_005",
-                                               "Asian" = "B03002_006",
-                                               "Native Hawaiian/Pacific Islander" = "B03002_007",
-                                               "Other race" = "B03002_008",
-                                               "Multi-Race" = "B03002_009",
-                                               "Hispanic/Latino" = "B03002_012")) 
+  race_ethnicity_data <-
+    get_acs(
+      geography = my_geography,
+      variables = c(
+        "White" = "B03002_003",
+        "Black/African American" = "B03002_004",
+        "American Indian/Alaska Native" = "B03002_005",
+        "Asian" = "B03002_006",
+        "Native Hawaiian/Pacific Islander" = "B03002_007",
+        "Other race" = "B03002_008",
+        "Multi-Race" = "B03002_009",
+        "Hispanic/Latino" = "B03002_012"
+      )
+    )
   
   if (clean_variable_names == TRUE) {
-    
     race_ethnicity_data <- clean_names(race_ethnicity_data)
     
   }
@@ -235,18 +248,22 @@ But what if I want to also select the year? Well, I could add an argument for th
 get_acs_race_ethnicity <- function(clean_variable_names = FALSE,
                                    ...) {
   
-  race_ethnicity_data <- get_acs(...,
-                                 variables = c("White" = "B03002_003",
-                                               "Black/African American" = "B03002_004",
-                                               "American Indian/Alaska Native" = "B03002_005",
-                                               "Asian" = "B03002_006",
-                                               "Native Hawaiian/Pacific Islander" = "B03002_007",
-                                               "Other race" = "B03002_008",
-                                               "Multi-Race" = "B03002_009",
-                                               "Hispanic/Latino" = "B03002_012")) 
+  race_ethnicity_data <-
+    get_acs(
+      ...,
+      variables = c(
+        "White" = "B03002_003",
+        "Black/African American" = "B03002_004",
+        "American Indian/Alaska Native" = "B03002_005",
+        "Asian" = "B03002_006",
+        "Native Hawaiian/Pacific Islander" = "B03002_007",
+        "Other race" = "B03002_008",
+        "Multi-Race" = "B03002_009",
+        "Hispanic/Latino" = "B03002_012"
+      )
+    )
   
   if (clean_variable_names == TRUE) {
-    
     race_ethnicity_data <- clean_names(race_ethnicity_data)
     
   }
