@@ -91,7 +91,6 @@ print_table_in_html <- function(table_object, output_format = "word") {
 
 # * Figures and Images ----------------------------------------------
 
-
 save_figure_for_nostarch <- function(figure_height = 4) {
   
   save_directory <- here::here("nostarch/figures/")
