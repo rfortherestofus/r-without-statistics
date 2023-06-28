@@ -25,7 +25,7 @@ jobs:
         with:
           use-public-rspm: true
 
-      - uses: r-lib/actions/setup-renv@v1
+      - uses: r-lib/actions/setup-renv@v2
 
       - name: Install packages missed by renv
         run: |
