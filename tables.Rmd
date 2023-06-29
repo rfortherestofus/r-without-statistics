@@ -11,7 +11,7 @@ source("_common.R")
 ```
 
 
-# Making High-Quality Tables {#tables-chapter}
+# Crafting High-Quality Tables {#tables-chapter}
 
 In his book *Fundamentals of Data Visualization*, Claus Wilke writes that tables are “an important tool for visualizing data.” This statement might seem odd. Tables are often considered the opposite of data visualizations such as plots: a place to dump numbers for the few nerds who care to read them. But Wilke sees things differently. 
 
