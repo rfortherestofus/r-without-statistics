@@ -116,19 +116,20 @@ save_image_for_nostarch <- function(image_file, chap_number = chapter_number) {
   image_width_pixels <- image_info %>% 
     pull(width)
   
-  image_dpi <- image_info %>%
-    separate(density, sep = "x", into = c("dpi", NA)) %>% 
-    mutate(dpi = as.numeric(dpi)) %>% 
-    pull(dpi)
+  # image_dpi <- image_info %>%
+  #   separate(density, sep = "x", into = c("dpi", NA)) %>% 
+  #   mutate(dpi = as.numeric(dpi)) %>% 
+  #   pull(dpi)
   
-  image_width_inches <- image_width_pixels / image_dpi
+  image_width_inches <- image_width_pixels / 96
   
   image_width_scale_down_factor <- image_width_inches / 4.675
   
   image_new_width <- image_width_pixels / image_width_scale_down_factor
   
   resized_image <- magick::image_read(image_file) %>% 
-    magick::image_resize(image_new_width)
+    magick::image_resize(image_new_width) %>% 
+    magick::image_page(density = "96x96")
   
   chapter_number_two_digits <- stringr::str_pad(chap_number, 2, "left", "0")
   figure_number_three_digits <- stringr::str_pad(i, 3, "left", "0")
