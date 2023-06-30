@@ -278,7 +278,7 @@ Doing this would give us a horizontally centered slide. To adjust vertical posit
 
 ### Adding Background Images to Slides {-}
 
-The syntax we just used to center the entire slide can also enable us to add a background image. Let’s create a new slide, use the classes `center` and `middle` to horizontally and vertically align the content, and add a background image by surrounding the path to the image with `url()`.
+The syntax we just used to center the entire slide can also enable us to add a background image. Let’s create a new slide, use the classes `center` and `middle` to horizontally and vertically align the content, and add a background image by surrounding the path to the image with `url()`. This code will only work for you if you have a file called *penguins.jpg* in your project.
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 class: center, middle
