@@ -373,7 +373,7 @@ reports <- tibble(
 pwalk(reports, render)
 ```
 
-If you run the `pwalk(reports, render)` code, you should see 51 HTML documents appear. Each one should consist of a report for that state, complete with a customized graph and accompanying text.
+If you run the `pwalk(reports, render)` code, you should see 51 HTML documents appear in the files panel in RStudio. Each one should consist of a report for that state, complete with a customized graph and accompanying text.
 
 ## Best Practices {-}
 
