@@ -6,19 +6,18 @@ source("_common.R")
 
 # Quarto, the Next-Generation Tool for Reproducible Reporting {#quarto-chapter}
 
-In mid-2022, the team at Posit (the company that makes the RStudio editor, the `tidyverse`, and many other tools to support R programmers) made an announcement: they had developed a new tool called Quarto, which they described as the next-generation version of R Markdown. The Posit team explained a few of the reasons why they felt the need to develop a new tool for reproducible reporting:
+Quarto, the next-generation version of R Markdown, offers a few advantages over R Markdown. First, the syntax it uses across output types is more consistent. As you’ve seen in this book, R Markdown documents might use a variety of conventions; for example, the `distill` package has layout options that don’t work in `xaringan`, and `xaringan` uses three dashes to indicate new slides, while three dashes in other output formats would create a horizontal line. 
 
-1. **More consistent syntax**: As you've seen in this book, the syntax used to create different outputs with R Markdown varies. For example, the `distill` package has layout options that don't work in `xaringan`. And `xaringan` uses three dashes to indicate new slides, while three dashes in other output formats would create a horizontal line. With Quarto, the idea is to make the syntax used to create different outputs more consistent. 
-2. **Support for multiple languages**: While R Markdown does work with languages such as Python, having the word R in the name was off-putting for non-R users. Creating a tool like Quarto was Posit's "attempt to bring R Markdown to everyone." Quarto makes it straightforward for users to include code from multiple languages in a single document. 
-3. **Support for multiple code editors**: R Markdown is designed to work in the RStudio IDE. With the move to support additional languages, it was important to support the code editors that users of those languages prefer. Quarto works in RStudio as well as editors such as VS Code and JupyterLab. 
+Quarto also supports more languages than does R Markdown, as well as multiple code editors. While R Markdown is designed to work in the RStudio IDE, Quarto works in RStudio as well as code editors such as VS Code and JupyterLab, making it easy to use with multiple languages.
 
-While the benefits of Quarto are clearest for non-R users, there are also many reasons why R users may want to use Quarto. I'll focus in this chapter on the benefits for R users who use RStudio. I'll begin by explaining how to set up and use Quarto before going over some of the most important differences between Quarto and R Markdown. I'll then demonstrate how to make each of the products we made in previous chapters with R Markdown using Quarto. Parameterized reporting, presentations, and websites are all things that Quarto can do, and this chapter will show you how.
+This chapter focuses on the benefits of using Quarto as an R user. It explains how to set up Quarto, then covers some of the most important differences between Quarto and R Markdown. Lastly, you’ll learn how to make the parameterized reports, presentations, and websites covered in previous chapters using Quarto. 
 
-## Getting Started with Quarto {-}
 
-To get started with Quarto, we first need to make sure it is installed. The good news is that newer versions of RStudio (2022.07.1 and later) come with Quarto installed. To check your RStudio version, click RStudio in the top menu bar, then click About RStudio.  If you have an older version of RStudio, update it now (repeat the steps outlined in Chapter \@ref(howto-chapter) on downloading RStudio) and Quarto will be installed for you.
+## Creating a Quarto Document {-}
 
-Once you have Quarto installed, you're ready to work with it. You can create a Quarto document by clicking File > New File > Quarto Document. You'll see a menu, shown in Figure \@ref(fig:new-quarto-doc), that looks like what you saw when creating an R Markdown document.
+Versions of RStudio starting with 2022.07.1 come with Quarto installed. To check your RStudio version, click **RStudio** in the top menu bar, then click **About RStudio**. If you have an older version of RStudio, update it now by reinstalling it, as outlined in Chapter \@ref(howto-chapter). Quarto should then be installed for you.
+
+Once you’ve installed Quarto, create a document by clicking **File** > **New File** > **Quarto Document**. You should see a menu, shown in Figure \@ref(fig:new-quarto-doc), that looks like the one used to create an R Markdown document.
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -32,7 +31,9 @@ knitr::include_graphics(here::here("assets/new-quarto-doc.png"))
 save_image_for_nostarch(here::here("assets/new-quarto-doc.png"))
 ```
 
-I'll give my document a title and choose HTML as my output format. The engine option allows users to select a different way to render documents. I'll keep the default of `Knitr`, which is the same tool that R Markdown uses to render documents. I'll keep the Use visual markdown editor unchecked (this option allows you to use an interface that looks more like Microsoft Word, but I've found it finicky). The Quarto document that is created has default content, just like R Markdown documents. 
+Give your document a title and choose an output format. The *Engine* option allows you to select a different way to render documents. By default, it uses Knitr, the same rendering tool used by R Markdown. The *Use visual markdown editor* option provides an interface that looks more like Microsoft Word, but it can be finicky, so we won’t cover it here. 
+
+The resulting Quarto document should contain default content, as do R Markdown documents:
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 ---
@@ -62,11 +63,15 @@ You can add options to executable code like this
 The `echo: false` option disables the printing of code (only output is displayed).
 ````
 
-There are some differences between R Markdown and Quarto and many things in common. Let's explore them.
+Although R Markdown and Quarto have many things in common, they also have differences. Let’s explore them.
 
 ## Comparing R Markdown and Quarto {-}
 
-Looking through our newly created Quarto document, you can see how similar Quarto and R Markdown are overall. Both have the same basic structure: YAML metadata, followed by a combination of markdown text and code chunks. Despite the similarities, there are some differences. In R Markdown, we would have created an HTML document with this YAML. 
+Quarto and R Markdown documents have the same basic structure: YAML metadata, followed by a combination of Markdown text and code chunks. Despite the similarities between the formats, there are some variations in their syntax. 
+
+### The format and execute YAML Fields {-}
+
+Quarto uses slightly different options in its YAML. It replaces the `output` field with the `format` field and uses the value html instead of `html_document`:
 
 ```
 ---
@@ -75,16 +80,9 @@ output: html_document
 ---
 ```
 
-With Quarto, `output` is replaced with `format` and we write `html` instead of `html_document`.
+Other Quarto formats also use slightly different names than their R Markdown counterparts: `docx` instead of `word_document` and `pdf` instead of `pdf_document`, for example.
 
-```
----
-title: "My Report"
-format: html
----
-```
-
-A second difference between R Markdown and Quarto is that the `setup` code chunk seen in the former does not exist in the latter. Recall from Chapter \@ref(rmarkdown-chapter) that the `setup` code chunk sets default options on things like whether we show code, charts and tables, and other elements in the rendered versions of our documents. With Quarto, these options are set in the YAML. For example, if we want to hide code as well as all warnings and messages from our rendered document, we add them under `execute` in our YAML as follows (Quarto also allows you to write `true` and `false` in lower case):
+A second difference between R Markdown and Quarto is that Quarto doesn’t use a `setup` code chunk to set default options about things like whether to show code, charts, and other elements in the rendered versions of the document. In Quarto, these options are set in the `execute` field of the YAML. For example, the following would hide code, as well as all warnings and messages, from the rendered document: 
 
 ```
 ---
@@ -97,7 +95,11 @@ execute:
 ---
 ```
 
-In R Markdown, if we want to override options at the individual code chunk level, we do it by adding them within the curly brackets that start a code chunk. The code chunk below would show both the code `2 * 2` as well as the output (4).
+Quarto also allows you to write true and false in lower case.
+
+### Individual Code Chunk Options {-}
+
+In R Markdown, we override options at the individual code chunk level by adding the new option within the curly brackets that start a code chunk. For example, the following would show both the code `2 * 2` as well as its output:
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 ```{r echo = TRUE}
@@ -105,8 +107,7 @@ In R Markdown, if we want to override options at the individual code chunk level
 ```
 ````
 
-With Quarto, we use a slightly different syntax to set individual chunk-level options. You can see below how the chunk option is not set within the curly brackets, but instead in the code chunk itself. We use the text `#|` (known as the **hash pipe**) at the start of a line to indicate that we are setting options. 
-
+Quarto instead uses the following syntax to set individual code chunk-level options: 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 ```{r}
 #| echo: false
@@ -114,20 +115,11 @@ With Quarto, we use a slightly different syntax to set individual chunk-level op
 ```
 ````
 
-A final difference you're likely to see if you switch from R Markdown to Quarto is that option names that consist of two words are separated by a dash rather than a period. R Markdown, for example, uses the code chunk option `fig.height` to determine the height of plots.
+You can see that the option is set within the code chunk itself. The characters `#|` (known as the *hash pipe*) at the start of a line indicate that we are setting options.
 
-````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
-```{r fig.height = 10}
-library(palmerpenguins)
-library(tidyverse)
+### Dashes in Option Names {-}
 
-ggplot(penguins, aes(x = bill_length_mm,
-                     y = bill_depth_mm)) +
-  geom_point()
-```
-````
-
-In contrast, Quarto uses `fig-height` as follows. 
+Another difference you’re likely to see if you switch from R Markdown to Quarto is that option names consisting of two words are separated by a dash rather than a period. R Markdown, for example, uses the code chunk option `fig.height` to determine the height of plots. In contrast, Quarto uses `fig-height`, as follows:
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 ```{r}
@@ -142,9 +134,11 @@ ggplot(penguins, aes(x = bill_length_mm,
 ```
 ````
 
-Helpfully for those of us coming from R Markdown, `fig.height` and similar options with periods in them will continue to work if you forget to make the switch. A list of all code chunk options can be found on the Quarto website: https://quarto.org/docs/reference/cells/cells-knitr.html. 
+Helpfully for those of us coming from R Markdown, `fig.height` and similar options with periods in them will continue to work if you forget to make the switch. A list of all code chunk options can be found on the Quarto website at https://quarto.org/docs/reference/cells/cells-knitr.html.
 
-Rendering your Quarto document to HTML (or any other format) follows the same process as R Markdown. While you use the Knit button to render an R Markdown document, with Quarto the button is called Render. Figure \@ref(fig:render-button) shows the Render button.
+### The Render Button {-}
+
+You can follow the same process to render your Quarto document as in R Markdown, but in Quarto the button is called Render rather than Knit. Figure \@ref(fig:render-button) shows the Render button.
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -158,21 +152,12 @@ knitr::include_graphics(here::here("assets/render-button.png"))
 save_image_for_nostarch(here::here("assets/render-button.png"))
 ```
 
-Clicking the Render button will turn the Quarto document into an HTML file, Word document, or any other output format you select. 
+Clicking the Render button will turn the Quarto document into an HTML file, Word document, or any other output format you select, just as we did when working with R Markdown.
 
-As you've seen, the differences between R Markdown and Quarto are mostly around syntax. All of the general concepts you learned about generating reports with the single-tool workflow described in Chapter \@ref(rmarkdown-chapter) apply to Quarto as well.
+## Parameterized Reporting {-}
 
-## Making Different Types of Outputs with Quarto {-}
+Now that you’ve learned how Quarto works, let’s make a few different documents with it, starting with a parameterized report. The process of making parameterized reports with Quarto is nearly identical to doing so with R Markdown. In fact, you can take the R Markdown document used to make the Urban Institute COVID Report in Chapter \@ref(parameterized-reporting-chapter) and adapt it for Quarto by copying the *.Rmd* file and changing its extension to *.qmd*, then making a few changes:
 
-Now that you've learned how Quarto works to create a simple document, let's make a few different things with it. We'll go through the outputs that you've learned to make in Chapters \@ref(parameterized-reporting-chapter), \@ref(presentations-chapter), and \@ref(websites-chapter).
-
-### Parameterized Reporting with Quarto {-}
-
-Let's start with parameterized reporting. The process of making parameterized reports with Quarto is nearly identical to how it's done with R Markdown. Below, I've taken the R Markdown document used to make the Urban Institute COVID Report in Chapter \@ref(parameterized-reporting-chapter) and adapted it for Quarto. I did so by copying the `.Rmd` file and changing its extension to `.qmd`. From there, I made the following changes:
-
-1. Switched `output: html_document` to `format: html` in the YAML.
-2. Removed the `setup` code chunk and put the options that were there in the YAML.
-3. Switched the `fig.height` option in the last code chunk to `fig-height` and used the hash pipe. 
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 ---
@@ -240,12 +225,9 @@ cases %>%
 ```
 ````
 
-Despite these small differences, the rendered report looks almost exactly the same as the one we produced in Chapter \@ref(parameterized-reports-chapter). Also nearly identical is the process of creating one report for each state. We can take the `render.R` script file we used to make parameterized reports in Chapter \@ref(parameterized-reporting-chapter) and, with a few small tweaks, it works. In the updated `render.R` file below, I made the following tweaks:
+In this code, we’ve switched `output: html_document` to `format: html` in the YAML, We’ve also removed the `setup` code chunk and put the options that were there in the YAML. Lastly, we’ve switched the `fig.height` option in the last code chunk to `fig-height` and used the hash pipe to label it as an option.
 
-1. Loaded the `quarto` package instead of the `rmarkdown` package.
-2. Made the input file `urban-covid-budget-report.qmd` instead of `urban-covid-budget-report.Rmd`.
-3. In the `reports` tibble I created, used `execute_params` instead of `params`.
-4. On the last line, used the `quarto_render()` function instead of the `render()` function from the `markdown` package.
+Next, to create one report for each state, we must tweak the render.R script file we used to make parameterized reports in Chapter \@ref(parameterized-reporting-chapter):
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "r"}
 # Load packages
@@ -272,11 +254,11 @@ reports %>%
   pwalk(quarto_render)
 ````
 
-Just as in Chapter \@ref(parameterized-reports-chapter), running this code will produce one report for each state. 
+This updated *render.R* file loads the quarto package instead of the `rmarkdown` package and changes the input file to *urban-covid-budget-report.qmd*. In the `reports` tibble, we use `execute_params` instead of `params` because this is the argument that the `quarto_render()` function expects. To render the reports, we use the `quarto_render()` function instead of the `render()` function from the markdown package. As in Chapter \@ref(parameterized-reporting-chapter), running this code should produce one report for each state.
 
-### Making Presentations with Quarto {-}
+### Making Presentations {-}
 
-Quarto can also produce presentations like those we made in Chapter \@ref(presentations-chapter). Again, the process is nearly identical to how we made slides with the `xaringan` package. To make a presentation with Quarto, click on File > New File > Quarto Presentation. You'll want to choose Reveal JS to make your slides and leave the Engine and Editor options untouched, as seen in Figure \@ref(fig:quarto-new-presentation).
+Quarto can produce presentations like those you made in Chapter \@ref(presentations-chapter) with the xaringan package. To make a presentation with Quarto, click **File** > **New File** > **Quarto Presentation**. Choose Reveal JS to make your slides and leave the Engine and Editor options untouched, as shown in Figure \@ref(fig:quarto-new-presentation).
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -290,7 +272,7 @@ knitr::include_graphics(here::here("assets/quarto-new-presentation.png"))
 save_image_for_nostarch(here::here("assets/quarto-new-presentation.png"))
 ```
 
-The slides we'll make use the reveal.js javascript library under the hood. Making slides in this format is the Quarto approach that is most similar to making slides with `xaringan`. Below I've taken the code used to make a presentation with `xaringan` in Chapter \@ref(presentations-chapter) and made a few updates to make it work with Quarto. 
+The slides we’ll make use the `reveal.js` JavaScript library under the hood, a technique similar to making slides with `xaringan`. The following code updates the presentation made in Chapter \@ref(presentations-chapter) so it works with Quarto:
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 ---
@@ -340,25 +322,11 @@ average_bill_length <- penguins %>%
 The chart shows the distribution of bill lengths. The average bill length is `r average_bill_length` millimeters.
 ````
 
-When we render this, we get an HTML file with our slides, seen in Figure \@ref(fig:quarto-slides) below. 
-
-```{r results='asis'}
-print_nostarch_file_name(file_type_to_print = "png")
-```
-
-```{r quarto-slides, out.width="100%", fig.cap="Slides made with Quarto"}
-knitr::include_graphics(here::here("assets/quarto-slides.png"))
-```
-
-```{r results='asis'}
-save_image_for_nostarch(here::here("assets/quarto-slides.png"))
-```
-
-Overall, the output looks similar to the default `xaringan` slides we made. However, remember how we had to manually add three dashes to make slides with `xaringan`? With Quarto, any first- or second-level headers make new slides so I was able to remove these (though you can use three dashes to manually add slide breaks). 
+In the YAML, we set `format: revealjs` to make a presentation and add several global code chunk options in the `execute` section. We remove the three dashes used to make slide breaks, because in Quarto, first- or second-level headings make new slides (though you can use three dashes to manually add slide breaks). When you render this code, you should get an HTML file with your slides. The output should look similar to the default `xaringan` slides we made. 
 
 #### Incrementally Revealing Content {-}
 
-Quarto slides also make it possible to incrementally reveal content. Bulleted and numbered lists can be made to incrementally reveal by default by adjusting the YAML. See here how I add `incremental: true` to the YAML.
+Quarto slides can incrementally reveal content. To reveal bulleted and numbered lists one item at a time by default, add `incremental: true` to the document’s YAML:
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 ---
@@ -374,7 +342,7 @@ execute:
 ---
 ````
 
-When I do this, the content in all lists in my presentation will be revealed one item at a time. You can also set just some lists to incrementally reveal using this format:
+As a result, the content in all lists in the presentation should appear on the slide one item at a time. You can also set just some lists to incrementally reveal using this format:
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 ::: {.incremental}
@@ -384,11 +352,11 @@ When I do this, the content in all lists in my presentation will be revealed one
 :::
 ````
 
-This pattern using `:::` to start and end a section creates a section in the resulting HTML file known as a `<div>`. The HTML `<div>` tag allows you to define properties within that section. In the code above, adding `{.incremental}` sets a custom CSS class that makes the list reveal incrementally. 
+Using `:::` to start and end a segment of the document creates a section in the resulting HTML file known as a `<div>`. The HTML `<div>` tag allows you to define properties within that section. In this code, adding `{.incremental}` sets a custom CSS class that makes the list reveal incrementally.
 
-#### Aligning Content {-}
+#### Aligning Content and Adding Background Images {-}
 
-We see a similar pattern when creating columns in Quarto slides. Let's say we want to create a slide with content in two columns, as in Figure \@ref(fig:quarto-slides-two-columns).
+We can use a <div> to create columns in Quarto slides, too. Let’s say we want to create a slide with content in two columns, as in Figure \@ref(fig:quarto-slides-two-columns).
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -402,7 +370,7 @@ knitr::include_graphics(here::here("assets/quarto-slides-two-columns.png"))
 save_image_for_nostarch(here::here("assets/quarto-slides-two-columns.png"))
 ```
 
-The code below is what I used to create the two-column slide. You'll see the `:::` as well as `::::`. This creates nested divs. We first have a `columns` class, which tells the HTML that all content within the `::::` should be laid out as columns. Then, we use `::: {.column width="50%"}` to start a div that takes up half of the width of the slide. With both `::::` and `:::`, we have to also have a matching closing `::::` and `:::` to indicate the end of the section.
+The following code created this two-column slide: 
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 :::: {.columns}
@@ -430,7 +398,9 @@ penguins %>%
 ::::
 ````
 
-With `xaringan` we were also able to easily center content on our slides by surrounding it with `.center[]`. Doing the same thing in Quarto is slightly more complicated. Quarto has no built-in CSS class to center content so we need to create it ourselves. I begin by creating a CSS code chunk and creating a custom class called `center-slide`. Using a bit of CSS, I tell it to center align all content (despite it saying `text-align` you'll see that it also aligns images).
+Notice the `:::`, as well as `::::`, which creates nested `<div>` sections. We first use a `columns` class, which tells the HTML that all content within the `::::` should be laid out as columns. Then, we use `::: {.column width="50%"}` to start a `<div>` that takes up half the width of the slide. With use closing `::::` and `:::` to indicate the end of the section.
+
+When using `xaringan`, we easily centered content on a slide by surrounding it with `.center[]`. Doing the same thing in Quarto is slightly more complicated. Quarto has no built-in CSS class to center content, so we need to create one ourselves. Begin a CSS code chunk and a custom class called `center-slide`: 
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "css"}
 ```{css}
@@ -440,47 +410,21 @@ With `xaringan` we were also able to easily center content on our slides by surr
 ```
 ````
 
-I then apply the new `center-slide` class by putting it next to the title of the slide as follows.
+Using CSS, we center-align all content. (The `text-align` property aligns images, too, not just text.) We then apply the new `center-slide` class by putting it next to the title of the slide, as follows:
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "css"}
 ## Bill Length {.center-slide}
 ````
 
-With our custom CSS applied, the slide now has all of its content centered, as seen in Figure \@ref(fig:quarto-slide-centered).
+With the custom CSS applied, the slide should now center all content.
 
-```{r results='asis'}
-print_nostarch_file_name(file_type_to_print = "png")
-```
-
-```{r quarto-slide-centered, out.width="100%", fig.cap="A slide with the content centered"}
-knitr::include_graphics(here::here("assets/quarto-slide-centered.png"))
-```
-
-```{r results='asis'}
-save_image_for_nostarch(here::here("assets/quarto-slide-centered.png"))
-```
-
-#### Adding Background Images to Slides {-}
-
-Working in `xaringan` we added a background image to one of our slides. We can do the same thing in Quarto by applying the `background-image` attribute to a slide as follows.
+Lastly, when working in `xaringan`, we added a background image to a slide. We can do the same thing in Quarto by applying the `background-image` attribute to a slide, as follows:
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "css"}
 ## Penguins {background-image="penguins.jpg"}
 ````
 
-This will add a slide with the text Penguins in front of an image of penguins, as seen in Figure \@ref(fig:quarto-slide-background-image).
-
-```{r results='asis'}
-print_nostarch_file_name(file_type_to_print = "png")
-```
-
-```{r quarto-slide-background-image, out.width="100%", fig.cap="A slide with a background image"}
-knitr::include_graphics(here::here("assets/quarto-slide-background-image.png"))
-```
-
-```{r results='asis'}
-save_image_for_nostarch(here::here("assets/quarto-slide-background-image.png"))
-```
+This should add a slide with the text *Penguins* in front of the selected image.
 
 #### Customizing Your Slides with Themes and CSS {-}
 
