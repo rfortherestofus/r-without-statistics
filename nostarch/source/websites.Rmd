@@ -640,7 +640,7 @@ In this chapter, you learned to use the `distill` package to make websites in R.
 
 - Create new pages and add them to your top navigation bar. 
 - Customize the look-and-feel of your website with tweaks to the CSS. 
-- Use wider the layouts to make content fit better on individual pages.
+- Use wider layouts to make content fit better on individual pages.
 - Convert static data visualization and tables into interactive versions.
 - Use GitHub Pages to host an always-up-to-date version of your website.
 
@@ -649,6 +649,7 @@ Herman has continued building websites with R. He and his colleagues at the Coun
 No matter whether you use `distill` or Quarto, using R gives you a quick way to develop complex websites without having to be a sophisticated front-end web developer. The websites look good and communicate well. They are one more way that R can help you share your results with the world.
 
 ## Learn More {-}
+
 Consult the following resources to learn how to make websites with the distill package and to see examples of other websites made with distill:
 
 “Building a blog with distill” by Tom Mock (2020), https://themockup.blog/posts/2020-08-01-building-a-blog-with-distill/
