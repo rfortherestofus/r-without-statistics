@@ -29,7 +29,7 @@ To make this website, Herman wrote a set of R Markdown files and strung them tog
 
 ## Creating a New `distill` Project {-}
 
-In Chapter \@ref(fig:presentations-chapter), you created a slideshow presentation by knitting an R Markdown document to a single HTML file. A website is merely a collection of HTML files. The `distill` package enables us to use multiple R Markdown documents to create several HTML files, then connect them with a navigation menu and more.
+In Chapter \@ref(presentations-chapter), you created a slideshow presentation by knitting an R Markdown document to a single HTML file. A website is merely a collection of HTML files. The `distill` package enables us to use multiple R Markdown documents to create several HTML files, then connect them with a navigation menu and more.
 
 To create a `distill` website, install the package using `install.packages("distill")`. Then start a project in R Studio by navigating to **File** > **New Project** > **New Directory** and selecting **Distill Website** as the project type. This should take you to the menu in Figure \@ref(fig:new-distill-website).
 

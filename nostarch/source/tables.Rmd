@@ -62,7 +62,7 @@ Unsurprisingly, the principles of good table design are similar to those for dat
 
 ### Principle One: Minimize Clutter {-}
 
-As with data visualization, one of the most important principles of table design is to minimize clutter. One way we can do this is by removing unnecessary elements. A common source of clutter in tables is gridlines. Often, you see tables that look like Figure \@ref(table-with-gridlines).
+As with data visualization, one of the most important principles of table design is to minimize clutter. One way we can do this is by removing unnecessary elements. A common source of clutter in tables is gridlines. Often, you see tables that look like Figure \@ref(fig:table-with-gridlines).
 
 ```{r results='asis', include = TRUE, echo = FALSE}
 print_nostarch_file_name(file_type_to_print = "png")

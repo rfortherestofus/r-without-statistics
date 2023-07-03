@@ -12,7 +12,6 @@ Quarto also supports more languages than does R Markdown, as well as multiple co
 
 This chapter focuses on the benefits of using Quarto as an R user. It explains how to set up Quarto, then covers some of the most important differences between Quarto and R Markdown. Lastly, you’ll learn how to make the parameterized reports, presentations, and websites covered in previous chapters using Quarto. 
 
-
 ## Creating a Quarto Document {-}
 
 Versions of RStudio starting with 2022.07.1 come with Quarto installed. To check your RStudio version, click **RStudio** in the top menu bar, then click **About RStudio**. If you have an older version of RStudio, update it now by reinstalling it, as outlined in Chapter \@ref(howto-chapter). Quarto should then be installed for you.
@@ -156,7 +155,7 @@ Clicking the Render button will turn the Quarto document into an HTML file, Word
 
 ## Parameterized Reporting {-}
 
-Now that you’ve learned how Quarto works, let’s make a few different documents with it, starting with a parameterized report. The process of making parameterized reports with Quarto is nearly identical to doing so with R Markdown. In fact, you can take the R Markdown document used to make the Urban Institute COVID Report in Chapter \@ref(parameterized-reporting-chapter) and adapt it for Quarto by copying the *.Rmd* file and changing its extension to *.qmd*, then making a few changes:
+Now that you’ve learned how Quarto works, let’s make a few different documents with it, starting with a parameterized report. The process of making parameterized reports with Quarto is nearly identical to doing so with R Markdown. In fact, you can take the R Markdown document used to make the Urban Institute COVID Report in Chapter \@ref(parameterized-reports-chapter) and adapt it for Quarto by copying the *.Rmd* file and changing its extension to *.qmd*, then making a few changes:
 
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
@@ -227,7 +226,7 @@ cases %>%
 
 In this code, we’ve switched `output: html_document` to `format: html` in the YAML, We’ve also removed the `setup` code chunk and put the options that were there in the YAML. Lastly, we’ve switched the `fig.height` option in the last code chunk to `fig-height` and used the hash pipe to label it as an option.
 
-Next, to create one report for each state, we must tweak the render.R script file we used to make parameterized reports in Chapter \@ref(parameterized-reporting-chapter):
+Next, to create one report for each state, we must tweak the render.R script file we used to make parameterized reports in Chapter \@ref(parameterized-reports-chapter):
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "r"}
 # Load packages
@@ -254,7 +253,7 @@ reports %>%
   pwalk(quarto_render)
 ````
 
-This updated *render.R* file loads the quarto package instead of the `rmarkdown` package and changes the input file to *urban-covid-budget-report.qmd*. In the `reports` tibble, we use `execute_params` instead of `params` because this is the argument that the `quarto_render()` function expects. To render the reports, we use the `quarto_render()` function instead of the `render()` function from the markdown package. As in Chapter \@ref(parameterized-reporting-chapter), running this code should produce one report for each state.
+This updated *render.R* file loads the quarto package instead of the `rmarkdown` package and changes the input file to *urban-covid-budget-report.qmd*. In the `reports` tibble, we use `execute_params` instead of `params` because this is the argument that the `quarto_render()` function expects. To render the reports, we use the `quarto_render()` function instead of the `render()` function from the markdown package. As in Chapter \@ref(parameterized-reports-chapter), running this code should produce one report for each state.
 
 ### Making Presentations {-}
 
