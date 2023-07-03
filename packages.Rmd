@@ -412,7 +412,7 @@ You should get the following message:
 • Refer to functions with `tidycensus::fun()`
 ```
 
-You'll then need to run `usethis::use_package(package = "tidycensus")`, which should give you the following output:
+You'll then need to run `usethis::use_package(package = "janitor")`, which should give you the following output:
 
 ```
 ✔ Adding 'janitor' to Imports field in DESCRIPTION
