@@ -4,7 +4,7 @@ chapter_number <- 10
 source("_common.R")
 ```
 
-# Quarto, the Next-Generation Tool for Reproducible Reporting {#quarto-chapter}
+# Reproducible Reporting with Quarto {#quarto-chapter}
 
 Quarto, the next-generation version of R Markdown, offers a few advantages over R Markdown. First, the syntax it uses across output types is more consistent. As you’ve seen in this book, R Markdown documents might use a variety of conventions; for example, the `distill` package has layout options that don’t work in `xaringan`, and `xaringan` uses three dashes to indicate new slides, while three dashes in other output formats would create a horizontal line. 
 
