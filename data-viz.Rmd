@@ -1276,7 +1276,7 @@ ggplot(dm_perc_cat_hubs, aes(week, percentage)) +
 There are a few additional tweaks to colors and spacing, but most of the code reflects what you’ve seen so far.
 
 
-## In Conclusion: ggplot is Your Data Viz Secret Weapon {-}
+## In Conclusion: ggplot is Your Data Visualization Secret Weapon {-}
 
 You may start to think of ggplot as a solution to all of your data visualization problems. And yes, you have a new hammer, but no, everything is not a nail. If you look at the version of the data visualization that appeared in *Scientific American* in November 2021, you’ll see that some of its annotations aren’t visible in our recreation. That’s because they were added in post-production. While you could have found ways to create them in ggplot, it’s often not the best use of your time. Get yourself 90 percent of the way there with ggplot and then use Illustrator, Figma, or a similar tool to finish your work.
 
