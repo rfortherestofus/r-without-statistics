@@ -1,6 +1,6 @@
 ```{r}
 i <- 1
-chapter_number <- 2
+chapter_number <- 1
 source("_common.R")
 ```
 

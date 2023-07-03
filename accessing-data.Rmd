@@ -1,6 +1,6 @@
 ```{r}
 i <- 1
-chapter_number <- 10
+chapter_number <- 11
 source("_common.R")
 ```
 
@@ -17,19 +17,21 @@ gs4_deauth()
 
 # Accessing Data {#accessing-data-chapter}
 
-The switch from R Markdown to a multi-tool workflow can improve the quality of your work significantly. But R Markdown on its own does nothing to improve how you access data. In Chapter \@ref(rmarkdown-chapter) the data I worked with came from a CSV file. To get my data in CSV format, I still had to do manual work. And manual work is one thing we're working on avoiding. 
+So far, we’ve imported data into projects from CSV files. Many online datasets allow you to export data as a CSV, but before you do so, you should look for packages to automate your data access. If you can eliminate the manual steps involved in fetching data, your analysis and reporting will be more accurate. You’ll also be able to efficiently update your report when the data changes.
 
-Fortunately for us, R has many ways to help you not only automate reporting with R Markdown, but also automate the process of accessing data. In this chapter, I'll discuss two such approaches. The first uses the `googlesheets4` package to bring in data directly from Google Sheets. The second uses the `tidycensus` package to access data from the United States Census Bureau. If you access data from either of these sources, this chapter will help you learn to do so efficiently. But even if you don't use Google Sheets or the Census Bureau data, this chapter can still help. R has many packages to automate the process of accessing data from a wide variety of sources (I discuss a few others below). Before you hit the export button to download your data as a CSV, see if you can find a package to automate accessing your data. Your data analysis and reporting will be more efficient and more accurate. 
+R offers many ways to automate the process of accessing online data. In this chapter, I’ll discuss two such approaches: using the `googlesheets4` package to fetch data directly from Google Sheets and using the `tidycensus` package to access data from the United States Census Bureau. You’ll learn how to connect your R Markdown project to Google so you can automatically download data when a Google Sheet updates. Then you’ll explore working with two large census datasets, the Decennial Census and the American Community Survey, and practice visualizing them.
 
-## Importing Data from Google Sheets {-}
+## Importing Data from Google Sheets with `googlesheets4` {-}
 
-In 2020, Meghan Harris started a job at the Primary Care Research Institute at the University of Buffalo. Her title was Data Integration Specialist, which was both generic and an accurate representation of the work she would do. One of the projects Harris worked on during her time in this job was looking at people affected by opioid use disorder, and data for this project came from a variety of surveys, all of which fed into a series of Google Sheets. She started her new job faced with a jumble of Google Sheets, tasked with helping the organization to make sense of and use its data. 
+By using the `googlesheets4` package to access data directly from Google Sheets, you can avoid having to manually download data, copy it into your project, and adjust your code so it imports that new data each time you want to update a report. This package lets you write code that automatically fetches new data directly from Google Sheets. Whenever you need to update your report, you can simply run your code to refresh the data. In addition, if you work with Google Forms, you can pipe your data into Google Sheets, completely automating the workflow from data collection to data import. 
 
-If R Markdown is an improvement on the typical multitool workflow discussed in Chapter \@ref(rmarkdown-chapter), using the `googlesheets4` package to access data directly from Google Sheets represents a similar improvement compared to downloading data each time you want to update a report. Rather than going through multiple steps (downloading data, copying it into your project, adjusting your code so it imports the new data), you can write code so that it automatically brings in new data directly from Google Sheets. Whenever you need to update your report, simply run your code and the report, generated with the latest data, will be created. I'll use a simple example below to demonstrate how the `googlesheets4` package works. This example, using fake data on video game preferences, is one that Meghan Harris created to mirror her work with opioid survey data (which, for obvious reasons, is confidential). 
+Using this package can help you manage complex datasets that update frequently. For example, in her role at the Primary Care Research Institute at the University of Buffalo, Megan Harris used it for a research project about people affected by opioid use disorder. The data came from a variety of surveys, all of which fed into a jumble of Google Sheets. Using `googlesheets4`, she was able to bring all of her data into one place and use R to put them to use. Data that had once been largely unused because accessing it was so complicated came to inform research on opioid use disorder. 
 
-### Using the `googlesheets4` Package {-}
+This section demonstrates how the `googlesheets4` package works using a fake dataset about video game preferences that Harris created to replace her opioid survey data (which, for obvious reasons, is confidential).
 
-After installing the `googlesheets4` package with the standard `install.packages("googlesheets4")`, you are ready to use it. Before you access data in a Google Sheet, you will need to connect your Google account. To do this, run the `gs4_auth()` function in the console. If you have more than one Google account, you will need to select the account that has access to the Google Sheet you want to work with. Once you do so, you'll see a screen that looks like Figure \@ref(fig:tidyverse-access-r).
+### Connecting to Google {-}
+
+Begin by installing the `googlesheets4` package by running `install.packages("googlesheets4")`. Next, you’ll need to connect to your Google account. To do this, run the `gs4_auth()` function in the console. If you have more than one Google account, select the account that has access to the Google Sheet you want to work with. Once you do so, you should see a screen that looks like Figure \@ref(fig:tidyverse-access-r).
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -43,9 +45,11 @@ knitr::include_graphics(here::here("assets/tidyverse-access-r.png"))
 save_image_for_nostarch(here::here("assets/tidyverse-access-r.png"))
 ```
 
-The most important thing is to check the box for "See, edit, create, and delete all your Google Sheets spreadsheets". This will ensure that R is able to access data from your Google Sheets account. Hit Continue and you'll be given the message "Authentication complete. Please close this page and return to R." The `googlesheets4` package will now save your credentials so that you can use them in the future without having to authenticate each time. 
+Check the box next to **See, edit, create, and delete all your Google Sheets spreadsheets**. This will ensure that R is able to access data from your Google Sheets account. Hit **Continue**, and you’ll be given the message *Authentication complete. Please close this page and return to R*. The `googlesheets4` package will now save your credentials so that you can use them in the future without having to reauthenticate.
 
-Now that we've connected R to our Google account, we can import data. We'll import fake data that Meghan Harris created on video preferences. You can see in Figure \@ref(fig:video-game-survey-data) what it looks like in Google Sheets.
+### Reading Data from a Sheet {-}
+
+Now that we’ve connected R to our Google account, we can import data. We’ll import the fake data that Meghan Harris created about video game preferences (you can access it at https://data.rwithoutstatistics.com/google-sheet). Figure \@ref(fig:video-game-survey-data) shows what it looks like in Google Sheets.
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -59,8 +63,7 @@ knitr::include_graphics(here::here("assets/video-game-survey-data.png"))
 save_image_for_nostarch(here::here("assets/video-game-survey-data.png"))
 ```
 
-The `googlesheets4` package has a function called `read_sheet()` that allows you to pull in data directly from a Google Sheet. We can import this data with this function in the following way:
-
+The `googlesheets4` package has a function called `read_sheet()` that allows you to pull in data directly from a Google Sheet. Import the data by passing the spreadsheet’s URL to the function:
 
 ```{r echo = TRUE}
 library(googlesheets4)
@@ -68,7 +71,7 @@ library(googlesheets4)
 survey_data_raw <- read_sheet("https://docs.google.com/spreadsheets/d/1AR0_RcFBg8wdiY4Cj-k8vRypp_txh27MyZuiRdqScog/edit?usp=sharing")
 ```
 
-We can take a look at the `survey_data_raw` object to confirm that our data was imported. I'm using the `glimpse()` function from the `dplyr` package in order to make it easier to read. 
+Take a look at the `survey_data_raw` object to confirm that the data was imported. Using the `glimpse()` function from the `dplyr` package can make it easier to read:
 
 ```{r eval = FALSE, echo = TRUE}
 library(tidyverse)
@@ -77,20 +80,18 @@ survey_data_raw %>%
   glimpse()
 ```
 
-The output shows that we have indeed imported the data directly from Google Sheets:
+The `glimpse()` function, which creates one output row per variable, shows that we’ve indeed imported the data directly from Google Sheets:
 
 ```{r}
 survey_data_raw %>% 
   glimpse()
 ```
 
-Once we have the data in R, we can now use the same workflow as always when creating reports with R Markdown. The code below is taken from an R Markdown report that Meghan Harris made to summarize the video games data. You can see the YAML, the `setup` code chunk, a chunk to load packages, followed by the code to read in data from Google Sheets. The next code chunk cleans the `survey_data_raw` object, saving the result as `survey_data_clean`. We then use this data to:
+Once we have the data in R, we can use the same workflow we always do when creating reports with R Markdown. 
 
-- Calculate the number of respondents and put this in the text using inline R code
-- Create a table that shows the respondents broken down by age group
-- Create a graph that shows how many respondents like video games
+### Using the Data in R Markdown {-}
 
-The code used to generate this report is below.
+The following code is taken from an R Markdown report that Meghan Harris made to summarize the video games data. You can see the YAML, the `setup` code chunk, a code chunk that loads packages, and the code to import data from Google Sheets: 
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 ---
@@ -116,23 +117,46 @@ library(gt)
 # Import data from Google Sheets
 survey_data_raw <- read_sheet("https://docs.google.com/spreadsheets/d/1AR0_RcFBg8wdiY4Cj-k8vRypp_txh27MyZuiRdqScog/edit?usp=sharing")
 ```
+````
 
+The R Markdown document resembles those discussed in previous chapters except for the way we’re importing the data. Because we’re bringing it in directly from Google Sheets, there’s no risk of, say, accidentally reading in the wrong CSV. Automating this step reduces the risk of error.
+
+The next code chunk cleans the `survey_data_raw` object, saving the result as `survey_data_clean`:
+
+````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 ```{r}
 # Clean data
 survey_data_clean <- survey_data_raw %>%
   clean_names() %>%
   mutate(participant_id = as.character(row_number())) %>%
-  relocate(participant_id, .before = age) %>%
   rename(age = how_old_are_you,
          like_games = do_you_like_to_play_video_games,
          game_types = what_kind_of_games_do_you_like,
          favorite_game = whats_your_favorite_game) %>%
+  relocate(participant_id, .before = age) %>%
   mutate(age = factor(age, levels = c("Under 18", "18-24", "25-34", "35-44", "45-54", "55-64", "Over 65")))
 ```
+````
 
+Here, we use the `clean_names()` function from the `janitor` package to make the variable names easier to work with. We then add a `participant_id` variable using the `row_number()` function, which adds a consecutively increasing number to each row. (I also make it a character using the `as.character()` function.) Next, I change several variable names with `rename()` before finally using `mutate()` to make the `age` variable into a data structure known as a *factor*; doing so will make sure the `age` variable shows up in the right order in our charts. I then use `relocate()` to put `participant_id` before the `age` variable. We can now take a look at our `survey_data_clean` data frame using the `glimpse()` function again:
 
+```{r}
+survey_data_clean <- survey_data_raw %>%
+  clean_names() %>%
+  mutate(participant_id = as.character(row_number())) %>%
+  rename(age = how_old_are_you,
+         like_games = do_you_like_to_play_video_games,
+         game_types = what_kind_of_games_do_you_like,
+         favorite_game = whats_your_favorite_game) %>%
+  relocate(participant_id, .before = age) %>%
+  mutate(age = factor(age, levels = c("Under 18", "18-24", "25-34", "35-44", "45-54", "55-64", "Over 65")))
 
+survey_data_clean %>% 
+  glimpse()
+```
+The rest of the report uses this data to highlight a variety of statistics:
 
+````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 # Respondent Demographics
 
 ```{r}
@@ -192,7 +216,7 @@ survey_data_clean %>%
 ```
 ````
 
-The resulting report can be seen in Figure \@ref(fig:video-game-report).
+These sections calculate the number of survey respondents, then put this in the text using inline R code; create a table that shows the respondents broken down by age group; and generate a graph that shows how many respondents like video games. Figure \@ref(fig:video-game-report) shows the resulting report.
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -206,25 +230,43 @@ knitr::include_graphics(here::here("assets/video-game-report.png"))
 save_image_for_nostarch(here::here("assets/video-game-report.png"))
 ```
 
-The R Markdown document here isn't revolutionary (it has the same type of things we saw in Chapter \@ref(rmarkdown-chapter)). What is different is the way we're importing our data. Because we're bringing it in directly from Google Sheets, there's no risk of, say, accidentally reading in the wrong CSV. Automating this step reduces the risk of error.
+We can re-run the code at any point to bring in updated data. Our survey had five responses today, but if we run it again tomorrow and it has additional responses, they will be included in the import. If you used Google Forms to run your survey and saved the results to a Google Sheet, you could produce this up-to-date report simply by clicking the Knit button in RStudio. 
 
-The best part is that we can re-run our code at any point to bring in updated data. The `read_sheet()` function will look for all data on the Google Sheet we specify. Our survey had five responses today, but if we run it again tomorrow and it has additional responses, they will all be included in the import. If you use Google Forms to run your survey and have the results go to a Google Sheet, you can have an always up-to-date summary report simply by clicking the Knit button in RStudio. That workflow is one that helped Meghan Harris to collect surveys and manage a wide range of data on opiod use disorder.
+### Importing Only Certain Columns {-}
 
-Importing data directly from Google Sheets takes our reproducibility one step further, making it possible not only to generate reports automatically, but also automating the process of bringing in the latest data. This process of bringing in data directly from the source applies beyond Google Sheets. There are packages to bring in data directly from Excel365 (`Microsoft365R`), Qualtrics (`qualtRics `), Survey Monkey (`surveymonkey`), and other sources. Before hitting the "Download Data" button in your data collection tool of choice, it's worth looking into whether a package exists to import data directly into R. 
+In the previous sections, we read the data of the entire Google Sheet. It is, however, possible to import only a section of a Sheet. For example, the survey data we imported includes a `timestamp` column. This variable is added automatically whenever someone submits a Google Form that pipes data into a Google Sheet, but we don’t use it in our analysis, so we could get rid of it. 
 
-For Meghan Harris, working directly with data in Google Sheets was a game-changer. She used `googlesheets4` to bring in data in multiple Google Sheets. From there, she was able to streamline analysis and reporting, which ultimately had a big impact on her organization's work. Data that had once been largely unused because accessing it was so complicated came to inform research on opioid use disorder. Bringing in data from Google Sheets with a few lines of code may seem small at first, but it can have a big impact.
+To do this, use the `range` argument in the `read_sheet()` function when importing the data. This argument lets us specify a range of data to bring. It uses the syntax you may have used to select columns in Google Sheets. In this example, I use `range = "Sheet1!B:E"` to import columns B through E (but not A, which contains the timestamp) before adding `glimpse()`.
 
-## Accessing Census Data with the `tidycensus` Package {-}
+```{r eval = FALSE, echo = TRUE}
+read_sheet("https://docs.google.com/spreadsheets/d/1AR0_RcFBg8wdiY4Cj-k8vRypp_txh27MyZuiRdqScog/edit?usp=sharing",
+           range = "Sheet1!B:E") %>% 
+  glimpse()
+```
 
-If you've ever worked with data from the United States Census Bureau, you know what a hassle it can be. You've got to go to the Census Bureau website, find the data you need, download it, and then analyze it in your tool of choice. Working with Census Bureau data in this way involves a lot of pointing and clicking, and gets very tedious over time.
+Running this code produces output without the `timestamp` variable:
 
-This tedium is what drove Texas Christian University geographer Kyle Walker to develop a package to automate the process of bringing Census Bureau data into R. Walker had previously created a package called `tigris` (introduced in Chapter \@ref(maps-chapter)) to automatically bring in shape files from the Census Bureau. As he told me, "I was using `tigris` pretty heavily in my own work to bring in the spatial data, but I didn't have a seamless way to get the demographic data as well." Drawing on his experience developing `tigris`, Walker, along with co-author Matt Herman (yes, he of the Westchester COVID-19 website discussed in Chapter \@ref(websites-chapter)), would develop the `tidycensus` package, which allows R users to bring in data directly from various Census Bureau datasets. With `tidycensus`, a user can write just a few lines of code and get data on, say, the median income in all 3,000 plus counties in the United States. 
+```{r}
+read_sheet("https://docs.google.com/spreadsheets/d/1AR0_RcFBg8wdiY4Cj-k8vRypp_txh27MyZuiRdqScog/edit?usp=sharing",
+           range = "Sheet1!B:E") %>% 
+  glimpse()
+```
 
-Below, we'll show how the `tidycensus` package works. We'll do this using examples from two datasets that `tidyverse` makes it possible to work with: the every-ten-year (decennial) Census and the American Community Survey. We'll also show how we can use the data from these two sources for additional analysis and to make maps by accessing geospatial and demographic data simultaneously. While this chapter focuses on data from the United States Census Bureau, I also list other R packages that access analogous data from other countries. 
+There are a number of other functions in the `googlesheets4` package that you can use. For example, if you ever need to write your output back to a Google Sheet, the `write_sheet()` function is there to help. To explore other functions in the package, check out its documentation website at https://googlesheets4.tidyverse.org/index.html.
 
-### Using `tidycensus` {-}
+## Accessing Census Data with `tidycensus` {-}
 
-The `tidycensus` package is available on CRAN so you can install it as you would most packages using `install.packages("tidycensus")`. In order to use `tidycensus` you must also get an API (application programming interface) key from the Census Bureau. This key, which is free, can be obtained by going to https://api.census.gov/data/key_signup.html and entering your details. Once you receive your API key by email, you need to put it in a place where `tidycensus` can find it. The `census_api_key()` function does this for you. Your best bet, after loading the `tidycensus` package, is to run the function as follows (replacing 123456789 with your actual API key):
+If you’ve ever worked with data from the United States Census Bureau, you know what a hassle it can be. Usually, the process involves visiting the Census Bureau website, searching the website for the data you need, downloading it, and then analyzing it in your tool of choice. This pointing and clicking gets very tedious over time.
+
+Kyle Walker, a geographer at Texas Christian University, and Matt Herman (creator of the Westchester COVID-19 website discussed in Chapter \@ref(websites-chapter)) developed a package to automate the process of bringing Census Bureau data into R: the `tidycensus` package. With `tidycensus`, a user can write just a few lines of code to get data about, say, the median income in all counties in the United States.
+
+This section shows you how the `tidycensus` package works using examples from two datasets to which it provides access: the Decennial Census administered every 10 years and the annual American Community Survey. We’ll also show you how to use the data from these two sources to perform additional analysis and make maps by accessing geospatial and demographic data simultaneously. 
+
+### Connecting to the Census Bureau with an API Key {-}
+
+Begin by installing `tidycensus` using `install.packages("tidycensus")`. To use `tidycensus`, you must get an application programming interface (API) key from the Census Bureau. *API keys* are like passwords that allow online services to determine whether you are authorized to access data. 
+
+You can obtain this key, which is free, by going to https://api.census.gov/data/key_signup.html and entering your details. Once you receive the key by email, you need to put it in a place where tidycensus can find it. The `census_api_key()` function does this for you, so after loading the `tidycensus` package, run the function as follows, replacing 123456789 with your actual API key:
 
 ```{r eval = FALSE, echo = TRUE}
 library(tidycensus)
@@ -232,13 +274,13 @@ library(tidycensus)
 census_api_key("123456789", install = TRUE)
 ```
 
-The `install = TRUE` argument will save your API key in your `.Renviron` file (a file designed to keep confidential information like API keys). The `tidycensus` will look for your API key there in the future so that you don't have to enter it every time you want to use the package.
+The `install = TRUE` argument will save your API key in your *.Renviron* file, which is designed for storing confidential information like API keys. The package will look for your API key there in the future so that you don’t have to reenter it every time you use the package.
 
-Having obtained and saved our API key, we're now ready to use `tidycensus` to access data. The Census Bureau puts out many datasets, several of which can be accessed using `tidycensus`. The most common datasets to access with `tidycensus` are the decennial Census and the American Community Survey (other datasets that can be accessed are discussed in Chapter 2 of Kyle Walker's book *Analyzing US Census Data: Methods, Maps, and Models in R*). 
+Now you can use `tidycensus` to access data. The most common of these are the Decennial Census and the American Community Survey. You can find a discussion of other datasets you can access in Chapter 2 of Kyle Walker’s book *Analyzing US Census Data: Methods, Maps, and Models in R*.
 
 ### Working with Decennial Census Data {-}
 
-We'll start out by accessing data from the 2020 Census on the Asian population in each state. To do this, we use the `get_decennial()` function with three arguments: 
+The Census Bureau puts out many datasets, several of which you can access using dedicated `tidycensus` functions. Let’s access data from the 2020 Decennial Census about the Asian population in each state using the `get_decennial()` function with three arguments:
 
 ```{r eval = FALSE, echo = TRUE}
 get_decennial(geography = "state", 
@@ -246,11 +288,7 @@ get_decennial(geography = "state",
               year = 2020)
 ```
 
-The arguments we're using here are:
-
-- `geography`, which tells `get_decennial()` to access data at the state level. There are many other geographies, including county, census tract, and more. 
-- `variables` is where we choose the variable or variables we want to access. I know that `P2_002N` is the variable name for the total Asian, but below I'll demonstrate how to identify other variables you may want to use.
-- `year` is where we select the year from which we want to access data. We're using data from the 2020 Census.
+The geography argument tells `get_decennial()` to access data at the state level. In addition to the 50 states, it will return for the District of Columbia and Puerto Rico. There are many other geographies, including county, census tract, and more. The `variables` argument specifies the variable or variables we want to access. Here, `P2_002N` is the variable name for the total Asian population. We’ll discuss how to identify other variables you may want to use in the next section. Lastly, `year` specifies the year from which we want to access data. We’re using data from the 2020 Census.
 
 Running this code returns the following:
 
@@ -260,34 +298,32 @@ get_decennial(geography = "state",
               year = 2020)
 ```
 
-The resulting data frame has four variables: 
+The resulting data frame has four variables. `GEOID` is the geographic identifier given by the Census Bureau for the state. Each state has a geographic identifier, as do all counties, census tracts, and other geographies. `NAME` is the name of each state, and `variable` is the name of the variable we passed to the `get_decennial()` function. Lastly, `value` is the numeric value for the state and variable in each row. In this case, it represents the total Asian population in each state.
 
-1. `GEOID` is the geographic identifier given by the Census Bureau for the state. Each state has a geographic identifier, as do all counties, census tracts, and all other geographies. 
-1. `NAME` is the name of each state.
-1. `variable` is the name of the variable we passed to the `get_decennial()` function.
-1. `value` is the numeric value for the state and variable in each row. In our case, it represents the total Asian population in each state.
+#### Identifying Census Variable Values {-}
 
-Let's say we want to calculate the Asian population as a percentage of all people in each state. To do that, we'd need both the Asian population as well as the total population. How would we do this? 
+To pass a specific variable to `get_decennial()`, you have to first look it up. Let’s say we want to calculate the Asian population as a percentage of all people in each state. To do that, we’d first need to retrieve the variable for the state’s total population. 
 
-#### Identifying Variables {-}
+The `tidycensus` package has a function called `load_variables()` that shows all of the variables from a Decennial Census. Run it with the `year` argument set to 2020 and `dataset` set to `pl`. This should pull data from so-called redistricting summary data files, which public law 94-171 requires the census to produce every 10 years:
 
-First, we'd need to know the variable names. I looked up the variable name for Asian population (`P1_006N`) without showing you how I did it. Let's backtrack so I can show you how to identify variable names. The `tidycensus` package has a function called `load_variables()` that shows us all of the variables from the decennial Census. If we run it with the argument `year` set to 2020 and `dataset` set to "pl" (pl refers to public law 94-171, which requires the Census to produce so-called redistricting summary data files every ten years).
 
 ```{r eval = FALSE, echo = TRUE}
 load_variables(year = 2020, 
                dataset = "pl")
 ```
 
-Running this code returns the name, label (description), and concept (category) of all variables available to us. Looking at this, we can see variable `P1_006N` (it's cut off here, but in RStudio you'd see the full description). We can also see that variable `P1_001N` gives us the total population.
+Running this code returns the name, label (a description), and concept (a category) of all variables available to us:
 
 ```{r}
 load_variables(year = 2020, 
                dataset = "pl")
 ```
 
-#### Using Multiple Variables {-}
+By looking at this list, you can see that the variable `P1_001N` gives us the total population.
 
-Now that we know which variables we need, we can use the `get_decennial()` function again. We used just one variable above, but we can run our code again with two variables. 
+#### Using Multiple Census Variables {-}
+
+Now that we know which variables we need, we can use the `get_decennial()` function again with two variables at once:
 
 ```{r eval = FALSE, echo = TRUE}
 get_decennial(geography = "state", 
@@ -296,7 +332,7 @@ get_decennial(geography = "state",
   arrange(NAME)
 ```
 
-I've added `arrange(NAME)` after `get_decennial()` so that the results are sorted by state name, allowing us to see that we have both variables for each state.
+We add `arrange(NAME)` after `get_decennial()` so that the results are sorted by state name, allowing us to see that we have both variables for each state:
 
 ```{r}
 get_decennial(geography = "state", 
@@ -305,9 +341,7 @@ get_decennial(geography = "state",
   arrange(NAME)
 ```
 
-#### Giving Variables More Descriptive Names {-}
-
-I often have trouble remembering what variable names like `P1_001N` and `P1_006N` mean. Fortunately, we can adjust our code in `get_decennial()` to give our variables more meaningful names using the following syntax:
+If you’re working with multiple census variables, however, you might have trouble remembering what names like `P1_001N` and `P1_006N` mean. Fortunately, we can adjust the code in the call to `get_decennial()` to give these variables more meaningful names using the following syntax:
 
 ```{r eval = FALSE, echo = TRUE}
 get_decennial(geography = "state", 
@@ -317,7 +351,7 @@ get_decennial(geography = "state",
   arrange(NAME)
 ```
 
-When we run this code, it is now much easier to remember which variables we are working with.
+Within the `variables` argument, we give the name we want our variables to have, followed by the equal sign and the original variable name. We can rename multiple variables by putting them within the `c()` function, as I’ve done here. It should now be much easier to see which variables we’re working with:
 
 ```{r}
 get_decennial(geography = "state", 
@@ -327,16 +361,11 @@ get_decennial(geography = "state",
   arrange(NAME)
 ```
 
-Instead of "P1_001N" and "P1_006N", we have "total_population" and "asian_population." Much better!
+Instead of `P1_001N` and `P1_006N`, we have `total_population` and `asian_population`. Much better!
 
 ### Analyzing Census Data {-}
 
-Let's now return to what started us down this path: calculating the Asian population in each state as a percentage of the total. To do this, we use the code from above and add a few things to it: 
-
-1. We use `group_by(NAME)` to create one group for each state because we want to calculate the Asian population percentage in each state.
-1. We use `mutate(pct = value / sum(value))` to calculate the percentage. This line takes the `value` in each row and divides it by the `total_population` and `asian_population` rows for each state.
-1. We use `ungroup()` to remove the state-level grouping.
-1. We use `filter(variable == "asian_population")` to only show the Asian population percentage. 
+Now we have the data we need to calculate the Asian population in each state as a percentage of the total. To do this, we add a few things to the code from the previous section:
 
 ```{r echo = TRUE, eval = FALSE}
 get_decennial(geography = "state", 
@@ -350,7 +379,9 @@ get_decennial(geography = "state",
   filter(variable == "asian_population")
 ```
 
-When we run this code, we see the Asian population and the Asian population as a percentage of the total population in each state.
+We use `group_by(NAME)` to create one group for each state because we want to calculate the Asian population percentage in each state (not for the entire United States). We then use `mutate()` to calculate each percentage, taking the value in each row and dividing it by the `total_population` and `asian_population` rows for each state. We use `ungroup()` to remove the state-level grouping. We use `filter()` to show only the Asian population percentage.
+
+When we run this code, we see both the Asian population and the Asian population as a percentage of the total population in each state:
 
 ```{r}
 get_decennial(geography = "state", 
@@ -364,9 +395,11 @@ get_decennial(geography = "state",
   filter(variable == "asian_population") 
 ```
 
+This is one way to calculate the Asian population as a percentage of the total population in each state, but it’s not the only way.
+
 #### Using a Summary Variable {-}
 
-Kyle Walker knew that calculating summaries like this would be a common use case for `tidycensus`. So, to simplify things, he gives us the `summary_var` argument that we can use within `get_decennial()`. Instead of putting "P1_001N" (total population) in the `variables` argument, we can instead use it with the `summary_var` argument as follows.
+Kyle Walker knew that calculating summaries like we’ve just done would be a common use case for `tidycensus`. To calculate, say, the Asian population as a percentage of the whole, you need to have a numerator (the Asian population) and denominator (the total population). So, to simplify things, he gives us the `summary_var` argument that we can use within `get_decennial()` to import the total population as a separate variable. Instead of putting `P1_001N` (total population) in the `variables` argument, we can use it with the `summary_var` argument as follows.
 
 ```{r eval = FALSE, echo = TRUE}
 get_decennial(geography = "state", 
@@ -376,7 +409,7 @@ get_decennial(geography = "state",
   arrange(NAME)
 ```
 
-This returns a nearly identical data frame to what we got above, except that the total population is now a separate variable, rather than additional rows for each state.
+This returns a nearly identical data frame to what we got earlier, except that the total population is now a separate variable, rather than additional rows for each state:
 
 ```{r}
 get_decennial(geography = "state", 
@@ -386,7 +419,7 @@ get_decennial(geography = "state",
   arrange(NAME)
 ```
 
-With our data in this new format, we can calculate the Asian population as a percentage of the whole by dividing the `value` variable by the `summary_value` variable. 
+With our data in this new format, we can calculate the Asian population as a percentage of the whole by dividing the `value` variable by the `summary_value` variable. Then we drop the `summary_value` variable because we no longer need it after doing our calculation:
 
 ```{r eval = FALSE, echo = TRUE}
 get_decennial(geography = "state", 
@@ -398,7 +431,7 @@ get_decennial(geography = "state",
   select(-summary_value)
 ```
 
-The resulting output is nearly identical.
+The resulting output is identical to the output of the previous section:
 
 ```{r}
 get_decennial(geography = "state", 
@@ -409,16 +442,13 @@ get_decennial(geography = "state",
   mutate(pct = value / summary_value)
 ```
 
-How you choose to calculate summary statistics is up to you. The good thing is that `tidycensus` makes it easy to do either way!
+How you choose to calculate summary statistics is up to you; `tidycensus` makes it easy to do either way.
 
-#### Working with American Community Survey Data {-}
+#### Visualizing American Community Survey Data {-}
 
-Let's switch now to accessing data from the American Community Survey (ACS). This survey, which is conducted every year, differs from the decennial Census in two major ways:
+Once you’ve accessed data using the `tidycensus` package, you can do whatever you want with it. Let’s practice analyzing and visualizing survey data using the American Community Survey. This survey, which is conducted every year, differs from the decennial Census in two major ways: It is given to a sample of people rather than the entire population, and it includes a wider range of questions.
 
-1. It is given to a sample of people rather than the entire population.
-1. It includes a wider range of questions.
-
-Despite these differences, accessing data from the ACS is nearly identical to how we access Census data. Instead of `get_decennial()`, we use the function `get_acs()`, but the arguments are the same. Here I've identified a variable I'm interested in (`B01002_001`, which shows median age) and am using it to get the data for each state.
+Despite these differences, we can access data from the American Community Survey in a manner nearly identical to how we access Decennial Census data. Instead of `get_decennial()`, we use the function `get_acs()`, but the arguments we pass to these functions are the same. In the following example, I’ve identified a variable I’m interested in (`B01002_001`, which shows the median age) and use it to get this data for each state:
 
 ```{r eval = FALSE, echo = TRUE}
 get_acs(geography = "state",
@@ -426,7 +456,7 @@ get_acs(geography = "state",
         year = 2020)
 ```
 
-Here's what the output looks like:
+Here is what the output looks like:
 
 ```{r}
 get_acs(geography = "state",
@@ -434,16 +464,13 @@ get_acs(geography = "state",
         year = 2020)
 ```
 
-There are two differences we can see in the `get_acs()` output compared to that from `get_decennial()`:
+You should notice two differences in the output from `get_acs()` compared to that from `get_decennial()`. First, instead of the value column, `get_acs()` produces a column called `estimate`. It also produces an additional column called `moe`, for the margin of error. We see these changes because the American Community Survey is given to a sample of the population. As a result, we must extrapolate values from that sample to the population as a whole, and with such an estimate comes a margin of error. 
 
-1. The `value` column in `get_decennial()` is called `estimate` with `get_acs()`.
-1. We have an additional column called `moe` for margin of error.
+In the state-level data, the margins of error are relatively low, but if you get data from smaller geographies, they tend to be higher. In cases where your margins of error are high relative to your estimates, you should interpret results with caution, as there is greater uncertainty about how well the data represents the population as a whole.
 
-Both of these changes are because the ACS is given to a sample of the population. As a result, we don't have precise values, but rather estimates, which are extrapolations from the sample to the population as a whole. And with an estimate comes a margin of error. In our state-level data, the margins of error are relatively low, but if you get data from smaller geographies, they tend to be higher. In cases where your margins of error are high relative to your estimates, you should interpret results with caution, as there is greater uncertainty about how well the data represents the population as a whole.
+#### Making Charts {-}
 
-#### Using ACS Data to Make Charts {-}
-
-As we saw with Census data on the Asian population in the United States, once you access data using the `tidycensus` package, you can do whatever else you want with it. We calculated the Asian population as a percentage of the total above. Here we could take the data on median age and pipe it into ggplot in order to create a bar chart.
+Here is how we could take the data on median age and pipe it into ggplot to create a bar chart: 
 
 ```{r eval = FALSE, echo = TRUE}
 get_acs(geography = "state",
@@ -454,7 +481,7 @@ get_acs(geography = "state",
   geom_col()
 ```
 
-Figure \@ref(fig:median-age-chart) shows our bar chart.
+We import data with the `get_acs()` function and then pipe this directly into ggplot. We put states (which use the variable `NAME`) on the y axis and median age (`estimate`) on the x axis. A simple `geom_col()` creates the bar chart, shown in Figure \@ref(fig:median-age-chart).
 
 ```{r results='asis'}
 print_nostarch_file_name()
@@ -473,11 +500,11 @@ get_acs(geography = "state",
 save_figure_for_nostarch(figure_height = 6)
 ```
 
-This chart is nothing special, but the fact that it takes just six lines of code to create most definitely is. 
+This chart is nothing special, but the fact that it takes just six lines of code to create most definitely is.
 
-#### Using ACS Data to Make Maps {-}
+#### Making Population Maps with the `geometry` Argument {-}
 
-Kyle Walker's original motivation to build `tidycensus` came from wanting to make it easy to access demographic data, just as he had done with geospatial data in the `tigris` package. He succeeded. And one additional benefit of Walker working on both packages is that there is a tight integration between them. Using the `get_acs()` function, you can set the `geometry` argument to `TRUE` and you will get both demographic and geospatial data (which, under the hood, actually comes from the `tigris` package).
+Kyle Walker, the creator of `tidycensus`, also created the `tigris` package for working with geospatial data. As a result, these packages are tightly integrated. Within the `get_acs()` function, you can set the `geometry` argument to `TRUE` to receive both demographic data from the Census Bureau and geospatial data from `tigris`:
 
 ```{r eval = FALSE, echo = TRUE}
 get_acs(geography = "state",
@@ -486,7 +513,7 @@ get_acs(geography = "state",
         geometry = TRUE) 
 ```
 
-If we take a look at the resulting data, we can see that it has the metadata and `geometry` column of simple features objects that we saw in Chapter \@ref(maps-chapter).
+If we take a look at the resulting data, we can see that it has the metadata and `geometry` column of the simple features objects that we saw in Chapter \@ref(maps-chapter).
 
 ```{r}
 get_acs(geography = "state",
@@ -495,7 +522,7 @@ get_acs(geography = "state",
         geometry = TRUE) 
 ```
 
-We can pipe this data into ggplot to make a map with the following code.
+We can see that the geometry type is MULTIPOLYGON, which you learned about in Chapter \@ref(maps-chapter). We can pipe this data into ggplot to make a map with the following code:
 
 ```{r eval = FALSE, echo = TRUE}
 get_acs(geography = "state",
@@ -507,7 +534,9 @@ get_acs(geography = "state",
   scale_fill_viridis_c()
 ```
 
-The resulting map, seen in Figure \@ref(fig:median-age-map-bad) below, is less than ideal. The problem with it is that the Aleutian Islands in Alaska cross the 180-degree line of longitude, also known as the international date line. As a result, most of Alaska is on one side of the map while a small part is on the other side. What's more, both Hawaii and Puerto Rico, both being decently far from the United States mainland and relatively small, are hard to see.
+Here, we import the data with the `get_acs()` function before piping it into the `ggplot()` function. We set the estimate variable to use for the `fill` aesthetic property; that is, the fill color of each state will vary depending on the median age of its residents. Then we use `geom_sf()` to draw the map. The `scale_fill_viridis_c()` function gives us a colorblind-friendly palette. 
+
+The resulting map, seen in Figure \@ref(fig:median-age-map-bad), is less than ideal because the Aleutian Islands in Alaska cross the 180-degree line of longitude, also known as the *international date line*. As a result, most of Alaska appears on one side of the map while a small part appears on the other side. What’s more, both Hawaii and Puerto Rico are hard to see.
 
 ```{r results='asis'}
 print_nostarch_file_name()
@@ -527,7 +556,7 @@ get_acs(geography = "state",
 save_figure_for_nostarch(figure_height = 5)
 ```
 
-Fortunately for us, Kyle Walker has a solution. If we load the `tigris` package, we can then use the `shift_geometry()` function to move Alaska, Hawaii, and Puerto Rico into places where they are more easily visible. We set the argument `preserve_area` to `FALSE` so that the giant state of Alaska is shrunk while Hawaii and Puerto Rico are made larger. 
+To fix these problems, load the tigris package, then use the `shift_geometry()` function to move Alaska, Hawaii, and Puerto Rico into places where they’ll be more easily visible: 
 
 ```{r eval = FALSE, echo = TRUE}
 library(tigris)
@@ -542,7 +571,7 @@ get_acs(geography = "state",
   scale_fill_viridis_c()
 ```
 
-This lack of precision in the exact sizes of the states is more than made up for by having an easier to read map, which we can see in Figure \@ref(fig:median-age-map-good).
+We set the `preserve_area` argument to `FALSE` to shrink the giant state of Alaska and make Hawaii and Puerto Rico larger. Although the state sizes in the map won’t be precise, the map will be easier to read, as you can see in Figure \@ref(fig:median-age-map-good).
 
 ```{r results='asis'}
 print_nostarch_file_name()
@@ -563,15 +592,12 @@ get_acs(geography = "state",
 save_figure_for_nostarch(figure_height = 5)
 ```
 
-We've made a map that shows median age by state. But there's nothing to stop us from making the same map by county. Just change the `geography` argument to "county" and you'll get a map for all 3,000 plus counties. Chapter 2 of Kyle Walker's book *Analyzing US Census Data: Methods, Maps, and Models in R* discusses the various geographies available. There are also many more arguments in both the `get_decennial()` and `get_acs()` functions. We've only shown a few of the most common arguments. If you want to learn more, Walker's book is a great resource.
+We’ve made a map that shows the median age by state. As an exercise, try making the same map for all 3,000 counties by changing the `geography` argument to `"county"`. Other geographies include region, tract (for census tracts), place (for census-designated places, more commonly known as towns and cities), congressional district, and more. Chapter 2 of Kyle Walker’s book *Analyzing US Census Data: Methods, Maps, and Models in R* discusses the various geographies available. There are also many more arguments in both the `get_decennial()` and `get_acs()` functions. We’ve shown only a few of the most common. If you want to learn more, Walker’s book is a great resource.
 
 ## Packages like `googlesheets4` and `tidycensus` Make it Easy to Access Data {-}
 
-If you work with Census data, the `tidycensus` package is a huge timesaver. Rather than having to manually download data from the Census Bureau website, you can write R code that brings it in automatically, making it ready for analysis and reporting. If you're looking for Census data from other countries, Chapter 12 of Walker's *Analyzing US Census Data* book gives examples of packages that can help. There are R packages to bring Census data from Canada, Kenya, Mexico, Brazil, and other countries. 
+This chapter explored two packages that use APIs to access data directly from its source. The `googlesheets4` package lets you import data from a Google Sheet. It’s particularly useful when you’re working with survey data, as it makes it easy to update your reports when new results come in. If you don’t work with Sheets, you could use similar packages to fetch data from Excel365 (`Microsoft365R`), Qualtrics (`qualtRics`), Survey Monkey (`surveymonkey`), and other sources. 
 
-What all of these packages (and the `googlesheets4` package) have in common is that they use application programming interfaces (APIs) to access data directly from its source. These packages are often referred to as "wrapper packages" because they wrap R code around the code needed to access data through APIs. You don't have to figure out how to access data through APIs yourself; you can just write some simple R code and the wrapper packages convert your code into the complex code needed to bring in the data. 
+If you work with US census data, the `tidycensus` package is a huge timesaver. Rather than having to manually download data from the Census Bureau website, you can use it to write R code that accesses it automatically, making it ready for analysis and reporting. Because of its integration with `tigris`, you can also easily map this demographic data. 
 
-In talking with Kyle Walker, he nicely summarized the benefit of `tidycensus`, saying it does "all of the tedious aspects of getting census data so that you can focus on the fun aspects." He continued: "making maps is fun, analyzing data and finding out insights about your community is fun and interesting. But setting up a connector to an API or figuring out how to align columns [is] more tedious." 
-
-This is the benefit of working with an open-source tool like R. Because R is extensible, others can create packages to do things that would take you extraordinary amounts of time to do on your own. You don't need to figure on your own out how to access data from Google Sheets or the Census Bureau API by yourself. You can build on the hours of work put in by the R community to make your life easier.
-
+If you’re looking for census data from other countries, Walker’s *Analyzing US Census Data* book gives examples of packages that can help. There are R packages to bring census data from Canada (`cancensus`), Kenya (`rKenyaCensus`), Mexico (`mxmaps` and `inegiR`), Europe (`eurostat`), and other countries. Before hitting the download button in your data collection tool of choice, it’s worth looking for a package that can import that data directly into R.
