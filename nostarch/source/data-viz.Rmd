@@ -88,22 +88,22 @@ source("_common.R")
 
 In the spring of 2021, nearly all of the American West was in a drought. By April of that year, officials in Southern California had declared a water emergency, citing unprecedented conditions.
 
-This wouldn’t have come as news to those living in California and other Western states.  Drought conditions like those in the West in 2021 are becoming increasingly common. Yet communicating the extent of problem remains difficult. How can we show the data in a way that accurately represents it while making it compelling enough to get people to take notice?
-This was the challenge that data-visualization designers Cédric Scherer and Georgios Karamanis took on in the fall of 2021. Working with the magazine *Scientific American* to create a data visualization of drought conditions over the last two decades in the United States, they turned to the ggplot2 package to transform what could have been dry data (pardon the pun) into a visually arresting and impactful graph.
+This wouldn’t have come as news to those living in California and other Western states. Drought conditions like those in the West in 2021 are becoming increasingly common. Yet communicating the extent of problem remains difficult. How can we show the data in a way that accurately represents it while making it compelling enough to get people to take notice?
 
-In this chapter, I show how Scherer and Karamanis made their data visualization. We begin by looking at why the data visualization is effective. Next, we talk about the grammar of graphics, a theory to make sense of graphs that underlies the ggplot2 package that Scherer, Karamanis, and millions of others use to make data visualization. We then return to the drought graph, recreating it step-by-step using ggplot2. In the process, we pull out some key principles of high-quality data visualization that you can use to improve your own work.
+Data-visualization designers Cédric Scherer and Georgios Karamanis took on this challenge in the fall of 2021. By working with the magazine *Scientific American* to create a data visualization of drought conditions over the last two decades in the United States, they turned to the `ggplot2` package to transform what could have been dry data (pardon the pun) into a visually arresting and impactful graph.
+
+This chapter explores why the data visualization that Scherer and Karamanis created is effective and introduces you to the *grammar of graphics*, a theory to make sense of graphs that underlies the `ggplot2` package. You’ll then learn how to use `ggplot2` by recreating the drought graph step by step. In the process, we’ll highlight some key principles of high-quality data visualization that you can use to improve your own work.
 
 ## The Drought Visualization {-}
 
-There was nothing unique about the data that Scherer and Karamanis used. Other news organizations had relied on the same data, from the National Drought Center, in their stories. But Scherer and Karamanis visualized it in a way that it both grabs attention and communicates the scale of the phenomenon. Figure \@ref(fig:final-viz) shows a section of the final visualization. Showing four regions over the last two decades, the increase in drought conditions, especially in California and the Southwest, is made apparent.
-
+Other news organizations had relied on the same data as Scherer and Karamanis, from the National Drought Center, in their stories. But Scherer and Karamanis visualized it in a way that it both grabs attention and communicates the scale of the phenomenon. Figure \@ref(fig:final-viz) shows a section of the final visualization. Covering four regions over the last two decades, the graph makes apparent increase in drought conditions, especially in California and the Southwest.
 
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
 
-```{r final-viz, fig.height = 8, fig.cap="A section of the final drought visualization. If you’re incredibly eagle-eyed, you’ll see a few minor elements that differ from the version published in *Scientific American*. These are things I had to change to make the plots fit in this book (for example, altering the text size and putting legend text on two rows) or things that *Scientific American* added in post-production (such as annotations)."}
+```{r final-viz, fig.height = 8, fig.cap="A section of the final drought visualization, with a few tweaks made so that the plots fit in this book "}
 dm_perc_cat_hubs %>%
   filter(hub %in% c("Northwest", 
                     "California", 
@@ -206,7 +206,7 @@ dm_perc_cat_hubs %>%
 save_figure_for_nostarch(figure_height = 8)
 ```
 
-To understand why this visualization is effective, let’s break it down into pieces. At the broadest level, the data visualization is notable for its minimalist aesthetic. There are, for example, no grid lines and few text labels, as well as little text along the axes. What Scherer and Karamanis have done is remove what statistician Edward Tufte, in his 1983 book *The Visual Display of Quantitative Information*, calls *chartjunk*. Tufte wrote (and researchers, as well as data visualization designers since, have generally agreed) that extraneous elements often hinder, rather than help, our understanding of charts.
+To understand why this visualization is effective, let’s break it down into pieces. At the broadest level, the data visualization is notable for its minimalist aesthetic. There are, for example, no grid lines and few text labels, as well as little text along the axes. Scherer and Karamanis removed what statistician Edward Tufte, in his 1983 book *The Visual Display of Quantitative Information*, calls *chartjunk*. Tufte wrote that extraneous elements often hinder, rather than help, our understanding of charts (and researchers, as well as data visualization designers since, have generally agreed).
 
 Need proof that Scherer and Karamanis’s decluttered graph is better than the alternative? Figure \@ref(fig:cluttered-viz) shows a version with a few small tweaks to the code to include grid lines and text labels on axes. Prepare yourself for clutter!
 
@@ -318,7 +318,8 @@ save_figure_for_nostarch(figure_height = 8)
 
 Again, it’s not just that this cluttered version looks worse. The clutter actively inhibits understanding. Rather than focus on overall drought patterns (the point of the graph), our brain gets stuck reading repetitive and unnecessary axis text.
 
-One of the best ways to reduce clutter is to break a single chart into what are known as *small multiples*. When we look closely at the data visualization, we see that it is not one chart but actually a set of charts. Each rectangle represents one region in one year. If we filter to show the Southwest region in 2003 and add axis titles, we can see in Figure \@ref(fig:viz-sw-2003) that the x axis shows the week while the y axis shows the percentage of that region at different drought levels.
+One of the best ways to reduce clutter is to break a single chart into what are known as *small multiples*. When we look closely at the data visualization, we see that it is not one chart but actually a set of charts. Each rectangle represents one region in one year. If we filter it to show the Southwest region in 2003 and add axis titles, we can see in Figure \@ref(fig:viz-sw-2003) that the x axis shows the week while the y axis shows the percentage of that region at different drought levels.
+
 
 
 ```{r results='asis'}
@@ -427,9 +428,8 @@ save_figure_for_nostarch(figure_height = 4)
 ```
 
 
-Zooming in on a single region in a single year also makes the color choices more obvious. The lightest bars show the percentage of the region that is abnormally dry while the darkest bars show the percentage in exceptional drought conditions. These colors, as we’ll see shortly, are intentionally chosen to make differences in the drought levels visible to all readers.
-When I asked Scherer and Karamanis to speak with me about this data visualization, they initially told me that the code for this piece might be too simple to highlight the power of R for data visualization. No, I told them, I want to speak with you precisely because the code is not super complex. The fact that Scherer and Karamanis were able to produce this complex graph with relatively simple code shows the power of R for data visualization. And it is possible *because* of a theory called the grammar of graphics.
-
+Zooming in on a single region in a single year also makes the color choices more obvious. The lightest bars show the percentage of the region that is abnormally dry while the darkest bars show the percentage in exceptional drought conditions. These colors, as we’ll see shortly, were intentionally chosen to make differences in the drought levels visible to all readers.
+Even so, the R code that Scherer and Karamanis wrote to produce this complex graph is relatively simple, due largely to a theory called the grammar of graphics.
 
 ## The Grammar of Graphics {-}
 
@@ -447,13 +447,11 @@ knitr::include_graphics(here::here("assets/excel-chart-chooser.png"))
 save_image_for_nostarch(here::here("assets/excel-chart-chooser.png"))
 ```
 
-
-f you’ve only ever made data visualization in Excel, this first step may seem so obvious that you’ve never even considered the process of creating data visualization in any other way. But there are different models for thinking about graphs. Rather than conceptualizing graphs types as being distinct, we can recognize the things that they have in common and use these commonalities as the starting point for making them.
+If you’ve only ever made data visualization in Excel, this first step may seem so obvious that you’ve never even considered the process of creating data visualization in any other way. But there are different models for thinking about graphs. Rather than conceptualizing graphs types as being distinct, we can recognize the things that they have in common and use these commonalities as the starting point for making them.
 
 This approach to thinking about graphs comes from the late statistician Leland Wilkinson. For years, Wilkinson thought deeply about what data visualization is and how we can describe it. In 1999, he published a book called *The Grammar of Graphics* that sought to develop a consistent way of describing all graphs. In it, Wilkinson argued that we should think of plots not as distinct types à la Excel, but as following a grammar that we can use to describe *any* plot. Just as English grammar tells us that a noun is typically followed by a verb (which is why “he goes” works, while the opposite, “goes he,” does not), knowledge of the grammar of graphics allows us to understand why certain graph types “work.” 
 
 Thinking about data visualization through the lens of the grammar of graphics allow us to see, for example, that graphs typically have some data that is plotted on the x axis and other data that is plotted on the y axis. This is the case no matter whether the graph is a bar chart or a line chart, for example. Consider Figure \@ref(fig:bar-line-chart), which shows two charts that use identical data on life expectancy in Afghanistan.
-
 
 ```{r results='asis'}
 print_nostarch_file_name()
@@ -513,15 +511,15 @@ save_figure_for_nostarch()
 
 While they look different (and would, to the Excel user, be different types of graphs), Wilkinson’s grammar of graphics allows us to see their similarities. (Incidentally, Wilkinson’s feelings on graph-making tools like Excel became clear when he wrote that “most charting packages channel user requests into a rigid array of chart types.”)
 
-When Wilkinson wrote his book, no data visualization tool could implement his grammar of graphics. This would change in 2010, when Hadley Wickham announced the ggplot2 package for R in an article titled “A Layered Grammar of Graphics.” By providing the tools to implement Wilkinson’s ideas, ggplot2 would come to revolutionize the world of data visualization.
+When Wilkinson wrote his book, no data visualization tool could implement his grammar of graphics. This would change in 2010, when Hadley Wickham announced the `ggplot2` package for R in an article titled “A Layered Grammar of Graphics.” By providing the tools to implement Wilkinson’s ideas, `ggplot2` would come to revolutionize the world of data visualization.
 
 ## Working With ggplot2 {-}
 
-The ggplot2 R package (which I, like nearly everyone in the data visualization world, will refer to simply as ggplot) relies on the idea of plots having multiple layers. Let’s walk through some of the most important layers. We’ll begin by selecting variables to map to aesthetic properties. Then we’ll choose a geometric object to use to represent our data. Next we’ll change the aesthetic properties of our chart (the color scheme, for example) using a `scale_` function. And finally we’ll use a `theme_` function to set the overall look-and-feel of our plot.
+The `ggplot2` R package (which I, like nearly everyone in the data visualization world, will refer to simply as ggplot) relies on the idea of plots having multiple layers. Let’s walk through some of the most important ones. We’ll begin by selecting variables to map to aesthetic properties. Then we’ll choose a geometric object to use to represent our data. Next, we’ll change the aesthetic properties of our chart (its color scheme, for example) using a `scale_` function. Finally, we’ll use a `theme_` function to set the overall look-and-feel of our plot.
 
 ### The First Layer: Mapping Data to Aesthetic Properties {-}
 
-When creating a graph with ggplot, we begin by mapping data to aesthetic properties. All this really means is that we use things like the x or y axis, color, and size (the so-called aesthetic properties) to represent variables. To make this concrete, we’ll use the data on life expectancy in Afghanistan, introduced in the previous section, to generate a plot. We can create this data with the following code:
+When creating a graph with ggplot, we begin by mapping data to aesthetic properties. All this really means is that we use things like the x or y axis, color, and size (the so-called *aesthetic properties*) to represent variables. To make this concrete, we’ll use the data on life expectancy in Afghanistan, introduced in the previous section, to generate a plot. Access this data with the following code:
 
 ```{r echo = TRUE}
 library(tidyverse)
@@ -535,8 +533,9 @@ Here’s what the `gapminder_10_rows` data frame looks like:
 gapminder_10_rows
 ```
 
-If we want to make a chart with ggplot, we need to first decide which variable to put on the x axis and which to put on the y axis. Let’s say we want to show life expectancy over time. That means we would use the variable `year` on the x axis and the variable `lifeExp` on the y axis. To do so, we begin by using the `ggplot()` function: 
+This is a shortened version of the full gapminder data frame, which includes over 1,700 rows of data. 
 
+If we want to make a chart with ggplot, we need to first decide which variable to put on the x axis and which to put on the y axis. For data showing change over time, it is common to put the date on the x axis and the value of what you are showing on the y axis. That means we would use the variable `year` on the x axis and the variable `lifeExp` on the y axis. To do so, we begin by using the `ggplot()` function: 
 
 ```{r blank-ggplot, echo = TRUE, eval = FALSE}
 ggplot(
@@ -548,7 +547,10 @@ ggplot(
 )
 ```
 
-Within this function, we tell R that we’re using the data frame `gapminder_10_rows`. This is the filtered version we created from the full `gapminder` data frame, which includes over 1,700 rows of data. The line following this tells R to use `year` on the x axis and `lifeExp` on the y axis. When we run the code, what we get in Figure \@ref(fig:blank-ggplot) doesn’t look like much.
+Within this function, we tell R that we’re using the data frame `gapminder_10_rows`. We also map `year` to the x axis and `lifeExp` to the y axis. 
+
+When we run the code, what we get in Figure \@ref(fig:blank-ggplot) doesn’t look like much.
+
 
 ```{r results='asis'}
 print_nostarch_file_name()
@@ -561,11 +563,11 @@ print_nostarch_file_name()
 save_figure_for_nostarch()
 ```
 
-But, if you look closely, you can see the beginnings of a plot. Remember that x axis using `year`? There it is! And `lifeExp` on the y axis? Yup, it’s there too. I can also see that the values on the x and y axes match up to our data. In the `gapminder_10_rows` data frame, the first year is 1952 and the last year is 1997. The range of the x axis seems to have been created with this data, which goes from 1952 to 1997, in mind (spoiler: it was). And `lifeExp`, which goes from about 28 to about 42 will fit nicely on our y axis.
+If you look closely, however, you should see that the x axis corresponds to `year` and the y axis corresponds to `lifeExp`. Also, the values on the x and y axes match the scope of our data. In the `gapminder_10_rows` data frame, the first year is 1952 and the last year is 1997. The range of the x axis seems to have been created with this data in mind (because it was). Likewise, `lifeExp`, which goes from about 28 to about 42, will fit nicely on our y axis.
 
 ### The Second Layer: Choosing the geoms {-}
 
-Axes are nice, but we’re missing any type of visual representation of the data. To get this, we need to add the next layer in ggplot: geoms. Short for geometric objects, geoms are functions that provide different ways of representing data. For example, if we want to add points, we use `geom_point()`: 
+Axes are nice, but we’re missing any type of visual representation of the data. To get this, we need to add the next ggplot layer: geoms. Short for *geometric objects*, *geoms* are functions that provide different ways of representing data. For example, if we want to add points to the graph, we use `geom_point()`: 
 
 ```{r gapminder-points, echo = TRUE, eval = FALSE}
 ggplot(
@@ -578,7 +580,7 @@ ggplot(
   geom_point()
 ```
 
-Now, in Figure \@ref(fig:gapminder-points-plot), we see that people in 1952 had a life expectancy of about 28 and that this value rose through every year in our data.
+Now, in Figure \@ref(fig:gapminder-points-plot), we see that people in 1952 had a life expectancy of about 28 and that this value rose every year included in the data.
 
 ```{r results='asis'}
 print_nostarch_file_name()
@@ -591,7 +593,7 @@ print_nostarch_file_name()
 save_figure_for_nostarch()
 ```
 
-Let’s say we change our mind and want to make a line chart instead. Well, all we have to do is replace `geom_point()` with `geom_line()`:
+Let’s say we change our mind and want to make a line chart instead. All we have to do is replace `geom_point()` with `geom_line()`:
 
 ```{r gapminder-line, echo = TRUE, eval = FALSE}
 ggplot(
@@ -631,7 +633,7 @@ ggplot(
   geom_line()
 ```
 
-This code generates a line chart with points, as seen in Figure \@ref(fig:gapminder-points-line-plot).
+This code generates a line chart with points, as shown in Figure \@ref(fig:gapminder-points-line-plot).
 
 ```{r results='asis'}
 print_nostarch_file_name()
@@ -644,7 +646,7 @@ print_nostarch_file_name()
 save_figure_for_nostarch()
 ```
 
-We can extend this idea further, as seen in Figure \@ref(fig:gapminder-bar-plot), swapping in `geom_col()` to create a bar chart:
+We can swap in `geom_col()` to create a bar chart: 
 
 ```{r gapminder-bar, echo = TRUE, eval = FALSE}
 ggplot(
@@ -657,7 +659,7 @@ ggplot(
   geom_col()
 ```
 
-Note that the y axis range has been automatically updated, going from 0 to 40 to account for the different geom.
+Note in Figure \@ref(fig:gapminder-bar-plot) that the y axis range has been automatically updated, going from 0 to 40 to account for the different geom.
 
 ```{r results='asis'}
 print_nostarch_file_name()
@@ -670,11 +672,11 @@ print_nostarch_file_name()
 save_figure_for_nostarch()
 ```
 
-As you can see, the difference between a line chart and a bar chart isn’t as great as the Excel chart-type picker might have us think. Both can have the same aesthetic properties (namely, putting years on the x axis and life expectancies on the y axis). They simply use different geometric objects to visually represent the data.
+As you can see, the difference between a line chart and a bar chart isn’t as great as the Excel chart-type picker might have us think. Both can have the same underlying properties (namely, putting years on the x axis and life expectancies on the y axis). They simply use different geometric objects to visually represent the data.
 
 ### The Third Layer: Altering Aesthetic Properties {-}
 
-Before we return to the drought data visualization, let’s look at a few additional layers that can help us can alter our bar chart. Say we want to change the color of our bars. In the grammar of graphics approach to chart-making, this means mapping some variable to the aesthetic property of `fill`. (Slightly confusingly, the aesthetic property of `color` would, for a bar chart, change only the outline of each bar). In the same way that we mapped `year` to the x axis and y to `lifeExp`, we can also map fill to a variable, such as year:
+Before we return to the drought data visualization, let’s look at a few additional layers that can help us can alter the bar chart. Say we want to change the color of the bars. In the grammar of graphics approach to chart-making, this means mapping some variable to the aesthetic property of `fill`. (Slightly confusingly, the aesthetic property of `color` would, for a bar chart, change only the outline of each bar). In the same way that we mapped `year` to the x axis and `lifeExp` to the y axis, we can map `fill` to a variable, such as `year`:
 
 ```{r gapminder-bar-colors, echo = TRUE, eval = FALSE}
 ggplot(
@@ -688,7 +690,7 @@ ggplot(
   geom_col()
 ```
 
-The result is shown in Figure \@ref(fig:gapminder-bar-colors-plot). We see now that, for earlier years, the fill is darker, while for later years, it is lighter (the legend, added to the right of our plot, shows this).
+Figure \@ref(fig:gapminder-bar-colors-plot) shows the result. We see now that, for earlier years, the fill is darker, while for later years, it is lighter (the legend, added to the right of our plot, also indicates this).
 
 ```{r results='asis'}
 print_nostarch_file_name()
@@ -701,7 +703,7 @@ print_nostarch_file_name()
 save_figure_for_nostarch()
 ```
 
-What if we want to change the fill colors? For that, we use a new *scale layer*. In this case, I’ll use the `scale_fill_viridis_c()` function. The c at the end of the function name refers to the fact that the data is continuous, meaning it can take any numeric value:
+What if we wanted to change the fill colors? For that, we use a new scale layer. To do this, I’ll use the `scale_fill_viridis_c()` function. The *c* at the end of the function name refers to the fact that the data is continuous, meaning it can take any numeric value:
 
 ```{r gapminder-viridis, echo = TRUE, eval = FALSE}
 ggplot(
@@ -718,20 +720,9 @@ ggplot(
 
 This function changes the default palette to one that is colorblind-friendly and prints well in grayscale. The `scale_fill_viridis_c()` function is just one of many that start with `scale_` and can alter the fill scale.
 
-```{r results='asis'}
-print_nostarch_file_name()
-```
-
-```{r gapminder-viridis-plot, ref.label = "gapminder-viridis", echo = FALSE, fig.cap="The same chart with a colorblind-friendly palette"}
-```
-
-```{r results='asis'}
-save_figure_for_nostarch()
-```
-
 ### The Fourth Layer: Setting a Theme {-}
 
-A final layer we’ll look at is the theme layer. This layer allows us to change the overall look-and-feel of plots (plot backgrounds, grid lines, and so on). Just as there are a number of `scale_` functions, there are also a number of functions that start with `theme_.` Here, we’ve added `theme_minimal()`: 
+A final layer we’ll look at is the theme layer. This layer allows us to change the overall look-and-feel of plots (including the plot background, grid lines, and so on). Just as there are a number of `scale_` functions, there are also a number of functions that start with `theme_`. Here, we’ve added `theme_minimal()`: 
 
 ```{r gapminder-theme, echo = TRUE, eval = FALSE}
 ggplot(
@@ -747,8 +738,7 @@ ggplot(
   theme_minimal()
 ```
 
-Notice in Figure \@ref(fig:gapminder-theme-plot) that this theme starts to declutter our plot.
-
+Notice in Figure \@ref(fig:gapminder-theme-plot) that this theme starts to declutter the plot.
 
 ```{r results='asis'}
 print_nostarch_file_name()
@@ -761,15 +751,16 @@ print_nostarch_file_name()
 save_figure_for_nostarch()
 ```
 
-We’ve now seen why Hadley Wickham described the ggplot2 package as using a layered grammar of graphics. It implements Wilkinson’s theory through the creation of multiple layers. First, we select variables to map to aesthetic properties, such as x or y axes, color, and fill. Second, we choose the geometric object (or geom) we want to use to represent our data. Third, if we want to change aesthetic properties (for example, to use a different palette), we do this with a `scale_` function. Fourth, we use a `theme_` function to set the overall look-and-feel of our plot.
+By now, you should see why Hadley Wickham described the `ggplot2` package as using a layered grammar of graphics. It implements Wilkinson’s theory through the creation of multiple layers. First, we select variables to map to aesthetic properties, such as x or y axes, color, and fill. Second, we choose the geometric object (or geom) we want to use to represent our data. Third, if we want to change aesthetic properties (for example, to use a different color palette), we do this with a `scale_` function. Fourth, we use a `theme_` function to set the overall look-and-feel of the plot.
 
-We could improve the plot we’ve been working on in many ways. But rather than adding to an ugly plot, let’s instead return to the drought data visualization by Cédric Scherer and Georgios Karamanis. Going through their code will show us some familiar aspects of ggplot and reveal tips on how to make high-quality data visualization with R.
+We could improve the plot we’ve been working on in many ways, but rather than add to an ugly plot, let’s instead return to the drought data visualization by Cédric Scherer and Georgios Karamanis. By walking through their code, you’ll learn lessons about making high-quality data visualization with ggplot and R.
 
 ## Recreating the Drought Visualization with ggplot {-}
 
-The drought visualization code relies on a combination of ggplot fundamentals and some less-well-known tweaks that make it really shine. In order to understand how Scherer and Karamanis made their data visualization, we’ll start out with a simplified version of their code. We’ll build it up layer by layer, adding elements as we go. 
+fundamentals and some less-well-known tweaks that make it really shine. To understand how Scherer and Karamanis made their data visualization, we’ll start with a simplified version of their code, then build it up layer by layer, adding elements as we go.
 
-First, let’s import the data. Scherer and Karamanis do this with the `import()` function from the `rio` package. This function is helpful because the data they are working with is in JSON format, which can be complicated to work with. The `rio` package simplifies it into just one line:
+First, let’s import the data. Scherer and Karamanis do this with the `import()` function from the `rio` package: 
+
 
 ```{r echo = TRUE}
 library(rio)
@@ -777,9 +768,11 @@ library(rio)
 dm_perc_cat_hubs_raw <- import("https://data.rwithoutstatistics.com/dm_export_20000101_20210909_perc_cat_hubs.json")
 ```
 
+This function is helpful because the data they are working with is in JSON format, which can be complicated to work with. The `rio` package simplifies it into just one line.
+
 ### Plotting One Region and Year {-}
 
-Let’s start by looking at just one region (the Southwest) in one year (2003). First, we filter our data and save it as a new object called `southwest_2003`.
+Let’s start by looking at just one region (the Southwest) in one year (2003). First, we filter our data and save it as a new object called `southwest_2003`:
 
 ```{r, echo = TRUE}
 southwest_2003 <- dm_perc_cat_hubs %>%
@@ -789,15 +782,14 @@ southwest_2003 <- dm_perc_cat_hubs %>%
 
 We can take a look at this object to see the variables we have to work with:
 
-
 ```{r, echo = TRUE}
 southwest_2003 %>%
   slice(1:10)
 ```
 
-The `date` variable represents the start date of the week in which the observation took place. The `hub` variable is the region, and `category` is level of drought (a value of `D0` indicates the lowest level of drought, while `D5` indicates the highest level). The `percentage` variable is the percentage of that region that is in that drought category, ranging from `0` to `1`. The `year` and `week` variables are the observation year and week number (beginning with week 1). The `max_week` variable is the maximum number of weeks in a given year.
+The `date` variable represents the start date of the week in which the observation took place. The `hub` variable is the region, and `category` is the level of drought: a value of `D0` indicates the lowest level of drought, while `D5` indicates the highest level. The `percentage` variable is the percentage of that region in that drought category, ranging from `0` to `1`. The `year` and `week` variables are the observation year and week number (beginning with week 1). The `max_week` variable is the maximum number of weeks in a given year.
 
-Now we can use this `southwest_2003` object for our plotting:
+Now we can use this `southwest_2003` object for our plotting: 
 
 ```{r southwest-2003-no-style, echo = TRUE, eval = FALSE}
 ggplot(
@@ -811,7 +803,7 @@ ggplot(
   geom_col()
 ```
 
-In the `ggplot()` function, we tell R to put `week` on the x axis and `percentage` on the y axis. We also use the `category` variable for our `fill` color. We then use `geom_col()` to create a bar chart in which the fill color of each bar represents the percentage of the region in a single week at each drought level. You can see the result in in \@ref(fig:southwest-2003-no-style-plot).
+In the `ggplot()` function, we tell R to put `week` on the x axis and `percentage` on the y axis. We also use the `category` variable for the `fill` color. We then use `geom_col()` to create a bar chart in which the `fill` color of each bar represents the percentage of the region in a single week at each drought level. You can see the result in in Figure \@ref(fig:southwest-2003-no-style-plot).
 
 ```{r results='asis'}
 print_nostarch_file_name()
@@ -823,7 +815,6 @@ print_nostarch_file_name()
 ```{r results='asis'}
 save_figure_for_nostarch()
 ```
-
 
 The colors don’t match the final version of the plot, but we can start to see the outlines of Scherer and Karamanis’s data visualization.
 
@@ -847,10 +838,9 @@ ggplot(
   )
 ```
 
-
 They used the argument `option = "rocket"` to select the rocket palette (the function has several other palettes). Then they used the `direction = -1` argument to reverse the order of fill colors so that darker colors mean higher drought conditions.
-Scherer and Karamanis also tweaked the appearance of the x and y axes: 
 
+Scherer and Karamanis also tweaked the appearance of the x and y axes: 
 
 ```{r southwest-2003-xy-scales, echo = TRUE, eval = FALSE}
 ggplot(
@@ -873,7 +863,7 @@ ggplot(
                      position = "right")
 ```
 
-On the x axis, they removed both the axis title (“week”) using `name = NULL` and the 0–50 text with `guide = "none"`. On the y axis, they removed the title and text showing percentages using `labels = NULL`, which functionally does the same thing as `guide = "none"`. They also moved the axis lines themselves to the right side using `position = "right"`. These axis lines are only apparent as tick marks at this point but will become more visible later. Figure \@ref(fig:southwest-2003-xy-scales-plot) shows the result of these tweaks.
+On the x axis, they removed both the axis title (“week”) using `name = NULL` and the 0–50 text with `guide = "none"`. On the y axis, they removed the title and text showing percentages using `labels = NULL`, which functionally does the same thing as `guide = "none"`. They also moved the axis lines themselves to the right side using `position = "right"`. These axis lines are apparent only as tick marks at this point but will become more visible later. Figure \@ref(fig:southwest-2003-xy-scales-plot) shows the result of these tweaks.
 
 ```{r results='asis'}
 print_nostarch_file_name()
@@ -890,8 +880,7 @@ Up to this point, we’ve focused on one of the single plots that make up the la
 
 ### Faceting the Plot {-}
 
-One of the most useful features of ggplot is what’s known as *faceting* (or, more commonly in the data visualization world, *small multiples*). Faceting takes a single plot and makes it into multiple plots using a variable (think: a line chart showing life expectancy by country over time, but instead of multiple lines on one plot, we get multiple plots with one line per plot). With the `facet_grid()` function, we can select which variable to put in rows and which to put in columns of our faceted plot. 
-
+One of the most useful features of ggplot is what’s known as *faceting* (or, more commonly in the data visualization world, small multiples). Faceting takes a single plot and makes it into multiple plots using a variable. For example, think of a line chart showing life expectancy by country over time; instead of multiple lines on one plot, we might create multiple plots with one line per plot). With the `facet_grid()` function, we can select which variable to put in the rows and which to put in the columns of our faceted plot:
 
 ```{r drought-viz-faceted, fig.height = 8, echo = TRUE, eval = FALSE}
 dm_perc_cat_hubs %>%
@@ -917,7 +906,7 @@ dm_perc_cat_hubs %>%
              switch = "y")
 ```
 
-Scherer and Karamanis put `year` in rows and `hub` (region) in columns. The `switch = "y"` argument moves the year label from the right side (where it appears by default) to the left. With this code in place, we can see the final plot coming together in Figure \@ref(fig:drought-viz-faceted-plot). 
+Scherer and Karamanis put `year` in rows and `hub` (region) in columns. The `switch = "y"` argument moves the year label from the right side (where it appears by default) to the left. With this code in place, we can see the final plot coming together in Figure \@ref(fig:drought-viz-faceted-plot). Space considerations require me to include only four regions, but you get the idea.
 
 ```{r results='asis'}
 print_nostarch_file_name()
@@ -934,9 +923,9 @@ Incredibly, the broad outlines of the plot took us just 10 lines to create. The 
 
 ### Applying Small Polishes {-}
 
-Let’s look at a few of the small polishes that Scherer and Karamanis made. The first is to apply a theme, as seen in Figure \@ref(fig:drought-viz-theme-tweaks-plot). They used `theme_light()`, which removes the default gray background and changes the font to Roboto.
+Let’s look at a few of the small polishes that Scherer and Karamanis made. The first is to apply a theme, as shown in Figure \@ref(fig:drought-viz-theme-tweaks-plot). They used `theme_light()`, which removes the default gray background and changes the font to Roboto.
 
-The `theme_light()` function is what’s known as a complete theme. So-called complete themes change the overall look-and-feel of a plot. But Scherer and Karamanis didn’t stop there. They then used the theme() function to make additional tweaks to what `theme_light()` gave them. 
+The `theme_light()` function is what’s known as a *complete theme*. So-called complete themes change the overall look-and-feel of a plot. But Scherer and Karamanis didn’t stop there. They then used the `theme()` function to make additional tweaks to what `theme_light()` gave them:
 
 ```{r drought-viz-theme-tweaks, fig.height = 8, echo = TRUE, eval = FALSE}
 dm_perc_cat_hubs %>%
@@ -1021,23 +1010,20 @@ geom_rect(
 )
 ```
 
-They set some additional aesthetic properties specific to this geom: `xmin`, `xmax`, `ymin`, and `ymax`, which determine the boundaries of the rectangle it produces. The result is a gray background drawn behind each small multiple, as seen in Figure \@ref(fig:drought-viz-theme-tweaks-plot).
+They set some additional aesthetic properties specific to this geom: `xmin`, `xmax`, `ymin`, and `ymax`, which determine the boundaries of the rectangle it produces. The result is a gray background drawn behind each small multiple, as shown in Figure \@ref(fig:drought-viz-theme-tweaks-plot).
 
 ```{r results='asis'}
 print_nostarch_file_name()
 ```
 
-```{r drought-viz-theme-tweaks-plot, ref.label = "drought-viz-theme-tweaks", fig.height = 8, echo = FALSE, fig.cap="Figure 1-16	Faceted version of the drought visualization with gray backgrounds behind each small multiple"}
+```{r drought-viz-theme-tweaks-plot, ref.label = "drought-viz-theme-tweaks", fig.height = 8, echo = FALSE, fig.cap="Faceted version of the drought visualization with gray backgrounds behind each small multiple"}
 ```
 
 ```{r results='asis'}
 save_figure_for_nostarch(figure_height = 8)
 ```
 
-
-
 Finally, consider the tweaks made to the legend. We previously saw a simplified version of the `scale_fill_viridis_d()` function. Here is a more complete version: 
-
 
 ```{r, echo = TRUE, eval = FALSE}
 scale_fill_viridis_d(
@@ -1054,8 +1040,7 @@ scale_fill_viridis_d(
 )
 ```
 
-The `name` argument sets the legend title, and the `labels` argument determines the labels that show up in the legend. Figure \@ref(fig:drought-viz-legend-tweaks) shows the result of these changes.
-
+The `name` argument sets the legend title, and the labels argument determines the `labels` that show up in the legend. Figure \@ref(fig:drought-viz-legend-tweaks) shows the result of these changes.
 
 ```{r results='asis'}
 print_nostarch_file_name()
@@ -1167,11 +1152,11 @@ get_legend(drought_viz_legend_tweaks) %>%
 save_figure_for_nostarch(figure_height = 1)
 ```
 
-Rather than D0, D1, D2, D3, and D4, we now have Abnormally Dry, Moderate Drought, Severe Drought, Extreme Drought, and Exceptional Drought.
+Rather than D0, D1, D2, D3, and D4, we now have the legend text Abnormally Dry, Moderate Drought, Severe Drought, Extreme Drought, and Exceptional Drought.
 
 ### The Complete Visualization Code {-}
 
-While I've showed you a nearly complete version of the code, I have made some small changes along the way to make it easier to understand. If you're curious to see the full code Cédric and Georgios used to create the data viz, here it is. There are a few additional tweaks to colors and spacing, but nothing major beyond what we've seen so far. 
+While I’ve showed you a nearly complete version of the code that Scherer and Karamanis wrote, I made some small changes to make it easier to understand. If you’re curious, the full code is here: 
 
 ```{r, echo = TRUE, eval = FALSE}
 ggplot(dm_perc_cat_hubs, aes(week, percentage)) +
@@ -1275,19 +1260,31 @@ ggplot(dm_perc_cat_hubs, aes(week, percentage)) +
 
 There are a few additional tweaks to colors and spacing, but most of the code reflects what you’ve seen so far.
 
-
-## In Conclusion: ggplot is Your Data Viz Secret Weapon {-}
+## In Conclusion: ggplot is Your Data Visualization Secret Weapon {-}
 
 You may start to think of ggplot as a solution to all of your data visualization problems. And yes, you have a new hammer, but no, everything is not a nail. If you look at the version of the data visualization that appeared in *Scientific American* in November 2021, you’ll see that some of its annotations aren’t visible in our recreation. That’s because they were added in post-production. While you could have found ways to create them in ggplot, it’s often not the best use of your time. Get yourself 90 percent of the way there with ggplot and then use Illustrator, Figma, or a similar tool to finish your work.
 
 Even so, ggplot is a very powerful hammer, used to make plots that you’ve seen in *The New York Times*, FiveThirtyEight, the BBC, and other well-known news outlets. Although not the only tool that can generate high-quality data visualization, it makes the process straightforward. The graph by Scherer and Karamanis shows this in several ways:
 
-- **It strips away extraneous elements, such as grid lines, in order to keep the focus on the data itself**. Complete themes such as `theme_light()` and the `theme()` function allowed Scherer and Karamanis to create a decluttered visualization that communicates effectively.
+- **It strips away extraneous elements, such as grid lines, to keep the focus on the data itself**. Complete themes such as `theme_light()` and the `theme()` function allowed Scherer and Karamanis to create a decluttered visualization that communicates effectively.
 
-- **It uses well-chosen colors**. The `scale_fill_viridis_d()` allowed them to create a color scheme that demonstrates differences between groups, is colorblind friendly, and shows up well when printed in grayscale.
+- **It uses well-chosen colors**. The `scale_fill_viridis_d()` function allowed them to create a color scheme that demonstrates differences between groups, is colorblind friendly, and shows up well when printed in grayscale.
 
 - **It uses small multiples to break data from two decades and eight regions into a set of graphs that come together to create a single plot**. With a single call to the `facet_grid()` function, Scherer and Karamanis created over 100 small multiples that the tool automatically combined into a single plot.
 
 Learning to create data visualization in ggplot involves a significant time investment. But the long-term payoff is even greater. Once you learn how ggplot works, you can look at others’ code and learn how to improve your own. By contrast, when you make a data visualization in Excel, the series of point-and-click steps disappears into the ether. To recreate a visualization you made last week, you’ll need to remember the exact steps you used, and to make someone else’s data visualization, you’ll need them to write up their process for you.
 
 Because code-based data visualization tools allow you to keep that record of the steps you made, you don’t have to be the most talented designer to make high-quality data visualization with ggplot. You can study others’ code, adapt it to your own needs, and create your own data visualization that is beautiful and communicates effectively.
+
+## Learn More {-}
+Consult the following resources to learn more about data visualization principles and the ggplot2 package:
+
+*Data Visualization: A Practical Introduction* by Kieran Healy (Princeton University Press, 2018), https://socviz.co
+
+*Fundamentals of Data Visualization* by Claus Wilke (O'Reilly Media, 2019). https://clauswilke.com/dataviz/
+
+*ggplot2: Elegant Graphics for Data Analysis* by Hadley Wickham, Danielle Navarro, and Thomas Lin Pedersen (Springer, Forthcoming), https://ggplot2-book.org
+
+*Graphic Design with ggplot2* by Cédric Scherer (CRC Press, Forthcoming)
+
+“The Glamour of Graphics,” course by Will Chase, https://rfortherestofus.com/courses/glamour/
