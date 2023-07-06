@@ -7,6 +7,7 @@ library(fs)
 library(rmarkdown)
 library(xfun)
 library(officer)
+library(zip)
 
 # Copy source files -------------------------------------------------------
 
@@ -53,6 +54,13 @@ file_copy(path = "nostarch/source/_book/r-without-statistics.docx",
 
 file_show("nostarch/word/r-without-statistics.docx")
 
+
+# Zip all figures ---------------------------------------------------------
+
+all_figures <- dir_ls("nostarch/figures/")
+
+zip(zipfile = "nostarch/figures/figures.zip",
+    files = all_figures)
 
 # Beep --------------------------------------------------------------------
 

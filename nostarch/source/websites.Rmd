@@ -84,7 +84,7 @@ The `site: distill::distill_website` line identifies the root page of a `distill
 
 You’ll notice we’re also missing an argument we’ve seen in other R Markdown documents: `output`, which specifies the output format to use while knitting. The reason we don’t have this argument here is that we specify the output for the entire website in the *_site.yml* file.
 
-## The *_site.yml* File {-}
+### The _site.yml File {-}
 
 The *_site.yml* file tells R which R Markdown documents make up the website, what the knitted files should look like, what the website should be called, and more. If you open it, you should see the following code.
 
