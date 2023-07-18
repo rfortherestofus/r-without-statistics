@@ -40,7 +40,7 @@ R is a great tool for anyone who works with data. Maybe you’re a researcher lo
 
 Each chapter focuses on one use of the R language and includes examples of real R projects that employ the techniques we cover. We’ll dive into their code, breaking the programs down to help you understand how they works, and suggest ways of going beyond the example. The book has three parts:
 
-**Part 1: Visualizations**
+### Part 1: Visualizations {-}
 
 In the first part, you’ll learn about ways to use R to visualize data.
 
@@ -64,7 +64,7 @@ Walks through the process of making maps in R using simple features data. You’
 
 Shows you how to use the `gt` package to make high-quality tables in R. We draw from a conversation with R table connoisseur Tom Mock to learn how to apply design principles that ensure your tables communicate effectively.
 
-**Part 2: Reports, Presentations, and Websites**
+### Part 2: Reports, Presentations, and Websites {-}
 
 The second part of the book focuses on using R Markdown to communicate efficiently. You’ll learn how to incorporate visualizations like the ones discussed in Part 1 into complete reports, slideshow presentations, and static websites generated entirely using R code. 
 
@@ -84,7 +84,12 @@ Explains how to use R Markdown to make slides with the `xaringan` package. You�
 
 Shows you how to create your own website with R Markdown and the `distill` package. We explore how `distill` works by considering a website about COVID-19 rates in Westchester County, New York. In the process, we cover how to create pages on your site, add interactivity through R packages, and deploy your website using several options.
 
-**Part 3: Automation and Collaboration**
+**Chapter 10: Reproducible Reporting with Quarto**
+
+Explains how to use Quarto, the next-generation version of R Markdown. You'll learn to use Quarto to do all of the things you did previously in R Markdown (reports, parameterized reporting, slideshow presentations, and website). 
+
+### Part 3: Automation and Collaboration {-}
+
 The last part of the book focuses on ways you can use R to automate your work and share it with others.
 
 **Chapter 10: Accessing Online Data**

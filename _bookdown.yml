@@ -12,21 +12,21 @@ rmd_files: [
   "introduction.Rmd",
   "howto.Rmd",
   
-  "part-illuminate.Rmd",
+  "part-1.Rmd",
   
   "data-viz.Rmd",
   "custom-theme.Rmd",
   "maps.Rmd",
   "tables.Rmd",
   
-  "part-communicate.Rmd",
+  "part-2.Rmd",
   "rmarkdown.Rmd",
   "parameterized-reports.Rmd",
   "presentations.Rmd",
   "websites.Rmd",
   "quarto.Rmd",
   
-  "part-automate.Rmd",
+  "part-3.Rmd",
   "accessing-data.Rmd",
   "packages.Rmd",
    

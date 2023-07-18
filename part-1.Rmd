@@ -4,4 +4,4 @@ editor_options:
   chunk_output_type: inline
 ---
 
-# (PART\*) Illuminate {-}
+# (PART\*) Part 1: Visualizations {-}
