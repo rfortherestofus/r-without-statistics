@@ -13,14 +13,14 @@ source("_common.R")
 
 # Crafting High-Quality Tables {#tables-chapter}
 
-In his book *Fundamentals of Data Visualization*, Claus Wilke writes that tables are “an important tool for visualizing data.” This statement might seem odd. Tables are often considered the opposite of data visualizations such as plots: a place to dump numbers for the few nerds who care to read them. But Wilke sees things differently. 
+In his book *Fundamentals of Data Visualization*, Claus Wilke writes that tables are "an important tool for visualizing data." This statement might seem odd. Tables are often considered the opposite of data visualizations such as plots: a place to dump numbers for the few nerds who care to read them. But Wilke sees things differently. 
 
-Tables should not be data dumps devoid of design. While bars, lines, and points in graphs are visualizations, so too are numbers in a table, and we should care about their appearance. As an example, take a look at the tables made by reputable news sources; data dumps these are not. Media organizations, whose job it is to communicate effectively, pay a lot of attention to table design. But elsewhere, because of tables’ apparent simplicity, Wilke writes, “they may not always receive the attention they need.”
+Tables should not be data dumps devoid of design. While bars, lines, and points in graphs are visualizations, so too are numbers in a table, and we should care about their appearance. As an example, take a look at the tables made by reputable news sources; data dumps these are not. Media organizations, whose job it is to communicate effectively, pay a lot of attention to table design. But elsewhere, because of tables’ apparent simplicity, Wilke writes, "they may not always receive the attention they need."
 
 Many people use Microsoft Word to make tables, a strategy that has potential pitfalls. Wilke found that his version of Word included 105 built-in table styles. Of those, around 80 percent, including the default style, violated some key principle of table design. The good news is that R is a great tool for making high-quality tables. It has a number of packages for this purpose, and within these packages, several functions designed to make sure your tables follow important design principles. 
 Moreover, if you’re writing reports in R Markdown (which you’ll learn about in Chapter \@ref(rmarkdown-chapter)), you can include code that will generate a table when you export your document. By working with a single tool to create tables, text, and other visualizations, you won’t have to copy and paste your data, lowering the risk of human error.
 
-This chapter examines table design principles and shows you how to apply them to your tables using R’s `gt` package, one of the most popular table-making packages (and, as you’ll soon see, one that uses good design principles by default). These principles, and the code in this chapter, are adapted from Tom Mock’s blog post “10+ Guidelines for Better Tables in R.” Mock works at Posit, the company that makes RStudio, and has become something of an R table connoisseur. We’ll walk through examples of Mock’s code to show how small tweaks can make a big difference.
+This chapter examines table design principles and shows you how to apply them to your tables using R’s `gt` package, one of the most popular table-making packages (and, as you’ll soon see, one that uses good design principles by default). These principles, and the code in this chapter, are adapted from Tom Mock’s blog post "10+ Guidelines for Better Tables in R." Mock works at Posit, the company that makes RStudio, and has become something of an R table connoisseur. We’ll walk through examples of Mock’s code to show how small tweaks can make a big difference.
 
 
 ## Creating a Data Frame {-}
@@ -268,7 +268,7 @@ table_bold_header %>%
 
 By default, `gt` will right-align numeric values. Don’t change anything, and you’ll be golden.
 
-Right alignment is best practice for numeric columns, but for text columns, use left alignment. As Jon Schwabish points out in his article “Ten Guidelines for Better Tables” in the *Journal of Benefit-Cost Analysis*, it’s much easier to read longer text cells when they are left aligned. To illustrate the benefit of left-aligning text, let’s add a country with a long name to the table. I’ve added Bosnia and Herzegovina and saved this as a data frame called `gdp_with_bosnia`. You’ll see that I’m using nearly the same code as I used to create the `gdp` data frame above:
+Right alignment is best practice for numeric columns, but for text columns, use left alignment. As Jon Schwabish points out in his article "Ten Guidelines for Better Tables" in the *Journal of Benefit-Cost Analysis*, it’s much easier to read longer text cells when they are left aligned. To illustrate the benefit of left-aligning text, let’s add a country with a long name to the table. I’ve added Bosnia and Herzegovina and saved this as a data frame called `gdp_with_bosnia`. You’ll see that I’m using nearly the same code as I used to create the `gdp` data frame above:
 
 ```{r}
 gdp_with_bosnia <- gapminder %>% 
@@ -351,7 +351,7 @@ Within this function, we use the `columns` argument to tell gt which columns to 
 
 ### Principle Four: Use the Right Level of Precision {-}
 
-In all of the tables we’ve made so far, we’ve used the data exactly as it came to us. The numeric columns, for example, extend their data to four decimal places. This is almost certainly too many. Having more decimal places makes a table harder to read, so you should always strike a balance between what Jon Schwabish describes as “necessary precision and a clean, spare table.” 
+In all of the tables we’ve made so far, we’ve used the data exactly as it came to us. The numeric columns, for example, extend their data to four decimal places. This is almost certainly too many. Having more decimal places makes a table harder to read, so you should always strike a balance between what Jon Schwabish describes as "necessary precision and a clean, spare table." 
 
 Here is another way I’ve heard this principle described: If adding additional decimal places would change some action, keep them; otherwise, take them out. In my experience, people tend to leave too many decimal places in, putting too much importance on a very high degree of accuracy (and, in the process, reducing the legibility of their tables).
 
@@ -653,9 +653,9 @@ In Chapter \@ref(rmarkdown-chapter), you’ll learn how to create reports using 
 
 Consult the following resources to learn about table design principles and how to make high-quality tables with the `gt` package: 
 
-“Ten Guidelines for Better Tables” by Jon Schwabish (*Journal of Benefit-Cost Analysis*, 2020), https://doi.org/10.1017/bca.2020.11
+"Ten Guidelines for Better Tables" by Jon Schwabish (*Journal of Benefit-Cost Analysis*, 2020), https://doi.org/10.1017/bca.2020.11
 
-“10+ Guidelines for Better Tables in R” by Tom Mock (2020), https://themockup.blog/posts/2020-09-04-10-table-rules-in-r/
+"10+ Guidelines for Better Tables in R" by Tom Mock (2020), https://themockup.blog/posts/2020-09-04-10-table-rules-in-r/
 
-“Creating beautiful tables in R with {gt}” by Albert Rapp (2022), https://gt.albert-rapp.de/
+"Creating beautiful tables in R with {gt}" by Albert Rapp (2022), https://gt.albert-rapp.de/
 

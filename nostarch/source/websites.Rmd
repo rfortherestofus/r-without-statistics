@@ -121,7 +121,7 @@ knitr::include_graphics(here::here("assets/navbar.png"))
 save_image_for_nostarch(here::here("assets/navbar.png"))
 ```
 
-Within the `navbar` code, the `text` argument determines what text shows up in the menu. (Try, for example, changing “About” to “About this Website.”) The `href` argument determines which HTML file the text in the navigation bar links to. If you want to include additional pages on your menu, you’ll need to add both the `text` and `href` parameters.
+Within the `navbar` code, the `text` argument determines what text shows up in the menu. (Try, for example, changing "About" to "About this Website.") The `href` argument determines which HTML file the text in the navigation bar links to. If you want to include additional pages on your menu, you’ll need to add both the `text` and `href` parameters.
 
 Lastly, the `output` argument specifies that all R Markdown documents should be rendered using the `distill_article` format. This format allows for layouts of different widths, *asides* (parenthetical items that live in a sidebar next to the main content), easily customizable CSS, and more. 
 
@@ -325,18 +325,18 @@ We also create a variable called `most_recent_day`, which we later reference in 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 ```{r}
 covid_data %>% 
-  filter(state %in% c(“Alabama”,
-                      “Alaska”,
-                      “Arizona”,
-                      “Arkansas”)) %>% 
+  filter(state %in% c("Alabama",
+                      "Alaska",
+                      "Arizona",
+                      "Arkansas")) %>% 
   slice_max(order_by = date,
             n = 1) %>% 
   select(state, deaths_avg_per_100k) %>% 
   arrange(state) %>% 
-  set_names(“State”, “Death rate”) %>% 
+  set_names("State", "Death rate") %>% 
   gt() %>% 
   tab_style(
-    style = cell_text(weight = “bold”),
+    style = cell_text(weight = "bold"),
     locations = cells_column_labels()
   )
 ```
@@ -350,15 +350,15 @@ We can see this same death rate data for all states on a map.
 ```{r}
 
 most_recent <- us_states %>% 
-  left_join(covid_data, by = “state”) %>% 
+  left_join(covid_data, by = "state") %>% 
   slice_max(order_by = date,
             n = 1) 
 
 most_recent %>% 
   ggplot(aes(fill = deaths_avg_per_100k)) +
   geom_sf() +
-  scale_fill_viridis_c(option = “rocket”) +
-  labs(fill = “Deaths per\n100,000 people”) +
+  scale_fill_viridis_c(option = "rocket") +
+  labs(fill = "Deaths per\n100,000 people") +
   theme_void()
 ```
 ````
@@ -485,7 +485,7 @@ knitr::include_graphics(here::here("assets/covid-website-reactable.png"))
 save_image_for_nostarch(here::here("assets/covid-website-reactable.png"))
 ```
 
-The `reactable()` function also enables sorting by default. Although we used the `arrange()` function in our code to sort the data by state name, users can click the “Death rate” column to sort values using that variable. 
+The `reactable()` function also enables sorting by default. Although we used the `arrange()` function in our code to sort the data by state name, users can click the "Death rate" column to sort values using that variable. 
 
 ### Creating a Hovering Tooltip with Plotly {-}
 
@@ -652,6 +652,6 @@ No matter whether you use `distill` or Quarto, using R gives you a quick way to 
 
 Consult the following resources to learn how to make websites with the distill package and to see examples of other websites made with distill:
 
-“Building a blog with distill” by Tom Mock (2020), https://themockup.blog/posts/2020-08-01-building-a-blog-with-distill/
+"Building a blog with distill" by Tom Mock (2020), https://themockup.blog/posts/2020-08-01-building-a-blog-with-distill/
 
 The Distillery website, showcasing websites made with `distill`: https://distillery.rbind.io/

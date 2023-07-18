@@ -385,7 +385,7 @@ wyoming_counties %>%
 save_figure_for_nostarch()
 ```
 
-If you’re curious about how to change projections when making maps of your own, fear not. You’ll see how to do this when we look at Abdoul Madjid’s map in the next section. And if you want to know how to choose appropriate projections for your maps, check out the “Using Appropriate Projections” section below.
+If you’re curious about how to change projections when making maps of your own, fear not. You’ll see how to do this when we look at Abdoul Madjid’s map in the next section. And if you want to know how to choose appropriate projections for your maps, check out the "Using Appropriate Projections" section below.
 
 ### The `geometry` Column {-}
 
@@ -722,7 +722,7 @@ usa_states_geom_covid_six_days %>%
   )
 ```
 
-The `scale_fill_discrete_sequential()` function from the `colorspace` package sets the color scale. Madjid uses the "rocket" palette (the same palette that that Cédric Scherer and Georgios Karamanis used in Chapter \@ref(data-viz-chapter)) and changes the legend title to “COVID-19 INCIDENCE RATE.” Within the `guide_legend()` function, Madjid puts adjusts the position and alignment as well as text properties of the title. He also puts the colored squares in one row, adjusts their height and width, and tweaks the text properties of the labels  (the `>0`, `>5`, and so on).
+The `scale_fill_discrete_sequential()` function from the `colorspace` package sets the color scale. Madjid uses the "rocket" palette (the same palette that that Cédric Scherer and Georgios Karamanis used in Chapter \@ref(data-viz-chapter)) and changes the legend title to "COVID-19 INCIDENCE RATE." Within the `guide_legend()` function, Madjid puts adjusts the position and alignment as well as text properties of the title. He also puts the colored squares in one row, adjusts their height and width, and tweaks the text properties of the labels  (the `>0`, `>5`, and so on).
 
 Next, he adds a title and caption using the `labs()` function. After this, he uses `theme_minimal()` before making tweaks using the `theme()` function. These tweaks include setting the font and text color, making the title and caption bold, and adjusting their size, alignment, and the margins around them. He also adjusts the size of the strip text (the *Jan 01*, *Jan 02*, and so on) and makes it bold, puts the legend at the top of the maps, and adds a bit of spacing around it. He removes grid lines and the longitude and latitude lines, then adds a bit of padding around the entire visualization and makes the background a light gray.
 
@@ -807,7 +807,7 @@ If you can’t find an appropriate package, you can always fall back on using `r
 
 ### Using Appropriate Projections {-}
 
-Once you have access to geospatial data, you need to decide which projection to use. If you’re looking for a simple answer to this question, you’ll be disappointed. As Robin Lovelace, Jakub Nowosad, and Jannes Muenchow put it in their book *Geocomputation with R*, “the question of *which* CRS [to use] is tricky, and there is rarely a ‘right’ answer.”
+Once you have access to geospatial data, you need to decide which projection to use. If you’re looking for a simple answer to this question, you’ll be disappointed. As Robin Lovelace, Jakub Nowosad, and Jannes Muenchow put it in their book *Geocomputation with R*, "the question of *which* CRS [to use] is tricky, and there is rarely a ‘right’ answer."
 
 If you feel overwhelmed by the task of choosing a projection, the `crsuggest` package, also by Kyle Walker, can give you ideas. Its `suggest_top_crs()` function returns a coordinate reference system that is well-suited for your data. Let’s load `crsuggest` and try it out on our `africa_countries` data:
 
