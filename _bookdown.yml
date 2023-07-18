@@ -29,8 +29,6 @@ rmd_files: [
   "part-3.Rmd",
   "accessing-data.Rmd",
   "packages.Rmd",
-   
-   "part-conclusion.Rmd",
-  "conclusion.Rmd"
+
   ]
   

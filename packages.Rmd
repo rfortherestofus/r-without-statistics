@@ -641,4 +641,11 @@ Consult the following resources to learn how to make your own packages in R:
 
 Package Development with R, course by Malcolm Barrett, https://rfortherestofus.com/courses/package-development-course/
 
+## Wrapping Up {-}
+
+R was invented in 1993 as a tool for statistics, and in the years since then, it has been used for plenty of statistical analysis. But over the last three decades, R has also become a tool that can do much more than statistics.
+
+As you’ve seen in this book, R is great for making visualizations. You can use it to create high-quality graphics and maps, make your own theme to keep your visuals consistent and on-brand, and generate tables that look good and communicate well. Using R Markdown or Quarto, you can create reports, presentations, and websites. And best of all, these documents are all reproducible, meaning that updating them is as easy as rerunning your code. Finally, you’ve seen that R can help you to automate how you access data, as well as assist you in collaborating with others through functions and packages that you make.
+
+If R was new to you when you started this book, you should now feel inspired to use it. If you are an experienced R user, this book should have shown you ways to use R that you hadn’t previously considered. No matter your background, you should understand how to use R like a pro, and without any statistics.
 

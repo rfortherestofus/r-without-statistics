@@ -86,7 +86,7 @@ Shows you how to create your own website with R Markdown and the `distill` packa
 
 **Chapter 10: Reproducible Reporting with Quarto**
 
-Explains how to use Quarto, the next-generation version of R Markdown. You'll learn to use Quarto to do all of the things you did previously in R Markdown (reports, parameterized reporting, slideshow presentations, and website). 
+Explains how to use Quarto, the next-generation version of R Markdown. You'll learn to use Quarto to do all of the things you did previously in R Markdown (reports, parameterized reporting, slideshow presentations, and websites). 
 
 ### Part 3: Automation and Collaboration {-}
 
