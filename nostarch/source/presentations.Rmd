@@ -305,7 +305,7 @@ Now let’s add custom CSS to improve this new slide.
 
 ## Applying CSS to Slides {-}
 
-One issue with the slide we just made is that the word *Penguins* is hard to read. It would probably be best if we could make the text bigger and a different color. To do this, we need to use *CSS*, the language used to style HTML documents. If you’re thinking, “I’m reading this book to learn R, not CSS,” don’t worry. You’ll need only a bit of CSS to make tweaks to your slides. To apply these tweaks to your slides, you can write your own custom code, use a CSS theme, or combine the two approaches using the `xaringanthemer` package.
+One issue with the slide we just made is that the word *Penguins* is hard to read. It would probably be best if we could make the text bigger and a different color. To do this, we need to use *CSS*, the language used to style HTML documents. If you’re thinking, "I’m reading this book to learn R, not CSS," don’t worry. You’ll need only a bit of CSS to make tweaks to your slides. To apply these tweaks to your slides, you can write your own custom code, use a CSS theme, or combine the two approaches using the `xaringanthemer` package.
 
 ### Custom CSS {-}
 
@@ -459,6 +459,6 @@ Consult the following resources to improve the quality of the presentations you 
 
 *Meet xaringan: Making slides in R Markdown* by Alison Hill (2019), https://arm.rbind.io/slides/xaringan.html
 
-Chapter 7 (“xaringan Presentations”) of *R Markdown: The Definitive Guide* by Yihui Xie, J. J. Allaire, and Garrett Grolemund (CRC Press, 2019), https://bookdown.org/yihui/rmarkdown/
+Chapter 7 ("xaringan Presentations") of *R Markdown: The Definitive Guide* by Yihui Xie, J. J. Allaire, and Garrett Grolemund (CRC Press, 2019), https://bookdown.org/yihui/rmarkdown/
 
 

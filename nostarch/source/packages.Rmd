@@ -386,7 +386,7 @@ Let’s review the output from bottom to top. The line `0 errors ✔ | 2 warning
 
 We’ll start by addressing the note. To understand what `R CMD check` is saying here, we need to explain a bit about how packages work. When you install a package using the `install.packages()` function, it often takes a while. That’s because the package you are telling R to install likely uses functions from other packages. To access these functions, R must install these packages (known as *dependencies*) for you; after all, it would be a pain if you had to manually install a whole set of dependencies every time you installed a package. But to make sure that the appropriate packages are installed for any user of the dk package, we have to make a few changes.
 
-`R CMD check` tells us we have several “undefined global functions or variables” and “no visible global function definition” for various functions. This is because we are attempting to use functions from the `tidycensus` and `janitor` packages, but we haven’t specified where these functions come from. I can run this code in my environment because I have `tidycensus` and `janitor` installed, but we can’t assume the same of others.
+`R CMD check` tells us we have several "undefined global functions or variables" and "no visible global function definition" for various functions. This is because we are attempting to use functions from the `tidycensus` and `janitor` packages, but we haven’t specified where these functions come from. I can run this code in my environment because I have `tidycensus` and `janitor` installed, but we can’t assume the same of others.
 
 ### Adding Dependency Packages {-}
 
@@ -404,7 +404,7 @@ You should get the following message:
 • Refer to functions with `tidycensus::fun()`
 ```
 
-The “Setting active project …” line indicates that we’re working in the `dk` project. The second line indicates that the *DESCRIPTION* file has been edited. This file provides meta information about the package we’re developing. 
+The "Setting active project …" line indicates that we’re working in the `dk` project. The second line indicates that the *DESCRIPTION* file has been edited. This file provides meta information about the package we’re developing. 
 
 Next, in order to use the `clean_names()` function, you’ll need to add the `janitor` package using the code `usethis::use_package(package = "janitor")`, which should give you the following output:
 
@@ -436,7 +436,7 @@ Look for the `Imports` section way down at the bottom of the file. Its contents 
 
 ### Referring to Functions Correctly {-}
 
-The `R CMD check` output also included this line: “Refer to functions with tidycensus::fun()” (where `fun()` stands for function name) This tells us that, in order to use functions from other packages in the `dk` package, we need to specify both the package name and the function name to ensure that the correct function is used at all times. On rare occasions, you’ll find functions with identical names used across multiple packages, and this syntax avoids ambiguity. Remember when we ran `R CMD check` and got this?
+The `R CMD check` output also included this line: "Refer to functions with tidycensus::fun()" (where `fun()` stands for function name) This tells us that, in order to use functions from other packages in the `dk` package, we need to specify both the package name and the function name to ensure that the correct function is used at all times. On rare occasions, you’ll find functions with identical names used across multiple packages, and this syntax avoids ambiguity. Remember when we ran `R CMD check` and got this?
 
 ```
 Undefined global functions or variables:
@@ -492,7 +492,7 @@ However, there are still two warnings we need to deal with. Let’s do that next
 
 ### Adding Documentation {-}
 
-Take a look at the “checking for missing documentation entries” warning. This warning tells us that we need to document our `get_acs_race_ethnicity()` function. One of the benefits of creating a package is that you can add documentation to help others use your code. In the same way that users can enter `?get_acs()` and see documentation about that function, we want them to be able to enter `?get_acs_race_ethnicity()` to learn how it works.
+Take a look at the "checking for missing documentation entries" warning. This warning tells us that we need to document our `get_acs_race_ethnicity()` function. One of the benefits of creating a package is that you can add documentation to help others use your code. In the same way that users can enter `?get_acs()` and see documentation about that function, we want them to be able to enter `?get_acs_race_ethnicity()` to learn how it works.
 
 To create documentation for the function, we’ll use Roxygen, a documentation tool that uses a package called `roxygen2`. To get started, place your cursor anywhere in the function. Then, go to the **Code** menu in RStudio and select **Insert Roxygen Skeleton**. Doing this should add text above the `get_acs_race_ethnicity()` function that looks like this:
 

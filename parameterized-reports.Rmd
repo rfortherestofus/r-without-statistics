@@ -394,6 +394,6 @@ When you’re starting out, parameterized reporting might feel like a heavy lift
 
 Consult the following resources to learn how the Urban Institute has created parameterized reports and how you can make them yourself: 
 
-“Using R Markdown to Track and Publish State Data” by the Data@Urban team (2021), https://urban-institute.medium.com/using-r-markdown-to-track-and-publish-state-data-d1291bfa1ec0
+"Using R Markdown to Track and Publish State Data" by the Data@Urban team (2021), https://urban-institute.medium.com/using-r-markdown-to-track-and-publish-state-data-d1291bfa1ec0
 
-“Iterated fact sheets with R Markdown” by the Data@Urban team (2018), https://urban-institute.medium.com/iterated-fact-sheets-with-r-markdown-d685eb4eafce
+"Iterated fact sheets with R Markdown" by the Data@Urban team (2018), https://urban-institute.medium.com/iterated-fact-sheets-with-r-markdown-d685eb4eafce
