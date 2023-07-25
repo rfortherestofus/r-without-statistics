@@ -6,27 +6,17 @@ source("_common.R")
 
 # An R Programming Crash Course {#howto-chapter}
 
-R has a well-earned reputation for being hard to learn. Especially for those who come to R without programming experience, it can be hard to figure out how things work. This chapter is designed to help those who have never used R before. I'll start from scratch, showing you what you need to download in order to use R, and how to work with data using functions, objects, packages, and projects. If you have some experience with R, feel free to skip this chapter. But if you're just starting out, this chapter will help you understand the basics, and help you make sense of the rest of the book.
+R has a well-earned reputation for being hard to learn, especially for those who come to it without prior programming experience. This chapter is designed to help those who have never used R before. You’ll set up an R programming environment with RStudio and learn how to work with data using functions, objects, packages, and projects. You’ll also be introduced to the `tidyverse` package, which contains the core data analysis and manipulation functions we’ll use in this book.
 
-## Getting Set Up {-}
+If you have prior experience with R, feel free to skip this chapter, but if you’re just starting out, it should help you make sense of the rest of the book.
 
-One of the more confusing things for people just starting out is that you need two pieces of software in order to use R. The first is R itself, which provides the underlying computational tools that make R work. The second is RStudio, which makes working with R much easier. The best way to understand the relationship between R and RStudio is with this analogy from the book *Modern Dive*  by Chester Ismay and Albert Kim. R is the engine that makes your work with data go. RStudio is like a dashboard that makes it easier to work with your data by providing a more user-friendly interface. 
+## Setting Up {-}
 
-Let's download each piece and get started. To download R, go to https://cloud.r-project.org/ and choose your operating system, as seen in Figure \@ref(fig:cran-download-r)
+You’ll need two pieces of software to use R effectively. The first is R itself, which provides the underlying computational tools that make the language work. The second is an integrated development environment (IDE) like RStudio. This coding platform simplifies working with R. The best way to understand the relationship between R and RStudio is with this analogy from the book *Modern Dive* by Chester Ismay and Albert Kim: R is the engine that powers your data; RStudio is like a dashboard that provides a user-friendly interface.
 
-```{r results='asis'}
-print_nostarch_file_name(file_type_to_print = "png")
-```
+### Installing R and RStudio
 
-```{r cran-download-r, out.width="100%", fig.cap="The Comprehensive R Archive Network where you can download R"}
-knitr::include_graphics(here::here("assets/download-r.png"))
-```
-
-```{r results='asis'}
-save_image_for_nostarch(here::here("assets/download-r.png"))
-```
-
-Once you download and install R, open it and you can work at the command line. For example, I can type 2 + 2, hit enter, and I will see 4, as seen in Figure \@ref(fig:r-console).
+To download R, go to https://cloud.r-project.org/ and choose the link for your operating system. Once you’ve installed it, open the file. This should open an interface like the one in Figure \@ref(fig:r-console) that lets you work with R on your operating system’s command line. For example, enter `2 + 2`, and you should see `4`.
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -40,10 +30,11 @@ knitr::include_graphics(here::here("assets/r-console.png"))
 save_image_for_nostarch(here::here("assets/r-console.png"))
 ```
 
+A few brave souls work with R using only this command line, but most opt to use RStudio, which provides a way to see your files, the output of your code, and more. You can download RStudio at https://posit.co/download/rstudio-desktop/. Install RStudio as you would any other app and open it. 
 
+### Exploring the RStudio Interface {-}
 
-
-Simple math problems are only the start; you can do pretty much anything in R. No matter what you're planning to do, you're probably not super impressed with the R interface. A few brave souls work only using the command line we're looking at, but most do not. RStudio is where most R coders do their work. RStudio is like a skin that lives on top of R itself. It doesn't provide new functionality to R, but it wraps R in a much more user-friendly interface, providing a way to see your files, outputs, and more. You can download RStudio at https://posit.co/download/rstudio-desktop/. Install RStudio as you would any other app and open it up. RStudio has several panels. The first time you open RStudio, you'll see these the three panels shown in Figure \@ref(fig:rstudio-no-project) below.
+The first time you open RStudio, you should see the three panels shown in Figure \@ref(fig:rstudio-no-project).
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -57,16 +48,20 @@ knitr::include_graphics(here::here("assets/rstudio-no-project.png"))
 save_image_for_nostarch(here::here("assets/rstudio-no-project.png"))
 ```
 
-The left side panel should look familiar. It is what we saw when working in R. This is known as the **console**. You'll use it to add code and see results. This panel, like the others we'll discuss, has several tabs (terminal and background jobs) for more advanced usages. For now, we'll stick to the default tab. Let's look at the bottom right panel next. This **files** panel shows all of the files on my computer. Finally, the top right panel shows my **environment**. The environment shows the objects (discussed below) I have available to me when working in RStudio. There's one more panel that you'll typically have when working in RStudio. But to make it appear, we need to create an R script file. 
+The left panel should look familiar. It’s similar to the screen you saw when working in R on the command line. This is known as the *console*. You’ll use it to enter code and see the results. This panel, like the others we’ll discuss, has several tabs, such as Terminal and Background Jobs, for more advanced usages. For now, we’ll stick to the default tab. 
+
+At the bottom right, the *files* panel shows all of the files on your computer. You can click any file to open it within RStudio. Finally, the top-right panel shows your *environment*, or the objects that are available to you when working in RStudio. We discuss objects below.
+
+There is one more panel that you’ll typically use when working in RStudio, but to make it appear, you need to create an R script file.
 
 ## R Script Files {-}
 
-If you work in the console, either in RStudio or in R itself, you don't have a record of your code. Say you sit down today and write code to import your data, analyze it, and make some graphs. You don't want to have to recreate that code from scratch tomorrow. The way to save your code is by using files. Files allow you to save all of the code you have written. There are two types of files we'll discuss in this book:
+If you write all of your code in the console, you won’t have any record of it. Say you sit down today and import your data, analyze it, and then make some graphs. If you run these operations in the console, you’ll have to recreate that code from scratch tomorrow. Writing your code in files lets you run it multiple times. There are two types of files we’ll discuss in this book:
 
-1. R script files, which only contain code.
-2. R Markdown files, which contain code combined with text. 
+- R script files, which contain only code.
+- R Markdown files, which contain both code and text.
 
-We'll talk about R Markdown files starting in Chapter \@ref(rmarkdown-chapter). Let's start with R script files, which use the .R extension. To create an R script file, go to File > New File > R Script. When you create a new R script file, you'll now have a fourth panel in the top left, which you can see in Figure \@ref(fig:rstudio-four-panels). I'll save this file in my `Documents` folder as `sample-code.R`. 
+We'll talk about R Markdown files starting in Chapter \@ref(rmarkdown-chapter). For now, let’s work with R script files, which use the *.R* extension. To create an R script file, go to File > New File > R Script. When you create a new R script file, a fourth panel should appear in the top left of R Studio, as you can see in Figure 1-3. Save this file in your *Documents* folder as *sample-code.R*.
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -80,47 +75,68 @@ knitr::include_graphics(here::here("assets/rstudio-four-panels.png"))
 save_image_for_nostarch(here::here("assets/rstudio-four-panels.png"))
 ```
 
-I can now use the same syntax in my R script file that I did when working in just R. If I type `2 + 2` in the R script file and hit the **Run** button, 4 will show up in the console pane. If you're looking to learn R, it's probably not to help you figure out the answer to 2 + 2. Instead, you probably want to read in your own data and do analysis on it. Let's work with some real data. 
+Now you can enter R code in your script file. For example, try entering `2 + 2` in the script file panel. To run a script file, press the **Run** button or use the keyboard shortcut **CMD + ENTER** on macOS and **CTRL + ENTER** on Windows. The result (`4`, in this case) should show up in the console pane.
+
+You now have a working programming environment. But if you’re trying to learn R, you probably want to perform more complex operations than `2 + 2`. Let’s discuss how to import data for your R programs to work with.
 
 ## Working with Data {-}
 
-To explain how you work with data in R, we need go on a bit of a detour. We'll make stops to discuss RStudio functions, objects, packages, and projects before we import and take a look at our data.
+R lets you do all of the same data manipulation tasks you might perform in a tool like Excel, such as calculating averages, totals, and so on. Conceptually, however, working with data in R is very different from working with Excel, where your data and analysis code live in the same place: a spreadsheet. In R, your data typically comes from some external file. To work with this data in R, you have to run code to import it. 
 
-Conceptually, working with data in R is very different than working with data in a tool like Excel. In Excel, your data and any analysis you do on it all live in the same place: a spreadsheet. With R, you typically have data that lives in some external source (for example, an Excel spreadsheet or a CSV file). In order to work with this data in R, you have to run code to import it. It's only once you've run this code, which is made up of functions, that you have the data available in R. 
+### Importing Data {-}
 
-## Functions {-}
+Let’s import data from a *comma-separated values (CSV)* file. CSV files, a common way to store data, are text files that have values separated by commas. You can open them using most spreadsheet applications. Figure \@ref(fig:population-by-state-csv) shows the *population-by-state.csv* file when opened in Excel. You can download this file at https://data.rwithoutstatistics.com/population-by-state.csv. Let’s import it into R.
 
-Let's say I have a CSV file called `population-by-state.csv` in my `Documents` folder that I want to import to R. To import it into R, you might think to add a line like this in the `sample-code.R` file:
+```{r results='asis'}
+print_nostarch_file_name(file_type_to_print = "png")
+```
+
+```{r population-by-state-csv, out.width="100%", fig.cap="The population-by-state.csv file in Excel"}
+knitr::include_graphics(here::here("assets/population-by-state-csv.png"))
+```
+
+```{r results='asis'}
+save_image_for_nostarch(here::here("assets/population-by-state-csv.png"))
+```
+
+To import the *population-by-state.csv* file into R, add a line like this one in the *sample-code.R* file, replacing the filepath with the path to the file’s location on your system:
 
 ```{r eval = FALSE, echo = TRUE}
 read.csv(file = "/Users/davidkeyes/Documents/population-by-state.csv")
 ```
 
-This line shows the `read.csv()` function. Functions in R are pieces of code that you can run to do specific things. Functions have a name and arguments, which are surrounded by parentheses. Looking at the `read.csv()` function, the name, which appears before the open parentheses, is `read.csv`. Within the parentheses, we have the text `file = "Documents/population-by-state.csv"`. Here we can see the argument `file`. The text after the equals sign gives the location of the file we want to read in. Arguments work in this way: the argument name, followed by the equals sign, followed by some value. This allows us to do something general (like importing a CSV) while allowing us to choose the specific file to run the function on. Functions can have multiple arguments as well, each of which is separated by a comma. For example, this would read in the same file, but skip the first row.
+
+This line uses the `read.csv()` function. *Functions* are pieces of code that do specific things. They have a name and *arguments*, which are values that affect the function’s behavior. For example, the `read.csv()` function’s name is `read.csv`. Within the parentheses is the argument `file`, which specifies the file from which to import data. The text after the equal sign (`=`) gives the location of that file. 
+
+Arguments have the following structure: the argument name, followed by the equal sign and some value. Functions can have multiple arguments separated by commas. For example, this code uses the `file` and `skip` arguments to import the same file but skip the first row:
 
 ```{r eval = FALSE, echo = TRUE}
 read.csv(file = "/Users/davidkeyes/Documents/population-by-state.csv",
 				 skip = 1)
 ```
 
-At this point, you might think to run the code in order to import your data. You can do so by selecting the line of code and hitting the Run button (or using the keyboard shortcut Command/Control + Enter on Mac/Windows). Running this code causes this text show up in the console pane. 
+At this point, you can run the code to import your data (without the `skip` argument). Select the line you want to run and press **Run**. The following output should show up in the console pane:
 
 ```{r}
 # read.csv(file = "/Users/davidkeyes/Documents/population-by-state.csv")
 read.csv("data/population-by-state.csv")
 ```
 
-This is R confirming that it read in the CSV file and showing us the data within it. You might think you are ready to work with your data in R. But in fact all you've done at this point is **display** the result of running the code that imports your data. To use the data again, you need to **save** the result of running the code to an object.
+This is R’s way of confirming that it imported the CSV file and understands the data within it. You can see four variables, which show the rank (in terms of population size), the state name, the population, the population growth between the `Pop` and `Pop2018` variables (expressed as a percentage), and the 2018 population. There are also several other variables that are hidden in the output, though you’ll see them if you import this CSV file yourself. We discuss variables in more detail in the next section.
 
-## Objects {-}
+You might think you’re now ready to work with your data. But all you’ve done at this point is display the result of running the code that imports your data. To use the data again, you need to save this data to an object.
 
-To save your data for reuse, you need to create an object. To do so, you would add to your data importing syntax from above. 
+## Saving Data as Objects {-}
+
+To save your data for reuse, you need to create an object. In his book *Extending R*, John Chambers writes that “everything exists in R is an object.” For our purposes, an *object* is a data structure that we store to use later. To create an object, add to your data-importing syntax so it looks like this:
 
 ```{r eval = FALSE, echo = TRUE}
 population_data <- read.csv(file = "/Users/davidkeyes/Documents/population-by-state.csv")
 ```
 
-The second half of this code is what we used above, but we've added to it. In the middle you will see this: `<-`. Known as the assignment operator, it takes what follows it and assigns it to the item on the left. To the left of the assignment operator is `population_data`. This is an **object**. Put together, the whole line reads in the CSV and assigns it to an object called `population_data`. If you run this line of code, you will now see `population_data` in your environment pane, as in Figure \@ref(fig:population-data-environment).
+The second half of this code is the same as the line shown in the previous section, except it contains this: `<-`. Known as the *assignment operator*, it takes what follows it and assigns it to the item on the left. To the left of the assignment operator is the `population_data` object. Put together, the whole line imports the CSV and assigns it to an object called `population_data`. 
+
+If you run this code, you should see `population_data` in your environment pane, as in Figure \@ref(fig:population-data-environment).
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -134,17 +150,19 @@ knitr::include_graphics(here::here("assets/population-data-environment.png"))
 save_image_for_nostarch(here::here("assets/population-data-environment.png"))
 ```
 
-This is confirmation that your data import worked and you have the `population_data` object ready for future use. Now, instead of having to rerun the code to import the data, I can simply type `population_data`, run that line, and I'll see the same output as above. Data imported to an object is known as a **data frame**.
+This message confirms that your data import worked and that the `population_data` object is ready for future use. Now, instead of having to rerun the code to import the data, you can simply enter `population_data` to output the data. 
 
-## Packages {-}
+Data imported to an object in this way is known as a *data frame*. You can see that the `population_data` data frame has 52 observations and nine variables. *Variables* are the columns in a data frame, each of which represents some value (for example, the population of each state). As you’ll see throughout the book, you can add new variables or modify existing ones using R code. The 52 observations come from the 50 states, as well as the District of Columbia and Puerto Rico. 
 
-The `read.csv()` function that we've used up to this point is one of a set of functions that come from what is known as base R. They are built into R and you simply have to type the name of the function to use it. However, one of the benefits of R being an open source language is that anyone create their own code and share it with others. R users around the world make what are called **packages**, which provide code to do specific things. 
+## Installing Packages {-}
 
-The best analogy for understanding packages also comes from the *Modern Dive*  book. The functionality in base R is like that built into a phone. A phone can do a lot on its own. But you usually want to install apps on your phone to do specific things. Packages are like apps, giving you specific functionality that doesn't come built into base R.
+The `read.csv()` function we’ve been using comes from what is known as *base R*. This is a set of functions that are built into R, and to use them, you can simply enter their function names. However, one of the benefits of R being an open source language is that anyone create their own code and share it with others. R users around the world make what are called *packages*, which provide their own functions to do specific things. 
 
-You can install packages using the `install.packages()` function. For example, to install the `tidyverse` package, which provides a range of functions for data import, cleaning, analysis, visualization, and more, you would type `install.packages("tidyverse")`. I typically enter this code in the console because you only need to install a package once on your computer and so I know I won't need to rerun this code. 
+The best analogy for understanding packages also comes from *Modern Dive*. The functionality in base R is like the features built into a phone. A phone can do a lot on its own. But you usually want to install additional apps to do specific things. Packages are like apps, giving you specific functionality that doesn’t come built into base R. In Chapters \@ref(custom-theme-chapter) and \@ref(packages-chapter), you’ll create your own R package.
 
-To confirm that the `tidyverse` package has been installed correctly, click on the packages tab on the bottom right panel. Search for `tidyverse` and you should see it pop up, as in Figure \@ref(fig:tidyverse-installed).
+You can install packages using the `install.packages()` function. For example, to install the `tidyverse` package, which provides a range of functions for data import, cleaning, analysis, visualization, and more, enter `install.packages("tidyverse")`. Typically, you’ll enter package installation code in the console rather than in a script file because you need to install a package only once on your computer to access its code in the future.
+
+To confirm that the `tidyverse` package has been installed correctly, click the **Packages** tab on the bottom right panel in R Studio. Search for tidyverse, and you should see it pop up, as in Figure \@ref(fig:tidyverse-installed).
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -158,7 +176,7 @@ knitr::include_graphics(here::here("assets/tidyverse-installed.png"))
 save_image_for_nostarch(here::here("assets/tidyverse-installed.png"))
 ```
 
-Now that we've installed the `tidyverse` package, let's use it. While you only need to install packages once per computer, you need to load packages each time you restart RStudio. You can only use functions from the `tidyverse` package if you first run the line `library(tidyverse)`. I'll go back to my `sample-code.R` file and re-import my data using a function from the `tidyverse` package. 
+Now that you’ve installed `tidyverse`, let’s use it. While you need to install packages only once per computer, you need to *load* packages each time you restart RStudio by running `library(tidyverse)`. Return to the *sample-code.R* file and re-import your data using a function from the tidyverse package:
 
 ```{r echo = TRUE, eval = FALSE}
 library(tidyverse)
@@ -166,7 +184,7 @@ library(tidyverse)
 population_data_2 <- read_csv(file = "/Users/davidkeyes/Documents/population-by-state.csv")
 ```
 
-At the top of my script I load the `tidyverse`. Then, I use the `read_csv()` function (note the `_` in place of the `.`) to import my data. This alternate function to import CSV files achieves the same goal of creating an object called `population_data_2`. If we type `population_data_2` and run the code (either by using the run button or the keyboard shortcut) you will see the output in the console. 
+At the top of the script, load the `tidyverse`. Then, use the package’s `read_csv()` function to import the data. Note the underscore (`_`) in place of the period (`.`) in the function’s name; this is a different function from one we used earlier. Using this alternate function to import CSV files achieves the same goal of creating an object, in this case one called `population_data_2`. If you enter `population_data_2` in the console, you should see this output:
 
 ```{r}
 library(tidyverse)
@@ -176,31 +194,17 @@ population_data_2 <- read_csv(file = "data/population-by-state.csv")
 population_data_2
 ```
 
-What we see is slightly different from what we saw above using the `read.csv()` function. R describes the output as a **tibble** and only shows us the first 10 rows. This slightly different output occurs because `read_csv()` imports the data not as a data frame, but as a tibble. Both are used to describe rectangular data like what you would see in a spreadsheet. While there are some small differences between data frames and tibbles, I'll use the terms interchangeably in this book. 
+This data looks slightly different from the data we generated using the `read.csv()` function. For example, R shows us only the first 10 rows. This variation occurs because `read_csv()` imports the data not as a data frame but as a data type called a *tibble*. Both are used to describe *rectangular* data like that you would see in a spreadsheet. There are some small differences between data frames and tibbles, the most important of which is that tibbles will print only the first 10 rows by default, while data frames print all rows. For the purposes of this book, we can use the terms interchangeably. 
 
 ## RStudio Projects {-}
 
-So far, we've imported a CSV file from the Documents folder. But the path to the file on my computer was `/Users/davidkeyes/Documents/population-by-state.csv`. Since others will not have this exact location on their computer, if they try to run my code, it won't work. There's a solution to this problem, and it's called **RStudio projects**. 
+So far, we’ve imported a CSV file from the *Documents* folder. But the path to the file on my computer was */Users/davidkeyes/Documents/population-by-state.csv*. Because others won’t have this exact location on their computer, my code won’t work if they try to run it. There is a solution to this problem called *RStudio projects*.
 
-By working in a project, you can use what are known as **relative paths** to your files. Instead of having to write out `read_csv(file = "/Users/davidkeyes/Documents/population-by-state.csv")`, you can put the CSV file in your project and then call it using `read_csv(file = "population-by-state.csv")`. This makes it easier for you, and enables others to use your code.
+By working in a project, you can use what are known as *relative paths* to your files instead of having to write the entire filepath when calling a function to import data. If you place the CSV file in your project, anyone can open it by using the file’s name, as in `read_csv(file = "population-by-state.csv")`. This makes the path easier to write and enables others to use your code.
 
-To create a new RStudio project, go to File > New Project. Select either New Directory or Existing Directory and choose where to put your project. If you choose New Directory, you'll need to specify that you want to create a new project. I'll do this and then choose a name for the new directory and where it should live. As seen in Figure \@ref(fig:create-new-project), you can leave the two checkboxes that ask about creating a git repository and using `renv` unchecked (these are for more advanced purposes). 
+To create a new RStudio project, go to **File > New Project**. Select either New Directory or Existing Directory and choose where to put your project. If you choose New Directory, you’ll need to specify that you want to create a new project. Do this, then choose a name for the new directory and where it should live. Leave the checkboxes that ask about creating a git repository and using `renv` unchecked. These are for more advanced purposes. 
 
-```{r results='asis'}
-print_nostarch_file_name(file_type_to_print = "png")
-```
-
-```{r create-new-project, out.width="100%", fig.cap="The RStudio prompt to create a new project"}
-knitr::include_graphics(here::here("assets/create-new-project.png"))
-```
-
-```{r results='asis'}
-save_image_for_nostarch(here::here("assets/create-new-project.png"))
-```
-
-Having now created this project, there are two major differences in RStudio's appearance:
-
-First, the files pane no longer shows every file on my computer, but instead only shows files in the `example-project` directory. Right now that's just the `example-project.Rproj` file that indicates the folder contains a project. Second, at the very top right of RStudio, you can see the name of the `example-project` project (it had previously said `Project: (None)`). If you want to make sure you're working in a project, make sure you see its name here. Both of these changes can be seen in Figure \@ref(fig:rstudio-active-project) below.
+Having created this project, you should now see two major differences in RStudio’s appearance. First, the Files pane no longer shows every file on your computer. Instead, it shows only files in the *example-project* directory. Right now, that’s just the *example-project.Rproj* file, which indicates that the folder contains a project. Second, at the top right of RStudio, you can see the name of the example-project project. This label had previously read `Project: (None)`. If you want to make sure you’re working in a project, check for its name here. Figure \@ref(fig:rstudio-active-project) shows these changes.
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -214,21 +218,9 @@ knitr::include_graphics(here::here("assets/rstudio-active-project.png"))
 save_image_for_nostarch(here::here("assets/rstudio-active-project.png"))
 ```
 
-Now that I've created a project, I'll use the Finder on my Mac computer to copy the `population-by-state.csv` file into the `example-project` directory. Once I do this, I can see it in the RStudio files pane, as in Figure \@ref(fig:rstudio-project-csv).
+Now that you’ve created a project, use your operating system’s filesystem to manually copy the *population-by-state.csv* file into the *example-project* directory. Once you’ve done this, you should see it in the RStudio files pane.
 
-```{r results='asis'}
-print_nostarch_file_name(file_type_to_print = "png")
-```
-
-```{r rstudio-project-csv, out.width="100%", fig.cap="A CSV file visible in the files pane in RStudio"}
-knitr::include_graphics(here::here("assets/rstudio-project-csv.png"))
-```
-
-```{r results='asis'}
-save_image_for_nostarch(here::here("assets/rstudio-project-csv.png"))
-```
-
-With this CSV file in my project, I can now import it more easily. As before, I'll start by loading the `tidyverse` package. After that, I can remove the reference to the `Documents` folder and import my data by simply using the name of the file:
+With this CSV file in your project, you can now import it more easily. As before, start by loading the `tidyverse` package. After that, remove the reference to the *Documents* folder and import your data by simply using the name of the file:
 
 ```{r eval = FALSE, echo = TRUE}
 library(tidyverse)
@@ -236,54 +228,84 @@ library(tidyverse)
 population_data_2 <- read_csv(file = "population-by-state.csv")
 ```
 
-I'm able to import the `population-by-state.csv` file in this way because the RStudio project sets the **working directory** to be the root of my project. With the working directory set in this way, all references to files are relative to the `.Rproj` file at the root of the project (this is where the name relative paths comes from). Now that we're working in a project, anyone can run this code because it imports the data from a location that they are guaranteed to have on their computer. 
+You’re able to import the *population-by-state.csv* file in this way because the RStudio project sets the working directory to be the root of your project. With the working directory set in this way, all references to files are relative to the *.Rproj* file at the root of the project. Now anyone can run this code because it imports the data from a location that is guaranteed to exist on their computer.
 
-## Data Analysis with R {-}
+## Data Analysis with the Tidyverse {-}
 
-Now that we've imported data, let's do a bit of analysis on it. Below is a code snippet that calculates the mean population of all states using the `summarize()` function. 
+Now that we’ve imported data, let’s do a bit of analysis on it. While I’ve been referring to the `tidyverse` as a single package, it is actually a collection of packages for performing data importing, analysis, visualization, and more. We’ll explore several of its functions throughout this book, but this section introduces you to its basic workflow.
+
+### Tidyverse Functions {-}
+
+Because we’ve loaded the `tidyverse` package, we can access its functions. The following code calculates the mean population of all states using the `summarize()` function from the `tidyverse`:
 
 ```{r eval = FALSE, echo = TRUE}
 summarize(.data = population_data_2,
           mean_population = mean(Pop))
 ```
 
-You can see that I'm using `population_data_2` with the `.data` argument, telling the `summarize()` function (which comes from the `tidyverse`) to use that data frame. The second half of the code creates a new variable called `mean_population`, which is calculated by using the `mean()` function on the `Pop` variable. Running this code will return a tibble with a single variable (`mean_population`) that is of type double (meaning numeric) and has a value of 6433422, the mean population of all states. 
+To understand what is happening here, you need to understand two functions: `mean()` and `summarize()`. The `mean()` function calculates the mean of a set of values. If I were to write `mean(c(1, 3, 5))`, R would return `3` because that is the mean of the values `1`, `3`, and `5`. The `c()` function that surrounds the values tells R to combine these values when calculating the mean.
+
+The `summarize()` function takes a data frame or tibble and calculates a summary of one or more variables. In the previous code, we use the `summarize()` function to calculate the mean population of all states. To do this, we pass `population_data_2` to the `.data` argument of the `summarize()` function to tell it to use that data frame. Next, we create a new variable called `mean_population` and assign it to the output of the `mean()` function run on the `Pop` variable (one of the variables in the `population_data_2` data frame). 
+
+Running this code should return a tibble with a single variable (`mean_population`) that is of type double (meaning numeric data) and has a value of `6433422`, the mean population of all states:
 
 ```{r}
 summarize(.data = population_data_2,
           mean_population = mean(Pop))
 ```
 
-This is a basic example of data analysis, but you can do a lot more with the `tidyverse`. One advantage of working with the `tidyverse` is that it uses what's known as the **pipe** for multi-step operations. The `tidyverse` pipe, which is written with the text `%>%`, allows us to break steps into multiple lines (the functionally equivalent so-called native pipe uses the text `|>`). For example, I can rewrite the code above to do the same thing using the pipe. 
+This is a basic example of data analysis, but you can do a lot more with the `tidyverse`.
+
+### The Tidyverse Pipe
+
+One advantage of working with the `tidyverse` is that it uses what’s known as the `pipe` for multi-step operations. The `tidyverse` pipe, which is written as `%>%`, allows us to break steps into multiple lines. For example, we could rewrite our code using the pipe:
 
 ```{r eval = FALSE, echo = TRUE}
 population_data_2 %>% 
   summarize(mean_population = mean(Pop))
 ```
 
-This code says: start with the `population_data_2` data frame, then run the `summarize()` function on it, creating a variable called `mean_population` by calculating the mean of the `Pop` variable. 
+This code says, "Start with the `population_data_2` data frame, then run the `summarize()` function on it, creating a variable called `mean_population` by calculating the mean of the `Pop` variable."
 
-The pipe becomes even more useful when we use multiple steps. Let's say, for example, we want to calculate the mean population of the five largest states. The code below adds a line that uses the `filter()` function (also from the `tidyverse`) to only include states where the `rank` variable (which is the rank of the total population size of all states) is less than or equal to five (in other words, rank one through five). Then, it uses `summarize()` function as we did before.
+The pipe becomes even more useful when we use multiple steps in our data analysis. Let’s say, for example, we want to calculate the mean population of the five largest states. The following code adds a line that uses the `filter()` function (also from the `tidyverse`) to include only states where the `rank` variable (which is the rank of the total population size of all states) is less than or equal to five. Then, it uses `summarize()` function, as we did before:
 
 ```{r eval = FALSE, echo = TRUE}
 population_data_2 %>% 
   filter(rank <= 5) %>% 
   summarize(mean_population = mean(Pop))
 ```
-Running this code shows us the mean population of the five largest states. 
+
+Running this code shows us the mean population of the five largest states:
 
 ```{r}
 population_data_2 %>% 
   filter(rank <= 5) %>% 
   summarize(mean_population = mean(Pop))
 ```
-Combining functions using the pipe lets us do multiple things on our data in a way that keeps our code readable and easy to understand. We've introduced only two functions for analysis at this point, but the `tidyverse` has many functions that enable you to do nearly anything you could hope to do with your data. In fact, while I've been referring to the `tidyverse` as a single package, it is actually a collection of packages that do data importing, analysis, visualization, and more. The book *R for Data Science* by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund is the bible of `tidyverse` programming and worth reading for more details on how its many packages work. In this book, I'll introduce you to a number of packages, but because of how useful it is, the `tidyverse` will appear in every single piece of R code I write. 
+
+Combining functions using the pipe lets us do multiple things to our data in a way that keeps our code readable and easy to understand. 
+
+We’ve introduced only two functions for analysis at this point, but the `tidyverse` has many more functions that enable you to do nearly anything you could hope to do with your data. *R for Data Science* by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund is the bible of tidyverse programming and worth reading for more details on how its many packages work. Because of how useful it is, the `tidyverse` will appear in every single piece of R code you write in this book.
+
+## Comments {-}
+
+In addition to code, R script files often contain comments. In R script files, lines with hashes (`#`) at the start are not treated as code, but as text comments. For example, I could add a comment to the code above like so:
+
+```{r eval = FALSE, echo = TRUE}
+# Calculate the mean population of the five largest states
+
+population_data_2 %>% 
+  filter(rank <= 5) %>% 
+  summarize(mean_population = mean(Pop))
+```
+
+Having this comment will help yourself and others understand what is happening in the code. 
 
 ## How to Get Help {-}
 
-Now that you've learned about the basics of how R works, you're probably ready to dive in. When you do, you're going to encounter errors. Everyone does, and it's just part of working in R. Learning how to get help when you do run into issues is a key part of learning to use R successfully. There are two main strategies you can use to get unstuck.
+Now that you’ve learned about the basics of how R works, you’re probably ready to dive in and write some code. When you do, though, you’re going to encounter errors. Learning how to get help when you run into issues is a key part of learning to use R successfully. There are two main strategies you can use to get unstuck.
 
-The first is to read the documentation for functions. To access the documentation for any function, simply type the `?` and then the name of the function. For example, if I run the line `?read.csv`, I will see the documentation pop up in the bottom right panel, as in Figure \@ref(fig:readcsv-documentation).
+The first is to read the documentation for the functions you use. To access the documentation for any function, simply enter `?` and then the name of the function in the console. For example, run `?read.csv` to see documentation about that function pop up in the bottom right panel, as in Figure \@ref(fig:readcsv-documentation).
 
 ```{r results='asis'}
 print_nostarch_file_name(file_type_to_print = "png")
@@ -297,13 +319,22 @@ knitr::include_graphics(here::here("assets/readcsv-documentation.png"))
 save_image_for_nostarch(here::here("assets/readcsv-documentation.png"))
 ```
 
-Help files can be a bit hard to decipher but at their core, they tell you what package the function comes from, what it does, its arguments, and some examples of how to use it. For additional guidance on reading documentation, I recommend the appendix of Kieran Healy's book *Data Visualization: A practical introduction* (a free online version is available at https://socviz.co/appendix.html).
+Help files can be a bit hard to decipher, but at their core, they tell you what package the function comes from, what it does, what arguments it accepts, and some examples of how to use it. For additional guidance on reading documentation, I recommend the appendix of Kieran Healy’s book *Data Visualization: A Practical Introduction*. A free online version is available at https://socviz.co/appendix.html.
 
-In addition to providing help files in RStudio, many R packages have documentation websites. I find these easier to read and tend to use them when I am confused about how to use a function. In addition, many packages have longer articles known as vignettes that provide an overview of how the package works. Reading these can help you see how individual functions can be used in the context of a larger project. Every package I discuss in this book has a good documentation website. 
+In addition to providing help files in RStudio, many R packages have documentation websites. These can be easier to read than R Studio’s help files. In addition, they often contain longer articles known as *vignettes* that provide an overview of how a given package works. Reading these can help you understand how to combine individual functions in the context of a larger project. Every package discussed in this book has a good documentation website.
 
-## In Conclusion: Invest Time Now to Learn R and Save Time Later {-}
+## Conclusion {-}
 
-Getting started with R can be challenging. I myself experienced many frustrations early on that I've since realized are quite common. This chapter has, hopefully, helped you to see how you can get started with R. Understanding how functions, objects, packages, and projects work is key to ensuring that you can successfully use R to work with your data. 
+This chapter should have helped you get started with R programming. You’ve learned a number of things, beginning with how to download and set up R and RStudio, what the various RStudio panels are for, and how R script files work. You also learned how to import CSV files and explore them in R, how to save data as objects, and how to install packages to access additional functions. Then, to make the files used in your code more accessible, you created an RStudio project.
 
-If R feels challenging, just know that it will get better with time. Best of all, the time you invest in learning to use R will repay itself many times over. My favorite example to show this is one I discuss in Chapter \@ref(parameterized-reports-chapter), which discusses a technique called parameterized reporting to automatically produce dozens, hundreds, or even thousands of reports at once. At my company, R for the Rest of Us, we worked with a client to produce reports on demographics and housing data for each of the 170 plus towns and counties in the state of Connecticut. Doing this by hand would have taken the client hundreds of hours. Using R, we were able to automate the process so they can generate the reports simply by running code. If you make multiple reports by hand, think of the hours you're spending. Reframe the time it takes to learn R as an investment in never having to do this manual labor again. When you're struggling to make sense of an inscrutable error message, you will get frustrated. But, with all of the time you'll save, I promise that it is worth the effort to learn R.
+Lastly, we covered the basics of data exploration with `tidyverse` functions and the `tidyverse` pipe, and you learned how to get help when those functions don’t work as expected. Now that you understand the basics, you can use R to work with your data. Let’s get started!
+
+## Learn More {-}
+
+Consult the following resources to learn more about R programming:
+
+*Statistical Inference via Data Science: A ModernDive into R and the Tidyverse* by Chester Ismay and Albert Y. Kim (CRC Press, 2020), https://moderndive.com/
+
+The *Getting Started with R* course: https://rfortherestofus.com/courses/getting-started/
+
 
