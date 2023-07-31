@@ -25,7 +25,7 @@ cases <- tibble(state.name) %>%
 ```
 
 
-# Parameterized Reporting {#parameterized-reports-chapter}
+# Using Parameters to Automate Reports {#parameterized-reports-chapter}
 
 *Parameterized reporting* is a technique that uses R Markdown to make multiple reports simultaneously. Using parameterized reporting, you can follow the same process to make 3,000 reports as you did to make one report. The technique also makes your work more accurate, as it avoids copy-and-paste errors.  
 
