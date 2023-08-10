@@ -780,11 +780,10 @@ southwest_2003 <- dm_perc_cat_hubs %>%
   filter(year == 2003)
 ```
 
-We can take a look at this object to see the variables we have to work with:
+We can take a look at this object to see the variables we have to work with by typing `southwest_2003` in the console, which will return this:
 
-```{r, echo = TRUE}
-southwest_2003 %>%
-  slice(1:10)
+```{r}
+southwest_2003
 ```
 
 The `date` variable represents the start date of the week in which the observation took place. The `hub` variable is the region, and `category` is the level of drought: a value of `D0` indicates the lowest level of drought, while `D5` indicates the highest level. The `percentage` variable is the percentage of that region in that drought category, ranging from `0` to `1`. The `year` and `week` variables are the observation year and week number (beginning with week 1). The `max_week` variable is the maximum number of weeks in a given year.

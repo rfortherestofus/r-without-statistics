@@ -20,16 +20,32 @@
       ],
       "Hash": "b2866e62bab9378c3cc9476a1954226b"
     },
+    "DT": {
+      "Package": "DT",
+      "Version": "0.28",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "crosstalk",
+        "htmltools",
+        "htmlwidgets",
+        "jquerylib",
+        "jsonlite",
+        "magrittr",
+        "promises"
+      ],
+      "Hash": "ab745834dfae7eaf71dd0b90f3b66759"
+    },
     "KernSmooth": {
       "Package": "KernSmooth",
-      "Version": "2.23-20",
+      "Version": "2.23-22",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R",
         "stats"
       ],
-      "Hash": "8dcfa99b14c296bc9f1fd64d52fd3ce7"
+      "Hash": "2fecebc3047322fa5930f74fae5de70f"
     },
     "MASS": {
       "Package": "MASS",
@@ -97,14 +113,14 @@
     },
     "Rcpp": {
       "Package": "Rcpp",
-      "Version": "1.0.10",
+      "Version": "1.0.11",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "methods",
         "utils"
       ],
-      "Hash": "e749cae40fa9ef469b6050959517453c"
+      "Hash": "ae6cbbe1492f4de79c45fce06f967ce8"
     },
     "RcppEigen": {
       "Package": "RcppEigen",
@@ -146,7 +162,7 @@
     },
     "V8": {
       "Package": "V8",
-      "Version": "4.2.2",
+      "Version": "4.3.3",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -155,7 +171,7 @@
         "jsonlite",
         "utils"
       ],
-      "Hash": "ebee37dadb0a8f5086663825d2c33076"
+      "Hash": "20d81ec18bde233d8cc3265761fe8c93"
     },
     "abind": {
       "Package": "abind",
@@ -175,9 +191,9 @@
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
-      "RemoteRepo": "albersusa",
       "RemoteUsername": "hrbrmstr",
-      "RemoteRef": "HEAD",
+      "RemoteRepo": "albersusa",
+      "RemoteRef": "master",
       "RemoteSha": "07aa87f6b5ede56809b2dbdd2f97f4c6756a6677",
       "Requirements": [
         "R",
@@ -187,7 +203,7 @@
         "sf",
         "sp"
       ],
-      "Hash": "dbffcf3296de85a8a87bcb32612e7b52"
+      "Hash": "178462b423bf4e3ff2329a1e551336f2"
     },
     "askpass": {
       "Package": "askpass",
@@ -638,7 +654,7 @@
     },
     "dbplyr": {
       "Package": "dbplyr",
-      "Version": "2.3.1",
+      "Version": "2.3.3",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -662,7 +678,7 @@
         "vctrs",
         "withr"
       ],
-      "Hash": "6e432b1a334fc06786e2ee8627e8cbea"
+      "Hash": "d6fd1b1440c1cacc6623aaa4e9fe352b"
     },
     "desc": {
       "Package": "desc",
@@ -710,14 +726,15 @@
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
-      "RemoteRepo": "dk",
       "RemoteUsername": "dgkeyes",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "2a3a3bef45c188f5e3ea9f82ec0ca25fa97b044c",
+      "RemoteRepo": "dk",
+      "RemoteRef": "main",
+      "RemoteSha": "4092a6e527dfd31de8baf7fb778976a6c46ab109",
       "Requirements": [
-        "ggplot2"
+        "janitor",
+        "tidycensus"
       ],
-      "Hash": "915903524cb690821ed379459e882bda"
+      "Hash": "cdefd802ac4dd5d6eacdebaf9ad0472a"
     },
     "dplyr": {
       "Package": "dplyr",
@@ -744,13 +761,12 @@
     },
     "dtplyr": {
       "Package": "dtplyr",
-      "Version": "1.3.0",
+      "Version": "1.3.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R",
         "cli",
-        "crayon",
         "data.table",
         "dplyr",
         "glue",
@@ -760,7 +776,7 @@
         "tidyselect",
         "vctrs"
       ],
-      "Hash": "4f640f188add4172c025920054a1f8c2"
+      "Hash": "54ed3ea01b11e81a86544faaecfef8e2"
     },
     "e1071": {
       "Package": "e1071",
@@ -880,7 +896,7 @@
     },
     "foreign": {
       "Package": "foreign",
-      "Version": "0.8-83",
+      "Version": "0.8-84",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -889,7 +905,7 @@
         "stats",
         "utils"
       ],
-      "Hash": "4e43a8846712a6d5991b19b9bd5f9199"
+      "Hash": "467ec0ca895d4e61a22cfbac9bccddf8"
     },
     "fs": {
       "Package": "fs",
@@ -915,7 +931,7 @@
     },
     "gargle": {
       "Package": "gargle",
-      "Version": "1.3.0",
+      "Version": "1.5.2",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -929,12 +945,11 @@
         "openssl",
         "rappdirs",
         "rlang",
-        "rstudioapi",
         "stats",
         "utils",
         "withr"
       ],
-      "Hash": "bb3208dcdfeb2e68bf33c87601b3cbe3"
+      "Hash": "fc0b272e5847c58cd5da9b20eedbd026"
     },
     "generics": {
       "Package": "generics",
@@ -949,7 +964,7 @@
     },
     "gert": {
       "Package": "gert",
-      "Version": "1.9.2",
+      "Version": "1.9.3",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -960,7 +975,7 @@
         "sys",
         "zip"
       ],
-      "Hash": "9122b3958e749badb5c939f498038b57"
+      "Hash": "b544c397820e05a97d391b2d614a921a"
     },
     "ggplot2": {
       "Package": "ggplot2",
@@ -1094,7 +1109,7 @@
     },
     "googledrive": {
       "Package": "googledrive",
-      "Version": "2.0.0",
+      "Version": "2.1.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1115,11 +1130,11 @@
         "vctrs",
         "withr"
       ],
-      "Hash": "c3a25adbbfbb03f12e6f88c5fb1f3024"
+      "Hash": "e99641edef03e2a5e87f0a0b1fcc97f4"
     },
     "googlesheets4": {
       "Package": "googlesheets4",
-      "Version": "1.0.1",
+      "Version": "1.1.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1132,6 +1147,7 @@
         "googledrive",
         "httr",
         "ids",
+        "lifecycle",
         "magrittr",
         "methods",
         "purrr",
@@ -1139,9 +1155,10 @@
         "rlang",
         "tibble",
         "utils",
-        "vctrs"
+        "vctrs",
+        "withr"
       ],
-      "Hash": "3b449d5292327880fc6cb61d0b2e9063"
+      "Hash": "d6db1667059d027da730decdc214b959"
     },
     "gridExtra": {
       "Package": "gridExtra",
@@ -1224,7 +1241,7 @@
     },
     "haven": {
       "Package": "haven",
-      "Version": "2.5.2",
+      "Version": "2.5.3",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1241,7 +1258,7 @@
         "tidyselect",
         "vctrs"
       ],
-      "Hash": "8b331e659e67d757db0fcc28e689c501"
+      "Hash": "9b302fe352f9cfc5dcf0a4139af3a565"
     },
     "here": {
       "Package": "here",
@@ -1503,6 +1520,41 @@
       ],
       "Hash": "d908914ae53b04d4c0c0fd72ecc35370"
     },
+    "leaflet": {
+      "Package": "leaflet",
+      "Version": "2.1.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "RColorBrewer",
+        "base64enc",
+        "crosstalk",
+        "htmltools",
+        "htmlwidgets",
+        "leaflet.providers",
+        "magrittr",
+        "markdown",
+        "methods",
+        "png",
+        "raster",
+        "scales",
+        "sp",
+        "stats",
+        "viridis"
+      ],
+      "Hash": "ac2c7f21c2a6d2579eed8aaae4c42610"
+    },
+    "leaflet.providers": {
+      "Package": "leaflet.providers",
+      "Version": "1.13.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "235cd5abed82d9e6e79eb05eee248983"
+    },
     "lifecycle": {
       "Package": "lifecycle",
       "Version": "1.0.3",
@@ -1557,7 +1609,7 @@
     },
     "magick": {
       "Package": "magick",
-      "Version": "2.7.4",
+      "Version": "2.7.5",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1565,7 +1617,7 @@
         "curl",
         "magrittr"
       ],
-      "Hash": "92dd08195d2270e188dcac8d4b219e84"
+      "Hash": "26ff8efba0dcc7b1bc8f970df1c38cc9"
     },
     "magrittr": {
       "Package": "magrittr",
@@ -1579,7 +1631,7 @@
     },
     "maptools": {
       "Package": "maptools",
-      "Version": "1.1-6",
+      "Version": "1.1-8",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1593,11 +1645,11 @@
         "stats",
         "utils"
       ],
-      "Hash": "cd65b7fe71f03fca368a1e93db5ed91b"
+      "Hash": "2457cdde319dfcd4d78ff10b9238c08e"
     },
     "markdown": {
       "Package": "markdown",
-      "Version": "1.6",
+      "Version": "1.7",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1606,7 +1658,7 @@
         "utils",
         "xfun"
       ],
-      "Hash": "c0e8495f796d73f2d2e1a8c6964d67e8"
+      "Hash": "0ffaea87c070a56d140ce00b0727b278"
     },
     "memoise": {
       "Package": "memoise",
@@ -1621,7 +1673,7 @@
     },
     "mgcv": {
       "Package": "mgcv",
-      "Version": "1.8-42",
+      "Version": "1.9-0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1634,7 +1686,7 @@
         "stats",
         "utils"
       ],
-      "Hash": "3460beba7ccc8946249ba35327ba902a"
+      "Hash": "086028ca0460d0c368028d3bda58f31b"
     },
     "mime": {
       "Package": "mime",
@@ -1658,7 +1710,7 @@
     },
     "modelr": {
       "Package": "modelr",
-      "Version": "0.1.10",
+      "Version": "0.1.11",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1672,7 +1724,7 @@
         "tidyselect",
         "vctrs"
       ],
-      "Hash": "bc23cda9c6a8f91dc1c10e1994494711"
+      "Hash": "4f50122dc256b1b6996a4703fecea821"
     },
     "munsell": {
       "Package": "munsell",
@@ -1752,13 +1804,13 @@
     },
     "openssl": {
       "Package": "openssl",
-      "Version": "2.0.6",
+      "Version": "2.1.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "askpass"
       ],
-      "Hash": "0f7cd2962e3044bb940cca4f4b5cecbe"
+      "Hash": "273a6bb4a9844c296a459d2176673270"
     },
     "openxlsx": {
       "Package": "openxlsx",
@@ -1884,7 +1936,7 @@
     },
     "plotly": {
       "Package": "plotly",
-      "Version": "4.10.1",
+      "Version": "4.10.2",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1912,7 +1964,7 @@
         "vctrs",
         "viridisLite"
       ],
-      "Hash": "3781cf6971c6467fa842a63725bbee9e"
+      "Hash": "6c00a09ba7d34917d9a3e28b15dd74e3"
     },
     "png": {
       "Package": "png",
@@ -1990,18 +2042,19 @@
     },
     "promises": {
       "Package": "promises",
-      "Version": "1.2.0.1",
+      "Version": "1.2.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R6",
         "Rcpp",
+        "fastmap",
         "later",
         "magrittr",
         "rlang",
         "stats"
       ],
-      "Hash": "4ab2c43adb4d4699cf3690acd378d75d"
+      "Hash": "0d8a15c9d000970ada1ab21405387dee"
     },
     "proxy": {
       "Package": "proxy",
@@ -2043,7 +2096,7 @@
     },
     "quantreg": {
       "Package": "quantreg",
-      "Version": "5.95",
+      "Version": "5.96",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -2057,7 +2110,7 @@
         "stats",
         "survival"
       ],
-      "Hash": "6cdf5a3dc958f55529b0401a8e5869e3"
+      "Hash": "47a0047c3082b2a285434db2eb418dcc"
     },
     "ragg": {
       "Package": "ragg",
@@ -2079,6 +2132,20 @@
         "R"
       ],
       "Hash": "5e3c5dc0b071b21fa128676560dbe94d"
+    },
+    "raster": {
+      "Package": "raster",
+      "Version": "3.6-23",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "Rcpp",
+        "methods",
+        "sp",
+        "terra"
+      ],
+      "Hash": "337d6d70f7d6bf78df236a5a53f09db0"
     },
     "reactR": {
       "Package": "reactR",
@@ -2130,7 +2197,7 @@
     },
     "readxl": {
       "Package": "readxl",
-      "Version": "1.4.2",
+      "Version": "1.4.3",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -2141,7 +2208,7 @@
         "tibble",
         "utils"
       ],
-      "Hash": "2e6020b1399d95f947ed867045e9ca17"
+      "Hash": "8cf9c239b96df1bbb133b74aef77ad0a"
     },
     "rematch": {
       "Package": "rematch",
@@ -2169,7 +2236,11 @@
       "RemoteUsername": "rstudio",
       "RemoteRepo": "renv",
       "RemoteRef": "0.17.3-62",
-      "RemoteSha": "bdafa4033ec3166aa1f36a4f02db8e3d09ca4ae0"
+      "RemoteSha": "bdafa4033ec3166aa1f36a4f02db8e3d09ca4ae0",
+      "Requirements": [
+        "utils"
+      ],
+      "Hash": "0eec72194bf21b1fb3d2ecf09cf64b0f"
     },
     "reprex": {
       "Package": "reprex",
@@ -2195,7 +2266,7 @@
     },
     "rgdal": {
       "Package": "rgdal",
-      "Version": "1.6-6",
+      "Version": "1.6-7",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -2207,11 +2278,11 @@
         "stats",
         "utils"
       ],
-      "Hash": "05c7c91191407d54da92816fb849ab29"
+      "Hash": "10b777236c9e7855bc9dea8e347e30b7"
     },
     "rgeos": {
       "Package": "rgeos",
-      "Version": "0.6-2",
+      "Version": "0.6-4",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -2222,7 +2293,7 @@
         "stats",
         "utils"
       ],
-      "Hash": "9511acfd44e26cd310b9975f63ac9f72"
+      "Hash": "2eab4e0f0b131f018bfb3e81857f9767"
     },
     "rio": {
       "Package": "rio",
@@ -2281,7 +2352,7 @@
     },
     "rnaturalearth": {
       "Package": "rnaturalearth",
-      "Version": "0.3.2",
+      "Version": "0.3.3",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -2290,9 +2361,10 @@
         "jsonlite",
         "sf",
         "sp",
+        "terra",
         "utils"
       ],
-      "Hash": "c97d05220a4112f461eb940f2633d091"
+      "Hash": "86411a59f5fc9534d8ea0c270d70cfa5"
     },
     "rprojroot": {
       "Package": "rprojroot",
@@ -2329,10 +2401,10 @@
     },
     "rstudioapi": {
       "Package": "rstudioapi",
-      "Version": "0.14",
+      "Version": "0.15.0",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "690bd2acc42a9166ce34845884459320"
+      "Hash": "5564500e25cffad9e22244ced1379887"
     },
     "rvest": {
       "Package": "rvest",
@@ -2356,7 +2428,7 @@
     },
     "s2": {
       "Package": "s2",
-      "Version": "1.1.3",
+      "Version": "1.1.4",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -2364,7 +2436,7 @@
         "Rcpp",
         "wk"
       ],
-      "Hash": "e162ffd6ff4bde5264584be359a06f88"
+      "Hash": "f1cbe03bb3346f8e817518ffa20f9f5a"
     },
     "sass": {
       "Package": "sass",
@@ -2427,7 +2499,7 @@
     },
     "sf": {
       "Package": "sf",
-      "Version": "1.0-12",
+      "Version": "1.0-14",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -2446,7 +2518,7 @@
         "units",
         "utils"
       ],
-      "Hash": "5b41b4f0bd22b38661d82205a87deb4b"
+      "Hash": "e2111252a76984ca50bf8d6314348681"
     },
     "shades": {
       "Package": "shades",
@@ -2457,7 +2529,7 @@
     },
     "shiny": {
       "Package": "shiny",
-      "Version": "1.7.4",
+      "Version": "1.7.4.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -2487,7 +2559,7 @@
         "withr",
         "xtable"
       ],
-      "Hash": "c2eae3d8c670fa9dfa35a12066f4a1d5"
+      "Hash": "f7f201522eedbc95f10ef323b100ff29"
     },
     "snakecase": {
       "Package": "snakecase",
@@ -2513,7 +2585,7 @@
     },
     "sp": {
       "Package": "sp",
-      "Version": "1.6-0",
+      "Version": "2.0-0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -2526,7 +2598,7 @@
         "stats",
         "utils"
       ],
-      "Hash": "6674e075a078d9c3bde8ba800367347c"
+      "Hash": "2551981e6f85d59c81652bf654d6c3ca"
     },
     "stringi": {
       "Package": "stringi",
@@ -2592,6 +2664,18 @@
       ],
       "Hash": "90b28393209827327de889f49935140a"
     },
+    "terra": {
+      "Package": "terra",
+      "Version": "1.7-39",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "Rcpp",
+        "methods"
+      ],
+      "Hash": "6037d18193ca3f16900646e773937094"
+    },
     "testthat": {
       "Package": "testthat",
       "Version": "3.1.9",
@@ -2655,7 +2739,7 @@
     },
     "tidycensus": {
       "Package": "tidycensus",
-      "Version": "1.3.2",
+      "Version": "1.4.4",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -2678,7 +2762,7 @@
         "utils",
         "xml2"
       ],
-      "Hash": "4f564bb53bd268e868270cad2d64eb5e"
+      "Hash": "580d84464cc1b1a07221b171e5f95de5"
     },
     "tidyr": {
       "Package": "tidyr",
@@ -2783,7 +2867,7 @@
     },
     "tigris": {
       "Package": "tigris",
-      "Version": "2.0.1",
+      "Version": "2.0.3",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -2798,7 +2882,7 @@
         "utils",
         "uuid"
       ],
-      "Hash": "9024982d39ebba25efd3ff768291e661"
+      "Hash": "6dd14cb88733b84d2b9af9fb8f64dbc5"
     },
     "timechange": {
       "Package": "timechange",
@@ -2834,14 +2918,14 @@
     },
     "units": {
       "Package": "units",
-      "Version": "0.8-1",
+      "Version": "0.8-2",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R",
         "Rcpp"
       ],
-      "Hash": "81433967f9b34a120a4f5a5a016cd5ed"
+      "Hash": "422376fe53419adcde4710d43acbcdd0"
     },
     "urbnthemes": {
       "Package": "urbnthemes",
@@ -2849,9 +2933,9 @@
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
-      "RemoteRepo": "urbnthemes",
       "RemoteUsername": "UrbanInstitute",
-      "RemoteRef": "HEAD",
+      "RemoteRepo": "urbnthemes",
+      "RemoteRef": "master",
       "RemoteSha": "f6a368d6018e128238e9f3cfcaf1f6c4acb62613",
       "Requirements": [
         "R",
@@ -2868,11 +2952,11 @@
         "systemfonts",
         "tibble"
       ],
-      "Hash": "a00acf7d78e39db7e73e2eace2d529ef"
+      "Hash": "9d0b3a6440fd4af6a5bc62de43d450e1"
     },
     "usethis": {
       "Package": "usethis",
-      "Version": "2.2.1",
+      "Version": "2.2.2",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -2899,7 +2983,7 @@
         "withr",
         "yaml"
       ],
-      "Hash": "13e65f22c6cb1aaad65f437a4bc5a6d2"
+      "Hash": "60e51f0b94d0324dc19e44110098fa9f"
     },
     "utf8": {
       "Package": "utf8",
@@ -2934,6 +3018,19 @@
         "rlang"
       ],
       "Hash": "d0ef2856b83dc33ea6e255caf6229ee2"
+    },
+    "viridis": {
+      "Package": "viridis",
+      "Version": "0.6.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "ggplot2",
+        "gridExtra",
+        "viridisLite"
+      ],
+      "Hash": "80cd127bc8c9d3d9f0904ead9a9102f1"
     },
     "viridisLite": {
       "Package": "viridisLite",
@@ -3010,13 +3107,13 @@
     },
     "wk": {
       "Package": "wk",
-      "Version": "0.7.2",
+      "Version": "0.7.3",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R"
       ],
-      "Hash": "d090e79291f852c4da96b036500d449f"
+      "Hash": "68a7ab6ec1afb5f076172b983c069313"
     },
     "xaringan": {
       "Package": "xaringan",
@@ -3062,14 +3159,14 @@
     },
     "xml2": {
       "Package": "xml2",
-      "Version": "1.3.4",
+      "Version": "1.3.5",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R",
         "methods"
       ],
-      "Hash": "7dc765ac9b909487326a7d471fdd3821"
+      "Hash": "6c40e5cfcc6aefd88110666e18c31f40"
     },
     "xtable": {
       "Package": "xtable",
@@ -3099,7 +3196,7 @@
     },
     "zoo": {
       "Package": "zoo",
-      "Version": "1.8-11",
+      "Version": "1.8-12",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -3110,7 +3207,7 @@
         "stats",
         "utils"
       ],
-      "Hash": "874a5b77fe0cfacf2a3450069ae70926"
+      "Hash": "5c715954112b45499fb1dadc6ee6ee3e"
     }
   }
 }
