@@ -35,6 +35,8 @@ jobs:
           R -e 'install.packages("webshot2")'
           R -e 'install.packages("class")'
           R -e 'install.packages("promises")'
+          R -e 'install.packages("Matrix")'
+          R -e 'install.packages("MatrixModels")'
 
       - name: Cache bookdown results
         uses: actions/cache@v2
