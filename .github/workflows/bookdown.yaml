@@ -15,7 +15,7 @@ jobs:
       isExtPR: ${{ github.event.pull_request.head.repo.fork == true }}
     steps:
     
-      - run: sudo apt-get update && sudo apt-get install libudunits2-dev libgdal-dev libgeos-dev libproj-dev libharfbuzz-dev libfribidi-dev libmagick++-dev --fix-missing
+      # - run: sudo apt-get update && sudo apt-get install libudunits2-dev libgdal-dev libgeos-dev libproj-dev libharfbuzz-dev libfribidi-dev libmagick++-dev --fix-missing
       
       - uses: actions/checkout@v2
 
