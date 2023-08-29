@@ -732,7 +732,82 @@ There we have it: Figure \@ref(fig:final-map-map) shows our recreation of Abdoul
 print_nostarch_file_name()
 ```
 
-```{r final-map-map, ref.label = "final-map", fig.cap = "Our recreation of Abdoul Madjid's map"}
+```{r final-map-map, fig.cap = "Our recreation of Abdoul Madjid's map"}
+usa_states_geom_covid_six_days %>%
+  ggplot() +
+  geom_sf(
+    aes(fill = incidence_rate),
+    size = .05,
+    color = "transparent"
+  ) +
+  facet_wrap(
+    vars(fancy_date),
+    strip.position = "bottom"
+  ) +
+  scale_fill_discrete_sequential(
+    palette = "Rocket",
+    name = "COVID-19 INCIDENCE RATE",
+    guide = guide_legend(
+      title.position = "top",
+      title.hjust = .5,
+      title.theme = element_text(
+        family = "Times New Roman",
+        size = rel(9),
+        margin = margin(
+          b = .1,
+          unit = "cm"
+        )
+      ),
+      nrow = 1,
+      keyheight = unit(.3, "cm"),
+      keywidth = unit(.3, "cm"),
+      label.theme = element_text(
+        family = "Times New Roman",
+        size = rel(6),
+        margin = margin(
+          r = 5,
+          unit = "pt"
+        )
+      )
+    )
+  ) +
+  labs(title = "2021 · A pandemic year",
+       caption = "Incidence rates are calculated for 100,000 people in each state.
+                  Inspired from a graphic in the DIE ZEIT newspaper of November 18, 2021.
+                  Data from NY Times · Tidytuesday Week-1 2022 · Abdoul ISSA BIDA.") +
+  theme_minimal() +
+  theme(
+    text = element_text(family = "Times New Roman", 
+                        color = "#111111"),
+    plot.title = element_text(
+      size = rel(2.5),
+      face = "bold",
+      hjust = 0.5,
+      margin = margin(t = .25, 
+                      b = .25, 
+                      unit = "cm")
+    ),
+    plot.caption = element_blank(),
+    # plot.caption = element_text(
+    #   hjust = .5,
+    #   face = "bold",
+    #   margin = margin(t = .25, 
+    #                   b = .25, 
+    #                   unit = "cm")),
+    strip.text = element_text(size = rel(0.75), 
+                              face = "bold"),
+    legend.position = "top",
+    legend.box.spacing = unit(.25, "cm"),
+    panel.grid = element_blank(),
+    axis.text = element_blank(),
+    plot.margin = margin(t = .25, 
+                         r = .25, 
+                         b = .25, 
+                         l = .25, 
+                         unit = "cm"),
+    plot.background = element_rect(fill = "#e5e4e2", 
+                                   color = NA)
+  )
 ```
 
 ```{r results='asis'}

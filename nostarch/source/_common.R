@@ -127,9 +127,9 @@ save_image_for_nostarch <- function(image_file, chap_number = chapter_number) {
   
   image_new_width <- image_width_pixels / image_width_scale_down_factor
   
-  resized_image <- magick::image_read(image_file) %>% 
-    magick::image_resize(image_new_width) %>% 
-    magick::image_page(density = "96x96")
+  resized_image <- magick::image_read(image_file)
+    # magick::image_resize(image_new_width) %>% 
+    # magick::image_page(density = "96x96")
   
   chapter_number_two_digits <- stringr::str_pad(chap_number, 2, "left", "0")
   figure_number_three_digits <- stringr::str_pad(i, 3, "left", "0")
