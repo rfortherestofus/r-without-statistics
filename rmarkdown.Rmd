@@ -178,6 +178,7 @@ penguins %>%
   theme_minimal()
 ```
 ````
+
 The histogram can be seen in Figure \@ref(fig:simple-histogram).
 
 ```{r simple-histogram, fig.cap = "A simple histogram"}
