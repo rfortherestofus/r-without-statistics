@@ -37,14 +37,16 @@ library(gtExtras)
 As we saw in Chapter \@ref(data-viz-chapter), the `gapminder` package provides country-level demographic statistics. To make a data frame for our table, let’s use just a few countries (the first four, in alphabetical order: Afghanistan, Albania, Algeria, and Angola) and three years (1952, 1972, and 1992). The `gapminder` data has many years, but we need only a few to demonstrate table-making principles. Here is the code to make the data frame called `gdp`: 
 
 ```{r echo = TRUE}
-gdp <- gapminder %>% 
-  filter(country %in% c("Afghanistan", "Albania", "Algeria", "Angola")) %>% 
-  select(country, year, gdpPercap) %>% 
-  mutate(country = as.character(country)) %>% 
-  pivot_wider(id_cols = country,
-              names_from = year,
-              values_from = gdpPercap) %>% 
-  select(country, `1952`, `1972`, `1992`) %>% 
+gdp <- gapminder %>%
+  filter(country %in% c("Afghanistan", "Albania", "Algeria", "Angola")) %>%
+  select(country, year, gdpPercap) %>%
+  mutate(country = as.character(country)) %>%
+  pivot_wider(
+    id_cols = country,
+    names_from = year,
+    values_from = gdpPercap
+  ) %>%
+  select(country, `1952`, `1972`, `1992`) %>%
   rename(Country = country)
 ```
 
@@ -67,8 +69,8 @@ As with data visualization, one of the most important principles of table design
 ```{r results='asis', include = TRUE, echo = FALSE}
 print_nostarch_file_name(file_type_to_print = "png")
 
-table <- gdp %>% 
-  gt() %>% 
+table <- gdp %>%
+  gt() %>%
   tab_style(
     style = cell_borders(
       side = "all",
@@ -84,7 +86,7 @@ table <- gdp %>%
         everything()
       )
     )
-  ) %>% 
+  ) %>%
   opt_table_lines(extent = "none")
 ```
 
@@ -97,7 +99,7 @@ Having gridlines around every single cell in our table is unnecessary and create
 ```{r results='asis', include = TRUE, echo = FALSE}
 print_nostarch_file_name(file_type_to_print = "png")
 
-table <- gdp %>% 
+table <- gdp %>%
   gt()
 ```
 
@@ -108,15 +110,15 @@ save_table_for_nostarch(table)
 I mentioned that `gt` uses good table design principles by default, and this guideline is a great example of it. The second table, with minimal gridlines, requires just two lines of code. We pipe our `gdp` data into the `gt()` function, which creates a table:
 
 ```{r echo = TRUE, eval = FALSE}
-gdp %>% 
+gdp %>%
   gt()
 ```
 
 To add gridlines to every part of the example, we would have to add additional code. Here, the code that follows the `gt()` function adds gridlines:
 
 ```{r echo = TRUE, eval = FALSE}
-gdp %>% 
-  gt() %>% 
+gdp %>%
+  gt() %>%
   tab_style(
     style = cell_borders(
       side = "all",
@@ -132,15 +134,15 @@ gdp %>%
         everything()
       )
     )
-  ) %>% 
+  ) %>%
   opt_table_lines(extent = "none")
 ```
 
 Since I don’t recommend taking this approach, I won’t walk through this code. However, if we wanted to remove additional gridlines, we could use the following: 
 
 ```{r remove-gridlines, echo = TRUE, eval = FALSE}
-gdp %>% 
-  gt() %>% 
+gdp %>%
+  gt() %>%
   tab_style(
     style = cell_borders(color = "transparent"),
     locations = cells_body()
@@ -154,8 +156,8 @@ Doing this gives us a table with no gridlines at all in the body (Figure \@ref(f
 ```{r results='asis', include = TRUE, echo = FALSE}
 print_nostarch_file_name(file_type_to_print = "png")
 
-table <- gdp %>% 
-  gt() %>% 
+table <- gdp %>%
+  gt() %>%
   tab_style(
     style = cell_borders(color = "transparent"),
     locations = cells_body()
@@ -169,8 +171,8 @@ save_table_for_nostarch(table)
 Let’s save this table as an object called `table_no_gridlines` so that we can add onto it later.
 
 ```{r}
-table_no_gridlines <- gdp %>% 
-  gt() %>% 
+table_no_gridlines <- gdp %>%
+  gt() %>%
   tab_style(
     style = cell_borders(color = "transparent"),
     locations = cells_body()
@@ -184,8 +186,8 @@ While reducing clutter is an important goal, going too far can have negative con
 ```{r results='asis', include = TRUE, echo = FALSE}
 print_nostarch_file_name(file_type_to_print = "png")
 
-table <- gdp %>% 
-  gt() %>% 
+table <- gdp %>%
+  gt() %>%
   opt_table_lines(extent = "none")
 ```
 
@@ -196,7 +198,7 @@ save_table_for_nostarch(table)
 We’ve already covered how to use appropriate gridlines. But by making the header row bold, we can make it stand out even more: 
 
 ```{r echo = TRUE, eval = FALSE}
-table_no_gridlines %>% 
+table_no_gridlines %>%
   tab_style(
     style = cell_text(weight = "bold"),
     locations = cells_column_labels()
@@ -208,7 +210,7 @@ We start with the `table_no_gridlines` object (our saved table from earlier). Th
 ```{r results='asis', include = TRUE}
 print_nostarch_file_name(file_type_to_print = "png")
 
-table <- table_no_gridlines %>% 
+table <- table_no_gridlines %>%
   tab_style(
     style = cell_text(weight = "bold"),
     locations = cells_column_labels()
@@ -222,7 +224,7 @@ save_table_for_nostarch(table)
 Let’s save this table as `table_bold_header` in order to add additional formatting.
 
 ```{r echo = TRUE, include = FALSE}
-table_bold_header <- table_no_gridlines %>% 
+table_bold_header <- table_no_gridlines %>%
   tab_style(
     style = cell_text(weight = "bold"),
     locations = cells_column_labels()
@@ -241,13 +243,19 @@ Let’s see this principle in action. In Figure \@ref(fig:table-cols-aligned-lcr
 ```{r results='asis', include = TRUE}
 print_nostarch_file_name(file_type_to_print = "png")
 
-table <- table_bold_header %>% 
-  cols_align(align = "left",
-             columns = 2) %>% 
-  cols_align(align = "center",
-             columns = 3) %>% 
-  cols_align(align = "right",
-             columns = 4)
+table <- table_bold_header %>%
+  cols_align(
+    align = "left",
+    columns = 2
+  ) %>%
+  cols_align(
+    align = "center",
+    columns = 3
+  ) %>%
+  cols_align(
+    align = "right",
+    columns = 4
+  )
 ```
 
 ```{r table-cols-aligned-lcr, fig.cap = "Table with year columns aligned left, center, and right"}
@@ -257,13 +265,19 @@ save_table_for_nostarch(table)
 As with other tables, we actually have to override the defaults to get the `gt` package to misalign the columns, as you can see in the following code. 
 
 ```{r echo = TRUE, eval = FALSE}
-table_bold_header %>% 
-  cols_align(align = "left",
-             columns = 2) %>% 
-  cols_align(align = "center",
-             columns = 3) %>% 
-  cols_align(align = "right",
-             columns = 4)
+table_bold_header %>%
+  cols_align(
+    align = "left",
+    columns = 2
+  ) %>%
+  cols_align(
+    align = "center",
+    columns = 3
+  ) %>%
+  cols_align(
+    align = "right",
+    columns = 4
+  )
 ```
 
 By default, `gt` will right-align numeric values. Don’t change anything, and you’ll be golden.
@@ -271,14 +285,16 @@ By default, `gt` will right-align numeric values. Don’t change anything, and y
 Right alignment is best practice for numeric columns, but for text columns, use left alignment. As Jon Schwabish points out in his article "Ten Guidelines for Better Tables" in the *Journal of Benefit-Cost Analysis*, it’s much easier to read longer text cells when they are left aligned. To illustrate the benefit of left-aligning text, let’s add a country with a long name to the table. I’ve added Bosnia and Herzegovina and saved this as a data frame called `gdp_with_bosnia`. You’ll see that I’m using nearly the same code as I used to create the `gdp` data frame above:
 
 ```{r}
-gdp_with_bosnia <- gapminder %>% 
-  filter(country %in% c("Afghanistan", "Albania", "Algeria", "Angola", "Bosnia and Herzegovina")) %>% 
-  select(country, year, gdpPercap) %>% 
-  mutate(country = as.character(country)) %>% 
-  pivot_wider(id_cols = country,
-              names_from = year,
-              values_from = gdpPercap) %>% 
-  select(country, `1952`, `1972`, `1992`) %>% 
+gdp_with_bosnia <- gapminder %>%
+  filter(country %in% c("Afghanistan", "Albania", "Algeria", "Angola", "Bosnia and Herzegovina")) %>%
+  select(country, year, gdpPercap) %>%
+  mutate(country = as.character(country)) %>%
+  pivot_wider(
+    id_cols = country,
+    names_from = year,
+    values_from = gdpPercap
+  ) %>%
+  select(country, `1952`, `1972`, `1992`) %>%
   rename(Country = country)
 ```
 
@@ -291,18 +307,20 @@ Now take the `gdp_with_bosnia` data frame and create a table with the country co
 ```{r results='asis', include = TRUE}
 print_nostarch_file_name(file_type_to_print = "png")
 
-table <- gdp_with_bosnia %>% 
-  gt() %>% 
+table <- gdp_with_bosnia %>%
+  gt() %>%
   tab_style(
     style = cell_borders(color = "transparent"),
     locations = cells_body()
-  ) %>% 
+  ) %>%
   tab_style(
     style = cell_text(weight = "bold"),
     locations = cells_column_labels()
-  ) %>% 
-  cols_align(columns = "Country",
-             align = "center")
+  ) %>%
+  cols_align(
+    columns = "Country",
+    align = "center"
+  )
 ```
 
 ```{r table-country-centered, fig.cap = "A table with country column center aligned"}
@@ -314,16 +332,16 @@ This is another example where we’ve had to change the `gt` defaults to mess th
 ```{r results='asis', include = TRUE}
 print_nostarch_file_name(file_type_to_print = "png")
 
-table <- gdp_with_bosnia %>% 
-  gt() %>% 
+table <- gdp_with_bosnia %>%
+  gt() %>%
   tab_style(
     style = cell_borders(color = "transparent"),
     locations = cells_body()
-  ) %>% 
+  ) %>%
   tab_style(
     style = cell_text(weight = "bold"),
     locations = cells_column_labels()
-  ) 
+  )
 ```
 
 ```{r table-country-left, fig.cap = "A table with country column left aligned"}
@@ -333,18 +351,20 @@ save_table_for_nostarch(table)
 If you ever do want to override the default alignments, you can use the `cols_align()` function. For example, here is how to make the table with the country names center aligned:
 
 ```{r eval = FALSE, echo = TRUE}
-gdp_with_bosnia %>% 
-  gt() %>% 
+gdp_with_bosnia %>%
+  gt() %>%
   tab_style(
     style = cell_borders(color = "transparent"),
     locations = cells_body()
-  ) %>% 
+  ) %>%
   tab_style(
     style = cell_text(weight = "bold"),
     locations = cells_column_labels()
-  ) %>% 
-  cols_align(columns = "Country",
-             align = "center")
+  ) %>%
+  cols_align(
+    columns = "Country",
+    align = "center"
+  )
 ```
 
 Within this function, we use the `columns` argument to tell gt which columns to align and the `align` argument to select our alignment (`left`, `right`, or `center`).
@@ -362,7 +382,7 @@ table_bold_header %>%
   fmt_currency(
     columns = c(`1952`, `1972`, `1992`),
     decimals = 0
-  ) 
+  )
 ```
 
 We end up with values formatted as dollars. The `fmt_currency()` function automatically adds a thousands-place comma to make the values even easier to read (Figure \@ref(fig:table-whole-numbers)).
@@ -374,7 +394,7 @@ table <- table_bold_header %>%
   fmt_currency(
     columns = c(`1952`, `1972`, `1992`),
     decimals = 0
-  ) 
+  )
 ```
 
 ```{r table-whole-numbers, fig.cap = "A table with numbers rounded to whole numbers and dollar sign added"}
@@ -388,7 +408,7 @@ table_whole_numbers <- table_bold_header %>%
   fmt_currency(
     columns = c(`1952`, `1972`, `1992`),
     decimals = 0
-  ) 
+  )
 ```
 
 
@@ -397,13 +417,17 @@ table_whole_numbers <- table_bold_header %>%
 So far, our table hasn’t used any color. We’ll add some now to highlight outlier values. Especially for readers who want to scan your table, highlighting outliers with color can help significantly. Let’s make the highest value in the year 1952 a different color. To do this, we again use the `tab_style()` function: 
 
 ```{r eval = FALSE, echo = TRUE}
-table_whole_numbers %>% 
-  tab_style(style = cell_text(color = "orange",
-                              weight = "bold"),
-            locations = cells_body(
-              columns = `1952`,
-              rows = `1952` == max(`1952`)
-            )) 
+table_whole_numbers %>%
+  tab_style(
+    style = cell_text(
+      color = "orange",
+      weight = "bold"
+    ),
+    locations = cells_body(
+      columns = `1952`,
+      rows = `1952` == max(`1952`)
+    )
+  )
 ```
 
 This function uses `cell_text()` to both change the color of the text to orange and make it bold. Within the `cells_body()` function, we use the locations() function specify the columns and rows to which we want to apply our change. You can see that we’ve simply set the `columns` argument to the year whose values we’re changing. To set the rows, we need a more complicated formula. The code `rows = `1952` == max(`1952`)` causes the text transformation to occur in rows whose value is equal to the maximum value in that year. 
@@ -413,25 +437,37 @@ If we repeat this code for the 1972 and 1992 columns, we generate the result sho
 ```{r results='asis', include = TRUE}
 print_nostarch_file_name(file_type_to_print = "png")
 
-table <- table_whole_numbers %>% 
-  tab_style(style = cell_text(color = "orange",
-                              weight = "bold"),
-            locations = cells_body(
-              columns = `1952`,
-              rows = `1952` == max(`1952`)
-            )) %>% 
-  tab_style(style = cell_text(color = "orange",
-                              weight = "bold"),
-            locations = cells_body(
-              columns = `1972`,
-              rows = `1972` == max(`1972`)
-            )) %>% 
-  tab_style(style = cell_text(color = "orange",
-                              weight = "bold"),
-            locations = cells_body(
-              columns = `1992`,
-              rows = `1992` == max(`1992`)
-            ))
+table <- table_whole_numbers %>%
+  tab_style(
+    style = cell_text(
+      color = "orange",
+      weight = "bold"
+    ),
+    locations = cells_body(
+      columns = `1952`,
+      rows = `1952` == max(`1952`)
+    )
+  ) %>%
+  tab_style(
+    style = cell_text(
+      color = "orange",
+      weight = "bold"
+    ),
+    locations = cells_body(
+      columns = `1972`,
+      rows = `1972` == max(`1972`)
+    )
+  ) %>%
+  tab_style(
+    style = cell_text(
+      color = "orange",
+      weight = "bold"
+    ),
+    locations = cells_body(
+      columns = `1992`,
+      rows = `1992` == max(`1992`)
+    )
+  )
 ```
 
 ```{r table-highlight-value, fig.cap = "A table with color added to show the highest value in each year"}
@@ -441,25 +477,37 @@ save_table_for_nostarch(table)
 The `gt` package makes it straightforward to add color to highlight outlier values. 
 
 ```{r}
-table_with_color <- table_whole_numbers %>% 
-  tab_style(style = cell_text(color = "orange",
-                              weight = "bold"),
-            locations = cells_body(
-              columns = `1952`,
-              rows = `1952` == max(`1952`)
-            )) %>% 
-  tab_style(style = cell_text(color = "orange",
-                              weight = "bold"),
-            locations = cells_body(
-              columns = `1972`,
-              rows = `1972` == max(`1972`)
-            )) %>% 
-  tab_style(style = cell_text(color = "orange",
-                              weight = "bold"),
-            locations = cells_body(
-              columns = `1992`,
-              rows = `1992` == max(`1992`)
-            ))
+table_with_color <- table_whole_numbers %>%
+  tab_style(
+    style = cell_text(
+      color = "orange",
+      weight = "bold"
+    ),
+    locations = cells_body(
+      columns = `1952`,
+      rows = `1952` == max(`1952`)
+    )
+  ) %>%
+  tab_style(
+    style = cell_text(
+      color = "orange",
+      weight = "bold"
+    ),
+    locations = cells_body(
+      columns = `1972`,
+      rows = `1972` == max(`1972`)
+    )
+  ) %>%
+  tab_style(
+    style = cell_text(
+      color = "orange",
+      weight = "bold"
+    ),
+    locations = cells_body(
+      columns = `1992`,
+      rows = `1992` == max(`1992`)
+    )
+  )
 ```
 
 ### Principle Six: Add Data Visualization Where Appropriate {-}
@@ -467,9 +515,9 @@ table_with_color <- table_whole_numbers %>%
 Adding color to highlight outliers is one way to help guide the reader’s attention. Another way is to incorporate graphs into tables. Tom Mock developed an add-on package for `gt` called `gtExtras` that makes it possible to do just this. For example, in our table, we might want to show how the GDP of each country changes over time. To do that, we’ll add a new column that visualizes this trend using a *sparkline* (essentially, a simple line chart): 
 
 ```{r echo = TRUE}
-gdp_with_trend <- gdp %>% 
-  group_by(Country) %>% 
-  mutate(Trend = list(c(`1952`, `1972`, `1992`))) %>% 
+gdp_with_trend <- gdp %>%
+  group_by(Country) %>%
+  mutate(Trend = list(c(`1952`, `1972`, `1992`))) %>%
   ungroup()
 ```
 
@@ -478,8 +526,8 @@ The `gt_plt_sparkline()` function requires us to provide the values needed to ma
 Now we create our table as before, but add the `gt_plt_sparkline()` function to the end of the code. Within this function, we specify which column to use to create the sparkline (`Trend`):
 
 ```{r eval = FALSE, echo = TRUE}
-gdp_with_trend %>% 
-  gt() %>% 
+gdp_with_trend %>%
+  gt() %>%
   tab_style(
     style = cell_borders(color = "transparent"),
     locations = cells_body()
@@ -491,28 +539,42 @@ gdp_with_trend %>%
   fmt_currency(
     columns = c(`1952`, `1972`, `1992`),
     decimals = 0
-  ) %>% 
-  tab_style(style = cell_text(color = "orange",
-                              weight = "bold"),
-            locations = cells_body(
-              columns = `1952`,
-              rows = `1952` == max(`1952`)
-            )) %>% 
-  tab_style(style = cell_text(color = "orange",
-                              weight = "bold"),
-            locations = cells_body(
-              columns = `1972`,
-              rows = `1972` == max(`1972`)
-            )) %>% 
-  tab_style(style = cell_text(color = "orange",
-                              weight = "bold"),
-            locations = cells_body(
-              columns = `1992`,
-              rows = `1992` == max(`1992`)
-            )) %>% 
-  gt_plt_sparkline(column = Trend,
-                   label = FALSE,
-                   palette = c("black", "transparent", "transparent", "transparent", "transparent"))
+  ) %>%
+  tab_style(
+    style = cell_text(
+      color = "orange",
+      weight = "bold"
+    ),
+    locations = cells_body(
+      columns = `1952`,
+      rows = `1952` == max(`1952`)
+    )
+  ) %>%
+  tab_style(
+    style = cell_text(
+      color = "orange",
+      weight = "bold"
+    ),
+    locations = cells_body(
+      columns = `1972`,
+      rows = `1972` == max(`1972`)
+    )
+  ) %>%
+  tab_style(
+    style = cell_text(
+      color = "orange",
+      weight = "bold"
+    ),
+    locations = cells_body(
+      columns = `1992`,
+      rows = `1992` == max(`1992`)
+    )
+  ) %>%
+  gt_plt_sparkline(
+    column = Trend,
+    label = FALSE,
+    palette = c("black", "transparent", "transparent", "transparent", "transparent")
+  )
 ```
 
 We set `label = FALSE` to remove text labels that `gt_plt_sparkline()` adds by default, then add a `palette` argument to make the sparkline black and all other elements of it transparent. (By default, the function will make different parts of the sparkline different colors.) The stripped-down sparkline in Figure \@ref(fig:table-sparkline) allows the reader to see the trend for each country at a glance.
@@ -520,8 +582,8 @@ We set `label = FALSE` to remove text labels that `gt_plt_sparkline()` adds by d
 ```{r results='asis', include = TRUE}
 print_nostarch_file_name(file_type_to_print = "png")
 
-table <- gdp_with_trend %>% 
-  gt() %>% 
+table <- gdp_with_trend %>%
+  gt() %>%
   tab_style(
     style = cell_borders(color = "transparent"),
     locations = cells_body()
@@ -533,28 +595,42 @@ table <- gdp_with_trend %>%
   fmt_currency(
     columns = c(`1952`, `1972`, `1992`),
     decimals = 0
-  ) %>% 
-  tab_style(style = cell_text(color = "orange",
-                              weight = "bold"),
-            locations = cells_body(
-              columns = `1952`,
-              rows = `1952` == max(`1952`)
-            )) %>% 
-  tab_style(style = cell_text(color = "orange",
-                              weight = "bold"),
-            locations = cells_body(
-              columns = `1972`,
-              rows = `1972` == max(`1972`)
-            )) %>% 
-  tab_style(style = cell_text(color = "orange",
-                              weight = "bold"),
-            locations = cells_body(
-              columns = `1992`,
-              rows = `1992` == max(`1992`)
-            )) %>% 
-  gt_plt_sparkline(column = Trend,
-                   label = FALSE,
-                   palette = c("black", "transparent", "transparent", "transparent", "transparent"))
+  ) %>%
+  tab_style(
+    style = cell_text(
+      color = "orange",
+      weight = "bold"
+    ),
+    locations = cells_body(
+      columns = `1952`,
+      rows = `1952` == max(`1952`)
+    )
+  ) %>%
+  tab_style(
+    style = cell_text(
+      color = "orange",
+      weight = "bold"
+    ),
+    locations = cells_body(
+      columns = `1972`,
+      rows = `1972` == max(`1972`)
+    )
+  ) %>%
+  tab_style(
+    style = cell_text(
+      color = "orange",
+      weight = "bold"
+    ),
+    locations = cells_body(
+      columns = `1992`,
+      rows = `1992` == max(`1992`)
+    )
+  ) %>%
+  gt_plt_sparkline(
+    column = Trend,
+    label = FALSE,
+    palette = c("black", "transparent", "transparent", "transparent", "transparent")
+  )
 ```
 
 ```{r table-sparkline, fig.cap = "A table with sparkline added to show trend over time"}
@@ -564,36 +640,50 @@ save_table_for_nostarch(table)
 The `gtExtras` package can do way more than merely create sparklines. Its set of theme functions allow you to make your tables look like those published by *FiveThirtyEight*, *The New York Times*, *The Guardian*, and other news outlets. As an example, try removing the formatting we’ve applied so far and instead use the *gt_theme_538()* function to style the table:
 
 ```{r eval = FALSE, echo = TRUE}
-gdp %>% 
-  group_by(Country) %>% 
-  mutate(Trend = list(c(`1952`, `1972`, `1992`))) %>% 
-  ungroup() %>% 
-  gt() %>% 
-  tab_style(style = cell_text(color = "orange",
-                              weight = "bold"),
-            locations = cells_body(
-              columns = `1952`,
-              rows = `1952` == max(`1952`)
-            )) %>% 
-  tab_style(style = cell_text(color = "orange",
-                              weight = "bold"),
-            locations = cells_body(
-              columns = `1972`,
-              rows = `1972` == max(`1972`)
-            )) %>% 
-  tab_style(style = cell_text(color = "orange",
-                              weight = "bold"),
-            locations = cells_body(
-              columns = `1992`,
-              rows = `1992` == max(`1992`)
-            )) %>% 
+gdp %>%
+  group_by(Country) %>%
+  mutate(Trend = list(c(`1952`, `1972`, `1992`))) %>%
+  ungroup() %>%
+  gt() %>%
+  tab_style(
+    style = cell_text(
+      color = "orange",
+      weight = "bold"
+    ),
+    locations = cells_body(
+      columns = `1952`,
+      rows = `1952` == max(`1952`)
+    )
+  ) %>%
+  tab_style(
+    style = cell_text(
+      color = "orange",
+      weight = "bold"
+    ),
+    locations = cells_body(
+      columns = `1972`,
+      rows = `1972` == max(`1972`)
+    )
+  ) %>%
+  tab_style(
+    style = cell_text(
+      color = "orange",
+      weight = "bold"
+    ),
+    locations = cells_body(
+      columns = `1992`,
+      rows = `1992` == max(`1992`)
+    )
+  ) %>%
   fmt_currency(
     columns = c(`1952`, `1972`, `1992`),
     decimals = 0
-  ) %>% 
-  gt_plt_sparkline(column = Trend,
-                   label = FALSE,
-                   palette = c("black", "transparent", "transparent", "transparent", "transparent")) %>% 
+  ) %>%
+  gt_plt_sparkline(
+    column = Trend,
+    label = FALSE,
+    palette = c("black", "transparent", "transparent", "transparent", "transparent")
+  ) %>%
   gt_theme_538()
 ```
 
@@ -602,36 +692,50 @@ Take a look at tables on the FiveThirtyEight website, and you’ll see similarit
 ```{r results='asis', include = TRUE}
 print_nostarch_file_name(file_type_to_print = "png")
 
-table <- gdp %>% 
-  group_by(Country) %>% 
-  mutate(Trend = list(c(`1952`, `1972`, `1992`))) %>% 
-  ungroup() %>% 
-  gt() %>% 
-  tab_style(style = cell_text(color = "orange",
-                              weight = "bold"),
-            locations = cells_body(
-              columns = `1952`,
-              rows = `1952` == max(`1952`)
-            )) %>% 
-  tab_style(style = cell_text(color = "orange",
-                              weight = "bold"),
-            locations = cells_body(
-              columns = `1972`,
-              rows = `1972` == max(`1972`)
-            )) %>% 
-  tab_style(style = cell_text(color = "orange",
-                              weight = "bold"),
-            locations = cells_body(
-              columns = `1992`,
-              rows = `1992` == max(`1992`)
-            )) %>% 
+table <- gdp %>%
+  group_by(Country) %>%
+  mutate(Trend = list(c(`1952`, `1972`, `1992`))) %>%
+  ungroup() %>%
+  gt() %>%
+  tab_style(
+    style = cell_text(
+      color = "orange",
+      weight = "bold"
+    ),
+    locations = cells_body(
+      columns = `1952`,
+      rows = `1952` == max(`1952`)
+    )
+  ) %>%
+  tab_style(
+    style = cell_text(
+      color = "orange",
+      weight = "bold"
+    ),
+    locations = cells_body(
+      columns = `1972`,
+      rows = `1972` == max(`1972`)
+    )
+  ) %>%
+  tab_style(
+    style = cell_text(
+      color = "orange",
+      weight = "bold"
+    ),
+    locations = cells_body(
+      columns = `1992`,
+      rows = `1992` == max(`1992`)
+    )
+  ) %>%
   fmt_currency(
     columns = c(`1952`, `1972`, `1992`),
     decimals = 0
-  ) %>% 
-  gt_plt_sparkline(column = Trend,
-                   label = FALSE,
-                   palette = c("black", "transparent", "transparent", "transparent", "transparent")) %>% 
+  ) %>%
+  gt_plt_sparkline(
+    column = Trend,
+    label = FALSE,
+    palette = c("black", "transparent", "transparent", "transparent", "transparent")
+  ) %>%
   gt_theme_538()
 ```
 
@@ -658,4 +762,3 @@ Consult the following resources to learn about table design principles and how t
 "10+ Guidelines for Better Tables in R" by Tom Mock (2020), https://themockup.blog/posts/2020-09-04-10-table-rules-in-r/
 
 "Creating beautiful tables in R with {gt}" by Albert Rapp (2022), https://gt.albert-rapp.de/
-
