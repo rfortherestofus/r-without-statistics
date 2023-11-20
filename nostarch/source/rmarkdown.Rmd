@@ -53,10 +53,12 @@ output: word_document
 ---
   
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(include = TRUE, 
-                      echo = FALSE,
-                      message = FALSE,
-                      warning = FALSE)
+knitr::opts_chunk$set(
+  include = TRUE,
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
 ```
 
 ```{r}
@@ -80,16 +82,18 @@ We are writing a report about the **Palmer Penguins**. These penguins are *reall
 We can make a histogram to see the distribution of bill lengths.
 
 ```{r}
-penguins %>% 
+penguins %>%
   ggplot(aes(x = bill_length_mm)) +
   geom_histogram() +
   theme_minimal()
 ```
 
 ```{r}
-average_bill_length <- penguins %>% 
-  summarize(avg_bill_length = mean(bill_length_mm,
-                                   na.rm = TRUE)) %>% 
+average_bill_length <- penguins %>%
+  summarize(avg_bill_length = mean(
+    bill_length_mm,
+    na.rm = TRUE
+  )) %>%
   pull(avg_bill_length)
 ```
 
@@ -172,7 +176,7 @@ R Markdown treats anything in the code chunk as R code when we knit. For example
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 ```{r}
-penguins %>% 
+penguins %>%
   ggplot(aes(x = bill_length_mm)) +
   geom_histogram() +
   theme_minimal()
@@ -182,7 +186,7 @@ penguins %>%
 The histogram can be seen in Figure \@ref(fig:simple-histogram).
 
 ```{r simple-histogram, fig.cap = "A simple histogram"}
-penguins %>% 
+penguins %>%
   ggplot(aes(x = bill_length_mm)) +
   geom_histogram() +
   theme_minimal()
@@ -222,10 +226,12 @@ In cases where you’re using R Markdown to generate a report for a non-R user, 
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(include = TRUE, 
-                      echo = FALSE,
-                      message = FALSE,
-                      warning = FALSE)
+knitr::opts_chunk$set(
+  include = TRUE,
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
 ```
 ````
 
@@ -234,7 +240,7 @@ The `include = FALSE` option on the first line applies to the setup code chunk i
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 ```{r echo = TRUE}
-penguins %>% 
+penguins %>%
   ggplot(aes(x = bill_length_mm)) +
   geom_histogram() +
   theme_minimal()
@@ -295,9 +301,11 @@ Inline R code begins with a backtick and the lowercase letter r and ends with an
 
 ````{verbatim echo = TRUE, eval = FALSE, lang = "markdown"}
 ```{r}
-average_bill_length <- penguins %>% 
-  summarize(avg_bill_length = mean(bill_length_mm,
-                                   na.rm = TRUE)) %>% 
+average_bill_length <- penguins %>%
+  summarize(avg_bill_length = mean(
+    bill_length_mm,
+    na.rm = TRUE
+  )) %>%
   pull(avg_bill_length)
 ```
 ````
@@ -357,10 +365,12 @@ output: word_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(include = TRUE, 
-                      echo = FALSE,
-                      message = FALSE,
-                      warning = FALSE)
+knitr::opts_chunk$set(
+  include = TRUE,
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
 ```
 
 ```{r}
@@ -368,7 +378,7 @@ penguins <- read_csv("https://raw.githubusercontent.com/rfortherestofus/r-withou
 ```
 
 ```{r}
-penguins %>% 
+penguins %>%
   ggplot(aes(x = bill_length_mm)) +
   geom_histogram() +
   theme_minimal()
@@ -402,4 +412,3 @@ The following resources are great general guides for using R Markdown:
 *R Markdown: The Definitive Guide* by Yihui Xie, J. J. Allaire, and Garrett Grolemund (CRC Press, 2019), https://bookdown.org/yihui/rmarkdown/
 
 *R Markdown Cookbook* by Yihui Xie, Christophe Dervieux, Emily Riederer (CRC Press, 2021), https://bookdown.org/yihui/rmarkdown-cookbook/
-
