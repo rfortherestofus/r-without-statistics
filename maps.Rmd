@@ -50,8 +50,8 @@ library(sf)
 #   select(NAME) %>%
 #   filter(NAME == "Wyoming") %>%
 #   st_cast(to = "POLYGON")
-# 
-# wyoming %>% 
+#
+# wyoming %>%
 #   st_write("data/wyoming.geojson")
 
 wyoming <- read_sf("https://data.rwithoutstatistics.com/wyoming.geojson")
@@ -111,12 +111,12 @@ save_figure_for_nostarch()
 #     crs = "WGS84"
 #   ) %>%
 #   select(objectid)
-# 
-# wy_ev_stations %>% 
+#
+# wy_ev_stations %>%
 #   st_write("data/wyoming-all-ev-stations.geojson")
-# 
-# wy_ev_stations %>% 
-#   slice(1) %>% 
+#
+# wy_ev_stations %>%
+#   slice(1) %>%
 #   st_write("data/wyoming-one-ev-station.geojson")
 ```
 
@@ -131,11 +131,11 @@ Other geometry types used in simple feature data include `POINT`, to display ele
 #   progress_bar = FALSE
 # ) %>%
 #   janitor::clean_names()
-# 
+#
 # wy_roads %>%
 #   filter(linearid == 11010932011560) %>%
 #   st_write("data/wyoming-highway-30.geojson")
-# 
+#
 # wy_roads %>%
 #   st_write("data/wyoming-roads.geojson")
 ```
@@ -299,7 +299,7 @@ save_figure_for_nostarch()
 #                         progress_bar = FALSE) %>%
 #   st_transform("WGS84") %>%
 #   select(NAME)
-# 
+#
 # wy_counties %>%
 #   st_write("data/wyoming-counties.geojson")
 ```
@@ -509,8 +509,16 @@ After calculating `roll_cases`, we need to calculate per capita case rates. To d
 
 
 ```{r echo = TRUE, eval = FALSE}
-left_join(usa_states,
-          by = c("state" = "State")) %>%
+covid_cases_rm <- covid_cases %>%
+  mutate(roll_cases = rollmean(
+    daily_cases,
+    k = 5,
+    fill = NA
+  )) %>%
+  left_join(
+    usa_states,
+    by = c("state" = "State")
+  ) %>%
   drop_na(Pop)
 ```
 
@@ -520,7 +528,7 @@ Next, we created a per capita case rate variable called `incidence_rate` by mult
 
 ```{r echo = TRUE, eval = FALSE}
 covid_cases_rm <- covid_cases_rm %>%
-  mutate(incidence_rate = 10 ^ 5 * roll_cases / Pop) %>%
+  mutate(incidence_rate = 10^5 * roll_cases / Pop) %>%
   mutate(
     incidence_rate = cut(
       incidence_rate,
@@ -538,13 +546,17 @@ The last step is to filter the data so it includes only 2021 data (the only year
 ```{r}
 # This is just to create the covid_cases_rm data frame
 covid_cases_rm <- covid_cases %>%
-  mutate(roll_cases = rollmean(daily_cases,
-                               k = 5,
-                               fill = NA)) %>%
-  left_join(usa_states,
-            by = c("state" = "State")) %>%
+  mutate(roll_cases = rollmean(
+    daily_cases,
+    k = 5,
+    fill = NA
+  )) %>%
+  left_join(
+    usa_states,
+    by = c("state" = "State")
+  ) %>%
   drop_na(Pop) %>%
-  mutate(incidence_rate = 10 ^ 5 * roll_cases / Pop) %>%
+  mutate(incidence_rate = 10^5 * roll_cases / Pop) %>%
   mutate(
     incidence_rate = cut(
       incidence_rate,
@@ -577,14 +589,14 @@ We merge our `covid_cases_rm` data frame into the geospatial data, matching the 
 ```{r echo = TRUE}
 usa_states_geom_covid <- usa_states_geom %>%
   left_join(covid_cases_rm, by = c("name" = "state")) %>%
-  mutate(fancy_date = fct_inorder(format(date, "%b. %d"))) %>% 
+  mutate(fancy_date = fct_inorder(format(date, "%b. %d"))) %>%
   relocate(fancy_date, .before = incidence_rate)
 ```
 
 The `format()` function does the formatting while the `fct_inorder()` function makes the `fancy_date` variable sort data by date (rather than, say, alphabetically, which would put August before January). Last, we use the `relocate()` function to put the `fancy_date` column next to the date column. We save this data frame as `usa_states_geom_covid`.  Take a look at it: 
 
 ```{r}
-usa_states_geom_covid 
+usa_states_geom_covid
 ```
 
 We can see the metadata and `geometry` columns we discussed.
@@ -684,41 +696,56 @@ usa_states_geom_covid_six_days %>%
       )
     )
   ) +
-  labs(title = "2021 · A pandemic year",
-       caption = "Incidence rates are calculated for 100,000 people in each state.
+  labs(
+    title = "2021 · A pandemic year",
+    caption = "Incidence rates are calculated for 100,000 people in each state.
                   Inspired from a graphic in the DIE ZEIT newspaper of November 18, 2021.
-                  Data from NY Times · Tidytuesday Week-1 2022 · Abdoul ISSA BIDA.") +
+                  Data from NY Times · Tidytuesday Week-1 2022 · Abdoul ISSA BIDA."
+  ) +
   theme_minimal() +
   theme(
-    text = element_text(family = "Times New Roman", 
-                        color = "#111111"),
+    text = element_text(
+      family = "Times New Roman",
+      color = "#111111"
+    ),
     plot.title = element_text(
       size = rel(2.5),
       face = "bold",
       hjust = 0.5,
-      margin = margin(t = .25, 
-                      b = .25, 
-                      unit = "cm")
+      margin = margin(
+        t = .25,
+        b = .25,
+        unit = "cm"
+      )
     ),
     plot.caption = element_text(
       hjust = .5,
       face = "bold",
-      margin = margin(t = .25, 
-                      b = .25, 
-                      unit = "cm")),
-    strip.text = element_text(size = rel(0.75), 
-                              face = "bold"),
+      margin = margin(
+        t = .25,
+        b = .25,
+        unit = "cm"
+      )
+    ),
+    strip.text = element_text(
+      size = rel(0.75),
+      face = "bold"
+    ),
     legend.position = "top",
     legend.box.spacing = unit(.25, "cm"),
     panel.grid = element_blank(),
     axis.text = element_blank(),
-    plot.margin = margin(t = .25, 
-                         r = .25, 
-                         b = .25, 
-                         l = .25, 
-                         unit = "cm"),
-    plot.background = element_rect(fill = "#e5e4e2", 
-                                   color = NA)
+    plot.margin = margin(
+      t = .25,
+      r = .25,
+      b = .25,
+      l = .25,
+      unit = "cm"
+    ),
+    plot.background = element_rect(
+      fill = "#e5e4e2",
+      color = NA
+    )
   )
 ```
 
@@ -771,42 +798,54 @@ usa_states_geom_covid_six_days %>%
       )
     )
   ) +
-  labs(title = "2021 · A pandemic year",
-       caption = "Incidence rates are calculated for 100,000 people in each state.
+  labs(
+    title = "2021 · A pandemic year",
+    caption = "Incidence rates are calculated for 100,000 people in each state.
                   Inspired from a graphic in the DIE ZEIT newspaper of November 18, 2021.
-                  Data from NY Times · Tidytuesday Week-1 2022 · Abdoul ISSA BIDA.") +
+                  Data from NY Times · Tidytuesday Week-1 2022 · Abdoul ISSA BIDA."
+  ) +
   theme_minimal() +
   theme(
-    text = element_text(family = "Times New Roman", 
-                        color = "#111111"),
+    text = element_text(
+      family = "Times New Roman",
+      color = "#111111"
+    ),
     plot.title = element_text(
       size = rel(2.5),
       face = "bold",
       hjust = 0.5,
-      margin = margin(t = .25, 
-                      b = .25, 
-                      unit = "cm")
+      margin = margin(
+        t = .25,
+        b = .25,
+        unit = "cm"
+      )
     ),
     plot.caption = element_blank(),
     # plot.caption = element_text(
     #   hjust = .5,
     #   face = "bold",
-    #   margin = margin(t = .25, 
-    #                   b = .25, 
+    #   margin = margin(t = .25,
+    #                   b = .25,
     #                   unit = "cm")),
-    strip.text = element_text(size = rel(0.75), 
-                              face = "bold"),
+    strip.text = element_text(
+      size = rel(0.75),
+      face = "bold"
+    ),
     legend.position = "top",
     legend.box.spacing = unit(.25, "cm"),
     panel.grid = element_blank(),
     axis.text = element_blank(),
-    plot.margin = margin(t = .25, 
-                         r = .25, 
-                         b = .25, 
-                         l = .25, 
-                         unit = "cm"),
-    plot.background = element_rect(fill = "#e5e4e2", 
-                                   color = NA)
+    plot.margin = margin(
+      t = .25,
+      r = .25,
+      b = .25,
+      l = .25,
+      unit = "cm"
+    ),
+    plot.background = element_rect(
+      fill = "#e5e4e2",
+      color = NA
+    )
   )
 ```
 
@@ -839,9 +878,11 @@ You’ll sometimes have to work with raw data in this way, but not always. That�
 ```{r echo = TRUE}
 library(tigris)
 
-states_tigris <- states(cb = TRUE, 
-                        resolution = "20m",
-                        progress_bar = FALSE)
+states_tigris <- states(
+  cb = TRUE,
+  resolution = "20m",
+  progress_bar = FALSE
+)
 ```
 
 We use the `cb = TRUE` argument to opt us out of using the most detailed shapefile and set the resolution to a more manageable 20m (1:20 million). Without these changes, the shapefile we’d get would be large and slow to work with. We also set `progress_bar = FALSE` so we won’t see the messages that `tigris` shares while it loads data. We then save the result as `states_tigris`.
@@ -853,14 +894,16 @@ If you’re looking for data outside of the United States, fear not! The `rnatur
 ```{r echo = TRUE}
 library(rnaturalearth)
 
-africa_countries <- ne_countries(returnclass = "sf",
-                                 continent = "Africa")
+africa_countries <- ne_countries(
+  returnclass = "sf",
+  continent = "Africa"
+)
 ```
 
 This code uses two arguments: `returnclass = "sf"` to get data in simple features format, and `continent = "Africa"` to get only countries on the African continent. If we save the result to an object called `africa_countries`, we can plot the data on a map: 
 
 ```{r africa-map-code, echo = TRUE, eval = FALSE}
-africa_countries %>% 
+africa_countries %>%
   ggplot() +
   geom_sf()
 ```
@@ -889,7 +932,7 @@ If you feel overwhelmed by the task of choosing a projection, the `crsuggest` pa
 ```{r echo = TRUE, eval = FALSE}
 library(crsuggest)
 
-africa_countries %>% 
+africa_countries %>%
   suggest_top_crs()
 ```
 
@@ -897,7 +940,7 @@ The `suggest_top_crs()` function should return projection number 28232. We can n
 
 ```{r africa-map-different-projection-code, echo = TRUE, eval = FALSE}
 africa_countries %>%
-  st_transform(28232) %>% 
+  st_transform(28232) %>%
   ggplot() +
   geom_sf()
 ```
@@ -922,31 +965,31 @@ As you can see, we’ve mapped Africa with a different projection.
 The ability to merge traditional data frames with geospatial data is a huge benefit of working with simple features data. Remember that for his COVID map, Madjid analyzed traditional data frames before merging them with geospatial data. But because simple features data acts just like traditional data frames, we can just as easily apply the data-wrangling and analysis functions from `tidyverse` directly to a simple features object. To demonstrate this, let’s return to the `africa_countries` simple features data, selecting two variables (`name` and `pop_est`) to see the name and population of the countries:
 
 ```{r echo = TRUE, eval = FALSE}
-africa_countries %>% 
+africa_countries %>%
   select(name, pop_est)
 ```
 
 The output looks like the following:
 
 ```{r}
-africa_countries %>% 
+africa_countries %>%
   select(name, pop_est)
 ```
 
 Say we want to make a map showing which African countries have populations larger than 20 million. To do so, we’d need to first calculate this value for each country. Let’s do this using the `mutate()` and `if_else()` functions, which will return `TRUE` if a country’s population is over 20 million and `FALSE` otherwise, then store the result in a variable called `population_above_20_million`:
 
 ```{r echo = TRUE, eval = FALSE}
-africa_countries %>% 
-  select(name, pop_est) %>% 
+africa_countries %>%
+  select(name, pop_est) %>%
   mutate(population_above_20_million = if_else(pop_est > 20000000, TRUE, FALSE))
 ```
 
 We can then take this code and pipe it into ggplot, setting the `fill` aesthetic property to be equal to `population_above_20_million`:
 
 ```{r africa-map-20m-code, echo = TRUE, eval = FALSE}
-africa_countries %>% 
-  select(name, pop_est) %>% 
-  mutate(population_above_20_million = if_else(pop_est > 20000000, TRUE, FALSE)) %>% 
+africa_countries %>%
+  select(name, pop_est) %>%
+  mutate(population_above_20_million = if_else(pop_est > 20000000, TRUE, FALSE)) %>%
   ggplot(aes(fill = population_above_20_million)) +
   geom_sf()
 ```
@@ -958,9 +1001,9 @@ print_nostarch_file_name()
 ```
 
 ```{r africa-map-20m, ref.label = "africa-map-20m-code", fig.cap = "A map of Africa that highlights countries with populations above 20 million people"}
-africa_countries %>% 
-  select(name, pop_est) %>% 
-  mutate(population_above_20_million = if_else(pop_est > 20000000, TRUE, FALSE)) %>% 
+africa_countries %>%
+  select(name, pop_est) %>%
+  mutate(population_above_20_million = if_else(pop_est > 20000000, TRUE, FALSE)) %>%
   ggplot(aes(fill = population_above_20_million)) +
   geom_sf()
 ```
@@ -986,5 +1029,3 @@ Consult the following resources to learn how to make maps and conduct geospatial
 Chapter 7 (Draw Maps) of *Data Visualization: A Practical Introduction* by Kieran Healy (Princeton University Press, 2018), https://socviz.co
 
 Lessons on Space from Data Visualization: Use R, ggplot2, and the principles of graphic design to create beautiful and truthful visualizations of data, course by Andrew Weiss (2022), https://datavizs22.classes.andrewheiss.com/content/12-content/
-
-
