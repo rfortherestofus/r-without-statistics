@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Introduction | R Without Statistics</title>
+<meta name="author" content="David Keyes">
+<meta name="description" content="In early 2020, as the world struggled to contain the spread of COVID-19, one country succeeded where others did not: New Zealand. There are many reasons New Zealand was able to tackle COVID-19....">
+<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta property="og:title" content="Introduction | R Without Statistics">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://book.rwithoutstatistics.com/introduction.html">
+<meta property="og:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
+<meta property="og:description" content="In early 2020, as the world struggled to contain the spread of COVID-19, one country succeeded where others did not: New Zealand. There are many reasons New Zealand was able to tackle COVID-19....">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Introduction | R Without Statistics">
+<meta name="twitter:description" content="In early 2020, as the world struggled to contain the spread of COVID-19, one country succeeded where others did not: New Zealand. There are many reasons New Zealand was able to tackle COVID-19....">
+<meta name="twitter:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">R Without Statistics</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">About the Book</a></li>
+<li class="book-part">Introduction</li>
+<li><a class="active" href="introduction.html">Introduction</a></li>
+<li><a class="" href="howto-chapter.html"><span class="header-section-number">1</span> An R Programming Crash Course</a></li>
+<li class="book-part">Part 1: Visualizations</li>
+<li><a class="" href="data-viz-chapter.html"><span class="header-section-number">2</span> Principles of Data Visualization</a></li>
+<li><a class="" href="custom-theme-chapter.html"><span class="header-section-number">3</span> Making Your Own Theme</a></li>
+<li><a class="" href="maps-chapter.html"><span class="header-section-number">4</span> Creating Maps</a></li>
+<li><a class="" href="tables-chapter.html"><span class="header-section-number">5</span> Crafting High-Quality Tables</a></li>
+<li class="book-part">Part 2: Reports, Presentations, and Websites</li>
+<li><a class="" href="rmarkdown-chapter.html"><span class="header-section-number">6</span> Writing Reports in R Markdown</a></li>
+<li><a class="" href="parameterized-reports-chapter.html"><span class="header-section-number">7</span> Using Parameters to Automate Reports</a></li>
+<li><a class="" href="presentations-chapter.html"><span class="header-section-number">8</span> Making Slides Presentations with xaringan</a></li>
+<li><a class="" href="websites-chapter.html"><span class="header-section-number">9</span> Make Websites to Share Results Online</a></li>
+<li><a class="" href="quarto-chapter.html"><span class="header-section-number">10</span> Reproducible Reporting with Quarto</a></li>
+<li class="book-part">Part 3: Automation and Collaboration</li>
+<li><a class="" href="accessing-data-chapter.html"><span class="header-section-number">11</span> Accessing Data</a></li>
+<li><a class="" href="packages-chapter.html"><span class="header-section-number">12</span> Creating Your Own R Packages</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/rfortherestofus/r-without-statistics">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="introduction" class="section level1 unnumbered">
+<h1>Introduction<a class="anchor" aria-label="anchor" href="#introduction"><i class="fas fa-link"></i></a>
+</h1>
+<p>In early 2020, as the world struggled to contain the spread of COVID-19, one country succeeded where others did not: New Zealand. There are many reasons New Zealand was able to tackle COVID-19. One of these was the R programming language (yes, really).</p>
+<p>How did a humble tool for data analysis help New Zealand fight COVID-19? It allowed a team at the Ministry of Health to generate daily reports on cases throughout New Zealand. These reports enabled officials to develop policies that kept the country largely COVID-19 free. The team was small, however, so producing these reports every day with a tool like Excel wouldn’t have been feasible. As team leader Chris Knox told me, “Trying to do what we did in a point-and-click environment is not possible.”</p>
+<p>Instead, a few staff members wrote R code that they could re-run every day to produce updated reports. These reports did not involve any complicated statistics; they were literally counts of COVID-19 cases. Their value came from everything else R can do: data analysis and visualization, report creation, and workflow automation.</p>
+<p>This book explores the many ways that people use R to communicate and automate tasks. You’ll learn how to do activities like the following:</p>
+<ul>
+<li><p>Make professional-quality data visualizations, maps, and tables.</p></li>
+<li><p>Replace a clunky multi-tool workflow for creating reports with R Markdown.</p></li>
+<li><p>Use parameterized reporting to generate multiple reports at once.</p></li>
+<li><p>Produce slideshow presentations and websites using R Markdown.</p></li>
+<li><p>Automate the process of importing online data from Google Sheets and the US Census Bureau.</p></li>
+<li><p>Create your own functions to automate tasks you do repeatedly.</p></li>
+<li><p>Bundle your functions into a package that you can share with others.</p></li>
+</ul>
+<p>Best of all, you’ll do all of this without performing any statistical analysis more complex than calculating averages.</p>
+<div id="isnt-r-just-a-tool-for-statistical-analysis" class="section level2 unnumbered">
+<h2>Isn’t R Just a Tool for Statistical Analysis?<a class="anchor" aria-label="anchor" href="#isnt-r-just-a-tool-for-statistical-analysis"><i class="fas fa-link"></i></a>
+</h2>
+<p>Many people think of R as simply a tool for hardcore statistical analysis. But, over a quarter of a century since its creation, R can do much more than manipulate numerical values. After all, every R user must illuminate their findings and communicate their results somehow, whether via data visualizations, reports, websites, or presentations. Also, the more you use R, the more you’ll find yourself wanting to automate tasks you used to do manually.</p>
+<p>As a qualitatively-trained anthropologist without a quantitative background, I used to feel ashamed about using R for my visualization and communication tasks. But R is good at these things. The <code>ggplot2</code> package is the tool of choice for many top information designers. Users around the world have taken advantage of R’s ability to automate reporting to make their work more efficient. Rather than simply replace other tools, R can allow you to do things, like generate reports and tables, that you’re already probably doing, and it can do it better than your existing workflow.</p>
+</div>
+<div id="who-this-book-is-for" class="section level2 unnumbered">
+<h2>Who This Book is For<a class="anchor" aria-label="anchor" href="#who-this-book-is-for"><i class="fas fa-link"></i></a>
+</h2>
+<p>No matter your background, using R can transform your work. This book is for you if you are either a current R user keen to explore uses of R for visualization and communication or a non-R user wondering if R is right for you. I’ve written <em>R Without Statistics</em> so that it should make sense even if you’ve never written a line of R code. But if you have written many lines of R code, the book should help you learn plenty of new techniques to up your R game.</p>
+<p>R is a great tool for anyone who works with data. Maybe you’re a researcher looking for a new way to share your results. Perhaps you’re a journalist looking to analyze public data more efficiently. Or maybe you’re a data analyst tired of working in expensive, proprietary tools. If you have to work with data, you will get value from R.</p>
+</div>
+<div id="about-this-book" class="section level2 unnumbered">
+<h2>About This Book<a class="anchor" aria-label="anchor" href="#about-this-book"><i class="fas fa-link"></i></a>
+</h2>
+<p>Each chapter focuses on one use of the R language and includes examples of real R projects that employ the techniques we cover. We’ll dive into their code, breaking the programs down to help you understand how they works, and suggest ways of going beyond the example. The book has three parts:</p>
+<div id="part-1-visualizations" class="section level3 unnumbered">
+<h3>Part 1: Visualizations<a class="anchor" aria-label="anchor" href="#part-1-visualizations"><i class="fas fa-link"></i></a>
+</h3>
+<p>In the first part, you’ll learn about ways to use R to visualize data.</p>
+<p><strong>Chapter 1: An R Programming Crash Course</strong></p>
+<p>Introduces you to the R Studio programming environment and the foundational R syntax you’ll need to understand the rest of the book.</p>
+<p><strong>Chapter 2: Principles of Data Visualization</strong></p>
+<p>Breaks down a visualization created for <em>Scientific American</em> on drought conditions in the United States. In doing so, it introduces you to the <code>ggplot2</code> package for data visualization and addresses important principles that can help you to make high-quality graphics.</p>
+<p><strong>Chapter 3: Making Your Own ggplot Theme</strong></p>
+<p>Describes how journalists at the BBC made a custom theme for the <code>ggplot2</code> data visualization package. We’ll walk through the package they created, and in the process, you’ll learn how to make your own theme.</p>
+<p><strong>Chapter 4: Creating Maps</strong></p>
+<p>Walks through the process of making maps in R using simple features data. You’ll learn how to write map-making code, find geospatial data, choose appropriate projections, and apply data visualization principles to make your map appealing.</p>
+<p><strong>Chapter 5: Crafting High-Quality Tables</strong></p>
+<p>Shows you how to use the <code>gt</code> package to make high-quality tables in R. We draw from a conversation with R table connoisseur Tom Mock to learn how to apply design principles that ensure your tables communicate effectively.</p>
+</div>
+<div id="part-2-reports-presentations-and-websites" class="section level3 unnumbered">
+<h3>Part 2: Reports, Presentations, and Websites<a class="anchor" aria-label="anchor" href="#part-2-reports-presentations-and-websites"><i class="fas fa-link"></i></a>
+</h3>
+<p>The second part of the book focuses on using R Markdown to communicate efficiently. You’ll learn how to incorporate visualizations like the ones discussed in Part 1 into complete reports, slideshow presentations, and static websites generated entirely using R code.</p>
+<p><strong>Chapter 6: Writing Reports in R Markdown</strong></p>
+<p>Introduces R Markdown, a tool that allows you to generate a professional report in R. This chapter will cover the structure of an R Markdown document, show you how to use inline code to automatically update your report’s text when data values change, and discusses the tool’s many export options.</p>
+<p><strong>Chapter 7: Using Parameters to Automate Reports</strong></p>
+<p>Covers one of the advantages of using R Markdown: the fact that you can produce multiple reports at the same time using a technique called parameterized reporting. We explore how staff members at the Urban Institute used R to generate fiscal briefs for all 50 US states. In the process, you’ll learn how parameterized reporting works and how you can use it.</p>
+<p><strong>Chapter 8: Making Slideshow Presentations with xaringan</strong></p>
+<p>Explains how to use R Markdown to make slides with the <code>xaringan</code> package. You’ll learn how to make your own presentations, adjust your content to fit on a slide, and add effects to your slideshow.</p>
+<p><strong>Chapter 9: Building Websites with distill</strong></p>
+<p>Shows you how to create your own website with R Markdown and the <code>distill</code> package. We explore how <code>distill</code> works by considering a website about COVID-19 rates in Westchester County, New York. In the process, we cover how to create pages on your site, add interactivity through R packages, and deploy your website using several options.</p>
+<p><strong>Chapter 10: Reproducible Reporting with Quarto</strong></p>
+<p>Explains how to use Quarto, the next-generation version of R Markdown. You’ll learn to use Quarto to do all of the things you did previously in R Markdown (reports, parameterized reporting, slideshow presentations, and websites).</p>
+</div>
+<div id="part-3-automation-and-collaboration" class="section level3 unnumbered">
+<h3>Part 3: Automation and Collaboration<a class="anchor" aria-label="anchor" href="#part-3-automation-and-collaboration"><i class="fas fa-link"></i></a>
+</h3>
+<p>The last part of the book focuses on ways you can use R to automate your work and share it with others.</p>
+<p><strong>Chapter 10: Accessing Online Data</strong></p>
+<p>Explores two R packages that let you automatically import data from the internet: <code>googlesheets4</code> for working with Google Sheets and <code>tidycensus</code> for working with United States Census Bureau data. You’ll learn how the packages work and how to use them to automate the process of accessing data.</p>
+<p><strong>Chapter 11: Creating Your Own R Packages</strong></p>
+<p>Shows you how to create your own functions and packages to share your code with others. One of the major benefits of R is that you can create your own functions to automate common tasks, then bundle them into a package other users can import. This chapter covers a few example functions. Then you’ll learn how to create your own package by learning from R developers who built packages to improve the work of researchers at the Moffitt Cancer Center.</p>
+<p>By the end of the book, you should be able to use R for a wide range of non-statistical tasks. You’ll know effectively visualize data and communicate your findings using maps and tables. You’ll be able to integrate your results into reports using R Markdown, as well as efficiently generate slideshow presentations and websites. And you’ll understand how to automate many tedious tasks using packages others have built or ones you yourself can develop. Let’s dive in.</p>
+
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="index.html">About the Book</a></div>
+<div class="next"><a href="howto-chapter.html"><span class="header-section-number">1</span> An R Programming Crash Course</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#introduction">Introduction</a></li>
+<li><a class="nav-link" href="#isnt-r-just-a-tool-for-statistical-analysis">Isn’t R Just a Tool for Statistical Analysis?</a></li>
+<li><a class="nav-link" href="#who-this-book-is-for">Who This Book is For</a></li>
+<li>
+<a class="nav-link" href="#about-this-book">About This Book</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#part-1-visualizations">Part 1: Visualizations</a></li>
+<li><a class="nav-link" href="#part-2-reports-presentations-and-websites">Part 2: Reports, Presentations, and Websites</a></li>
+<li><a class="nav-link" href="#part-3-automation-and-collaboration">Part 3: Automation and Collaboration</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/rfortherestofus/r-without-statistics/blob/master/introduction.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/rfortherestofus/r-without-statistics/edit/master/introduction.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>R Without Statistics</strong>" was written by David Keyes. </p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>

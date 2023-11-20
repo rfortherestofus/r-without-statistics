@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 12 Creating Your Own R Packages | R Without Statistics</title>
+<meta name="author" content="David Keyes">
+<meta name="description" content="This chapter discusses how to make your own R functions and packages. You’ll learn how to define your own functions, including the parameters they should accept. Then you’ll create a package, add...">
+<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta property="og:title" content="Chapter 12 Creating Your Own R Packages | R Without Statistics">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://book.rwithoutstatistics.com/packages-chapter.html">
+<meta property="og:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
+<meta property="og:description" content="This chapter discusses how to make your own R functions and packages. You’ll learn how to define your own functions, including the parameters they should accept. Then you’ll create a package, add...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 12 Creating Your Own R Packages | R Without Statistics">
+<meta name="twitter:description" content="This chapter discusses how to make your own R functions and packages. You’ll learn how to define your own functions, including the parameters they should accept. Then you’ll create a package, add...">
+<meta name="twitter:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">R Without Statistics</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">About the Book</a></li>
+<li class="book-part">Introduction</li>
+<li><a class="" href="introduction.html">Introduction</a></li>
+<li><a class="" href="howto-chapter.html"><span class="header-section-number">1</span> An R Programming Crash Course</a></li>
+<li class="book-part">Part 1: Visualizations</li>
+<li><a class="" href="data-viz-chapter.html"><span class="header-section-number">2</span> Principles of Data Visualization</a></li>
+<li><a class="" href="custom-theme-chapter.html"><span class="header-section-number">3</span> Making Your Own Theme</a></li>
+<li><a class="" href="maps-chapter.html"><span class="header-section-number">4</span> Creating Maps</a></li>
+<li><a class="" href="tables-chapter.html"><span class="header-section-number">5</span> Crafting High-Quality Tables</a></li>
+<li class="book-part">Part 2: Reports, Presentations, and Websites</li>
+<li><a class="" href="rmarkdown-chapter.html"><span class="header-section-number">6</span> Writing Reports in R Markdown</a></li>
+<li><a class="" href="parameterized-reports-chapter.html"><span class="header-section-number">7</span> Using Parameters to Automate Reports</a></li>
+<li><a class="" href="presentations-chapter.html"><span class="header-section-number">8</span> Making Slides Presentations with xaringan</a></li>
+<li><a class="" href="websites-chapter.html"><span class="header-section-number">9</span> Make Websites to Share Results Online</a></li>
+<li><a class="" href="quarto-chapter.html"><span class="header-section-number">10</span> Reproducible Reporting with Quarto</a></li>
+<li class="book-part">Part 3: Automation and Collaboration</li>
+<li><a class="" href="accessing-data-chapter.html"><span class="header-section-number">11</span> Accessing Data</a></li>
+<li><a class="active" href="packages-chapter.html"><span class="header-section-number">12</span> Creating Your Own R Packages</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/rfortherestofus/r-without-statistics">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="packages-chapter" class="section level1" number="12">
+<h1>
+<span class="header-section-number">12</span> Creating Your Own R Packages<a class="anchor" aria-label="anchor" href="#packages-chapter"><i class="fas fa-link"></i></a>
+</h1>
+<p>This chapter discusses how to make your own R functions and packages. You’ll learn how to define your own functions, including the parameters they should accept. Then you’ll create a package, add code and dependencies to it, write its documentation, and choose the license under which to release it.</p>
+<p>Saving your code as functions and then distributing these functions in packages can have numerous benefits. First, packages make your code easier for others to use. For example, when researchers at the Moffitt Cancer Center needed to access code from a database, data scientists Travis Gerke and Garrick Aden-Buie used to write R code for each researcher, but they quickly realized they were reusing the same code over and over. Instead, they made a package with functions for accessing databases. Now researchers no longer had to ask for help. They could install the package Gerke and Aden-Buie had made and use its functions themselves.</p>
+<p>What’s more, developing packages allows you to shape how others work. Say you make a ggplot theme that follows the principles of high-quality data visualization discussed in Chapter <a href="data-viz-chapter.html#data-viz-chapter">2</a>. If you put this theme in a package, you can give others an easy way to follow these principles. Functions and packages can help you work with others using shared code.</p>
+<div id="creating-your-own-functions" class="section level2 unnumbered">
+<h2>Creating Your Own Functions<a class="anchor" aria-label="anchor" href="#creating-your-own-functions"><i class="fas fa-link"></i></a>
+</h2>
+<p>Hadley Wickham, developer of the <code>tidyverse</code> set of packages, recommends creating a function once you’ve copied some code three times. Functions have three pieces: a name, a body, and arguments.</p>
+<div id="writing-a-simple-function" class="section level3 unnumbered">
+<h3>Writing a Simple Function<a class="anchor" aria-label="anchor" href="#writing-a-simple-function"><i class="fas fa-link"></i></a>
+</h3>
+<p>Let’s begin by taking an example of a relatively simple function. This function, called <code>show_in_excel_penguins()</code>, opens in Excel the data about penguins we used in Chapter <a href="rmarkdown-chapter.html#rmarkdown-chapter">6</a>.</p>
+<p>We first import the data with the <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code> function before creating the <code>show_in_excel_penguins()</code> function:</p>
+<div class="sourceCode" id="cb227"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://fs.r-lib.org">fs</a></span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">penguins</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"https://data.rwithoutstatistics.com/penguins-2007.csv"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">show_in_excel_penguins</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  </span>
+<span>  <span class="va">csv_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue</a></span><span class="op">(</span><span class="st">"{tempfile()}.csv"</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">penguins</span>,</span>
+<span>            file <span class="op">=</span> <span class="va">csv_file</span>,</span>
+<span>            na <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="fu"><a href="https://fs.r-lib.org/reference/file_show.html">file_show</a></span><span class="op">(</span>path <span class="op">=</span> <span class="va">csv_file</span><span class="op">)</span></span>
+<span>  </span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>We load the <code>tidyverse</code> and <code>fs</code> packages. We’ll use <code>tidyverse</code> to create a filename for the CSV file and save it. The fs package will enable us to open the CSV file in Excel (or whichever program your computer uses to open CSV files by default).</p>
+<p>We give the function a name, then use the assignment operator (<code>&lt;-</code>) and <code>function()</code> to specify that <code>show_in_excel_penguins</code> is not a variable name but a function name. The open curly bracket (<code>{</code>) at the end of the line indicates the start of the function body, where the meat of the function can be found. In our case, the body does three things:</p>
+<ol style="list-style-type: decimal">
+<li><p>Creates a location for a CSV file to be saved using the <code><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue()</a></code> function combined with the <code><a href="https://rdrr.io/r/base/tempfile.html">tempfile()</a></code> function. This creates a file at a temporary location with the <em>.csv</em> extension and saves it as <code>csv_file</code>.</p></li>
+<li><p>Writes penguins to the location set in <code>csv_file</code>. The <code>x</code> argument in <code><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv()</a></code> refers to the data frame to be saved. We also make all <code>NA</code> values show up as blanks. By default, they will show up as the text <code>NA</code>.</p></li>
+<li><p>Uses the <code><a href="https://fs.r-lib.org/reference/file_show.html">file_show()</a></code> function from the <code>fs</code> package to open the temporarily created CSV file in Excel.</p></li>
+</ol>
+<p>If you wanted to use the <code>show_in_excel_penguins()</code> function, you would run the lines where you define the function by highlighting those lines and hitting <strong>Command + Enter</strong> on Mac and <strong>Ctrl + Enter</strong> on Windows. You should see the function show up in your global environment, as shown in Figure <a href="packages-chapter.html#fig:function-in-global-environment">12.1</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:function-in-global-environment"></span>
+<img src="assets/function-in-global-environment.png" alt="The function we created in the global environment" width="100%"><p class="caption">
+Figure 12.1: The function we created in the global environment
+</p>
+</div>
+<p>From now on, any time you run the code <code>show_in_excel_penguins()</code>, R will open the penguins data frame in Excel.</p>
+</div>
+<div id="adding-arguments" class="section level3 unnumbered">
+<h3>Adding Arguments<a class="anchor" aria-label="anchor" href="#adding-arguments"><i class="fas fa-link"></i></a>
+</h3>
+<p>Now, you’re probably thinking that the function we wrote doesn’t seem very useful. All it does it open the <code>penguins</code> data frame. Why would you want to keep doing that? A more practical function would let you open any data in Excel so you can use it in a variety of contexts.</p>
+<p>The <code>show_in_excel()</code> function takes any data frame from R, saves it as a CSV file, and opens the CSV file in Excel. Bruno Rodrigues, head of the Department of Statistics and Data Strategy at the Ministry of Higher Education and Research in Luxembourg, wrote it to easily share data with his non-R-user colleagues. Whenever he needed data in a CSV file, he could run his function.</p>
+<p>To make such a function, we need to add arguments. Below is a slightly simplified version of the actual code that Bruno Rodrigues used. It looks the same as our <code>show_in_excel_penguins()</code> function, with two exceptions:</p>
+<div class="sourceCode" id="cb228"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">show_in_excel</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">csv_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue</a></span><span class="op">(</span><span class="st">"{tempfile()}.csv"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">data</span>,</span>
+<span>            file <span class="op">=</span> <span class="va">csv_file</span>,</span>
+<span>            na <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://fs.r-lib.org/reference/file_show.html">file_show</a></span><span class="op">(</span>path <span class="op">=</span> <span class="va">csv_file</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>Notice that the first line now says <code>function(data)</code>. Items listed within the parentheses of our function definition are arguments. If you look further down, you’ll see another change. Within <code><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv()</a></code>, instead of <code>x = penguins</code>, we now use the line <code>x = data</code>. This allows us to use the function with any data, not just <code>penguins</code>.</p>
+<p>To use this function, you would tell <code>show_in_excel()</code> what data to use, and the function would open the data in Excel. For example, you can tell it to open the <code>penguins</code> data frame as follows:</p>
+<div class="sourceCode" id="cb229"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">show_in_excel</span><span class="op">(</span>data <span class="op">=</span> <span class="va">penguins</span><span class="op">)</span></span></code></pre></div>
+<p>Having created the function with the <code>data</code> argument, we can run it with any data we want to. This code, for example, will import COVID case data we saw in Chapter <a href="websites-chapter.html#websites-chapter">9</a> and open it in Excel:</p>
+<div class="sourceCode" id="cb230"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">covid_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"https://data.rwithoutstatistics.com/us-states-covid-rolling-average.csv"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">show_in_excel</span><span class="op">(</span>data <span class="op">=</span> <span class="va">covid_data</span><span class="op">)</span></span></code></pre></div>
+<p>You can also use this function at the end of a pipeline. This code filters the <code>covid_data</code> data frame to include only data from California before opening it in Excel:</p>
+<div class="sourceCode" id="cb231"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">covid_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">state</span> <span class="op">==</span> <span class="st">"California"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">show_in_excel</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Bruno Rodrigues could have copied the code within the <code>show_in_excel()</code> function and re-run it every time he wanted to view his data in Excel. But, by creating a function, he was able to write the code just once and then run it as many times as necessary.</p>
+</div>
+</div>
+<div id="creating-a-function-to-automatically-format-race-and-ethnicity-data" class="section level2 unnumbered">
+<h2>Creating a Function to Automatically Format Race and Ethnicity Data<a class="anchor" aria-label="anchor" href="#creating-a-function-to-automatically-format-race-and-ethnicity-data"><i class="fas fa-link"></i></a>
+</h2>
+<p>Now that you understand how functions work, let’s walk through an example function you could use to simplify some of the activities discussed in previous chapters.</p>
+<p>In Chapter <a href="accessing-data-chapter.html#accessing-data-chapter">11</a>, when you used the <code>tidycensus</code> package to easily import data from the United States Census Bureau, you learned that it can be hard to remember the names of the census data’s many variables. Say you regularly want to access data about race and ethnicity from the American Community Survey, but never remember which variables enable you to do so. In this section, we’ll create the <code>get_acs_race_ethnicity()</code> function to help with this task, walking through its development step-by-step to show some important concepts about making functions.</p>
+<p>A first version of this function might look like this:</p>
+<div class="sourceCode" id="cb232"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://walker-data.com/tidycensus/">tidycensus</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">get_acs_race_ethnicity</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  </span>
+<span>  <span class="va">race_ethnicity_data</span> <span class="op">&lt;-</span></span>
+<span>    <span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs</a></span><span class="op">(</span></span>
+<span>      geography <span class="op">=</span> <span class="st">"state"</span>,</span>
+<span>      variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
+<span>        <span class="st">"White"</span> <span class="op">=</span> <span class="st">"B03002_003"</span>,</span>
+<span>        <span class="st">"Black/African American"</span> <span class="op">=</span> <span class="st">"B03002_004"</span>,</span>
+<span>        <span class="st">"American Indian/Alaska Native"</span> <span class="op">=</span> <span class="st">"B03002_005"</span>,</span>
+<span>        <span class="st">"Asian"</span> <span class="op">=</span> <span class="st">"B03002_006"</span>,</span>
+<span>        <span class="st">"Native Hawaiian/Pacific Islander"</span> <span class="op">=</span> <span class="st">"B03002_007"</span>,</span>
+<span>        <span class="st">"Other race"</span> <span class="op">=</span> <span class="st">"B03002_008"</span>,</span>
+<span>        <span class="st">"Multi-Race"</span> <span class="op">=</span> <span class="st">"B03002_009"</span>,</span>
+<span>        <span class="st">"Hispanic/Latino"</span> <span class="op">=</span> <span class="st">"B03002_012"</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">race_ethnicity_data</span></span>
+<span>  </span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>Within the function’s body, we call the <code><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs()</a></code> function from <code>tidycensus</code> to retrieve population data at the state level. But instead of returning the function’s default output, we relabel the hard-to-remember variable names to human-readable names, such as White and Black/African American. Next, we save these names as an object called <code>race_ethnicity_data</code>. Lastly, we use this object to return that data when the function is run.</p>
+<p>We can run this function by entering the following:</p>
+<div class="sourceCode" id="cb233"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">get_acs_race_ethnicity</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Doing so should return data with easy-to-read race and ethnicity group names:</p>
+<pre><code>#&gt; # A tibble: 416 × 5
+#&gt;    GEOID NAME    variable                     estimate   moe
+#&gt;    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;                           &lt;dbl&gt; &lt;dbl&gt;
+#&gt;  1 01    Alabama White                         3241003  2076
+#&gt;  2 01    Alabama Black/African American        1316314  3018
+#&gt;  3 01    Alabama American Indian/Alaska Nati…    17417   941
+#&gt;  4 01    Alabama Asian                           69331  1559
+#&gt;  5 01    Alabama Native Hawaiian/Pacific Isl…     1594   376
+#&gt;  6 01    Alabama Other race                      12504  1867
+#&gt;  7 01    Alabama Multi-Race                     114853  3835
+#&gt;  8 01    Alabama Hispanic/Latino                224659   413
+#&gt;  9 02    Alaska  White                          434515  1067
+#&gt; 10 02    Alaska  Black/African American          22787   769
+#&gt; # ℹ 406 more rows</code></pre>
+<p>We could improve this function in a few ways. For example, you might want the resulting variables names to follow a consistent syntax. To do this, you could use the <code>clean_names()</code> function from the janitor package, which formats all variable names using <em>snake case</em> (in which all words are lowercase and separated by underscores). In snake case, the variable name <code>GEOID</code> would become geoid. However, you might also want to leave yourself the option of keeping the original variable names. We can accomplish this by adding an argument to the function:</p>
+<div class="sourceCode" id="cb235"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">get_acs_race_ethnicity</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">clean_variable_names</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  </span>
+<span>  <span class="va">race_ethnicity_data</span> <span class="op">&lt;-</span></span>
+<span>    <span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs</a></span><span class="op">(</span></span>
+<span>      geography <span class="op">=</span> <span class="st">"state"</span>,</span>
+<span>      variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
+<span>        <span class="st">"White"</span> <span class="op">=</span> <span class="st">"B03002_003"</span>,</span>
+<span>        <span class="st">"Black/African American"</span> <span class="op">=</span> <span class="st">"B03002_004"</span>,</span>
+<span>        <span class="st">"American Indian/Alaska Native"</span> <span class="op">=</span> <span class="st">"B03002_005"</span>,</span>
+<span>        <span class="st">"Asian"</span> <span class="op">=</span> <span class="st">"B03002_006"</span>,</span>
+<span>        <span class="st">"Native Hawaiian/Pacific Islander"</span> <span class="op">=</span> <span class="st">"B03002_007"</span>,</span>
+<span>        <span class="st">"Other race"</span> <span class="op">=</span> <span class="st">"B03002_008"</span>,</span>
+<span>        <span class="st">"Multi-Race"</span> <span class="op">=</span> <span class="st">"B03002_009"</span>,</span>
+<span>        <span class="st">"Hispanic/Latino"</span> <span class="op">=</span> <span class="st">"B03002_012"</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">clean_variable_names</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">race_ethnicity_data</span> <span class="op">&lt;-</span> <span class="fu">clean_names</span><span class="op">(</span><span class="va">race_ethnicity_data</span><span class="op">)</span></span>
+<span>    </span>
+<span>  <span class="op">}</span></span>
+<span>  </span>
+<span>  <span class="va">race_ethnicity_data</span></span>
+<span>  </span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>We add the <code>clean_variable_names</code> argument to the function and specify that it should be <code>FALSE</code> by default. Then, in the function body, we set up an <code>if</code> statement. If the argument is <code>TRUE</code>, we run a line that overwrites the variable names with versions formatted in snake case. If the argument is <code>FALSE</code>, we leave the variable names unchanged.</p>
+<p>If you run the function, nothing should change, because our new argument is set to <code>FALSE</code> by default. Try setting <code>clean_variable_names</code> to <code>TRUE</code> as follows:</p>
+<div class="sourceCode" id="cb236"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">get_acs_race_ethnicity</span><span class="op">(</span>clean_variable_names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p>This function call should return data with consistent variable names:</p>
+<pre><code>#&gt; # A tibble: 416 × 5
+#&gt;    geoid name    variable                     estimate   moe
+#&gt;    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;                           &lt;dbl&gt; &lt;dbl&gt;
+#&gt;  1 01    Alabama White                         3241003  2076
+#&gt;  2 01    Alabama Black/African American        1316314  3018
+#&gt;  3 01    Alabama American Indian/Alaska Nati…    17417   941
+#&gt;  4 01    Alabama Asian                           69331  1559
+#&gt;  5 01    Alabama Native Hawaiian/Pacific Isl…     1594   376
+#&gt;  6 01    Alabama Other race                      12504  1867
+#&gt;  7 01    Alabama Multi-Race                     114853  3835
+#&gt;  8 01    Alabama Hispanic/Latino                224659   413
+#&gt;  9 02    Alaska  White                          434515  1067
+#&gt; 10 02    Alaska  Black/African American          22787   769
+#&gt; # ℹ 406 more rows</code></pre>
+<p>Now that you’ve seen how to add arguments to two separate functions, let’s explore how to pass arguments from one function to another.</p>
+<div id="using-...-to-pass-arguments-to-another-function" class="section level3 unnumbered">
+<h3>Using <code>...</code> to Pass Arguments to Another Function<a class="anchor" aria-label="anchor" href="#using-...-to-pass-arguments-to-another-function"><i class="fas fa-link"></i></a>
+</h3>
+<p>The function we created retrieves population data at the state level by passing the <code>geography = "state"</code> argument to the <code><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs()</a></code> function. But what if we wanted to obtain county-level data, or else data about census tracts? We could do so using <code><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs()</a></code>, but we’ve written the <code>get_acs_race_ethnicity()</code> function in a way that isn’t flexible enough to allow this.</p>
+<p>Your first thought about how to modify our function might involve adding an additional argument for the level of data to retrieve. We could edit the first two lines of the function as follows to add a <code>my_geography</code> argument and then use it in the <code><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs()</a></code> function:</p>
+<div class="sourceCode" id="cb238"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">get_acs_race_ethnicity</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">clean_variable_names</span> <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                                   <span class="va">my_geography</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  </span>
+<span>  <span class="va">race_ethnicity_data</span> <span class="op">&lt;-</span></span>
+<span>    <span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs</a></span><span class="op">(</span></span>
+<span>      geography <span class="op">=</span> <span class="va">my_geography</span>,</span>
+<span>      variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
+<span>        <span class="st">"White"</span> <span class="op">=</span> <span class="st">"B03002_003"</span>,</span>
+<span>        <span class="st">"Black/African American"</span> <span class="op">=</span> <span class="st">"B03002_004"</span>,</span>
+<span>        <span class="st">"American Indian/Alaska Native"</span> <span class="op">=</span> <span class="st">"B03002_005"</span>,</span>
+<span>        <span class="st">"Asian"</span> <span class="op">=</span> <span class="st">"B03002_006"</span>,</span>
+<span>        <span class="st">"Native Hawaiian/Pacific Islander"</span> <span class="op">=</span> <span class="st">"B03002_007"</span>,</span>
+<span>        <span class="st">"Other race"</span> <span class="op">=</span> <span class="st">"B03002_008"</span>,</span>
+<span>        <span class="st">"Multi-Race"</span> <span class="op">=</span> <span class="st">"B03002_009"</span>,</span>
+<span>        <span class="st">"Hispanic/Latino"</span> <span class="op">=</span> <span class="st">"B03002_012"</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">clean_variable_names</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">race_ethnicity_data</span> <span class="op">&lt;-</span> <span class="fu">clean_names</span><span class="op">(</span><span class="va">race_ethnicity_data</span><span class="op">)</span></span>
+<span>    </span>
+<span>  <span class="op">}</span></span>
+<span>  </span>
+<span>  <span class="va">race_ethnicity_data</span></span>
+<span>  </span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>But what if I also want to select the year for which to retrieve data? Well, we could add an argument for that as well. However, as you saw in Chapter <a href="accessing-data-chapter.html#accessing-data-chapter">11</a>, the <code><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs()</a></code> function has many arguments, and repeating them all in our code would become cumbersome.</p>
+<p>The <code>...</code> syntax allows us to avoid doing so. By placing <code>...</code> in the <code>get_acs_race_ethnicity()</code> function, we can automatically pass any arguments listed there to the <code><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs()</a></code> function by including <code>...</code> there as well:</p>
+<div class="sourceCode" id="cb239"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">get_acs_race_ethnicity</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">clean_variable_names</span> <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                                   <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  </span>
+<span>  <span class="va">race_ethnicity_data</span> <span class="op">&lt;-</span></span>
+<span>    <span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs</a></span><span class="op">(</span></span>
+<span>      <span class="va">...</span>,</span>
+<span>      variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
+<span>        <span class="st">"White"</span> <span class="op">=</span> <span class="st">"B03002_003"</span>,</span>
+<span>        <span class="st">"Black/African American"</span> <span class="op">=</span> <span class="st">"B03002_004"</span>,</span>
+<span>        <span class="st">"American Indian/Alaska Native"</span> <span class="op">=</span> <span class="st">"B03002_005"</span>,</span>
+<span>        <span class="st">"Asian"</span> <span class="op">=</span> <span class="st">"B03002_006"</span>,</span>
+<span>        <span class="st">"Native Hawaiian/Pacific Islander"</span> <span class="op">=</span> <span class="st">"B03002_007"</span>,</span>
+<span>        <span class="st">"Other race"</span> <span class="op">=</span> <span class="st">"B03002_008"</span>,</span>
+<span>        <span class="st">"Multi-Race"</span> <span class="op">=</span> <span class="st">"B03002_009"</span>,</span>
+<span>        <span class="st">"Hispanic/Latino"</span> <span class="op">=</span> <span class="st">"B03002_012"</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">clean_variable_names</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">race_ethnicity_data</span> <span class="op">&lt;-</span> <span class="fu">clean_names</span><span class="op">(</span><span class="va">race_ethnicity_data</span><span class="op">)</span></span>
+<span>    </span>
+<span>  <span class="op">}</span></span>
+<span>  </span>
+<span>  <span class="va">race_ethnicity_data</span></span>
+<span>  </span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>Try running this function by passing it the <code>geography</code> argument set to <code>"state"</code>:</p>
+<div class="sourceCode" id="cb240"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">get_acs_race_ethnicity</span><span class="op">(</span>geography <span class="op">=</span> <span class="st">"state"</span><span class="op">)</span></span></code></pre></div>
+<p>This should return the following:</p>
+<pre><code>#&gt; # A tibble: 416 × 5
+#&gt;    GEOID NAME    variable                     estimate   moe
+#&gt;    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;                           &lt;dbl&gt; &lt;dbl&gt;
+#&gt;  1 01    Alabama White                         3241003  2076
+#&gt;  2 01    Alabama Black/African American        1316314  3018
+#&gt;  3 01    Alabama American Indian/Alaska Nati…    17417   941
+#&gt;  4 01    Alabama Asian                           69331  1559
+#&gt;  5 01    Alabama Native Hawaiian/Pacific Isl…     1594   376
+#&gt;  6 01    Alabama Other race                      12504  1867
+#&gt;  7 01    Alabama Multi-Race                     114853  3835
+#&gt;  8 01    Alabama Hispanic/Latino                224659   413
+#&gt;  9 02    Alaska  White                          434515  1067
+#&gt; 10 02    Alaska  Black/African American          22787   769
+#&gt; # ℹ 406 more rows</code></pre>
+<p>Alternatively, you could change the value of the argument to get data by county:</p>
+<div class="sourceCode" id="cb242"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">get_acs_race_ethnicity</span><span class="op">(</span>geography <span class="op">=</span> <span class="st">"state"</span><span class="op">)</span></span></code></pre></div>
+<p>You could also run the function with the <code>geometry = TRUE</code> argument to return geospatial data alongside demographic data:</p>
+<div class="sourceCode" id="cb243"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">get_acs_race_ethnicity</span><span class="op">(</span>geography <span class="op">=</span> <span class="st">"county"</span>,</span>
+<span>                       geometry <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p>The function should return data like the following:</p>
+<pre><code>#&gt; Simple feature collection with 416 features and 5 fields
+#&gt; Geometry type: MULTIPOLYGON
+#&gt; Dimension:     XY
+#&gt; Bounding box:  xmin: -179.1489 ymin: 17.88328 xmax: 179.7785 ymax: 71.36516
+#&gt; Geodetic CRS:  NAD83
+#&gt; First 10 features:
+#&gt;    GEOID    NAME                         variable estimate
+#&gt; 1     56 Wyoming                            White   478508
+#&gt; 2     56 Wyoming           Black/African American     4811
+#&gt; 3     56 Wyoming    American Indian/Alaska Native    11330
+#&gt; 4     56 Wyoming                            Asian     4907
+#&gt; 5     56 Wyoming Native Hawaiian/Pacific Islander      397
+#&gt; 6     56 Wyoming                       Other race     1582
+#&gt; 7     56 Wyoming                       Multi-Race    15921
+#&gt; 8     56 Wyoming                  Hispanic/Latino    59185
+#&gt; 9     02  Alaska                            White   434515
+#&gt; 10    02  Alaska           Black/African American    22787
+#&gt;     moe                       geometry
+#&gt; 1   959 MULTIPOLYGON (((-111.0546 4...
+#&gt; 2   544 MULTIPOLYGON (((-111.0546 4...
+#&gt; 3   458 MULTIPOLYGON (((-111.0546 4...
+#&gt; 4   409 MULTIPOLYGON (((-111.0546 4...
+#&gt; 5   158 MULTIPOLYGON (((-111.0546 4...
+#&gt; 6   545 MULTIPOLYGON (((-111.0546 4...
+#&gt; 7  1098 MULTIPOLYGON (((-111.0546 4...
+#&gt; 8   167 MULTIPOLYGON (((-111.0546 4...
+#&gt; 9  1067 MULTIPOLYGON (((179.4825 51...
+#&gt; 10  769 MULTIPOLYGON (((179.4825 51...</code></pre>
+<p>The <code>...</code> syntax allows you to create your own function and pass it the arguments of another function without repeating all of that function’s arguments in your own code. This approach gives you flexibility while keeping your code concise.</p>
+<p>Now that we’ve discussed how to make functions, you’ll learn how to put them into a package.</p>
+</div>
+</div>
+<div id="how-to-create-a-package" class="section level2 unnumbered">
+<h2>How to Create a Package<a class="anchor" aria-label="anchor" href="#how-to-create-a-package"><i class="fas fa-link"></i></a>
+</h2>
+<p>Packages bundle your functions so you can use them in multiple projects. If you find yourself copying functions from one project to another, or perhaps have a set of functions you’ve saved in a <em>functions.R</em> file that you copy into each new project, these are good indications that you should make a package.</p>
+<p>While you can run the functions from a <em>functions.R</em> file in your own environment, this code in may not work on someone else’s computer. Other users may not have the necessary packages installed, or they may be confused about how your functions’ arguments work and not know where to go for help. If you put your functions in a package, they are more likely to work, as they include necessary dependencies. R packages also contain built-in documentation to help others use the functions on their own.</p>
+<div id="starting-the-package" class="section level3 unnumbered">
+<h3>Starting the Package<a class="anchor" aria-label="anchor" href="#starting-the-package"><i class="fas fa-link"></i></a>
+</h3>
+<p>To create a package in RStudio, go to the <strong>File</strong> menu, then select <strong>New Project</strong>. From there, select <strong>New Directory</strong>. You’ll be given a list of options, one of which is <strong>R Package</strong>. Select it, and give your package a name. In Figure <a href="packages-chapter.html#fig:rstudio-create-package">12.2</a>, I’ve called mine <code>dk</code>. Also decide where you want your package to live on your computer. You can leave everything else as is.</p>
+<div class="figure">
+<span style="display:block;" id="fig:rstudio-create-package"></span>
+<img src="assets/create-r-package.png" alt="The RStudio menu for creating your package" width="100%"><p class="caption">
+Figure 12.2: The RStudio menu for creating your package
+</p>
+</div>
+<p>RStudio will now create and open the package. It should already contain a few files, including <code>hello.R</code>, which has a pre-built function called <code>hello()</code> that, when run, prints the text “Hello, world!” in the console. Let’s get rid of it and a few other default files so we can start with a clean slate. Delete <em>hello.R</em>, <em>NAMESPACE</em>, and <em>hello.Rd</em> in the <em>man</em> directory.</p>
+</div>
+<div id="adding-functions-with-use_r" class="section level3 unnumbered">
+<h3>Adding Functions with <code>use_r()</code><a class="anchor" aria-label="anchor" href="#adding-functions-with-use_r"><i class="fas fa-link"></i></a>
+</h3>
+<p>All functions in a package should go in separate files in the <em>R</em> folder. To add these files to the package automatically and test that they work correctly, we’ll use the <code>usethis</code> and <code>devtools</code> packages. Install them using <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages()</a></code> if you don’t already have them installed:</p>
+<div class="sourceCode" id="cb245"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"usethis"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span></code></pre></div>
+<p>To add a function to the package, run the <code>use_r()</code> function from the <code>usethis</code> package in the console:</p>
+<div class="sourceCode" id="cb246"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_r.html">use_r</a></span><span class="op">(</span><span class="st">"acs"</span><span class="op">)</span></span></code></pre></div>
+<p>The <code>package::function()</code> syntax makes it possible to use the function without loading the package. This function should create a file called <code>acs.R</code> in the R directory with the name you give it as an argument. The name of the file itself doesn’t really matter, but choosing something that gives an indication of the functions within it is good practice. Now you can open the file and add code to it. Copy the <code>get_acs_race_ethnicity()</code> function to the package.</p>
+</div>
+<div id="checking-our-package-with-devtools" class="section level3 unnumbered">
+<h3>Checking our Package with <code>devtools</code><a class="anchor" aria-label="anchor" href="#checking-our-package-with-devtools"><i class="fas fa-link"></i></a>
+</h3>
+<p>We need to change the <code>get_acs_race_ethnicity()</code> in a few ways to make it work in a package. The easiest way to figure out what changes we need to make is to use built-in tools to check that our package is built correctly. Run the function <code><a href="https://devtools.r-lib.org/reference/check.html">devtools::check()</a></code> in the console to perform what is known as an R CMD check, which makes sure that others can install your package on their system. Running an <code>R CMD check</code> on the <code>dk</code> package gives us a long message. The last part is the most important:</p>
+<pre><code>── R CMD check results ─────────────── dk 0.1.0 ────
+Duration: 4s
+
+❯ checking DESCRIPTION meta-information ... WARNING
+Non-standard license specification:
+What license is it under?
+Standardizable: FALSE
+
+❯ checking for missing documentation entries ... WARNING
+Undocumented code objects:
+‘get_acs_race_ethnicity’
+All user-level objects in a package should have documentation entries.
+See chapter ‘Writing R documentation files’ in the ‘Writing R
+Extensions’ manual.
+
+❯ checking R code for possible problems ... NOTE
+get_acs_race_ethnicity: no visible global function definition for
+‘get_acs’
+get_acs_race_ethnicity: no visible global function definition for
+‘clean_names’
+Undefined global functions or variables:
+clean_names get_acs
+
+0 errors ✔ | 2 warnings ✖ | 1 note ✖</code></pre>
+<p>Let’s review the output from bottom to top. The line <code>0 errors ✔ | 2 warnings ✖ | 1 note ✖</code> highlights three levels of issues identified in our package. Errors are the most severe, as they mean others won’t be able to install your package, while warnings and notes may cause problems for others. It’s best practice to eliminate all errors, warnings, and notes.</p>
+<p>We’ll start by addressing the note. To understand what <code>R CMD check</code> is saying here, we need to explain a bit about how packages work. When you install a package using the <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages()</a></code> function, it often takes a while. That’s because the package you are telling R to install likely uses functions from other packages. To access these functions, R must install these packages (known as <em>dependencies</em>) for you; after all, it would be a pain if you had to manually install a whole set of dependencies every time you installed a package. But to make sure that the appropriate packages are installed for any user of the dk package, we have to make a few changes.</p>
+<p><code>R CMD check</code> tells us we have several “undefined global functions or variables” and “no visible global function definition” for various functions. This is because we are attempting to use functions from the <code>tidycensus</code> and <code>janitor</code> packages, but we haven’t specified where these functions come from. I can run this code in my environment because I have <code>tidycensus</code> and <code>janitor</code> installed, but we can’t assume the same of others.</p>
+</div>
+<div id="adding-dependency-packages" class="section level3 unnumbered">
+<h3>Adding Dependency Packages<a class="anchor" aria-label="anchor" href="#adding-dependency-packages"><i class="fas fa-link"></i></a>
+</h3>
+<p>To ensure the package’s code will work, we need to install <code>tidycensus</code> and <code>janitor</code> for users when they install the <code>dk</code> package. To do this, run the <code>use_package()</code> function from the <code>usethis</code> package in the console:</p>
+<div class="sourceCode" id="cb248"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_package.html">use_package</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"tidycensus"</span><span class="op">)</span></span></code></pre></div>
+<p>You should get the following message:</p>
+<pre><code>✔ Setting active project to '/Users/davidkeyes/Documents/Work/R Without Statistics/dk'
+✔ Adding 'tidycensus' to Imports field in DESCRIPTION
+• Refer to functions with `tidycensus::fun()`</code></pre>
+<p>The “Setting active project …” line indicates that we’re working in the <code>dk</code> project. The second line indicates that the <em>DESCRIPTION</em> file has been edited. This file provides meta information about the package we’re developing.</p>
+<p>Next, in order to use the <code>clean_names()</code> function, you’ll need to add the <code>janitor</code> package using the code <code>usethis::use_package(package = "janitor")</code>, which should give you the following output:</p>
+<pre><code>✔ Adding 'janitor' to Imports field in DESCRIPTION
+• Refer to functions with `janitor::fun()`</code></pre>
+<p>If you open the <em>DESCRIPTION</em> file in the root directory of your project, you should see the following:</p>
+<pre><code>Package: dk
+Type: Package
+Title: What the Package Does (Title Case)
+Version: 0.1.0
+Author: Who wrote it
+Maintainer: The package maintainer &lt;yourself@somewhere.net&gt;
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    janitor,
+    tidycensus</code></pre>
+<p>Look for the <code>Imports</code> section way down at the bottom of the file. Its contents indicate that when a user installs the <code>dk</code> package, the <code>tidycensus</code> and <code>janitor</code> packages will also be installed for them.</p>
+</div>
+<div id="referring-to-functions-correctly" class="section level3 unnumbered">
+<h3>Referring to Functions Correctly<a class="anchor" aria-label="anchor" href="#referring-to-functions-correctly"><i class="fas fa-link"></i></a>
+</h3>
+<p>The <code>R CMD check</code> output also included this line: “Refer to functions with tidycensus::fun()” (where <code>fun()</code> stands for function name) This tells us that, in order to use functions from other packages in the <code>dk</code> package, we need to specify both the package name and the function name to ensure that the correct function is used at all times. On rare occasions, you’ll find functions with identical names used across multiple packages, and this syntax avoids ambiguity. Remember when we ran <code>R CMD check</code> and got this?</p>
+<pre><code>Undefined global functions or variables:
+clean_names get_acs</code></pre>
+<p>This is because we were using functions without saying what package they came from. The <code>clean_names()</code> function comes from the <code>janitor</code> package, and <code><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs()</a></code> comes from <code>tidycensus</code>, so we need to add these package names before each function:</p>
+<div class="sourceCode" id="cb253"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">get_acs_race_ethnicity</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">clean_variable_names</span> <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                                   <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  </span>
+<span>  <span class="va">race_ethnicity_data</span> <span class="op">&lt;-</span> <span class="fu">tidycensus</span><span class="fu">::</span><span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs</a></span><span class="op">(</span><span class="va">...</span>,</span>
+<span>                                             variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"White"</span> <span class="op">=</span> <span class="st">"B03002_003"</span>,</span>
+<span>                                                           <span class="st">"Black/African American"</span> <span class="op">=</span> <span class="st">"B03002_004"</span>,</span>
+<span>                                                           <span class="st">"American Indian/Alaska Native"</span> <span class="op">=</span> <span class="st">"B03002_005"</span>,</span>
+<span>                                                           <span class="st">"Asian"</span> <span class="op">=</span> <span class="st">"B03002_006"</span>,</span>
+<span>                                                           <span class="st">"Native Hawaiian/Pacific Islander"</span> <span class="op">=</span> <span class="st">"B03002_007"</span>,</span>
+<span>                                                           <span class="st">"Other race"</span> <span class="op">=</span> <span class="st">"B03002_008"</span>,</span>
+<span>                                                           <span class="st">"Multi-Race"</span> <span class="op">=</span> <span class="st">"B03002_009"</span>,</span>
+<span>                                                           <span class="st">"Hispanic/Latino"</span> <span class="op">=</span> <span class="st">"B03002_012"</span><span class="op">)</span><span class="op">)</span> </span>
+<span>  </span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">clean_variable_names</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    </span>
+<span>    <span class="va">race_ethnicity_data</span> <span class="op">&lt;-</span> <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/clean_names.html">clean_names</a></span><span class="op">(</span><span class="va">race_ethnicity_data</span><span class="op">)</span></span>
+<span>    </span>
+<span>  <span class="op">}</span></span>
+<span>  </span>
+<span>  <span class="va">race_ethnicity_data</span></span>
+<span>  </span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>Now that we’ve specified which packages the functions come from, we can run <code><a href="https://devtools.r-lib.org/reference/check.html">devtools::check()</a></code> again. When you do so, you should see that the notes have gone away:</p>
+<pre><code>❯ checking DESCRIPTION meta-information ... WARNING
+Non-standard license specification:
+What license is it under?
+Standardizable: FALSE
+
+❯ checking for missing documentation entries ... WARNING
+Undocumented code objects:
+‘get_acs_race_ethnicity’
+All user-level objects in a package should have documentation entries.
+See chapter ‘Writing R documentation files’ in the ‘Writing R
+Extensions’ manual.
+
+0 errors ✔ | 2 warnings ✖ | 0 notes ✔</code></pre>
+<p>However, there are still two warnings we need to deal with. Let’s do that next.</p>
+</div>
+<div id="adding-documentation" class="section level3 unnumbered">
+<h3>Adding Documentation<a class="anchor" aria-label="anchor" href="#adding-documentation"><i class="fas fa-link"></i></a>
+</h3>
+<p>Take a look at the “checking for missing documentation entries” warning. This warning tells us that we need to document our <code>get_acs_race_ethnicity()</code> function. One of the benefits of creating a package is that you can add documentation to help others use your code. In the same way that users can enter <code>?get_acs()</code> and see documentation about that function, we want them to be able to enter <code>?get_acs_race_ethnicity()</code> to learn how it works.</p>
+<p>To create documentation for the function, we’ll use Roxygen, a documentation tool that uses a package called <code>roxygen2</code>. To get started, place your cursor anywhere in the function. Then, go to the <strong>Code</strong> menu in RStudio and select <strong>Insert Roxygen Skeleton</strong>. Doing this should add text above the <code>get_acs_race_ethnicity()</code> function that looks like this:</p>
+<pre><code>#' Title
+#'
+#' @param clean_variable_names 
+#' @param ... 
+#'
+#' @return
+#' @export
+#'
+#' @examples</code></pre>
+<p>This text is the documentation’s skeleton. Each line starts with the special characters <code>#'</code>, which indicate we’re working with Roxygen. We can now edit the text to create our documentation. Begin by replacing <code>Title</code> with a sentence that describes the function:</p>
+<pre><code>#' Access race and ethnicity data from the American Community Survey</code></pre>
+<p>Next, turn your attention to the lines beginning with <code>@param</code>. Roxygen automatically creates one of these lines for each of our function’s arguments, but it’s up to us to fill them in with a description. Begin by describing what the <code>clean_variable_names</code> argument does. Next, specify that the <code>...</code> will pass additional arguments to the <code><a href="https://walker-data.com/tidycensus/reference/get_acs.html">tidycensus::get_acs()</a></code> function:</p>
+<pre><code>#' @param clean_variable_names Should variable names be cleaned (i.e. snake case)
+#' @param ... Other arguments passed to tidycensus::get_acs()</code></pre>
+<p>The <code>@return</code> line should tell the user what the <code>get_acs_race_ethnicity()</code> function returns. In our case, it returns data, which I document as follows:</p>
+<pre><code>#' @return A tibble with five variables: GEOID, NAME, variable, estimate, and moe</code></pre>
+<p>Below <code>@return</code> is <code>@export</code>. We don’t need to change anything here. Most functions in a package are known as exported functions, meaning they are available to users of the package. In contrast, internal functions, which are used only by the package developers, do not have <code>@export</code> in the Roxygen skeleton.</p>
+<p>The last section is <code>@examples</code>. This is where you can give examples of code that users can run to learn how the function works. Doing this introduces some complexity and isn’t required, so we’ll skip it here and delete the line with <code>@examples</code> on it. If you want to learn more about adding examples to your documentation, the second edition of Hadley Wickham and Jenny Bryan’s book <em>R Packages</em> is a great resource.</p>
+<p>Now that we’ve added documentation with Roxygen, run <code><a href="https://devtools.r-lib.org/reference/document.html">devtools::document()</a></code> in the console. This should create a <em>get_acs_race_ethnicity.Rd</em> documentation file in the <em>man</em> directory using the very specific format that R packages require. You’re welcome to look at it, but you can’t change it, since it is read only.</p>
+<p>Running the function should also create a <em>NAMESPACE</em> file, which lists the functions that your package makes available to users. It should look like this:</p>
+<pre><code># Generated by roxygen2: do not edit by hand
+
+export(get_acs_race_ethnicity)</code></pre>
+<p>The <code>get_acs_race_ethnicity()</code> function is now almost ready for users.</p>
+</div>
+<div id="adding-a-license-and-metadata" class="section level3 unnumbered">
+<h3>Adding a License and Metadata<a class="anchor" aria-label="anchor" href="#adding-a-license-and-metadata"><i class="fas fa-link"></i></a>
+</h3>
+<p>Try running <code><a href="https://devtools.r-lib.org/reference/check.html">devtools::check()</a></code> again to see if we’ve fixed the issues that led to the warnings. The warning about missing documentation should no longer be there. However, we do still have one warning:</p>
+<pre><code>❯ checking DESCRIPTION meta-information ... WARNING
+Non-standard license specification:
+What license is it under?
+Standardizable: FALSE
+
+0 errors ✔ | 1 warning ✖ | 0 notes ✔</code></pre>
+<p>This warning tells us that we haven’t given our package a license. If you plan to make your package publicly available, choosing a license is important because it tells other people what they can and cannot do with your code. For information about how to choose the right license for your package, see <a href="https://choosealicense.com/" class="uri">https://choosealicense.com/</a>.</p>
+<p>In this example, we use the MIT license. which allows people to do essentially whatever they want with your code, by running <code><a href="https://usethis.r-lib.org/reference/licenses.html">usethis::use_mit_license()</a></code>. The <code>usethis</code> package has similar functions for other common licenses. Doing so returns the following:</p>
+<pre><code>✔ Setting active project to '/Users/davidkeyes/Documents/Work/R Without Statistics/dk'
+✔ Setting License field in DESCRIPTION to 'MIT + file LICENSE'
+✔ Writing 'LICENSE'
+✔ Writing 'LICENSE.md'
+✔ Adding '^LICENSE\\.md$' to '.Rbuildignore'</code></pre>
+<p>The <code>use_mit_license()</code> function handles a lot of the tedious parts of adding a license to our package. Most importantly for us, it specifies the license in the <em>DESCRIPTION</em> file. If you open it, you should see a confirmation that you’ve added the MIT license:</p>
+<pre><code>License: MIT + file LICENSE</code></pre>
+<p>In addition to the license, the <em>DESCRIPTION</em> file contains metadata about the package. We can make a few changes to it identify its title and add an author, a maintainer, and a description. The final <em>DESCRIPTION</em> file might look something like this:</p>
+<pre><code>Package: dk
+Type: Package
+Title: David Keyes's Personal Package
+Version: 0.1.0
+Author: David Keyes
+Maintainer: David Keyes &lt;david@rfortherestofus.com&gt;
+    Description: A package with functions that David Keyes may find 
+    useful.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    janitor,
+    tidycensus</code></pre>
+<p>Having made these changes, let’s run <code><a href="https://devtools.r-lib.org/reference/check.html">devtools::check()</a></code> one more time to make sure everything is in order:</p>
+<pre><code>0 errors ✔ | 0 warnings ✔ | 0 notes ✔</code></pre>
+<p>We get exactly what we hoped to see.</p>
+</div>
+<div id="adding-additional-functions" class="section level3 unnumbered">
+<h3>Adding Additional Functions<a class="anchor" aria-label="anchor" href="#adding-additional-functions"><i class="fas fa-link"></i></a>
+</h3>
+<p>You’ve now got a package with one working function in it. If you wanted to add additional functions, you would follow the same procedure:</p>
+<ol style="list-style-type: decimal">
+<li><p>Create a new <em>.R</em> file with <code><a href="https://usethis.r-lib.org/reference/use_r.html">usethis::use_r()</a></code> or copy another function to the existing <em>.R</em> file.</p></li>
+<li><p>Develop your function using the <code>package::function()</code> syntax to refer to functions from other packages.</p></li>
+<li><p>Add any dependency packages with <code>use_package()</code>.</p></li>
+<li><p>Add documentation of your function.</p></li>
+<li><p>Run <code><a href="https://devtools.r-lib.org/reference/check.html">devtools::check()</a></code> to make sure you did everything correctly.</p></li>
+</ol>
+<p>Your package can contain a single function, like <code>dk</code>, or as many functions as you want.</p>
+</div>
+<div id="installing-the-package" class="section level3 unnumbered">
+<h3>Installing the Package<a class="anchor" aria-label="anchor" href="#installing-the-package"><i class="fas fa-link"></i></a>
+</h3>
+<p>Having developed the package, we’re now ready to install and use it. When you’re developing your own package, installing it for your own use is relatively straightforward. Simply run <code><a href="https://devtools.r-lib.org/reference/install.html">devtools::install()</a></code> and the package will be ready for you to use in any project.</p>
+<p>Of course, if you’re developing a package, you’re likely doing it not just for yourself, but for others as well. The most common way to make your package available to others is with the code-sharing website GitHub. The details of how to put your code on GitHub are beyond what we can cover here, but the book <em>Happy Git and GitHub for the useR</em> by Jenny Bryan is a great place to get started.</p>
+<p>I’ve pushed the <code>dk</code> package to GitHub, and you can find it at <a href="https://github.com/dgkeyes/dk" class="uri">https://github.com/dgkeyes/dk</a>. If you or anyone else wants to install it, first make sure you have the remotes package installed. This package, which can be installed by running <code>install.packages("remotes")</code>, allows you to install packages from a wide range of locations, including GitHub. Once you’ve installed the remotes package, you can run the code <code>remotes::install_github("dgkeyes/dk")</code> in the console to install the <code>dk</code> package.</p>
+</div>
+</div>
+<div id="conclusion-7" class="section level2 unnumbered">
+<h2>Conclusion<a class="anchor" aria-label="anchor" href="#conclusion-7"><i class="fas fa-link"></i></a>
+</h2>
+<p>Packages are useful because they let you bundle several elements needed to reliably run your code: a set of functions, instructions to automatically install dependency packages, and code documentation.</p>
+<p>Creating your own R package is especially beneficial when you’re working for an organization, as they can allow advanced R users to help those with less experience. When Gerke and Aden-Buie provided researchers at the Moffitt Cancer Center with a package that contained functions for easily accessing their databases, the researchers began use R more creatively.</p>
+<p>If you create a package, you can also guide people to use R in the way you think is best. Packages are a way to ensure that others follow best practices (without even being aware they are doing so). They make it easy to reuse functions across projects, help others, and adhere to a consistent style.</p>
+</div>
+<div id="learn-more-10" class="section level2 unnumbered">
+<h2>Learn More<a class="anchor" aria-label="anchor" href="#learn-more-10"><i class="fas fa-link"></i></a>
+</h2>
+<p>Consult the following resources to learn how to make your own packages in R:</p>
+<p><em>R Packages, Second Edition</em> by Hadley Wickham and Jennifer Bryan (O’Reilly Media, Forthcoming), <a href="https://r-pkgs.org/" class="uri">https://r-pkgs.org/</a></p>
+<p>Package Development with R, course by Malcolm Barrett, <a href="https://rfortherestofus.com/courses/package-development-course/" class="uri">https://rfortherestofus.com/courses/package-development-course/</a></p>
+</div>
+<div id="wrapping-up" class="section level2 unnumbered">
+<h2>Wrapping Up<a class="anchor" aria-label="anchor" href="#wrapping-up"><i class="fas fa-link"></i></a>
+</h2>
+<p>R was invented in 1993 as a tool for statistics, and in the years since then, it has been used for plenty of statistical analysis. But over the last three decades, R has also become a tool that can do much more than statistics.</p>
+<p>As you’ve seen in this book, R is great for making visualizations. You can use it to create high-quality graphics and maps, make your own theme to keep your visuals consistent and on-brand, and generate tables that look good and communicate well. Using R Markdown or Quarto, you can create reports, presentations, and websites. And best of all, these documents are all reproducible, meaning that updating them is as easy as rerunning your code. Finally, you’ve seen that R can help you to automate how you access data, as well as assist you in collaborating with others through functions and packages that you make.</p>
+<p>If R was new to you when you started this book, you should now feel inspired to use it. If you are an experienced R user, this book should have shown you ways to use R that you hadn’t previously considered. No matter your background, you should understand how to use R like a pro, and without any statistics.</p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="accessing-data-chapter.html"><span class="header-section-number">11</span> Accessing Data</a></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#packages-chapter"><span class="header-section-number">12</span> Creating Your Own R Packages</a></li>
+<li>
+<a class="nav-link" href="#creating-your-own-functions">Creating Your Own Functions</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#writing-a-simple-function">Writing a Simple Function</a></li>
+<li><a class="nav-link" href="#adding-arguments">Adding Arguments</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#creating-a-function-to-automatically-format-race-and-ethnicity-data">Creating a Function to Automatically Format Race and Ethnicity Data</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#using-...-to-pass-arguments-to-another-function">Using ... to Pass Arguments to Another Function</a></li></ul>
+</li>
+<li>
+<a class="nav-link" href="#how-to-create-a-package">How to Create a Package</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#starting-the-package">Starting the Package</a></li>
+<li><a class="nav-link" href="#adding-functions-with-use_r">Adding Functions with use_r()</a></li>
+<li><a class="nav-link" href="#checking-our-package-with-devtools">Checking our Package with devtools</a></li>
+<li><a class="nav-link" href="#adding-dependency-packages">Adding Dependency Packages</a></li>
+<li><a class="nav-link" href="#referring-to-functions-correctly">Referring to Functions Correctly</a></li>
+<li><a class="nav-link" href="#adding-documentation">Adding Documentation</a></li>
+<li><a class="nav-link" href="#adding-a-license-and-metadata">Adding a License and Metadata</a></li>
+<li><a class="nav-link" href="#adding-additional-functions">Adding Additional Functions</a></li>
+<li><a class="nav-link" href="#installing-the-package">Installing the Package</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#conclusion-7">Conclusion</a></li>
+<li><a class="nav-link" href="#learn-more-10">Learn More</a></li>
+<li><a class="nav-link" href="#wrapping-up">Wrapping Up</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/rfortherestofus/r-without-statistics/blob/master/packages.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/rfortherestofus/r-without-statistics/edit/master/packages.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>R Without Statistics</strong>" was written by David Keyes. </p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 10 Automatically Access the Latest Data | R Without Statistics</title>
+<meta name="author" content="David Keyes">
+<meta name="description" content="In 2020, Meghan Harris started a job at the Primary Care Research Institute at the University of Buffalo. Her title was Data Integration Specialist, which was both generic and an accurate...">
+<meta name="generator" content="bookdown 0.30 with bs4_book()">
+<meta property="og:title" content="Chapter 10 Automatically Access the Latest Data | R Without Statistics">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://book.rwithoutstatistics.com/googlesheets-chapter.html">
+<meta property="og:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
+<meta property="og:description" content="In 2020, Meghan Harris started a job at the Primary Care Research Institute at the University of Buffalo. Her title was Data Integration Specialist, which was both generic and an accurate...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 10 Automatically Access the Latest Data | R Without Statistics">
+<meta name="twitter:description" content="In 2020, Meghan Harris started a job at the Primary Care Research Institute at the University of Buffalo. Her title was Data Integration Specialist, which was both generic and an accurate...">
+<meta name="twitter:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.1/transition.js"></script><script src="libs/bs3compat-0.4.1/tabs.js"></script><script src="libs/bs3compat-0.4.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">R Without Statistics</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">About the Book</a></li>
+<li class="book-part">Introduction</li>
+<li><a class="" href="why-r-without-statistics.html"><span class="header-section-number">1</span> Why R Without Statistics?</a></li>
+<li class="book-part">Illuminate</li>
+<li><a class="" href="data-viz-chapter.html"><span class="header-section-number">2</span> Principles of Data Visualization</a></li>
+<li><a class="" href="custom-theme-chapter.html"><span class="header-section-number">3</span> Making Your Own Theme</a></li>
+<li><a class="" href="maps-chapter.html"><span class="header-section-number">4</span> Creating Maps</a></li>
+<li><a class="" href="tables-chapter.html"><span class="header-section-number">5</span> Making High-Quality Tables</a></li>
+<li class="book-part">Communicate</li>
+<li><a class="" href="rmarkdown-chapter.html"><span class="header-section-number">6</span> Communicating with R Markdown</a></li>
+<li><a class="" href="parameterized-reports-chapter.html"><span class="header-section-number">7</span> Generate Multiple Reports at Once with Parameterized Reporting</a></li>
+<li><a class="" href="presentations-chapter.html"><span class="header-section-number">8</span> Create Beautiful Presentations with R Markdown</a></li>
+<li><a class="" href="websites-chapter.html"><span class="header-section-number">9</span> Make Websites to Share Results Online</a></li>
+<li class="book-part">Automate</li>
+<li><a class="active" href="googlesheets-chapter.html"><span class="header-section-number">10</span> Automatically Access the Latest Data</a></li>
+<li><a class="" href="tidycensus-chapter.html"><span class="header-section-number">11</span> Access Census Data with the tidycensus Package</a></li>
+<li><a class="" href="functions-chapter.html"><span class="header-section-number">12</span> Code Once, Run Twice: Creating Your Own Functions</a></li>
+<li><a class="" href="custom-packages.html"><span class="header-section-number">13</span> Bundle Your Functions Together in Your Own R Package</a></li>
+<li class="book-part">Conclusion</li>
+<li><a class="" href="come-for-the-data-stay-for-the-community.html"><span class="header-section-number">14</span> Come for the Data, Stay for the Community</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/rfortherestofus/r-without-statistics">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="googlesheets-chapter" class="section level1" number="10">
+<h1>
+<span class="header-section-number">10</span> Automatically Access the Latest Data<a class="anchor" aria-label="anchor" href="#googlesheets-chapter"><i class="fas fa-link"></i></a>
+</h1>
+<p>In 2020, Meghan Harris started a job at the Primary Care Research Institute at the University of Buffalo. Her title was Data Integration Specialist, which was both generic and an accurate representation of the work she would do. One of the projects Harris worked on during her time in this job was looking at people affected by opioid use disorder, and data for this project came from a variety of surveys, all of which fed into a series of Google Sheets. She started her new job faced with a jumble of Google Sheets, tasked with helping the organization to make sense of and use its data.</p>
+<p>For many people, especially those working in tools like SPSS, SAS, or Stata, the first step here would probably be to download the Google Sheets data. Exporting Google Sheets data to CSV or Excel files isn’t complicated so you may be wondering why I’m devoting an entire chapter to working with data from Google Sheets. Here’s why.</p>
+<p>If R Markdown is an improvement on the typical multitool workflow discussed in Chapter <a href="rmarkdown-chapter.html#rmarkdown-chapter">6</a>, using the <code>googlesheets4</code> package to access data directly from Google Sheets represents a similar improvement compared to downloading data each time you want to update a report. Rather than going through multiple steps (downloading data, copying it into your project, adjusting your code so it imports the new data), you can write code so that it automatically brings in new data directly from Google Sheets. Whenever you need to update your report, simply run your code and the report, generated with the latest data, will be created.</p>
+<p>In this chapter I’ll use a simple example to demonstrate how the <code>googlesheets4</code> package works. This example, using fake data on video game preferences, is one that Meghan Harris created to mirror her work with opioid survey data (which, for obvious reasons, is confidential). We’ll then conclude with some reflections on how connecting directly to data sources such as Google Sheets through R can improve your workflow.</p>
+<div id="using-the-googlesheets4-package-to-bring-in-up-to-date-data" class="section level2 unnumbered">
+<h2>Using the <code>googlesheets4</code> Package to Bring in Up-to-Date Data<a class="anchor" aria-label="anchor" href="#using-the-googlesheets4-package-to-bring-in-up-to-date-data"><i class="fas fa-link"></i></a>
+</h2>
+<p>After installing the <code>googlesheets4</code> package with the standard <code>install.packages("googlesheets4")</code>, you are ready to use it. Before you access data in a Google Sheet, you will need to connect your Google account. To do this, run the <code><a href="https://googlesheets4.tidyverse.org/reference/gs4_auth.html">gs4_auth()</a></code> function in the console. If you have more than one Google account, you will need to select the account that has access to the Google Sheet you want to work with. Once you do so, you’ll see a screen that looks like Figure <a href="googlesheets-chapter.html#fig:tidyverse-access-r">10.1</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:tidyverse-access-r"></span>
+<img src="assets/tidyverse-access-r.png" alt="The screen asking for authorization to access your Google Sheets data" width="100%"><p class="caption">
+Figure 10.1: The screen asking for authorization to access your Google Sheets data
+</p>
+</div>
+<p>The most important thing is to check the box for “See, edit, create, and delete all your Google Sheets spreadsheets”. This will ensure that R is able to access data from your Google Sheets account. Hit Continue and you’ll be given the message “Authentication complete. Please close this page and return to R.” The <code>googlesheets4</code> package will now save your credentials so that you can use them in the future without having to authenticate each time.</p>
+<p>Now that we’ve connected R to our Google account, we can import data. We’ll import fake data that Meghan Harris created on video preferences. You can see in Figure <a href="googlesheets-chapter.html#fig:video-game-survey-data">10.2</a> what it looks like in Google Sheets.</p>
+<div class="figure">
+<span style="display:block;" id="fig:video-game-survey-data"></span>
+<img src="assets/video-game-survey-data.png" alt="The video game data in Google Sheets" width="100%"><p class="caption">
+Figure 10.2: The video game data in Google Sheets
+</p>
+</div>
+<p>The <code>googlesheets4</code> package has a function called <code><a href="https://googlesheets4.tidyverse.org/reference/range_read.html">read_sheet()</a></code> that allows you to pull in data directly from a Google Sheet. We can import this data with this function in the following way:</p>
+<div class="sourceCode" id="cb150"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://googlesheets4.tidyverse.org">googlesheets4</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">survey_data_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://googlesheets4.tidyverse.org/reference/range_read.html">read_sheet</a></span><span class="op">(</span><span class="st">"https://docs.google.com/spreadsheets/d/1AR0_RcFBg8wdiY4Cj-k8vRypp_txh27MyZuiRdqScog/edit?usp=sharing"</span><span class="op">)</span></span></code></pre></div>
+<p>We can take a look at the <code>survey_data_raw</code> object to confirm that our data was imported. I’m using the <code><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse()</a></code> function from the <code>dplyr</code> package in order to make it easier to read.</p>
+<div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">survey_data_raw</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>The output shows that we have indeed imported the data directly from Google Sheets:</p>
+<pre><code>#&gt; Rows: 5
+#&gt; Columns: 5
+#&gt; $ Timestamp                         &lt;dttm&gt; 2022-05-16 15:2…
+#&gt; $ `How old are you?`                &lt;chr&gt; "25-34", "45-54"…
+#&gt; $ `Do you like to play video games` &lt;chr&gt; "Yes", "No", "Ye…
+#&gt; $ `What kind of games do you like?` &lt;chr&gt; "Sandbox, Role-P…
+#&gt; $ `What's your favorite game?`      &lt;chr&gt; "It's hard to ch…</code></pre>
+<p>Once we have the data in R, we can now use the same workflow as always when creating reports with R Markdown. The code below is taken from an R Markdown report that Meghan Harris made to summarize the video games data. You can see the YAML, the <code>setup</code> code chunk, a chunk to load packages, followed by the code to read in data from Google Sheets. The next code chunk cleans the <code>survey_data_raw</code> object, saving the result as <code>survey_data_clean</code>. We then use this data to:</p>
+<ul>
+<li>Calculate the number of respondents and put this in the text using inline R code</li>
+<li>Create a table that shows the respondents broken down by age group</li>
+<li>Create a graph that shows how many respondents like video games</li>
+</ul>
+<p>The code used to generate this report is below.</p>
+<div class="sourceCode" id="cb153"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb153-1"><a href="googlesheets-chapter.html#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb153-2"><a href="googlesheets-chapter.html#cb153-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Video Game Survey"</span></span>
+<span id="cb153-3"><a href="googlesheets-chapter.html#cb153-3" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span><span class="co"> html_document</span></span>
+<span id="cb153-4"><a href="googlesheets-chapter.html#cb153-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb153-5"><a href="googlesheets-chapter.html#cb153-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb153-6"><a href="googlesheets-chapter.html#cb153-6" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
+<span id="cb153-7"><a href="googlesheets-chapter.html#cb153-7" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::opts_chunk$set(echo = FALSE,</span></span>
+<span id="cb153-8"><a href="googlesheets-chapter.html#cb153-8" aria-hidden="true" tabindex="-1"></a><span class="in">                      warning = FALSE,</span></span>
+<span id="cb153-9"><a href="googlesheets-chapter.html#cb153-9" aria-hidden="true" tabindex="-1"></a><span class="in">                      message = FALSE)</span></span>
+<span id="cb153-10"><a href="googlesheets-chapter.html#cb153-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb153-11"><a href="googlesheets-chapter.html#cb153-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb153-12"><a href="googlesheets-chapter.html#cb153-12" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb153-13"><a href="googlesheets-chapter.html#cb153-13" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb153-14"><a href="googlesheets-chapter.html#cb153-14" aria-hidden="true" tabindex="-1"></a><span class="in">library(janitor)</span></span>
+<span id="cb153-15"><a href="googlesheets-chapter.html#cb153-15" aria-hidden="true" tabindex="-1"></a><span class="in">library(googlesheets4)</span></span>
+<span id="cb153-16"><a href="googlesheets-chapter.html#cb153-16" aria-hidden="true" tabindex="-1"></a><span class="in">library(gt)</span></span>
+<span id="cb153-17"><a href="googlesheets-chapter.html#cb153-17" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb153-18"><a href="googlesheets-chapter.html#cb153-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb153-19"><a href="googlesheets-chapter.html#cb153-19" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb153-20"><a href="googlesheets-chapter.html#cb153-20" aria-hidden="true" tabindex="-1"></a><span class="in"># Import data from Google Sheets</span></span>
+<span id="cb153-21"><a href="googlesheets-chapter.html#cb153-21" aria-hidden="true" tabindex="-1"></a><span class="in">survey_data_raw &lt;- read_sheet("https://docs.google.com/spreadsheets/d/1AR0_RcFBg8wdiY4Cj-k8vRypp_txh27MyZuiRdqScog/edit?usp=sharing")</span></span>
+<span id="cb153-22"><a href="googlesheets-chapter.html#cb153-22" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb153-23"><a href="googlesheets-chapter.html#cb153-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb153-24"><a href="googlesheets-chapter.html#cb153-24" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb153-25"><a href="googlesheets-chapter.html#cb153-25" aria-hidden="true" tabindex="-1"></a><span class="in"># Clean data</span></span>
+<span id="cb153-26"><a href="googlesheets-chapter.html#cb153-26" aria-hidden="true" tabindex="-1"></a><span class="in">survey_data_clean &lt;- survey_data_raw %&gt;%</span></span>
+<span id="cb153-27"><a href="googlesheets-chapter.html#cb153-27" aria-hidden="true" tabindex="-1"></a><span class="in">  clean_names() %&gt;%</span></span>
+<span id="cb153-28"><a href="googlesheets-chapter.html#cb153-28" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate("participant_id" = as.character(row_number())) %&gt;%</span></span>
+<span id="cb153-29"><a href="googlesheets-chapter.html#cb153-29" aria-hidden="true" tabindex="-1"></a><span class="in">  rename("age" = "how_old_are_you",</span></span>
+<span id="cb153-30"><a href="googlesheets-chapter.html#cb153-30" aria-hidden="true" tabindex="-1"></a><span class="in">         "like_games" = "do_you_like_to_play_video_games",</span></span>
+<span id="cb153-31"><a href="googlesheets-chapter.html#cb153-31" aria-hidden="true" tabindex="-1"></a><span class="in">         "game_types" = "what_kind_of_games_do_you_like",</span></span>
+<span id="cb153-32"><a href="googlesheets-chapter.html#cb153-32" aria-hidden="true" tabindex="-1"></a><span class="in">         "favorite_game" = "whats_your_favorite_game") %&gt;%</span></span>
+<span id="cb153-33"><a href="googlesheets-chapter.html#cb153-33" aria-hidden="true" tabindex="-1"></a><span class="in">  relocate(participant_id, .before = "age") %&gt;%</span></span>
+<span id="cb153-34"><a href="googlesheets-chapter.html#cb153-34" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(age = factor(age, levels = c("Under 18", "18-24", "25-34", "35-44", "45-54", "55-64", "Over 65")))</span></span>
+<span id="cb153-35"><a href="googlesheets-chapter.html#cb153-35" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb153-36"><a href="googlesheets-chapter.html#cb153-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb153-37"><a href="googlesheets-chapter.html#cb153-37" aria-hidden="true" tabindex="-1"></a><span class="fu"># Respondent Demographics</span></span>
+<span id="cb153-38"><a href="googlesheets-chapter.html#cb153-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb153-39"><a href="googlesheets-chapter.html#cb153-39" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb153-40"><a href="googlesheets-chapter.html#cb153-40" aria-hidden="true" tabindex="-1"></a><span class="in"># Calculate number of respondents</span></span>
+<span id="cb153-41"><a href="googlesheets-chapter.html#cb153-41" aria-hidden="true" tabindex="-1"></a><span class="in">number_of_respondents &lt;- nrow(survey_data_clean)</span></span>
+<span id="cb153-42"><a href="googlesheets-chapter.html#cb153-42" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb153-43"><a href="googlesheets-chapter.html#cb153-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb153-44"><a href="googlesheets-chapter.html#cb153-44" aria-hidden="true" tabindex="-1"></a>We received responses from <span class="in">`r number_of_respondents`</span> respondents. Their ages are below.</span>
+<span id="cb153-45"><a href="googlesheets-chapter.html#cb153-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb153-46"><a href="googlesheets-chapter.html#cb153-46" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb153-47"><a href="googlesheets-chapter.html#cb153-47" aria-hidden="true" tabindex="-1"></a><span class="in">survey_data_clean %&gt;% </span></span>
+<span id="cb153-48"><a href="googlesheets-chapter.html#cb153-48" aria-hidden="true" tabindex="-1"></a><span class="in">  select(participant_id, age) %&gt;% </span></span>
+<span id="cb153-49"><a href="googlesheets-chapter.html#cb153-49" aria-hidden="true" tabindex="-1"></a><span class="in">  gt() %&gt;% </span></span>
+<span id="cb153-50"><a href="googlesheets-chapter.html#cb153-50" aria-hidden="true" tabindex="-1"></a><span class="in">  cols_label(</span></span>
+<span id="cb153-51"><a href="googlesheets-chapter.html#cb153-51" aria-hidden="true" tabindex="-1"></a><span class="in">    participant_id = "Participant ID",</span></span>
+<span id="cb153-52"><a href="googlesheets-chapter.html#cb153-52" aria-hidden="true" tabindex="-1"></a><span class="in">    age = "Age"</span></span>
+<span id="cb153-53"><a href="googlesheets-chapter.html#cb153-53" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;% </span></span>
+<span id="cb153-54"><a href="googlesheets-chapter.html#cb153-54" aria-hidden="true" tabindex="-1"></a><span class="in">  tab_style(</span></span>
+<span id="cb153-55"><a href="googlesheets-chapter.html#cb153-55" aria-hidden="true" tabindex="-1"></a><span class="in">    style = cell_text(weight = "bold"),</span></span>
+<span id="cb153-56"><a href="googlesheets-chapter.html#cb153-56" aria-hidden="true" tabindex="-1"></a><span class="in">    locations = cells_column_labels()</span></span>
+<span id="cb153-57"><a href="googlesheets-chapter.html#cb153-57" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;% </span></span>
+<span id="cb153-58"><a href="googlesheets-chapter.html#cb153-58" aria-hidden="true" tabindex="-1"></a><span class="in">  cols_align(</span></span>
+<span id="cb153-59"><a href="googlesheets-chapter.html#cb153-59" aria-hidden="true" tabindex="-1"></a><span class="in">    align = "left",</span></span>
+<span id="cb153-60"><a href="googlesheets-chapter.html#cb153-60" aria-hidden="true" tabindex="-1"></a><span class="in">    columns = everything()</span></span>
+<span id="cb153-61"><a href="googlesheets-chapter.html#cb153-61" aria-hidden="true" tabindex="-1"></a><span class="in">  ) %&gt;% </span></span>
+<span id="cb153-62"><a href="googlesheets-chapter.html#cb153-62" aria-hidden="true" tabindex="-1"></a><span class="in">  cols_width(</span></span>
+<span id="cb153-63"><a href="googlesheets-chapter.html#cb153-63" aria-hidden="true" tabindex="-1"></a><span class="in">    participant_id ~ px(200),</span></span>
+<span id="cb153-64"><a href="googlesheets-chapter.html#cb153-64" aria-hidden="true" tabindex="-1"></a><span class="in">    age ~ px(700)</span></span>
+<span id="cb153-65"><a href="googlesheets-chapter.html#cb153-65" aria-hidden="true" tabindex="-1"></a><span class="in">  ) </span></span>
+<span id="cb153-66"><a href="googlesheets-chapter.html#cb153-66" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb153-67"><a href="googlesheets-chapter.html#cb153-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb153-68"><a href="googlesheets-chapter.html#cb153-68" aria-hidden="true" tabindex="-1"></a><span class="fu"># Video Games</span></span>
+<span id="cb153-69"><a href="googlesheets-chapter.html#cb153-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb153-70"><a href="googlesheets-chapter.html#cb153-70" aria-hidden="true" tabindex="-1"></a>We asked if respondents liked video games. Their responses are below.</span>
+<span id="cb153-71"><a href="googlesheets-chapter.html#cb153-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb153-72"><a href="googlesheets-chapter.html#cb153-72" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb153-73"><a href="googlesheets-chapter.html#cb153-73" aria-hidden="true" tabindex="-1"></a><span class="in">survey_data_clean %&gt;%</span></span>
+<span id="cb153-74"><a href="googlesheets-chapter.html#cb153-74" aria-hidden="true" tabindex="-1"></a><span class="in">  count(like_games) %&gt;% </span></span>
+<span id="cb153-75"><a href="googlesheets-chapter.html#cb153-75" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x = like_games,</span></span>
+<span id="cb153-76"><a href="googlesheets-chapter.html#cb153-76" aria-hidden="true" tabindex="-1"></a><span class="in">             y = n,</span></span>
+<span id="cb153-77"><a href="googlesheets-chapter.html#cb153-77" aria-hidden="true" tabindex="-1"></a><span class="in">             fill = like_games)) +</span></span>
+<span id="cb153-78"><a href="googlesheets-chapter.html#cb153-78" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_col() +</span></span>
+<span id="cb153-79"><a href="googlesheets-chapter.html#cb153-79" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_fill_manual(values = c(</span></span>
+<span id="cb153-80"><a href="googlesheets-chapter.html#cb153-80" aria-hidden="true" tabindex="-1"></a><span class="in">    "No" = "#6cabdd",</span></span>
+<span id="cb153-81"><a href="googlesheets-chapter.html#cb153-81" aria-hidden="true" tabindex="-1"></a><span class="in">    "Yes" = "#ff7400"</span></span>
+<span id="cb153-82"><a href="googlesheets-chapter.html#cb153-82" aria-hidden="true" tabindex="-1"></a><span class="in">  )) +</span></span>
+<span id="cb153-83"><a href="googlesheets-chapter.html#cb153-83" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(title = "How Many People Like Video Games?", </span></span>
+<span id="cb153-84"><a href="googlesheets-chapter.html#cb153-84" aria-hidden="true" tabindex="-1"></a><span class="in">       x = NULL,</span></span>
+<span id="cb153-85"><a href="googlesheets-chapter.html#cb153-85" aria-hidden="true" tabindex="-1"></a><span class="in">       y = "Number of Participants") +</span></span>
+<span id="cb153-86"><a href="googlesheets-chapter.html#cb153-86" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal(base_size = 16) +</span></span>
+<span id="cb153-87"><a href="googlesheets-chapter.html#cb153-87" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(legend.position = "none",</span></span>
+<span id="cb153-88"><a href="googlesheets-chapter.html#cb153-88" aria-hidden="true" tabindex="-1"></a><span class="in">        panel.grid.minor = element_blank(),</span></span>
+<span id="cb153-89"><a href="googlesheets-chapter.html#cb153-89" aria-hidden="true" tabindex="-1"></a><span class="in">        panel.grid.major.x = element_blank(),</span></span>
+<span id="cb153-90"><a href="googlesheets-chapter.html#cb153-90" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.title.y = element_blank(),</span></span>
+<span id="cb153-91"><a href="googlesheets-chapter.html#cb153-91" aria-hidden="true" tabindex="-1"></a><span class="in">        plot.title = element_text(face = "bold",</span></span>
+<span id="cb153-92"><a href="googlesheets-chapter.html#cb153-92" aria-hidden="true" tabindex="-1"></a><span class="in">                                  hjust = 0.5))</span></span>
+<span id="cb153-93"><a href="googlesheets-chapter.html#cb153-93" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<p>The resulting report can be seen in Figure <a href="googlesheets-chapter.html#fig:video-game-report">10.3</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:video-game-report"></span>
+<img src="assets/video-game-report.png" alt="The rendered video game report" width="100%"><p class="caption">
+Figure 10.3: The rendered video game report
+</p>
+</div>
+<p>The R Markdown document here isn’t revolutionary (it’s the same types of things we saw in Chapter <a href="rmarkdown-chapter.html#rmarkdown-chapter">6</a>). What is different is the way we’re importing our data. Because we’re bringing it in directly from Google Sheets, there’s no risk of, say, accidentally reading in the wrong CSV. Automating this step reduces the risk of error.</p>
+<p>The best part is that we can re-run our code at any point to bring in updated data. The <code><a href="https://googlesheets4.tidyverse.org/reference/range_read.html">read_sheet()</a></code> function will look for all data on the Google Sheet we specify. Our survey had five responses today, but if we run it again tomorrow and it has additional responses, they will all be included in the import. If you use Google Forms to run your survey and have the results go to a Google Sheet, you can have an always up-to-date summary report simply by clicking the Knit button in RStudio. That workflow is one that helped Meghan Harris to collect surveys and manage a wide range of data on opiod use disorder.</p>
+</div>
+<div id="conclusion-2" class="section level2 unnumbered">
+<h2>Conclusion<a class="anchor" aria-label="anchor" href="#conclusion-2"><i class="fas fa-link"></i></a>
+</h2>
+<p>In this chapter, we’ve shown how you can use the <code>googlesheets4</code> package to import data directly from Google Sheets. This takes our reproducibility one step further, making it possible not only to generate reports automatically, but also automating the process of bringing in the latest data.</p>
+<p>This process of bringing in data directly from the source applies beyond Google Sheets. There are packages to bring in data directly from Excel365 (<code>Microsoft365R</code>), Qualtrics (<code>qualtRics</code>), Survey Monkey (<code>surveymonkey</code>), and other sources. Before hitting the “Download Data” button in your data collection tool of choice, it’s worth looking into whether a package exists to import data directly into R.</p>
+<p>For Meghan Harris, working directly with data in Google Sheets was a game-changer. She used <code>googlesheets4</code> to bring in data in multiple Google Sheets. From there, she was able to streamline analysis and reporting, which ultimately had a big impact on her organization’s work. Data that had once been largely unused because accessing it was so complicated came to inform research on opioid use disorder. Bringing in data from Google Sheets with a few lines of code may seem small at first, but it can have a big impact.</p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="websites-chapter.html"><span class="header-section-number">9</span> Make Websites to Share Results Online</a></div>
+<div class="next"><a href="tidycensus-chapter.html"><span class="header-section-number">11</span> Access Census Data with the tidycensus Package</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#googlesheets-chapter"><span class="header-section-number">10</span> Automatically Access the Latest Data</a></li>
+<li><a class="nav-link" href="#using-the-googlesheets4-package-to-bring-in-up-to-date-data">Using the googlesheets4 Package to Bring in Up-to-Date Data</a></li>
+<li><a class="nav-link" href="#conclusion-2">Conclusion</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/rfortherestofus/r-without-statistics/blob/master/googlesheets.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/rfortherestofus/r-without-statistics/edit/master/googlesheets.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>R Without Statistics</strong>" was written by David Keyes. </p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 10 Reproducible Reporting with Quarto | R Without Statistics</title>
+<meta name="author" content="David Keyes">
+<meta name="description" content="Quarto, the next-generation version of R Markdown, offers a few advantages over R Markdown. First, the syntax it uses across output types is more consistent. As you’ve seen in this book, R...">
+<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta property="og:title" content="Chapter 10 Reproducible Reporting with Quarto | R Without Statistics">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://book.rwithoutstatistics.com/quarto-chapter.html">
+<meta property="og:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
+<meta property="og:description" content="Quarto, the next-generation version of R Markdown, offers a few advantages over R Markdown. First, the syntax it uses across output types is more consistent. As you’ve seen in this book, R...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 10 Reproducible Reporting with Quarto | R Without Statistics">
+<meta name="twitter:description" content="Quarto, the next-generation version of R Markdown, offers a few advantages over R Markdown. First, the syntax it uses across output types is more consistent. As you’ve seen in this book, R...">
+<meta name="twitter:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">R Without Statistics</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">About the Book</a></li>
+<li class="book-part">Introduction</li>
+<li><a class="" href="introduction.html">Introduction</a></li>
+<li><a class="" href="howto-chapter.html"><span class="header-section-number">1</span> An R Programming Crash Course</a></li>
+<li class="book-part">Part 1: Visualizations</li>
+<li><a class="" href="data-viz-chapter.html"><span class="header-section-number">2</span> Principles of Data Visualization</a></li>
+<li><a class="" href="custom-theme-chapter.html"><span class="header-section-number">3</span> Making Your Own Theme</a></li>
+<li><a class="" href="maps-chapter.html"><span class="header-section-number">4</span> Creating Maps</a></li>
+<li><a class="" href="tables-chapter.html"><span class="header-section-number">5</span> Crafting High-Quality Tables</a></li>
+<li class="book-part">Part 2: Reports, Presentations, and Websites</li>
+<li><a class="" href="rmarkdown-chapter.html"><span class="header-section-number">6</span> Writing Reports in R Markdown</a></li>
+<li><a class="" href="parameterized-reports-chapter.html"><span class="header-section-number">7</span> Using Parameters to Automate Reports</a></li>
+<li><a class="" href="presentations-chapter.html"><span class="header-section-number">8</span> Making Slides Presentations with xaringan</a></li>
+<li><a class="" href="websites-chapter.html"><span class="header-section-number">9</span> Make Websites to Share Results Online</a></li>
+<li><a class="active" href="quarto-chapter.html"><span class="header-section-number">10</span> Reproducible Reporting with Quarto</a></li>
+<li class="book-part">Part 3: Automation and Collaboration</li>
+<li><a class="" href="accessing-data-chapter.html"><span class="header-section-number">11</span> Accessing Data</a></li>
+<li><a class="" href="packages-chapter.html"><span class="header-section-number">12</span> Creating Your Own R Packages</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/rfortherestofus/r-without-statistics">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="quarto-chapter" class="section level1" number="10">
+<h1>
+<span class="header-section-number">10</span> Reproducible Reporting with Quarto<a class="anchor" aria-label="anchor" href="#quarto-chapter"><i class="fas fa-link"></i></a>
+</h1>
+<p>Quarto, the next-generation version of R Markdown, offers a few advantages over R Markdown. First, the syntax it uses across output types is more consistent. As you’ve seen in this book, R Markdown documents might use a variety of conventions; for example, the <code>distill</code> package has layout options that don’t work in <code>xaringan</code>, and <code>xaringan</code> uses three dashes to indicate new slides, while three dashes in other output formats would create a horizontal line.</p>
+<p>Quarto also supports more languages than does R Markdown, as well as multiple code editors. While R Markdown is designed to work in the RStudio IDE, Quarto works in RStudio as well as code editors such as VS Code and JupyterLab, making it easy to use with multiple languages.</p>
+<p>This chapter focuses on the benefits of using Quarto as an R user. It explains how to set up Quarto, then covers some of the most important differences between Quarto and R Markdown. Lastly, you’ll learn how to make the parameterized reports, presentations, and websites covered in previous chapters using Quarto.</p>
+<div id="creating-a-quarto-document" class="section level2 unnumbered">
+<h2>Creating a Quarto Document<a class="anchor" aria-label="anchor" href="#creating-a-quarto-document"><i class="fas fa-link"></i></a>
+</h2>
+<p>Versions of RStudio starting with 2022.07.1 come with Quarto installed. To check your RStudio version, click <strong>RStudio</strong> in the top menu bar, then click <strong>About RStudio</strong>. If you have an older version of RStudio, update it now by reinstalling it, as outlined in Chapter <a href="howto-chapter.html#howto-chapter">1</a>. Quarto should then be installed for you.</p>
+<p>Once you’ve installed Quarto, create a document by clicking <strong>File</strong> &gt; <strong>New File</strong> &gt; <strong>Quarto Document</strong>. You should see a menu, shown in Figure <a href="quarto-chapter.html#fig:new-quarto-doc">10.1</a>, that looks like the one used to create an R Markdown document.</p>
+<div class="figure">
+<span style="display:block;" id="fig:new-quarto-doc"></span>
+<img src="assets/new-quarto-doc.png" alt="The RStudio menu for creating a new Quarto document" width="100%"><p class="caption">
+Figure 10.1: The RStudio menu for creating a new Quarto document
+</p>
+</div>
+<p>Give your document a title and choose an output format. The <em>Engine</em> option allows you to select a different way to render documents. By default, it uses Knitr, the same rendering tool used by R Markdown. The <em>Use visual markdown editor</em> option provides an interface that looks more like Microsoft Word, but it can be finicky, so we won’t cover it here.</p>
+<p>The resulting Quarto document should contain default content, as do R Markdown documents:</p>
+<div class="sourceCode" id="cb165"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb165-1"><a href="quarto-chapter.html#cb165-1" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb165-2"><a href="quarto-chapter.html#cb165-2" tabindex="-1"></a><span class="an">title:</span><span class="co"> "My Report"</span></span>
+<span id="cb165-3"><a href="quarto-chapter.html#cb165-3" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
+<span id="cb165-4"><a href="quarto-chapter.html#cb165-4" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb165-5"><a href="quarto-chapter.html#cb165-5" tabindex="-1"></a></span>
+<span id="cb165-6"><a href="quarto-chapter.html#cb165-6" tabindex="-1"></a><span class="fu">## Quarto</span></span>
+<span id="cb165-7"><a href="quarto-chapter.html#cb165-7" tabindex="-1"></a></span>
+<span id="cb165-8"><a href="quarto-chapter.html#cb165-8" tabindex="-1"></a>Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <span class="ot">&lt;https://quarto.org&gt;</span>.</span>
+<span id="cb165-9"><a href="quarto-chapter.html#cb165-9" tabindex="-1"></a></span>
+<span id="cb165-10"><a href="quarto-chapter.html#cb165-10" tabindex="-1"></a><span class="fu">## Running Code</span></span>
+<span id="cb165-11"><a href="quarto-chapter.html#cb165-11" tabindex="-1"></a></span>
+<span id="cb165-12"><a href="quarto-chapter.html#cb165-12" tabindex="-1"></a>When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:</span>
+<span id="cb165-13"><a href="quarto-chapter.html#cb165-13" tabindex="-1"></a></span>
+<span id="cb165-14"><a href="quarto-chapter.html#cb165-14" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb165-15"><a href="quarto-chapter.html#cb165-15" tabindex="-1"></a><span class="in">1 + 1</span></span>
+<span id="cb165-16"><a href="quarto-chapter.html#cb165-16" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb165-17"><a href="quarto-chapter.html#cb165-17" tabindex="-1"></a></span>
+<span id="cb165-18"><a href="quarto-chapter.html#cb165-18" tabindex="-1"></a>You can add options to executable code like this </span>
+<span id="cb165-19"><a href="quarto-chapter.html#cb165-19" tabindex="-1"></a></span>
+<span id="cb165-20"><a href="quarto-chapter.html#cb165-20" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb165-21"><a href="quarto-chapter.html#cb165-21" tabindex="-1"></a><span class="in">#| echo: false</span></span>
+<span id="cb165-22"><a href="quarto-chapter.html#cb165-22" tabindex="-1"></a><span class="in">2 * 2</span></span>
+<span id="cb165-23"><a href="quarto-chapter.html#cb165-23" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb165-24"><a href="quarto-chapter.html#cb165-24" tabindex="-1"></a></span>
+<span id="cb165-25"><a href="quarto-chapter.html#cb165-25" tabindex="-1"></a>The <span class="in">`echo: false`</span> option disables the printing of code (only output is displayed).</span></code></pre></div>
+<p>Although R Markdown and Quarto have many things in common, they also have differences. Let’s explore them.</p>
+</div>
+<div id="comparing-r-markdown-and-quarto" class="section level2 unnumbered">
+<h2>Comparing R Markdown and Quarto<a class="anchor" aria-label="anchor" href="#comparing-r-markdown-and-quarto"><i class="fas fa-link"></i></a>
+</h2>
+<p>Quarto and R Markdown documents have the same basic structure: YAML metadata, followed by a combination of Markdown text and code chunks. Despite the similarities between the formats, there are some variations in their syntax.</p>
+<div id="the-format-and-execute-yaml-fields" class="section level3 unnumbered">
+<h3>The format and execute YAML Fields<a class="anchor" aria-label="anchor" href="#the-format-and-execute-yaml-fields"><i class="fas fa-link"></i></a>
+</h3>
+<p>Quarto uses slightly different options in its YAML. It replaces the <code>output</code> field with the <code>format</code> field and uses the value html instead of <code>html_document</code>:</p>
+<pre><code>---
+title: "My Report"
+output: html_document
+---</code></pre>
+<p>Other Quarto formats also use slightly different names than their R Markdown counterparts: <code>docx</code> instead of <code>word_document</code> and <code>pdf</code> instead of <code>pdf_document</code>, for example.</p>
+<p>A second difference between R Markdown and Quarto is that Quarto doesn’t use a <code>setup</code> code chunk to set default options about things like whether to show code, charts, and other elements in the rendered versions of the document. In Quarto, these options are set in the <code>execute</code> field of the YAML. For example, the following would hide code, as well as all warnings and messages, from the rendered document:</p>
+<pre><code>---
+title: "My Report"
+format: html
+execute:
+  echo: false
+  warning: false
+  message: false
+---</code></pre>
+<p>Quarto also allows you to write true and false in lower case.</p>
+</div>
+<div id="individual-code-chunk-options" class="section level3 unnumbered">
+<h3>Individual Code Chunk Options<a class="anchor" aria-label="anchor" href="#individual-code-chunk-options"><i class="fas fa-link"></i></a>
+</h3>
+<p>In R Markdown, we override options at the individual code chunk level by adding the new option within the curly brackets that start a code chunk. For example, the following would show both the code <code>2 * 2</code> as well as its output:</p>
+<div class="sourceCode" id="cb168"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb168-1"><a href="quarto-chapter.html#cb168-1" tabindex="-1"></a><span class="in">```{r echo = TRUE}</span></span>
+<span id="cb168-2"><a href="quarto-chapter.html#cb168-2" tabindex="-1"></a><span class="in">2 * 2</span></span>
+<span id="cb168-3"><a href="quarto-chapter.html#cb168-3" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<p>Quarto instead uses the following syntax to set individual code chunk-level options:</p>
+<div class="sourceCode" id="cb169"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb169-1"><a href="quarto-chapter.html#cb169-1" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb169-2"><a href="quarto-chapter.html#cb169-2" tabindex="-1"></a><span class="in">#| echo: false</span></span>
+<span id="cb169-3"><a href="quarto-chapter.html#cb169-3" tabindex="-1"></a><span class="in">2 * 2</span></span>
+<span id="cb169-4"><a href="quarto-chapter.html#cb169-4" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<p>You can see that the option is set within the code chunk itself. The characters <code>#|</code> (known as the <em>hash pipe</em>) at the start of a line indicate that we are setting options.</p>
+</div>
+<div id="dashes-in-option-names" class="section level3 unnumbered">
+<h3>Dashes in Option Names<a class="anchor" aria-label="anchor" href="#dashes-in-option-names"><i class="fas fa-link"></i></a>
+</h3>
+<p>Another difference you’re likely to see if you switch from R Markdown to Quarto is that option names consisting of two words are separated by a dash rather than a period. R Markdown, for example, uses the code chunk option <code>fig.height</code> to determine the height of plots. In contrast, Quarto uses <code>fig-height</code>, as follows:</p>
+<div class="sourceCode" id="cb170"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb170-1"><a href="quarto-chapter.html#cb170-1" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb170-2"><a href="quarto-chapter.html#cb170-2" tabindex="-1"></a><span class="in">#| fig-height: 10</span></span>
+<span id="cb170-3"><a href="quarto-chapter.html#cb170-3" tabindex="-1"></a></span>
+<span id="cb170-4"><a href="quarto-chapter.html#cb170-4" tabindex="-1"></a><span class="in">library(palmerpenguins)</span></span>
+<span id="cb170-5"><a href="quarto-chapter.html#cb170-5" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb170-6"><a href="quarto-chapter.html#cb170-6" tabindex="-1"></a></span>
+<span id="cb170-7"><a href="quarto-chapter.html#cb170-7" tabindex="-1"></a><span class="in">ggplot(penguins, aes(x = bill_length_mm,</span></span>
+<span id="cb170-8"><a href="quarto-chapter.html#cb170-8" tabindex="-1"></a><span class="in">                     y = bill_depth_mm)) +</span></span>
+<span id="cb170-9"><a href="quarto-chapter.html#cb170-9" tabindex="-1"></a><span class="in">  geom_point()</span></span>
+<span id="cb170-10"><a href="quarto-chapter.html#cb170-10" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<p>Helpfully for those of us coming from R Markdown, <code>fig.height</code> and similar options with periods in them will continue to work if you forget to make the switch. A list of all code chunk options can be found on the Quarto website at <a href="https://quarto.org/docs/reference/cells/cells-knitr.html" class="uri">https://quarto.org/docs/reference/cells/cells-knitr.html</a>.</p>
+</div>
+<div id="the-render-button" class="section level3 unnumbered">
+<h3>The Render Button<a class="anchor" aria-label="anchor" href="#the-render-button"><i class="fas fa-link"></i></a>
+</h3>
+<p>You can follow the same process to render your Quarto document as in R Markdown, but in Quarto the button is called Render rather than Knit. Figure <a href="quarto-chapter.html#fig:render-button">10.2</a> shows the Render button.</p>
+<div class="figure">
+<span style="display:block;" id="fig:render-button"></span>
+<img src="assets/render-button.png" alt="The Render button" width="100%"><p class="caption">
+Figure 10.2: The Render button
+</p>
+</div>
+<p>Clicking the Render button will turn the Quarto document into an HTML file, Word document, or any other output format you select, just as we did when working with R Markdown.</p>
+</div>
+</div>
+<div id="parameterized-reporting" class="section level2 unnumbered">
+<h2>Parameterized Reporting<a class="anchor" aria-label="anchor" href="#parameterized-reporting"><i class="fas fa-link"></i></a>
+</h2>
+<p>Now that you’ve learned how Quarto works, let’s make a few different documents with it, starting with a parameterized report. The process of making parameterized reports with Quarto is nearly identical to doing so with R Markdown. In fact, you can take the R Markdown document used to make the Urban Institute COVID Report in Chapter <a href="parameterized-reports-chapter.html#parameterized-reports-chapter">7</a> and adapt it for Quarto by copying the <em>.Rmd</em> file and changing its extension to <em>.qmd</em>, then making a few changes:</p>
+<div class="sourceCode" id="cb171"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb171-1"><a href="quarto-chapter.html#cb171-1" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb171-2"><a href="quarto-chapter.html#cb171-2" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Urban Institute COVID Report"</span></span>
+<span id="cb171-3"><a href="quarto-chapter.html#cb171-3" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
+<span id="cb171-4"><a href="quarto-chapter.html#cb171-4" tabindex="-1"></a><span class="an">params:</span></span>
+<span id="cb171-5"><a href="quarto-chapter.html#cb171-5" tabindex="-1"></a><span class="co">  state: "Alabama"</span></span>
+<span id="cb171-6"><a href="quarto-chapter.html#cb171-6" tabindex="-1"></a><span class="an">execute:</span></span>
+<span id="cb171-7"><a href="quarto-chapter.html#cb171-7" tabindex="-1"></a><span class="co">  echo: false</span></span>
+<span id="cb171-8"><a href="quarto-chapter.html#cb171-8" tabindex="-1"></a><span class="co">  warning: false</span></span>
+<span id="cb171-9"><a href="quarto-chapter.html#cb171-9" tabindex="-1"></a><span class="co">  message: false</span></span>
+<span id="cb171-10"><a href="quarto-chapter.html#cb171-10" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb171-11"><a href="quarto-chapter.html#cb171-11" tabindex="-1"></a></span>
+<span id="cb171-12"><a href="quarto-chapter.html#cb171-12" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb171-13"><a href="quarto-chapter.html#cb171-13" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb171-14"><a href="quarto-chapter.html#cb171-14" tabindex="-1"></a><span class="in">library(urbnthemes)</span></span>
+<span id="cb171-15"><a href="quarto-chapter.html#cb171-15" tabindex="-1"></a><span class="in">library(here)</span></span>
+<span id="cb171-16"><a href="quarto-chapter.html#cb171-16" tabindex="-1"></a><span class="in">library(scales)</span></span>
+<span id="cb171-17"><a href="quarto-chapter.html#cb171-17" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb171-18"><a href="quarto-chapter.html#cb171-18" tabindex="-1"></a></span>
+<span id="cb171-19"><a href="quarto-chapter.html#cb171-19" tabindex="-1"></a><span class="fu"># `r params$state`</span></span>
+<span id="cb171-20"><a href="quarto-chapter.html#cb171-20" tabindex="-1"></a></span>
+<span id="cb171-21"><a href="quarto-chapter.html#cb171-21" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb171-22"><a href="quarto-chapter.html#cb171-22" tabindex="-1"></a><span class="in">cases &lt;- tibble(state.name) %&gt;%</span></span>
+<span id="cb171-23"><a href="quarto-chapter.html#cb171-23" tabindex="-1"></a><span class="in">  rbind(state.name = "District of Columbia") %&gt;%</span></span>
+<span id="cb171-24"><a href="quarto-chapter.html#cb171-24" tabindex="-1"></a><span class="in">  left_join(read_csv("https://data.rwithoutstatistics.com/united_states_covid19_cases_deaths_and_testing_by_state.csv", skip = 2),</span></span>
+<span id="cb171-25"><a href="quarto-chapter.html#cb171-25" tabindex="-1"></a><span class="in">            by = c("state.name" = "State/Territory")) %&gt;%</span></span>
+<span id="cb171-26"><a href="quarto-chapter.html#cb171-26" tabindex="-1"></a><span class="in">  select(total_cases = `Total Cases`, state.name,</span></span>
+<span id="cb171-27"><a href="quarto-chapter.html#cb171-27" tabindex="-1"></a><span class="in">         cases_per_100000 = `Case Rate per 100000`) %&gt;%</span></span>
+<span id="cb171-28"><a href="quarto-chapter.html#cb171-28" tabindex="-1"></a><span class="in">  mutate(cases_per_100000 = parse_number(cases_per_100000)) %&gt;% </span></span>
+<span id="cb171-29"><a href="quarto-chapter.html#cb171-29" tabindex="-1"></a><span class="in">  mutate(case_rank = rank(-cases_per_100000, ties.method = "min"))</span></span>
+<span id="cb171-30"><a href="quarto-chapter.html#cb171-30" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb171-31"><a href="quarto-chapter.html#cb171-31" tabindex="-1"></a></span>
+<span id="cb171-32"><a href="quarto-chapter.html#cb171-32" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb171-33"><a href="quarto-chapter.html#cb171-33" tabindex="-1"></a><span class="in">state_text &lt;- if_else(params$state == "District of Columbia", str_glue("the District of Columbia"), str_glue("state of {params$state}"))</span></span>
+<span id="cb171-34"><a href="quarto-chapter.html#cb171-34" tabindex="-1"></a></span>
+<span id="cb171-35"><a href="quarto-chapter.html#cb171-35" tabindex="-1"></a><span class="in">state_cases_per_100000 &lt;- cases %&gt;%</span></span>
+<span id="cb171-36"><a href="quarto-chapter.html#cb171-36" tabindex="-1"></a><span class="in">  filter(state.name == params$state) %&gt;% </span></span>
+<span id="cb171-37"><a href="quarto-chapter.html#cb171-37" tabindex="-1"></a><span class="in">  pull(cases_per_100000) %&gt;% </span></span>
+<span id="cb171-38"><a href="quarto-chapter.html#cb171-38" tabindex="-1"></a><span class="in">  comma()</span></span>
+<span id="cb171-39"><a href="quarto-chapter.html#cb171-39" tabindex="-1"></a></span>
+<span id="cb171-40"><a href="quarto-chapter.html#cb171-40" tabindex="-1"></a><span class="in">state_cases_rank &lt;- cases %&gt;%</span></span>
+<span id="cb171-41"><a href="quarto-chapter.html#cb171-41" tabindex="-1"></a><span class="in">  filter(state.name == params$state) %&gt;% </span></span>
+<span id="cb171-42"><a href="quarto-chapter.html#cb171-42" tabindex="-1"></a><span class="in">  pull(case_rank)</span></span>
+<span id="cb171-43"><a href="quarto-chapter.html#cb171-43" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb171-44"><a href="quarto-chapter.html#cb171-44" tabindex="-1"></a></span>
+<span id="cb171-45"><a href="quarto-chapter.html#cb171-45" tabindex="-1"></a>In <span class="in">`r state_text`</span>, there were <span class="in">`r state_cases_per_100000`</span> cases per 100,000 people in the last seven days. This puts <span class="in">`r params$state`</span> at number <span class="in">`r state_cases_rank`</span> of 50 states and the District of Columbia. </span>
+<span id="cb171-46"><a href="quarto-chapter.html#cb171-46" tabindex="-1"></a></span>
+<span id="cb171-47"><a href="quarto-chapter.html#cb171-47" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb171-48"><a href="quarto-chapter.html#cb171-48" tabindex="-1"></a><span class="in">#| fig-height: 8</span></span>
+<span id="cb171-49"><a href="quarto-chapter.html#cb171-49" tabindex="-1"></a></span>
+<span id="cb171-50"><a href="quarto-chapter.html#cb171-50" tabindex="-1"></a><span class="in">set_urbn_defaults(style = "print")</span></span>
+<span id="cb171-51"><a href="quarto-chapter.html#cb171-51" tabindex="-1"></a></span>
+<span id="cb171-52"><a href="quarto-chapter.html#cb171-52" tabindex="-1"></a><span class="in">cases %&gt;% </span></span>
+<span id="cb171-53"><a href="quarto-chapter.html#cb171-53" tabindex="-1"></a><span class="in">  mutate(highlight_state = if_else(state.name == params$state, "Y", "N")) %&gt;% </span></span>
+<span id="cb171-54"><a href="quarto-chapter.html#cb171-54" tabindex="-1"></a><span class="in">  mutate(state.name = fct_reorder(state.name, cases_per_100000)) %&gt;% </span></span>
+<span id="cb171-55"><a href="quarto-chapter.html#cb171-55" tabindex="-1"></a><span class="in">  ggplot(aes(x = cases_per_100000,</span></span>
+<span id="cb171-56"><a href="quarto-chapter.html#cb171-56" tabindex="-1"></a><span class="in">             y = state.name,</span></span>
+<span id="cb171-57"><a href="quarto-chapter.html#cb171-57" tabindex="-1"></a><span class="in">             fill = highlight_state)) +</span></span>
+<span id="cb171-58"><a href="quarto-chapter.html#cb171-58" tabindex="-1"></a><span class="in">  geom_col() +</span></span>
+<span id="cb171-59"><a href="quarto-chapter.html#cb171-59" tabindex="-1"></a><span class="in">  scale_x_continuous(labels = comma_format()) +</span></span>
+<span id="cb171-60"><a href="quarto-chapter.html#cb171-60" tabindex="-1"></a><span class="in">  theme(legend.position = "none") +</span></span>
+<span id="cb171-61"><a href="quarto-chapter.html#cb171-61" tabindex="-1"></a><span class="in">  labs(y = NULL,</span></span>
+<span id="cb171-62"><a href="quarto-chapter.html#cb171-62" tabindex="-1"></a><span class="in">       x = "Cases per 100,000")</span></span>
+<span id="cb171-63"><a href="quarto-chapter.html#cb171-63" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<p>In this code, we’ve switched <code>output: html_document</code> to <code>format: html</code> in the YAML, We’ve also removed the <code>setup</code> code chunk and put the options that were there in the YAML. Lastly, we’ve switched the <code>fig.height</code> option in the last code chunk to <code>fig-height</code> and used the hash pipe to label it as an option.</p>
+<p>Next, to create one report for each state, we must tweak the render.R script file we used to make parameterized reports in Chapter <a href="parameterized-reports-chapter.html#parameterized-reports-chapter">7</a>:</p>
+<div class="sourceCode" id="cb172"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Load packages</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/quarto-dev/quarto-r">quarto</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create a vector of all states and the District of Columbia</span></span>
+<span><span class="va">state</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span><span class="va">state.name</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="st">"District of Columbia"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">state.name</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create a tibble with information on the:</span></span>
+<span><span class="co"># input R Markdown document</span></span>
+<span><span class="co"># output HTML file</span></span>
+<span><span class="co"># parameters needed to knit the document</span></span>
+<span><span class="va">reports</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
+<span>  input <span class="op">=</span> <span class="st">"urban-covid-budget-report.qmd"</span>,</span>
+<span>  output_file <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue</a></span><span class="op">(</span><span class="st">"{state}.html"</span><span class="op">)</span>,</span>
+<span>  execute_params <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">state</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>state <span class="op">=</span> <span class="va">.</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Generate all of our reports</span></span>
+<span><span class="va">reports</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/pmap.html">pwalk</a></span><span class="op">(</span><span class="va">quarto_render</span><span class="op">)</span></span></code></pre></div>
+<p>This updated <em>render.R</em> file loads the quarto package instead of the <code>rmarkdown</code> package and changes the input file to <em>urban-covid-budget-report.qmd</em>. In the <code>reports</code> tibble, we use <code>execute_params</code> instead of <code>params</code> because this is the argument that the <code><a href="https://quarto-dev.github.io/quarto-r/reference/quarto_render.html">quarto_render()</a></code> function expects. To render the reports, we use the <code><a href="https://quarto-dev.github.io/quarto-r/reference/quarto_render.html">quarto_render()</a></code> function instead of the <code><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html">render()</a></code> function from the markdown package. As in Chapter <a href="parameterized-reports-chapter.html#parameterized-reports-chapter">7</a>, running this code should produce one report for each state.</p>
+<div id="making-presentations" class="section level3 unnumbered">
+<h3>Making Presentations<a class="anchor" aria-label="anchor" href="#making-presentations"><i class="fas fa-link"></i></a>
+</h3>
+<p>Quarto can produce presentations like those you made in Chapter <a href="presentations-chapter.html#presentations-chapter">8</a> with the xaringan package. To make a presentation with Quarto, click <strong>File</strong> &gt; <strong>New File</strong> &gt; <strong>Quarto Presentation</strong>. Choose Reveal JS to make your slides and leave the Engine and Editor options untouched, as shown in Figure <a href="quarto-chapter.html#fig:quarto-new-presentation">10.3</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:quarto-new-presentation"></span>
+<img src="assets/quarto-new-presentation.png" alt="The RStudio menu to make a new Quarto presentation" width="100%"><p class="caption">
+Figure 10.3: The RStudio menu to make a new Quarto presentation
+</p>
+</div>
+<p>The slides we’ll make use the <code>reveal.js</code> JavaScript library under the hood, a technique similar to making slides with <code>xaringan</code>. The following code updates the presentation made in Chapter <a href="presentations-chapter.html#presentations-chapter">8</a> so it works with Quarto:</p>
+<div class="sourceCode" id="cb173"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb173-1"><a href="quarto-chapter.html#cb173-1" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb173-2"><a href="quarto-chapter.html#cb173-2" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Penguins Report"</span></span>
+<span id="cb173-3"><a href="quarto-chapter.html#cb173-3" tabindex="-1"></a><span class="an">author:</span><span class="co"> "David Keyes"</span></span>
+<span id="cb173-4"><a href="quarto-chapter.html#cb173-4" tabindex="-1"></a><span class="an">format:</span><span class="co"> revealjs</span></span>
+<span id="cb173-5"><a href="quarto-chapter.html#cb173-5" tabindex="-1"></a><span class="an">execute:</span><span class="co"> </span></span>
+<span id="cb173-6"><a href="quarto-chapter.html#cb173-6" tabindex="-1"></a><span class="co">  echo: false</span></span>
+<span id="cb173-7"><a href="quarto-chapter.html#cb173-7" tabindex="-1"></a><span class="co">  warning: false</span></span>
+<span id="cb173-8"><a href="quarto-chapter.html#cb173-8" tabindex="-1"></a><span class="co">  message: false</span></span>
+<span id="cb173-9"><a href="quarto-chapter.html#cb173-9" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb173-10"><a href="quarto-chapter.html#cb173-10" tabindex="-1"></a></span>
+<span id="cb173-11"><a href="quarto-chapter.html#cb173-11" tabindex="-1"></a><span class="fu"># Introduction</span></span>
+<span id="cb173-12"><a href="quarto-chapter.html#cb173-12" tabindex="-1"></a></span>
+<span id="cb173-13"><a href="quarto-chapter.html#cb173-13" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb173-14"><a href="quarto-chapter.html#cb173-14" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb173-15"><a href="quarto-chapter.html#cb173-15" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb173-16"><a href="quarto-chapter.html#cb173-16" tabindex="-1"></a></span>
+<span id="cb173-17"><a href="quarto-chapter.html#cb173-17" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb173-18"><a href="quarto-chapter.html#cb173-18" tabindex="-1"></a><span class="in">penguins &lt;- read_csv("https://raw.githubusercontent.com/rfortherestofus/r-without-statistics/main/data/penguins-2008.csv")</span></span>
+<span id="cb173-19"><a href="quarto-chapter.html#cb173-19" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb173-20"><a href="quarto-chapter.html#cb173-20" tabindex="-1"></a></span>
+<span id="cb173-21"><a href="quarto-chapter.html#cb173-21" tabindex="-1"></a>We are writing a report about the **Palmer Penguins**. These penguins are *really* amazing. There are three species:</span>
+<span id="cb173-22"><a href="quarto-chapter.html#cb173-22" tabindex="-1"></a></span>
+<span id="cb173-23"><a href="quarto-chapter.html#cb173-23" tabindex="-1"></a><span class="ss">- </span>Adelie</span>
+<span id="cb173-24"><a href="quarto-chapter.html#cb173-24" tabindex="-1"></a><span class="ss">- </span>Gentoo</span>
+<span id="cb173-25"><a href="quarto-chapter.html#cb173-25" tabindex="-1"></a><span class="ss">- </span>Chinstrap</span>
+<span id="cb173-26"><a href="quarto-chapter.html#cb173-26" tabindex="-1"></a></span>
+<span id="cb173-27"><a href="quarto-chapter.html#cb173-27" tabindex="-1"></a><span class="fu">## Bill Length</span></span>
+<span id="cb173-28"><a href="quarto-chapter.html#cb173-28" tabindex="-1"></a></span>
+<span id="cb173-29"><a href="quarto-chapter.html#cb173-29" tabindex="-1"></a>We can make a histogram to see the distribution of bill lengths.</span>
+<span id="cb173-30"><a href="quarto-chapter.html#cb173-30" tabindex="-1"></a></span>
+<span id="cb173-31"><a href="quarto-chapter.html#cb173-31" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb173-32"><a href="quarto-chapter.html#cb173-32" tabindex="-1"></a><span class="in">penguins %&gt;% </span></span>
+<span id="cb173-33"><a href="quarto-chapter.html#cb173-33" tabindex="-1"></a><span class="in">  ggplot(aes(x = bill_length_mm)) +</span></span>
+<span id="cb173-34"><a href="quarto-chapter.html#cb173-34" tabindex="-1"></a><span class="in">  geom_histogram() +</span></span>
+<span id="cb173-35"><a href="quarto-chapter.html#cb173-35" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb173-36"><a href="quarto-chapter.html#cb173-36" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb173-37"><a href="quarto-chapter.html#cb173-37" tabindex="-1"></a></span>
+<span id="cb173-38"><a href="quarto-chapter.html#cb173-38" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb173-39"><a href="quarto-chapter.html#cb173-39" tabindex="-1"></a><span class="in">average_bill_length &lt;- penguins %&gt;% </span></span>
+<span id="cb173-40"><a href="quarto-chapter.html#cb173-40" tabindex="-1"></a><span class="in">  summarize(avg_bill_length = mean(bill_length_mm,</span></span>
+<span id="cb173-41"><a href="quarto-chapter.html#cb173-41" tabindex="-1"></a><span class="in">                                   na.rm = TRUE)) %&gt;% </span></span>
+<span id="cb173-42"><a href="quarto-chapter.html#cb173-42" tabindex="-1"></a><span class="in">  pull(avg_bill_length)</span></span>
+<span id="cb173-43"><a href="quarto-chapter.html#cb173-43" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb173-44"><a href="quarto-chapter.html#cb173-44" tabindex="-1"></a></span>
+<span id="cb173-45"><a href="quarto-chapter.html#cb173-45" tabindex="-1"></a>The chart shows the distribution of bill lengths. The average bill length is <span class="in">`r average_bill_length`</span> millimeters.</span></code></pre></div>
+<p>In the YAML, we set <code>format: revealjs</code> to make a presentation and add several global code chunk options in the <code>execute</code> section. We remove the three dashes used to make slide breaks, because in Quarto, first- or second-level headings make new slides (though you can use three dashes to manually add slide breaks). When you render this code, you should get an HTML file with your slides. The output should look similar to the default <code>xaringan</code> slides we made.</p>
+<div id="incrementally-revealing-content-1" class="section level4 unnumbered">
+<h4>Incrementally Revealing Content<a class="anchor" aria-label="anchor" href="#incrementally-revealing-content-1"><i class="fas fa-link"></i></a>
+</h4>
+<p>Quarto slides can incrementally reveal content. To reveal bulleted and numbered lists one item at a time by default, add <code>incremental: true</code> to the document’s YAML:</p>
+<div class="sourceCode" id="cb174"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb174-1"><a href="quarto-chapter.html#cb174-1" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb174-2"><a href="quarto-chapter.html#cb174-2" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Penguins Report"</span></span>
+<span id="cb174-3"><a href="quarto-chapter.html#cb174-3" tabindex="-1"></a><span class="an">author:</span><span class="co"> "David Keyes"</span></span>
+<span id="cb174-4"><a href="quarto-chapter.html#cb174-4" tabindex="-1"></a><span class="an">format:</span><span class="co"> </span></span>
+<span id="cb174-5"><a href="quarto-chapter.html#cb174-5" tabindex="-1"></a><span class="co">  revealjs:</span></span>
+<span id="cb174-6"><a href="quarto-chapter.html#cb174-6" tabindex="-1"></a><span class="co">      incremental: true</span></span>
+<span id="cb174-7"><a href="quarto-chapter.html#cb174-7" tabindex="-1"></a><span class="an">execute:</span><span class="co"> </span></span>
+<span id="cb174-8"><a href="quarto-chapter.html#cb174-8" tabindex="-1"></a><span class="co">  echo: false</span></span>
+<span id="cb174-9"><a href="quarto-chapter.html#cb174-9" tabindex="-1"></a><span class="co">  warning: false</span></span>
+<span id="cb174-10"><a href="quarto-chapter.html#cb174-10" tabindex="-1"></a><span class="co">  message: false</span></span>
+<span id="cb174-11"><a href="quarto-chapter.html#cb174-11" tabindex="-1"></a><span class="co">---</span></span></code></pre></div>
+<p>As a result, the content in all lists in the presentation should appear on the slide one item at a time. You can also set just some lists to incrementally reveal using this format:</p>
+<div class="sourceCode" id="cb175"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb175-1"><a href="quarto-chapter.html#cb175-1" tabindex="-1"></a>::: {.incremental}</span>
+<span id="cb175-2"><a href="quarto-chapter.html#cb175-2" tabindex="-1"></a><span class="ss">- </span>Adelie</span>
+<span id="cb175-3"><a href="quarto-chapter.html#cb175-3" tabindex="-1"></a><span class="ss">- </span>Gentoo</span>
+<span id="cb175-4"><a href="quarto-chapter.html#cb175-4" tabindex="-1"></a><span class="ss">- </span>Chinstrap</span>
+<span id="cb175-5"><a href="quarto-chapter.html#cb175-5" tabindex="-1"></a>:::</span></code></pre></div>
+<p>Using <code>:::</code> to start and end a segment of the document creates a section in the resulting HTML file known as a <code>&lt;div&gt;</code>. The HTML <code>&lt;div&gt;</code> tag allows you to define properties within that section. In this code, adding <code>{.incremental}</code> sets a custom CSS class that makes the list reveal incrementally.</p>
+</div>
+<div id="aligning-content-and-adding-background-images" class="section level4 unnumbered">
+<h4>Aligning Content and Adding Background Images<a class="anchor" aria-label="anchor" href="#aligning-content-and-adding-background-images"><i class="fas fa-link"></i></a>
+</h4>
+We can use a
+<div>
+<p>to create columns in Quarto slides, too. Let’s say we want to create a slide with content in two columns, as in Figure <a href="quarto-chapter.html#fig:quarto-slides-two-columns">10.4</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:quarto-slides-two-columns"></span>
+<img src="assets/quarto-slides-two-columns.png" alt="A slide with two columns" width="100%"><p class="caption">
+Figure 10.4: A slide with two columns
+</p>
+</div>
+<p>The following code created this two-column slide:</p>
+<div class="sourceCode" id="cb176"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb176-1"><a href="quarto-chapter.html#cb176-1" tabindex="-1"></a>:::: {.columns}</span>
+<span id="cb176-2"><a href="quarto-chapter.html#cb176-2" tabindex="-1"></a></span>
+<span id="cb176-3"><a href="quarto-chapter.html#cb176-3" tabindex="-1"></a>::: {.column width="50%"}</span>
+<span id="cb176-4"><a href="quarto-chapter.html#cb176-4" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb176-5"><a href="quarto-chapter.html#cb176-5" tabindex="-1"></a><span class="in">penguins %&gt;% </span></span>
+<span id="cb176-6"><a href="quarto-chapter.html#cb176-6" tabindex="-1"></a><span class="in">  ggplot(aes(x = bill_length_mm)) +</span></span>
+<span id="cb176-7"><a href="quarto-chapter.html#cb176-7" tabindex="-1"></a><span class="in">  geom_histogram() +</span></span>
+<span id="cb176-8"><a href="quarto-chapter.html#cb176-8" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb176-9"><a href="quarto-chapter.html#cb176-9" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb176-10"><a href="quarto-chapter.html#cb176-10" tabindex="-1"></a></span>
+<span id="cb176-11"><a href="quarto-chapter.html#cb176-11" tabindex="-1"></a>:::</span>
+<span id="cb176-12"><a href="quarto-chapter.html#cb176-12" tabindex="-1"></a></span>
+<span id="cb176-13"><a href="quarto-chapter.html#cb176-13" tabindex="-1"></a>::: {.column width="50%"}</span>
+<span id="cb176-14"><a href="quarto-chapter.html#cb176-14" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb176-15"><a href="quarto-chapter.html#cb176-15" tabindex="-1"></a><span class="in">penguins %&gt;% </span></span>
+<span id="cb176-16"><a href="quarto-chapter.html#cb176-16" tabindex="-1"></a><span class="in">  ggplot(aes(x = bill_depth_mm)) +</span></span>
+<span id="cb176-17"><a href="quarto-chapter.html#cb176-17" tabindex="-1"></a><span class="in">  geom_histogram() +</span></span>
+<span id="cb176-18"><a href="quarto-chapter.html#cb176-18" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb176-19"><a href="quarto-chapter.html#cb176-19" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb176-20"><a href="quarto-chapter.html#cb176-20" tabindex="-1"></a></span>
+<span id="cb176-21"><a href="quarto-chapter.html#cb176-21" tabindex="-1"></a>:::</span>
+<span id="cb176-22"><a href="quarto-chapter.html#cb176-22" tabindex="-1"></a></span>
+<span id="cb176-23"><a href="quarto-chapter.html#cb176-23" tabindex="-1"></a>::::</span></code></pre></div>
+<p>Notice the <code>:::</code>, as well as <code>::::</code>, which creates nested <code>&lt;div&gt;</code> sections. We first use a <code>columns</code> class, which tells the HTML that all content within the <code>::::</code> should be laid out as columns. Then, we use <code>::: {.column width="50%"}</code> to start a <code>&lt;div&gt;</code> that takes up half the width of the slide. With use closing <code>::::</code> and <code>:::</code> to indicate the end of the section.</p>
+<p>When using <code>xaringan</code>, we easily centered content on a slide by surrounding it with <code>.center[]</code>. Doing the same thing in Quarto is slightly more complicated. Quarto has no built-in CSS class to center content, so we need to create one ourselves. Begin a CSS code chunk and a custom class called <code>center-slide</code>:</p>
+<div class="sourceCode" id="cb177"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb177-1"><a href="quarto-chapter.html#cb177-1" tabindex="-1"></a>```{css}</span>
+<span id="cb177-2"><a href="quarto-chapter.html#cb177-2" tabindex="-1"></a><span class="fu">.center-slide</span> {</span>
+<span id="cb177-3"><a href="quarto-chapter.html#cb177-3" tabindex="-1"></a>    <span class="kw">text-align</span>: <span class="dv">center</span><span class="op">;</span></span>
+<span id="cb177-4"><a href="quarto-chapter.html#cb177-4" tabindex="-1"></a>}</span>
+<span id="cb177-5"><a href="quarto-chapter.html#cb177-5" tabindex="-1"></a>```</span></code></pre></div>
+<p>Using CSS, we center-align all content. (The <code>text-align</code> property aligns images, too, not just text.) We then apply the new <code>center-slide</code> class by putting it next to the title of the slide, as follows:</p>
+<div class="sourceCode" id="cb178"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb178-1"><a href="quarto-chapter.html#cb178-1" tabindex="-1"></a>## Bill Length {<span class="fu">.center-slide</span>}</span></code></pre></div>
+<p>With the custom CSS applied, the slide should now center all content.</p>
+<p>Lastly, when working in <code>xaringan</code>, we added a background image to a slide. We can do the same thing in Quarto by applying the <code>background-image</code> attribute to a slide, as follows:</p>
+<div class="sourceCode" id="cb179"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb179-1"><a href="quarto-chapter.html#cb179-1" tabindex="-1"></a>## Penguins {background-image="penguins<span class="fu">.jpg</span>"}</span></code></pre></div>
+<p>This should add a slide with the text <em>Penguins</em> in front of the selected image.</p>
+</div>
+<div id="customizing-your-slides-with-themes-and-css" class="section level4 unnumbered">
+<h4>Customizing Your Slides with Themes and CSS<a class="anchor" aria-label="anchor" href="#customizing-your-slides-with-themes-and-css"><i class="fas fa-link"></i></a>
+</h4>
+<p>We’ve started making some changes to the look-and-feel of the Quarto slides. As with <code>xaringan</code>, there are two main ways to further customize your slides: using existing themes and changing the CSS.</p>
+<p>Themes are the easiest way to change what your slides look like. Quarto has many themes you can apply by adding their name to your YAML, as follows:</p>
+<div class="sourceCode" id="cb180"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb180-1"><a href="quarto-chapter.html#cb180-1" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb180-2"><a href="quarto-chapter.html#cb180-2" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Penguins Report"</span></span>
+<span id="cb180-3"><a href="quarto-chapter.html#cb180-3" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb180-4"><a href="quarto-chapter.html#cb180-4" tabindex="-1"></a><span class="co">  revealjs: </span></span>
+<span id="cb180-5"><a href="quarto-chapter.html#cb180-5" tabindex="-1"></a><span class="co">    theme: dark</span></span>
+<span id="cb180-6"><a href="quarto-chapter.html#cb180-6" tabindex="-1"></a><span class="co">---</span></span></code></pre></div>
+<p>Using this option should change the theme from the default of light to a dark theme. You can see the title slide with the dark theme applied in Figure <a href="quarto-chapter.html#fig:quarto-slide-dark">10.5</a>. To see the full list of available themes, go to <a href="https://quarto.org/docs/presentations/revealjs/themes.html" class="uri">https://quarto.org/docs/presentations/revealjs/themes.html</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:quarto-slide-dark"></span>
+<img src="assets/quarto-slide-dark.png" alt="A slide with the dark theme applied" width="100%"><p class="caption">
+Figure 10.5: A slide with the dark theme applied
+</p>
+</div>
+<p>You can also write custom CSS to change your slides further. Quarto uses a type of CSS called Sass that lets us include variables in the CSS. These variables resemble those from the <code>xaringanthemer</code> package, which allowed us to set values for header formatting using <code>header_h2_font_size</code> and <code>header_color</code>.</p>
+<p>Go to <strong>File</strong> &gt; <strong>New File</strong> &gt; <strong>New Text File</strong>, create a Sass file called <em>theme.scss</em>, and add the following two mandatory sections to it as follows:</p>
+<div class="sourceCode" id="cb181"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb181-1"><a href="quarto-chapter.html#cb181-1" tabindex="-1"></a><span class="co">/*-- scss:defaults --*/</span></span>
+<span id="cb181-2"><a href="quarto-chapter.html#cb181-2" tabindex="-1"></a></span>
+<span id="cb181-3"><a href="quarto-chapter.html#cb181-3" tabindex="-1"></a><span class="co">/*-- scss:rules --*/</span></span></code></pre></div>
+<p>In the <code>scss:defaults</code> section, we can use the Quarto Sass variables. For example, to change the color and size of first-level headers, add this code:</p>
+<div class="sourceCode" id="cb182"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb182-1"><a href="quarto-chapter.html#cb182-1" tabindex="-1"></a><span class="co">/*-- scss:defaults --*/</span></span>
+<span id="cb182-2"><a href="quarto-chapter.html#cb182-2" tabindex="-1"></a>$presentation-heading-color<span class="in">: red</span>;</span>
+<span id="cb182-3"><a href="quarto-chapter.html#cb182-3" tabindex="-1"></a>$presentation-h1-font-size<span class="in">: 150px;</span></span>
+<span id="cb182-4"><a href="quarto-chapter.html#cb182-4" tabindex="-1"></a></span>
+<span id="cb182-5"><a href="quarto-chapter.html#cb182-5" tabindex="-1"></a><span class="co">/*-- scss:rules --*/</span></span></code></pre></div>
+<p>All Quarto Sass variables start with a dollar sign, followed by a name. To apply these tweaks to your slides, adjust your YAML to tell Quarto use the custom <em>theme.scss</em> file:</p>
+<div class="sourceCode" id="cb183"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb183-1"><a href="quarto-chapter.html#cb183-1" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb183-2"><a href="quarto-chapter.html#cb183-2" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Penguins Reports"</span></span>
+<span id="cb183-3"><a href="quarto-chapter.html#cb183-3" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb183-4"><a href="quarto-chapter.html#cb183-4" tabindex="-1"></a><span class="co">  revealjs: </span></span>
+<span id="cb183-5"><a href="quarto-chapter.html#cb183-5" tabindex="-1"></a><span class="co">    theme: theme.scss</span></span>
+<span id="cb183-6"><a href="quarto-chapter.html#cb183-6" tabindex="-1"></a><span class="co">---</span></span></code></pre></div>
+<p>Figure <a href="quarto-chapter.html#fig:quarto-slide-scss">10.6</a> shows the changes applied to the rendered slides.</p>
+<div class="figure">
+<span style="display:block;" id="fig:quarto-slide-scss"></span>
+<img src="assets/quarto-slide-scss.png" alt="A slide with custom CSS applied to it" width="100%"><p class="caption">
+Figure 10.6: A slide with custom CSS applied to it
+</p>
+</div>
+<p>All pre-defined variables should go in the <code>scss:defaults</code> section, and you can find the full list of variables at <a href="https://quarto.org/docs/presentations/revealjs/themes.html#sass-variables" class="uri">https://quarto.org/docs/presentations/revealjs/themes.html#sass-variables</a>. In the <code>sass:rules</code> section, you can add additional CSS tweaks for which there are no existing variables. For example, you could place the code you wrote to center the slide’s content in this section:</p>
+<div class="sourceCode" id="cb184"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb184-1"><a href="quarto-chapter.html#cb184-1" tabindex="-1"></a><span class="co">/*-- scss:defaults --*/</span></span>
+<span id="cb184-2"><a href="quarto-chapter.html#cb184-2" tabindex="-1"></a>$presentation-heading-color<span class="in">: red</span>;</span>
+<span id="cb184-3"><a href="quarto-chapter.html#cb184-3" tabindex="-1"></a>$presentation-h1-font-size<span class="in">: 150px;</span></span>
+<span id="cb184-4"><a href="quarto-chapter.html#cb184-4" tabindex="-1"></a></span>
+<span id="cb184-5"><a href="quarto-chapter.html#cb184-5" tabindex="-1"></a><span class="co">/*-- scss:rules --*/</span></span>
+<span id="cb184-6"><a href="quarto-chapter.html#cb184-6" tabindex="-1"></a><span class="fu">.center-slide</span> {</span>
+<span id="cb184-7"><a href="quarto-chapter.html#cb184-7" tabindex="-1"></a>  <span class="kw">text-align</span>: <span class="dv">center</span><span class="op">;</span></span>
+<span id="cb184-8"><a href="quarto-chapter.html#cb184-8" tabindex="-1"></a>}</span></code></pre></div>
+<p>Because rendered Quarto slides are HTML documents, you can tweak them however you would like with custom CSS. What’s more, because the slides use <code>reveal.js</code> under the hood, any features built into that JavaScript library work in Quarto. This library includes easy ways to add transitions, animations, interactive content, and much more. The demo Quarto presentation available at <a href="https://quarto.org/docs/presentations/revealjs/demo/" class="uri">https://quarto.org/docs/presentations/revealjs/demo/</a> shows many of these features in action.</p>
+</div>
+</div>
+<div id="making-websites" class="section level3 unnumbered">
+<h3>Making Websites<a class="anchor" aria-label="anchor" href="#making-websites"><i class="fas fa-link"></i></a>
+</h3>
+<p>Quarto can make websites without requiring the use of an external package like <code>distill</code>. To create a Quarto website, go to <strong>File</strong> &gt; <strong>New Project</strong>. Select <strong>New Directory</strong>, then <strong>Quarto website</strong>. You’ll be prompted to choose a directory in which to place your project. Keep the default engine (Knitr), check <strong>Create a git repository</strong> (which should show up only if you’ve already installed git). and leave everything else unchecked. Your screen should look like Figure <a href="quarto-chapter.html#fig:create-quarto-website">10.7</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:create-quarto-website"></span>
+<img src="assets/create-quarto-website.png" alt="The RStudio menu to create a Quarto website" width="100%"><p class="caption">
+Figure 10.7: The RStudio menu to create a Quarto website
+</p>
+</div>
+<p>Click <strong>Create Project</strong>, which should create a series of files: <em>index.qmd</em>, <em>about.qmd</em>, *_quarto.yml<em>, and </em>styles.css<em>. These files resemble those created by the <code>distill</code> package. The .qmd files are where we’ll add content, the </em>_quarto.yml* file is where we’ll set options for the entire website, and the <em>styles.css</em> file is where we’ll add CSS to customize the website’s appearance.</p>
+<div id="building-the-website" class="section level4 unnumbered">
+<h4>Building the Website<a class="anchor" aria-label="anchor" href="#building-the-website"><i class="fas fa-link"></i></a>
+</h4>
+<p>Let’s start by modifying the <em>.qmd</em> files. Open the home page file, <em>index.qmd</em>, delete the default content below the YAML and replace it with the content from website you made in Chapter 9. Remove the <code>layout = "l-page"</code> element, which we used to widen the layout. We’ll discuss how to change the page’s layout in Quarto later in this section:</p>
+<div class="sourceCode" id="cb185"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb185-1"><a href="quarto-chapter.html#cb185-1" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb185-2"><a href="quarto-chapter.html#cb185-2" tabindex="-1"></a><span class="in"># Load packages</span></span>
+<span id="cb185-3"><a href="quarto-chapter.html#cb185-3" tabindex="-1"></a></span>
+<span id="cb185-4"><a href="quarto-chapter.html#cb185-4" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb185-5"><a href="quarto-chapter.html#cb185-5" tabindex="-1"></a><span class="in">library(janitor)</span></span>
+<span id="cb185-6"><a href="quarto-chapter.html#cb185-6" tabindex="-1"></a><span class="in">library(tigris)</span></span>
+<span id="cb185-7"><a href="quarto-chapter.html#cb185-7" tabindex="-1"></a><span class="in">library(gt)</span></span>
+<span id="cb185-8"><a href="quarto-chapter.html#cb185-8" tabindex="-1"></a><span class="in">library(lubridate)</span></span>
+<span id="cb185-9"><a href="quarto-chapter.html#cb185-9" tabindex="-1"></a><span class="in">library(reactable)</span></span>
+<span id="cb185-10"><a href="quarto-chapter.html#cb185-10" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb185-11"><a href="quarto-chapter.html#cb185-11" tabindex="-1"></a></span>
+<span id="cb185-12"><a href="quarto-chapter.html#cb185-12" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb185-13"><a href="quarto-chapter.html#cb185-13" tabindex="-1"></a><span class="in"># Import data</span></span>
+<span id="cb185-14"><a href="quarto-chapter.html#cb185-14" tabindex="-1"></a></span>
+<span id="cb185-15"><a href="quarto-chapter.html#cb185-15" tabindex="-1"></a><span class="in">us_states &lt;- states(cb = TRUE, </span></span>
+<span id="cb185-16"><a href="quarto-chapter.html#cb185-16" tabindex="-1"></a><span class="in">                    resolution = "20m",</span></span>
+<span id="cb185-17"><a href="quarto-chapter.html#cb185-17" tabindex="-1"></a><span class="in">                    progress_bar = FALSE) %&gt;%</span></span>
+<span id="cb185-18"><a href="quarto-chapter.html#cb185-18" tabindex="-1"></a><span class="in">  shift_geometry() %&gt;% </span></span>
+<span id="cb185-19"><a href="quarto-chapter.html#cb185-19" tabindex="-1"></a><span class="in">  clean_names() %&gt;% </span></span>
+<span id="cb185-20"><a href="quarto-chapter.html#cb185-20" tabindex="-1"></a><span class="in">  select(geoid, name) %&gt;% </span></span>
+<span id="cb185-21"><a href="quarto-chapter.html#cb185-21" tabindex="-1"></a><span class="in">  rename(state = name) %&gt;% </span></span>
+<span id="cb185-22"><a href="quarto-chapter.html#cb185-22" tabindex="-1"></a><span class="in">  filter(state %in% state.name)</span></span>
+<span id="cb185-23"><a href="quarto-chapter.html#cb185-23" tabindex="-1"></a></span>
+<span id="cb185-24"><a href="quarto-chapter.html#cb185-24" tabindex="-1"></a><span class="in">covid_data &lt;- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/rolling-averages/us-states.csv") %&gt;% </span></span>
+<span id="cb185-25"><a href="quarto-chapter.html#cb185-25" tabindex="-1"></a><span class="in">  filter(state %in% state.name) %&gt;% </span></span>
+<span id="cb185-26"><a href="quarto-chapter.html#cb185-26" tabindex="-1"></a><span class="in">  mutate(geoid = str_remove(geoid, "USA-")) </span></span>
+<span id="cb185-27"><a href="quarto-chapter.html#cb185-27" tabindex="-1"></a></span>
+<span id="cb185-28"><a href="quarto-chapter.html#cb185-28" tabindex="-1"></a><span class="in">most_recent_day &lt;- covid_data %&gt;% </span></span>
+<span id="cb185-29"><a href="quarto-chapter.html#cb185-29" tabindex="-1"></a><span class="in">  slice_max(order_by = date,</span></span>
+<span id="cb185-30"><a href="quarto-chapter.html#cb185-30" tabindex="-1"></a><span class="in">            n = 1) %&gt;% </span></span>
+<span id="cb185-31"><a href="quarto-chapter.html#cb185-31" tabindex="-1"></a><span class="in">  distinct(date) %&gt;% </span></span>
+<span id="cb185-32"><a href="quarto-chapter.html#cb185-32" tabindex="-1"></a><span class="in">  mutate(date_nice_format = str_glue("{month(date, label = TRUE, abbr = FALSE)} {day(date)}, {year(date)}")) %&gt;% </span></span>
+<span id="cb185-33"><a href="quarto-chapter.html#cb185-33" tabindex="-1"></a><span class="in">  pull(date_nice_format)</span></span>
+<span id="cb185-34"><a href="quarto-chapter.html#cb185-34" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb185-35"><a href="quarto-chapter.html#cb185-35" tabindex="-1"></a></span>
+<span id="cb185-36"><a href="quarto-chapter.html#cb185-36" tabindex="-1"></a><span class="fu"># COVID Death Rates as of `r most_recent_day`</span></span>
+<span id="cb185-37"><a href="quarto-chapter.html#cb185-37" tabindex="-1"></a></span>
+<span id="cb185-38"><a href="quarto-chapter.html#cb185-38" tabindex="-1"></a>This table shows COVID death rates per 100,000 people in four states states.</span>
+<span id="cb185-39"><a href="quarto-chapter.html#cb185-39" tabindex="-1"></a></span>
+<span id="cb185-40"><a href="quarto-chapter.html#cb185-40" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb185-41"><a href="quarto-chapter.html#cb185-41" tabindex="-1"></a><span class="in"># Make table</span></span>
+<span id="cb185-42"><a href="quarto-chapter.html#cb185-42" tabindex="-1"></a></span>
+<span id="cb185-43"><a href="quarto-chapter.html#cb185-43" tabindex="-1"></a><span class="in">covid_data %&gt;% </span></span>
+<span id="cb185-44"><a href="quarto-chapter.html#cb185-44" tabindex="-1"></a><span class="in">  slice_max(order_by = date,</span></span>
+<span id="cb185-45"><a href="quarto-chapter.html#cb185-45" tabindex="-1"></a><span class="in">            n = 1) %&gt;%</span></span>
+<span id="cb185-46"><a href="quarto-chapter.html#cb185-46" tabindex="-1"></a><span class="in">  select(state, deaths_avg_per_100k) %&gt;% </span></span>
+<span id="cb185-47"><a href="quarto-chapter.html#cb185-47" tabindex="-1"></a><span class="in">  arrange(state) %&gt;% </span></span>
+<span id="cb185-48"><a href="quarto-chapter.html#cb185-48" tabindex="-1"></a><span class="in">  set_names("State", "Death rate") %&gt;% </span></span>
+<span id="cb185-49"><a href="quarto-chapter.html#cb185-49" tabindex="-1"></a><span class="in">  reactable()</span></span>
+<span id="cb185-50"><a href="quarto-chapter.html#cb185-50" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb185-51"><a href="quarto-chapter.html#cb185-51" tabindex="-1"></a></span>
+<span id="cb185-52"><a href="quarto-chapter.html#cb185-52" tabindex="-1"></a>We can see this same death rate data for all states on a map.</span>
+<span id="cb185-53"><a href="quarto-chapter.html#cb185-53" tabindex="-1"></a></span>
+<span id="cb185-54"><a href="quarto-chapter.html#cb185-54" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb185-55"><a href="quarto-chapter.html#cb185-55" tabindex="-1"></a><span class="in"># Make map</span></span>
+<span id="cb185-56"><a href="quarto-chapter.html#cb185-56" tabindex="-1"></a></span>
+<span id="cb185-57"><a href="quarto-chapter.html#cb185-57" tabindex="-1"></a><span class="in">most_recent &lt;- us_states %&gt;% </span></span>
+<span id="cb185-58"><a href="quarto-chapter.html#cb185-58" tabindex="-1"></a><span class="in">  left_join(covid_data, by = "state") %&gt;% </span></span>
+<span id="cb185-59"><a href="quarto-chapter.html#cb185-59" tabindex="-1"></a><span class="in">  slice_max(order_by = date,</span></span>
+<span id="cb185-60"><a href="quarto-chapter.html#cb185-60" tabindex="-1"></a><span class="in">            n = 1) </span></span>
+<span id="cb185-61"><a href="quarto-chapter.html#cb185-61" tabindex="-1"></a></span>
+<span id="cb185-62"><a href="quarto-chapter.html#cb185-62" tabindex="-1"></a><span class="in">most_recent %&gt;% </span></span>
+<span id="cb185-63"><a href="quarto-chapter.html#cb185-63" tabindex="-1"></a><span class="in">  ggplot(aes(fill = deaths_avg_per_100k)) +</span></span>
+<span id="cb185-64"><a href="quarto-chapter.html#cb185-64" tabindex="-1"></a><span class="in">  geom_sf() +</span></span>
+<span id="cb185-65"><a href="quarto-chapter.html#cb185-65" tabindex="-1"></a><span class="in">  scale_fill_viridis_c(option = "rocket") +</span></span>
+<span id="cb185-66"><a href="quarto-chapter.html#cb185-66" tabindex="-1"></a><span class="in">  labs(fill = "Deaths per\n100,000 people") +</span></span>
+<span id="cb185-67"><a href="quarto-chapter.html#cb185-67" tabindex="-1"></a><span class="in">  theme_void()</span></span>
+<span id="cb185-68"><a href="quarto-chapter.html#cb185-68" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb185-69"><a href="quarto-chapter.html#cb185-69" tabindex="-1"></a></span>
+<span id="cb185-70"><a href="quarto-chapter.html#cb185-70" tabindex="-1"></a><span class="fu"># COVID Death Rates Over Time</span></span>
+<span id="cb185-71"><a href="quarto-chapter.html#cb185-71" tabindex="-1"></a></span>
+<span id="cb185-72"><a href="quarto-chapter.html#cb185-72" tabindex="-1"></a>The following chart shows COVID death rates from the start of COVID in early 2020 until <span class="in">`r most_recent_day`</span>.</span>
+<span id="cb185-73"><a href="quarto-chapter.html#cb185-73" tabindex="-1"></a></span>
+<span id="cb185-74"><a href="quarto-chapter.html#cb185-74" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb185-75"><a href="quarto-chapter.html#cb185-75" tabindex="-1"></a><span class="in"># Make chart</span></span>
+<span id="cb185-76"><a href="quarto-chapter.html#cb185-76" tabindex="-1"></a></span>
+<span id="cb185-77"><a href="quarto-chapter.html#cb185-77" tabindex="-1"></a><span class="in">library(plotly)</span></span>
+<span id="cb185-78"><a href="quarto-chapter.html#cb185-78" tabindex="-1"></a></span>
+<span id="cb185-79"><a href="quarto-chapter.html#cb185-79" tabindex="-1"></a><span class="in">covid_chart &lt;- covid_data %&gt;% </span></span>
+<span id="cb185-80"><a href="quarto-chapter.html#cb185-80" tabindex="-1"></a><span class="in">  filter(state %in% c("Alabama",</span></span>
+<span id="cb185-81"><a href="quarto-chapter.html#cb185-81" tabindex="-1"></a><span class="in">                      "Alaska",</span></span>
+<span id="cb185-82"><a href="quarto-chapter.html#cb185-82" tabindex="-1"></a><span class="in">                      "Arizona",</span></span>
+<span id="cb185-83"><a href="quarto-chapter.html#cb185-83" tabindex="-1"></a><span class="in">                      "Arkansas")) %&gt;% </span></span>
+<span id="cb185-84"><a href="quarto-chapter.html#cb185-84" tabindex="-1"></a><span class="in">  ggplot(aes(x = date,</span></span>
+<span id="cb185-85"><a href="quarto-chapter.html#cb185-85" tabindex="-1"></a><span class="in">             y = deaths_avg_per_100k,</span></span>
+<span id="cb185-86"><a href="quarto-chapter.html#cb185-86" tabindex="-1"></a><span class="in">             group = state,</span></span>
+<span id="cb185-87"><a href="quarto-chapter.html#cb185-87" tabindex="-1"></a><span class="in">             fill = deaths_avg_per_100k)) +</span></span>
+<span id="cb185-88"><a href="quarto-chapter.html#cb185-88" tabindex="-1"></a><span class="in">  geom_col() +</span></span>
+<span id="cb185-89"><a href="quarto-chapter.html#cb185-89" tabindex="-1"></a><span class="in">  scale_fill_viridis_c(option = "rocket") +</span></span>
+<span id="cb185-90"><a href="quarto-chapter.html#cb185-90" tabindex="-1"></a><span class="in">  theme_minimal() +</span></span>
+<span id="cb185-91"><a href="quarto-chapter.html#cb185-91" tabindex="-1"></a><span class="in">  labs(title = "Deaths per 100,000 people over time") +</span></span>
+<span id="cb185-92"><a href="quarto-chapter.html#cb185-92" tabindex="-1"></a><span class="in">  theme(legend.position = "none",</span></span>
+<span id="cb185-93"><a href="quarto-chapter.html#cb185-93" tabindex="-1"></a><span class="in">        plot.title.position = "plot",</span></span>
+<span id="cb185-94"><a href="quarto-chapter.html#cb185-94" tabindex="-1"></a><span class="in">        plot.title = element_text(face = "bold"),</span></span>
+<span id="cb185-95"><a href="quarto-chapter.html#cb185-95" tabindex="-1"></a><span class="in">        panel.grid.minor = element_blank(),</span></span>
+<span id="cb185-96"><a href="quarto-chapter.html#cb185-96" tabindex="-1"></a><span class="in">        axis.title = element_blank()) +</span></span>
+<span id="cb185-97"><a href="quarto-chapter.html#cb185-97" tabindex="-1"></a><span class="in">  facet_wrap(~state,</span></span>
+<span id="cb185-98"><a href="quarto-chapter.html#cb185-98" tabindex="-1"></a><span class="in">             nrow = 2)</span></span>
+<span id="cb185-99"><a href="quarto-chapter.html#cb185-99" tabindex="-1"></a></span>
+<span id="cb185-100"><a href="quarto-chapter.html#cb185-100" tabindex="-1"></a></span>
+<span id="cb185-101"><a href="quarto-chapter.html#cb185-101" tabindex="-1"></a><span class="in">ggplotly(covid_chart)</span></span>
+<span id="cb185-102"><a href="quarto-chapter.html#cb185-102" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<p>To render a Quarto website, look for the Build tab in the top right of RStudio and click <strong>Render Website</strong>. The rendered website should now appear in the Viewer pane on the bottom-right panel of RStudio. If you navigate to the Files pane on the same panel, you should also see that a _site folder has been created to hold the content of the rendered site. Try opening the <em>index.html</em> file in your web browser. You should see the website in Figure <a href="quarto-chapter.html#fig:covid-website-messages">10.8</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:covid-website-messages"></span>
+<img src="assets/covid-website-messages.png" alt="The Quarto website with warnings and messages" width="100%"><p class="caption">
+Figure 10.8: The Quarto website with warnings and messages
+</p>
+</div>
+<p>As you can see, the web page includes many warnings and messages that we don’t want to show. In R Markdown, we removed these in our <code>setup</code> code chunk; in Quarto, we can do this in the YAML. Add the following code to the <em>index.qmd</em> YAML to remove all code, warnings, and messages from the output:</p>
+<div class="sourceCode" id="cb186"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb186-1"><a href="quarto-chapter.html#cb186-1" tabindex="-1"></a><span class="an">execute:</span><span class="co"> </span></span>
+<span id="cb186-2"><a href="quarto-chapter.html#cb186-2" tabindex="-1"></a>  echo: false</span>
+<span id="cb186-3"><a href="quarto-chapter.html#cb186-3" tabindex="-1"></a>  warning: false</span>
+<span id="cb186-4"><a href="quarto-chapter.html#cb186-4" tabindex="-1"></a>  message: false</span></code></pre></div>
+<p>Note, however, that these options will make changes to only one file. Next, we discuss how to set these options for the entire website.</p>
+</div>
+<div id="setting-options-for-the-website" class="section level4 unnumbered">
+<h4>Setting Options for the Website<a class="anchor" aria-label="anchor" href="#setting-options-for-the-website"><i class="fas fa-link"></i></a>
+</h4>
+<p>When using <code>distill</code>, we modified the *_site.yml* file to make changes to all files in the website. In Quarto, we use the *_quarto.yml* file for the same purpose. If you open it, you should see three sections:</p>
+<div class="sourceCode" id="cb187"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb187-1"><a href="quarto-chapter.html#cb187-1" tabindex="-1"></a><span class="fu">project</span><span class="kw">:</span></span>
+<span id="cb187-2"><a href="quarto-chapter.html#cb187-2" tabindex="-1"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> website</span></span>
+<span id="cb187-3"><a href="quarto-chapter.html#cb187-3" tabindex="-1"></a></span>
+<span id="cb187-4"><a href="quarto-chapter.html#cb187-4" tabindex="-1"></a><span class="fu">website</span><span class="kw">:</span></span>
+<span id="cb187-5"><a href="quarto-chapter.html#cb187-5" tabindex="-1"></a><span class="at">  </span><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"covid-website-quarto"</span></span>
+<span id="cb187-6"><a href="quarto-chapter.html#cb187-6" tabindex="-1"></a><span class="at">  </span><span class="fu">navbar</span><span class="kw">:</span></span>
+<span id="cb187-7"><a href="quarto-chapter.html#cb187-7" tabindex="-1"></a><span class="at">    </span><span class="fu">left</span><span class="kw">:</span></span>
+<span id="cb187-8"><a href="quarto-chapter.html#cb187-8" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">href</span><span class="kw">:</span><span class="at"> index.qmd</span></span>
+<span id="cb187-9"><a href="quarto-chapter.html#cb187-9" tabindex="-1"></a><span class="at">        </span><span class="fu">text</span><span class="kw">:</span><span class="at"> Home</span></span>
+<span id="cb187-10"><a href="quarto-chapter.html#cb187-10" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> about.qmd</span></span>
+<span id="cb187-11"><a href="quarto-chapter.html#cb187-11" tabindex="-1"></a></span>
+<span id="cb187-12"><a href="quarto-chapter.html#cb187-12" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb187-13"><a href="quarto-chapter.html#cb187-13" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
+<span id="cb187-14"><a href="quarto-chapter.html#cb187-14" tabindex="-1"></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> cosmo</span></span>
+<span id="cb187-15"><a href="quarto-chapter.html#cb187-15" tabindex="-1"></a><span class="at">    </span><span class="fu">css</span><span class="kw">:</span><span class="at"> styles.css</span></span>
+<span id="cb187-16"><a href="quarto-chapter.html#cb187-16" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code></pre></div>
+<p>The top section sets the project type (in this case, a website). The middle section defines the website’s title and determines the options for its navigation bar. The bottom section modifies the site’s appearance.</p>
+<p>Let’s start from the bottom. To remove code, warnings, and messages for all pages in our website, add the portion of the YAML we created above to the <code>_quarto.yml</code> file. The bottom section should now look like this:</p>
+<div class="sourceCode" id="cb188"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb188-1"><a href="quarto-chapter.html#cb188-1" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb188-2"><a href="quarto-chapter.html#cb188-2" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
+<span id="cb188-3"><a href="quarto-chapter.html#cb188-3" tabindex="-1"></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> cosmo</span></span>
+<span id="cb188-4"><a href="quarto-chapter.html#cb188-4" tabindex="-1"></a><span class="at">    </span><span class="fu">css</span><span class="kw">:</span><span class="at"> styles.css</span></span>
+<span id="cb188-5"><a href="quarto-chapter.html#cb188-5" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb188-6"><a href="quarto-chapter.html#cb188-6" tabindex="-1"></a><span class="fu">execute</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb188-7"><a href="quarto-chapter.html#cb188-7" tabindex="-1"></a><span class="at">  </span><span class="fu">echo</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb188-8"><a href="quarto-chapter.html#cb188-8" tabindex="-1"></a><span class="at">  </span><span class="fu">warning</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb188-9"><a href="quarto-chapter.html#cb188-9" tabindex="-1"></a><span class="at">  </span><span class="fu">message</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span></code></pre></div>
+<p>If you build the website again, you should now see just the content, as in Figure <a href="quarto-chapter.html#fig:covid-website-no-messages">10.9</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:covid-website-no-messages"></span>
+<img src="assets/covid-website-no-messages.png" alt="The website with warnings and messages removed" width="100%"><p class="caption">
+Figure 10.9: The website with warnings and messages removed
+</p>
+</div>
+<p>In this section of the *_quarto.yml* file, you can add any options you would otherwise place in a single <em>.qmd</em> file to apply them across all pages of your website.</p>
+</div>
+<div id="changing-the-appearance-of-the-website-with-themes-and-css" class="section level4 unnumbered">
+<h4>Changing the Appearance of the Website with Themes and CSS<a class="anchor" aria-label="anchor" href="#changing-the-appearance-of-the-website-with-themes-and-css"><i class="fas fa-link"></i></a>
+</h4>
+<p>The <code>format</code> section of the *_quarto.yml* file determines the appearance of rendered files. By default, Quarto applies a theme called <code>cosmo</code>, but there are many themes available. (You can see the full list at <a href="https://quarto.org/docs/output-formats/html-themes.html" class="uri">https://quarto.org/docs/output-formats/html-themes.html</a>.) Let’s apply a different theme to see how it affects the output:</p>
+<div class="sourceCode" id="cb189"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb189-1"><a href="quarto-chapter.html#cb189-1" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb189-2"><a href="quarto-chapter.html#cb189-2" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
+<span id="cb189-3"><a href="quarto-chapter.html#cb189-3" tabindex="-1"></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> minty</span></span>
+<span id="cb189-4"><a href="quarto-chapter.html#cb189-4" tabindex="-1"></a><span class="at">    </span><span class="fu">css</span><span class="kw">:</span><span class="at"> styles.css</span></span>
+<span id="cb189-5"><a href="quarto-chapter.html#cb189-5" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code></pre></div>
+<p>Using the <code>minty</code> theme changes the colors and fonts on the website, as shown in Figure <a href="quarto-chapter.html#fig:covid-website-minty">10.10</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:covid-website-minty"></span>
+<img src="assets/covid-website-minty.png" alt="The website with the minty theme" width="100%"><p class="caption">
+Figure 10.10: The website with the minty theme
+</p>
+</div>
+<p>In addition to using pre-built themes, you can customize your website with CSS. The <code>css: styles.css</code> section in the *_quarto.yml* file indicates that Quarto will use any CSS in the <em>styles.css</em> file when rendering. Try adding the following CSS to <em>styles.css</em> to make first-level headers red and 50 pixels large:</p>
+<div class="sourceCode" id="cb190"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb190-1"><a href="quarto-chapter.html#cb190-1" tabindex="-1"></a><span class="at">h1 {</span></span>
+<span id="cb190-2"><a href="quarto-chapter.html#cb190-2" tabindex="-1"></a><span class="at">    </span><span class="fu">color</span><span class="kw">:</span><span class="at"> red;</span></span>
+<span id="cb190-3"><a href="quarto-chapter.html#cb190-3" tabindex="-1"></a><span class="at">  </span><span class="fu">font-size</span><span class="kw">:</span><span class="at"> 50px;</span></span>
+<span id="cb190-4"><a href="quarto-chapter.html#cb190-4" tabindex="-1"></a><span class="at">}</span></span></code></pre></div>
+<p>The re-rendered index.html, shown in Figure <a href="quarto-chapter.html#fig:covid-website-custom-css">10.11</a>, now has large red headings.</p>
+<div class="figure">
+<span style="display:block;" id="fig:covid-website-custom-css"></span>
+<img src="assets/covid-website-custom-css.png" alt="The website with custom CSS applied" width="100%"><p class="caption">
+Figure 10.11: The website with custom CSS applied
+</p>
+</div>
+<p>An alternative approach to customizing your website is to use Sass variables in a <em>.scss</em> file, as you did in your presentation. For example, create a file called <em>styles.scss</em> and add a line like this one to make the body background bright yellow:</p>
+<div class="sourceCode" id="cb191"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb191-1"><a href="quarto-chapter.html#cb191-1" tabindex="-1"></a><span class="at">/*-- scss:defaults --*/</span></span>
+<span id="cb191-2"><a href="quarto-chapter.html#cb191-2" tabindex="-1"></a><span class="fu">$body-bg</span><span class="kw">:</span><span class="at"> yellow;</span></span></code></pre></div>
+<p>To get Quarto to use the <em>styles.scss</em> file, adjust the <code>theme</code> line as follows:</p>
+<div class="sourceCode" id="cb192"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb192-1"><a href="quarto-chapter.html#cb192-1" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb192-2"><a href="quarto-chapter.html#cb192-2" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
+<span id="cb192-3"><a href="quarto-chapter.html#cb192-3" tabindex="-1"></a><span class="at">        </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">minty</span><span class="kw">,</span><span class="at"> styles.scss</span><span class="kw">]</span></span>
+<span id="cb192-4"><a href="quarto-chapter.html#cb192-4" tabindex="-1"></a><span class="at">    </span><span class="fu">css</span><span class="kw">:</span><span class="at"> styles.css</span></span>
+<span id="cb192-5"><a href="quarto-chapter.html#cb192-5" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code></pre></div>
+<p>This syntax tells Quarto to use the <code>minty</code> theme, then make additional tweaks based on the <em>styles.scss</em> file. If you render the website again, you should see the bright yellow background throughout (Figure <a href="quarto-chapter.html#fig:quarto-website-scss">10.12</a>).</p>
+<div class="figure">
+<span style="display:block;" id="fig:quarto-website-scss"></span>
+<img src="assets/quarto-website-scss.png" alt="The website with custom CSS applied through styles.scss" width="100%"><p class="caption">
+Figure 10.12: The website with custom CSS applied through styles.scss
+</p>
+</div>
+<p>Note that when you add a <em>.scss</em> file, the tweaks made in <em>styles.css</em> no longer apply. If you wanted to use those, you’d need to add them to the <em>styles.scss</em> file.</p>
+<p>The line <code>toc: true</code> creates a table of contents on the right side of the web pages that you can see in the previous screenshots. You can remove it by changing <code>true</code> to <code>false</code>. Add any additional options, such as figure height, to the bottom section of the *_quarto.yml* file.</p>
+</div>
+<div id="adjusting-the-website-title-and-navigation-bar" class="section level4 unnumbered">
+<h4>Adjusting the Website Title and Navigation Bar<a class="anchor" aria-label="anchor" href="#adjusting-the-website-title-and-navigation-bar"><i class="fas fa-link"></i></a>
+</h4>
+<p>The middle section of the *_quarto.yml* file sets the website’s title and navigation. Here, we change the title and the text for the About page link:</p>
+<div class="sourceCode" id="cb193"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb193-1"><a href="quarto-chapter.html#cb193-1" tabindex="-1"></a><span class="fu">website</span><span class="kw">:</span></span>
+<span id="cb193-2"><a href="quarto-chapter.html#cb193-2" tabindex="-1"></a><span class="at">  </span><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Quarto COVID Website"</span></span>
+<span id="cb193-3"><a href="quarto-chapter.html#cb193-3" tabindex="-1"></a><span class="at">  </span><span class="fu">navbar</span><span class="kw">:</span></span>
+<span id="cb193-4"><a href="quarto-chapter.html#cb193-4" tabindex="-1"></a><span class="at">    </span><span class="fu">left</span><span class="kw">:</span></span>
+<span id="cb193-5"><a href="quarto-chapter.html#cb193-5" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">href</span><span class="kw">:</span><span class="at"> index.qmd</span></span>
+<span id="cb193-6"><a href="quarto-chapter.html#cb193-6" tabindex="-1"></a><span class="at">        </span><span class="fu">text</span><span class="kw">:</span><span class="at"> Home</span></span>
+<span id="cb193-7"><a href="quarto-chapter.html#cb193-7" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">href</span><span class="kw">:</span><span class="at"> about.qmd</span></span>
+<span id="cb193-8"><a href="quarto-chapter.html#cb193-8" tabindex="-1"></a><span class="at">        </span><span class="fu">text</span><span class="kw">:</span><span class="at"> About this Website</span></span></code></pre></div>
+<p>Changing the title requires adjusting the <code>title</code> line. The <code>navbar</code> section functions nearly identically to how it does when working with <code>distill</code>. The <code>href</code> line lists the files the navigation bar should link to. The optional <code>text</code> line specifies the text that should show up for that link. Figure <a href="quarto-chapter.html#fig:quarto-website-navbar-changes">10.13</a> shows these changes applied to the website.</p>
+<div class="figure">
+<span style="display:block;" id="fig:quarto-website-navbar-changes"></span>
+<img src="assets/quarto-website-navbar-changes.png" alt="The website with changes to the navigation bar" width="100%"><p class="caption">
+Figure 10.13: The website with changes to the navigation bar
+</p>
+</div>
+<p>The title on the home page is still <em>covid-website-quarto</em>, but you could change this in the <em>index.qmd</em> file.</p>
+</div>
+<div id="creating-wider-layouts" class="section level4 unnumbered">
+<h4>Creating Wider Layouts<a class="anchor" aria-label="anchor" href="#creating-wider-layouts"><i class="fas fa-link"></i></a>
+</h4>
+<p>When we made a website with <code>distill</code>, we used the line <code>layout = "l-page"</code> to widen the map on the web page. We can accomplish the same thing with Quarto by using the<code>:::</code> syntax to add HTML <code>&lt;div&gt;</code> tags:</p>
+<div class="sourceCode" id="cb194"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb194-1"><a href="quarto-chapter.html#cb194-1" tabindex="-1"></a>:::{.column-screen-inset}</span>
+<span id="cb194-2"><a href="quarto-chapter.html#cb194-2" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb194-3"><a href="quarto-chapter.html#cb194-3" tabindex="-1"></a><span class="in">#| out-width: 100%</span></span>
+<span id="cb194-4"><a href="quarto-chapter.html#cb194-4" tabindex="-1"></a><span class="in"># Make map</span></span>
+<span id="cb194-5"><a href="quarto-chapter.html#cb194-5" tabindex="-1"></a></span>
+<span id="cb194-6"><a href="quarto-chapter.html#cb194-6" tabindex="-1"></a><span class="in">most_recent &lt;- us_states %&gt;% </span></span>
+<span id="cb194-7"><a href="quarto-chapter.html#cb194-7" tabindex="-1"></a><span class="in">  left_join(covid_data, by = "state") %&gt;% </span></span>
+<span id="cb194-8"><a href="quarto-chapter.html#cb194-8" tabindex="-1"></a><span class="in">  slice_max(order_by = date,</span></span>
+<span id="cb194-9"><a href="quarto-chapter.html#cb194-9" tabindex="-1"></a><span class="in">            n = 1) </span></span>
+<span id="cb194-10"><a href="quarto-chapter.html#cb194-10" tabindex="-1"></a></span>
+<span id="cb194-11"><a href="quarto-chapter.html#cb194-11" tabindex="-1"></a><span class="in">most_recent %&gt;% </span></span>
+<span id="cb194-12"><a href="quarto-chapter.html#cb194-12" tabindex="-1"></a><span class="in">  ggplot(aes(fill = deaths_avg_per_100k)) +</span></span>
+<span id="cb194-13"><a href="quarto-chapter.html#cb194-13" tabindex="-1"></a><span class="in">  geom_sf() +</span></span>
+<span id="cb194-14"><a href="quarto-chapter.html#cb194-14" tabindex="-1"></a><span class="in">  scale_fill_viridis_c(option = "rocket") +</span></span>
+<span id="cb194-15"><a href="quarto-chapter.html#cb194-15" tabindex="-1"></a><span class="in">  labs(fill = "Deaths per\n100,000 people") +</span></span>
+<span id="cb194-16"><a href="quarto-chapter.html#cb194-16" tabindex="-1"></a><span class="in">  theme_void()</span></span>
+<span id="cb194-17"><a href="quarto-chapter.html#cb194-17" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb194-18"><a href="quarto-chapter.html#cb194-18" tabindex="-1"></a>:::</span></code></pre></div>
+<p>We add <code>:::{.column-screen-inset}</code> to the beginning of the code chunk that makes the map and <code>:::</code> to the end of the code chunk. We also add the line <code>#| out-width: 100%</code> in the code chunk. This is because we need to specify that the map should take up all of the available width. Without this line, the map would take up only a portion of the window. There are a number of different output widths you can use. The full list is available at <a href="https://quarto.org/docs/authoring/article-layout.html" class="uri">https://quarto.org/docs/authoring/article-layout.html</a>.</p>
+</div>
+<div id="hosting-your-website-on-github-pages-and-quarto-pub" class="section level4 unnumbered">
+<h4>Hosting Your Website on GitHub Pages and Quarto Pub<a class="anchor" aria-label="anchor" href="#hosting-your-website-on-github-pages-and-quarto-pub"><i class="fas fa-link"></i></a>
+</h4>
+<p>You can host your Quarto website using GitHub Pages, just as you did with your <code>distill</code> website. Recall that GitHub Pages requires you to save the website’s files in the <em>docs</em> folder. Change the *_quarto.yml* file so that the site outputs to this folder:</p>
+<div class="sourceCode" id="cb195"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb195-1"><a href="quarto-chapter.html#cb195-1" tabindex="-1"></a><span class="fu">project</span><span class="kw">:</span></span>
+<span id="cb195-2"><a href="quarto-chapter.html#cb195-2" tabindex="-1"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> website</span></span>
+<span id="cb195-3"><a href="quarto-chapter.html#cb195-3" tabindex="-1"></a><span class="at">  </span><span class="fu">output-dir</span><span class="kw">:</span><span class="at"> docs</span></span></code></pre></div>
+<p>Now, when you render the site, the HTML and other files should show up in the <em>docs</em> directory. At this point, you can push your repository to GitHub, adjust the GitHub Pages settings as you did in Chapter 9, and receive a URL at which your Quarto website will live.</p>
+<p>In addition to using GitHub Pages, Quarto has a free service called Quarto Pub that makes it easy to get your materials online. If you’re not a GitHub user, this is a great way to publish your work. To see how it works, let’s publish the website we just made to it. Click the <strong>Terminal</strong> tab on the bottom-left panel of RStudio. At the prompt, enter the text <em>quarto publish</em> and hit <strong>Enter</strong>. Doing so should bring up a list of ways you can publish your website, as in Figure <a href="quarto-chapter.html#fig:quarto-publish">10.14</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:quarto-publish"></span>
+<img src="assets/quarto-publish.png" alt="The list of providers to publish your Quarto website" width="100%"><p class="caption">
+Figure 10.14: The list of providers to publish your Quarto website
+</p>
+</div>
+<p>Press <strong>Enter</strong> to select Quarto Pub. You’ll then be asked to authorize RStudio to publish to Quarto Pub. Enter <strong>Y</strong> to do so, which should take you to <a href="https://quartopub.com/" class="uri">https://quartopub.com/</a>. Sign up for an account (or sign in if you already have one). You should see a screen indicating that you have successfully signed in and authorized RStudio to connect with Quarto Pub. From there, you can return to RStudio, which should prompt you to select a name for your website. The easiest thing is to use your project’s name. Once you enter the name, Quarto Pub should publish the site and take you to it, as shown in Figure <a href="quarto-chapter.html#fig:quarto-pub-website">10.15</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:quarto-pub-website"></span>
+<img src="assets/quarto-pub-website.png" alt="The website published on Quarto Pub" width="100%"><p class="caption">
+Figure 10.15: The website published on Quarto Pub
+</p>
+</div>
+<p>When you make updates to your site, you can republish it to Quarto Pub using the same steps. Quarto Pub is probably the easiest way to publish HTML files made with Quarto.</p>
+</div>
+</div>
+</div>
+<div id="conclusion-6" class="section level2 unnumbered">
+<h2>Conclusion<a class="anchor" aria-label="anchor" href="#conclusion-6"><i class="fas fa-link"></i></a>
+</h2>
+<p>As you’ve seen in this chapter, you can do everything you did in R Markdown using Quarto without loading any external packages. In addition, Quarto’s different output formats use a more consistent syntax. For example, because you can make new slides in Quarto by adding first- or second-level headers, the Quarto documents you use to create reports should translate easily to presentations.</p>
+<p>You’re probably wondering at this point whether you should use R Markdown or Quarto. It’s a big question, and one many in the R community are thinking about. The first thing to know is that R Markdown isn’t going away, so if you already use R Markdown, you don’t need to switch. If you’re new to R, however, you may be a good candidate for Quarto, as the R Markdown team has promised to continue its development, and its future features may not be backported to R Markdown.</p>
+<p>Ultimately, the differences between R Markdown and Quarto are relatively small, and the impact of switching between tools should be minor. Both R Markdown and Quarto can help you become more efficient, avoid manual errors, and share results in a wide variety of formats.</p>
+</div>
+<div id="learn-more-9" class="section level2 unnumbered">
+<h2>Learn More<a class="anchor" aria-label="anchor" href="#learn-more-9"><i class="fas fa-link"></i></a>
+</h2>
+<p>Consult the following resources to learn the fundamentals of Quarto:</p>
+<p><em>Get Started with Quarto</em>, workshop materials by Tom Mock (2022), <a href="https://jthomasmock.github.io/quarto-in-two-hours/" class="uri">https://jthomasmock.github.io/quarto-in-two-hours/</a></p>
+<p><em>From R Markdown to Quarto</em>, workshop materials by Andrew Bray, Rebecca Barter, Silvia Canelón, Christophe Dervieu, Devin Pastor, and Tatsu Shigeta (2022), <a href="https://rstudio-conf-2022.github.io/rmd-to-quarto/" class="uri">https://rstudio-conf-2022.github.io/rmd-to-quarto/</a></p>
+
+</div>
+</div>
+
+
+
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="websites-chapter.html"><span class="header-section-number">9</span> Make Websites to Share Results Online</a></div>
+<div class="next"><a href="accessing-data-chapter.html"><span class="header-section-number">11</span> Accessing Data</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#quarto-chapter"><span class="header-section-number">10</span> Reproducible Reporting with Quarto</a></li>
+<li><a class="nav-link" href="#creating-a-quarto-document">Creating a Quarto Document</a></li>
+<li>
+<a class="nav-link" href="#comparing-r-markdown-and-quarto">Comparing R Markdown and Quarto</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#the-format-and-execute-yaml-fields">The format and execute YAML Fields</a></li>
+<li><a class="nav-link" href="#individual-code-chunk-options">Individual Code Chunk Options</a></li>
+<li><a class="nav-link" href="#dashes-in-option-names">Dashes in Option Names</a></li>
+<li><a class="nav-link" href="#the-render-button">The Render Button</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#parameterized-reporting">Parameterized Reporting</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#making-presentations">Making Presentations</a></li>
+<li><a class="nav-link" href="#making-websites">Making Websites</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#conclusion-6">Conclusion</a></li>
+<li><a class="nav-link" href="#learn-more-9">Learn More</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/rfortherestofus/r-without-statistics/blob/master/quarto.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/rfortherestofus/r-without-statistics/edit/master/quarto.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>R Without Statistics</strong>" was written by David Keyes. </p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 4 Making Your Own Theme | R Without Statistics</title>
+<meta name="author" content="David Keyes">
+<meta name="description" content="In 2018, BBC data journalists Nassos Stylianou and Clara Guibourg, along with their team, developed a custom ggplot theme that matches the BBC’s style. By introducing this bbplot package for...">
+<meta name="generator" content="bookdown 0.30 with bs4_book()">
+<meta property="og:title" content="Chapter 4 Making Your Own Theme | R Without Statistics">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://book.rwithoutstatistics.com/making-your-own-theme.html">
+<meta property="og:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
+<meta property="og:description" content="In 2018, BBC data journalists Nassos Stylianou and Clara Guibourg, along with their team, developed a custom ggplot theme that matches the BBC’s style. By introducing this bbplot package for...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 4 Making Your Own Theme | R Without Statistics">
+<meta name="twitter:description" content="In 2018, BBC data journalists Nassos Stylianou and Clara Guibourg, along with their team, developed a custom ggplot theme that matches the BBC’s style. By introducing this bbplot package for...">
+<meta name="twitter:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.1/transition.js"></script><script src="libs/bs3compat-0.4.1/tabs.js"></script><script src="libs/bs3compat-0.4.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">R Without Statistics</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled"><li><a class="" href="index.html"><span class="header-section-number">Chapter 4</span> Making Your Own Theme</a></li></ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/rfortherestofus/r-without-statistics">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="making-your-own-theme" class="section level1" number="4">
+<h1>
+<span class="header-section-number">4</span> Making Your Own Theme<a class="anchor" aria-label="anchor" href="#making-your-own-theme"><i class="fas fa-link"></i></a>
+</h1>
+<p>In 2018, BBC data journalists Nassos Stylianou and Clara Guibourg, along with their team, developed a custom ggplot theme that matches the BBC’s style. By introducing this bbplot package for others to use, they changed their organization’s culture, removed bottlenecks, and allowed the BBC to visualize data more creatively.</p>
+<p>To understand the significance of these changes, it’s helpful to know how things worked at the BBC before the introduction of <code>bbplot.</code> In the mid-2010s, journalists who wanted to make data visualization had two choices:</p>
+<ol style="list-style-type: decimal">
+<li><p>They could use an internal tool. This tool could create data visualizations but was limited to the predefined charts it had been designed to generate.</p></li>
+<li><p>They could use Excel to create mockups and then work with a graphic designer to finalize the charts. This approach led to better results, and was way more flexible, but required extensive, time-consuming back-and-forth with a designer.</p></li>
+</ol>
+<p>Neither of these choices was ideal, and they limited the BBC’s data visualization output. R freed the journalists from having to work with a designer. It wasn’t that the designers were bad (they weren’t), but ggplot allowed the journalists to explore different visualizations on their own. Working with a designer required the journalists to have a fully-formed idea that the designer could take and improve upon.</p>
+<p>As the team improved their ggplot skills, they realized that it might be possible to produce more than just exploratory data visualizations. Could they create production-ready charts in R that could go straight onto the BBC website? In this chapter, I discuss the power of custom ggplot themes. I then go through the code in the <code>bbplot</code> package to learn how custom themes work. I wrap up the chapter by exploring the impact that bbplot had, not only on a technical level, but also as a catalyst for a larger culture change.</p>
+<div id="the-power-of-a-theme" class="section level2 unnumbered">
+<h2>The Power of a Theme<a class="anchor" aria-label="anchor" href="#the-power-of-a-theme"><i class="fas fa-link"></i></a>
+</h2>
+<p>As Stylianou, Guibourg, and their colleagues realized, so much of the work involved in making a professional chart consists of small tweaks. What font should you use? Where should the legend go? Should axes have titles? Should charts have grid lines? These questions may seem small, but they have a big impact on the final product.</p>
+<p>And these are the types of questions to which a custom theme can provide answers. Custom themes force everyone who uses them follows style guidelines and ensures that all data visualization is on brand. What’s more, when more experienced R users in an organization make a custom theme, other less experienced users can take advantage of their work to make sure their plots follow organizational style guidelines. Custom themes, as we’ll see below when we dive into the bbplot code, involve a set of code that makes a set of small tweaks to all plots. Rather than forcing everyone to copy the long code to tweak each plot they make, putting this code into a custom theme allows everyone to apply the theme with one line of code.</p>
+</div>
+<div id="using-bbplot-to-style-a-penguin-plot" class="section level2 unnumbered">
+<h2>Using bbplot to Style a Penguin Plot<a class="anchor" aria-label="anchor" href="#using-bbplot-to-style-a-penguin-plot"><i class="fas fa-link"></i></a>
+</h2>
+<p>The bbplot package has two functions: <code><a href="https://rdrr.io/pkg/bbplot/man/bbc_style.html">bbc_style()</a></code> and <code><a href="https://rdrr.io/pkg/bbplot/man/finalise_plot.html">finalise_plot()</a></code>. The latter deals with things like adding the BBC logo, saving plots in the correct dimensions, and other tasks done after the plot is complete (we’ll discuss it a bit later on). For now, let’s look at the <code><a href="https://rdrr.io/pkg/bbplot/man/bbc_style.html">bbc_style()</a></code> function, which applies a custom ggplot theme to any plot, making all plots look consistent and follow BBC style guidelines.</p>
+</div>
+<div id="creating-an-example-plot" class="section level2 unnumbered">
+<h2>Creating an Example Plot<a class="anchor" aria-label="anchor" href="#creating-an-example-plot"><i class="fas fa-link"></i></a>
+</h2>
+<p>To show how this function works, let’s create a plot. We’ll do so using the <code>palmerpenguins</code> package, which has data on penguins living on three islands in Antarctica. To give you a sense of what this data looks like, let’s load the <code>palmerpenguins</code> and <code>tidyverse</code> packages.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://allisonhorst.github.io/palmerpenguins/">palmerpenguins</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code></pre></div>
+<p>We now have data that we can work with in an object called <code>penguins</code>. Here’s what the first ten rows look like.</p>
+<pre><code>#&gt; # A tibble: 344 × 8
+#&gt;    species island    bill_le…¹ bill_…² flipp…³ body_…⁴ sex  
+#&gt;    &lt;fct&gt;   &lt;fct&gt;         &lt;dbl&gt;   &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt; &lt;fct&gt;
+#&gt;  1 Adelie  Torgersen      39.1    18.7     181    3750 male 
+#&gt;  2 Adelie  Torgersen      39.5    17.4     186    3800 fema…
+#&gt;  3 Adelie  Torgersen      40.3    18       195    3250 fema…
+#&gt;  4 Adelie  Torgersen      NA      NA        NA      NA &lt;NA&gt; 
+#&gt;  5 Adelie  Torgersen      36.7    19.3     193    3450 fema…
+#&gt;  6 Adelie  Torgersen      39.3    20.6     190    3650 male 
+#&gt;  7 Adelie  Torgersen      38.9    17.8     181    3625 fema…
+#&gt;  8 Adelie  Torgersen      39.2    19.6     195    4675 male 
+#&gt;  9 Adelie  Torgersen      34.1    18.1     193    3475 &lt;NA&gt; 
+#&gt; 10 Adelie  Torgersen      42      20.2     190    4250 &lt;NA&gt; 
+#&gt; # … with 334 more rows, 1 more variable: year &lt;int&gt;, and
+#&gt; #   abbreviated variable names ¹​bill_length_mm,
+#&gt; #   ²​bill_depth_mm, ³​flipper_length_mm, ⁴​body_mass_g</code></pre>
+<p>To get our data in a more usable format, let’s count how many penguins live on each island. We do this with the <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> function from the <code>dplyr</code> package (one of several packages that are loaded when we load the <code>tidyverse</code>). This gives us some simple data that we can use for plotting:</p>
+<p>This gives us some simple data that we can use for plotting below.</p>
+<pre><code>#&gt; # A tibble: 3 × 2
+#&gt;   island        n
+#&gt;   &lt;fct&gt;     &lt;int&gt;
+#&gt; 1 Biscoe      168
+#&gt; 2 Dream       124
+#&gt; 3 Torgersen    52</code></pre>
+<p>Because we’re going to use this data multiple times below, let’s save it as an object called <code>penguins_summary</code>.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">penguins_summary</span> <span class="op">&lt;-</span> <span class="va">penguins</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">island</span><span class="op">)</span></span></code></pre></div>
+<p>Now that we’ve got some data to work with, we’re ready to create a plot. Before showing what <code>bbplot</code> does, let’s make our plot with the ggplot defaults. Here is the code we’ll use:</p>
+<p>We use our <code>penguins_summary</code> data frame, putting the island on the x axis and the count of the number of penguins (n) on the y axis, and making each bar a different color with the fill aesthetic property. We’ll modify this plot multiple times, so to simplify this process, we save it as an object called penguins_plot. The resulting plot is seen in Figure <a href="making-your-own-theme.html#fig:basic-penguins-plot-plot">4.1</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:basic-penguins-plot-plot"></span>
+<img src="custom-theme_files/figure-html/basic-penguins-plot-plot-1.png" alt="A chart with the default theme" width="100%"><p class="caption">
+Figure 4.1: A chart with the default theme
+</p>
+</div>
+<p>It isn’t the most aesthetically pleasing chart. The gray background is ugly, the y axis title is hard to read because it’s angled, and the text size overall is quite small. But don’t worry: we’ll be improving it soon!</p>
+<div id="applying-the-bbc_style-function" class="section level3 unnumbered">
+<h3>Applying the <code>bbc_style()</code> Function<a class="anchor" aria-label="anchor" href="#applying-the-bbc_style-function"><i class="fas fa-link"></i></a>
+</h3>
+<p>Now that we have a basic plot to work with, let’s make it look like a BBC chart. To do this, we load the <code>bbplot</code> package:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">bbplot</span><span class="op">)</span></span></code></pre></div>
+<p>We can then apply the <code><a href="https://rdrr.io/pkg/bbplot/man/bbc_style.html">bbc_style()</a></code> function to our <code>penguins_plot</code>.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">penguins_plot</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/bbplot/man/bbc_style.html">bbc_style</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Take a look at what happens in Figure <a href="making-your-own-theme.html#fig:penguins-bbc-style-plot">4.2</a> with the application of <code><a href="https://rdrr.io/pkg/bbplot/man/bbc_style.html">bbc_style()</a></code> to our plot.</p>
+<div class="figure">
+<span style="display:block;" id="fig:penguins-bbc-style-plot"></span>
+<img src="custom-theme_files/figure-html/penguins-bbc-style-plot-1.png" alt="The same chart with BBC style" width="100%"><p class="caption">
+Figure 4.2: The same chart with BBC style
+</p>
+</div>
+<p>Way different, right? Larger font size, legend on top, no axis titles, stripped down grid lines, and a white background. These are the major changes that the <code><a href="https://rdrr.io/pkg/bbplot/man/bbc_style.html">bbc_style()</a></code> function makes. Let’s look at them one by one.</p>
+</div>
+<div id="breaking-down-the-custom-theme" class="section level3 unnumbered">
+<h3>Breaking Down the Custom Theme<a class="anchor" aria-label="anchor" href="#breaking-down-the-custom-theme"><i class="fas fa-link"></i></a>
+</h3>
+<p>Here is the code for the bbc_style() function (taken from the <code>bbplot</code> GitHub repository at <a href="https://github.com/bbc/bbplot" class="uri">https://github.com/bbc/bbplot</a>, with some minor tweaks for readability). The first line gives the function a name and indicates that what follows is, in fact, a function definition. We’ll discuss functions more in Chapter <a href="functions.html#functions">13</a>.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">bbc_style</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">font</span> <span class="op">&lt;-</span> <span class="st">"Helvetica"</span></span>
+<span>  </span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    </span>
+<span>    <span class="co"># TEXT FORMAT</span></span>
+<span>    <span class="co"># This sets the font, size, type and colour </span></span>
+<span>    <span class="co"># of text for the chart's title</span></span>
+<span>    plot.title <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span></span>
+<span>      family <span class="op">=</span> <span class="va">font</span>,</span>
+<span>      size <span class="op">=</span> <span class="fl">28</span>,</span>
+<span>      face <span class="op">=</span> <span class="st">"bold"</span>,</span>
+<span>      color <span class="op">=</span> <span class="st">"#222222"</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    <span class="co"># This sets the font, size, type and colour</span></span>
+<span>    <span class="co"># of text for the chart's subtitle,</span></span>
+<span>    <span class="co"># as well as setting a margin between the title and the subtitle</span></span>
+<span>    plot.subtitle <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span></span>
+<span>      family <span class="op">=</span> <span class="va">font</span>,</span>
+<span>      size <span class="op">=</span> <span class="fl">22</span>,</span>
+<span>      margin <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">margin</a></span><span class="op">(</span><span class="fl">9</span>, <span class="fl">0</span>, <span class="fl">9</span>, <span class="fl">0</span><span class="op">)</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    <span class="co"># This leaves the caption text element empty, </span></span>
+<span>    <span class="co"># because it is set elsewhere in the finalise plot function</span></span>
+<span>    plot.caption <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    </span>
+<span>    <span class="co"># LEGEND FORMAT</span></span>
+<span>    <span class="co"># This sets the position and alignment of the legend, </span></span>
+<span>    <span class="co"># removes a title and background for it</span></span>
+<span>    <span class="co"># and sets the requirements for any text within the legend.</span></span>
+<span>    <span class="co"># The legend may often need some more manual tweaking </span></span>
+<span>    <span class="co"># when it comes to its exact position based on the plot coordinates.</span></span>
+<span>    legend.position <span class="op">=</span> <span class="st">"top"</span>,</span>
+<span>    legend.text.align <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    legend.background <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    legend.title <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    legend.key <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    legend.text <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span></span>
+<span>      family <span class="op">=</span> <span class="va">font</span>,</span>
+<span>      size <span class="op">=</span> <span class="fl">18</span>,</span>
+<span>      color <span class="op">=</span> <span class="st">"#222222"</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    </span>
+<span>    <span class="co"># AXIS FORMAT</span></span>
+<span>    <span class="co"># This sets the text font, size and colour for the axis test, </span></span>
+<span>    <span class="co"># as well as setting the margins and removes lines and ticks.</span></span>
+<span>    <span class="co"># In some cases, axis lines and axis ticks are things we would </span></span>
+<span>    <span class="co"># want to have in the chart - </span></span>
+<span>    <span class="co"># the cookbook shows examples of how to do so.</span></span>
+<span>    axis.title <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    axis.text <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span></span>
+<span>      family <span class="op">=</span> <span class="va">font</span>,</span>
+<span>      size <span class="op">=</span> <span class="fl">18</span>,</span>
+<span>      color <span class="op">=</span> <span class="st">"#222222"</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    axis.text.x <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>margin <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">margin</a></span><span class="op">(</span><span class="fl">5</span>, b <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    axis.ticks <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    axis.line <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    </span>
+<span>    <span class="co"># GRID LINES</span></span>
+<span>    <span class="co"># This removes all minor gridlines and adds major y gridlines.</span></span>
+<span>    <span class="co"># In many cases you will want to change this to remove </span></span>
+<span>    <span class="co"># y gridlines and add x gridlines.</span></span>
+<span>    <span class="co"># The cookbook shows you examples for doing so.</span></span>
+<span>    panel.grid.minor <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    panel.grid.major.y <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"#cbcbcb"</span><span class="op">)</span>,</span>
+<span>    panel.grid.major.x <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    </span>
+<span>    <span class="co"># BLANK BACKGROUND</span></span>
+<span>    <span class="co"># This sets the panel background as blank, removing the standard </span></span>
+<span>    <span class="co"># grey ggplot background colour from the plot.</span></span>
+<span>    panel.background <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    </span>
+<span>    <span class="co"># STRIP BACKGROUND</span></span>
+<span>    <span class="co"># This sets the panel background for facet-wrapped plots to white,</span></span>
+<span>    <span class="co"># removing the standard grey ggplot background colour and sets the </span></span>
+<span>    <span class="co"># title size of the facet-wrap title to font size 22.</span></span>
+<span>    strip.background <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span>,</span>
+<span>    strip.text <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">22</span>, hjust <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>You’ll see that instead of loading the package <code>ggplot2</code> with the code <code><a href="https://ggplot2.tidyverse.org">library(ggplot2)</a></code> and then using the <code><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme()</a></code> function, the code below uses <code><a href="https://ggplot2.tidyverse.org/reference/theme.html">ggplot2::theme()</a></code>. This indicates that the <code><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme()</a></code> function comes from the <code>ggplot2</code> package. Writing code in this way is something that is done when making an R package, something we’ll discuss in Chapter <a href="custom-packages.html#custom-packages">14</a>.</p>
+<p>Nearly all of the code in the <code><a href="https://rdrr.io/pkg/bbplot/man/bbc_style.html">bbc_style()</a></code> function exists within the <code><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme()</a></code> function from ggplot2. Remember from Chapter <a href="data-viz-chapter.html#data-viz-chapter">3</a> that <code><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme()</a></code> makes additional tweaks to an existing theme; it isn’t a complete theme like <code><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_light()</a></code>, which will change the whole look-and-feel of your plot. In other words, by jumping straight into the <code><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme()</a></code> function, <code><a href="https://rdrr.io/pkg/bbplot/man/bbc_style.html">bbc_style()</a></code> makes tweaks to the ggplot defaults.</p>
+<p>As you can see, the <code><a href="https://rdrr.io/pkg/bbplot/man/bbc_style.html">bbc_style()</a></code> function does a lot of tweaking. Let’s go through the changes it makes, section by section.</p>
+</div>
+<div id="text-formatting" class="section level3 unnumbered">
+<h3>Text Formatting<a class="anchor" aria-label="anchor" href="#text-formatting"><i class="fas fa-link"></i></a>
+</h3>
+<p>The first code section formats the text. It defines a variable called <code>font</code> and assigns it the value <code>Helvetica.</code> This allows later sections to simply write font rather than repeating <code>Helvetica</code> over and over again. Also, if the BBC team ever wanted to use a different font, they could change <code>Helvetica</code> to, say, <code>Comic Sans</code> and update the font of all BBC plots (though I suspect higher-ups at the BBC might not be on board).</p>
+<p>Subsequent pieces of this section make changes to the title, subtitle, and caption using the following pattern:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">AREA_OF_CHART</span> <span class="op">=</span> <span class="fu">ELEMENT_TYPE</span><span class="op">(</span></span>
+<span>  PROPERTY <span class="op">=</span> <span class="va">VALUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>We begin by selecting an area of the chart (for example, <code>plot.title</code>). Then, we say what type of element it is: <code><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text()</a></code>, <code><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line()</a></code>, <code><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect()</a></code>, or <code><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank()</a></code>. For now, we’re working with <code><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text()</a></code> to handle formatting the title, subtitle, and caption. Within the element type, we give values to properties. This can be, say, setting the font family (the property) to Helvetica (the value).</p>
+<p>One of the main things the <code><a href="https://rdrr.io/pkg/bbplot/man/bbc_style.html">bbc_style()</a></code> function does is bump up the text size. Increasing font size helps with legibility, especially when plots made using the bbplot package are viewed on smaller mobile devices. The code first formats the title (with <code>plot.title</code>) using Helvetica 28-point bold font in a nearly black color (that’s the hex code #222222). The subtitle (using <code>plot.subtitle</code>) is 22-point Helvetica. Some spacing is added between the title and subtitle using the margin() function, which gives the spacing, in points, for the top (9), right (0), bottom (9), and left (0) sides. Finally, the caption (through the <code>plot.caption</code> argument) is removed using the <code><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank()</a></code> function. This is done because the <code><a href="https://rdrr.io/pkg/bbplot/man/finalise_plot.html">finalise_plot()</a></code> function in the <code>bbplot</code> package adds elements, including a caption and the BBC logo to the bottom of plots.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">penguins_plot</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span></span>
+<span>      family <span class="op">=</span> <span class="va">font</span>,</span>
+<span>      size <span class="op">=</span> <span class="fl">28</span>,</span>
+<span>      face <span class="op">=</span> <span class="st">"bold"</span>,</span>
+<span>      color <span class="op">=</span> <span class="st">"#222222"</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    plot.subtitle <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span></span>
+<span>      family <span class="op">=</span> <span class="va">font</span>,</span>
+<span>      size <span class="op">=</span> <span class="fl">22</span>,</span>
+<span>      margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">margin</a></span><span class="op">(</span><span class="fl">9</span>, <span class="fl">0</span>, <span class="fl">9</span>, <span class="fl">0</span><span class="op">)</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    plot.caption <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p>We can see these changes in Figure <a href="making-your-own-theme.html#fig:penguins-plot-text-formatting-plot">4.3</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:penguins-plot-text-formatting-plot"></span>
+<img src="custom-theme_files/figure-html/penguins-plot-text-formatting-plot-1.png" alt="Our chart with only text formatting changed" width="100%"><p class="caption">
+Figure 4.3: Our chart with only text formatting changed
+</p>
+</div>
+<p>We then save our plot as an object in order to work with it in the next section.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">penguins_plot_text</span> <span class="op">&lt;-</span> <span class="va">penguins_plot</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span></span>
+<span>      family <span class="op">=</span> <span class="va">font</span>,</span>
+<span>      size <span class="op">=</span> <span class="fl">28</span>,</span>
+<span>      face <span class="op">=</span> <span class="st">"bold"</span>,</span>
+<span>      color <span class="op">=</span> <span class="st">"#222222"</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    plot.subtitle <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span></span>
+<span>      family <span class="op">=</span> <span class="va">font</span>,</span>
+<span>      size <span class="op">=</span> <span class="fl">22</span>,</span>
+<span>      margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">margin</a></span><span class="op">(</span><span class="fl">9</span>, <span class="fl">0</span>, <span class="fl">9</span>, <span class="fl">0</span><span class="op">)</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    plot.caption <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+</div>
+<div id="legend-formatting" class="section level3 unnumbered">
+<h3>Legend Formatting<a class="anchor" aria-label="anchor" href="#legend-formatting"><i class="fas fa-link"></i></a>
+</h3>
+<p>Next, we deal with the legend, putting it on top of the plot and left-aligning the text within it. Then, we remove the legend background (which would show up only if the background color of the entire plot were different), title, and legend key (the borders on the red, green, and blue boxes that show the island names). Finally, we make the legend’s text 18-point Helvetica with the same nearly black color.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">penguins_plot_text</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    legend.position <span class="op">=</span> <span class="st">"top"</span>,</span>
+<span>    legend.text.align <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    legend.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    legend.key <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    legend.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span></span>
+<span>      family <span class="op">=</span> <span class="va">font</span>,</span>
+<span>      size <span class="op">=</span> <span class="fl">18</span>,</span>
+<span>      color <span class="op">=</span> <span class="st">"#222222"</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p>We can see the result in Figure <a href="making-your-own-theme.html#fig:penguins-plot-legend-plot">4.4</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:penguins-plot-legend-plot"></span>
+<img src="custom-theme_files/figure-html/penguins-plot-legend-plot-1.png" alt="Our chart with changes to the legend" width="100%"><p class="caption">
+Figure 4.4: Our chart with changes to the legend
+</p>
+</div>
+<p>And again, we save this plot so we can continue to alter it below.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">penguins_plot_legend</span> <span class="op">&lt;-</span> <span class="va">penguins_plot_text</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    legend.position <span class="op">=</span> <span class="st">"top"</span>,</span>
+<span>    legend.text.align <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    legend.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    legend.key <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    legend.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span></span>
+<span>      family <span class="op">=</span> <span class="va">font</span>,</span>
+<span>      size <span class="op">=</span> <span class="fl">18</span>,</span>
+<span>      color <span class="op">=</span> <span class="st">"#222222"</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+</div>
+<div id="axis-formatting" class="section level3 unnumbered">
+<h3>Axis Formatting<a class="anchor" aria-label="anchor" href="#axis-formatting"><i class="fas fa-link"></i></a>
+</h3>
+<p>Next are the axes. The code first removes axis titles because, as Nassos told me, these tend to take up a lot of chart real estate, and you can use the title and subtitle to make it clear what the axes show.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">penguins_plot_legend</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span></span>
+<span>      family <span class="op">=</span> <span class="va">font</span>,</span>
+<span>      size <span class="op">=</span> <span class="fl">18</span>,</span>
+<span>      color <span class="op">=</span> <span class="st">"#222222"</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">margin</a></span><span class="op">(</span><span class="fl">5</span>, b <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    axis.ticks <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    axis.line <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p>All text on axes becomes 18-point Helevetica and nearly black. The text on the x axis (in our case, Biscoe, Dream, and Torgersen) gets a bit of spacing around it. And, finally, we remove both axis ticks and axis lines. We can see the changes to our axes in Figure <a href="making-your-own-theme.html#fig:penguins-plot-axes-plot">4.5</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:penguins-plot-axes-plot"></span>
+<img src="custom-theme_files/figure-html/penguins-plot-axes-plot-1.png" alt="Our chart with changes to axis formatting" width="100%"><p class="caption">
+Figure 4.5: Our chart with changes to axis formatting
+</p>
+</div>
+<p>Let’s now save this plot as an object for future tweaks.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">penguins_plot_axes</span> <span class="op">&lt;-</span> <span class="va">penguins_plot_legend</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span></span>
+<span>      family <span class="op">=</span> <span class="va">font</span>,</span>
+<span>      size <span class="op">=</span> <span class="fl">18</span>,</span>
+<span>      color <span class="op">=</span> <span class="st">"#222222"</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">margin</a></span><span class="op">(</span><span class="fl">5</span>, b <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    axis.ticks <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    axis.line <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+</div>
+<div id="grid-lines-formatting" class="section level3 unnumbered">
+<h3>Grid Lines Formatting<a class="anchor" aria-label="anchor" href="#grid-lines-formatting"><i class="fas fa-link"></i></a>
+</h3>
+<p>Now that we’ve tweaked overall text formatting, the legend, and the axes, let’s move onto grid lines. The approach here is fairly straightforward: remove all minor grid lines and the major grid lines on the x axis, keeping only major grid lines on the y axis, but making them a light gray (using the #cbcbcb hex code).</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">penguins_plot_axes</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    panel.grid.minor <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    panel.grid.major.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"#cbcbcb"</span><span class="op">)</span>,</span>
+<span>    panel.grid.major.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p>We can see the result of these tweaks to the grid lines in Figure <a href="making-your-own-theme.html#fig:penguins-plot-gridlines-plot">4.6</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:penguins-plot-gridlines-plot"></span>
+<img src="custom-theme_files/figure-html/penguins-plot-gridlines-plot-1.png" alt="Our chart with tweaks to the grid lines" width="100%"><p class="caption">
+Figure 4.6: Our chart with tweaks to the grid lines
+</p>
+</div>
+<p>And, once again, we save our plot to an object.</p>
+</div>
+<div id="background-formatting" class="section level3 unnumbered">
+<h3>Background Formatting<a class="anchor" aria-label="anchor" href="#background-formatting"><i class="fas fa-link"></i></a>
+</h3>
+<p>The previous iteration of our plot still had a gray background. The <code><a href="https://rdrr.io/pkg/bbplot/man/bbc_style.html">bbc_style()</a></code> function removes this with the following code.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">penguins_plot_grid_lines</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    panel.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p>The plot without the gray background is seen in Figure <a href="making-your-own-theme.html#fig:penguins-plot-no-bg">4.7</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:penguins-plot-no-bg"></span>
+<img src="custom-theme_files/figure-html/penguins-plot-no-bg-1.png" alt="Our chart with the gray background removed" width="100%"><p class="caption">
+Figure 4.7: Our chart with the gray background removed
+</p>
+</div>
+<p>There we go! We’ve recreated the Penguin plot using the <code><a href="https://rdrr.io/pkg/bbplot/man/bbc_style.html">bbc_style()</a></code> function.</p>
+</div>
+<div id="small-multiples-formatting" class="section level3 unnumbered">
+<h3>Small Multiples Formatting<a class="anchor" aria-label="anchor" href="#small-multiples-formatting"><i class="fas fa-link"></i></a>
+</h3>
+<p>However, you may recall that the function contains a bit more code, to modify strip.background and strip.text. These elements become relevant in small multiples charts like the one discussed in Chapter 2. Let’s turn our penguin chart into a small multiples chart to see these components of the BBC’s theme. I’ve used the code from the bbc_style() function, minus the sections that deal with small multiples, to make Figure <a href="making-your-own-theme.html#fig:penguin-facetted-plot">4.8</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:penguin-facetted-plot"></span>
+<img src="custom-theme_files/figure-html/penguin-facetted-plot-1.png" alt="Small multiples chart with no changes to the strip text formatting" width="100%"><p class="caption">
+Figure 4.8: Small multiples chart with no changes to the strip text formatting
+</p>
+</div>
+<p>When we use the <code><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap()</a></code> function, to make a small multiples chart, we are left with one chart per island. But note that, by default, the text above each chart is noticeably smaller than the rest of the chart. And the gray background behind the text stands out when we have removed the gray background from other parts of the chart. The consistency we’ve worked toward is now gone, with small text that is out of proportion to the other text in the chart and a gray background that sticks out like a sore thumb in a chart with an all white background.</p>
+<p>I’ve saved the code used to make Figure <a href="making-your-own-theme.html#fig:penguin-facetted-plot">4.8</a> as an object, <code>penguins_plot_weight.</code> We now use this object in order to show how to change the text that shows up above each small multiples chart (called the <em>strip</em> in ggplot):</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">penguins_plot_weight</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    strip.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span>,</span>
+<span>    strip.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">17</span>, hjust <span class="op">=</span> <span class="fl">0</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p>We remove the background (or, more accurately, color it white). Then we make the text larger, bold, and left aligned using <code>hjust = 0</code>. I did have to make the text size slightly smaller to fit in the book and added code to make it bold. You can see the result in Figure @ref(fig: penguins-plot-facetted-bbc-plot).</p>
+<div class="figure">
+<span style="display:block;" id="fig:penguins-plot-facetted-bbc-plot"></span>
+<img src="custom-theme_files/figure-html/penguins-plot-facetted-bbc-plot-1.png" alt="Small multiples chart in the BBC style" width="100%"><p class="caption">
+Figure 4.9: Small multiples chart in the BBC style
+</p>
+</div>
+<p>If you take a look at any chart on the BBC site, you’ll see how similar it is to our chart. All of the tweaks in the <code><a href="https://rdrr.io/pkg/bbplot/man/bbc_style.html">bbc_style()</a></code> function (text formatting, legends, axes, grid lines, and backgrounds) that we used to make our example show up in charts seen by millions on the BBC website.</p>
+</div>
+<div id="what-about-colors" class="section level3 unnumbered">
+<h3>What About Colors?<a class="anchor" aria-label="anchor" href="#what-about-colors"><i class="fas fa-link"></i></a>
+</h3>
+<p>You might be thinking: wait, what about the color of the bars? Doesn’t the theme change those? It’s a common point of confusion. If we read the documentation for the <code><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme()</a></code> function, though, it becomes clearer why this is the case:</p>
+<blockquote>
+<p>Themes are a powerful way to customize the non-data components of your plots: i.e. titles, labels, fonts, background, gridlines, and legends.</p>
+</blockquote>
+<p>Color (or, technically, in the case of the bar charts we have made in this chapter, fill) is used in plots as an aesthetic property to show something about data. In our small multiples chart, for instance, fill is mapped to the island (Biscoe is salmon, Dream is green, and Torgersen is blue). As we saw in Chapter <a href="data-viz-chapter.html#data-viz-chapter">3</a>, we can change fill using the various <code>scale_fill_</code> functions. It is because fill is tied to the data rather than being about the overall look-and-feel that ggplot themes do not, on their own, change this component of plots.</p>
+</div>
+</div>
+<div id="in-conclusion-code-is-the-catalyst-for-culture-change" class="section level2 unnumbered">
+<h2>In Conclusion: Code is the Catalyst for Culture Change<a class="anchor" aria-label="anchor" href="#in-conclusion-code-is-the-catalyst-for-culture-change"><i class="fas fa-link"></i></a>
+</h2>
+<p>When Stylianou and Guibourg started developing a custom theme for the BBC, they had one question: would they be able to create graphs in R that could go directly onto the BBC website? And, wouldn’t you know, they succeeded! The <code>bbplot</code> package allowed them to make plots with a consistent look-and-feel that followed BBC standards and, most importantly, did not need help from a designer.</p>
+<p>You can see many of the principles of high-quality data visualization discussed in Chapter <a href="data-viz-chapter.html#data-viz-chapter">3</a> in this custom theme. In particular, the removal of extraneous elements (axis titles and grid lines, for instance) helps keep the focus on the data itself. And because applying the theme requires users to add only a single line to their ggplot code, it became simple to get others on board. Users had only to append <code><a href="https://rdrr.io/pkg/bbplot/man/bbc_style.html">bbc_style()</a></code> to their code to produce a BBC-style plot.</p>
+<p>Over time, others at the BBC noticed the data journalism team’s production-ready graphs and wanted to make their own. The team members set up R trainings for their colleagues and developed a “cookbook” (found at <a href="https://bbc.github.io/rcookbook/" class="uri">https://bbc.github.io/rcookbook/</a>) that showed how to make various types of charts. Soon, the quality and quantity of BBC’s data visualization exploded. Stylianou told me, “I don’t think there’s been a day where someone at the BBC hasn’t used the package to produce a graphic.”</p>
+<p>Now that you’ve seen how custom ggplot themes work, I hope you might be inspired to make one of your own. As you’ve seen, custom themes are a set of small tweaks that you can apply to plots to give them a consistent look-and-feel. Developing a custom theme can take your data visualization from meh to wow. And, once you’ve written the code, it only takes one line of code to apply your custom theme. If a custom theme can transform the data visualization work of the BBC, imagine what it can do for you.</p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="empty"></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <div id="book-on-this-page"></div>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>R Without Statistics</strong>" was written by David Keyes. </p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>

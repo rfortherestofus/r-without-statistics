@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Recreating the COVID Map | R Without Statistics</title>
+
+    <meta name="author" content="David Keyes" />
+  
+   <meta name="description" content="Since R was invented in 1993, it has become a widely used programming language for statistical analysis. From academia to the tech world and beyond, R is used for a wide range of statistical analysis. R Without Statistics will show ways that R can be used beyond complex statistical analysis. Readers will learn about a range of uses for R, many of which they have likely never even considered." />
+   <meta name="generator" content="placeholder" />
+  <meta property="og:title" content="Recreating the COVID Map | R Without Statistics" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://book.rwithoutstatistics.com" />
+  <meta property="og:image" content="https://book.rwithoutstatistics.com/mock-cover.png" />
+  <meta property="og:description" content="Since R was invented in 1993, it has become a widely used programming language for statistical analysis. From academia to the tech world and beyond, R is used for a wide range of statistical analysis. R Without Statistics will show ways that R can be used beyond complex statistical analysis. Readers will learn about a range of uses for R, many of which they have likely never even considered." />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Recreating the COVID Map | R Without Statistics" />
+  
+  <meta name="twitter:description" content="Since R was invented in 1993, it has become a widely used programming language for statistical analysis. From academia to the tech world and beyond, R is used for a wide range of statistical analysis. R Without Statistics will show ways that R can be used beyond complex statistical analysis. Readers will learn about a range of uses for R, many of which they have likely never even considered." />
+  <meta name="twitter:image" content="https://book.rwithoutstatistics.com/mock-cover.png" />
+  <!-- JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script>
+    <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet" />
+    <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script>
+    <script src="libs/bs3compat-0.4.1/transition.js"></script>
+    <script src="libs/bs3compat-0.4.1/tabs.js"></script>
+    <script src="libs/bs3compat-0.4.1/bs3compat.js"></script>
+    <link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet" />
+    <script src="libs/bs4_book-1.0.0/bs4_book.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script>
+
+  <!-- CSS -->
+  <style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+      <link rel="stylesheet" href="style.css" />
+  
+</head>
+
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book">
+    <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">R Without Statistics</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+      </form>
+
+      <nav aria-label="Table of contents">
+        <h2>Table of contents</h2>
+        <div id="book-toc"></div>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="#">View book source <i class="fab fa-github"></i></a></li></p>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="col-sm-12 col-md-9 col-lg-7" id="content">
+<div id="recreating-the-covid-map" class="section level1 unnumbered">
+<h1>Recreating the COVID Map</h1>
+<p>Now that we’ve explained the basics of geospatial data, let’s make a map. All those concepts you just learned about geometry types, dimensions, bounding boxes, projections, and the <code>geometry</code> column will come into play as we return to the COVID-19 map that Abdoul Madjid made. Let’s walk through the code Madjid used to make his map. I’ve made some small modifications to the code in order to make the final map fit on the page, but what you’ll see below is nearly identical to the original code.</p>
+<p>Let’s begin by loading few packages to create Madjid’s COVID-19 map. We’ll use the <code>tidyverse</code> for data importing, manipulation, and plotting (with ggplot). The <code>albersusa</code> package will give us the geospatial data we need and the <code>sf</code> package will enable us to change its coordinate reference system to use an appropriate projection. The <code>zoo</code> package has functions for calculating rolling averages and the <code>colorspace</code> package gives us a color scale that highlights the data well.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="recreating-the-covid-map.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb4-2"><a href="recreating-the-covid-map.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(albersusa)</span>
+<span id="cb4-3"><a href="recreating-the-covid-map.html#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb4-4"><a href="recreating-the-covid-map.html#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(zoo)</span>
+<span id="cb4-5"><a href="recreating-the-covid-map.html#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(colorspace)</span></code></pre></div>
+<div id="importing-our-data" class="section level2 unnumbered">
+<h2>Importing Our Data</h2>
+<p>Next, let’s import the data we need. There are three pieces of data we’ll import:</p>
+<ol style="list-style-type: decimal">
+<li>COVID rates by state over time</li>
+<li>State populations</li>
+<li>Geospatial data to make our map of the United States</li>
+</ol>
+<p>Madjid imported each of these pieces of data separately and then merged them, and we’ll do the same.</p>
+<p>First, we import COVID data. This data comes directly from the <em>New York Times</em>, which publishes daily case rates by state as a CSV file on their GitHub account. I’ve dropped the <code>fips</code> variable (FIPS, which stands for Federal Information Processing Standards, are numeric codes used to represent states) because we can just use the state name instead.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="recreating-the-covid-map.html#cb5-1" aria-hidden="true" tabindex="-1"></a>covid_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="recreating-the-covid-map.html#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>fips)</span></code></pre></div>
+<p>If we take a look at this data we can see the arrival of the first COVID cases in the United States in January 2020.</p>
+<pre><code>#&gt; # A tibble: 56,006 × 4
+#&gt;    date       state      cases deaths
+#&gt;    &lt;date&gt;     &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;
+#&gt;  1 2020-01-21 Washington     1      0
+#&gt;  2 2020-01-22 Washington     1      0
+#&gt;  3 2020-01-23 Washington     1      0
+#&gt;  4 2020-01-24 Illinois       1      0
+#&gt;  5 2020-01-24 Washington     1      0
+#&gt;  6 2020-01-25 California     1      0
+#&gt;  7 2020-01-25 Illinois       1      0
+#&gt;  8 2020-01-25 Washington     1      0
+#&gt;  9 2020-01-26 Arizona        1      0
+#&gt; 10 2020-01-26 California     2      0
+#&gt; # … with 55,996 more rows</code></pre>
+<p>The map that Abdoul Madjid made shows not absolute rates, but per capita rates. So, to recreate his maps, we need to have data on population by state. Madjid downloaded this data as a CSV. The code below imports this data, keeps the <code>State</code> and <code>Pop</code> (population) variables, and saves it as an object called <code>usa_states</code>.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="recreating-the-covid-map.html#cb7-1" aria-hidden="true" tabindex="-1"></a>usa_states <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/population-by-state.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="recreating-the-covid-map.html#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(State, Pop)</span></code></pre></div>
+<p>Let’s see what <code>usa_states</code> looks like.</p>
+<pre><code>#&gt; # A tibble: 52 × 2
+#&gt;    State               Pop
+#&gt;    &lt;chr&gt;             &lt;dbl&gt;
+#&gt;  1 California     39613493
+#&gt;  2 Texas          29730311
+#&gt;  3 Florida        21944577
+#&gt;  4 New York       19299981
+#&gt;  5 Pennsylvania   12804123
+#&gt;  6 Illinois       12569321
+#&gt;  7 Ohio           11714618
+#&gt;  8 Georgia        10830007
+#&gt;  9 North Carolina 10701022
+#&gt; 10 Michigan        9992427
+#&gt; # … with 42 more rows</code></pre>
+<p>Finally, we’ll bring in our geospatial data and save it as an object called <code>usa_states_geom</code>. The <code>usa_sf()</code> function from the <code>albersausa</code> package gives us simple features data for all U.S. states (and, conveniently, puts Alaska and Hawaii in a location and at a scale that they are easy to see). This data includes multiple variables, but we only need the state name so we only keep the <code>name</code> variable.</p>
+<p>Madjid then used the <code>st_transform()</code> function from the <code>sf</code> package to change the coordinate reference system. The CRS that he used comes from the <code>us_laea_proj</code> object, which comes from the <code>alberusa</code> package. Remember the Albers equal-area conic convenience projection we used to change the appearance of our Wyoming counties map? This is the same projection. Here’s the full code to import <code>usa_states_geom</code>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="recreating-the-covid-map.html#cb9-1" aria-hidden="true" tabindex="-1"></a>usa_states_geom <span class="ot">&lt;-</span> <span class="fu">usa_sf</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="recreating-the-covid-map.html#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name) <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="recreating-the-covid-map.html#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(us_laea_proj)</span></code></pre></div>
+<div id="a-short-detour-to-discuss-projections" class="section level3 unnumbered">
+<h3>A Short Detour to Discuss Projections</h3>
+<p>Let’s pause for a moment to plot our geospatial data. As we saw when making our maps of Wyoming, it only takes three lines to make a map from our simple features data.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="recreating-the-covid-map.html#cb10-1" aria-hidden="true" tabindex="-1"></a>usa_states_geom <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="recreating-the-covid-map.html#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb10-3"><a href="recreating-the-covid-map.html#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>()</span></code></pre></div>
+<p>In Figure <a href="recreating-the-covid-map.html#fig:us-map-albers-projection">5.11</a>, we can see the curvature of the longitude and latitude lines and see how the land curves along with them.</p>
+<div class="figure"><span style="display:block;" id="fig:us-map-albers-projection"></span>
+<img src="maps_files/figure-html/us-map-albers-projection-1.png" alt="A map of the United States using the Albers equal-area conic convenience projection" width="100%" />
+<p class="caption">
+Figure 5.11: A map of the United States using the Albers equal-area conic convenience projection
+</p>
+</div>
+<p>If we want to see the same data projected with a different coordinate reference system, we can import the data again using the <code>usa_sf()</code> function, but without setting the CRS to the Albers equal-area conic convenience projection. I’m also only keeping the <code>name</code> variable in order to make our output easier to read.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="recreating-the-covid-map.html#cb11-1" aria-hidden="true" tabindex="-1"></a>usa_states_wgs84 <span class="ot">&lt;-</span> <span class="fu">usa_sf</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb11-2"><a href="recreating-the-covid-map.html#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name)</span></code></pre></div>
+<p>I saved this object as <code>usa_states_wgs84</code> because, as you can see below, the <code>usa_sf()</code> function returns data that uses the WGS84 projection. Here’s what it looks like.</p>
+<pre><code>#&gt; Simple feature collection with 51 features and 1 field
+#&gt; Geometry type: MULTIPOLYGON
+#&gt; Dimension:     XY
+#&gt; Bounding box:  xmin: -124.7332 ymin: 20.63151 xmax: -66.9499 ymax: 49.38436
+#&gt; Geodetic CRS:  WGS 84
+#&gt; First 10 features:
+#&gt;                    name                       geometry
+#&gt; 1               Arizona MULTIPOLYGON (((-112.5386 3...
+#&gt; 2              Arkansas MULTIPOLYGON (((-94.04296 3...
+#&gt; 3            California MULTIPOLYGON (((-120.2485 3...
+#&gt; 4              Colorado MULTIPOLYGON (((-107.3178 4...
+#&gt; 5           Connecticut MULTIPOLYGON (((-72.39743 4...
+#&gt; 6  District of Columbia MULTIPOLYGON (((-77.03299 3...
+#&gt; 7               Georgia MULTIPOLYGON (((-84.81048 3...
+#&gt; 8              Illinois MULTIPOLYGON (((-89.36603 4...
+#&gt; 9               Indiana MULTIPOLYGON (((-84.80412 4...
+#&gt; 10            Louisiana MULTIPOLYGON (((-88.86507 2...</code></pre>
+<p>We can now use the same three lines of code (switching out <code>usa_states_geom</code> for <code>usa_states_wgs84</code>) to plot our map.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="recreating-the-covid-map.html#cb13-1" aria-hidden="true" tabindex="-1"></a>usa_states_wgs84 <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="recreating-the-covid-map.html#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb13-3"><a href="recreating-the-covid-map.html#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>()</span></code></pre></div>
+<p>If we take a look at the resulting map in Figure <a href="recreating-the-covid-map.html#fig:us-map-wgs84-projection">5.12</a> below, we can see how different it looks. The curvature of the latitude and longitude lines is gone and the shape of the United States has changed as well, looking far more straight than our previous map.</p>
+<div class="figure"><span style="display:block;" id="fig:us-map-wgs84-projection"></span>
+<img src="maps_files/figure-html/us-map-wgs84-projection-1.png" alt="A map of the United States using the WGS84 projection" width="100%" />
+<p class="caption">
+Figure 5.12: A map of the United States using the WGS84 projection
+</p>
+</div>
+<p>There are many, many different projections you can use. The conclusion of this chapter talks about how to select appropriate projections when making your own maps.</p>
+</div>
+</div>
+<div id="calculating-daily-covid-cases" class="section level2 unnumbered">
+<h2>Calculating Daily COVID Cases</h2>
+<p>Next, we need to calculate the number of daily COVID cases. We have to do this because the <code>covid_data</code> data frame gives us cumulative cases by state. So, to calculate the number of cases per day for each state, Madjid grouped the data by state using the <code>group_by()</code> function, then created a new variable called <code>pd_cases</code>, which represents the number of cases in the previous day (he uses the <code>lag()</code> function to create this variable). Some days do not have cases counts for the previous day so, in these cases, Madjid set the value as 0 using the <code>replace_na()</code> function. Finally, Madjid created a new variable called <code>daily_cases</code>. For this variable, he used the <code>case_when()</code> function to set up a condition: if the <code>cases</code> variable (cases on that day) is greater than the <code>pd_cases</code> variable (cases one day prior), then <code>daily_cases</code> is equal to <code>cases</code> minus <code>pd_cases</code>; otherwise, set <code>daily_cases</code> to be equal to 0. Since we grouped the data by state at the beginning, we must now remove this grouping using the <code>ungroup()</code> function.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="recreating-the-covid-map.html#cb14-1" aria-hidden="true" tabindex="-1"></a>covid_cases <span class="ot">&lt;-</span> covid_data <span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="recreating-the-covid-map.html#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(state) <span class="sc">%&gt;%</span></span>
+<span id="cb14-3"><a href="recreating-the-covid-map.html#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb14-4"><a href="recreating-the-covid-map.html#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">pd_cases =</span> <span class="fu">lag</span>(cases)</span>
+<span id="cb14-5"><a href="recreating-the-covid-map.html#cb14-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb14-6"><a href="recreating-the-covid-map.html#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace_na</span>(<span class="fu">list</span>(<span class="at">pd_cases =</span> <span class="dv">0</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb14-7"><a href="recreating-the-covid-map.html#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb14-8"><a href="recreating-the-covid-map.html#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">daily_cases =</span> <span class="fu">case_when</span>(</span>
+<span id="cb14-9"><a href="recreating-the-covid-map.html#cb14-9" aria-hidden="true" tabindex="-1"></a>      cases <span class="sc">&gt;</span> pd_cases <span class="sc">~</span> cases <span class="sc">-</span> pd_cases,</span>
+<span id="cb14-10"><a href="recreating-the-covid-map.html#cb14-10" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="dv">0</span></span>
+<span id="cb14-11"><a href="recreating-the-covid-map.html#cb14-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb14-12"><a href="recreating-the-covid-map.html#cb14-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb14-13"><a href="recreating-the-covid-map.html#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb14-14"><a href="recreating-the-covid-map.html#cb14-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(state, date)</span></code></pre></div>
+<p>We can now take a look at the <code>covid_cases</code> data frame we created. The variable we care about for the next step is <code>daily_cases</code>.</p>
+<pre><code>#&gt; # A tibble: 56,006 × 6
+#&gt;    date       state   cases deaths pd_cases daily_cases
+#&gt;    &lt;date&gt;     &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;
+#&gt;  1 2020-03-13 Alabama     6      0        0           6
+#&gt;  2 2020-03-14 Alabama    12      0        6           6
+#&gt;  3 2020-03-15 Alabama    23      0       12          11
+#&gt;  4 2020-03-16 Alabama    29      0       23           6
+#&gt;  5 2020-03-17 Alabama    39      0       29          10
+#&gt;  6 2020-03-18 Alabama    51      0       39          12
+#&gt;  7 2020-03-19 Alabama    78      0       51          27
+#&gt;  8 2020-03-20 Alabama   106      0       78          28
+#&gt;  9 2020-03-21 Alabama   131      0      106          25
+#&gt; 10 2020-03-22 Alabama   157      0      131          26
+#&gt; # … with 55,996 more rows</code></pre>
+</div>
+<div id="calculating-incidence-rates" class="section level2 unnumbered">
+<h2>Calculating Incidence Rates</h2>
+<p>We’re not quite done calculating values. The data that Madjid used to make his map was not daily case counts. Instead, it was a five-day rolling average of cases per 100,000 people. Madjid created a new data frame called <code>covid_cases_rm</code> (rm for rolling mean). The first step in its creation is to use the <code>rollmean()</code> function from the <code>zoo</code> package to create a <code>roll_cases</code> variable. The <code>k</code> argument is the number of days (five in order to calculate the five-day rolling average) and the <code>fill</code> argument determines what happens in cases like the first day where we can’t calculate a five-day rolling mean because there are no days prior to this day (Madjid set these values to be NA). Here is that section of the code:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="recreating-the-covid-map.html#cb16-1" aria-hidden="true" tabindex="-1"></a>covid_cases <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="recreating-the-covid-map.html#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">roll_cases =</span> <span class="fu">rollmean</span>(</span>
+<span id="cb16-3"><a href="recreating-the-covid-map.html#cb16-3" aria-hidden="true" tabindex="-1"></a>    daily_cases,</span>
+<span id="cb16-4"><a href="recreating-the-covid-map.html#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">k =</span> <span class="dv">5</span>,</span>
+<span id="cb16-5"><a href="recreating-the-covid-map.html#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="cn">NA</span></span>
+<span id="cb16-6"><a href="recreating-the-covid-map.html#cb16-6" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div>
+<p>After calculating <code>roll_cases</code>, Madjid started work on calculating per capita case rates. To do this, he needed population data so he joined the population data from the <code>usa_states</code> data frame with the <code>covid_cases</code> data. He then dropped rows with missing population data (the <code>Pop</code> variable). In practice, this meant getting rid of several U.S. territories (American Samoa, Guam, Northern Marianas Islands, and Virgin Islands).</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="recreating-the-covid-map.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(usa_states,</span>
+<span id="cb17-2"><a href="recreating-the-covid-map.html#cb17-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;state&quot;</span> <span class="ot">=</span> <span class="st">&quot;State&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href="recreating-the-covid-map.html#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(Pop)</span></code></pre></div>
+<p>Next, Madjid created a per capita case rate variable called <code>incidence_rate</code> by multiplying the <code>roll_cases</code> variable by 100,000 and then dividing it by the population of each state. Rather than keeping raw values (for example, the Florida on June 29, 2021 had a rate of 57.77737 cases per 100,000 people), Madjid used the <code>cut()</code> function to convert the values into categories. His code in this section makes values of “&gt;0” (greater than 0), “&gt;5”, and so on up to a maximum value of “&gt;50”.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="recreating-the-covid-map.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">incidence_rate =</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">5</span> <span class="sc">*</span> roll_cases <span class="sc">/</span> Pop) <span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="recreating-the-covid-map.html#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">incidence_rate =</span> <span class="fu">cut</span>(incidence_rate,</span>
+<span id="cb18-3"><a href="recreating-the-covid-map.html#cb18-3" aria-hidden="true" tabindex="-1"></a>                              <span class="at">breaks =</span> <span class="fu">c</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">50</span>, <span class="dv">5</span>), <span class="cn">Inf</span>),</span>
+<span id="cb18-4"><a href="recreating-the-covid-map.html#cb18-4" aria-hidden="true" tabindex="-1"></a>                              <span class="at">include.lowest =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb18-5"><a href="recreating-the-covid-map.html#cb18-5" aria-hidden="true" tabindex="-1"></a>           <span class="fu">factor</span>(<span class="at">labels =</span> <span class="fu">paste0</span>(<span class="st">&quot;&gt;&quot;</span>, <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">50</span>, <span class="dv">5</span>))))</span></code></pre></div>
+<p>The last step is to filter to only include 2021 data because Madjid’s map only shows that year and select only the variables (<code>state</code>, <code>date</code>, and <code>incidence_rate</code>) we’ll need to create our map. The full code to create the <code>covid_cases_rm</code> data frame is below.</p>
+<p>Let’s now take a look at the <code>covid_cases_rm</code> data frame.</p>
+<pre><code>#&gt; # A tibble: 18,980 × 3
+#&gt;    state   date       incidence_rate
+#&gt;    &lt;chr&gt;   &lt;date&gt;     &lt;fct&gt;         
+#&gt;  1 Alabama 2021-01-01 &gt;50           
+#&gt;  2 Alabama 2021-01-02 &gt;50           
+#&gt;  3 Alabama 2021-01-03 &gt;50           
+#&gt;  4 Alabama 2021-01-04 &gt;50           
+#&gt;  5 Alabama 2021-01-05 &gt;50           
+#&gt;  6 Alabama 2021-01-06 &gt;50           
+#&gt;  7 Alabama 2021-01-07 &gt;50           
+#&gt;  8 Alabama 2021-01-08 &gt;50           
+#&gt;  9 Alabama 2021-01-09 &gt;50           
+#&gt; 10 Alabama 2021-01-10 &gt;50           
+#&gt; # … with 18,970 more rows</code></pre>
+</div>
+<div id="adding-geospatial-data" class="section level2 unnumbered">
+<h2>Adding Geospatial Data</h2>
+<p>We’ve now used two (COVID case data and state population data) of our three data sources to create the <code>covid_cases_rm</code> data frame that we’ll use to make our map. Let’s use our third data source: the geospatial data we saved as <code>usa_states_geom</code>. We start with this data frame and then merge our <code>covid_cases_rm</code> data frame into it, matching the <code>name</code> variable from <code>usa_states_geom</code> to the <code>state</code> variable in <code>covid_cases_rm</code>. Being able to merge together regular data frames with geospatial data is possible with simple features data, another mark in its favor.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="recreating-the-covid-map.html#cb20-1" aria-hidden="true" tabindex="-1"></a>usa_states_geom <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="recreating-the-covid-map.html#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(covid_cases_rm, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;name&quot;</span> <span class="ot">=</span> <span class="st">&quot;state&quot;</span>))</span></code></pre></div>
+<p>Next, Madjid created a new variable called <code>fancy_date</code>. As the name implies, it’s a nicely formatted version of the date so that we get “Jan. 01” instead of “2021-01-01.” The <code>format()</code> function does the formatting while the <code>fct_inorder()</code> function makes it so that the <code>fancy_date()</code> variable will display in order by date (rather than, say, putting August before January because it comes first alphabetically). Last, we use the <code>relocate()</code> function to put the <code>fancy_date</code> column next to the <code>date</code> column. We save this data frame as <code>usa_states_geom_covid</code>.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="recreating-the-covid-map.html#cb21-1" aria-hidden="true" tabindex="-1"></a>usa_states_geom_covid <span class="ot">&lt;-</span> usa_states_geom <span class="sc">%&gt;%</span></span>
+<span id="cb21-2"><a href="recreating-the-covid-map.html#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(covid_cases_rm, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;name&quot;</span> <span class="ot">=</span> <span class="st">&quot;state&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb21-3"><a href="recreating-the-covid-map.html#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fancy_date =</span> <span class="fu">fct_inorder</span>(<span class="fu">format</span>(date, <span class="st">&quot;%b. %d&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-4"><a href="recreating-the-covid-map.html#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(fancy_date, <span class="at">.before =</span> incidence_rate)</span></code></pre></div>
+<p>If we take a look at the <code>usa_states_geom_covid</code> data frame, we can see the metadata and <code>geometry</code> columns discussed above.</p>
+<pre><code>#&gt; Simple feature collection with 18615 features and 4 fields
+#&gt; Geometry type: MULTIPOLYGON
+#&gt; Dimension:     XY
+#&gt; Bounding box:  xmin: -2100000 ymin: -2500000 xmax: 2516374 ymax: 732103.3
+#&gt; CRS:           +proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs
+#&gt; First 10 features:
+#&gt;       name       date fancy_date incidence_rate
+#&gt; 1  Arizona 2021-01-01    Jan. 01            &gt;50
+#&gt; 2  Arizona 2021-01-02    Jan. 02            &gt;50
+#&gt; 3  Arizona 2021-01-03    Jan. 03            &gt;50
+#&gt; 4  Arizona 2021-01-04    Jan. 04            &gt;50
+#&gt; 5  Arizona 2021-01-05    Jan. 05            &gt;50
+#&gt; 6  Arizona 2021-01-06    Jan. 06            &gt;50
+#&gt; 7  Arizona 2021-01-07    Jan. 07            &gt;50
+#&gt; 8  Arizona 2021-01-08    Jan. 08            &gt;50
+#&gt; 9  Arizona 2021-01-09    Jan. 09            &gt;50
+#&gt; 10 Arizona 2021-01-10    Jan. 10            &gt;50
+#&gt;                          geometry
+#&gt; 1  MULTIPOLYGON (((-1111066 -8...
+#&gt; 2  MULTIPOLYGON (((-1111066 -8...
+#&gt; 3  MULTIPOLYGON (((-1111066 -8...
+#&gt; 4  MULTIPOLYGON (((-1111066 -8...
+#&gt; 5  MULTIPOLYGON (((-1111066 -8...
+#&gt; 6  MULTIPOLYGON (((-1111066 -8...
+#&gt; 7  MULTIPOLYGON (((-1111066 -8...
+#&gt; 8  MULTIPOLYGON (((-1111066 -8...
+#&gt; 9  MULTIPOLYGON (((-1111066 -8...
+#&gt; 10 MULTIPOLYGON (((-1111066 -8...</code></pre>
+</div>
+<div id="making-the-map" class="section level2 unnumbered">
+<h2>Making the Map</h2>
+<p>It was a lot of work to end up with the surprisingly simple data frame <code>usa_states_geom_covid</code>, but it’s all we need in order to make our map. The data may be simple, but the code that Abdoul Madjid used to make his map is quite complex. Let’s look at it in pieces.</p>
+<p>But before doing so, two quick notes:</p>
+<p>First: The final map is actually multiple maps, one for each day in 2021. Combining 365 days makes for a large final product. So, instead of showing every day for each step, I’m going to filter the <code>usa_states_geom_covid</code> to just show the first six days in January. I do this using the code below and save the result as a data frame called <code>usa_states_geom_covid_six_days</code>.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="recreating-the-covid-map.html#cb23-1" aria-hidden="true" tabindex="-1"></a>usa_states_geom_covid_six_days <span class="ot">&lt;-</span> usa_states_geom_covid <span class="sc">%&gt;%</span></span>
+<span id="cb23-2"><a href="recreating-the-covid-map.html#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date <span class="sc">&lt;=</span> <span class="fu">as.Date</span>(<span class="st">&quot;2021-01-06&quot;</span>))</span></code></pre></div>
+<p>Here’s what this data looks like:</p>
+<pre><code>#&gt; Simple feature collection with 306 features and 4 fields
+#&gt; Geometry type: MULTIPOLYGON
+#&gt; Dimension:     XY
+#&gt; Bounding box:  xmin: -2100000 ymin: -2500000 xmax: 2516374 ymax: 732103.3
+#&gt; CRS:           +proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs
+#&gt; First 10 features:
+#&gt;        name       date fancy_date incidence_rate
+#&gt; 1   Arizona 2021-01-01    Jan. 01            &gt;50
+#&gt; 2   Arizona 2021-01-02    Jan. 02            &gt;50
+#&gt; 3   Arizona 2021-01-03    Jan. 03            &gt;50
+#&gt; 4   Arizona 2021-01-04    Jan. 04            &gt;50
+#&gt; 5   Arizona 2021-01-05    Jan. 05            &gt;50
+#&gt; 6   Arizona 2021-01-06    Jan. 06            &gt;50
+#&gt; 7  Arkansas 2021-01-01    Jan. 01            &gt;50
+#&gt; 8  Arkansas 2021-01-02    Jan. 02            &gt;50
+#&gt; 9  Arkansas 2021-01-03    Jan. 03            &gt;50
+#&gt; 10 Arkansas 2021-01-04    Jan. 04            &gt;50
+#&gt;                          geometry
+#&gt; 1  MULTIPOLYGON (((-1111066 -8...
+#&gt; 2  MULTIPOLYGON (((-1111066 -8...
+#&gt; 3  MULTIPOLYGON (((-1111066 -8...
+#&gt; 4  MULTIPOLYGON (((-1111066 -8...
+#&gt; 5  MULTIPOLYGON (((-1111066 -8...
+#&gt; 6  MULTIPOLYGON (((-1111066 -8...
+#&gt; 7  MULTIPOLYGON (((557903.1 -1...
+#&gt; 8  MULTIPOLYGON (((557903.1 -1...
+#&gt; 9  MULTIPOLYGON (((557903.1 -1...
+#&gt; 10 MULTIPOLYGON (((557903.1 -1...</code></pre>
+<p>Second: the final product that Abdoul Madjid made is giant in order to fit all 365 days. I’ve had to change sizes of a few elements below to make them fit in this book. I’ve kept the overall structure of the code, but changed a few specific elements (for example, making text sizes smaller) so that everything fits.</p>
+<div id="generating-the-basic-map" class="section level3 unnumbered">
+<h3>Generating the Basic Map</h3>
+<p>Now that we have six days of data, let’s make some maps. Abdoul Madjid’s map-making code has three main parts:</p>
+<ol style="list-style-type: decimal">
+<li>Making the basic map</li>
+<li>Changing colors</li>
+<li>Making tweaks to the theme</li>
+</ol>
+<p>The three lines of code that we used above to make our Wyoming maps come back again, with some adornments to improve the quality of our map. Below, we can see that we’re using <code>geom_sf()</code> to plot our geospatial data. Madjid modified a couple arguments, using <code>size = .05</code> to make the state borders less prominent and <code>color = "grey55"</code> to make the borders a medium grey color. Then, because he made one map for each day, he used the <code>facet_wrap()</code> function. The <code>vars(fancy_date)</code> code specifies that the <code>fancy_date</code> variable should be used to do the faceting (in other words, make one map for each day) and <code>strip.position = "bottom"</code> moves the labels “Jan. 01”, “Jan. 02”, and so on to the bottom of the maps.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="recreating-the-covid-map.html#cb25-1" aria-hidden="true" tabindex="-1"></a>usa_states_geom_covid_six_days <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="recreating-the-covid-map.html#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb25-3"><a href="recreating-the-covid-map.html#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(</span>
+<span id="cb25-4"><a href="recreating-the-covid-map.html#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">fill =</span> incidence_rate),</span>
+<span id="cb25-5"><a href="recreating-the-covid-map.html#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> .<span class="dv">05</span>,</span>
+<span id="cb25-6"><a href="recreating-the-covid-map.html#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;grey55&quot;</span></span>
+<span id="cb25-7"><a href="recreating-the-covid-map.html#cb25-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb25-8"><a href="recreating-the-covid-map.html#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(</span>
+<span id="cb25-9"><a href="recreating-the-covid-map.html#cb25-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">vars</span>(fancy_date),</span>
+<span id="cb25-10"><a href="recreating-the-covid-map.html#cb25-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.position =</span> <span class="st">&quot;bottom&quot;</span></span>
+<span id="cb25-11"><a href="recreating-the-covid-map.html#cb25-11" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p>The resulting map can be seen in Figure <a href="recreating-the-covid-map.html#fig:basic-map">5.13</a>.</p>
+<div class="figure"><span style="display:block;" id="fig:basic-map"></span>
+<img src="maps_files/figure-html/basic-map-1.png" alt="A map showing the incidence rate of COVID for the first six days of 2021" width="100%" />
+<p class="caption">
+Figure 5.13: A map showing the incidence rate of COVID for the first six days of 2021
+</p>
+</div>
+</div>
+<div id="changing-colors-and-beginning-to-tweak-the-legend" class="section level3" number="5.1.1">
+<h3><span class="header-section-number">5.1.1</span> Changing Colors and Beginning to Tweak the Legend</h3>
+<p>Next, Madjid tweaked the colors of his maps. He used the <code>scale_fill_discrete_sequential()</code> function from the <code>colorspace</code> package to set the color scale. This function is quite similar to the <code>scale_fill_viridis_d()</code> function that Cédric Scherer and Georgios Karamanis used to make their drought data visualization in Chapter <a href="data-viz-chapter.html#data-viz-chapter">3</a>. Both visualizations use the “rocket” palette, with the fill scale going from a tan at the low end to a black at the high end. Madjid then used the <code>name</code> argument to set the title for the legend. By default, it would use the variable name (<code>incidence_rate</code>), but Madjid improves it by using “COVID-19 INCIDENCE RATE” instead.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="recreating-the-covid-map.html#cb26-1" aria-hidden="true" tabindex="-1"></a>usa_states_geom_covid_six_days <span class="sc">%&gt;%</span></span>
+<span id="cb26-2"><a href="recreating-the-covid-map.html#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb26-3"><a href="recreating-the-covid-map.html#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(</span>
+<span id="cb26-4"><a href="recreating-the-covid-map.html#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">fill =</span> incidence_rate),</span>
+<span id="cb26-5"><a href="recreating-the-covid-map.html#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> .<span class="dv">05</span>,</span>
+<span id="cb26-6"><a href="recreating-the-covid-map.html#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;grey55&quot;</span></span>
+<span id="cb26-7"><a href="recreating-the-covid-map.html#cb26-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb26-8"><a href="recreating-the-covid-map.html#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(</span>
+<span id="cb26-9"><a href="recreating-the-covid-map.html#cb26-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">vars</span>(fancy_date),</span>
+<span id="cb26-10"><a href="recreating-the-covid-map.html#cb26-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.position =</span> <span class="st">&quot;bottom&quot;</span></span>
+<span id="cb26-11"><a href="recreating-the-covid-map.html#cb26-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb26-12"><a href="recreating-the-covid-map.html#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_discrete_sequential</span>(</span>
+<span id="cb26-13"><a href="recreating-the-covid-map.html#cb26-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="st">&quot;Rocket&quot;</span>,</span>
+<span id="cb26-14"><a href="recreating-the-covid-map.html#cb26-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&quot;COVID-19 INCIDENCE RATE&quot;</span></span>
+<span id="cb26-15"><a href="recreating-the-covid-map.html#cb26-15" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p>Our in-progress map can be seen in Figure <a href="recreating-the-covid-map.html#fig:map-with-rocket-palette">5.14</a> below.</p>
+<div class="figure"><span style="display:block;" id="fig:map-with-rocket-palette"></span>
+<img src="maps_files/figure-html/map-with-rocket-palette-1.png" alt="The COVID map with the rocket palette added" width="100%" />
+<p class="caption">
+Figure 5.14: The COVID map with the rocket palette added
+</p>
+</div>
+<p>I’ve actually only shown a portion of the code that Abdoul Madjid used within the <code>scale_fill_discrete_sequential()</code> function. He also used the <code>guide</code> argument and the <code>guide_legend()</code> function to make tweaks to the legend. His code does the following:</p>
+<ul>
+<li>Puts the colored squares in one row (<code>nrow = 1</code>) rather than the default (all in a single column)</li>
+<li>Sets the height and width of each colored square (.3 centimeters for each)</li>
+<li>Sets the font family, size, and margin of both the labels (the “&gt;0,” “&gt;5,” and so on) with <code>label.theme</code> and the title (“COVID-19 INCIDENCE RATE”) with <code>title.theme</code></li>
+<li>Puts the title on top of the legend (<code>title.position = "top"</code>) and centers it (<code>title.hjust = .5</code>)</li>
+</ul>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="recreating-the-covid-map.html#cb27-1" aria-hidden="true" tabindex="-1"></a>usa_states_geom_covid_six_days <span class="sc">%&gt;%</span></span>
+<span id="cb27-2"><a href="recreating-the-covid-map.html#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb27-3"><a href="recreating-the-covid-map.html#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(</span>
+<span id="cb27-4"><a href="recreating-the-covid-map.html#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">fill =</span> incidence_rate),</span>
+<span id="cb27-5"><a href="recreating-the-covid-map.html#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> .<span class="dv">05</span>,</span>
+<span id="cb27-6"><a href="recreating-the-covid-map.html#cb27-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;transparent&quot;</span></span>
+<span id="cb27-7"><a href="recreating-the-covid-map.html#cb27-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb27-8"><a href="recreating-the-covid-map.html#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(</span>
+<span id="cb27-9"><a href="recreating-the-covid-map.html#cb27-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">vars</span>(fancy_date),</span>
+<span id="cb27-10"><a href="recreating-the-covid-map.html#cb27-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.position =</span> <span class="st">&quot;bottom&quot;</span></span>
+<span id="cb27-11"><a href="recreating-the-covid-map.html#cb27-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb27-12"><a href="recreating-the-covid-map.html#cb27-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_discrete_sequential</span>(</span>
+<span id="cb27-13"><a href="recreating-the-covid-map.html#cb27-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="st">&quot;Rocket&quot;</span>,</span>
+<span id="cb27-14"><a href="recreating-the-covid-map.html#cb27-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&quot;COVID-19 INCIDENCE RATE&quot;</span>,</span>
+<span id="cb27-15"><a href="recreating-the-covid-map.html#cb27-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">guide =</span> <span class="fu">guide_legend</span>(</span>
+<span id="cb27-16"><a href="recreating-the-covid-map.html#cb27-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">nrow =</span> <span class="dv">1</span>,</span>
+<span id="cb27-17"><a href="recreating-the-covid-map.html#cb27-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">keyheight =</span> <span class="fu">unit</span>(.<span class="dv">3</span>, <span class="st">&quot;cm&quot;</span>),</span>
+<span id="cb27-18"><a href="recreating-the-covid-map.html#cb27-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">keywidth =</span> <span class="fu">unit</span>(.<span class="dv">3</span>, <span class="st">&quot;cm&quot;</span>),</span>
+<span id="cb27-19"><a href="recreating-the-covid-map.html#cb27-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">label.theme =</span> <span class="fu">element_text</span>(</span>
+<span id="cb27-20"><a href="recreating-the-covid-map.html#cb27-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">family =</span> <span class="st">&quot;Times New Roman&quot;</span>,</span>
+<span id="cb27-21"><a href="recreating-the-covid-map.html#cb27-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">size =</span> <span class="fu">rel</span>(<span class="dv">6</span>),</span>
+<span id="cb27-22"><a href="recreating-the-covid-map.html#cb27-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">margin =</span> <span class="fu">margin</span>(</span>
+<span id="cb27-23"><a href="recreating-the-covid-map.html#cb27-23" aria-hidden="true" tabindex="-1"></a>          <span class="at">r =</span> <span class="dv">5</span>,</span>
+<span id="cb27-24"><a href="recreating-the-covid-map.html#cb27-24" aria-hidden="true" tabindex="-1"></a>          <span class="at">unit =</span> <span class="st">&quot;pt&quot;</span></span>
+<span id="cb27-25"><a href="recreating-the-covid-map.html#cb27-25" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb27-26"><a href="recreating-the-covid-map.html#cb27-26" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb27-27"><a href="recreating-the-covid-map.html#cb27-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">title.theme =</span> <span class="fu">element_text</span>(</span>
+<span id="cb27-28"><a href="recreating-the-covid-map.html#cb27-28" aria-hidden="true" tabindex="-1"></a>        <span class="at">family =</span> <span class="st">&quot;Times New Roman&quot;</span>,</span>
+<span id="cb27-29"><a href="recreating-the-covid-map.html#cb27-29" aria-hidden="true" tabindex="-1"></a>        <span class="at">size =</span> <span class="fu">rel</span>(<span class="dv">9</span>),</span>
+<span id="cb27-30"><a href="recreating-the-covid-map.html#cb27-30" aria-hidden="true" tabindex="-1"></a>        <span class="at">margin =</span> <span class="fu">margin</span>(</span>
+<span id="cb27-31"><a href="recreating-the-covid-map.html#cb27-31" aria-hidden="true" tabindex="-1"></a>          <span class="at">b =</span> .<span class="dv">1</span>,</span>
+<span id="cb27-32"><a href="recreating-the-covid-map.html#cb27-32" aria-hidden="true" tabindex="-1"></a>          <span class="at">unit =</span> <span class="st">&quot;cm&quot;</span></span>
+<span id="cb27-33"><a href="recreating-the-covid-map.html#cb27-33" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb27-34"><a href="recreating-the-covid-map.html#cb27-34" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb27-35"><a href="recreating-the-covid-map.html#cb27-35" aria-hidden="true" tabindex="-1"></a>      <span class="at">title.position =</span> <span class="st">&quot;top&quot;</span>,</span>
+<span id="cb27-36"><a href="recreating-the-covid-map.html#cb27-36" aria-hidden="true" tabindex="-1"></a>      <span class="at">title.hjust =</span> .<span class="dv">5</span></span>
+<span id="cb27-37"><a href="recreating-the-covid-map.html#cb27-37" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb27-38"><a href="recreating-the-covid-map.html#cb27-38" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p>If we view our map at this point, it won’t actually look like much because the legend is currently quite large in relation to the maps. In order to change this, and to make some other tweaks to improve the look-and-feel of our maps, Madjid made multiple tweaks to the maps themselves. He did this using the <code>theme()</code> function from the <code>ggplot2</code> package. One benefit of making maps with ggplot is that all of the tweaks you use when making a regular plot can be carried over to your maps as well. Many of the tweaks within the <code>theme()</code> function below are similar to those seen in Chapter <a href="data-viz-chapter.html#data-viz-chapter">3</a>. I’m saving the map as it is now as the object <code>map_with_legend_tweaks</code> so that we can add onto it below.</p>
+</div>
+<div id="tweaking-the-theme-the-legend" class="section level3" number="5.1.2">
+<h3><span class="header-section-number">5.1.2</span> Tweaking the Theme: The Legend</h3>
+<p>Let’s review the changes that Abdoul Madjid made to his maps using ggplot themes. He began by applying <code>theme_minimal()</code> to his map. This removes the ugly gray background that ggplot applies to plots (and maps). He then applied additional tweaks using the <code>theme()</code> function. Let’s start by looking at the tweaks to the legend.</p>
+<p>While the code in the <code>scale_fill_discrete_sequential()</code> function customized individual elements <em>within</em> the legend (for example, the size of the colored squares), the code below customizes the legend as a whole. Madjid moved the legend to the top of the maps using <code>legend.position = "top"</code> and added a bit of spacing around the legend with <code>legend.box.spacing = unit(.25, "cm")</code>.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="recreating-the-covid-map.html#cb28-1" aria-hidden="true" tabindex="-1"></a>map_with_legend_tweaks <span class="sc">+</span></span>
+<span id="cb28-2"><a href="recreating-the-covid-map.html#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb28-3"><a href="recreating-the-covid-map.html#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb28-4"><a href="recreating-the-covid-map.html#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">&quot;top&quot;</span>,</span>
+<span id="cb28-5"><a href="recreating-the-covid-map.html#cb28-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.box.spacing =</span> <span class="fu">unit</span>(.<span class="dv">25</span>, <span class="st">&quot;cm&quot;</span>)</span>
+<span id="cb28-6"><a href="recreating-the-covid-map.html#cb28-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p>We can see the result of these tweaks in Figure <a href="recreating-the-covid-map.html#fig:map-with-more-legend-tweaks">5.15</a> below.</p>
+<div class="figure"><span style="display:block;" id="fig:map-with-more-legend-tweaks"></span>
+<img src="maps_files/figure-html/map-with-more-legend-tweaks-1.png" alt="The COVID map with additional tweaks to the legend" width="100%" />
+<p class="caption">
+Figure 5.15: The COVID map with additional tweaks to the legend
+</p>
+</div>
+<p>As I did above, I’m saving the map as it is at this point (in this case, to an object called <code>map_with_more_legend_tweaks</code>) to avoid having to reprint all of the code for each map (I do the same thing in the sections below).</p>
+</div>
+<div id="tweaking-the-theme-the-title-caption-and-strip-text" class="section level3" number="5.1.3">
+<h3><span class="header-section-number">5.1.3</span> Tweaking the Theme: The Title, Caption, and Strip Text</h3>
+<p>Next, Madjid made tweaks to the title and caption. Below, we added the title and caption using this <code>labs()</code> function. Then, we see how Madjid used the <code>theme()</code> function to tweak these elements as well as the label for each map (“Jan. 01”, “Jan. 02”, and so on). He makes all text use Times New Roman and makes it a nearly black color using the hex code #111111. This sets defaults for all text elements, but Madjid also made tweaks to individual elements as well. He set the size of the title to be 2.5 times that of other text elements (<code>size = rel(2.5)</code>), made it bold (<code>face = "bold"</code>) and centered (<code>hjust = 0.5</code>), and added 0.25 centimeter margins on the top and bottom (<code>hjust = 0.5, margin = margin(t = .25, b = .25, unit = "cm")</code>). He made the same tweaks to the caption, with the exception of adjusting the font size. And finally, Abdoul Madjid adjusted the size and bolding of the individual map labels using <code>strip.text</code>.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="recreating-the-covid-map.html#cb29-1" aria-hidden="true" tabindex="-1"></a>map_with_more_legend_tweaks <span class="sc">+</span></span>
+<span id="cb29-2"><a href="recreating-the-covid-map.html#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;2021 · A pandemic year&quot;</span>,</span>
+<span id="cb29-3"><a href="recreating-the-covid-map.html#cb29-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Incidence rates are calculated for 100,000 people in each state.</span></span>
+<span id="cb29-4"><a href="recreating-the-covid-map.html#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="st">                  Inspired from a graphic in the DIE ZEIT newspaper of November 18, 2021.</span></span>
+<span id="cb29-5"><a href="recreating-the-covid-map.html#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="st">                  Data from NY Times · Tidytuesday Week-1 2022 · Abdoul ISSA BIDA.&quot;</span>) <span class="sc">+</span></span>
+<span id="cb29-6"><a href="recreating-the-covid-map.html#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb29-7"><a href="recreating-the-covid-map.html#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">&quot;Times New Roman&quot;</span>, </span>
+<span id="cb29-8"><a href="recreating-the-covid-map.html#cb29-8" aria-hidden="true" tabindex="-1"></a>                        <span class="at">color =</span> <span class="st">&quot;#111111&quot;</span>),</span>
+<span id="cb29-9"><a href="recreating-the-covid-map.html#cb29-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(</span>
+<span id="cb29-10"><a href="recreating-the-covid-map.html#cb29-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">2.5</span>),</span>
+<span id="cb29-11"><a href="recreating-the-covid-map.html#cb29-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>,</span>
+<span id="cb29-12"><a href="recreating-the-covid-map.html#cb29-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">hjust =</span> <span class="fl">0.5</span>,</span>
+<span id="cb29-13"><a href="recreating-the-covid-map.html#cb29-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> .<span class="dv">25</span>, </span>
+<span id="cb29-14"><a href="recreating-the-covid-map.html#cb29-14" aria-hidden="true" tabindex="-1"></a>                      <span class="at">b =</span> .<span class="dv">25</span>, </span>
+<span id="cb29-15"><a href="recreating-the-covid-map.html#cb29-15" aria-hidden="true" tabindex="-1"></a>                      <span class="at">unit =</span> <span class="st">&quot;cm&quot;</span>)</span>
+<span id="cb29-16"><a href="recreating-the-covid-map.html#cb29-16" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb29-17"><a href="recreating-the-covid-map.html#cb29-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.caption =</span> <span class="fu">element_text</span>(</span>
+<span id="cb29-18"><a href="recreating-the-covid-map.html#cb29-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">hjust =</span> .<span class="dv">5</span>,</span>
+<span id="cb29-19"><a href="recreating-the-covid-map.html#cb29-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>,</span>
+<span id="cb29-20"><a href="recreating-the-covid-map.html#cb29-20" aria-hidden="true" tabindex="-1"></a>      <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> .<span class="dv">25</span>, </span>
+<span id="cb29-21"><a href="recreating-the-covid-map.html#cb29-21" aria-hidden="true" tabindex="-1"></a>                      <span class="at">b =</span> .<span class="dv">25</span>, </span>
+<span id="cb29-22"><a href="recreating-the-covid-map.html#cb29-22" aria-hidden="true" tabindex="-1"></a>                      <span class="at">unit =</span> <span class="st">&quot;cm&quot;</span>)),</span>
+<span id="cb29-23"><a href="recreating-the-covid-map.html#cb29-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">0.75</span>), </span>
+<span id="cb29-24"><a href="recreating-the-covid-map.html#cb29-24" aria-hidden="true" tabindex="-1"></a>                              <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>)</span>
+<span id="cb29-25"><a href="recreating-the-covid-map.html#cb29-25" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p>The resulting map shows up in Figure <a href="recreating-the-covid-map.html#fig:map-with-text-tweaks">5.16</a> below.</p>
+<div class="figure"><span style="display:block;" id="fig:map-with-text-tweaks"></span>
+<img src="maps_files/figure-html/map-with-text-tweaks-1.png" alt="The COVID map with tweaks to the title, captions, and strip text" width="100%" />
+<p class="caption">
+Figure 5.16: The COVID map with tweaks to the title, captions, and strip text
+</p>
+</div>
+</div>
+<div id="tweaking-the-theme-grid-lines-and-axis-text" class="section level3" number="5.1.4">
+<h3><span class="header-section-number">5.1.4</span> Tweaking the Theme: Grid Lines and Axis Text</h3>
+<p>Our map is looking good! Just a few tweaks left to get it close to Abdoul Madjid’s original. By default, maps made with the <code>geom_sf()</code> function have axis text and lines to show longitude and latitude. Madjid removed them using the <code>element_blank()</code> function on <code>panel.grid</code> and <code>axis.text</code>.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="recreating-the-covid-map.html#cb30-1" aria-hidden="true" tabindex="-1"></a>map_with_text_tweaks <span class="sc">+</span></span>
+<span id="cb30-2"><a href="recreating-the-covid-map.html#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb30-3"><a href="recreating-the-covid-map.html#cb30-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb30-4"><a href="recreating-the-covid-map.html#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb30-5"><a href="recreating-the-covid-map.html#cb30-5" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p>The result, seen in Figure <a href="recreating-the-covid-map.html#fig:map-with-grid-tweaks">5.17</a>, is a much nicer-looking set of maps.</p>
+<div class="figure"><span style="display:block;" id="fig:map-with-grid-tweaks"></span>
+<img src="maps_files/figure-html/map-with-grid-tweaks-1.png" alt="The COVID map without the grid lines and axis text" width="100%" />
+<p class="caption">
+Figure 5.17: The COVID map without the grid lines and axis text
+</p>
+</div>
+</div>
+<div id="tweaking-the-theme-plot-background-and-margins" class="section level3" number="5.1.5">
+<h3><span class="header-section-number">5.1.5</span> Tweaking the Theme: Plot Background and Margins</h3>
+<p>The last bit of tweaking that Abdoul Madjid did was to adjust the margins around the final set of maps and give the whole thing a light gray background. The former is done within <code>plot.margin</code> while the latter is done using <code>plot.background</code>. Setting the fill color of #e5e4e2 gives it that light gray background while the <code>color = NA</code> ensures there is no outline around the plot (without that code, it would have a black border).</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="recreating-the-covid-map.html#cb31-1" aria-hidden="true" tabindex="-1"></a>map_with_grid_and_axis_tweaks <span class="sc">+</span></span>
+<span id="cb31-2"><a href="recreating-the-covid-map.html#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb31-3"><a href="recreating-the-covid-map.html#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> .<span class="dv">25</span>, </span>
+<span id="cb31-4"><a href="recreating-the-covid-map.html#cb31-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">r =</span> .<span class="dv">25</span>, </span>
+<span id="cb31-5"><a href="recreating-the-covid-map.html#cb31-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">b =</span> .<span class="dv">25</span>, </span>
+<span id="cb31-6"><a href="recreating-the-covid-map.html#cb31-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">l =</span> .<span class="dv">25</span>, </span>
+<span id="cb31-7"><a href="recreating-the-covid-map.html#cb31-7" aria-hidden="true" tabindex="-1"></a>                         <span class="at">unit =</span> <span class="st">&quot;cm&quot;</span>),</span>
+<span id="cb31-8"><a href="recreating-the-covid-map.html#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">&quot;#e5e4e2&quot;</span>, </span>
+<span id="cb31-9"><a href="recreating-the-covid-map.html#cb31-9" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">color =</span> <span class="cn">NA</span>)</span>
+<span id="cb31-10"><a href="recreating-the-covid-map.html#cb31-10" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p>And there we have it: Figure <a href="recreating-the-covid-map.html#fig:map-with-background-tweaks">5.18</a> our recreation of Abdoul Madjid’s COVID-19 map.</p>
+<div class="figure"><span style="display:block;" id="fig:map-with-background-tweaks"></span>
+<img src="maps_files/figure-html/map-with-background-tweaks-1.png" alt="The COVID map with tweaks to the margins and the background color" width="100%" />
+<p class="caption">
+Figure 5.18: The COVID map with tweaks to the margins and the background color
+</p>
+</div>
+</div>
+</div>
+</div>
+  </main>
+
+  <div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page">
+      <h2>On this page</h2>
+      <div id="book-on-this-page"></div>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          <li><a id="book-source" href="#">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="#">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5">
+  <div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>R Without Statistics</strong>" was written by David Keyes. </p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+
+
+</body>
+
+</html>

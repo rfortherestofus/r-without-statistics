@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 5 Crafting High-Quality Tables | R Without Statistics</title>
+<meta name="author" content="David Keyes">
+<meta name="description" content="In his book Fundamentals of Data Visualization, Claus Wilke writes that tables are “an important tool for visualizing data.” This statement might seem odd. Tables are often considered the opposite...">
+<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta property="og:title" content="Chapter 5 Crafting High-Quality Tables | R Without Statistics">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://book.rwithoutstatistics.com/tables-chapter.html">
+<meta property="og:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
+<meta property="og:description" content="In his book Fundamentals of Data Visualization, Claus Wilke writes that tables are “an important tool for visualizing data.” This statement might seem odd. Tables are often considered the opposite...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 5 Crafting High-Quality Tables | R Without Statistics">
+<meta name="twitter:description" content="In his book Fundamentals of Data Visualization, Claus Wilke writes that tables are “an important tool for visualizing data.” This statement might seem odd. Tables are often considered the opposite...">
+<meta name="twitter:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">R Without Statistics</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">About the Book</a></li>
+<li class="book-part">Introduction</li>
+<li><a class="" href="introduction.html">Introduction</a></li>
+<li><a class="" href="howto-chapter.html"><span class="header-section-number">1</span> An R Programming Crash Course</a></li>
+<li class="book-part">Part 1: Visualizations</li>
+<li><a class="" href="data-viz-chapter.html"><span class="header-section-number">2</span> Principles of Data Visualization</a></li>
+<li><a class="" href="custom-theme-chapter.html"><span class="header-section-number">3</span> Making Your Own Theme</a></li>
+<li><a class="" href="maps-chapter.html"><span class="header-section-number">4</span> Creating Maps</a></li>
+<li><a class="active" href="tables-chapter.html"><span class="header-section-number">5</span> Crafting High-Quality Tables</a></li>
+<li class="book-part">Part 2: Reports, Presentations, and Websites</li>
+<li><a class="" href="rmarkdown-chapter.html"><span class="header-section-number">6</span> Writing Reports in R Markdown</a></li>
+<li><a class="" href="parameterized-reports-chapter.html"><span class="header-section-number">7</span> Using Parameters to Automate Reports</a></li>
+<li><a class="" href="presentations-chapter.html"><span class="header-section-number">8</span> Making Slides Presentations with xaringan</a></li>
+<li><a class="" href="websites-chapter.html"><span class="header-section-number">9</span> Make Websites to Share Results Online</a></li>
+<li><a class="" href="quarto-chapter.html"><span class="header-section-number">10</span> Reproducible Reporting with Quarto</a></li>
+<li class="book-part">Part 3: Automation and Collaboration</li>
+<li><a class="" href="accessing-data-chapter.html"><span class="header-section-number">11</span> Accessing Data</a></li>
+<li><a class="" href="packages-chapter.html"><span class="header-section-number">12</span> Creating Your Own R Packages</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/rfortherestofus/r-without-statistics">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="tables-chapter" class="section level1" number="5">
+<h1>
+<span class="header-section-number">5</span> Crafting High-Quality Tables<a class="anchor" aria-label="anchor" href="#tables-chapter"><i class="fas fa-link"></i></a>
+</h1>
+<p>In his book <em>Fundamentals of Data Visualization</em>, Claus Wilke writes that tables are “an important tool for visualizing data.” This statement might seem odd. Tables are often considered the opposite of data visualizations such as plots: a place to dump numbers for the few nerds who care to read them. But Wilke sees things differently.</p>
+<p>Tables should not be data dumps devoid of design. While bars, lines, and points in graphs are visualizations, so too are numbers in a table, and we should care about their appearance. As an example, take a look at the tables made by reputable news sources; data dumps these are not. Media organizations, whose job it is to communicate effectively, pay a lot of attention to table design. But elsewhere, because of tables’ apparent simplicity, Wilke writes, “they may not always receive the attention they need.”</p>
+<p>Many people use Microsoft Word to make tables, a strategy that has potential pitfalls. Wilke found that his version of Word included 105 built-in table styles. Of those, around 80 percent, including the default style, violated some key principle of table design. The good news is that R is a great tool for making high-quality tables. It has a number of packages for this purpose, and within these packages, several functions designed to make sure your tables follow important design principles.
+Moreover, if you’re writing reports in R Markdown (which you’ll learn about in Chapter <a href="rmarkdown-chapter.html#rmarkdown-chapter">6</a>), you can include code that will generate a table when you export your document. By working with a single tool to create tables, text, and other visualizations, you won’t have to copy and paste your data, lowering the risk of human error.</p>
+<p>This chapter examines table design principles and shows you how to apply them to your tables using R’s <code>gt</code> package, one of the most popular table-making packages (and, as you’ll soon see, one that uses good design principles by default). These principles, and the code in this chapter, are adapted from Tom Mock’s blog post “10+ Guidelines for Better Tables in R.” Mock works at Posit, the company that makes RStudio, and has become something of an R table connoisseur. We’ll walk through examples of Mock’s code to show how small tweaks can make a big difference.</p>
+<div id="creating-a-data-frame" class="section level2 unnumbered">
+<h2>Creating a Data Frame<a class="anchor" aria-label="anchor" href="#creating-a-data-frame"><i class="fas fa-link"></i></a>
+</h2>
+<p>We’ll begin by creating a data frame that we can use to make tables throughout this chapter. First, let’s load the packages we need. We’ll rely on the <code>tidyverse</code> package for general data manipulation functions, <code>gapminder</code> for the data we’ll use, <code>gt</code> to make the tables, and <code>gtExtras</code> to do some formatting on our tables:</p>
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jennybc/gapminder">gapminder</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://gt.rstudio.com/">gt</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jthomasmock/gtExtras">gtExtras</a></span><span class="op">)</span></span></code></pre></div>
+<p>As we saw in Chapter <a href="data-viz-chapter.html#data-viz-chapter">2</a>, the <code>gapminder</code> package provides country-level demographic statistics. To make a data frame for our table, let’s use just a few countries (the first four, in alphabetical order: Afghanistan, Albania, Algeria, and Angola) and three years (1952, 1972, and 1992). The <code>gapminder</code> data has many years, but we need only a few to demonstrate table-making principles. Here is the code to make the data frame called <code>gdp</code>:</p>
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gdp</span> <span class="op">&lt;-</span> <span class="va">gapminder</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">country</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Afghanistan"</span>, <span class="st">"Albania"</span>, <span class="st">"Algeria"</span>, <span class="st">"Angola"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">country</span>, <span class="va">year</span>, <span class="va">gdpPercap</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>country <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">country</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span></span>
+<span>    id_cols <span class="op">=</span> <span class="va">country</span>,</span>
+<span>    names_from <span class="op">=</span> <span class="va">year</span>,</span>
+<span>    values_from <span class="op">=</span> <span class="va">gdpPercap</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">country</span>, <span class="va">`1952`</span>, <span class="va">`1972`</span>, <span class="va">`1992`</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>Country <span class="op">=</span> <span class="va">country</span><span class="op">)</span></span></code></pre></div>
+<p>Let’s see what <code>gdp</code> looks like:</p>
+<pre><code>#&gt; # A tibble: 4 × 4
+#&gt;   Country      `1952`  `1972`  `1992`
+#&gt;   &lt;chr&gt;         &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+#&gt; 1 Afghanistan  779.45  739.98  649.34
+#&gt; 2 Albania     1601.1  3313.4  2497.4 
+#&gt; 3 Algeria     2449.0  4182.7  5023.2 
+#&gt; 4 Angola      3520.6  5473.3  2627.8</code></pre>
+<p>Now that we have some data, let’s use it to make a table.</p>
+</div>
+<div id="table-design-principles" class="section level2 unnumbered">
+<h2>Table Design Principles<a class="anchor" aria-label="anchor" href="#table-design-principles"><i class="fas fa-link"></i></a>
+</h2>
+<p>Unsurprisingly, the principles of good table design are similar to those for data visualization more generally. In this section, we cover six of the most important.</p>
+<div id="principle-one-minimize-clutter" class="section level3 unnumbered">
+<h3>Principle One: Minimize Clutter<a class="anchor" aria-label="anchor" href="#principle-one-minimize-clutter"><i class="fas fa-link"></i></a>
+</h3>
+<p>As with data visualization, one of the most important principles of table design is to minimize clutter. One way we can do this is by removing unnecessary elements. A common source of clutter in tables is gridlines. Often, you see tables that look like Figure <a href="tables-chapter.html#fig:table-with-gridlines">5.1</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:table-with-gridlines"></span>
+<img src="nostarch/temp/F05001.png" alt="A table with gridlines everywhere" width="100%"><p class="caption">
+Figure 5.1: A table with gridlines everywhere
+</p>
+</div>
+<p>Having gridlines around every single cell in our table is unnecessary and creates visual clutter that distracts from the goal of communicating clearly. A table with minimal or even no gridlines (Figure <a href="tables-chapter.html#fig:table-horizontal-gridlines">5.2</a>) is a much more effective communication tool.</p>
+<div class="figure">
+<span style="display:block;" id="fig:table-horizontal-gridlines"></span>
+<img src="nostarch/temp/F05002.png" alt="A table with only horizontal gridlines" width="100%"><p class="caption">
+Figure 5.2: A table with only horizontal gridlines
+</p>
+</div>
+<p>I mentioned that <code>gt</code> uses good table design principles by default, and this guideline is a great example of it. The second table, with minimal gridlines, requires just two lines of code. We pipe our <code>gdp</code> data into the <code><a href="https://gt.rstudio.com/reference/gt.html">gt()</a></code> function, which creates a table:</p>
+<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gdp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>To add gridlines to every part of the example, we would have to add additional code. Here, the code that follows the <code><a href="https://gt.rstudio.com/reference/gt.html">gt()</a></code> function adds gridlines:</p>
+<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gdp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/cell_borders.html">cell_borders</a></span><span class="op">(</span></span>
+<span>      side <span class="op">=</span> <span class="st">"all"</span>,</span>
+<span>      color <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>      weight <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/px.html">px</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>,</span>
+<span>      style <span class="op">=</span> <span class="st">"solid"</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>      <span class="fu"><a href="https://gt.rstudio.com/reference/cells_body.html">cells_body</a></span><span class="op">(</span></span>
+<span>        <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>      <span class="op">)</span>,</span>
+<span>      <span class="fu"><a href="https://gt.rstudio.com/reference/cells_column_labels.html">cells_column_labels</a></span><span class="op">(</span></span>
+<span>        <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/opt_table_lines.html">opt_table_lines</a></span><span class="op">(</span>extent <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div>
+<p>Since I don’t recommend taking this approach, I won’t walk through this code. However, if we wanted to remove additional gridlines, we could use the following:</p>
+<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gdp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/cell_borders.html">cell_borders</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"transparent"</span><span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/cells_body.html">cells_body</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p>The <code><a href="https://gt.rstudio.com/reference/tab_style.html">tab_style()</a></code> function uses a two-step approach. First, it identifies the style we want to modify (in this case, the borders); next, it tells the function where to apply these styles. Here, we tell <code><a href="https://gt.rstudio.com/reference/tab_style.html">tab_style()</a></code> that we want to modify the borders using the <code><a href="https://gt.rstudio.com/reference/cell_borders.html">cell_borders()</a></code> function, making our borders transparent. Then, we say that we want this transformation to apply to the <code><a href="https://gt.rstudio.com/reference/cells_body.html">cells_body()</a></code> location. Other options include <code><a href="https://gt.rstudio.com/reference/cells_column_labels.html">cells_column_labels()</a></code> for the first row.</p>
+<p>Doing this gives us a table with no gridlines at all in the body (Figure <a href="tables-chapter.html#fig:table-no-body-gridlines">5.3</a>).</p>
+<div class="figure">
+<span style="display:block;" id="fig:table-no-body-gridlines"></span>
+<img src="nostarch/temp/F05003.png" alt="Figure 1-3 A table with gridlines only on the header row and the bottom" width="100%"><p class="caption">
+Figure 5.3: Figure 1-3 A table with gridlines only on the header row and the bottom
+</p>
+</div>
+<p>Let’s save this table as an object called <code>table_no_gridlines</code> so that we can add onto it later.</p>
+</div>
+<div id="principle-two-differentiate-the-header-from-the-body" class="section level3 unnumbered">
+<h3>Principle Two: Differentiate the Header from the Body<a class="anchor" aria-label="anchor" href="#principle-two-differentiate-the-header-from-the-body"><i class="fas fa-link"></i></a>
+</h3>
+<p>While reducing clutter is an important goal, going too far can have negative consequences. A table with no gridlines at all can make it hard to differentiate between the header row and the table body. Take Figure <a href="tables-chapter.html#fig:table-no-gridlines-at-all">5.4</a>, for example.</p>
+<div class="figure">
+<span style="display:block;" id="fig:table-no-gridlines-at-all"></span>
+<img src="nostarch/temp/F05004.png" alt="A table with all gridlines removed" width="100%"><p class="caption">
+Figure 5.4: A table with all gridlines removed
+</p>
+</div>
+<p>We’ve already covered how to use appropriate gridlines. But by making the header row bold, we can make it stand out even more:</p>
+<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">table_no_gridlines</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/cell_text.html">cell_text</a></span><span class="op">(</span>weight <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/cells_column_labels.html">cells_column_labels</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p>We start with the <code>table_no_gridlines</code> object (our saved table from earlier). Then, we apply our formatting with the <code><a href="https://gt.rstudio.com/reference/tab_style.html">tab_style()</a></code> function using two steps. First, we say that we want to alter the text by using the <code><a href="https://gt.rstudio.com/reference/cell_text.html">cell_text()</a></code> function to set the weight to bold. Second, we say we want this to happen only to the header row using the <code><a href="https://gt.rstudio.com/reference/cells_column_labels.html">cells_column_labels()</a></code> function. In Figure <a href="tables-chapter.html#fig:table-bolded-header">5.5</a>, we can see what our table looks like with headers bolded.</p>
+<div class="figure">
+<span style="display:block;" id="fig:table-bolded-header"></span>
+<img src="nostarch/temp/F05005.png" alt="Table with header row bolded" width="100%"><p class="caption">
+Figure 5.5: Table with header row bolded
+</p>
+</div>
+<p>Let’s save this table as <code>table_bold_header</code> in order to add additional formatting.</p>
+</div>
+<div id="principle-three-align-appropriately" class="section level3 unnumbered">
+<h3>Principle Three: Align Appropriately<a class="anchor" aria-label="anchor" href="#principle-three-align-appropriately"><i class="fas fa-link"></i></a>
+</h3>
+<p>A third principle of high-quality table design is appropriate alignment. Specifically, numbers in tables should be right-aligned. Tom Mock explains why:</p>
+<blockquote>
+<p>Left-alignment or center-alignment of numbers impairs the ability to clearly compare numbers and decimal places. Right-alignment lets you align decimal places and numbers for easy parsing.</p>
+</blockquote>
+<p>Let’s see this principle in action. In Figure <a href="tables-chapter.html#fig:table-cols-aligned-lcr">5.6</a>, we’ve left-aligned the 1952 column, center-aligned the 1972 column, and right-aligned the 1992 column. You can see how much easier it is to compare the values in the 1992 column than in the other two columns. In both 1952 and 1972, it is much more difficult to compare the numeric values because the numbers in the same columns (the tens place, for example) are not in the same vertical position. In the 1992 column, however, the number in the tens place in Afghanistan (4) aligns with the number in the tens place in Albania (9) and all other countries. This vertical alignment makes it easier to scan the table.</p>
+<div class="figure">
+<span style="display:block;" id="fig:table-cols-aligned-lcr"></span>
+<img src="nostarch/temp/F05006.png" alt="Table with year columns aligned left, center, and right" width="100%"><p class="caption">
+Figure 5.6: Table with year columns aligned left, center, and right
+</p>
+</div>
+<p>As with other tables, we actually have to override the defaults to get the <code>gt</code> package to misalign the columns, as you can see in the following code.</p>
+<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">table_bold_header</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/cols_align.html">cols_align</a></span><span class="op">(</span></span>
+<span>    align <span class="op">=</span> <span class="st">"left"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="fl">2</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/cols_align.html">cols_align</a></span><span class="op">(</span></span>
+<span>    align <span class="op">=</span> <span class="st">"center"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="fl">3</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/cols_align.html">cols_align</a></span><span class="op">(</span></span>
+<span>    align <span class="op">=</span> <span class="st">"right"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="fl">4</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p>By default, <code>gt</code> will right-align numeric values. Don’t change anything, and you’ll be golden.</p>
+<p>Right alignment is best practice for numeric columns, but for text columns, use left alignment. As Jon Schwabish points out in his article “Ten Guidelines for Better Tables” in the <em>Journal of Benefit-Cost Analysis</em>, it’s much easier to read longer text cells when they are left aligned. To illustrate the benefit of left-aligning text, let’s add a country with a long name to the table. I’ve added Bosnia and Herzegovina and saved this as a data frame called <code>gdp_with_bosnia</code>. You’ll see that I’m using nearly the same code as I used to create the <code>gdp</code> data frame above:</p>
+<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gdp_with_bosnia</span></span>
+<span><span class="co">#&gt; # A tibble: 5 × 4</span></span>
+<span><span class="co">#&gt;   Country                 `1952`  `1972`  `1992`</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;                    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 Afghanistan             779.45  739.98  649.34</span></span>
+<span><span class="co">#&gt; 2 Albania                1601.1  3313.4  2497.4 </span></span>
+<span><span class="co">#&gt; 3 Algeria                2449.0  4182.7  5023.2 </span></span>
+<span><span class="co">#&gt; 4 Angola                 3520.6  5473.3  2627.8 </span></span>
+<span><span class="co">#&gt; 5 Bosnia and Herzegovina  973.53 2860.2  2546.8</span></span></code></pre></div>
+<p>Now take the <code>gdp_with_bosnia</code> data frame and create a table with the country column center aligned. In the table in Figure <a href="tables-chapter.html#fig:table-country-centered">5.7</a>, it’s hard to scan the country names, and that center-aligned column just looks a bit weird.</p>
+<div class="figure">
+<span style="display:block;" id="fig:table-country-centered"></span>
+<img src="nostarch/temp/F05007.png" alt="A table with country column center aligned" width="100%"><p class="caption">
+Figure 5.7: A table with country column center aligned
+</p>
+</div>
+<p>This is another example where we’ve had to change the <code>gt</code> defaults to mess things up. In addition to right-aligning numeric columns by default, <code>gt</code> left-aligns character columns. So, if we don’t touch anything, it will give us the alignment we’re looking for (Figure <a href="tables-chapter.html#fig:table-country-left">5.8</a>).</p>
+<div class="figure">
+<span style="display:block;" id="fig:table-country-left"></span>
+<img src="nostarch/temp/F05008.png" alt="A table with country column left aligned" width="100%"><p class="caption">
+Figure 5.8: A table with country column left aligned
+</p>
+</div>
+<p>If you ever do want to override the default alignments, you can use the <code><a href="https://gt.rstudio.com/reference/cols_align.html">cols_align()</a></code> function. For example, here is how to make the table with the country names center aligned:</p>
+<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gdp_with_bosnia</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/cell_borders.html">cell_borders</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"transparent"</span><span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/cells_body.html">cells_body</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/cell_text.html">cell_text</a></span><span class="op">(</span>weight <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/cells_column_labels.html">cells_column_labels</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/cols_align.html">cols_align</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="st">"Country"</span>,</span>
+<span>    align <span class="op">=</span> <span class="st">"center"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p>Within this function, we use the <code>columns</code> argument to tell gt which columns to align and the <code>align</code> argument to select our alignment (<code>left</code>, <code>right</code>, or <code>center</code>).</p>
+</div>
+<div id="principle-four-use-the-right-level-of-precision" class="section level3 unnumbered">
+<h3>Principle Four: Use the Right Level of Precision<a class="anchor" aria-label="anchor" href="#principle-four-use-the-right-level-of-precision"><i class="fas fa-link"></i></a>
+</h3>
+<p>In all of the tables we’ve made so far, we’ve used the data exactly as it came to us. The numeric columns, for example, extend their data to four decimal places. This is almost certainly too many. Having more decimal places makes a table harder to read, so you should always strike a balance between what Jon Schwabish describes as “necessary precision and a clean, spare table.”</p>
+<p>Here is another way I’ve heard this principle described: If adding additional decimal places would change some action, keep them; otherwise, take them out. In my experience, people tend to leave too many decimal places in, putting too much importance on a very high degree of accuracy (and, in the process, reducing the legibility of their tables).</p>
+<p>In our GDP table, we can use the <code><a href="https://gt.rstudio.com/reference/fmt_currency.html">fmt_currency()</a></code> function to format the numeric values. The <code>gt</code> package has a whole series of functions for formatting values in tables, all of which start with <code>fmt_</code>. In the following code, we apply <code><a href="https://gt.rstudio.com/reference/fmt_currency.html">fmt_currency()</a></code> to the 1952, 1972, and 1992 columns, then use the decimals argument to tell <code><a href="https://gt.rstudio.com/reference/fmt_currency.html">fmt_currency()</a></code> to format the values with zero decimal places. After all, the difference between a GDP of $799.4453 and $779 is unlikely to lead to different decisions, so I’m comfortable with sacrificing precision for legibility:</p>
+<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">table_bold_header</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/fmt_currency.html">fmt_currency</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">`1952`</span>, <span class="va">`1972`</span>, <span class="va">`1992`</span><span class="op">)</span>,</span>
+<span>    decimals <span class="op">=</span> <span class="fl">0</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p>We end up with values formatted as dollars. The <code><a href="https://gt.rstudio.com/reference/fmt_currency.html">fmt_currency()</a></code> function automatically adds a thousands-place comma to make the values even easier to read (Figure <a href="tables-chapter.html#fig:table-whole-numbers">5.9</a>).</p>
+<div class="figure">
+<span style="display:block;" id="fig:table-whole-numbers"></span>
+<img src="nostarch/temp/F05009.png" alt="A table with numbers rounded to whole numbers and dollar sign added" width="100%"><p class="caption">
+Figure 5.9: A table with numbers rounded to whole numbers and dollar sign added
+</p>
+</div>
+<p>Now save your table for reuse as table_whole_numbers.</p>
+</div>
+<div id="principle-five-use-color-intentionally" class="section level3 unnumbered">
+<h3>Principle Five: Use Color Intentionally<a class="anchor" aria-label="anchor" href="#principle-five-use-color-intentionally"><i class="fas fa-link"></i></a>
+</h3>
+<p>So far, our table hasn’t used any color. We’ll add some now to highlight outlier values. Especially for readers who want to scan your table, highlighting outliers with color can help significantly. Let’s make the highest value in the year 1952 a different color. To do this, we again use the <code><a href="https://gt.rstudio.com/reference/tab_style.html">tab_style()</a></code> function:</p>
+<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">table_whole_numbers</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/cell_text.html">cell_text</a></span><span class="op">(</span></span>
+<span>      color <span class="op">=</span> <span class="st">"orange"</span>,</span>
+<span>      weight <span class="op">=</span> <span class="st">"bold"</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/cells_body.html">cells_body</a></span><span class="op">(</span></span>
+<span>      columns <span class="op">=</span> <span class="va">`1952`</span>,</span>
+<span>      rows <span class="op">=</span> <span class="va">`1952`</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">`1952`</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p>This function uses <code><a href="https://gt.rstudio.com/reference/cell_text.html">cell_text()</a></code> to both change the color of the text to orange and make it bold. Within the <code><a href="https://gt.rstudio.com/reference/cells_body.html">cells_body()</a></code> function, we use the locations() function specify the columns and rows to which we want to apply our change. You can see that we’ve simply set the <code>columns</code> argument to the year whose values we’re changing. To set the rows, we need a more complicated formula. The code <code>rows =</code>1952<code>== max(</code>1952<code>)</code> causes the text transformation to occur in rows whose value is equal to the maximum value in that year.</p>
+<p>If we repeat this code for the 1972 and 1992 columns, we generate the result shown in Figure <a href="tables-chapter.html#fig:table-highlight-value">5.10</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:table-highlight-value"></span>
+<img src="nostarch/temp/F05010.png" alt="A table with color added to show the highest value in each year" width="100%"><p class="caption">
+Figure 5.10: A table with color added to show the highest value in each year
+</p>
+</div>
+<p>The <code>gt</code> package makes it straightforward to add color to highlight outlier values.</p>
+</div>
+<div id="principle-six-add-data-visualization-where-appropriate" class="section level3 unnumbered">
+<h3>Principle Six: Add Data Visualization Where Appropriate<a class="anchor" aria-label="anchor" href="#principle-six-add-data-visualization-where-appropriate"><i class="fas fa-link"></i></a>
+</h3>
+<p>Adding color to highlight outliers is one way to help guide the reader’s attention. Another way is to incorporate graphs into tables. Tom Mock developed an add-on package for <code>gt</code> called <code>gtExtras</code> that makes it possible to do just this. For example, in our table, we might want to show how the GDP of each country changes over time. To do that, we’ll add a new column that visualizes this trend using a <em>sparkline</em> (essentially, a simple line chart):</p>
+<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gdp_with_trend</span> <span class="op">&lt;-</span> <span class="va">gdp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">Country</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Trend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">`1952`</span>, <span class="va">`1972`</span>, <span class="va">`1992`</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>The <code><a href="https://jthomasmock.github.io/gtExtras/reference/gt_plt_sparkline.html">gt_plt_sparkline()</a></code> function requires us to provide the values needed to make the sparkline in a single column. To accomplish this, we create a variable called <code>Trend</code>, using <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>, to hold a list of the values for each country. For Afghanistan, for example, Trend would contain 779.4453145, 739.9811058, and 649.3413952. We save this data as an object called <code>gdp_with_trend</code>.</p>
+<p>Now we create our table as before, but add the <code><a href="https://jthomasmock.github.io/gtExtras/reference/gt_plt_sparkline.html">gt_plt_sparkline()</a></code> function to the end of the code. Within this function, we specify which column to use to create the sparkline (<code>Trend</code>):</p>
+<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gdp_with_trend</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/cell_borders.html">cell_borders</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"transparent"</span><span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/cells_body.html">cells_body</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/cell_text.html">cell_text</a></span><span class="op">(</span>weight <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/cells_column_labels.html">cells_column_labels</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/fmt_currency.html">fmt_currency</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">`1952`</span>, <span class="va">`1972`</span>, <span class="va">`1992`</span><span class="op">)</span>,</span>
+<span>    decimals <span class="op">=</span> <span class="fl">0</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/cell_text.html">cell_text</a></span><span class="op">(</span></span>
+<span>      color <span class="op">=</span> <span class="st">"orange"</span>,</span>
+<span>      weight <span class="op">=</span> <span class="st">"bold"</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/cells_body.html">cells_body</a></span><span class="op">(</span></span>
+<span>      columns <span class="op">=</span> <span class="va">`1952`</span>,</span>
+<span>      rows <span class="op">=</span> <span class="va">`1952`</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">`1952`</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/cell_text.html">cell_text</a></span><span class="op">(</span></span>
+<span>      color <span class="op">=</span> <span class="st">"orange"</span>,</span>
+<span>      weight <span class="op">=</span> <span class="st">"bold"</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/cells_body.html">cells_body</a></span><span class="op">(</span></span>
+<span>      columns <span class="op">=</span> <span class="va">`1972`</span>,</span>
+<span>      rows <span class="op">=</span> <span class="va">`1972`</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">`1972`</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/cell_text.html">cell_text</a></span><span class="op">(</span></span>
+<span>      color <span class="op">=</span> <span class="st">"orange"</span>,</span>
+<span>      weight <span class="op">=</span> <span class="st">"bold"</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/cells_body.html">cells_body</a></span><span class="op">(</span></span>
+<span>      columns <span class="op">=</span> <span class="va">`1992`</span>,</span>
+<span>      rows <span class="op">=</span> <span class="va">`1992`</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">`1992`</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://jthomasmock.github.io/gtExtras/reference/gt_plt_sparkline.html">gt_plt_sparkline</a></span><span class="op">(</span></span>
+<span>    column <span class="op">=</span> <span class="va">Trend</span>,</span>
+<span>    label <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"black"</span>, <span class="st">"transparent"</span>, <span class="st">"transparent"</span>, <span class="st">"transparent"</span>, <span class="st">"transparent"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p>We set <code>label = FALSE</code> to remove text labels that <code><a href="https://jthomasmock.github.io/gtExtras/reference/gt_plt_sparkline.html">gt_plt_sparkline()</a></code> adds by default, then add a <code>palette</code> argument to make the sparkline black and all other elements of it transparent. (By default, the function will make different parts of the sparkline different colors.) The stripped-down sparkline in Figure <a href="tables-chapter.html#fig:table-sparkline">5.11</a> allows the reader to see the trend for each country at a glance.</p>
+<div class="figure">
+<span style="display:block;" id="fig:table-sparkline"></span>
+<img src="nostarch/temp/F05011.png" alt="A table with sparkline added to show trend over time" width="100%"><p class="caption">
+Figure 5.11: A table with sparkline added to show trend over time
+</p>
+</div>
+<p>The <code>gtExtras</code> package can do way more than merely create sparklines. Its set of theme functions allow you to make your tables look like those published by <em>FiveThirtyEight</em>, <em>The New York Times</em>, <em>The Guardian</em>, and other news outlets. As an example, try removing the formatting we’ve applied so far and instead use the <em>gt_theme_538()</em> function to style the table:</p>
+<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gdp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">Country</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Trend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">`1952`</span>, <span class="va">`1972`</span>, <span class="va">`1992`</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/cell_text.html">cell_text</a></span><span class="op">(</span></span>
+<span>      color <span class="op">=</span> <span class="st">"orange"</span>,</span>
+<span>      weight <span class="op">=</span> <span class="st">"bold"</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/cells_body.html">cells_body</a></span><span class="op">(</span></span>
+<span>      columns <span class="op">=</span> <span class="va">`1952`</span>,</span>
+<span>      rows <span class="op">=</span> <span class="va">`1952`</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">`1952`</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/cell_text.html">cell_text</a></span><span class="op">(</span></span>
+<span>      color <span class="op">=</span> <span class="st">"orange"</span>,</span>
+<span>      weight <span class="op">=</span> <span class="st">"bold"</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/cells_body.html">cells_body</a></span><span class="op">(</span></span>
+<span>      columns <span class="op">=</span> <span class="va">`1972`</span>,</span>
+<span>      rows <span class="op">=</span> <span class="va">`1972`</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">`1972`</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/cell_text.html">cell_text</a></span><span class="op">(</span></span>
+<span>      color <span class="op">=</span> <span class="st">"orange"</span>,</span>
+<span>      weight <span class="op">=</span> <span class="st">"bold"</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/cells_body.html">cells_body</a></span><span class="op">(</span></span>
+<span>      columns <span class="op">=</span> <span class="va">`1992`</span>,</span>
+<span>      rows <span class="op">=</span> <span class="va">`1992`</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">`1992`</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/fmt_currency.html">fmt_currency</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">`1952`</span>, <span class="va">`1972`</span>, <span class="va">`1992`</span><span class="op">)</span>,</span>
+<span>    decimals <span class="op">=</span> <span class="fl">0</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://jthomasmock.github.io/gtExtras/reference/gt_plt_sparkline.html">gt_plt_sparkline</a></span><span class="op">(</span></span>
+<span>    column <span class="op">=</span> <span class="va">Trend</span>,</span>
+<span>    label <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"black"</span>, <span class="st">"transparent"</span>, <span class="st">"transparent"</span>, <span class="st">"transparent"</span>, <span class="st">"transparent"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://jthomasmock.github.io/gtExtras/reference/gt_theme_538.html">gt_theme_538</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Take a look at tables on the FiveThirtyEight website, and you’ll see similarities to the one in Figure <a href="tables-chapter.html#fig:table-fivethirtyeight">5.12</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:table-fivethirtyeight"></span>
+<img src="nostarch/temp/F05012.png" alt="A table redone in FiveThirtyEight style" width="100%"><p class="caption">
+Figure 5.12: A table redone in FiveThirtyEight style
+</p>
+</div>
+<p>Add-on packages like <code>gtExtras</code> are common in the table-making landscape. If you’re working with the <code>reactable</code> package to make interactive tables, for example, you can also use the <code>reactablefmtr</code> to add interactive sparklines, themes, and more. You’ll learn more about making interactive tables in Chapter <a href="websites-chapter.html#websites-chapter">9</a>.</p>
+</div>
+</div>
+<div id="conclusion-2" class="section level2 unnumbered">
+<h2>Conclusion<a class="anchor" aria-label="anchor" href="#conclusion-2"><i class="fas fa-link"></i></a>
+</h2>
+<p>Many of the tweaks we made to our table are quite subtle. Changes like removing excess gridlines, bolding header text, right-aligning numeric values, and adjusting the level of precision can often go unnoticed, but if you skip them, your table will be far less effective. Our final product isn’t flashy, but it does communicate clearly.</p>
+<p>We used the gt package to make our high-quality table, and as we’ve repeatedly seen, this package has good defaults built in. Often, you don’t need to change much in your code to make effective tables. But no matter which package you use, it’s essential to treat tables as worthy of just as much thought as other kinds of data visualization.</p>
+<p>In Chapter <a href="rmarkdown-chapter.html#rmarkdown-chapter">6</a>, you’ll learn how to create reports using R Markdown, which can integrate your tables directly into the final document. What’s better than using just a few lines of code to make publication-ready tables?</p>
+</div>
+<div id="learn-more-4" class="section level2 unnumbered">
+<h2>Learn More<a class="anchor" aria-label="anchor" href="#learn-more-4"><i class="fas fa-link"></i></a>
+</h2>
+<p>Consult the following resources to learn about table design principles and how to make high-quality tables with the <code>gt</code> package:</p>
+<p>“Ten Guidelines for Better Tables” by Jon Schwabish (<em>Journal of Benefit-Cost Analysis</em>, 2020), <a href="https://doi.org/10.1017/bca.2020.11" class="uri">https://doi.org/10.1017/bca.2020.11</a></p>
+<p>“10+ Guidelines for Better Tables in R” by Tom Mock (2020), <a href="https://themockup.blog/posts/2020-09-04-10-table-rules-in-r/" class="uri">https://themockup.blog/posts/2020-09-04-10-table-rules-in-r/</a></p>
+<p>“Creating beautiful tables in R with {gt}” by Albert Rapp (2022), <a href="https://gt.albert-rapp.de/" class="uri">https://gt.albert-rapp.de/</a></p>
+
+</div>
+</div>
+
+
+
+<div class="chapter-nav">
+<div class="prev"><a href="maps-chapter.html"><span class="header-section-number">4</span> Creating Maps</a></div>
+<div class="next"><a href="rmarkdown-chapter.html"><span class="header-section-number">6</span> Writing Reports in R Markdown</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#tables-chapter"><span class="header-section-number">5</span> Crafting High-Quality Tables</a></li>
+<li><a class="nav-link" href="#creating-a-data-frame">Creating a Data Frame</a></li>
+<li>
+<a class="nav-link" href="#table-design-principles">Table Design Principles</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#principle-one-minimize-clutter">Principle One: Minimize Clutter</a></li>
+<li><a class="nav-link" href="#principle-two-differentiate-the-header-from-the-body">Principle Two: Differentiate the Header from the Body</a></li>
+<li><a class="nav-link" href="#principle-three-align-appropriately">Principle Three: Align Appropriately</a></li>
+<li><a class="nav-link" href="#principle-four-use-the-right-level-of-precision">Principle Four: Use the Right Level of Precision</a></li>
+<li><a class="nav-link" href="#principle-five-use-color-intentionally">Principle Five: Use Color Intentionally</a></li>
+<li><a class="nav-link" href="#principle-six-add-data-visualization-where-appropriate">Principle Six: Add Data Visualization Where Appropriate</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#conclusion-2">Conclusion</a></li>
+<li><a class="nav-link" href="#learn-more-4">Learn More</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/rfortherestofus/r-without-statistics/blob/master/tables.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/rfortherestofus/r-without-statistics/edit/master/tables.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+</div>
+  
+
+  
+
+</div>
+ <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>R Without Statistics</strong>" was written by David Keyes. </p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>

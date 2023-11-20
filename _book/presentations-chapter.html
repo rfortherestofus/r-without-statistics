@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 8 Making Slides Presentations with xaringan | R Without Statistics</title>
+<meta name="author" content="David Keyes">
+<meta name="description" content="You’re now able to generate reports using a single tool, R Markdown. But what if you need to make a slideshow presentation, like those you might create in PowerPoint? Luckily, R has robust...">
+<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta property="og:title" content="Chapter 8 Making Slides Presentations with xaringan | R Without Statistics">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://book.rwithoutstatistics.com/presentations-chapter.html">
+<meta property="og:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
+<meta property="og:description" content="You’re now able to generate reports using a single tool, R Markdown. But what if you need to make a slideshow presentation, like those you might create in PowerPoint? Luckily, R has robust...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 8 Making Slides Presentations with xaringan | R Without Statistics">
+<meta name="twitter:description" content="You’re now able to generate reports using a single tool, R Markdown. But what if you need to make a slideshow presentation, like those you might create in PowerPoint? Luckily, R has robust...">
+<meta name="twitter:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">R Without Statistics</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">About the Book</a></li>
+<li class="book-part">Introduction</li>
+<li><a class="" href="introduction.html">Introduction</a></li>
+<li><a class="" href="howto-chapter.html"><span class="header-section-number">1</span> An R Programming Crash Course</a></li>
+<li class="book-part">Part 1: Visualizations</li>
+<li><a class="" href="data-viz-chapter.html"><span class="header-section-number">2</span> Principles of Data Visualization</a></li>
+<li><a class="" href="custom-theme-chapter.html"><span class="header-section-number">3</span> Making Your Own Theme</a></li>
+<li><a class="" href="maps-chapter.html"><span class="header-section-number">4</span> Creating Maps</a></li>
+<li><a class="" href="tables-chapter.html"><span class="header-section-number">5</span> Crafting High-Quality Tables</a></li>
+<li class="book-part">Part 2: Reports, Presentations, and Websites</li>
+<li><a class="" href="rmarkdown-chapter.html"><span class="header-section-number">6</span> Writing Reports in R Markdown</a></li>
+<li><a class="" href="parameterized-reports-chapter.html"><span class="header-section-number">7</span> Using Parameters to Automate Reports</a></li>
+<li><a class="active" href="presentations-chapter.html"><span class="header-section-number">8</span> Making Slides Presentations with xaringan</a></li>
+<li><a class="" href="websites-chapter.html"><span class="header-section-number">9</span> Make Websites to Share Results Online</a></li>
+<li><a class="" href="quarto-chapter.html"><span class="header-section-number">10</span> Reproducible Reporting with Quarto</a></li>
+<li class="book-part">Part 3: Automation and Collaboration</li>
+<li><a class="" href="accessing-data-chapter.html"><span class="header-section-number">11</span> Accessing Data</a></li>
+<li><a class="" href="packages-chapter.html"><span class="header-section-number">12</span> Creating Your Own R Packages</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/rfortherestofus/r-without-statistics">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="presentations-chapter" class="section level1" number="8">
+<h1>
+<span class="header-section-number">8</span> Making Slides Presentations with xaringan<a class="anchor" aria-label="anchor" href="#presentations-chapter"><i class="fas fa-link"></i></a>
+</h1>
+<p>You’re now able to generate reports using a single tool, R Markdown. But what if you need to make a slideshow presentation, like those you might create in PowerPoint? Luckily, R has robust presentation-making capabilities. In this chapter, you’ll learn how to produce presentations using <code>xaringan</code>. This package, which uses R Markdown, is the most widely used tool for creating slideshows in R.</p>
+<p>We’ll use <code>xaringan</code> to turn the penguin report from Chapter <a href="rmarkdown-chapter.html#rmarkdown-chapter">6</a> into a slideshow. You’ll learn how to create new slides, selectively reveal content, adjust the alignment of text and images, and style your presentation with CSS.</p>
+<div id="why-use-xaringan" class="section level2 unnumbered">
+<h2>Why Use <code>xaringan</code>?<a class="anchor" aria-label="anchor" href="#why-use-xaringan"><i class="fas fa-link"></i></a>
+</h2>
+<p>In R Studio, you might have noticed that the Presentation option you see when creating a new R Markdown document provides several options for making slides, such as knitting an R Markdown document to PowerPoint. However, using the <code>xaringan</code> package provides advantages over these options.</p>
+<p>Silvia Canelón, a data analyst in the Urban Health Lab at the University of Pennsylvania, has taught the <code>xaringan</code> package extensively. She argues that the package’s benefits go well beyond making good-looking slides. For instance, because <code>xaringan</code> creates slides as HTML documents, you can post them online without needing to email them or print them out for viewers. Instead, you can send someone the presentation by just sharing a link. We’ll discuss ways to publish your presentations online in Chapter <a href="websites-chapter.html#websites-chapter">9</a>.</p>
+<p>A second benefit of using <code>xaringan</code> is accessibility. HTML documents are easy to manipulate, giving viewers control over their appearance. For example, people with limited vision can access HTML documents in ways that allow them to view the content, such as by increasing the text size or using screen readers. Making presentations with <code>xaringan</code> lets more people engage with your slides.</p>
+</div>
+<div id="how-xaringan-works" class="section level2 unnumbered">
+<h2>How <code>xaringan</code> Works<a class="anchor" aria-label="anchor" href="#how-xaringan-works"><i class="fas fa-link"></i></a>
+</h2>
+<p>To get started with xaringan, install the package by running <code>install.packages("xaringan")</code> in R Studio. Next, navigate to <strong>File</strong> &gt; <strong>New File</strong> &gt; <strong>R Markdown</strong> to create a new project. Choose the <strong>From Template</strong> tab and select the template called <strong>Ninja Presentation</strong>, then click <strong>OK</strong>.</p>
+<p>You should get an R Markdown document containing some default content. Delete this and add your own. The following document uses the penguin R report we created in Chapter <a href="rmarkdown-chapter.html#rmarkdown-chapter">6</a> but changes the output format in the YAML to <code><a href="https://rdrr.io/pkg/xaringan/man/moon_reader.html">xaringan::moon_reader</a></code>:</p>
+<div class="sourceCode" id="cb135"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb135-1"><a href="presentations-chapter.html#cb135-1" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb135-2"><a href="presentations-chapter.html#cb135-2" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Penguins Report"</span></span>
+<span id="cb135-3"><a href="presentations-chapter.html#cb135-3" tabindex="-1"></a><span class="an">author:</span><span class="co"> "David Keyes"</span></span>
+<span id="cb135-4"><a href="presentations-chapter.html#cb135-4" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2024-01-12"</span></span>
+<span id="cb135-5"><a href="presentations-chapter.html#cb135-5" tabindex="-1"></a><span class="an">output:</span><span class="co"> xaringan::moon_reader</span></span>
+<span id="cb135-6"><a href="presentations-chapter.html#cb135-6" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb135-7"><a href="presentations-chapter.html#cb135-7" tabindex="-1"></a></span>
+<span id="cb135-8"><a href="presentations-chapter.html#cb135-8" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
+<span id="cb135-9"><a href="presentations-chapter.html#cb135-9" tabindex="-1"></a><span class="in">knitr::opts_chunk$set(include = TRUE, </span></span>
+<span id="cb135-10"><a href="presentations-chapter.html#cb135-10" tabindex="-1"></a><span class="in">                      echo = FALSE,</span></span>
+<span id="cb135-11"><a href="presentations-chapter.html#cb135-11" tabindex="-1"></a><span class="in">                      message = FALSE,</span></span>
+<span id="cb135-12"><a href="presentations-chapter.html#cb135-12" tabindex="-1"></a><span class="in">                      warning = FALSE)</span></span>
+<span id="cb135-13"><a href="presentations-chapter.html#cb135-13" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb135-14"><a href="presentations-chapter.html#cb135-14" tabindex="-1"></a></span>
+<span id="cb135-15"><a href="presentations-chapter.html#cb135-15" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb135-16"><a href="presentations-chapter.html#cb135-16" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb135-17"><a href="presentations-chapter.html#cb135-17" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb135-18"><a href="presentations-chapter.html#cb135-18" tabindex="-1"></a></span>
+<span id="cb135-19"><a href="presentations-chapter.html#cb135-19" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb135-20"><a href="presentations-chapter.html#cb135-20" tabindex="-1"></a><span class="in">penguins &lt;- read_csv("https://raw.githubusercontent.com/rfortherestofus/r-without-statistics/main/data/penguins-2008.csv")</span></span>
+<span id="cb135-21"><a href="presentations-chapter.html#cb135-21" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb135-22"><a href="presentations-chapter.html#cb135-22" tabindex="-1"></a></span>
+<span id="cb135-23"><a href="presentations-chapter.html#cb135-23" tabindex="-1"></a><span class="fu"># Introduction</span></span>
+<span id="cb135-24"><a href="presentations-chapter.html#cb135-24" tabindex="-1"></a></span>
+<span id="cb135-25"><a href="presentations-chapter.html#cb135-25" tabindex="-1"></a>We are writing a report about the **Palmer Penguins**. These penguins are *really* amazing. There are three species:</span>
+<span id="cb135-26"><a href="presentations-chapter.html#cb135-26" tabindex="-1"></a></span>
+<span id="cb135-27"><a href="presentations-chapter.html#cb135-27" tabindex="-1"></a><span class="ss">- </span>Adelie</span>
+<span id="cb135-28"><a href="presentations-chapter.html#cb135-28" tabindex="-1"></a><span class="ss">- </span>Gentoo</span>
+<span id="cb135-29"><a href="presentations-chapter.html#cb135-29" tabindex="-1"></a><span class="ss">- </span>Chinstrap</span>
+<span id="cb135-30"><a href="presentations-chapter.html#cb135-30" tabindex="-1"></a></span>
+<span id="cb135-31"><a href="presentations-chapter.html#cb135-31" tabindex="-1"></a><span class="fu">## Bill Length</span></span>
+<span id="cb135-32"><a href="presentations-chapter.html#cb135-32" tabindex="-1"></a></span>
+<span id="cb135-33"><a href="presentations-chapter.html#cb135-33" tabindex="-1"></a>We can make a histogram to see the distribution of bill lengths.</span>
+<span id="cb135-34"><a href="presentations-chapter.html#cb135-34" tabindex="-1"></a></span>
+<span id="cb135-35"><a href="presentations-chapter.html#cb135-35" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb135-36"><a href="presentations-chapter.html#cb135-36" tabindex="-1"></a><span class="in">penguins %&gt;% </span></span>
+<span id="cb135-37"><a href="presentations-chapter.html#cb135-37" tabindex="-1"></a><span class="in">  ggplot(aes(x = bill_length_mm)) +</span></span>
+<span id="cb135-38"><a href="presentations-chapter.html#cb135-38" tabindex="-1"></a><span class="in">  geom_histogram() +</span></span>
+<span id="cb135-39"><a href="presentations-chapter.html#cb135-39" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb135-40"><a href="presentations-chapter.html#cb135-40" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb135-41"><a href="presentations-chapter.html#cb135-41" tabindex="-1"></a></span>
+<span id="cb135-42"><a href="presentations-chapter.html#cb135-42" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb135-43"><a href="presentations-chapter.html#cb135-43" tabindex="-1"></a><span class="in">average_bill_length &lt;- penguins %&gt;% </span></span>
+<span id="cb135-44"><a href="presentations-chapter.html#cb135-44" tabindex="-1"></a><span class="in">  summarize(avg_bill_length = mean(bill_length_mm,</span></span>
+<span id="cb135-45"><a href="presentations-chapter.html#cb135-45" tabindex="-1"></a><span class="in">                                   na.rm = TRUE)) %&gt;% </span></span>
+<span id="cb135-46"><a href="presentations-chapter.html#cb135-46" tabindex="-1"></a><span class="in">  pull(avg_bill_length)</span></span>
+<span id="cb135-47"><a href="presentations-chapter.html#cb135-47" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb135-48"><a href="presentations-chapter.html#cb135-48" tabindex="-1"></a></span>
+<span id="cb135-49"><a href="presentations-chapter.html#cb135-49" tabindex="-1"></a>The chart shows the distribution of bill lengths. The average bill length is <span class="in">`r average_bill_length`</span> millimeters.</span></code></pre></div>
+<p>The <code>moon_reader</code> output format takes R Markdown documents and knits them as slides. Try clicking the <strong>Knit</strong> button to see what this looks like. You should receive an HTML file with the same name as R Markdown document (such as <em>xaringan-example.html</em>), as shown in Figure <a href="presentations-chapter.html#fig:penguins-report-slide-1">8.1</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:penguins-report-slide-1"></span>
+<img src="assets/penguins-report-slide-1.png" alt="The first slide of the presentation" width="100%"><p class="caption">
+Figure 8.1: The first slide of the presentation
+</p>
+</div>
+<p>If you scroll to the next slide with the right arrow key, you should see familiar content. Figure <a href="presentations-chapter.html#fig:penguins-report-slide-2">8.2</a> shows the second slide, which has the same text as the report from Chapter <a href="rmarkdown-chapter.html#rmarkdown-chapter">6</a> and a cut-off version of its histogram.</p>
+<div class="figure">
+<span style="display:block;" id="fig:penguins-report-slide-2"></span>
+<img src="assets/penguins-report-slide-2.png" alt="The second slide of the presentation" width="100%"><p class="caption">
+Figure 8.2: The second slide of the presentation
+</p>
+</div>
+<p>Although the syntax for making slides with <code>xaringan</code> is nearly identical to that used to make reports with R Markdown, we need to make a few tweaks so that the content can fit on the slides. When we’re working in a document that will be knitted to Word, its length doesn’t matter, because reports can have one page or 100 pages. Working with <code>xaringan</code>, however, requires considering how much content can fit on a single slide. Our cut-off histogram shows us what happens if we don’t do this. Let’s fix it.</p>
+<div id="creating-a-new-slide" class="section level3 unnumbered">
+<h3>Creating a New Slide<a class="anchor" aria-label="anchor" href="#creating-a-new-slide"><i class="fas fa-link"></i></a>
+</h3>
+<p>Let’s make our histogram fully visible by putting it in its own slide. To make a new slide, add three dashes (<code>---</code>) where you’d like the slide to begin. I’ve added these dashes before the histogram code:</p>
+<div class="sourceCode" id="cb136"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb136-1"><a href="presentations-chapter.html#cb136-1" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb136-2"><a href="presentations-chapter.html#cb136-2" tabindex="-1"></a></span>
+<span id="cb136-3"><a href="presentations-chapter.html#cb136-3" tabindex="-1"></a><span class="co">## Bill Length</span></span>
+<span id="cb136-4"><a href="presentations-chapter.html#cb136-4" tabindex="-1"></a></span>
+<span id="cb136-5"><a href="presentations-chapter.html#cb136-5" tabindex="-1"></a><span class="co">We can make a histogram to see the distribution of bill lengths.</span></span>
+<span id="cb136-6"><a href="presentations-chapter.html#cb136-6" tabindex="-1"></a></span>
+<span id="cb136-7"><a href="presentations-chapter.html#cb136-7" tabindex="-1"></a><span class="co">```{r}</span></span>
+<span id="cb136-8"><a href="presentations-chapter.html#cb136-8" tabindex="-1"></a><span class="co">penguins %&gt;% </span></span>
+<span id="cb136-9"><a href="presentations-chapter.html#cb136-9" tabindex="-1"></a><span class="co">  ggplot(aes(x = bill_length_mm)) +</span></span>
+<span id="cb136-10"><a href="presentations-chapter.html#cb136-10" tabindex="-1"></a><span class="co">  geom_histogram() +</span></span>
+<span id="cb136-11"><a href="presentations-chapter.html#cb136-11" tabindex="-1"></a><span class="co">  theme_minimal()</span></span>
+<span id="cb136-12"><a href="presentations-chapter.html#cb136-12" tabindex="-1"></a><span class="co">```</span></span></code></pre></div>
+<p>If you knit the document again, what was one slide should now be broken into two: an Introduction slide and a Bill Length slide. However, if you look closely, you’ll notice that the bottom of histogram is still slightly cut off. To correct this, we’ll change its size.</p>
+</div>
+<div id="adjusting-the-size-of-figures" class="section level3 unnumbered">
+<h3>Adjusting the Size of Figures<a class="anchor" aria-label="anchor" href="#adjusting-the-size-of-figures"><i class="fas fa-link"></i></a>
+</h3>
+<p>Adjust the size of the histogram using the code chunk option fig.height:</p>
+<div class="sourceCode" id="cb137"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb137-1"><a href="presentations-chapter.html#cb137-1" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb137-2"><a href="presentations-chapter.html#cb137-2" tabindex="-1"></a></span>
+<span id="cb137-3"><a href="presentations-chapter.html#cb137-3" tabindex="-1"></a><span class="co">## Bill Length</span></span>
+<span id="cb137-4"><a href="presentations-chapter.html#cb137-4" tabindex="-1"></a></span>
+<span id="cb137-5"><a href="presentations-chapter.html#cb137-5" tabindex="-1"></a><span class="co">We can make a histogram to see the distribution of bill lengths.</span></span>
+<span id="cb137-6"><a href="presentations-chapter.html#cb137-6" tabindex="-1"></a></span>
+<span id="cb137-7"><a href="presentations-chapter.html#cb137-7" tabindex="-1"></a><span class="co">```{r fig.height = 4}</span></span>
+<span id="cb137-8"><a href="presentations-chapter.html#cb137-8" tabindex="-1"></a><span class="co">penguins %&gt;%</span></span>
+<span id="cb137-9"><a href="presentations-chapter.html#cb137-9" tabindex="-1"></a><span class="co">  ggplot(aes(x = bill_length_mm)) +</span></span>
+<span id="cb137-10"><a href="presentations-chapter.html#cb137-10" tabindex="-1"></a><span class="co">  geom_histogram() +</span></span>
+<span id="cb137-11"><a href="presentations-chapter.html#cb137-11" tabindex="-1"></a><span class="co">  theme_minimal()</span></span>
+<span id="cb137-12"><a href="presentations-chapter.html#cb137-12" tabindex="-1"></a><span class="co">```</span></span></code></pre></div>
+<p>Doing this makes the histogram fit on the slide and also reveals the text that was hidden below. When working in R Markdown, you’ll often want to adjust the output size of your figures, and <code>fig.height</code> and <code>fig.width</code> will help you do so.</p>
+</div>
+<div id="incrementally-revealing-content" class="section level3 unnumbered">
+<h3>Incrementally Revealing Content<a class="anchor" aria-label="anchor" href="#incrementally-revealing-content"><i class="fas fa-link"></i></a>
+</h3>
+<p>When presenting, it’s often useful to show only a portion of the content on each slide at a time. Let’s say, for example, that when we’re presenting the first slide, we want to talk a bit about each penguin species. Rather than show all three species when we open this slide, it would be nice to have the names come up one at a time.</p>
+<p>We can do this using what <code>xaringan</code> calls <em>incremental reveal</em>. To use this feature, place two dashes (<code>--</code>) between any content you want to display incrementally. This code, for example, will let us show Adelie on the screen, then Adelie and Gentoo, then Adelie, Gentoo, and Chinstrap:</p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb138-1"><a href="presentations-chapter.html#cb138-1" tabindex="-1"></a><span class="fu"># Introduction</span></span>
+<span id="cb138-2"><a href="presentations-chapter.html#cb138-2" tabindex="-1"></a></span>
+<span id="cb138-3"><a href="presentations-chapter.html#cb138-3" tabindex="-1"></a>We are writing a report about the **Palmer Penguins**. These penguins are *really* amazing. There are three species:</span>
+<span id="cb138-4"><a href="presentations-chapter.html#cb138-4" tabindex="-1"></a></span>
+<span id="cb138-5"><a href="presentations-chapter.html#cb138-5" tabindex="-1"></a><span class="ss">- </span>Adelie</span>
+<span id="cb138-6"><a href="presentations-chapter.html#cb138-6" tabindex="-1"></a></span>
+<span id="cb138-7"><a href="presentations-chapter.html#cb138-7" tabindex="-1"></a>--</span>
+<span id="cb138-8"><a href="presentations-chapter.html#cb138-8" tabindex="-1"></a></span>
+<span id="cb138-9"><a href="presentations-chapter.html#cb138-9" tabindex="-1"></a><span class="ss">- </span>Gentoo</span>
+<span id="cb138-10"><a href="presentations-chapter.html#cb138-10" tabindex="-1"></a></span>
+<span id="cb138-11"><a href="presentations-chapter.html#cb138-11" tabindex="-1"></a>--</span>
+<span id="cb138-12"><a href="presentations-chapter.html#cb138-12" tabindex="-1"></a></span>
+<span id="cb138-13"><a href="presentations-chapter.html#cb138-13" tabindex="-1"></a><span class="ss">- </span>Chinstrap</span></code></pre></div>
+<p>When presenting your slides, you’ll use the right arrow to incrementally reveal the species.</p>
+</div>
+<div id="aligning-content-with-content-classes" class="section level3 unnumbered">
+<h3>Aligning Content with Content Classes<a class="anchor" aria-label="anchor" href="#aligning-content-with-content-classes"><i class="fas fa-link"></i></a>
+</h3>
+<p>When designing your presentation, you’ll also likely want to control the alignment of content. We can do this by adding what are known as content classes. Surround any content with the classes <code>.left[]</code>, <code>right[]</code>, and <code>center[]</code> to align them. For example, let’s use <code>.center[]</code> to align the code chunk that makes the histogram:</p>
+<div class="sourceCode" id="cb139"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb139-1"><a href="presentations-chapter.html#cb139-1" tabindex="-1"></a>.center[</span>
+<span id="cb139-2"><a href="presentations-chapter.html#cb139-2" tabindex="-1"></a><span class="in">```{r fig.height = 4}</span></span>
+<span id="cb139-3"><a href="presentations-chapter.html#cb139-3" tabindex="-1"></a><span class="in">penguins %&gt;% </span></span>
+<span id="cb139-4"><a href="presentations-chapter.html#cb139-4" tabindex="-1"></a><span class="in">  ggplot(aes(x = bill_length_mm)) +</span></span>
+<span id="cb139-5"><a href="presentations-chapter.html#cb139-5" tabindex="-1"></a><span class="in">  geom_histogram() +</span></span>
+<span id="cb139-6"><a href="presentations-chapter.html#cb139-6" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb139-7"><a href="presentations-chapter.html#cb139-7" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb139-8"><a href="presentations-chapter.html#cb139-8" tabindex="-1"></a>]</span></code></pre></div>
+<p>Other built-in options can make two-column layouts. Adding <code>pull-left[]</code> and <code>pull-right[]</code> will make two equally spaced columns. Let’s use these to display the histogram on the left side of the slide and the accompanying text on the right:</p>
+<p>There are also built-in options to make two-column layouts. Adding <code>pull-left[]</code> and <code>pull-right[]</code> in this way will make two equally spaced columns.</p>
+<div class="sourceCode" id="cb140"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb140-1"><a href="presentations-chapter.html#cb140-1" tabindex="-1"></a>.pull-left[</span>
+<span id="cb140-2"><a href="presentations-chapter.html#cb140-2" tabindex="-1"></a><span class="in">```{r fig.height = 4}</span></span>
+<span id="cb140-3"><a href="presentations-chapter.html#cb140-3" tabindex="-1"></a><span class="in">penguins %&gt;% </span></span>
+<span id="cb140-4"><a href="presentations-chapter.html#cb140-4" tabindex="-1"></a><span class="in">  ggplot(aes(x = bill_length_mm)) +</span></span>
+<span id="cb140-5"><a href="presentations-chapter.html#cb140-5" tabindex="-1"></a><span class="in">  geom_histogram() +</span></span>
+<span id="cb140-6"><a href="presentations-chapter.html#cb140-6" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb140-7"><a href="presentations-chapter.html#cb140-7" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb140-8"><a href="presentations-chapter.html#cb140-8" tabindex="-1"></a>]</span>
+<span id="cb140-9"><a href="presentations-chapter.html#cb140-9" tabindex="-1"></a></span>
+<span id="cb140-10"><a href="presentations-chapter.html#cb140-10" tabindex="-1"></a>.pull-right[</span>
+<span id="cb140-11"><a href="presentations-chapter.html#cb140-11" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb140-12"><a href="presentations-chapter.html#cb140-12" tabindex="-1"></a><span class="in">average_bill_length &lt;- penguins %&gt;% </span></span>
+<span id="cb140-13"><a href="presentations-chapter.html#cb140-13" tabindex="-1"></a><span class="in">  summarize(avg_bill_length = mean(bill_length_mm,</span></span>
+<span id="cb140-14"><a href="presentations-chapter.html#cb140-14" tabindex="-1"></a><span class="in">                                   na.rm = TRUE)) %&gt;% </span></span>
+<span id="cb140-15"><a href="presentations-chapter.html#cb140-15" tabindex="-1"></a><span class="in">  pull(avg_bill_length)</span></span>
+<span id="cb140-16"><a href="presentations-chapter.html#cb140-16" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb140-17"><a href="presentations-chapter.html#cb140-17" tabindex="-1"></a></span>
+<span id="cb140-18"><a href="presentations-chapter.html#cb140-18" tabindex="-1"></a>The chart shows the distribution of bill lengths. The average bill length is <span class="in">`r average_bill_length`</span> millimeters.</span>
+<span id="cb140-19"><a href="presentations-chapter.html#cb140-19" tabindex="-1"></a>]</span></code></pre></div>
+<p>You can see what this looks like in Figure <a href="presentations-chapter.html#fig:slide-two-columns">8.3</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:slide-two-columns"></span>
+<img src="assets/slide-two-columns.png" alt="A slide with two columns" width="100%"><p class="caption">
+Figure 8.3: A slide with two columns
+</p>
+</div>
+<p>To make a narrow left column and wide right column, use the content classes <code>.left-column[]</code> and <code>.right-column[]</code>. Figure <a href="presentations-chapter.html#fig:slide-two-columns-v2">8.4</a>. shows what the slide would look like with the text on the left and the histogram on the right.</p>
+<div class="figure">
+<span style="display:block;" id="fig:slide-two-columns-v2"></span>
+<img src="assets/slide-two-columns-v2.png" alt="A slide with a smaller left column and a larger right column" width="100%"><p class="caption">
+Figure 8.4: A slide with a smaller left column and a larger right column
+</p>
+</div>
+<p>In addition to aligning particular pieces of content on slides, we can also horizontally align the entire content using the <code>left</code>, <code>right</code>, and <code>center</code> classes. To do this, specify the class right after the three dashes that indicate a new slide, but before any content:</p>
+<div class="sourceCode" id="cb141"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb141-1"><a href="presentations-chapter.html#cb141-1" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb141-2"><a href="presentations-chapter.html#cb141-2" tabindex="-1"></a></span>
+<span id="cb141-3"><a href="presentations-chapter.html#cb141-3" tabindex="-1"></a><span class="an">class:</span><span class="co"> center</span></span>
+<span id="cb141-4"><a href="presentations-chapter.html#cb141-4" tabindex="-1"></a></span>
+<span id="cb141-5"><a href="presentations-chapter.html#cb141-5" tabindex="-1"></a><span class="co">## Bill Length</span></span>
+<span id="cb141-6"><a href="presentations-chapter.html#cb141-6" tabindex="-1"></a></span>
+<span id="cb141-7"><a href="presentations-chapter.html#cb141-7" tabindex="-1"></a><span class="co">We can make a histogram to see the distribution of bill lengths.</span></span>
+<span id="cb141-8"><a href="presentations-chapter.html#cb141-8" tabindex="-1"></a></span>
+<span id="cb141-9"><a href="presentations-chapter.html#cb141-9" tabindex="-1"></a><span class="co">```{r fig.height = 4}</span></span>
+<span id="cb141-10"><a href="presentations-chapter.html#cb141-10" tabindex="-1"></a><span class="co">penguins %&gt;% </span></span>
+<span id="cb141-11"><a href="presentations-chapter.html#cb141-11" tabindex="-1"></a><span class="co">  ggplot(aes(x = bill_length_mm)) +</span></span>
+<span id="cb141-12"><a href="presentations-chapter.html#cb141-12" tabindex="-1"></a><span class="co">  geom_histogram() +</span></span>
+<span id="cb141-13"><a href="presentations-chapter.html#cb141-13" tabindex="-1"></a><span class="co">  theme_minimal()</span></span>
+<span id="cb141-14"><a href="presentations-chapter.html#cb141-14" tabindex="-1"></a><span class="co">```</span></span>
+<span id="cb141-15"><a href="presentations-chapter.html#cb141-15" tabindex="-1"></a></span>
+<span id="cb141-16"><a href="presentations-chapter.html#cb141-16" tabindex="-1"></a><span class="co">```{r}</span></span>
+<span id="cb141-17"><a href="presentations-chapter.html#cb141-17" tabindex="-1"></a><span class="co">average_bill_length &lt;- penguins %&gt;% </span></span>
+<span id="cb141-18"><a href="presentations-chapter.html#cb141-18" tabindex="-1"></a><span class="co">  summarize(avg_bill_length = mean(bill_length_mm,</span></span>
+<span id="cb141-19"><a href="presentations-chapter.html#cb141-19" tabindex="-1"></a><span class="co">                                   na.rm = TRUE)) %&gt;% </span></span>
+<span id="cb141-20"><a href="presentations-chapter.html#cb141-20" tabindex="-1"></a><span class="co">  pull(avg_bill_length)</span></span>
+<span id="cb141-21"><a href="presentations-chapter.html#cb141-21" tabindex="-1"></a><span class="co">```</span></span>
+<span id="cb141-22"><a href="presentations-chapter.html#cb141-22" tabindex="-1"></a></span>
+<span id="cb141-23"><a href="presentations-chapter.html#cb141-23" tabindex="-1"></a><span class="co">The chart shows the distribution of bill lengths. The average bill length is `r average_bill_length` millimeters.</span></span></code></pre></div>
+<p>Doing this would give us a horizontally centered slide. To adjust vertical position, you can use the classes <code>top</code>, <code>middle</code>, and <code>bottom</code>.</p>
+</div>
+<div id="adding-background-images-to-slides" class="section level3 unnumbered">
+<h3>Adding Background Images to Slides<a class="anchor" aria-label="anchor" href="#adding-background-images-to-slides"><i class="fas fa-link"></i></a>
+</h3>
+<p>The syntax we just used to center the entire slide can also enable us to add a background image. Let’s create a new slide, use the classes <code>center</code> and <code>middle</code> to horizontally and vertically align the content, and add a background image by surrounding the path to the image with <code><a href="https://rdrr.io/r/base/connections.html">url()</a></code>. This code will only work for you if you have a file called <em>penguins.jpg</em> in your project.</p>
+<div class="sourceCode" id="cb142"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb142-1"><a href="presentations-chapter.html#cb142-1" tabindex="-1"></a><span class="an">class:</span><span class="co"> center, middle</span></span>
+<span id="cb142-2"><a href="presentations-chapter.html#cb142-2" tabindex="-1"></a><span class="an">background-image:</span><span class="co"> url("penguins.jpg")</span></span>
+<span id="cb142-3"><a href="presentations-chapter.html#cb142-3" tabindex="-1"></a></span>
+<span id="cb142-4"><a href="presentations-chapter.html#cb142-4" tabindex="-1"></a><span class="fu">## Penguins</span></span></code></pre></div>
+<p>Doing this produces a slide with a picture of penguins in the background and the text Penguins in front of it, as shown in Figure <a href="presentations-chapter.html#fig:xaringan-background-image">8.5</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:xaringan-background-image"></span>
+<img src="assets/xaringan-background-image.png" alt="A slide that uses a background image" width="100%"><p class="caption">
+Figure 8.5: A slide that uses a background image
+</p>
+</div>
+<p>Now let’s add custom CSS to improve this new slide.</p>
+</div>
+</div>
+<div id="applying-css-to-slides" class="section level2 unnumbered">
+<h2>Applying CSS to Slides<a class="anchor" aria-label="anchor" href="#applying-css-to-slides"><i class="fas fa-link"></i></a>
+</h2>
+<p>One issue with the slide we just made is that the word <em>Penguins</em> is hard to read. It would probably be best if we could make the text bigger and a different color. To do this, we need to use <em>CSS</em>, the language used to style HTML documents. If you’re thinking, “I’m reading this book to learn R, not CSS,” don’t worry. You’ll need only a bit of CSS to make tweaks to your slides. To apply these tweaks to your slides, you can write your own custom code, use a CSS theme, or combine the two approaches using the <code>xaringanthemer</code> package.</p>
+<div id="custom-css" class="section level3 unnumbered">
+<h3>Custom CSS<a class="anchor" aria-label="anchor" href="#custom-css"><i class="fas fa-link"></i></a>
+</h3>
+<p>To add custom CSS, create a new code chunk, place <code>css</code> between the curly brackets:</p>
+<div class="sourceCode" id="cb143"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb143-1"><a href="presentations-chapter.html#cb143-1" tabindex="-1"></a>```{css}</span>
+<span id="cb143-2"><a href="presentations-chapter.html#cb143-2" tabindex="-1"></a><span class="fu">.remark-slide-content</span> h2 {</span>
+<span id="cb143-3"><a href="presentations-chapter.html#cb143-3" tabindex="-1"></a>  <span class="kw">font-size</span>: <span class="dv">150</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb143-4"><a href="presentations-chapter.html#cb143-4" tabindex="-1"></a>  <span class="kw">color</span>: <span class="cn">white</span><span class="op">;</span></span>
+<span id="cb143-5"><a href="presentations-chapter.html#cb143-5" tabindex="-1"></a>}</span>
+<span id="cb143-6"><a href="presentations-chapter.html#cb143-6" tabindex="-1"></a>```</span></code></pre></div>
+<p>In this code chunk, we tell R Markdown to make the second-level header (<code>h2</code>) 150 pixels large and white. We must also add the <code>.remark-slide-content</code> before the header to make sure we target specific elements in the presentation. The term <em>remark</em> comes from <em>remark.js</em>, a JavaScript library for making presentations that xaringan uses under the hood. You can see the new slide in Figure <a href="presentations-chapter.html#fig:penguins-report">8.6</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:penguins-report"></span>
+<img src="assets/penguins-report.png" alt="Figure 8-6   The title slide with changes to the text to make it more visible" width="100%"><p class="caption">
+Figure 8.6: Figure 8-6 The title slide with changes to the text to make it more visible
+</p>
+</div>
+<p>If you wanted to change the font in addition to the text’s size and color, you could do so with additional CSS:</p>
+<div class="sourceCode" id="cb144"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb144-1"><a href="presentations-chapter.html#cb144-1" tabindex="-1"></a>```{css}</span>
+<span id="cb144-2"><a href="presentations-chapter.html#cb144-2" tabindex="-1"></a><span class="im">@import</span> <span class="fu">url(</span><span class="st">'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;display=swap'</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb144-3"><a href="presentations-chapter.html#cb144-3" tabindex="-1"></a></span>
+<span id="cb144-4"><a href="presentations-chapter.html#cb144-4" tabindex="-1"></a><span class="fu">.remark-slide-content</span> h2 {</span>
+<span id="cb144-5"><a href="presentations-chapter.html#cb144-5" tabindex="-1"></a>  <span class="kw">font-size</span>: <span class="dv">150</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb144-6"><a href="presentations-chapter.html#cb144-6" tabindex="-1"></a>  <span class="kw">color</span>: <span class="cn">white</span><span class="op">;</span></span>
+<span id="cb144-7"><a href="presentations-chapter.html#cb144-7" tabindex="-1"></a>    <span class="kw">font-family</span>: Inter<span class="op">;</span></span>
+<span id="cb144-8"><a href="presentations-chapter.html#cb144-8" tabindex="-1"></a>  <span class="kw">font-weight</span>: <span class="dv">bold</span><span class="op">;</span></span>
+<span id="cb144-9"><a href="presentations-chapter.html#cb144-9" tabindex="-1"></a>}</span>
+<span id="cb144-10"><a href="presentations-chapter.html#cb144-10" tabindex="-1"></a>```</span></code></pre></div>
+<p>The first line of this CSS makes a font called Inter available to the slides. We do this because some people might not have this font installed on their computers. The next two lines apply Inter to the header and make it bold. You can see the slide with bold Inter font in Figure <a href="presentations-chapter.html#fig:penguins-report-inter">8.7</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:penguins-report-inter"></span>
+<img src="assets/penguins-report-inter.png" alt="The title slide with changes to the font to make the text more visible" width="100%"><p class="caption">
+Figure 8.7: The title slide with changes to the font to make the text more visible
+</p>
+</div>
+<p>Because xaringan slides are built as HTML documents, you can customize them with CSS however you’d like. The sky is the limit.</p>
+</div>
+<div id="themes" class="section level3 unnumbered">
+<h3>Themes<a class="anchor" aria-label="anchor" href="#themes"><i class="fas fa-link"></i></a>
+</h3>
+<p>You may not care to know the ins and outs of CSS. Fortunately, you can customize your slides in two ways without writing any CSS yourself. The first way is to apply <code>xaringan</code> themes created by other R users. Run this code to get a list of all available themes:</p>
+<div class="sourceCode" id="cb145"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="fu">xaringan</span><span class="fu">:::</span><span class="fu">list_css</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>The output should look something like this:</p>
+<pre><code>#&gt;  [1] "chocolate-fonts"  "chocolate"       
+#&gt;  [3] "default-fonts"    "default"         
+#&gt;  [5] "duke-blue"        "fc-fonts"        
+#&gt;  [7] "fc"               "glasgow_template"
+#&gt;  [9] "hygge-duke"       "hygge"           
+#&gt; [11] "ki-fonts"         "ki"              
+#&gt; [13] "kunoichi"         "lucy-fonts"      
+#&gt; [15] "lucy"             "metropolis-fonts"
+#&gt; [17] "metropolis"       "middlebury-fonts"
+#&gt; [19] "middlebury"       "nhsr-fonts"      
+#&gt; [21] "nhsr"             "ninjutsu"        
+#&gt; [23] "rladies-fonts"    "rladies"         
+#&gt; [25] "robot-fonts"      "robot"           
+#&gt; [27] "rutgers-fonts"    "rutgers"         
+#&gt; [29] "shinobi"          "tamu-fonts"      
+#&gt; [31] "tamu"             "uio-fonts"       
+#&gt; [33] "uio"              "uo-fonts"        
+#&gt; [35] "uo"               "uol-fonts"       
+#&gt; [37] "uol"              "useR-fonts"      
+#&gt; [39] "useR"             "uwm-fonts"       
+#&gt; [41] "uwm"              "wic-fonts"       
+#&gt; [43] "wic"</code></pre>
+<p>Some CSS files change fonts only, while others change general elements, such as text size, colors, whether slide numbers are displayed, and so on. Using pre-built themes will usually require you to use both a general theme and a fonts theme, as follows:</p>
+<div class="sourceCode" id="cb147"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb147-1"><a href="presentations-chapter.html#cb147-1" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb147-2"><a href="presentations-chapter.html#cb147-2" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Penguins Report"</span></span>
+<span id="cb147-3"><a href="presentations-chapter.html#cb147-3" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span><span class="st">"David Keyes"</span></span>
+<span id="cb147-4"><a href="presentations-chapter.html#cb147-4" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> </span><span class="st">"2024-01-12"</span></span>
+<span id="cb147-5"><a href="presentations-chapter.html#cb147-5" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span></span>
+<span id="cb147-6"><a href="presentations-chapter.html#cb147-6" tabindex="-1"></a><span class="at">  xaringan:</span><span class="fu">:moon_reader</span><span class="kw">:</span></span>
+<span id="cb147-7"><a href="presentations-chapter.html#cb147-7" tabindex="-1"></a><span class="at">    </span><span class="fu">css</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">default</span><span class="kw">,</span><span class="at"> metropolis</span><span class="kw">,</span><span class="at"> metropolis-fonts</span><span class="kw">]</span></span>
+<span id="cb147-8"><a href="presentations-chapter.html#cb147-8" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
+<p>This code tells <code>xaringan</code> to use the default CSS, as well as customizations made in the <code>metropolis</code> and <code>metropolis-fonts</code> CSS themes. These come bundled with <code>xaringan</code>, so you don’t need to install any additional packages to access them. Figure <a href="presentations-chapter.html#fig:xaringan-metropolis">8.8</a> shows how the theme changes the look-and-feel of the slides.</p>
+<div class="figure">
+<span style="display:block;" id="fig:xaringan-metropolis"></span>
+<img src="assets/xaringan-metropolis.png" alt="A slide using the metropolis theme" width="100%"><p class="caption">
+Figure 8.8: A slide using the metropolis theme
+</p>
+</div>
+<p>If writing custom CSS is the totally flexible but more challenging option to tweaking your <code>xaringan</code> slides, then using a custom theme is way simpler but a lot less flexible. Custom themes allow you to easily use others’ pre-built CSS, but don’t give you the ability to tweak it further.</p>
+</div>
+<div id="the-xaringanthemer-package" class="section level3 unnumbered">
+<h3>The <code>xaringanthemer</code> Package<a class="anchor" aria-label="anchor" href="#the-xaringanthemer-package"><i class="fas fa-link"></i></a>
+</h3>
+<p>A nice middle ground between writing custom CSS and applying someone else’s theme is to use the <code>xaringanthemer</code> package by Garrick Aden-Buie. This package includes several built-in themes but also allows you to easily create your own custom theme. After installing the package, adjust the <code>css</code> line in your YAML to use the <em>xaringan-themer.css</em> file:</p>
+<div class="sourceCode" id="cb148"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb148-1"><a href="presentations-chapter.html#cb148-1" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb148-2"><a href="presentations-chapter.html#cb148-2" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Penguins Report"</span></span>
+<span id="cb148-3"><a href="presentations-chapter.html#cb148-3" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span><span class="st">"David Keyes"</span></span>
+<span id="cb148-4"><a href="presentations-chapter.html#cb148-4" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> </span><span class="st">"2024-01-12"</span></span>
+<span id="cb148-5"><a href="presentations-chapter.html#cb148-5" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span></span>
+<span id="cb148-6"><a href="presentations-chapter.html#cb148-6" tabindex="-1"></a><span class="at">  xaringan:</span><span class="fu">:moon_reader</span><span class="kw">:</span></span>
+<span id="cb148-7"><a href="presentations-chapter.html#cb148-7" tabindex="-1"></a><span class="at">    </span><span class="fu">css</span><span class="kw">:</span><span class="at"> xaringan-themer.css</span></span>
+<span id="cb148-8"><a href="presentations-chapter.html#cb148-8" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
+<p>Now you can customize your slides by using the <code>style_xaringan()</code> function. This function has over 60 arguments, allowing you to tweak nearly any part of your <code>xaringan</code> slides. To replicate the custom CSS we wrote earlier in this chapter using <code>xaringanthemer</code>, let’s use just a few of the arguments:</p>
+<div class="sourceCode" id="cb149"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb149-1"><a href="presentations-chapter.html#cb149-1" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb149-2"><a href="presentations-chapter.html#cb149-2" tabindex="-1"></a><span class="in">library(xaringanthemer)</span></span>
+<span id="cb149-3"><a href="presentations-chapter.html#cb149-3" tabindex="-1"></a></span>
+<span id="cb149-4"><a href="presentations-chapter.html#cb149-4" tabindex="-1"></a><span class="in">style_xaringan(</span></span>
+<span id="cb149-5"><a href="presentations-chapter.html#cb149-5" tabindex="-1"></a><span class="in">  header_h2_font_size = "150px",</span></span>
+<span id="cb149-6"><a href="presentations-chapter.html#cb149-6" tabindex="-1"></a><span class="in">  header_color = "white",</span></span>
+<span id="cb149-7"><a href="presentations-chapter.html#cb149-7" tabindex="-1"></a><span class="in">  header_font_weight = "bold",</span></span>
+<span id="cb149-8"><a href="presentations-chapter.html#cb149-8" tabindex="-1"></a><span class="in">  header_font_family = "Inter"</span></span>
+<span id="cb149-9"><a href="presentations-chapter.html#cb149-9" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb149-10"><a href="presentations-chapter.html#cb149-10" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<p>This code sets the header size to 150 pixels and makes all headers use the bold, white Inter font.</p>
+<p>One particularly nice thing about the <code>xaringanthemer</code> package is that you can use any font available on Google Fonts by simply adding its name to <code>header_font_family</code> or any other argument that sets font families (<code>text_font_family</code> and <code>code_font_family</code> are the other two). You won’t have to include the line that made the Inter font available to us.</p>
+</div>
+</div>
+<div id="in-conclusion-the-advantages-of-xaringan" class="section level2 unnumbered">
+<h2>In Conclusion: The Advantages of <code>xaringan</code><a class="anchor" aria-label="anchor" href="#in-conclusion-the-advantages-of-xaringan"><i class="fas fa-link"></i></a>
+</h2>
+<p>In this chapter, you learned how to create presentations using the <code>xaringan</code> package. You’ve seen how to incrementally reveal content on slides, create multi-column layouts, add background images to slides, and change the appearance of slides by applying custom themes, by writing your own custom CSS, or by using the <code>xaringanthemer</code> package.</p>
+<p>By working in <code>xaringan</code>, you can create any type of presentation you want to, then customize it to match your desired look-and-feel. Creating presentations with <code>xaringan</code> also allows you to share your HTML slides easily and enables greater accessibility.</p>
+</div>
+<div id="learn-more-7" class="section level2 unnumbered">
+<h2>Learn More<a class="anchor" aria-label="anchor" href="#learn-more-7"><i class="fas fa-link"></i></a>
+</h2>
+<p>Consult the following resources to improve the quality of the presentations you make with the xaringan package:</p>
+<p><em>Sharing Your Work with xaringan: An Introduction to xaringan for Presentations: The Basics and Beyond</em> by Silvia Canelón (2020), <a href="https://spcanelon.github.io/xaringan-basics-and-beyond/index.html" class="uri">https://spcanelon.github.io/xaringan-basics-and-beyond/index.html</a></p>
+<p><em>Professional, Polished, Presentable: Making Great Slides with xaringan</em>, workshop materials by Garrick Aden-Buie, Silvia Canelón, and Shannon Pileggi (2021), <a href="https://presentable-user2021.netlify.app/" class="uri">https://presentable-user2021.netlify.app/</a></p>
+<p><em>Meet xaringan: Making slides in R Markdown</em> by Alison Hill (2019), <a href="https://arm.rbind.io/slides/xaringan.html" class="uri">https://arm.rbind.io/slides/xaringan.html</a></p>
+<p>Chapter 7 (“xaringan Presentations”) of <em>R Markdown: The Definitive Guide</em> by Yihui Xie, J. J. Allaire, and Garrett Grolemund (CRC Press, 2019), <a href="https://bookdown.org/yihui/rmarkdown/" class="uri">https://bookdown.org/yihui/rmarkdown/</a></p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="parameterized-reports-chapter.html"><span class="header-section-number">7</span> Using Parameters to Automate Reports</a></div>
+<div class="next"><a href="websites-chapter.html"><span class="header-section-number">9</span> Make Websites to Share Results Online</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#presentations-chapter"><span class="header-section-number">8</span> Making Slides Presentations with xaringan</a></li>
+<li><a class="nav-link" href="#why-use-xaringan">Why Use xaringan?</a></li>
+<li>
+<a class="nav-link" href="#how-xaringan-works">How xaringan Works</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#creating-a-new-slide">Creating a New Slide</a></li>
+<li><a class="nav-link" href="#adjusting-the-size-of-figures">Adjusting the Size of Figures</a></li>
+<li><a class="nav-link" href="#incrementally-revealing-content">Incrementally Revealing Content</a></li>
+<li><a class="nav-link" href="#aligning-content-with-content-classes">Aligning Content with Content Classes</a></li>
+<li><a class="nav-link" href="#adding-background-images-to-slides">Adding Background Images to Slides</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#applying-css-to-slides">Applying CSS to Slides</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#custom-css">Custom CSS</a></li>
+<li><a class="nav-link" href="#themes">Themes</a></li>
+<li><a class="nav-link" href="#the-xaringanthemer-package">The xaringanthemer Package</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#in-conclusion-the-advantages-of-xaringan">In Conclusion: The Advantages of xaringan</a></li>
+<li><a class="nav-link" href="#learn-more-7">Learn More</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/rfortherestofus/r-without-statistics/blob/master/presentations.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/rfortherestofus/r-without-statistics/edit/master/presentations.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>R Without Statistics</strong>" was written by David Keyes. </p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>

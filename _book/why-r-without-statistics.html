@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 1 Why R Without Statistics? | R Without Statistics</title>
+<meta name="author" content="David Keyes">
+<meta name="description" content="In early 2020, as COVID spread across the world, the government of New Zealand began planning their response. New Zealand had one major advantage that other countries lacked: being a remote...">
+<meta name="generator" content="bookdown 0.30 with bs4_book()">
+<meta property="og:title" content="Chapter 1 Why R Without Statistics? | R Without Statistics">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://book.rwithoutstatistics.com/why-r-without-statistics.html">
+<meta property="og:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
+<meta property="og:description" content="In early 2020, as COVID spread across the world, the government of New Zealand began planning their response. New Zealand had one major advantage that other countries lacked: being a remote...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 1 Why R Without Statistics? | R Without Statistics">
+<meta name="twitter:description" content="In early 2020, as COVID spread across the world, the government of New Zealand began planning their response. New Zealand had one major advantage that other countries lacked: being a remote...">
+<meta name="twitter:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.1/transition.js"></script><script src="libs/bs3compat-0.4.1/tabs.js"></script><script src="libs/bs3compat-0.4.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">R Without Statistics</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">About the Book</a></li>
+<li class="book-part">Introduction</li>
+<li><a class="active" href="why-r-without-statistics.html"><span class="header-section-number">1</span> Why R Without Statistics?</a></li>
+<li class="book-part">Illuminate</li>
+<li><a class="" href="data-viz-chapter.html"><span class="header-section-number">2</span> Principles of Data Visualization</a></li>
+<li><a class="" href="custom-theme-chapter.html"><span class="header-section-number">3</span> Making Your Own Theme</a></li>
+<li><a class="" href="maps-chapter.html"><span class="header-section-number">4</span> Creating Maps</a></li>
+<li><a class="" href="tables-chapter.html"><span class="header-section-number">5</span> Making High-Quality Tables</a></li>
+<li class="book-part">Communicate</li>
+<li><a class="" href="rmarkdown-chapter.html"><span class="header-section-number">6</span> Communicating with R Markdown</a></li>
+<li><a class="" href="parameterized-reports-chapter.html"><span class="header-section-number">7</span> Generate Multiple Reports at Once with Parameterized Reporting</a></li>
+<li><a class="" href="presentations-chapter.html"><span class="header-section-number">8</span> Create Beautiful Presentations with R Markdown</a></li>
+<li><a class="" href="websites-chapter.html"><span class="header-section-number">9</span> Make Websites to Share Results Online</a></li>
+<li class="book-part">Automate</li>
+<li><a class="" href="googlesheets-chapter.html"><span class="header-section-number">10</span> Automatically Access the Latest Data</a></li>
+<li><a class="" href="tidycensus-chapter.html"><span class="header-section-number">11</span> Access Census Data with the tidycensus Package</a></li>
+<li><a class="" href="functions-chapter.html"><span class="header-section-number">12</span> Code Once, Run Twice: Creating Your Own Functions</a></li>
+<li><a class="" href="custom-packages.html"><span class="header-section-number">13</span> Bundle Your Functions Together in Your Own R Package</a></li>
+<li class="book-part">Conclusion</li>
+<li><a class="" href="come-for-the-data-stay-for-the-community.html"><span class="header-section-number">14</span> Come for the Data, Stay for the Community</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/rfortherestofus/r-without-statistics">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="why-r-without-statistics" class="section level1" number="1">
+<h1>
+<span class="header-section-number">1</span> Why R Without Statistics?<a class="anchor" aria-label="anchor" href="#why-r-without-statistics"><i class="fas fa-link"></i></a>
+</h1>
+<p>In early 2020, as COVID spread across the world, the government of New Zealand began planning their response. New Zealand had one major advantage that other countries lacked: being a remote island. This bought the country some time, but those working in the government knew that this head start would not last forever. Unless they quickly developed a plan to tackle COVID, New Zealand faced the same bleak future that other countries were already beginning to experience.</p>
+<p>Of course, New Zealand did develop a plan to tackle COVID. As one of the few countries to largely keep COVID out in 2020 and 2021, New Zealand came to be seen as a model for how to respond to a global pandemic. While other countries were forced into repeated lockdowns due out of control COVID spread, life in New Zealand remained largely normal.</p>
+<p>There are many reasons why New Zealand was so successful in tackling COVID. One of these was its use of R. Yes, R.</p>
+<p>To understand how R helped New Zealand tackle COVID, let’s go back a bit before the pandemic. In the years leading up to 2020, the Ministry of Health had begun to transition from SAS to R. So when COVID finally arrived on the shores of New Zealand in February 2020, they had the knowledge of R to use it as their main analysis and reporting tool.</p>
+<p>But while people at Ministry of Health had R skills, they did not have a reporting system in place for a virus like COVID. Government officials and the general public needed to know how many cases there were in New Zealand and whether these cases were the result of international arrivals or community spread. And they didn’t need to know just once. They needed to know every day. As Chris Knox, who led a team at the Ministry of Health focused on the COVID response in 2021 and 2022 told me,</p>
+<blockquote>
+<p>Our general infectious disease reporting was not designed to be day to day. There were systems in place for reporting at the end of the year after everything had been tidied up.</p>
+</blockquote>
+<p>Creating a system to report daily on COVID data was no small feat. But because the Ministry of Health was already using R, they were able to leverage its power to make their reporting efficient.</p>
+<p>The work did involve complex analysis. Case reports from across New Zealand would go into a database. The Ministry of Health team would then pull data to generate reports on cases throughout the country. But the reporting requirements were high. The team had to produce three daily reports:</p>
+<ol style="list-style-type: decimal">
+<li>A 9:00am summary of cases for high-level government officials.</li>
+<li>An 11:00am situation report, complete with charts and tables, sent out to a wide range of government officials.</li>
+<li>A 1:00pm public release of data on a Ministry of Health website.</li>
+</ol>
+<p>There were a few tricky steps along the way. The team had to make sure to not double count cases from previous days before separating out international arrival and community spread cases. But, again, these reports did not involve any complex statistics. They were, quite literally, counting cases.</p>
+<p>So why am I discussing the New Zealand Ministry of Health’s use of R, a tool designed for statistics, to generate reports where the most complex statistic is counting? I’m using this example to highlight the power of R because it shows things that R can do that go beyond complex statistics.</p>
+<p>Specifically, the way that the New Zealand Ministry of Health used R shows the power of a code-based tool to make work more reproducible. Reproducible is really just a fancy way of saying that it was way, way easier to make those three daily reports using R than it would have been with a point-and-click tool like Excel.</p>
+<p>Reproducibility is a fancy word that often hides its true value. I used to hear it and think it referred to scientists recreating each other’s experiments in order to validate their results. But reproducibility really just means that code you write today can be run in another context. Sometimes this means someone else running your code. But sometimes it means you running the code you wrote last week. If last week’s code works when you run it again this week, it’s reproducible.</p>
+<p>Getting previously written code to run day after day was key to the success of the New Zealand Ministry of Health team reporting on COVID cases. Producing the three daily reports manually would have quickly become untenable. But the process become viable because they wrote R code once and reused it day after day.</p>
+<p>This isn’t to say that the original code the team wrote never changed. Reporting requirements shifted with time and the team at the Ministry of Health had to adapt. Chris Knox told me that, “at some points, the reporting requirements changed every day.” Fortunately, they could tweak their R code and re-run it to produce reports that met the new reporting needs.</p>
+<p>R was an important tool in enabling a small team to generate daily reports that were key to New Zealand’s successful COVID response. It allowed a team of five or six people to produce reports much more efficiently than would otherwise have been possible. In spite of this, the intensity of the work led to some burnout. As team members left and new members joined, the Ministry of Health found that, again, R was key to their success. Because the team used code for their work, a new team member could read it, get themselves up to speed, and quickly begin contributing. The public nature of a code-based workflow stands in marked contrast the all-too-common situation where an outsized amount of institutional knowledge is found in one person’s brain (let’s call him Larry). If Larry leaves, the team’s work grinds to a halt. R not only makes work more efficient, it also ensures long-term continuity. Chris Knox described how this played out at the New Zealand Ministry of Health:</p>
+<blockquote>
+<p>Setting up Larry’s analysis in Excel is usually faster than writing it up in code, but it’s harder to onboard people into that type of environment. If you have to just sit down, run this code, look for error messages, almost anyone can do that.</p>
+</blockquote>
+<p>R also made collaboration among the Ministry of Health team easier. Being able to review code allowed team members to improve their collective work and learn from each other. To understand the true benefit this offers, consider again our friend Larry. If Larry works in Excel, say, so much of his work is hidden. Team members can’t see the set of points-and-clicks that Larry carries out to do his analysis. His colleagues can’t improve his work, and it’s much harder for them to learn from Larry.</p>
+<p>R often feels intimidating to newcomers, especially those new to coding. But what the story of New Zealand’s COVID response shows us it that the power of R is huge. R was the main tool in a workflow that made it possible for a small team to produce regular reports every day for months on end. These reports didn’t involve any kind of complex statistics – they were literally counts of COVID cases. But the reproducibility of their R-based workflow is where the true value is found. As Chris Knox put it, “trying to do what we did in a point-and-click environment is not possible.” But with R, a small team helped a small island stay safe from COVID.</p>
+<div id="how-i-came-to-use-r" class="section level2 unnumbered">
+<h2>How I Came to Use R<a class="anchor" aria-label="anchor" href="#how-i-came-to-use-r"><i class="fas fa-link"></i></a>
+</h2>
+<p>My own relationship with R goes back to 2016. At the time, I was a consultant, helping non-profits, government agencies, and educational institutions to measure the effectiveness of their work is (a field known as <a href="https://www.cdc.gov/evaluation/index.htm">program evaluation</a>). A lot of my work involved conducting surveys, analyzing the resulting the data, and sharing the results with clients.</p>
+<p>The work itself was fine, but the tools I was using to do it were getting on my nerves. Well, one tool really: Excel.</p>
+<p>Now look, this is not a place for an anti-Excel rant. Excel is a fine tool that has empowered millions to work with data in ways they would never have been able to otherwise.</p>
+<p>But I found Excel extremely tedious. The amount of pointing and clicking I had to do when working with the amount of data I had got old fast. Each time I would conduct a survey, I’d know that it would yield an avalanche of data and that my wrists would end up exhausted from hours of pointing and clicking.</p>
+<p>No matter what I did, analyzing data and creating charts in Excel just involved a lot of repetitive pointing and clicking. Kind of like this:</p>
+<div class="inline-figure"><img src="introduction_files/figure-html/unnamed-chunk-2-1.png" width="100%"></div>
+<p>Endless pointing and clicking was just one problem I faced using Excel. Annoying though it was, it didn’t affect the quality of my work. Or so I thought until I recalled a project I had worked on a few years earlier.</p>
+<p>In this project, I was looking at which school districts in the state of Oregon have <a href="https://oregonstate.app.box.com/s/83g5sjdm88xgqdxfze0ri7qo4uff5sj7">outdoor education programs known as Outdoor School</a>. As part of this project, I had to download data on all school districts throughout Oregon, filter to only include relevant districts with fifth or sixth graders (the ages Outdoor School takes place), and then merge this with data that I collected as part of a survey I conducted.</p>
+<p>I did the work in Excel, using a lot of (you guessed it!) pointing and clicking. The problem came when I was almost done with the project. I’ve blocked the details from my memory (as I’ve done with most things Excel-related), but what I do recall is not being 100% certain I had done my filtering and joining correctly. And, to make it worse, I had no way to check my work. Why? Because all my pointing and clicking was ephemeral, gone in the ether as soon as I had completed it.</p>
+<p>I finished the Outdoor School project and submitted my report. The work I did was <em>probably</em> accurate, but maybe it wasn’t?</p>
+<p>Now, you may be reading this thinking: why didn’t you write down the steps you used in Excel so you could retrace them later? Sure, I could (and should) have done that. But let’s be honest: most of us don’t.</p>
+<p>We’re human. We’re lazy. We all make mistakes. And without a straightforward way to audit your work (and keeping a list of all of your Excel points and clicks in a separate document is not, in my view, straightforward), mistakes will happen. If you’ve used Excel to work with data, I guarantee you’ve made a mistake, just like me.</p>
+<p>The good news is that it’s okay. There’s a solution. And that solution is R.</p>
+<p>If I were to redo that project on Outdoor School with R, here’s what I’d do differently. Rather than watching points and clicks disappear into the ether, I’d write code that would serve as a record of everything I did. This code would:</p>
+<p>Download data on all school districts:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Download the data directly from the Oregon Department of Education website</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span>url <span class="op">=</span> <span class="st">"https://www.oregon.gov/ode/educator-resources/assessment/Documents/TestResults2019/pagr_schools_ela_tot_raceethnicity_1819.xlsx"</span>,</span>
+<span>              destfile <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data/pagr_schools_ela_tot_raceethnicity_1819.xlsx"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Import the downloaded data and use the `clean_names()` function to make the variable names easy to work with</span></span>
+<span><span class="va">oregon_schools</span> <span class="op">&lt;-</span> <span class="fu">read_excel</span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data/pagr_schools_ela_tot_raceethnicity_1819.xlsx"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">clean_names</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Filter to only include districts with fifth or sixth graders:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Start with the oregon_schools data from above</span></span>
+<span><span class="va">oregon_schools_fifth_sixth_grade</span> <span class="op">&lt;-</span> <span class="va">oregon_schools</span> <span class="op">%&gt;%</span> </span>
+<span>  </span>
+<span>  <span class="co"># Only keep schools with fifth or sixth graders</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">grade_level</span> <span class="op">==</span> <span class="st">"Grade 5"</span> <span class="op">|</span> <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"Grade 6"</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  </span>
+<span>  <span class="co"># Only keep the variables we need</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">district_id</span><span class="op">:</span><span class="va">school</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  </span>
+<span>  <span class="co"># There are multiple observations of the same school, just keep one of each</span></span>
+<span>  <span class="fu">distinct</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Join the filtered data on school districts with my survey data:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Use the school_id variable to join the survey data with the oregon_schools_fifth_sixth_grade from above </span></span>
+<span><span class="fu">left_join</span><span class="op">(</span><span class="va">survey_data</span>, <span class="va">oregon_schools_fifth_sixth_grade</span>,</span>
+<span>          by <span class="op">=</span> <span class="st">"school_id"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="code-is-just-a-written-record-of-your-work" class="section level2 unnumbered">
+<h2>Code is Just a Written Record of Your Work<a class="anchor" aria-label="anchor" href="#code-is-just-a-written-record-of-your-work"><i class="fas fa-link"></i></a>
+</h2>
+<p>Code can be scary. Having to write code is one of the reasons many people never learn R. But code is just a list of things you want to do to your data. It may be written in a hard-to-parse syntax (though it gets easier over time), but it’s just a set of steps. The same steps that we should write out when we’re working in Excel, but never do. Rather than having a separate document with my steps written down, I can see my steps in my code. See that line that says filter? Guess what it’s doing? Yep, it’s filtering!</p>
+<p>If I had done things this way when working on the Outdoor School project, I could have looked back at any point to make sure what I thought was happening to my data was in fact happening. That nagging sensation I had near the end of the project that I may have made a mistake in one of my early points or clicks? It never would have come up because I could have just reviewed my code to make sure it did what I thought it did. And if it didn’t, I could rewrite and rerun my code to get updated results.</p>
+<p>Using R won’t mean you’ll never make mistakes again (trust me, you will). But it will mean that you can easily spot your mistakes, make changes, and fix any issues.</p>
+<p>I started learning R to avoid tedious pointing and clicking. But what I found was that R improved my work in ways I never expected. It’s not just that my wrists are less tired. I now have more confidence that my work is accurate.</p>
+</div>
+<div id="r-can-do-much-more-than-just-statistics" class="section level2 unnumbered">
+<h2>R Can Do Much More Than Just Statistics<a class="anchor" aria-label="anchor" href="#r-can-do-much-more-than-just-statistics"><i class="fas fa-link"></i></a>
+</h2>
+<p>I used to feel ashamed about the way I use R. I use R, a tool for statistical analysis, but I don’t use it for complex statistical analysis. I don’t do machine learning. I don’t know what a random forest is. I’ve never run a regression in R. <a href="https://rfortherestofus.com/2018/12/descriptive-stats-r/">The only statistics I do in R are descriptive statistics</a>: counts, sums, averages, that type of thing.</p>
+<p>For a long time, I felt like I wasn’t a “real” R user. Real R users, in my mind, used R for hardcore stats. I “only” used R for descriptive stats. I sometimes felt like I was using a souped up sports car to drive 20 miles an hour to the grocery store. What was the point in using a high-powered machine like R to do “simple” things?</p>
+<p>Eventually, I realized that this framing misses the point. <a href="https://rss.onlinelibrary.wiley.com/doi/10.1111/j.1740-9713.2018.01169.x">R started out as a tool created by statisticians for other statisticians</a>. But, over a quarter century since its creation, R can do much more than statistical analysis.</p>
+<p>My own use of R is an example of this. I think of my work with R in three buckets:</p>
+<p><strong>Illuminate</strong> through data visualization: making graphs, maps, and tables that look good and share results effectively.</p>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-7"></span>
+<img src="assets/psc-sample.png" alt="Sample pages from a report on housing in demographics in Hartford, Connecticut" width="100%"><p class="caption">
+Figure 1.1: Sample pages from a report on housing in demographics in Hartford, Connecticut
+</p>
+</div>
+<p><strong>Communicate</strong> by doing reporting with R Markdown: moving away from the inefficient and error-prone workflow of using multiple tools to create reports by instead doing it all in the one tool that I think of as <a href="https://rfortherestofus.com/2019/03/r-killer-feature-rmarkdown/">R’s killer feature</a>.</p>
+<p>A typical workflow looks like this:</p>
+<ol style="list-style-type: decimal">
+<li>Analyze data in SPSS</li>
+<li>Copy data into Excel to make graphs</li>
+<li>Copy graphs into Word and write your report</li>
+</ol>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-8"></span>
+<img src="assets/non-r-workflow.png" alt="A typical non-R workflow" width="100%"><p class="caption">
+Figure 1.2: A typical non-R workflow
+</p>
+</div>
+<p>What happens, though, if you forget to include some data at step one? Or if you need to produce the same report with new data? You have to manually repeat the steps. It’s painful.</p>
+<p>With R, things are different. You do your data analysis, make your graphs, and write your report all in one tool (RStudio). Once you like what you have, you export it to a format (like Word) to share.</p>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-9"></span>
+<img src="assets/r-workflow.png" alt="An R-based workflow" width="100%"><p class="caption">
+Figure 1.3: An R-based workflow
+</p>
+</div>
+<p>And, best of all, if you forget to include data or need to produce your report again with new data, just re-run your code and you end up with a new Word document, ready to share.</p>
+<p><strong>Automate</strong> tedious practices: Remember my Excel-burdened wrists? Since I moved to R I’ve found so many ways to automate tedious practices, from gathering data directly from the U.S. Census Bureau to pulling survey results in from Google Sheets and more.</p>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-10"></span>
+<img src="assets/google-sheets-workflow.png" alt="An workflow that brings data from Google Sheets directly into R" width="100%"><p class="caption">
+Figure 1.4: An workflow that brings data from Google Sheets directly into R
+</p>
+</div>
+<p>The main reason I’ve come to accept that my way of using R is as valid as anyone else’s has come through realizing that more “sophisticated” R users are doing many of the same things I am. Sure, they may also be doing statistical analyses that I am not, but everyone who uses R needs to illuminate, communicate, and automate.</p>
+<p>Canadian statistician Sharla Gelfand has <a href="https://twitter.com/sharlagelfand/status/1135962094938009601">talked about how they used R to automate an annual report on nursing registration exams in Ontario</a>. Sharla told me in 2019 that, despite being a statistician, <a href="https://rfortherestofus.com/2019/09/my-r-journey-sharla-gelfand/">the most statistical thing they did was calculating a median</a>.</p>
+<p>Take a look at the R community on Twitter (where users congregate under the #rstats hashtag). What gets people most excited is not the latest complex statistical analysis. <a href="https://twitter.com/dgkeyes/status/1479473689225695234">It’s tips and tricks on the foundational work that everyone who uses R needs to do</a>. Things like:</p>
+<ul>
+<li><p><a href="https://twitter.com/CedScherer/status/1220843943224578050">Making illuminating data visualizations</a> as part of the <a href="https://github.com/rfordatascience/tidytuesday">Tidy Tuesday project</a>.</p></li>
+<li><p><a href="https://twitter.com/spcanelon/status/1424932510065209348">Video tutorials on how to communicate through effective presentations using R</a>.</p></li>
+<li><p><a href="https://twitter.com/WeAreRLadies/status/1228049014601342976">Love letters to the <code>clean_names()</code> function from the <code>janitor</code> package, which automates the process of making messy variable names easy to work with in R</a>.</p></li>
+</ul>
+<p>No matter what else you do in R, you have to <strong>illuminate</strong> your findings and <strong>communicate</strong> your results. And, the more you use R, the more you’ll find yourself wanting to <strong>automate</strong> things you used to do manually (your wrists will thank you). I realize now that the things that I use R for <em>are</em> the things that everyone uses R for. R was created for statistics. But today people are just as likely to use R without statistics.</p>
+<p>Ten years ago, if you had told me I’d be writing a book on R, I’d have laughed. As someone with an extremely non-quantitative background (I did a PhD in anthropology) who never used R in graduate school, I never thought I’d be in a position to teach people about R. But here we are. And I’m excited to be your guide on this journey through the ways you can use R without statistics.</p>
+<p>If I only used R for the things I thought “real” R users used it for, I wouldn’t be writing this book. But, instead of slogging away in the world of complex statistical analysis, far outside of my area of expertise, I have found a place for myself in the world of R. Expanding my conception of what this tool can do has enabled me to get more out of R.</p>
+<p>And here’s the thing: if I, a qualitatively-trained anthropologist whose most complex statistical use for R is calculating averages, can find value in R, so can you. No matter what your background or what you think about R right now, using R without statistics can transform how you work in the future.</p>
+</div>
+<div id="how-this-book-works" class="section level2 unnumbered">
+<h2>How This Book Works<a class="anchor" aria-label="anchor" href="#how-this-book-works"><i class="fas fa-link"></i></a>
+</h2>
+<p>This book shows the many ways that people use R without statistics. It’s not comprehensive (trust me, there are many ways people use R not covered here). But I hope the ideas inspire you to think about learning to use R (if you’re not yet an R user) or (if you are already on board the R train) learning to use R in ways you hadn’t previously considered.</p>
+<p>Each chapter focuses on one novel use of R. You’ll begin by learning about a user or users who have transformed their work using R. You’ll learn about a problem they had and how R helped them to solve it.We’ll dive into their code, analyzing it line by line in order to help you understand how they used R. Each chapter will conclude with a short summary, offering lessons you can take from this novel way of using R.</p>
+<p>I’ve tried to choose topics for each chapter that are relevant to a broad audience. Things like data visualization, report generation, and creating your own functions are things that anyone, no matter what you use R for, will find valuable.</p>
+<p>There are some great topics that I thought to include but were just too narrow in their focus (for example, <a href="https://blog.djnavarro.net/posts/2021-10-19_rtistry-posts/">the world of generative art made with R</a>. If, at any point while you’re reading this book, you think, “why didn’t David include X topic?” please know that X might be a great topic, but I can only cover so much. The fact that you’re able to come up with other ideas for things that R can do is a) fantastic and b) a further display of R’s versatility. I eagerly await your follow-up book highlighting the myriad other things R can do that I am unable to cover in this book!</p>
+</div>
+<div id="a-favor-to-ask" class="section level2 unnumbered">
+<h2>A Favor to Ask<a class="anchor" aria-label="anchor" href="#a-favor-to-ask"><i class="fas fa-link"></i></a>
+</h2>
+<p>Pedants of the world (as one of you, I come in peace), I have a favor to ask.</p>
+<p>This book is called R Without Statistics. But it’s not meant to be taken literally. Of course it’s true that if you’re making a graph you’re using statistics. So, before you start typing an angry email to me, please know that R Without Statistics is a mindset rather than a literal statement.</p>
+<p>We’re all using R with statistics already. Let’s also learn to use R without statistics.</p>
+
+</div>
+</div>
+
+
+
+<div class="chapter-nav">
+<div class="prev"><a href="index.html">About the Book</a></div>
+<div class="next"><a href="data-viz-chapter.html"><span class="header-section-number">2</span> Principles of Data Visualization</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#why-r-without-statistics"><span class="header-section-number">1</span> Why R Without Statistics?</a></li>
+<li><a class="nav-link" href="#how-i-came-to-use-r">How I Came to Use R</a></li>
+<li><a class="nav-link" href="#code-is-just-a-written-record-of-your-work">Code is Just a Written Record of Your Work</a></li>
+<li><a class="nav-link" href="#r-can-do-much-more-than-just-statistics">R Can Do Much More Than Just Statistics</a></li>
+<li><a class="nav-link" href="#how-this-book-works">How This Book Works</a></li>
+<li><a class="nav-link" href="#a-favor-to-ask">A Favor to Ask</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/rfortherestofus/r-without-statistics/blob/master/introduction.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/rfortherestofus/r-without-statistics/edit/master/introduction.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+</div>
+  
+
+  
+
+</div>
+ <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>R Without Statistics</strong>" was written by David Keyes. </p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>

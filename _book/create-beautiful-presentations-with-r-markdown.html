@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 9 Create Beautiful Presentations with R Markdown | R Without Statistics</title>
+<meta name="author" content="David Keyes">
+<meta name="description" content="Remember how we talked in Chapter 7 about the multi-tool workflow from SPSS to Excel to Word? That leaves out one of the most common tools in many people’s workflow: PowerPoint. Reporting happens...">
+<meta name="generator" content="bookdown 0.30 with bs4_book()">
+<meta property="og:title" content="Chapter 9 Create Beautiful Presentations with R Markdown | R Without Statistics">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://book.rwithoutstatistics.com/create-beautiful-presentations-with-r-markdown.html">
+<meta property="og:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
+<meta property="og:description" content="Remember how we talked in Chapter 7 about the multi-tool workflow from SPSS to Excel to Word? That leaves out one of the most common tools in many people’s workflow: PowerPoint. Reporting happens...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 9 Create Beautiful Presentations with R Markdown | R Without Statistics">
+<meta name="twitter:description" content="Remember how we talked in Chapter 7 about the multi-tool workflow from SPSS to Excel to Word? That leaves out one of the most common tools in many people’s workflow: PowerPoint. Reporting happens...">
+<meta name="twitter:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.1/transition.js"></script><script src="libs/bs3compat-0.4.1/tabs.js"></script><script src="libs/bs3compat-0.4.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">R Without Statistics</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled"><li><a class="" href="index.html"><span class="header-section-number">Chapter 9</span> Create Beautiful Presentations with R Markdown</a></li></ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/rfortherestofus/r-without-statistics">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="create-beautiful-presentations-with-r-markdown" class="section level1" number="9">
+<h1>
+<span class="header-section-number">9</span> Create Beautiful Presentations with R Markdown<a class="anchor" aria-label="anchor" href="#create-beautiful-presentations-with-r-markdown"><i class="fas fa-link"></i></a>
+</h1>
+<p>Remember how we talked in Chapter <a href="rmarkdown-chapter.html#rmarkdown-chapter">7</a> about the multi-tool workflow from SPSS to Excel to Word? That leaves out one of the most common tools in many people’s workflow: PowerPoint. Reporting happens in presentations as often as it does in Word-based reports.</p>
+<p>In Chapter <a href="rmarkdown-chapter.html#rmarkdown-chapter">7</a>, we talked about the R Markdown-based workflow having the benefit of keeping everything in one tool. You may be wondering at this point if creating presentations will require us to add another tool, like PowerPoint. Do you need to do your analysis, data visualization, and table making in R and then copy everything to PowerPoint by hand? No! R has robust presentation-making capabilities.</p>
+<p>In this chapter, we’ll learn how to make presentations in R using the <code>xaringan</code> package. This package, which uses R Markdown to make presentations, is one of several you can use to make slides, but it is the most widely used. To learn more about the capabilities of <code>xaringan</code>, I spoke with Silvia Canelón, a data analyst in the Urban Health Lab at the University of Pennsylvania. Canelón has done extensive teaching on the <code>xaringan</code> package and has thought deeply about its benefits. As you’ll hear in this chapter, these benefits include, but also go well beyond, making good-looking slides.</p>
+<div id="how-xaringan-works" class="section level2 unnumbered">
+<h2>How <code>xaringan</code> Works<a class="anchor" aria-label="anchor" href="#how-xaringan-works"><i class="fas fa-link"></i></a>
+</h2>
+<p>To get started with <code>xaringan</code>, you need to first install the package using the standard approach: <code>install.packages("xaringan")</code>. Once it is installed, you can go to File &gt; New File &gt; R Markdown. You’re probably thinking that you want to go to the Presentation tab. Doing so will give you several options for making slides, as you can see in Figure <a href="create-beautiful-presentations-with-r-markdown.html#fig:new-rmarkdown-presentation">9.1</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:new-rmarkdown-presentation"></span>
+<img src="assets/new-rmarkdown-presentation.png" alt="The options presented to create a new presentation" width="100%"><p class="caption">
+Figure 9.1: The options presented to create a new presentation
+</p>
+</div>
+<p>These are other formats you can use to make slides (and yes, you can knit an R Markdown document to PowerPoint). However, if you want to make a presentation with <code>xaringan</code> (and, as I will explain below, I think it’s the best option), you should go to the From Template tab. From there, scroll down until you find the template called Ninja Presentation. Select that, hit OK, and you’ll get a blank R Markdown document. Figure <a href="create-beautiful-presentations-with-r-markdown.html#fig:new-xaringan-document">9.2</a> shows you what to look for.</p>
+∂
+<div class="figure">
+<span style="display:block;" id="fig:new-xaringan-document"></span>
+<img src="assets/new-xaringan-document.png" alt="The options presented to create a new presentation" width="100%"><p class="caption">
+Figure 9.2: The options presented to create a new presentation
+</p>
+</div>
+<p>Just as when we created a regular R Markdown document, creating a new <code>xaringan</code> presentation will give us some default content. I’m going to delete that and add my own contents which you can see below.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb1-1"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-1" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-2" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Penguins Report"</span></span>
+<span id="cb1-3"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-3" tabindex="-1"></a><span class="an">author:</span><span class="co"> "David Keyes"</span></span>
+<span id="cb1-4"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-4" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2024-01-12"</span></span>
+<span id="cb1-5"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-5" tabindex="-1"></a><span class="an">output:</span><span class="co"> xaringan::moon_reader</span></span>
+<span id="cb1-6"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-6" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-7"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-7" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-8" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
+<span id="cb1-9"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-9" tabindex="-1"></a><span class="in">knitr::opts_chunk$set(include = TRUE, </span></span>
+<span id="cb1-10"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-10" tabindex="-1"></a><span class="in">                      echo = FALSE,</span></span>
+<span id="cb1-11"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-11" tabindex="-1"></a><span class="in">                      message = FALSE,</span></span>
+<span id="cb1-12"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-12" tabindex="-1"></a><span class="in">                      warning = FALSE)</span></span>
+<span id="cb1-13"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-13" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-14"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-14" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-15" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-16"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-16" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb1-17"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-17" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-18"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-18" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-19" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-20"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-20" tabindex="-1"></a><span class="in">penguins &lt;- read_csv("https://raw.githubusercontent.com/rfortherestofus/r-without-statistics/main/data/penguins-2008.csv")</span></span>
+<span id="cb1-21"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-21" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-22"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-22" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-23" tabindex="-1"></a><span class="fu"># Introduction</span></span>
+<span id="cb1-24"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-24" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-25" tabindex="-1"></a>We are writing a report about the **Palmer Penguins**. These penguins are *really* amazing. There are three species:</span>
+<span id="cb1-26"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-26" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-27" tabindex="-1"></a><span class="ss">- </span>Adelie</span>
+<span id="cb1-28"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-28" tabindex="-1"></a><span class="ss">- </span>Gentoo</span>
+<span id="cb1-29"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-29" tabindex="-1"></a><span class="ss">- </span>Chinstrap</span>
+<span id="cb1-30"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-30" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-31" tabindex="-1"></a><span class="fu">## Bill Length</span></span>
+<span id="cb1-32"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-32" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-33" tabindex="-1"></a>We can make a histogram to see the distribution of bill lengths.</span>
+<span id="cb1-34"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-34" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-35" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-36"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-36" tabindex="-1"></a><span class="in">penguins %&gt;% </span></span>
+<span id="cb1-37"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-37" tabindex="-1"></a><span class="in">  ggplot(aes(x = bill_length_mm)) +</span></span>
+<span id="cb1-38"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-38" tabindex="-1"></a><span class="in">  geom_histogram() +</span></span>
+<span id="cb1-39"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-39" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb1-40"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-40" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-41"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-41" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-42" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-43"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-43" tabindex="-1"></a><span class="in">average_bill_length &lt;- penguins %&gt;% </span></span>
+<span id="cb1-44"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-44" tabindex="-1"></a><span class="in">  summarize(avg_bill_length = mean(bill_length_mm,</span></span>
+<span id="cb1-45"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-45" tabindex="-1"></a><span class="in">                                   na.rm = TRUE)) %&gt;% </span></span>
+<span id="cb1-46"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-46" tabindex="-1"></a><span class="in">  pull(avg_bill_length)</span></span>
+<span id="cb1-47"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-47" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-48"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-48" tabindex="-1"></a></span>
+<span id="cb1-49"><a href="create-beautiful-presentations-with-r-markdown.html#cb1-49" tabindex="-1"></a>The chart shows the distribution of bill lengths. The average bill length is <span class="in">`r average_bill_length`</span> millimeters.</span></code></pre></div>
+<p>This code should look familiar because it is exactly the same as the R Markdown document we created in Chapter <a href="rmarkdown-chapter.html#rmarkdown-chapter">7</a> with one line changed in the YAML. Instead of <code>output: word_document</code> we now have <code>output: xaringan::moon_reader</code>. With this change, we will now get slides rather than a Word document. Let’s try hitting the Knit button to see what it looks like. When I hit Knit, I get an HTML file with the same name as R Markdown document (in my case, <code>xaringan-example.Rmd</code> and <code>xaringan-example.html</code>). If I open up the HTML document, I see Figure <a href="create-beautiful-presentations-with-r-markdown.html#fig:penguins-report-slide-1">9.3</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:penguins-report-slide-1"></span>
+<img src="assets/penguins-report-slide-1.png" alt="The first slide of my presentation" width="100%"><p class="caption">
+Figure 9.3: The first slide of my presentation
+</p>
+</div>
+<p>This is the first thing to know about <code>xaringan</code>: the slides it produces are HTML files. It may seem odd to get slides as HTML files, but it offers several advantages over formats like PowerPoint, as we’ll see below.</p>
+<p>If we scroll to the next slide with the right arrow key, we’ll see content that looks familiar. Figure <a href="create-beautiful-presentations-with-r-markdown.html#fig:penguins-report-slide-2">9.4</a> shows this slide, which has the same text and a cut-off version of the histogram we made in Chapter <a href="rmarkdown-chapter.html#rmarkdown-chapter">7</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:penguins-report-slide-2"></span>
+<img src="assets/penguins-report-slide-2.png" alt="The second slide of my presentation" width="100%"><p class="caption">
+Figure 9.4: The second slide of my presentation
+</p>
+</div>
+<p>At this point, we’ve learned two things about how <code>xaringan</code> works:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>The overall syntax for making slides with <code>xaringan</code> is nearly identical to that used to make reports with R Markdown.</strong> We copied in the content of our R Markdown document, changed one line, and we see the same output, just in slide format. The YAML, markdown text, and code chunks work exactly the same.</p></li>
+<li><p><strong>We need to make a few tweaks to make our content fit on our slides.</strong> When we’re working in an R Markdown document that will be knitted to Word, its length doesn’t matter because reports can be one page or 100 pages. Working with <code>xaringan</code>, however, we need to think about how much content will fit on one slide. Our cut-off histogram shows us what happens without doing this. Let’s fix it.</p></li>
+</ol>
+<div id="breaking-content-across-slides" class="section level3 unnumbered">
+<h3>Breaking Content Across Slides<a class="anchor" aria-label="anchor" href="#breaking-content-across-slides"><i class="fas fa-link"></i></a>
+</h3>
+<p>Let’s make our histogram fully visible by putting it on its own slide. To make a new slide, we add three dashes at any point in our R Markdown document. I’ve copied the relevant portion of the document and added these dashes.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb2-1"><a href="create-beautiful-presentations-with-r-markdown.html#cb2-1" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb2-2"><a href="create-beautiful-presentations-with-r-markdown.html#cb2-2" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="create-beautiful-presentations-with-r-markdown.html#cb2-3" tabindex="-1"></a><span class="co">## Bill Length</span></span>
+<span id="cb2-4"><a href="create-beautiful-presentations-with-r-markdown.html#cb2-4" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="create-beautiful-presentations-with-r-markdown.html#cb2-5" tabindex="-1"></a><span class="co">We can make a histogram to see the distribution of bill lengths.</span></span>
+<span id="cb2-6"><a href="create-beautiful-presentations-with-r-markdown.html#cb2-6" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="create-beautiful-presentations-with-r-markdown.html#cb2-7" tabindex="-1"></a><span class="co">```{r}</span></span>
+<span id="cb2-8"><a href="create-beautiful-presentations-with-r-markdown.html#cb2-8" tabindex="-1"></a><span class="co">penguins %&gt;% </span></span>
+<span id="cb2-9"><a href="create-beautiful-presentations-with-r-markdown.html#cb2-9" tabindex="-1"></a><span class="co">  ggplot(aes(x = bill_length_mm)) +</span></span>
+<span id="cb2-10"><a href="create-beautiful-presentations-with-r-markdown.html#cb2-10" tabindex="-1"></a><span class="co">  geom_histogram() +</span></span>
+<span id="cb2-11"><a href="create-beautiful-presentations-with-r-markdown.html#cb2-11" tabindex="-1"></a><span class="co">  theme_minimal()</span></span>
+<span id="cb2-12"><a href="create-beautiful-presentations-with-r-markdown.html#cb2-12" tabindex="-1"></a><span class="co">```</span></span></code></pre></div>
+<p>If I knit again, what was one slide is now broken into two: an Introduction slide and a Bill Length slide. We can see both in Figure <a href="create-beautiful-presentations-with-r-markdown.html#fig:penguins-report-2-pages">9.5</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:penguins-report-2-pages"></span>
+<img src="assets/penguins-report-2-pages.png" alt="The presentation broken into two slides" width="100%"><p class="caption">
+Figure 9.5: The presentation broken into two slides
+</p>
+</div>
+<p>If I look closely, I can see that the bottom of histogram is ever so slightly cut off. I can fix this by adjusting its size. We do this using the code chunk option <code>fig.height</code> to make our figure four inches tall.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb3-1"><a href="create-beautiful-presentations-with-r-markdown.html#cb3-1" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb3-2"><a href="create-beautiful-presentations-with-r-markdown.html#cb3-2" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="create-beautiful-presentations-with-r-markdown.html#cb3-3" tabindex="-1"></a><span class="co">## Bill Length</span></span>
+<span id="cb3-4"><a href="create-beautiful-presentations-with-r-markdown.html#cb3-4" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="create-beautiful-presentations-with-r-markdown.html#cb3-5" tabindex="-1"></a><span class="co">We can make a histogram to see the distribution of bill lengths.</span></span>
+<span id="cb3-6"><a href="create-beautiful-presentations-with-r-markdown.html#cb3-6" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="create-beautiful-presentations-with-r-markdown.html#cb3-7" tabindex="-1"></a><span class="co">```{r fig.height = 4}</span></span>
+<span id="cb3-8"><a href="create-beautiful-presentations-with-r-markdown.html#cb3-8" tabindex="-1"></a><span class="co">penguins %&gt;%</span></span>
+<span id="cb3-9"><a href="create-beautiful-presentations-with-r-markdown.html#cb3-9" tabindex="-1"></a><span class="co">  ggplot(aes(x = bill_length_mm)) +</span></span>
+<span id="cb3-10"><a href="create-beautiful-presentations-with-r-markdown.html#cb3-10" tabindex="-1"></a><span class="co">  geom_histogram() +</span></span>
+<span id="cb3-11"><a href="create-beautiful-presentations-with-r-markdown.html#cb3-11" tabindex="-1"></a><span class="co">  theme_minimal()</span></span>
+<span id="cb3-12"><a href="create-beautiful-presentations-with-r-markdown.html#cb3-12" tabindex="-1"></a><span class="co">```</span></span></code></pre></div>
+<p>Doing this makes the histogram fit on the slide and also reveals the text that was hidden below.</p>
+</div>
+<div id="incrementally-revealing-content" class="section level3 unnumbered">
+<h3>Incrementally Revealing Content<a class="anchor" aria-label="anchor" href="#incrementally-revealing-content"><i class="fas fa-link"></i></a>
+</h3>
+<p>When presenting, it’s often useful to only show a portion of the content on each slide at a time. Let’s say, for example, we know that when we’re presenting the first slide, we want to talk a bit about each penguin species. Rather than have all three species visible when we open this slide, it would be nice to have the names come up one at a time. We can do this using what <code>xaringan</code> calls incremental reveal.</p>
+<p>To use this feature, we put two dashes between any content we want to incrementally reveal. This code, for example, will let us show Adelie on the screen, then Adelie and Gentoo, then Adelie, Gentoo, and Chinstrap.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb4-1"><a href="create-beautiful-presentations-with-r-markdown.html#cb4-1" tabindex="-1"></a><span class="fu"># Introduction</span></span>
+<span id="cb4-2"><a href="create-beautiful-presentations-with-r-markdown.html#cb4-2" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="create-beautiful-presentations-with-r-markdown.html#cb4-3" tabindex="-1"></a>We are writing a report about the **Palmer Penguins**. These penguins are *really* amazing. There are three species:</span>
+<span id="cb4-4"><a href="create-beautiful-presentations-with-r-markdown.html#cb4-4" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="create-beautiful-presentations-with-r-markdown.html#cb4-5" tabindex="-1"></a><span class="ss">- </span>Adelie</span>
+<span id="cb4-6"><a href="create-beautiful-presentations-with-r-markdown.html#cb4-6" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="create-beautiful-presentations-with-r-markdown.html#cb4-7" tabindex="-1"></a>--</span>
+<span id="cb4-8"><a href="create-beautiful-presentations-with-r-markdown.html#cb4-8" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="create-beautiful-presentations-with-r-markdown.html#cb4-9" tabindex="-1"></a><span class="ss">- </span>Gentoo</span>
+<span id="cb4-10"><a href="create-beautiful-presentations-with-r-markdown.html#cb4-10" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="create-beautiful-presentations-with-r-markdown.html#cb4-11" tabindex="-1"></a>--</span>
+<span id="cb4-12"><a href="create-beautiful-presentations-with-r-markdown.html#cb4-12" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="create-beautiful-presentations-with-r-markdown.html#cb4-13" tabindex="-1"></a><span class="ss">- </span>Chinstrap</span></code></pre></div>
+<p>When presenting your slides, you’ll use the right arrow to incrementally reveal the species. We can see what this looks like in Figure <a href="create-beautiful-presentations-with-r-markdown.html#fig:incremental-reveal">9.6</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:incremental-reveal"></span>
+<img src="assets/incremental-reveal.png" alt="One slide shown with incremental reveal" width="100%"><p class="caption">
+Figure 9.6: One slide shown with incremental reveal
+</p>
+</div>
+</div>
+<div id="aligning-content" class="section level3 unnumbered">
+<h3>Aligning Content<a class="anchor" aria-label="anchor" href="#aligning-content"><i class="fas fa-link"></i></a>
+</h3>
+<p>When designing your presentation, you’ll also likely want to control the alignment of content. We do this by adding what are known as content classes. You can surround any content with the classes <code>.left[]</code>, <code>right[]</code>, and <code>center[]</code> to align them. For example, on our slide that creates a histogram and associated text, we could put <code>.center[]</code> around the code chunk that makes the histogram:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb5-1"><a href="create-beautiful-presentations-with-r-markdown.html#cb5-1" tabindex="-1"></a><span class="fu">## Bill Length</span></span>
+<span id="cb5-2"><a href="create-beautiful-presentations-with-r-markdown.html#cb5-2" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="create-beautiful-presentations-with-r-markdown.html#cb5-3" tabindex="-1"></a>We can make a histogram to see the distribution of bill lengths.</span>
+<span id="cb5-4"><a href="create-beautiful-presentations-with-r-markdown.html#cb5-4" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="create-beautiful-presentations-with-r-markdown.html#cb5-5" tabindex="-1"></a>.center[</span>
+<span id="cb5-6"><a href="create-beautiful-presentations-with-r-markdown.html#cb5-6" tabindex="-1"></a><span class="in">```{r fig.height = 4}</span></span>
+<span id="cb5-7"><a href="create-beautiful-presentations-with-r-markdown.html#cb5-7" tabindex="-1"></a><span class="in">penguins %&gt;% </span></span>
+<span id="cb5-8"><a href="create-beautiful-presentations-with-r-markdown.html#cb5-8" tabindex="-1"></a><span class="in">  ggplot(aes(x = bill_length_mm)) +</span></span>
+<span id="cb5-9"><a href="create-beautiful-presentations-with-r-markdown.html#cb5-9" tabindex="-1"></a><span class="in">  geom_histogram() +</span></span>
+<span id="cb5-10"><a href="create-beautiful-presentations-with-r-markdown.html#cb5-10" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb5-11"><a href="create-beautiful-presentations-with-r-markdown.html#cb5-11" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-12"><a href="create-beautiful-presentations-with-r-markdown.html#cb5-12" tabindex="-1"></a>]</span>
+<span id="cb5-13"><a href="create-beautiful-presentations-with-r-markdown.html#cb5-13" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="create-beautiful-presentations-with-r-markdown.html#cb5-14" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-15"><a href="create-beautiful-presentations-with-r-markdown.html#cb5-15" tabindex="-1"></a><span class="in">average_bill_length &lt;- penguins %&gt;% </span></span>
+<span id="cb5-16"><a href="create-beautiful-presentations-with-r-markdown.html#cb5-16" tabindex="-1"></a><span class="in">  summarize(avg_bill_length = mean(bill_length_mm,</span></span>
+<span id="cb5-17"><a href="create-beautiful-presentations-with-r-markdown.html#cb5-17" tabindex="-1"></a><span class="in">                                   na.rm = TRUE)) %&gt;% </span></span>
+<span id="cb5-18"><a href="create-beautiful-presentations-with-r-markdown.html#cb5-18" tabindex="-1"></a><span class="in">  pull(avg_bill_length)</span></span>
+<span id="cb5-19"><a href="create-beautiful-presentations-with-r-markdown.html#cb5-19" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-20"><a href="create-beautiful-presentations-with-r-markdown.html#cb5-20" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="create-beautiful-presentations-with-r-markdown.html#cb5-21" tabindex="-1"></a>The chart shows the distribution of bill lengths. The average bill length is <span class="in">`r average_bill_length`</span> millimeters.</span></code></pre></div>
+<p>Doing this would center the chart on our slide, as we can see in Figure <a href="create-beautiful-presentations-with-r-markdown.html#fig:center-chart">9.7</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:center-chart"></span>
+<img src="assets/center-chart.png" alt="A slide with the chart centered" width="100%"><p class="caption">
+Figure 9.7: A slide with the chart centered
+</p>
+</div>
+<p>There are also built-in options to make two-column layouts. Adding <code>pull-left[]</code> and <code>pull-right[]</code> in this way will make two equally spaced columns.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb6-1"><a href="create-beautiful-presentations-with-r-markdown.html#cb6-1" tabindex="-1"></a><span class="fu">## Bill Length</span></span>
+<span id="cb6-2"><a href="create-beautiful-presentations-with-r-markdown.html#cb6-2" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="create-beautiful-presentations-with-r-markdown.html#cb6-3" tabindex="-1"></a>We can make a histogram to see the distribution of bill lengths.</span>
+<span id="cb6-4"><a href="create-beautiful-presentations-with-r-markdown.html#cb6-4" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="create-beautiful-presentations-with-r-markdown.html#cb6-5" tabindex="-1"></a>.pull-left[</span>
+<span id="cb6-6"><a href="create-beautiful-presentations-with-r-markdown.html#cb6-6" tabindex="-1"></a><span class="in">```{r fig.height = 4}</span></span>
+<span id="cb6-7"><a href="create-beautiful-presentations-with-r-markdown.html#cb6-7" tabindex="-1"></a><span class="in">penguins %&gt;% </span></span>
+<span id="cb6-8"><a href="create-beautiful-presentations-with-r-markdown.html#cb6-8" tabindex="-1"></a><span class="in">  ggplot(aes(x = bill_length_mm)) +</span></span>
+<span id="cb6-9"><a href="create-beautiful-presentations-with-r-markdown.html#cb6-9" tabindex="-1"></a><span class="in">  geom_histogram() +</span></span>
+<span id="cb6-10"><a href="create-beautiful-presentations-with-r-markdown.html#cb6-10" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb6-11"><a href="create-beautiful-presentations-with-r-markdown.html#cb6-11" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-12"><a href="create-beautiful-presentations-with-r-markdown.html#cb6-12" tabindex="-1"></a>]</span>
+<span id="cb6-13"><a href="create-beautiful-presentations-with-r-markdown.html#cb6-13" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="create-beautiful-presentations-with-r-markdown.html#cb6-14" tabindex="-1"></a>.pull-right[</span>
+<span id="cb6-15"><a href="create-beautiful-presentations-with-r-markdown.html#cb6-15" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb6-16"><a href="create-beautiful-presentations-with-r-markdown.html#cb6-16" tabindex="-1"></a><span class="in">average_bill_length &lt;- penguins %&gt;% </span></span>
+<span id="cb6-17"><a href="create-beautiful-presentations-with-r-markdown.html#cb6-17" tabindex="-1"></a><span class="in">  summarize(avg_bill_length = mean(bill_length_mm,</span></span>
+<span id="cb6-18"><a href="create-beautiful-presentations-with-r-markdown.html#cb6-18" tabindex="-1"></a><span class="in">                                   na.rm = TRUE)) %&gt;% </span></span>
+<span id="cb6-19"><a href="create-beautiful-presentations-with-r-markdown.html#cb6-19" tabindex="-1"></a><span class="in">  pull(avg_bill_length)</span></span>
+<span id="cb6-20"><a href="create-beautiful-presentations-with-r-markdown.html#cb6-20" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-21"><a href="create-beautiful-presentations-with-r-markdown.html#cb6-21" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="create-beautiful-presentations-with-r-markdown.html#cb6-22" tabindex="-1"></a>The chart shows the distribution of bill lengths. The average bill length is <span class="in">`r average_bill_length`</span> millimeters.</span>
+<span id="cb6-23"><a href="create-beautiful-presentations-with-r-markdown.html#cb6-23" tabindex="-1"></a>]</span></code></pre></div>
+<p>We can see what this looks like in Figure <a href="create-beautiful-presentations-with-r-markdown.html#fig:slide-two-columns">9.8</a> below.</p>
+<div class="figure">
+<span style="display:block;" id="fig:slide-two-columns"></span>
+<img src="assets/slide-two-columns.png" alt="A slide with two columns" width="100%"><p class="caption">
+Figure 9.8: A slide with two columns
+</p>
+</div>
+<p>You can also use the content classes <code>.left-column[]</code> and <code>.right-column[]</code> to make a layout with a narrow left column and wide right column. The code below puts the text on the left and the histogram on the right.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb7-1"><a href="create-beautiful-presentations-with-r-markdown.html#cb7-1" tabindex="-1"></a><span class="fu">## Bill Length</span></span>
+<span id="cb7-2"><a href="create-beautiful-presentations-with-r-markdown.html#cb7-2" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="create-beautiful-presentations-with-r-markdown.html#cb7-3" tabindex="-1"></a>We can make a histogram to see the distribution of bill lengths.</span>
+<span id="cb7-4"><a href="create-beautiful-presentations-with-r-markdown.html#cb7-4" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="create-beautiful-presentations-with-r-markdown.html#cb7-5" tabindex="-1"></a>.right-column[</span>
+<span id="cb7-6"><a href="create-beautiful-presentations-with-r-markdown.html#cb7-6" tabindex="-1"></a><span class="in">```{r fig.height = 4}</span></span>
+<span id="cb7-7"><a href="create-beautiful-presentations-with-r-markdown.html#cb7-7" tabindex="-1"></a><span class="in">penguins %&gt;% </span></span>
+<span id="cb7-8"><a href="create-beautiful-presentations-with-r-markdown.html#cb7-8" tabindex="-1"></a><span class="in">  ggplot(aes(x = bill_length_mm)) +</span></span>
+<span id="cb7-9"><a href="create-beautiful-presentations-with-r-markdown.html#cb7-9" tabindex="-1"></a><span class="in">  geom_histogram() +</span></span>
+<span id="cb7-10"><a href="create-beautiful-presentations-with-r-markdown.html#cb7-10" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb7-11"><a href="create-beautiful-presentations-with-r-markdown.html#cb7-11" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-12"><a href="create-beautiful-presentations-with-r-markdown.html#cb7-12" tabindex="-1"></a>]</span>
+<span id="cb7-13"><a href="create-beautiful-presentations-with-r-markdown.html#cb7-13" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="create-beautiful-presentations-with-r-markdown.html#cb7-14" tabindex="-1"></a>.left-column[</span>
+<span id="cb7-15"><a href="create-beautiful-presentations-with-r-markdown.html#cb7-15" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb7-16"><a href="create-beautiful-presentations-with-r-markdown.html#cb7-16" tabindex="-1"></a><span class="in">average_bill_length &lt;- penguins %&gt;% </span></span>
+<span id="cb7-17"><a href="create-beautiful-presentations-with-r-markdown.html#cb7-17" tabindex="-1"></a><span class="in">  summarize(avg_bill_length = mean(bill_length_mm,</span></span>
+<span id="cb7-18"><a href="create-beautiful-presentations-with-r-markdown.html#cb7-18" tabindex="-1"></a><span class="in">                                   na.rm = TRUE)) %&gt;% </span></span>
+<span id="cb7-19"><a href="create-beautiful-presentations-with-r-markdown.html#cb7-19" tabindex="-1"></a><span class="in">  pull(avg_bill_length)</span></span>
+<span id="cb7-20"><a href="create-beautiful-presentations-with-r-markdown.html#cb7-20" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-21"><a href="create-beautiful-presentations-with-r-markdown.html#cb7-21" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="create-beautiful-presentations-with-r-markdown.html#cb7-22" tabindex="-1"></a>The chart shows the distribution of bill lengths. The average bill length is <span class="in">`r average_bill_length`</span> millimeters.</span>
+<span id="cb7-23"><a href="create-beautiful-presentations-with-r-markdown.html#cb7-23" tabindex="-1"></a>]</span></code></pre></div>
+<p>We can see the slide output in Figure <a href="create-beautiful-presentations-with-r-markdown.html#fig:slide-two-columns-v2">9.9</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:slide-two-columns-v2"></span>
+<img src="assets/slide-two-columns-v2.png" alt="A slide with a smaller left column and a larger right column" width="100%"><p class="caption">
+Figure 9.9: A slide with a smaller left column and a larger right column
+</p>
+</div>
+<p>In addition to aligning particular pieces of content on slides, we can also everything using the <code>.left</code>, <code>right</code>, and <code>center</code> classes. To do this, you specify the class right after the three dashes that indicate a new slide and before any content.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb8-1"><a href="create-beautiful-presentations-with-r-markdown.html#cb8-1" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb8-2"><a href="create-beautiful-presentations-with-r-markdown.html#cb8-2" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="create-beautiful-presentations-with-r-markdown.html#cb8-3" tabindex="-1"></a><span class="an">class:</span><span class="co"> center</span></span>
+<span id="cb8-4"><a href="create-beautiful-presentations-with-r-markdown.html#cb8-4" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="create-beautiful-presentations-with-r-markdown.html#cb8-5" tabindex="-1"></a><span class="co">## Bill Length</span></span>
+<span id="cb8-6"><a href="create-beautiful-presentations-with-r-markdown.html#cb8-6" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="create-beautiful-presentations-with-r-markdown.html#cb8-7" tabindex="-1"></a><span class="co">We can make a histogram to see the distribution of bill lengths.</span></span>
+<span id="cb8-8"><a href="create-beautiful-presentations-with-r-markdown.html#cb8-8" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="create-beautiful-presentations-with-r-markdown.html#cb8-9" tabindex="-1"></a><span class="co">```{r fig.height = 4}</span></span>
+<span id="cb8-10"><a href="create-beautiful-presentations-with-r-markdown.html#cb8-10" tabindex="-1"></a><span class="co">penguins %&gt;% </span></span>
+<span id="cb8-11"><a href="create-beautiful-presentations-with-r-markdown.html#cb8-11" tabindex="-1"></a><span class="co">  ggplot(aes(x = bill_length_mm)) +</span></span>
+<span id="cb8-12"><a href="create-beautiful-presentations-with-r-markdown.html#cb8-12" tabindex="-1"></a><span class="co">  geom_histogram() +</span></span>
+<span id="cb8-13"><a href="create-beautiful-presentations-with-r-markdown.html#cb8-13" tabindex="-1"></a><span class="co">  theme_minimal()</span></span>
+<span id="cb8-14"><a href="create-beautiful-presentations-with-r-markdown.html#cb8-14" tabindex="-1"></a><span class="co">```</span></span>
+<span id="cb8-15"><a href="create-beautiful-presentations-with-r-markdown.html#cb8-15" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="create-beautiful-presentations-with-r-markdown.html#cb8-16" tabindex="-1"></a><span class="co">```{r}</span></span>
+<span id="cb8-17"><a href="create-beautiful-presentations-with-r-markdown.html#cb8-17" tabindex="-1"></a><span class="co">average_bill_length &lt;- penguins %&gt;% </span></span>
+<span id="cb8-18"><a href="create-beautiful-presentations-with-r-markdown.html#cb8-18" tabindex="-1"></a><span class="co">  summarize(avg_bill_length = mean(bill_length_mm,</span></span>
+<span id="cb8-19"><a href="create-beautiful-presentations-with-r-markdown.html#cb8-19" tabindex="-1"></a><span class="co">                                   na.rm = TRUE)) %&gt;% </span></span>
+<span id="cb8-20"><a href="create-beautiful-presentations-with-r-markdown.html#cb8-20" tabindex="-1"></a><span class="co">  pull(avg_bill_length)</span></span>
+<span id="cb8-21"><a href="create-beautiful-presentations-with-r-markdown.html#cb8-21" tabindex="-1"></a><span class="co">```</span></span>
+<span id="cb8-22"><a href="create-beautiful-presentations-with-r-markdown.html#cb8-22" tabindex="-1"></a></span>
+<span id="cb8-23"><a href="create-beautiful-presentations-with-r-markdown.html#cb8-23" tabindex="-1"></a><span class="co">The chart shows the distribution of bill lengths. The average bill length is `r average_bill_length` millimeters.</span></span></code></pre></div>
+<p>Doing this would give us a fully-centered slide, as seen in Figure <a href="create-beautiful-presentations-with-r-markdown.html#fig:slide-centered">9.10</a> below.</p>
+<div class="figure">
+<span style="display:block;" id="fig:slide-centered"></span>
+<img src="assets/slide-centered.png" alt="A fully centered slide" width="100%"><p class="caption">
+Figure 9.10: A fully centered slide
+</p>
+</div>
+<p>You can also use the class <code>.middle</code> to vertically center the slide, as we’ll see in the next section.</p>
+</div>
+<div id="adding-background-images-to-slides" class="section level3 unnumbered">
+<h3>Adding Background Images to Slides<a class="anchor" aria-label="anchor" href="#adding-background-images-to-slides"><i class="fas fa-link"></i></a>
+</h3>
+<p>The same syntax that we just used to center our entire slide can also enable us to add a background image. Below I’ve created a new slide, added the classes <code>center</code> and <code>middle</code> to horizontally and vertically align the content, and added a background image, surrounding the path to the image with <code><a href="https://rdrr.io/r/base/connections.html">url()</a></code>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb9-1"><a href="create-beautiful-presentations-with-r-markdown.html#cb9-1" tabindex="-1"></a><span class="an">class:</span><span class="co"> center, middle</span></span>
+<span id="cb9-2"><a href="create-beautiful-presentations-with-r-markdown.html#cb9-2" tabindex="-1"></a><span class="an">background-image:</span><span class="co"> url("penguins.jpg")</span></span>
+<span id="cb9-3"><a href="create-beautiful-presentations-with-r-markdown.html#cb9-3" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="create-beautiful-presentations-with-r-markdown.html#cb9-4" tabindex="-1"></a><span class="fu">## Penguins</span></span></code></pre></div>
+<p>Doing this gives me a slide with a picture of penguins in the background with the text Penguins in front of it. Figure <a href="create-beautiful-presentations-with-r-markdown.html#fig:xaringan-background-image">9.11</a> shows the output.</p>
+<div class="figure">
+<span style="display:block;" id="fig:xaringan-background-image"></span>
+<img src="assets/xaringan-background-image.png" alt="A slide that uses a background image" width="100%"><p class="caption">
+Figure 9.11: A slide that uses a background image
+</p>
+</div>
+</div>
+<div id="customizing-our-slides-further" class="section level3 unnumbered">
+<h3>Customizing our Slides Further<a class="anchor" aria-label="anchor" href="#customizing-our-slides-further"><i class="fas fa-link"></i></a>
+</h3>
+<p>One issue with the slide we just made is that it’s hard to read the word “Penguins.” It would probably be best if we could make the text bigger and a different color. To do this, we need to use some CSS, the language used to style HTML documents (remember, when we knit our <code>xaringan</code> presentation, we end up with an HTML document). If you’re thinking, “I’m reading this book to learn R, not CSS,” don’t worry. You just have to know a bit of CSS to make tweaks to your slides.</p>
+<p>To add custom CSS, I’m going to create a code chunk. To tell R Markdown that this code chunk contains CSS, not R, I put the text “css” in between the curly brackets. I can then add CSS like this to tell R Markdown to make the h2 (the second-level header) 150px and white. I have to add the <code>.remark-slide-content</code> before the h2 in order to make sure we target the specific element in our presentation (remark comes from remark.js, a JavaScript library to make presentations that <code>xaringan</code> uses under the hood).</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb10-1"><a href="create-beautiful-presentations-with-r-markdown.html#cb10-1" tabindex="-1"></a>```{css}</span>
+<span id="cb10-2"><a href="create-beautiful-presentations-with-r-markdown.html#cb10-2" tabindex="-1"></a><span class="fu">.remark-slide-content</span> h2 {</span>
+<span id="cb10-3"><a href="create-beautiful-presentations-with-r-markdown.html#cb10-3" tabindex="-1"></a>  <span class="kw">font-size</span>: <span class="dv">150</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb10-4"><a href="create-beautiful-presentations-with-r-markdown.html#cb10-4" tabindex="-1"></a>  <span class="kw">color</span>: <span class="cn">white</span><span class="op">;</span></span>
+<span id="cb10-5"><a href="create-beautiful-presentations-with-r-markdown.html#cb10-5" tabindex="-1"></a>}</span>
+<span id="cb10-6"><a href="create-beautiful-presentations-with-r-markdown.html#cb10-6" tabindex="-1"></a>```</span></code></pre></div>
+<p>We can see our slide in Figure <a href="create-beautiful-presentations-with-r-markdown.html#fig:penguins-report">9.12</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:penguins-report"></span>
+<img src="assets/penguins-report.png" alt="The title slide with changes to the font to make the text more visible" width="100%"><p class="caption">
+Figure 9.12: The title slide with changes to the font to make the text more visible
+</p>
+</div>
+<p>If I wanted to change the font, I could do so with some additional CSS. The first line of this code will make a font called Inter available to use in our slides (we do this because not everyone has this font installed on their computers). The two lines I added will make the h2 use the Inter font and make it bold.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb11-1"><a href="create-beautiful-presentations-with-r-markdown.html#cb11-1" tabindex="-1"></a>```{css}</span>
+<span id="cb11-2"><a href="create-beautiful-presentations-with-r-markdown.html#cb11-2" tabindex="-1"></a><span class="im">@import</span> <span class="fu">url(</span><span class="st">'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;display=swap'</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb11-3"><a href="create-beautiful-presentations-with-r-markdown.html#cb11-3" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="create-beautiful-presentations-with-r-markdown.html#cb11-4" tabindex="-1"></a><span class="fu">.remark-slide-content</span> h2 {</span>
+<span id="cb11-5"><a href="create-beautiful-presentations-with-r-markdown.html#cb11-5" tabindex="-1"></a>  <span class="kw">font-size</span>: <span class="dv">150</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb11-6"><a href="create-beautiful-presentations-with-r-markdown.html#cb11-6" tabindex="-1"></a>  <span class="kw">color</span>: <span class="cn">white</span><span class="op">;</span></span>
+<span id="cb11-7"><a href="create-beautiful-presentations-with-r-markdown.html#cb11-7" tabindex="-1"></a>    <span class="kw">font-family</span>: Inter<span class="op">;</span></span>
+<span id="cb11-8"><a href="create-beautiful-presentations-with-r-markdown.html#cb11-8" tabindex="-1"></a>  <span class="kw">font-weight</span>: <span class="dv">bold</span><span class="op">;</span></span>
+<span id="cb11-9"><a href="create-beautiful-presentations-with-r-markdown.html#cb11-9" tabindex="-1"></a>}</span>
+<span id="cb11-10"><a href="create-beautiful-presentations-with-r-markdown.html#cb11-10" tabindex="-1"></a>```</span></code></pre></div>
+<p>The slide with bold Inter font is visible in Figure <a href="create-beautiful-presentations-with-r-markdown.html#fig:penguins-report-inter">9.13</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:penguins-report-inter"></span>
+<img src="assets/penguins-report-inter.png" alt="The title slide with changes to the font to make the text more visible" width="100%"><p class="caption">
+Figure 9.13: The title slide with changes to the font to make the text more visible
+</p>
+</div>
+<p>Because <code>xaringan</code> slides are built as HTML documents, the sky is the limit in terms of customizing them with CSS. Of course, you have to know the ins and outs of CSS, and if you’re reading this book, you’re probably more into R than CSS.Fortunately, there are two ways you can customize your slides without knowing CSS.</p>
+<p>The first way is to use pre-built themes. R users have made <code>xaringan</code> themes that you can apply to your slides to change the overall look-and-feel. If you run this code, you will get a list of all of these themes.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="fu">xaringan</span><span class="fu">:::</span><span class="fu">list_css</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Doing this will show the following output:</p>
+<pre><code>#&gt;  [1] "chocolate-fonts"  "chocolate"       
+#&gt;  [3] "default-fonts"    "default"         
+#&gt;  [5] "duke-blue"        "fc-fonts"        
+#&gt;  [7] "fc"               "glasgow_template"
+#&gt;  [9] "hygge-duke"       "hygge"           
+#&gt; [11] "ki-fonts"         "ki"              
+#&gt; [13] "kunoichi"         "lucy-fonts"      
+#&gt; [15] "lucy"             "metropolis-fonts"
+#&gt; [17] "metropolis"       "middlebury-fonts"
+#&gt; [19] "middlebury"       "nhsr-fonts"      
+#&gt; [21] "nhsr"             "ninjutsu"        
+#&gt; [23] "rladies-fonts"    "rladies"         
+#&gt; [25] "robot-fonts"      "robot"           
+#&gt; [27] "rutgers-fonts"    "rutgers"         
+#&gt; [29] "shinobi"          "tamu-fonts"      
+#&gt; [31] "tamu"             "uio-fonts"       
+#&gt; [33] "uio"              "uo-fonts"        
+#&gt; [35] "uo"               "uol-fonts"       
+#&gt; [37] "uol"              "useR-fonts"      
+#&gt; [39] "useR"             "uwm-fonts"       
+#&gt; [41] "uwm"              "wic-fonts"       
+#&gt; [43] "wic"</code></pre>
+<p>You can then choose a theme you’d like to use. To use the theme, you adjust your YAML as follows. This code tells <code>xaringan</code> to use the default CSS as well as customizations made in the <code>metropolis</code> and <code>metropolis-fonts</code> CSS files (these come bundled with <code>xaringan</code> so you don’t need to do anything beyond installing the package to access them).</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb14-1"><a href="create-beautiful-presentations-with-r-markdown.html#cb14-1" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb14-2"><a href="create-beautiful-presentations-with-r-markdown.html#cb14-2" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Penguins Report"</span></span>
+<span id="cb14-3"><a href="create-beautiful-presentations-with-r-markdown.html#cb14-3" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span><span class="st">"David Keyes"</span></span>
+<span id="cb14-4"><a href="create-beautiful-presentations-with-r-markdown.html#cb14-4" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> </span><span class="st">"2024-01-12"</span></span>
+<span id="cb14-5"><a href="create-beautiful-presentations-with-r-markdown.html#cb14-5" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span></span>
+<span id="cb14-6"><a href="create-beautiful-presentations-with-r-markdown.html#cb14-6" tabindex="-1"></a><span class="at">  xaringan:</span><span class="fu">:moon_reader</span><span class="kw">:</span></span>
+<span id="cb14-7"><a href="create-beautiful-presentations-with-r-markdown.html#cb14-7" tabindex="-1"></a><span class="at">    </span><span class="fu">css</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">default</span><span class="kw">,</span><span class="at"> metropolis</span><span class="kw">,</span><span class="at"> metropolis-fonts</span><span class="kw">]</span></span>
+<span id="cb14-8"><a href="create-beautiful-presentations-with-r-markdown.html#cb14-8" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
+<p>You can see how this theme changes the look-and-feel of our slides in Figure <a href="create-beautiful-presentations-with-r-markdown.html#fig:xaringan-metropolis">9.14</a> below.</p>
+<div class="figure">
+<span style="display:block;" id="fig:xaringan-metropolis"></span>
+<img src="assets/xaringan-metropolis.png" alt="A slide using the metropolis theme" width="100%"><p class="caption">
+Figure 9.14: A slide using the metropolis theme
+</p>
+</div>
+<p>If writing custom CSS is the totally flexible but more challenging option to tweaking your <code>xaringan</code> slides, using a custom theme is way simpler but a lot less flexible. A nice middle ground is to use the <code>xaringanthemer</code> package by Garrick Aden-Buie. This package has several built-in themes and also allows you to easily create your own custom <code>xaringan</code> theme. After installing the <code>xaringanthemer</code> package, you adjust the css line in your YAML to use the <code>xaringan-themer.css</code> file.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb15-1"><a href="create-beautiful-presentations-with-r-markdown.html#cb15-1" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb15-2"><a href="create-beautiful-presentations-with-r-markdown.html#cb15-2" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Penguins Report"</span></span>
+<span id="cb15-3"><a href="create-beautiful-presentations-with-r-markdown.html#cb15-3" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span><span class="st">"David Keyes"</span></span>
+<span id="cb15-4"><a href="create-beautiful-presentations-with-r-markdown.html#cb15-4" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> </span><span class="st">"2024-01-12"</span></span>
+<span id="cb15-5"><a href="create-beautiful-presentations-with-r-markdown.html#cb15-5" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span></span>
+<span id="cb15-6"><a href="create-beautiful-presentations-with-r-markdown.html#cb15-6" tabindex="-1"></a><span class="at">  xaringan:</span><span class="fu">:moon_reader</span><span class="kw">:</span></span>
+<span id="cb15-7"><a href="create-beautiful-presentations-with-r-markdown.html#cb15-7" tabindex="-1"></a><span class="at">    </span><span class="fu">css</span><span class="kw">:</span><span class="at"> xaringan-themer.css</span></span>
+<span id="cb15-8"><a href="create-beautiful-presentations-with-r-markdown.html#cb15-8" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
+<p>With this in place, you can now customize your slides by using the <code><a href="https://pkg.garrickadenbuie.com/xaringanthemer/reference/style_xaringan.html">style_xaringan()</a></code> function. This function has over 60 arguments, allowing you to tweak nearly any part of your <code>xaringan</code> slides. To make the same changes that we made above with custom CSS, I’ll use just a few of the arguments. One particularly nice thing about the <code>xaringanthemer</code> package is that you can use any font available on Google Fonts by simply adding its name to <code>header_font_family</code> or any other similar argument (no need to run the line above that made the Inter font available to us). Here’s how I would make the same changes that I made with custom CSS above.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://pkg.garrickadenbuie.com/xaringanthemer/">xaringanthemer</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://pkg.garrickadenbuie.com/xaringanthemer/reference/style_xaringan.html">style_xaringan</a></span><span class="op">(</span></span>
+<span>  header_h2_font_size <span class="op">=</span> <span class="st">"150px"</span>,</span>
+<span>  header_color <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>  header_font_weight <span class="op">=</span> <span class="st">"bold"</span>,</span>
+<span>  header_font_family <span class="op">=</span> <span class="st">"Inter"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>I could show you what my slide with the penguin image background looks like, but trust me, it’s exactly identical to the slide we made previously with custom CSS.</p>
+</div>
+</div>
+<div id="in-conclusion-the-advantages-of-xaringan" class="section level2 unnumbered">
+<h2>In Conclusion: The Advantages of <code>xaringan</code><a class="anchor" aria-label="anchor" href="#in-conclusion-the-advantages-of-xaringan"><i class="fas fa-link"></i></a>
+</h2>
+<p>Now that we’ve discussed how to use <code>xaringan</code>, let’s talk a bit about why you might consider switching to it for your presentations. In my conversation with Silvia Canelón, she brought up three main reasons.</p>
+<p>First, if you’re already working in R and R Markdown, being able to produce slides in the same tool is a game changer. Say you’ve written a report that you’ve knitted to a Word document. You can now reuse your code from that R Markdown document and use it to make figures, tables, and more in your <code>xaringan</code> slides.</p>
+<p>Second, because <code>xaringan</code> creates slides as HTML documents, you can post them online (we’ll discuss ways to do this in Chapter <a href="#fig:websites-chapter"><strong>??</strong></a>). No need to email or print out your slides for your viewers. Just share the link to your slides and you’re done.</p>
+<p>The third benefit of using <code>xaringan</code> is accessibility. As Canelón put it to me, “when [people] have the HTML version of the slides, they have some control over what it looks like.” People with limited vision are able to access HTML documents in ways that are accessible to them. They can also increase the text size or use screen readers. Making presentations with <code>xaringan</code> isn’t just a cool trick. It also means more people can engage with your slides.</p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="empty"></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <div id="book-on-this-page"></div>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>R Without Statistics</strong>" was written by David Keyes. </p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>

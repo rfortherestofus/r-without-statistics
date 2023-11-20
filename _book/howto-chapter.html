@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 1 An R Programming Crash Course | R Without Statistics</title>
+<meta name="author" content="David Keyes">
+<meta name="description" content="R has a well-earned reputation for being hard to learn, especially for those who come to it without prior programming experience. This chapter is designed to help those who have never used R...">
+<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta property="og:title" content="Chapter 1 An R Programming Crash Course | R Without Statistics">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://book.rwithoutstatistics.com/howto-chapter.html">
+<meta property="og:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
+<meta property="og:description" content="R has a well-earned reputation for being hard to learn, especially for those who come to it without prior programming experience. This chapter is designed to help those who have never used R...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 1 An R Programming Crash Course | R Without Statistics">
+<meta name="twitter:description" content="R has a well-earned reputation for being hard to learn, especially for those who come to it without prior programming experience. This chapter is designed to help those who have never used R...">
+<meta name="twitter:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">R Without Statistics</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">About the Book</a></li>
+<li class="book-part">Introduction</li>
+<li><a class="" href="introduction.html">Introduction</a></li>
+<li><a class="active" href="howto-chapter.html"><span class="header-section-number">1</span> An R Programming Crash Course</a></li>
+<li class="book-part">Part 1: Visualizations</li>
+<li><a class="" href="data-viz-chapter.html"><span class="header-section-number">2</span> Principles of Data Visualization</a></li>
+<li><a class="" href="custom-theme-chapter.html"><span class="header-section-number">3</span> Making Your Own Theme</a></li>
+<li><a class="" href="maps-chapter.html"><span class="header-section-number">4</span> Creating Maps</a></li>
+<li><a class="" href="tables-chapter.html"><span class="header-section-number">5</span> Crafting High-Quality Tables</a></li>
+<li class="book-part">Part 2: Reports, Presentations, and Websites</li>
+<li><a class="" href="rmarkdown-chapter.html"><span class="header-section-number">6</span> Writing Reports in R Markdown</a></li>
+<li><a class="" href="parameterized-reports-chapter.html"><span class="header-section-number">7</span> Using Parameters to Automate Reports</a></li>
+<li><a class="" href="presentations-chapter.html"><span class="header-section-number">8</span> Making Slides Presentations with xaringan</a></li>
+<li><a class="" href="websites-chapter.html"><span class="header-section-number">9</span> Make Websites to Share Results Online</a></li>
+<li><a class="" href="quarto-chapter.html"><span class="header-section-number">10</span> Reproducible Reporting with Quarto</a></li>
+<li class="book-part">Part 3: Automation and Collaboration</li>
+<li><a class="" href="accessing-data-chapter.html"><span class="header-section-number">11</span> Accessing Data</a></li>
+<li><a class="" href="packages-chapter.html"><span class="header-section-number">12</span> Creating Your Own R Packages</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/rfortherestofus/r-without-statistics">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="howto-chapter" class="section level1" number="1">
+<h1>
+<span class="header-section-number">1</span> An R Programming Crash Course<a class="anchor" aria-label="anchor" href="#howto-chapter"><i class="fas fa-link"></i></a>
+</h1>
+<p>R has a well-earned reputation for being hard to learn, especially for those who come to it without prior programming experience. This chapter is designed to help those who have never used R before. You’ll set up an R programming environment with RStudio and learn how to work with data using functions, objects, packages, and projects. You’ll also be introduced to the <code>tidyverse</code> package, which contains the core data analysis and manipulation functions we’ll use in this book.</p>
+<p>If you have prior experience with R, feel free to skip this chapter, but if you’re just starting out, it should help you make sense of the rest of the book.</p>
+<div id="setting-up" class="section level2 unnumbered">
+<h2>Setting Up<a class="anchor" aria-label="anchor" href="#setting-up"><i class="fas fa-link"></i></a>
+</h2>
+<p>You’ll need two pieces of software to use R effectively. The first is R itself, which provides the underlying computational tools that make the language work. The second is an integrated development environment (IDE) like RStudio. This coding platform simplifies working with R. The best way to understand the relationship between R and RStudio is with this analogy from the book <em>Modern Dive</em> by Chester Ismay and Albert Kim: R is the engine that powers your data; RStudio is like a dashboard that provides a user-friendly interface.</p>
+<div id="installing-r-and-rstudio" class="section level3" number="1.0.1">
+<h3>
+<span class="header-section-number">1.0.1</span> Installing R and RStudio<a class="anchor" aria-label="anchor" href="#installing-r-and-rstudio"><i class="fas fa-link"></i></a>
+</h3>
+<p>To download R, go to <a href="https://cloud.r-project.org/" class="uri">https://cloud.r-project.org/</a> and choose the link for your operating system. Once you’ve installed it, open the file. This should open an interface like the one in Figure <a href="howto-chapter.html#fig:r-console">1.1</a> that lets you work with R on your operating system’s command line. For example, enter <code>2 + 2</code>, and you should see <code>4</code>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:r-console"></span>
+<img src="assets/r-console.png" alt="The R console" width="100%"><p class="caption">
+Figure 1.1: The R console
+</p>
+</div>
+<p>A few brave souls work with R using only this command line, but most opt to use RStudio, which provides a way to see your files, the output of your code, and more. You can download RStudio at <a href="https://posit.co/download/rstudio-desktop/" class="uri">https://posit.co/download/rstudio-desktop/</a>. Install RStudio as you would any other app and open it.</p>
+</div>
+<div id="exploring-the-rstudio-interface" class="section level3 unnumbered">
+<h3>Exploring the RStudio Interface<a class="anchor" aria-label="anchor" href="#exploring-the-rstudio-interface"><i class="fas fa-link"></i></a>
+</h3>
+<p>The first time you open RStudio, you should see the three panels shown in Figure <a href="howto-chapter.html#fig:rstudio-no-project">1.2</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:rstudio-no-project"></span>
+<img src="assets/rstudio-no-project.png" alt="The RStudio editor" width="100%"><p class="caption">
+Figure 1.2: The RStudio editor
+</p>
+</div>
+<p>The left panel should look familiar. It’s similar to the screen you saw when working in R on the command line. This is known as the <em>console</em>. You’ll use it to enter code and see the results. This panel, like the others we’ll discuss, has several tabs, such as Terminal and Background Jobs, for more advanced usages. For now, we’ll stick to the default tab.</p>
+<p>At the bottom right, the <em>files</em> panel shows all of the files on your computer. You can click any file to open it within RStudio. Finally, the top-right panel shows your <em>environment</em>, or the objects that are available to you when working in RStudio. We discuss objects below.</p>
+<p>There is one more panel that you’ll typically use when working in RStudio, but to make it appear, you need to create an R script file.</p>
+</div>
+</div>
+<div id="r-script-files" class="section level2 unnumbered">
+<h2>R Script Files<a class="anchor" aria-label="anchor" href="#r-script-files"><i class="fas fa-link"></i></a>
+</h2>
+<p>If you write all of your code in the console, you won’t have any record of it. Say you sit down today and import your data, analyze it, and then make some graphs. If you run these operations in the console, you’ll have to recreate that code from scratch tomorrow. Writing your code in files lets you run it multiple times. There are two types of files we’ll discuss in this book:</p>
+<ul>
+<li>R script files, which contain only code.</li>
+<li>R Markdown files, which contain both code and text.</li>
+</ul>
+<p>We’ll talk about R Markdown files starting in Chapter <a href="rmarkdown-chapter.html#rmarkdown-chapter">6</a>. For now, let’s work with R script files, which use the <em>.R</em> extension. To create an R script file, go to File &gt; New File &gt; R Script. When you create a new R script file, a fourth panel should appear in the top left of R Studio, as you can see in Figure 1-3. Save this file in your <em>Documents</em> folder as <em>sample-code.R</em>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:rstudio-four-panels"></span>
+<img src="assets/rstudio-four-panels.png" alt="RStudio with four panels" width="100%"><p class="caption">
+Figure 1.3: RStudio with four panels
+</p>
+</div>
+<p>Now you can enter R code in your script file. For example, try entering <code>2 + 2</code> in the script file panel. To run a script file, press the <strong>Run</strong> button or use the keyboard shortcut <strong>CMD + ENTER</strong> on macOS and <strong>CTRL + ENTER</strong> on Windows. The result (<code>4</code>, in this case) should show up in the console pane.</p>
+<p>You now have a working programming environment. But if you’re trying to learn R, you probably want to perform more complex operations than <code>2 + 2</code>. Let’s discuss how to import data for your R programs to work with.</p>
+</div>
+<div id="working-with-data" class="section level2 unnumbered">
+<h2>Working with Data<a class="anchor" aria-label="anchor" href="#working-with-data"><i class="fas fa-link"></i></a>
+</h2>
+<p>R lets you do all of the same data manipulation tasks you might perform in a tool like Excel, such as calculating averages, totals, and so on. Conceptually, however, working with data in R is very different from working with Excel, where your data and analysis code live in the same place: a spreadsheet. In R, your data typically comes from some external file. To work with this data in R, you have to run code to import it.</p>
+<div id="importing-data" class="section level3 unnumbered">
+<h3>Importing Data<a class="anchor" aria-label="anchor" href="#importing-data"><i class="fas fa-link"></i></a>
+</h3>
+<p>Let’s import data from a <em>comma-separated values (CSV)</em> file. CSV files, a common way to store data, are text files that have values separated by commas. You can open them using most spreadsheet applications. Figure <a href="howto-chapter.html#fig:population-by-state-csv">1.4</a> shows the <em>population-by-state.csv</em> file when opened in Excel. You can download this file at <a href="https://data.rwithoutstatistics.com/population-by-state.csv" class="uri">https://data.rwithoutstatistics.com/population-by-state.csv</a>. Let’s import it into R.</p>
+<div class="figure">
+<span style="display:block;" id="fig:population-by-state-csv"></span>
+<img src="assets/population-by-state-csv.png" alt="The population-by-state.csv file in Excel" width="100%"><p class="caption">
+Figure 1.4: The population-by-state.csv file in Excel
+</p>
+</div>
+<p>To import the <em>population-by-state.csv</em> file into R, add a line like this one in the <em>sample-code.R</em> file, replacing the filepath with the path to the file’s location on your system:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"/Users/davidkeyes/Documents/population-by-state.csv"</span><span class="op">)</span></span></code></pre></div>
+<p>This line uses the <code><a href="https://rdrr.io/r/utils/read.table.html">read.csv()</a></code> function. <em>Functions</em> are pieces of code that do specific things. They have a name and <em>arguments</em>, which are values that affect the function’s behavior. For example, the <code><a href="https://rdrr.io/r/utils/read.table.html">read.csv()</a></code> function’s name is <code>read.csv</code>. Within the parentheses is the argument <code>file</code>, which specifies the file from which to import data. The text after the equal sign (<code>=</code>) gives the location of that file.</p>
+<p>Arguments have the following structure: the argument name, followed by the equal sign and some value. Functions can have multiple arguments separated by commas. For example, this code uses the <code>file</code> and <code>skip</code> arguments to import the same file but skip the first row:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"/Users/davidkeyes/Documents/population-by-state.csv"</span>,</span>
+<span>                 skip <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<p>At this point, you can run the code to import your data (without the <code>skip</code> argument). Select the line you want to run and press <strong>Run</strong>. The following output should show up in the console pane:</p>
+<pre><code>#&gt;    rank                State      Pop  Growth  Pop2018
+#&gt; 1     1           California 39613493  0.0038 39461588
+#&gt; 2     2                Texas 29730311  0.0385 28628666
+#&gt; 3     3              Florida 21944577  0.0330 21244317
+#&gt; 4     4             New York 19299981 -0.0118 19530351
+#&gt; 5     5         Pennsylvania 12804123  0.0003 12800922
+#&gt; 6     6             Illinois 12569321 -0.0121 12723071
+#&gt; 7     7                 Ohio 11714618  0.0033 11676341
+#&gt; 8     8              Georgia 10830007  0.0303 10511131
+#&gt; 9     9       North Carolina 10701022  0.0308 10381615
+#&gt; 10   10             Michigan  9992427  0.0008  9984072
+#&gt; 11   11           New Jersey  8874520 -0.0013  8886025
+#&gt; 12   12             Virginia  8603985  0.0121  8501286
+#&gt; 13   13           Washington  7796941  0.0363  7523869
+#&gt; 14   14              Arizona  7520103  0.0506  7158024
+#&gt; 15   15            Tennessee  6944260  0.0255  6771631
+#&gt; 16   16        Massachusetts  6912239  0.0043  6882635
+#&gt; 17   17              Indiana  6805663  0.0165  6695497
+#&gt; 18   18             Missouri  6169038  0.0077  6121623
+#&gt; 19   19             Maryland  6065436  0.0049  6035802
+#&gt; 20   20             Colorado  5893634  0.0356  5691287
+#&gt; 21   21            Wisconsin  5852490  0.0078  5807406
+#&gt; 22   22            Minnesota  5706398  0.0179  5606249
+#&gt; 23   23       South Carolina  5277830  0.0381  5084156
+#&gt; 24   24              Alabama  4934193  0.0095  4887681
+#&gt; 25   25            Louisiana  4627002 -0.0070  4659690
+#&gt; 26   26             Kentucky  4480713  0.0044  4461153
+#&gt; 27   27               Oregon  4289439  0.0257  4181886
+#&gt; 28   28             Oklahoma  3990443  0.0127  3940235
+#&gt; 29   29          Connecticut  3552821 -0.0052  3571520
+#&gt; 30   30                 Utah  3310774  0.0499  3153550
+#&gt; 31   31          Puerto Rico  3194374  0.0003  3193354
+#&gt; 32   32               Nevada  3185786  0.0523  3027341
+#&gt; 33   33                 Iowa  3167974  0.0061  3148618
+#&gt; 34   34             Arkansas  3033946  0.0080  3009733
+#&gt; 35   35          Mississippi  2966407 -0.0049  2981020
+#&gt; 36   36               Kansas  2917224  0.0020  2911359
+#&gt; 37   37           New Mexico  2105005  0.0059  2092741
+#&gt; 38   38             Nebraska  1951996  0.0137  1925614
+#&gt; 39   39                Idaho  1860123  0.0626  1750536
+#&gt; 40   40        West Virginia  1767859 -0.0202  1804291
+#&gt; 41   41               Hawaii  1406430 -0.0100  1420593
+#&gt; 42   42        New Hampshire  1372203  0.0138  1353465
+#&gt; 43   43                Maine  1354522  0.0115  1339057
+#&gt; 44   44              Montana  1085004  0.0229  1060665
+#&gt; 45   45         Rhode Island  1061509  0.0030  1058287
+#&gt; 46   46             Delaware   990334  0.0257   965479
+#&gt; 47   47         South Dakota   896581  0.0204   878698
+#&gt; 48   48         North Dakota   770026  0.0158   758080
+#&gt; 49   49               Alaska   724357 -0.0147   735139
+#&gt; 50   50 District of Columbia   714153  0.0180   701547
+#&gt; 51   51              Vermont   623251 -0.0018   624358
+#&gt; 52   52              Wyoming   581075  0.0060   577601
+#&gt;     Pop2010 growthSince2010 Percent    density
+#&gt; 1  37319502          0.0615  0.1184   254.2929
+#&gt; 2  25241971          0.1778  0.0889   113.8081
+#&gt; 3  18845537          0.1644  0.0656   409.2229
+#&gt; 4  19399878         -0.0051  0.0577   409.5400
+#&gt; 5  12711160          0.0073  0.0383   286.1704
+#&gt; 6  12840503         -0.0211  0.0376   226.3967
+#&gt; 7  11539336          0.0152  0.0350   286.6944
+#&gt; 8   9711881          0.1151  0.0324   188.3054
+#&gt; 9   9574323          0.1177  0.0320   220.1041
+#&gt; 10  9877510          0.0116  0.0299   176.7351
+#&gt; 11  8799446          0.0085  0.0265  1206.7609
+#&gt; 12  8023699          0.0723  0.0257   217.8776
+#&gt; 13  6742830          0.1563  0.0233   117.3249
+#&gt; 14  6407172          0.1737  0.0225    66.2016
+#&gt; 15  6355311          0.0927  0.0208   168.4069
+#&gt; 16  6566307          0.0527  0.0207   886.1845
+#&gt; 17  6490432          0.0486  0.0203   189.9644
+#&gt; 18  5995974          0.0289  0.0184    89.7419
+#&gt; 19  5788645          0.0478  0.0181   624.8518
+#&gt; 20  5047349          0.1677  0.0176    56.8653
+#&gt; 21  5690475          0.0285  0.0175   108.0633
+#&gt; 22  5310828          0.0745  0.0171    71.6641
+#&gt; 23  4635649          0.1385  0.0158   175.5707
+#&gt; 24  4785437          0.0311  0.0147    97.4271
+#&gt; 25  4544532          0.0181  0.0138   107.0966
+#&gt; 26  4348181          0.0305  0.0134   113.4760
+#&gt; 27  3837491          0.1178  0.0128    44.6872
+#&gt; 28  3759944          0.0613  0.0119    58.1740
+#&gt; 29  3579114         -0.0073  0.0106   733.7507
+#&gt; 30  2775332          0.1929  0.0099    40.2918
+#&gt; 31  3721525         -0.1416  0.0095   923.4964
+#&gt; 32  2702405          0.1789  0.0095    29.0195
+#&gt; 33  3050745          0.0384  0.0095    56.7158
+#&gt; 34  2921964          0.0383  0.0091    58.3059
+#&gt; 35  2970548         -0.0014  0.0089    63.2186
+#&gt; 36  2858190          0.0207  0.0087    35.6808
+#&gt; 37  2064552          0.0196  0.0063    17.3540
+#&gt; 38  1829542          0.0669  0.0058    25.4087
+#&gt; 39  1570746          0.1842  0.0056    22.5079
+#&gt; 40  1854239         -0.0466  0.0053    73.5443
+#&gt; 41  1363963          0.0311  0.0042   218.9678
+#&gt; 42  1316762          0.0421  0.0041   153.2674
+#&gt; 43  1327629          0.0203  0.0040    43.9167
+#&gt; 44   990697          0.0952  0.0032     7.4547
+#&gt; 45  1053959          0.0072  0.0032  1026.6044
+#&gt; 46   899593          0.1009  0.0030   508.1242
+#&gt; 47   816166          0.0985  0.0027    11.8265
+#&gt; 48   674715          0.1413  0.0023    11.1596
+#&gt; 49   713910          0.0146  0.0022     1.2694
+#&gt; 50   605226          0.1800  0.0021 11707.4262
+#&gt; 51   625879         -0.0042  0.0019    67.6197
+#&gt; 52   564487          0.0294  0.0017     5.9847</code></pre>
+<p>This is R’s way of confirming that it imported the CSV file and understands the data within it. You can see four variables, which show the rank (in terms of population size), the state name, the population, the population growth between the <code>Pop</code> and <code>Pop2018</code> variables (expressed as a percentage), and the 2018 population. There are also several other variables that are hidden in the output, though you’ll see them if you import this CSV file yourself. We discuss variables in more detail in the next section.</p>
+<p>You might think you’re now ready to work with your data. But all you’ve done at this point is display the result of running the code that imports your data. To use the data again, you need to save this data to an object.</p>
+</div>
+</div>
+<div id="saving-data-as-objects" class="section level2 unnumbered">
+<h2>Saving Data as Objects<a class="anchor" aria-label="anchor" href="#saving-data-as-objects"><i class="fas fa-link"></i></a>
+</h2>
+<p>To save your data for reuse, you need to create an object. In his book <em>Extending R</em>, John Chambers writes that “everything exists in R is an object.” For our purposes, an <em>object</em> is a data structure that we store to use later. To create an object, add to your data-importing syntax so it looks like this:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">population_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"/Users/davidkeyes/Documents/population-by-state.csv"</span><span class="op">)</span></span></code></pre></div>
+<p>The second half of this code is the same as the line shown in the previous section, except it contains this: <code>&lt;-</code>. Known as the <em>assignment operator</em>, it takes what follows it and assigns it to the item on the left. To the left of the assignment operator is the <code>population_data</code> object. Put together, the whole line imports the CSV and assigns it to an object called <code>population_data</code>.</p>
+<p>If you run this code, you should see <code>population_data</code> in your environment pane, as in Figure <a href="howto-chapter.html#fig:population-data-environment">1.5</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:population-data-environment"></span>
+<img src="assets/population-data-environment.png" alt="An object in our environment pane" width="100%"><p class="caption">
+Figure 1.5: An object in our environment pane
+</p>
+</div>
+<p>This message confirms that your data import worked and that the <code>population_data</code> object is ready for future use. Now, instead of having to rerun the code to import the data, you can simply enter <code>population_data</code> to output the data.</p>
+<p>Data imported to an object in this way is known as a <em>data frame</em>. You can see that the <code>population_data</code> data frame has 52 observations and nine variables. <em>Variables</em> are the columns in a data frame, each of which represents some value (for example, the population of each state). As you’ll see throughout the book, you can add new variables or modify existing ones using R code. The 52 observations come from the 50 states, as well as the District of Columbia and Puerto Rico.</p>
+</div>
+<div id="installing-packages" class="section level2 unnumbered">
+<h2>Installing Packages<a class="anchor" aria-label="anchor" href="#installing-packages"><i class="fas fa-link"></i></a>
+</h2>
+<p>The <code><a href="https://rdrr.io/r/utils/read.table.html">read.csv()</a></code> function we’ve been using comes from what is known as <em>base R</em>. This is a set of functions that are built into R, and to use them, you can simply enter their function names. However, one of the benefits of R being an open source language is that anyone create their own code and share it with others. R users around the world make what are called <em>packages</em>, which provide their own functions to do specific things.</p>
+<p>The best analogy for understanding packages also comes from <em>Modern Dive</em>. The functionality in base R is like the features built into a phone. A phone can do a lot on its own. But you usually want to install additional apps to do specific things. Packages are like apps, giving you specific functionality that doesn’t come built into base R. In Chapters <a href="custom-theme-chapter.html#custom-theme-chapter">3</a> and <a href="packages-chapter.html#packages-chapter">12</a>, you’ll create your own R package.</p>
+<p>You can install packages using the <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages()</a></code> function. For example, to install the <code>tidyverse</code> package, which provides a range of functions for data import, cleaning, analysis, visualization, and more, enter <code>install.packages("tidyverse")</code>. Typically, you’ll enter package installation code in the console rather than in a script file because you need to install a package only once on your computer to access its code in the future.</p>
+<p>To confirm that the <code>tidyverse</code> package has been installed correctly, click the <strong>Packages</strong> tab on the bottom right panel in R Studio. Search for tidyverse, and you should see it pop up, as in Figure <a href="howto-chapter.html#fig:tidyverse-installed">1.6</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:tidyverse-installed"></span>
+<img src="assets/tidyverse-installed.png" alt="Confirmation that the tidyverse package is installed on my computer" width="100%"><p class="caption">
+Figure 1.6: Confirmation that the tidyverse package is installed on my computer
+</p>
+</div>
+<p>Now that you’ve installed <code>tidyverse</code>, let’s use it. While you need to install packages only once per computer, you need to <em>load</em> packages each time you restart RStudio by running <code><a href="https://tidyverse.tidyverse.org">library(tidyverse)</a></code>. Return to the <em>sample-code.R</em> file and re-import your data using a function from the tidyverse package:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">population_data_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"/Users/davidkeyes/Documents/population-by-state.csv"</span><span class="op">)</span></span></code></pre></div>
+<p>At the top of the script, load the <code>tidyverse</code>. Then, use the package’s <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code> function to import the data. Note the underscore (<code>_</code>) in place of the period (<code>.</code>) in the function’s name; this is a different function from one we used earlier. Using this alternate function to import CSV files achieves the same goal of creating an object, in this case one called <code>population_data_2</code>. If you enter <code>population_data_2</code> in the console, you should see this output:</p>
+<pre><code>#&gt; # A tibble: 52 × 9
+#&gt;     rank State               Pop  Growth  Pop2018  Pop2010
+#&gt;    &lt;dbl&gt; &lt;chr&gt;             &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+#&gt;  1     1 California     39613493  0.0038 39461588 37319502
+#&gt;  2     2 Texas          29730311  0.0385 28628666 25241971
+#&gt;  3     3 Florida        21944577  0.033  21244317 18845537
+#&gt;  4     4 New York       19299981 -0.0118 19530351 19399878
+#&gt;  5     5 Pennsylvania   12804123  0.0003 12800922 12711160
+#&gt;  6     6 Illinois       12569321 -0.0121 12723071 12840503
+#&gt;  7     7 Ohio           11714618  0.0033 11676341 11539336
+#&gt;  8     8 Georgia        10830007  0.0303 10511131  9711881
+#&gt;  9     9 North Carolina 10701022  0.0308 10381615  9574323
+#&gt; 10    10 Michigan        9992427  0.0008  9984072  9877510
+#&gt; # ℹ 42 more rows
+#&gt; # ℹ 3 more variables: growthSince2010 &lt;dbl&gt;, Percent &lt;dbl&gt;,
+#&gt; #   density &lt;dbl&gt;</code></pre>
+<p>This data looks slightly different from the data we generated using the <code><a href="https://rdrr.io/r/utils/read.table.html">read.csv()</a></code> function. For example, R shows us only the first 10 rows. This variation occurs because <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code> imports the data not as a data frame but as a data type called a <em>tibble</em>. Both are used to describe <em>rectangular</em> data like that you would see in a spreadsheet. There are some small differences between data frames and tibbles, the most important of which is that tibbles will print only the first 10 rows by default, while data frames print all rows. For the purposes of this book, we can use the terms interchangeably.</p>
+</div>
+<div id="rstudio-projects" class="section level2 unnumbered">
+<h2>RStudio Projects<a class="anchor" aria-label="anchor" href="#rstudio-projects"><i class="fas fa-link"></i></a>
+</h2>
+<p>So far, we’ve imported a CSV file from the <em>Documents</em> folder. But the path to the file on my computer was <em>/Users/davidkeyes/Documents/population-by-state.csv</em>. Because others won’t have this exact location on their computer, my code won’t work if they try to run it. There is a solution to this problem called <em>RStudio projects</em>.</p>
+<p>By working in a project, you can use what are known as <em>relative paths</em> to your files instead of having to write the entire filepath when calling a function to import data. If you place the CSV file in your project, anyone can open it by using the file’s name, as in <code>read_csv(file = "population-by-state.csv")</code>. This makes the path easier to write and enables others to use your code.</p>
+<p>To create a new RStudio project, go to <strong>File &gt; New Project</strong>. Select either New Directory or Existing Directory and choose where to put your project. If you choose New Directory, you’ll need to specify that you want to create a new project. Do this, then choose a name for the new directory and where it should live. Leave the checkboxes that ask about creating a git repository and using <code>renv</code> unchecked. These are for more advanced purposes.</p>
+<p>Having created this project, you should now see two major differences in RStudio’s appearance. First, the Files pane no longer shows every file on your computer. Instead, it shows only files in the <em>example-project</em> directory. Right now, that’s just the <em>example-project.Rproj</em> file, which indicates that the folder contains a project. Second, at the top right of RStudio, you can see the name of the example-project project. This label had previously read <code>Project: (None)</code>. If you want to make sure you’re working in a project, check for its name here. Figure <a href="howto-chapter.html#fig:rstudio-active-project">1.7</a> shows these changes.</p>
+<div class="figure">
+<span style="display:block;" id="fig:rstudio-active-project"></span>
+<img src="assets/rstudio-active-project.png" alt="RStudio with an active project" width="100%"><p class="caption">
+Figure 1.7: RStudio with an active project
+</p>
+</div>
+<p>Now that you’ve created a project, use your operating system’s filesystem to manually copy the <em>population-by-state.csv</em> file into the <em>example-project</em> directory. Once you’ve done this, you should see it in the RStudio files pane.</p>
+<p>With this CSV file in your project, you can now import it more easily. As before, start by loading the <code>tidyverse</code> package. After that, remove the reference to the <em>Documents</em> folder and import your data by simply using the name of the file:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">population_data_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"population-by-state.csv"</span><span class="op">)</span></span></code></pre></div>
+<p>You’re able to import the <em>population-by-state.csv</em> file in this way because the RStudio project sets the working directory to be the root of your project. With the working directory set in this way, all references to files are relative to the <em>.Rproj</em> file at the root of the project. Now anyone can run this code because it imports the data from a location that is guaranteed to exist on their computer.</p>
+</div>
+<div id="data-analysis-with-the-tidyverse" class="section level2 unnumbered">
+<h2>Data Analysis with the Tidyverse<a class="anchor" aria-label="anchor" href="#data-analysis-with-the-tidyverse"><i class="fas fa-link"></i></a>
+</h2>
+<p>Now that we’ve imported data, let’s do a bit of analysis on it. While I’ve been referring to the <code>tidyverse</code> as a single package, it is actually a collection of packages for performing data importing, analysis, visualization, and more. We’ll explore several of its functions throughout this book, but this section introduces you to its basic workflow.</p>
+<div id="tidyverse-functions" class="section level3 unnumbered">
+<h3>Tidyverse Functions<a class="anchor" aria-label="anchor" href="#tidyverse-functions"><i class="fas fa-link"></i></a>
+</h3>
+<p>Because we’ve loaded the <code>tidyverse</code> package, we can access its functions. The following code calculates the mean population of all states using the <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> function from the <code>tidyverse</code>:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>.data <span class="op">=</span> <span class="va">population_data_2</span>,</span>
+<span>          mean_population <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Pop</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>To understand what is happening here, you need to understand two functions: <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code>. The <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code> function calculates the mean of a set of values. If I were to write <code>mean(c(1, 3, 5))</code>, R would return <code>3</code> because that is the mean of the values <code>1</code>, <code>3</code>, and <code>5</code>. The <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> function that surrounds the values tells R to combine these values when calculating the mean.</p>
+<p>The <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> function takes a data frame or tibble and calculates a summary of one or more variables. In the previous code, we use the <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> function to calculate the mean population of all states. To do this, we pass <code>population_data_2</code> to the <code>.data</code> argument of the <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> function to tell it to use that data frame. Next, we create a new variable called <code>mean_population</code> and assign it to the output of the <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code> function run on the <code>Pop</code> variable (one of the variables in the <code>population_data_2</code> data frame).</p>
+<p>Running this code should return a tibble with a single variable (<code>mean_population</code>) that is of type double (meaning numeric data) and has a value of <code>6433422</code>, the mean population of all states:</p>
+<pre><code>#&gt; # A tibble: 1 × 1
+#&gt;   mean_population
+#&gt;             &lt;dbl&gt;
+#&gt; 1        6433422.</code></pre>
+<p>This is a basic example of data analysis, but you can do a lot more with the <code>tidyverse</code>.</p>
+</div>
+<div id="the-tidyverse-pipe" class="section level3" number="1.0.2">
+<h3>
+<span class="header-section-number">1.0.2</span> The Tidyverse Pipe<a class="anchor" aria-label="anchor" href="#the-tidyverse-pipe"><i class="fas fa-link"></i></a>
+</h3>
+<p>One advantage of working with the <code>tidyverse</code> is that it uses what’s known as the <code>pipe</code> for multi-step operations. The <code>tidyverse</code> pipe, which is written as <code>%&gt;%</code>, allows us to break steps into multiple lines. For example, we could rewrite our code using the pipe:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">population_data_2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>mean_population <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Pop</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>This code says, “Start with the <code>population_data_2</code> data frame, then run the <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> function on it, creating a variable called <code>mean_population</code> by calculating the mean of the <code>Pop</code> variable.”</p>
+<p>The pipe becomes even more useful when we use multiple steps in our data analysis. Let’s say, for example, we want to calculate the mean population of the five largest states. The following code adds a line that uses the <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> function (also from the <code>tidyverse</code>) to include only states where the <code>rank</code> variable (which is the rank of the total population size of all states) is less than or equal to five. Then, it uses <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> function, as we did before:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">population_data_2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">rank</span> <span class="op">&lt;=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>mean_population <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Pop</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Running this code shows us the mean population of the five largest states:</p>
+<pre><code>#&gt; # A tibble: 1 × 1
+#&gt;   mean_population
+#&gt;             &lt;dbl&gt;
+#&gt; 1        24678497</code></pre>
+<p>Combining functions using the pipe lets us do multiple things to our data in a way that keeps our code readable and easy to understand.</p>
+<p>We’ve introduced only two functions for analysis at this point, but the <code>tidyverse</code> has many more functions that enable you to do nearly anything you could hope to do with your data. <em>R for Data Science</em> by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund is the bible of tidyverse programming and worth reading for more details on how its many packages work. Because of how useful it is, the <code>tidyverse</code> will appear in every single piece of R code you write in this book.</p>
+</div>
+</div>
+<div id="comments" class="section level2 unnumbered">
+<h2>Comments<a class="anchor" aria-label="anchor" href="#comments"><i class="fas fa-link"></i></a>
+</h2>
+<p>In addition to code, R script files often contain comments. In R script files, lines with hashes (<code>#</code>) at the start are not treated as code, but as text comments. For example, I could add a comment to the code above like so:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Calculate the mean population of the five largest states</span></span>
+<span></span>
+<span><span class="va">population_data_2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">rank</span> <span class="op">&lt;=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>mean_population <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Pop</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Having this comment will help yourself and others understand what is happening in the code.</p>
+</div>
+<div id="how-to-get-help" class="section level2 unnumbered">
+<h2>How to Get Help<a class="anchor" aria-label="anchor" href="#how-to-get-help"><i class="fas fa-link"></i></a>
+</h2>
+<p>Now that you’ve learned about the basics of how R works, you’re probably ready to dive in and write some code. When you do, though, you’re going to encounter errors. Learning how to get help when you run into issues is a key part of learning to use R successfully. There are two main strategies you can use to get unstuck.</p>
+<p>The first is to read the documentation for the functions you use. To access the documentation for any function, simply enter <code>?</code> and then the name of the function in the console. For example, run <code><a href="https://rdrr.io/r/utils/read.table.html">?read.csv</a></code> to see documentation about that function pop up in the bottom right panel, as in Figure <a href="howto-chapter.html#fig:readcsv-documentation">1.8</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:readcsv-documentation"></span>
+<img src="assets/readcsv-documentation.png" alt="The documentation for the `read.csv()` function" width="100%"><p class="caption">
+Figure 1.8: The documentation for the <code><a href="https://rdrr.io/r/utils/read.table.html">read.csv()</a></code> function
+</p>
+</div>
+<p>Help files can be a bit hard to decipher, but at their core, they tell you what package the function comes from, what it does, what arguments it accepts, and some examples of how to use it. For additional guidance on reading documentation, I recommend the appendix of Kieran Healy’s book <em>Data Visualization: A Practical Introduction</em>. A free online version is available at <a href="https://socviz.co/appendix.html" class="uri">https://socviz.co/appendix.html</a>.</p>
+<p>In addition to providing help files in RStudio, many R packages have documentation websites. These can be easier to read than R Studio’s help files. In addition, they often contain longer articles known as <em>vignettes</em> that provide an overview of how a given package works. Reading these can help you understand how to combine individual functions in the context of a larger project. Every package discussed in this book has a good documentation website.</p>
+</div>
+<div id="conclusion" class="section level2 unnumbered">
+<h2>Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"><i class="fas fa-link"></i></a>
+</h2>
+<p>This chapter should have helped you get started with R programming. You’ve learned a number of things, beginning with how to download and set up R and RStudio, what the various RStudio panels are for, and how R script files work. You also learned how to import CSV files and explore them in R, how to save data as objects, and how to install packages to access additional functions. Then, to make the files used in your code more accessible, you created an RStudio project.</p>
+<p>Lastly, we covered the basics of data exploration with <code>tidyverse</code> functions and the <code>tidyverse</code> pipe, and you learned how to get help when those functions don’t work as expected. Now that you understand the basics, you can use R to work with your data. Let’s get started!</p>
+</div>
+<div id="learn-more" class="section level2 unnumbered">
+<h2>Learn More<a class="anchor" aria-label="anchor" href="#learn-more"><i class="fas fa-link"></i></a>
+</h2>
+<p>Consult the following resources to learn more about R programming:</p>
+<p><em>Statistical Inference via Data Science: A ModernDive into R and the Tidyverse</em> by Chester Ismay and Albert Y. Kim (CRC Press, 2020), <a href="https://moderndive.com/" class="uri">https://moderndive.com/</a></p>
+<p>The <em>Getting Started with R</em> course: <a href="https://rfortherestofus.com/courses/getting-started/" class="uri">https://rfortherestofus.com/courses/getting-started/</a></p>
+
+</div>
+</div>
+
+
+
+<div class="chapter-nav">
+<div class="prev"><a href="introduction.html">Introduction</a></div>
+<div class="next"><a href="data-viz-chapter.html"><span class="header-section-number">2</span> Principles of Data Visualization</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#howto-chapter"><span class="header-section-number">1</span> An R Programming Crash Course</a></li>
+<li>
+<a class="nav-link" href="#setting-up">Setting Up</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#installing-r-and-rstudio"><span class="header-section-number">1.0.1</span> Installing R and RStudio</a></li>
+<li><a class="nav-link" href="#exploring-the-rstudio-interface">Exploring the RStudio Interface</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#r-script-files">R Script Files</a></li>
+<li>
+<a class="nav-link" href="#working-with-data">Working with Data</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#importing-data">Importing Data</a></li></ul>
+</li>
+<li><a class="nav-link" href="#saving-data-as-objects">Saving Data as Objects</a></li>
+<li><a class="nav-link" href="#installing-packages">Installing Packages</a></li>
+<li><a class="nav-link" href="#rstudio-projects">RStudio Projects</a></li>
+<li>
+<a class="nav-link" href="#data-analysis-with-the-tidyverse">Data Analysis with the Tidyverse</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#tidyverse-functions">Tidyverse Functions</a></li>
+<li><a class="nav-link" href="#the-tidyverse-pipe"><span class="header-section-number">1.0.2</span> The Tidyverse Pipe</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#comments">Comments</a></li>
+<li><a class="nav-link" href="#how-to-get-help">How to Get Help</a></li>
+<li><a class="nav-link" href="#conclusion">Conclusion</a></li>
+<li><a class="nav-link" href="#learn-more">Learn More</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/rfortherestofus/r-without-statistics/blob/master/howto.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/rfortherestofus/r-without-statistics/edit/master/howto.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+</div>
+  
+
+  
+
+</div>
+ <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>R Without Statistics</strong>" was written by David Keyes. </p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>

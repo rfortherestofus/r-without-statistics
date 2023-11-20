@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>In Conclusion: R is a Map-Making Swiss Army Knife | R Without Statistics</title>
+
+    <meta name="author" content="David Keyes" />
+  
+   <meta name="description" content="Since R was invented in 1993, it has become a widely used programming language for statistical analysis. From academia to the tech world and beyond, R is used for a wide range of statistical analysis. R Without Statistics will show ways that R can be used beyond complex statistical analysis. Readers will learn about a range of uses for R, many of which they have likely never even considered." />
+   <meta name="generator" content="placeholder" />
+  <meta property="og:title" content="In Conclusion: R is a Map-Making Swiss Army Knife | R Without Statistics" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://book.rwithoutstatistics.com" />
+  <meta property="og:image" content="https://book.rwithoutstatistics.com/mock-cover.png" />
+  <meta property="og:description" content="Since R was invented in 1993, it has become a widely used programming language for statistical analysis. From academia to the tech world and beyond, R is used for a wide range of statistical analysis. R Without Statistics will show ways that R can be used beyond complex statistical analysis. Readers will learn about a range of uses for R, many of which they have likely never even considered." />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="In Conclusion: R is a Map-Making Swiss Army Knife | R Without Statistics" />
+  
+  <meta name="twitter:description" content="Since R was invented in 1993, it has become a widely used programming language for statistical analysis. From academia to the tech world and beyond, R is used for a wide range of statistical analysis. R Without Statistics will show ways that R can be used beyond complex statistical analysis. Readers will learn about a range of uses for R, many of which they have likely never even considered." />
+  <meta name="twitter:image" content="https://book.rwithoutstatistics.com/mock-cover.png" />
+  <!-- JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script>
+    <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet" />
+    <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script>
+    <script src="libs/bs3compat-0.4.1/transition.js"></script>
+    <script src="libs/bs3compat-0.4.1/tabs.js"></script>
+    <script src="libs/bs3compat-0.4.1/bs3compat.js"></script>
+    <link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet" />
+    <script src="libs/bs4_book-1.0.0/bs4_book.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script>
+
+  <!-- CSS -->
+  <style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+      <link rel="stylesheet" href="style.css" />
+  
+</head>
+
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book">
+    <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">R Without Statistics</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+      </form>
+
+      <nav aria-label="Table of contents">
+        <h2>Table of contents</h2>
+        <div id="book-toc"></div>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="#">View book source <i class="fab fa-github"></i></a></li></p>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="col-sm-12 col-md-9 col-lg-7" id="content">
+<div id="in-conclusion-r-is-a-map-making-swiss-army-knife" class="section level1 unnumbered">
+<h1>In Conclusion: R is a Map-Making Swiss Army Knife</h1>
+<p>If this chapter has inspired you to want to make your own maps in R, fantastic! As we’ve seen from Abdoul Madjid’s work, you can use R both to gather and analyze geospatial data as well make maps it. R is a map-making Swiss army knife.</p>
+<p>In the first part of this chapter, I gave you a quick overview of how geospatial data works. You may now be wondering: okay, great, but how do I actually make my own maps? Let’s talk about where you can find geospatial data.</p>
+<div id="finding-geospatial-data" class="section level2 unnumbered">
+<h2>Finding Geospatial Data</h2>
+<p>First, a reminder: we’re exclusively discussing vector data in the simple features format. While there are other types of geospatial data, simple features data is the easiest to get started with.</p>
+<p>With that said, there are two ways to access geospatial data. The first is to import raw data. Geospatial data can take a number of different formats. While ESRL shapefiles (with the .shp extension) are the most common, there is also GeoJSON (.geojson), KML (.kml), and others (chapter 8 of <em>Geocomputation with R</em> by Robin Lovelace, Jakub Nowosad, and Jannes Muenchow discusses the range of formats). The good news for us is that there is a single function that can read in pretty much any type of geospatial data. That function is <code>read_sf()</code> from the <code>sf</code> package. Let’s show an example of how it works.</p>
+<p>I downloaded geospatial data from the website geojson.xyz on United States state boundaries in GeoJSON format, saving it in the <code>data</code> folder as states.geojson. I can then import this data using the <code>read_sf()</code> function. I use the <code>dsn</code> argument (dsn stands for data source name) to tell <code>read_sf()</code> where to find the file. I then save this as the object <code>us_states</code>.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb32-1" aria-hidden="true" tabindex="-1"></a>us_states <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="at">dsn =</span> <span class="st">&quot;data/states.geojson&quot;</span>)</span></code></pre></div>
+<p>Let’s now take at <code>us_states</code>. The data has 41 variables so, to keep things legible, let’s just keep a couple: <code>name</code> (of the state) and <code>geometry</code>. I can show these two by selecting only <code>name</code> because, when working with simple features data, the <code>geometry</code> column is unaffected by operations to all other variables. We can see all of the metadata we discussed above (geometry type, dimensions, bounding box, and coordinate reference system) as well as the data itself.</p>
+<pre><code>#&gt; Simple feature collection with 51 features and 1 field
+#&gt; Geometry type: MULTIPOLYGON
+#&gt; Dimension:     XY
+#&gt; Bounding box:  xmin: -171.7911 ymin: 18.91619 xmax: -66.96466 ymax: 71.35776
+#&gt; Geodetic CRS:  WGS 84
+#&gt; # A tibble: 51 × 2
+#&gt;    name                                             geometry
+#&gt;    &lt;chr&gt;                                  &lt;MULTIPOLYGON [°]&gt;
+#&gt;  1 Minnesota    (((-89.59941 48.01027, -89.48888 48.01344, …
+#&gt;  2 Montana      (((-111.1942 44.56116, -111.2915 44.70141, …
+#&gt;  3 North Dakota (((-96.60136 46.35136, -96.53891 46.19948, …
+#&gt;  4 Hawaii       (((-155.9366 19.05939, -155.9081 19.33888, …
+#&gt;  5 Idaho        (((-111.0497 44.48816, -111.0502 42.0016, -…
+#&gt;  6 Washington   (((-116.9981 46.33017, -116.9065 46.17778, …
+#&gt;  7 Arizona      (((-109.0452 36.99991, -109.0437 31.3419, -…
+#&gt;  8 California   (((-114.3549 34.46467, -114.166 34.27259, -…
+#&gt;  9 Colorado     (((-102.0502 40.00081, -102.0401 38.45987, …
+#&gt; 10 Nevada       (((-114.0305 36.9941, -114.0236 36.18976, -…
+#&gt; # … with 41 more rows</code></pre>
+<p>To prove that this is geospatial data like that we’ve seen throughout this chapter, let’s make a map with it. I’ll use the same three lines we’ve used throughout this chapter.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb34-1" aria-hidden="true" tabindex="-1"></a>us_states <span class="sc">%&gt;%</span> </span>
+<span id="cb34-2"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb34-3"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>() </span></code></pre></div>
+<p>And there we have it: Figure <a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#fig:geojson-us-map">5.19</a> shows a map of all 50 states.</p>
+<div class="figure"><span style="display:block;" id="fig:geojson-us-map"></span>
+<img src="maps_files/figure-html/geojson-us-map-1.png" alt="A map of the United States made with GeoJSON data" width="100%" />
+<p class="caption">
+Figure 5.19: A map of the United States made with GeoJSON data
+</p>
+</div>
+<p>Working with raw geosaptial data in this way is sometimes necessary. But not always. That’s because there are R packages that provide functions to access geospatial data. Abdoul Madjid used the <code>usa_sf()</code> function from the <code>albersusa</code> package to bring in his geospatial data. Another package for accessing geospatial data related to the United States is called <code>tigris</code>. This package has a number of well-named functions for bringing in different types of data. One of these is the <code>states()</code> function. We can load the <code>tigris</code> package and run the <code>states()</code> function. Let’s use the <code>cb = TRUE</code> argument to not use the most detailed shapefile and set the resolution to a more manageable “20m” (without these changes, the shapefile we’d get would be large and slow to work with). We also set <code>progress_bar = FALSE</code> in order to not see messages that <code>tigris</code> shares while it loads data. We then save the result as <code>states_tigris</code>.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tigris)</span>
+<span id="cb35-2"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb35-3" aria-hidden="true" tabindex="-1"></a>states_tigris <span class="ot">&lt;-</span> <span class="fu">states</span>(<span class="at">cb =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb35-4"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb35-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">resolution =</span> <span class="st">&quot;20m&quot;</span>,</span>
+<span id="cb35-5"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb35-5" aria-hidden="true" tabindex="-1"></a>                        <span class="at">progress_bar =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>The <code>states_tigris</code> object has 14 variables, but let’s just keep the <code>NAME</code> and <code>geometry</code> variables in order to make the output easier to read. Our output has 52 rows (referred to in the output as features): the 50 states as well as the District of Columbia and Puerto Rico.</p>
+<pre><code>#&gt; Simple feature collection with 52 features and 1 field
+#&gt; Geometry type: MULTIPOLYGON
+#&gt; Dimension:     XY
+#&gt; Bounding box:  xmin: -179.1743 ymin: 17.91377 xmax: 179.7739 ymax: 71.35256
+#&gt; Geodetic CRS:  NAD83
+#&gt; First 10 features:
+#&gt;                    NAME                       geometry
+#&gt; 1             Tennessee MULTIPOLYGON (((-90.3007 35...
+#&gt; 2             Minnesota MULTIPOLYGON (((-97.22904 4...
+#&gt; 3              Illinois MULTIPOLYGON (((-91.50626 4...
+#&gt; 4               Montana MULTIPOLYGON (((-116.0492 4...
+#&gt; 5  District of Columbia MULTIPOLYGON (((-77.11976 3...
+#&gt; 6            California MULTIPOLYGON (((-118.594 33...
+#&gt; 7              Kentucky MULTIPOLYGON (((-89.54443 3...
+#&gt; 8              Delaware MULTIPOLYGON (((-75.77379 3...
+#&gt; 9                 Texas MULTIPOLYGON (((-106.6234 3...
+#&gt; 10            Wisconsin MULTIPOLYGON (((-86.93428 4...</code></pre>
+<p>We can plot this as well, but before doing so, I’m going to use the <code>shift_geometry()</code> function from <code>tigris</code>. This will put Alaska, Hawaii, and Puerto Rico in places that it is easier to see all states. It also resizes these three states to make them easier to see on a map alongside the continental United States. This is similar to what the <code>usa_sf()</code> function from <code>albersusa</code> did above.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb37-1" aria-hidden="true" tabindex="-1"></a>states_tigris <span class="sc">%&gt;%</span> </span>
+<span id="cb37-2"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shift_geometry</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb37-3"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb37-4"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>()</span></code></pre></div>
+<p>The map, using data and the <code>shift_geometry</code> function from the <code>tigris</code> package are seen in Figure <a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#fig:tigris-us-map">5.20</a> below.</p>
+<div class="figure"><span style="display:block;" id="fig:tigris-us-map"></span>
+<img src="maps_files/figure-html/tigris-us-map-1.png" alt="A map of the United States made with data from the tigris package" width="100%" />
+<p class="caption">
+Figure 5.20: A map of the United States made with data from the tigris package
+</p>
+</div>
+<p>The <code>tigris</code> package has functions to get geospatial data on counties, census tracts, roads, and more. Kyle Walker, developer of the package, has also written an entire book, titled <em>Analyzing US Census Data: Methods, Maps, and Models in R</em>, that is a great place to learn more about how to use it.</p>
+<p>If you’re looking for data outside of the United States, fear not! The <code>rnaturalearth</code> package provides functions to import geospatial data from across the world. This package has a number of functions, but let’s look at one: <code>ne_countries()</code>. This function gets geospatial data on countries throughout the world. I’m using two arguments in the code below: <code>returnclass = "sf"</code> to get data in simple features format and <code>continent = "Africa"</code> to only get some countries. I save the result to an object called <code>africa_countries</code>.</p>
+<p>We can see our data below (as above, I’m keeping only the country name and the <code>geometry</code> column for legibility).</p>
+<pre><code>#&gt; Simple feature collection with 51 features and 1 field
+#&gt; Geometry type: MULTIPOLYGON
+#&gt; Dimension:     XY
+#&gt; Bounding box:  xmin: -17.62504 ymin: -34.81917 xmax: 51.13387 ymax: 37.34999
+#&gt; CRS:           +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0
+#&gt; First 10 features:
+#&gt;                    name                       geometry
+#&gt; 1                Angola MULTIPOLYGON (((16.32653 -5...
+#&gt; 11              Burundi MULTIPOLYGON (((29.34 -4.49...
+#&gt; 13                Benin MULTIPOLYGON (((2.691702 6....
+#&gt; 14         Burkina Faso MULTIPOLYGON (((-2.827496 9...
+#&gt; 25             Botswana MULTIPOLYGON (((25.64916 -1...
+#&gt; 26 Central African Rep. MULTIPOLYGON (((15.27946 7....
+#&gt; 31        Côte d&#39;Ivoire MULTIPOLYGON (((-2.856125 4...
+#&gt; 32             Cameroon MULTIPOLYGON (((13.07582 2....
+#&gt; 33      Dem. Rep. Congo MULTIPOLYGON (((30.83386 3....
+#&gt; 34                Congo MULTIPOLYGON (((12.99552 -4...</code></pre>
+<p>And we can plot our data on a map with the same three lines as always.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb39-1" aria-hidden="true" tabindex="-1"></a>africa_countries <span class="sc">%&gt;%</span> </span>
+<span id="cb39-2"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb39-3"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>()</span></code></pre></div>
+<p>The resulting map shows up in Figure <a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#fig:africa-map">5.21</a>.</p>
+<div class="figure"><span style="display:block;" id="fig:africa-map"></span>
+<img src="maps_files/figure-html/africa-map-1.png" alt="A map of Africa made with data from the rnaturalearth package" width="100%" />
+<p class="caption">
+Figure 5.21: A map of Africa made with data from the rnaturalearth package
+</p>
+</div>
+<p>If you need geospatial data, start by looking for a package like <code>albersusa</code>, <code>tigris</code>, or <code>rnaturalearth</code>. If you can’t find a package to access geospatial data, you can always fall back on using <code>read_sf()</code> from the <code>sf</code> package. No matter what, there is a way to get your geospatial data into R!</p>
+</div>
+<div id="using-appropriate-projections" class="section level2 unnumbered">
+<h2>Using Appropriate Projections</h2>
+<p>Once you have access to geospatial data and are ready to map it, you need to think about which projection to use. If you’re looking for a simple answer to this question, you’re going to be disappointed. As Robin Lovelace, Jakub Nowosad, and Jannes Muenchow put it in their book <em>Geocomputation with R</em>, “the question of <em>which</em> CRS [to use] is tricky, and there is rarely a ‘right’ answer.”</p>
+<p>If you feel overwhelmed with choosing a projection, there is a package to help. The <code>crsuggest</code> package, also made by Kyle Walker, can give you ideas for a projection to use. The <code>suggest_top_crs()</code> function will return a CRS that is well-suited for your data. Let’s load <code>crsuggest</code> and try it out on our <code>africa_countries</code> data.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(crsuggest)</span>
+<span id="cb40-2"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb40-3" aria-hidden="true" tabindex="-1"></a>africa_countries <span class="sc">%&gt;%</span> </span>
+<span id="cb40-4"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">suggest_top_crs</span>()</span></code></pre></div>
+<p>The <code>suggest_top_crs</code> function returns the projection number 28232. We can now use this value in combination with the <code>st_transform</code> function in order to change the projection before we plot.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb41-1" aria-hidden="true" tabindex="-1"></a>africa_countries <span class="sc">%&gt;%</span></span>
+<span id="cb41-2"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="dv">28232</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-3"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb41-4"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>()</span></code></pre></div>
+<p>When we run this code, we see in Figure <a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#fig:africa-map-different-projection">5.22</a> below, Africa mapped with a different projection.</p>
+<div class="figure"><span style="display:block;" id="fig:africa-map-different-projection"></span>
+<img src="maps_files/figure-html/africa-map-different-projection-1.png" alt="A map of Africa made with projection number 28232" width="100%" />
+<p class="caption">
+Figure 5.22: A map of Africa made with projection number 28232
+</p>
+</div>
+</div>
+<div id="bring-your-existing-r-skills-to-geospatial-data" class="section level2 unnumbered">
+<h2>Bring Your Existing R Skills to Geospatial Data</h2>
+<p>Abdoul Madjid’s process for analyzing data involved a few steps: he began by doing analysis on traditional data frames (recall the data on COVID rates and that on state populations). Once he had done his analysis on these data frames, he merged them with his geospatial data to create the <code>usa_states_geom_covid</code> data frame that he used to make his map. The ability to merge traditional data frames with geospatial data is a huge benefit of working with simple features data.</p>
+<p>Simple features data, as we’ve seen, looks almost exactly like a traditional data frame with two differences: 1) metadata and 2) a <code>geometry</code> column. And here’s the thing with simple features data: it acts just like a traditional data frame, too. While Madjid did all of his analysis in traditional data frames before merging them with simple features data, you can also work directly on your geospatial data. All of the basic data wrangling and analysis functions from the <code>tidyverse</code> work on a simple features object.</p>
+<p>To demonstrate this, let’s return to the <code>africa_countries</code> simple features data. Let’s select two variables (<code>name</code> and <code>pop_est</code>) to see the name and population of the countries.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb42-1" aria-hidden="true" tabindex="-1"></a>africa_countries <span class="sc">%&gt;%</span> </span>
+<span id="cb42-2"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, pop_est)</span></code></pre></div>
+<p>The output we get is this:</p>
+<pre><code>#&gt; Simple feature collection with 51 features and 2 fields
+#&gt; Geometry type: MULTIPOLYGON
+#&gt; Dimension:     XY
+#&gt; Bounding box:  xmin: -17.62504 ymin: -34.81917 xmax: 51.13387 ymax: 37.34999
+#&gt; CRS:           +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0
+#&gt; First 10 features:
+#&gt;                    name  pop_est
+#&gt; 1                Angola 12799293
+#&gt; 11              Burundi  8988091
+#&gt; 13                Benin  8791832
+#&gt; 14         Burkina Faso 15746232
+#&gt; 25             Botswana  1990876
+#&gt; 26 Central African Rep.  4511488
+#&gt; 31        Côte d&#39;Ivoire 20617068
+#&gt; 32             Cameroon 18879301
+#&gt; 33      Dem. Rep. Congo 68692542
+#&gt; 34                Congo  4012809
+#&gt;                          geometry
+#&gt; 1  MULTIPOLYGON (((16.32653 -5...
+#&gt; 11 MULTIPOLYGON (((29.34 -4.49...
+#&gt; 13 MULTIPOLYGON (((2.691702 6....
+#&gt; 14 MULTIPOLYGON (((-2.827496 9...
+#&gt; 25 MULTIPOLYGON (((25.64916 -1...
+#&gt; 26 MULTIPOLYGON (((15.27946 7....
+#&gt; 31 MULTIPOLYGON (((-2.856125 4...
+#&gt; 32 MULTIPOLYGON (((13.07582 2....
+#&gt; 33 MULTIPOLYGON (((30.83386 3....
+#&gt; 34 MULTIPOLYGON (((12.99552 -4...</code></pre>
+<p>Let’s now work with these two variables. What if I want to make a map that shows which African countries have populations over 20 million? To do so, I’d need a variable that calculates whether each country has a population over 20 million. I can do this using <code>mutate()</code> and the <code>if_else()</code> functions, creating a new variable called <code>population_above_20_million</code> that is TRUE if a country’s population is over 20 million and FALSE otherwise.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb44-1" aria-hidden="true" tabindex="-1"></a>africa_countries <span class="sc">%&gt;%</span> </span>
+<span id="cb44-2"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, pop_est) <span class="sc">%&gt;%</span> </span>
+<span id="cb44-3"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">population_above_20_million =</span> <span class="fu">if_else</span>(pop_est <span class="sc">&gt;</span> <span class="dv">20000000</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>))</span></code></pre></div>
+<p>We can then take this code and pipe it into ggplot, setting the <code>fill</code> aesthetic property to be equal to <code>population_above_20_million</code>.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb45-1" aria-hidden="true" tabindex="-1"></a>africa_countries <span class="sc">%&gt;%</span> </span>
+<span id="cb45-2"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, pop_est) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-3"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">population_above_20_million =</span> <span class="fu">if_else</span>(pop_est <span class="sc">&gt;</span> <span class="dv">20000000</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-4"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">fill =</span> population_above_20_million)) <span class="sc">+</span></span>
+<span id="cb45-5"><a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#cb45-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>()</span></code></pre></div>
+<p>And we end up with the map in Figure <a href="in-conclusion-r-is-a-map-making-swiss-army-knife.html#fig:africa-map-20m">5.23</a>.</p>
+<div class="figure"><span style="display:block;" id="fig:africa-map-20m"></span>
+<img src="maps_files/figure-html/africa-map-20m-1.png" alt="A map of Africa that highlights countries with populations above 20 million people" width="100%" />
+<p class="caption">
+Figure 5.23: A map of Africa that highlights countries with populations above 20 million people
+</p>
+</div>
+<p>This is a simple example of the type of data wrangling and analysis you can do on simple features data. The larger lesson is this: all of the skills you’ve worked hard to develop to work with data in R will also serve you well when working with geospatial data.</p>
+</div>
+<div id="why-r-is-best-tool-for-making-maps" class="section level2 unnumbered">
+<h2>Why R is Best Tool for Making Maps</h2>
+<p>This chapter has been a short, if exhausting, romp through the world of map-making in R. We’ve discussed the basics needed to understand geospatial data, seen how Abdoul Madjid applied this knowledge and principles of high-quality data visualization to make his map, learned how to get your own geospatial data, and how to project it appropriately to make your own maps.</p>
+<p>Over the years, I’ve come to believe that R is not just any old tool for making maps, but the best tool for making maps. It’s way more flexible than Excel, way less expensive than ArcGIS, and doesn’t require you to learn another tool like QGIS. But R as a map-making tool isn’t just good for these reasons. It’s good because you can use the general skills you’ve developed working with traditional data frames to your work with geospatial data. And the same ggplot code that makes your graphs shine will also help you make maps look great.</p>
+<p>That’s what Abdoul Madjid did when making his map of COVID in the United States in 2021. Madjid is not a GIS expert, and that’s kind of the point. He combined an understanding of the basics of geospatial data, fundamental R skills, and knowledge of data visualization principles to make a beautiful map. Now it’s your turn to do the same.</p>
+
+</div>
+</div>
+  </main>
+
+  <div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page">
+      <h2>On this page</h2>
+      <div id="book-on-this-page"></div>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          <li><a id="book-source" href="#">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="#">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5">
+  <div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>R Without Statistics</strong>" was written by David Keyes. </p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+
+
+</body>
+
+</html>

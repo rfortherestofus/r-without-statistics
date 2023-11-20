@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 11 Embracing Quarto, the Next-Generation Tool for Reproducible Reporting | R Without Statistics</title>
+<meta name="author" content="David Keyes">
+<meta name="description" content="In mid-2022, the team at Posit (the company that makes the RStudio editor, the tidyverse, and many other tools to support R programmers) made an announcement: they had developed a new tool called...">
+<meta name="generator" content="bookdown 0.33 with bs4_book()">
+<meta property="og:title" content="Chapter 11 Embracing Quarto, the Next-Generation Tool for Reproducible Reporting | R Without Statistics">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://book.rwithoutstatistics.com/embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html">
+<meta property="og:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
+<meta property="og:description" content="In mid-2022, the team at Posit (the company that makes the RStudio editor, the tidyverse, and many other tools to support R programmers) made an announcement: they had developed a new tool called...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 11 Embracing Quarto, the Next-Generation Tool for Reproducible Reporting | R Without Statistics">
+<meta name="twitter:description" content="In mid-2022, the team at Posit (the company that makes the RStudio editor, the tidyverse, and many other tools to support R programmers) made an announcement: they had developed a new tool called...">
+<meta name="twitter:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">R Without Statistics</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">About the Book</a></li>
+<li class="book-part">Introduction</li>
+<li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
+<li><a class="" href="howto-chapter.html"><span class="header-section-number">2</span> An R Programming Crash Course</a></li>
+<li class="book-part">Illuminate</li>
+<li><a class="" href="data-viz-chapter.html"><span class="header-section-number">3</span> Principles of Data Visualization</a></li>
+<li><a class="" href="custom-theme-chapter.html"><span class="header-section-number">4</span> Making Your Own Theme</a></li>
+<li><a class="" href="maps-chapter.html"><span class="header-section-number">5</span> Creating Maps</a></li>
+<li><a class="" href="tables-chapter.html"><span class="header-section-number">6</span> Making High-Quality Tables</a></li>
+<li class="book-part">Communicate</li>
+<li><a class="" href="rmarkdown-chapter.html"><span class="header-section-number">7</span> Communicating with R Markdown</a></li>
+<li><a class="" href="parameterized-reports-chapter.html"><span class="header-section-number">8</span> Generate Multiple Reports at Once with Parameterized Reporting</a></li>
+<li><a class="" href="presentations-chapter.html"><span class="header-section-number">9</span> Create Beautiful Presentations with R Markdown</a></li>
+<li><a class="" href="websites-chapter.html"><span class="header-section-number">10</span> Make Websites to Share Results Online</a></li>
+<li><a class="active" href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html"><span class="header-section-number">11</span> Embracing Quarto, the Next-Generation Tool for Reproducible Reporting</a></li>
+<li class="book-part">Automate</li>
+<li><a class="" href="accessing-data-chapter.html"><span class="header-section-number">12</span> Accessing Data</a></li>
+<li><a class="" href="packages-chapter.html"><span class="header-section-number">13</span> Create Your Own R Package</a></li>
+<li class="book-part">Conclusion</li>
+<li><a class="" href="conclusion.html"><span class="header-section-number">14</span> Come for the Statistics, Stay for the Community</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/rfortherestofus/r-without-statistics">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="embracing-quarto-the-next-generation-tool-for-reproducible-reporting" class="section level1" number="11">
+<h1>
+<span class="header-section-number">11</span> Embracing Quarto, the Next-Generation Tool for Reproducible Reporting<a class="anchor" aria-label="anchor" href="#embracing-quarto-the-next-generation-tool-for-reproducible-reporting"><i class="fas fa-link"></i></a>
+</h1>
+<p>In mid-2022, the team at Posit (the company that makes the RStudio editor, the <code>tidyverse</code>, and many other tools to support R programmers) made an announcement: they had developed a new tool called Quarto, which they described as the next-generation version of R Markdown. Why did Posit feel the need to develop a new tool for reproducible reporting? They cited a few reasons:</p>
+<ol style="list-style-type: decimal">
+<li>
+<strong>More consistent syntax</strong>: As you’ve seen in this book, the syntax used to create different outputs with R Markdown varies. For example, the <code>distill</code> package has layout options that don’t work in <code>xaringan</code>. And <code>xaringan</code> uses three dashes to indicate new slides, while three dashes in other output formats would create a horizontal line. With Quarto, the idea is to make the syntax used to create different outputs more consistent.</li>
+<li>
+<strong>Support for multiple languages</strong>: While R Markdown does work with languages such as Python, having the word R in the name was off-putting for non-R users. Creating a tool like Quarto was Posit’s “attempt to bring R Markdown to everyone.” What’s more Quarto makes it straightforward for users to include code from multiple languages in a single document.</li>
+<li>
+<strong>Support for multiple code editors</strong>: R Markdown is designed to work in the RStudio IDE. With the move to support additional languages, it was important to support the code editors that users of those languages prefer. Quarto works in RStudio as well as editors such as VS Code, JupyterLab, and others.</li>
+</ol>
+<p>While the benefits of Quarto are clearest for non-R users, there are also many reasons why R users may want to use Quarto. I’ll focus in this chapter on the benefits for R users who use RStudio. I’ll begin by explaining how to set up and use Quarto. We’ll focus on some of the most important differences between Quarto and R Markdown. I’ll then demonstrate how to make each of the products we made in R Markdown with Quarto. Parameterized reporting, presentations, and websites are all things that Quarto can do, and this chapter will show you how.</p>
+<div id="getting-started-with-quarto" class="section level2 unnumbered">
+<h2>Getting Started with Quarto<a class="anchor" aria-label="anchor" href="#getting-started-with-quarto"><i class="fas fa-link"></i></a>
+</h2>
+<p>To get started with Quarto, we need to first install it. The good news is that newer versions of RStudio (2022.07.1 and later) come with Quarto installed. To check your RStudio version, click RStudio in the top menu bar, then click About RStudio. If you have an older version of RStudio, update it now and Quarto will be installed for you.</p>
+<p>Once you have Quarto installed, you’re ready to work with it. We’ll create a Quarto document by clicking File &gt; New File &gt; Quarto Document. You’ll see a menu, shown in Figure <a href="#fig:TODO"><strong>??</strong></a>, that looks like what you saw when creating an R Markdown document.</p>
+<p>TODO: Add screenshot</p>
+<p>I’ll give my document a title and choose HTML as my output format. The engine option allows users to select a different way to render documents. I’ll keep the default of <code>Knitr</code>, which is the same tool that R Markdown uses to render documents. I’ll keep the Use visual markdown editor unchecked (this option allows you to use an interface that looks more like Microsoft Word). The Quarto document that is created has default content, just like R Markdown documents.</p>
+<div class="sourceCode" id="cb158"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb158-1"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb158-2"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb158-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "My Report"</span></span>
+<span id="cb158-3"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb158-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
+<span id="cb158-4"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb158-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb158-5"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb158-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb158-6"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb158-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Quarto</span></span>
+<span id="cb158-7"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb158-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb158-8"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb158-8" aria-hidden="true" tabindex="-1"></a>Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <span class="ot">&lt;https://quarto.org&gt;</span>.</span>
+<span id="cb158-9"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb158-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb158-10"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb158-10" aria-hidden="true" tabindex="-1"></a><span class="fu">## Running Code</span></span>
+<span id="cb158-11"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb158-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb158-12"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb158-12" aria-hidden="true" tabindex="-1"></a>When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:</span>
+<span id="cb158-13"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb158-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb158-14"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb158-14" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb158-15"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb158-15" aria-hidden="true" tabindex="-1"></a><span class="in">1 + 1</span></span>
+<span id="cb158-16"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb158-16" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb158-17"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb158-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb158-18"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb158-18" aria-hidden="true" tabindex="-1"></a>You can add options to executable code like this </span>
+<span id="cb158-19"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb158-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb158-20"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb158-20" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb158-21"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb158-21" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
+<span id="cb158-22"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb158-22" aria-hidden="true" tabindex="-1"></a><span class="in">2 * 2</span></span>
+<span id="cb158-23"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb158-23" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb158-24"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb158-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb158-25"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb158-25" aria-hidden="true" tabindex="-1"></a>The <span class="in">`echo: false`</span> option disables the printing of code (only output is displayed).</span></code></pre></div>
+<p>There are some differences between R Markdown and Quarto and many things in common. Let’s explore them.</p>
+</div>
+<div id="comparing-r-markdown-and-quarto" class="section level2 unnumbered">
+<h2>Comparing R Markdown and Quarto<a class="anchor" aria-label="anchor" href="#comparing-r-markdown-and-quarto"><i class="fas fa-link"></i></a>
+</h2>
+<p>Looking through our newly created Quarto document, you can see how similar Quarto and R Markdown are overall. Both have the same basic structure: YAML metadata, followed by a combination of markdown text and code chunks. Despite the similarities, there are some differences. In R Markdown, we would have created an HTML document with this YAML.</p>
+<pre><code>---
+title: "My Report"
+output: html_document
+---</code></pre>
+<p>With Quarto, <code>output</code> is replaced with <code>format</code> and we write <code>html</code> instead of <code>html_document</code>.</p>
+<pre><code>---
+title: "My Report"
+format: html
+---</code></pre>
+<p>A second difference between R Markdown and Quarto is that the <code>setup</code> code chunk seen in the former does not exist in the latter. Recall from Chapter <a href="rmarkdown-chapter.html#rmarkdown-chapter">7</a> that the <code>setup</code> code chunk sets default options on things like whether we show code, charts and tables, and other elements in the rendered versions of our documents. With Quarto, these options are set in the YAML. For example, if we want to hide code as well as all warnings and messages from out rendered document, we add them under <code>execute</code> in our YAML as follows (Quarto also allows you to write true and false in lower case):</p>
+<pre><code>---
+title: "My Report"
+format: html
+execute:
+  echo: false
+  warning: false
+  message: false
+---</code></pre>
+<p>In R Markdown, if we want to override options at the individual code chunk level, we do it as follows. The code chunk below would show both the code <code>2 * 2</code> as well as the output (4).</p>
+<div class="sourceCode" id="cb162"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb162-1"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r echo = TRUE}</span></span>
+<span id="cb162-2"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb162-2" aria-hidden="true" tabindex="-1"></a><span class="in">2 * 2</span></span>
+<span id="cb162-3"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb162-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<p>With Quarto, we use a slightly different syntax to set individual chunk-level options. You can see below how the chunk option is not set within the curly brackets, but instead in the code chunk itself. We use the text <code>#|</code> (this is known as the <strong>hash pipe</strong>) at the start of a line to indicate that we are setting options.</p>
+<div class="sourceCode" id="cb163"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb163-1"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb163-2"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb163-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
+<span id="cb163-3"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb163-3" aria-hidden="true" tabindex="-1"></a><span class="in">2 * 2</span></span>
+<span id="cb163-4"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb163-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<p>A final difference you’re likely to see if you switch from R Markdown to Quarto is that option names that consist of two words are separated by a dash rather than a period. R Markdown, for example, uses the code chunk option <code>fig.height</code> to determine the height of plots.</p>
+<div class="sourceCode" id="cb164"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb164-1"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig.height = 10}</span></span>
+<span id="cb164-2"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb164-2" aria-hidden="true" tabindex="-1"></a><span class="in">library(palmerpenguins)</span></span>
+<span id="cb164-3"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb164-3" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb164-4"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb164-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb164-5"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb164-5" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(penguins, aes(x = bill_length_mm,</span></span>
+<span id="cb164-6"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb164-6" aria-hidden="true" tabindex="-1"></a><span class="in">                     y = bill_depth_mm)) +</span></span>
+<span id="cb164-7"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb164-7" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point()</span></span>
+<span id="cb164-8"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb164-8" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<p>In contrast, Quarto uses <code>fig-height</code> as follows.</p>
+<div class="sourceCode" id="cb165"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb165-1"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb165-2"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb165-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height: 10</span></span>
+<span id="cb165-3"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb165-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb165-4"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb165-4" aria-hidden="true" tabindex="-1"></a><span class="in">library(palmerpenguins)</span></span>
+<span id="cb165-5"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb165-5" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb165-6"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb165-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb165-7"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb165-7" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(penguins, aes(x = bill_length_mm,</span></span>
+<span id="cb165-8"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb165-8" aria-hidden="true" tabindex="-1"></a><span class="in">                     y = bill_depth_mm)) +</span></span>
+<span id="cb165-9"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb165-9" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point()</span></span>
+<span id="cb165-10"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb165-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<p>Helpfully for those of us coming from R Markdown, <code>fig.height</code> and similar options with periods in them will continue to work if you forget to make the switch. A list of all code chunk options can be found on the Quarto website: <a href="https://quarto.org/docs/reference/cells/cells-knitr.html" class="uri">https://quarto.org/docs/reference/cells/cells-knitr.html</a>.</p>
+<p>Rendering your Quarto document to HTML (or any other format) follows the same process as R Markdown. While you use the Knit button to render an R Markdown document, with Quarto the button is called Render. Figure <a href="#fig:TODO"><strong>??</strong></a> shows both buttons.</p>
+<p>TODO: Add screenshot</p>
+<p>Clicking the Render button will turn the Quarto document I created above into an HTML file, seen in Figure <a href="#fig:TODO"><strong>??</strong></a>.</p>
+<p>TODO: Add screenshot</p>
+<p>As you’ve seen, the differences between R Markdown and Quarto are mostly around syntax. All of the general concepts you learned about generating reports with the single-tool workflow described in Chapter <a href="rmarkdown-chapter.html#rmarkdown-chapter">7</a> apply to Quarto as well.</p>
+</div>
+<div id="making-different-types-of-outputs-with-quarto" class="section level2 unnumbered">
+<h2>Making Different Types of Outputs with Quarto<a class="anchor" aria-label="anchor" href="#making-different-types-of-outputs-with-quarto"><i class="fas fa-link"></i></a>
+</h2>
+<p>Now that you’ve learned how Quarto works, let’s make a few different things with it. We’ll go through the outputs that you’ve seen how to develop in Chapters <a href="#parameterized-reporting-chapter"><strong>??</strong></a>, <a href="presentations-chapter.html#presentations-chapter">9</a>, and <a href="websites-chapter.html#websites-chapter">10</a>.</p>
+<div id="parameterized-reporting-with-quarto" class="section level3 unnumbered">
+<h3>Parameterized Reporting with Quarto<a class="anchor" aria-label="anchor" href="#parameterized-reporting-with-quarto"><i class="fas fa-link"></i></a>
+</h3>
+<p>Let’s start with parameterized reporting. The process of making parameterized reports with Quarto is nearly identical to how it’s done with R Markdown. Below, I’ve taken the R Markdown document used to make the Urban Institute COVID Report in Chapter <a href="#parameterized-reporting-chapter"><strong>??</strong></a> and adapted it for Quarto. I did so by copying the <code>.Rmd</code> file and changing its extension to <code>.qmd</code>. From there, I made the following changes:</p>
+<ol style="list-style-type: decimal">
+<li>Switched <code>output: html_document</code> to <code>format: html</code> in the YAML.</li>
+<li>Removed the <code>setup</code> code chunk and put the options that were there in the YAML.</li>
+<li>Switched the <code>fig.height</code> option in the last code chunk to <code>fig-height</code> and used the hash pipe.</li>
+</ol>
+<div class="sourceCode" id="cb166"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb166-1"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb166-2"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Urban Institute COVID Report"</span></span>
+<span id="cb166-3"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
+<span id="cb166-4"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-4" aria-hidden="true" tabindex="-1"></a><span class="an">params:</span></span>
+<span id="cb166-5"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-5" aria-hidden="true" tabindex="-1"></a><span class="co">  state: "Alabama"</span></span>
+<span id="cb166-6"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-6" aria-hidden="true" tabindex="-1"></a><span class="an">execute:</span></span>
+<span id="cb166-7"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-7" aria-hidden="true" tabindex="-1"></a><span class="co">  echo: false</span></span>
+<span id="cb166-8"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-8" aria-hidden="true" tabindex="-1"></a><span class="co">  warning: false</span></span>
+<span id="cb166-9"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-9" aria-hidden="true" tabindex="-1"></a><span class="co">  message: false</span></span>
+<span id="cb166-10"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-10" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb166-11"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb166-12"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-12" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb166-13"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-13" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb166-14"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-14" aria-hidden="true" tabindex="-1"></a><span class="in">library(urbnthemes)</span></span>
+<span id="cb166-15"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-15" aria-hidden="true" tabindex="-1"></a><span class="in">library(here)</span></span>
+<span id="cb166-16"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-16" aria-hidden="true" tabindex="-1"></a><span class="in">library(scales)</span></span>
+<span id="cb166-17"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-17" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb166-18"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb166-19"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-19" aria-hidden="true" tabindex="-1"></a><span class="fu"># `r params$state`</span></span>
+<span id="cb166-20"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb166-21"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-21" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb166-22"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-22" aria-hidden="true" tabindex="-1"></a><span class="in">cases &lt;- tibble(state.name) %&gt;%</span></span>
+<span id="cb166-23"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-23" aria-hidden="true" tabindex="-1"></a><span class="in">  rbind(state.name = "District of Columbia") %&gt;%</span></span>
+<span id="cb166-24"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-24" aria-hidden="true" tabindex="-1"></a><span class="in">  left_join(read_csv("https://data.rwithoutstatistics.com/united_states_covid19_cases_deaths_and_testing_by_state.csv", skip = 2),</span></span>
+<span id="cb166-25"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-25" aria-hidden="true" tabindex="-1"></a><span class="in">            by = c("state.name" = "State/Territory")) %&gt;%</span></span>
+<span id="cb166-26"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-26" aria-hidden="true" tabindex="-1"></a><span class="in">  select(total_cases = `Total Cases`, state.name,</span></span>
+<span id="cb166-27"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-27" aria-hidden="true" tabindex="-1"></a><span class="in">         cases_per_100000 = `Case Rate per 100000`) %&gt;%</span></span>
+<span id="cb166-28"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-28" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(cases_per_100000 = parse_number(cases_per_100000)) %&gt;% </span></span>
+<span id="cb166-29"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-29" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(case_rank = rank(-cases_per_100000, ties.method = "min"))</span></span>
+<span id="cb166-30"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-30" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb166-31"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb166-32"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-32" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb166-33"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-33" aria-hidden="true" tabindex="-1"></a><span class="in">state_text &lt;- if_else(params$state == "District of Columbia", str_glue("the District of Columbia"), str_glue("state of {params$state}"))</span></span>
+<span id="cb166-34"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb166-35"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-35" aria-hidden="true" tabindex="-1"></a><span class="in">state_cases_per_100000 &lt;- cases %&gt;%</span></span>
+<span id="cb166-36"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-36" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(state.name == params$state) %&gt;% </span></span>
+<span id="cb166-37"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-37" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(cases_per_100000) %&gt;% </span></span>
+<span id="cb166-38"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-38" aria-hidden="true" tabindex="-1"></a><span class="in">  comma()</span></span>
+<span id="cb166-39"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb166-40"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-40" aria-hidden="true" tabindex="-1"></a><span class="in">state_cases_rank &lt;- cases %&gt;%</span></span>
+<span id="cb166-41"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-41" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(state.name == params$state) %&gt;% </span></span>
+<span id="cb166-42"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-42" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(case_rank)</span></span>
+<span id="cb166-43"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-43" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb166-44"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb166-45"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-45" aria-hidden="true" tabindex="-1"></a>In <span class="in">`r state_text`</span>, there were <span class="in">`r state_cases_per_100000`</span> cases per 100,000 people in the last seven days. This puts <span class="in">`r params$state`</span> at number <span class="in">`r state_cases_rank`</span> of 50 states and the District of Columbia. </span>
+<span id="cb166-46"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb166-47"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-47" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb166-48"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-48" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height: 8</span></span>
+<span id="cb166-49"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb166-50"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-50" aria-hidden="true" tabindex="-1"></a><span class="in">set_urbn_defaults(style = "print")</span></span>
+<span id="cb166-51"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb166-52"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-52" aria-hidden="true" tabindex="-1"></a><span class="in">cases %&gt;% </span></span>
+<span id="cb166-53"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-53" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(highlight_state = if_else(state.name == params$state, "Y", "N")) %&gt;% </span></span>
+<span id="cb166-54"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-54" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(state.name = fct_reorder(state.name, cases_per_100000)) %&gt;% </span></span>
+<span id="cb166-55"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-55" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x = cases_per_100000,</span></span>
+<span id="cb166-56"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-56" aria-hidden="true" tabindex="-1"></a><span class="in">             y = state.name,</span></span>
+<span id="cb166-57"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-57" aria-hidden="true" tabindex="-1"></a><span class="in">             fill = highlight_state)) +</span></span>
+<span id="cb166-58"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-58" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_col() +</span></span>
+<span id="cb166-59"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-59" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_x_continuous(labels = comma_format()) +</span></span>
+<span id="cb166-60"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-60" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(legend.position = "none") +</span></span>
+<span id="cb166-61"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-61" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(y = NULL,</span></span>
+<span id="cb166-62"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-62" aria-hidden="true" tabindex="-1"></a><span class="in">       x = "Cases per 100,000")</span></span>
+<span id="cb166-63"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb166-63" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<p>Despite these small differences, when rendered the report looks almost exactly the same as the one we produced in Chapter <a href="#parameterized-reporting-chapter"><strong>??</strong></a>. Also nearly identical is the process of creating one report for each state. We can take the <code>render.R</code> script file we used to make parameterized reports in Chapter <a href="#parameterized-reporting-chapter"><strong>??</strong></a> and, with a few small tweaks, it works. In the updated <code>render.R</code> file below, I made the following tweaks:</p>
+<ol style="list-style-type: decimal">
+<li>Load the <code>quarto</code> package instead of the <code>rmarkdown</code> package.</li>
+<li>Made the input file <code>urban-covid-budget-report.qmd</code> instead of <code>urban-covid-budget-report.Rmd</code>.</li>
+<li>In the <code>reports</code> tibble I created, used <code>execute_params</code> instead of <code>params</code>.</li>
+<li>On the last line, used the <code><a href="https://rdrr.io/pkg/quarto/man/quarto_render.html">quarto_render()</a></code> function instead of the <code><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html">render()</a></code> function from the <code>markdown</code> package.</li>
+</ol>
+<div class="sourceCode" id="cb167"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Load packages</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/quarto-dev/quarto-r">quarto</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create a vector of all states and the District of Columbia</span></span>
+<span><span class="va">state</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span><span class="va">state.name</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="st">"District of Columbia"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">state.name</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create a tibble with information on the:</span></span>
+<span><span class="co"># input R Markdown document</span></span>
+<span><span class="co"># output HTML file</span></span>
+<span><span class="co"># parameters needed to knit the document</span></span>
+<span><span class="va">reports</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
+<span>  input <span class="op">=</span> <span class="st">"urban-covid-budget-report.qmd"</span>,</span>
+<span>  output_file <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue</a></span><span class="op">(</span><span class="st">"{state}.html"</span><span class="op">)</span>,</span>
+<span>  execute_params <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">state</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>state <span class="op">=</span> <span class="va">.</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Generate all of our reports</span></span>
+<span><span class="va">reports</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/pmap.html">pwalk</a></span><span class="op">(</span><span class="va">quarto_render</span><span class="op">)</span></span></code></pre></div>
+<p>Just as in Chapter <a href="#parameterized-reporting-chapter"><strong>??</strong></a>, running this code will produce one report for each state.</p>
+</div>
+<div id="presentations" class="section level3 unnumbered">
+<h3>Presentations<a class="anchor" aria-label="anchor" href="#presentations"><i class="fas fa-link"></i></a>
+</h3>
+<p>Quarto can also produce presentations like those we made in Chapter <a href="presentations-chapter.html#presentations-chapter">9</a>. Again, the process is nearly identical to how we made slides with the <code>xaringan</code> package. To make a presentation with Quarto, click on File &gt; New File &gt; Quarto Presentation. You’ll want to choose Reveal JS to make your slides and leave the Engine and Editor options untouched, as seen in Figure <a href="#fig:TODO"><strong>??</strong></a>.</p>
+<p>TODO: Add screenshot</p>
+<p>The slides we’ll make use the reveal.js javascript library under the hood. Making slides in this format is the Quarto approach that is most similar to making slides with <code>xaringan</code>. Below I’ve taken the code used to make a presentation with <code>xaringan</code> in Chapter <a href="presentations-chapter.html#presentations-chapter">9</a> and made a few updates to make it work with Quarto.</p>
+<div class="sourceCode" id="cb168"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb168-1"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb168-2"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Penguins Report"</span></span>
+<span id="cb168-3"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "David Keyes"</span></span>
+<span id="cb168-4"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-4" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> revealjs</span></span>
+<span id="cb168-5"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-5" aria-hidden="true" tabindex="-1"></a><span class="an">execute:</span><span class="co"> </span></span>
+<span id="cb168-6"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-6" aria-hidden="true" tabindex="-1"></a><span class="co">  echo: false</span></span>
+<span id="cb168-7"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-7" aria-hidden="true" tabindex="-1"></a><span class="co">  warning: false</span></span>
+<span id="cb168-8"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-8" aria-hidden="true" tabindex="-1"></a><span class="co">  message: false</span></span>
+<span id="cb168-9"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-9" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb168-10"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb168-11"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-11" aria-hidden="true" tabindex="-1"></a><span class="fu"># Introduction</span></span>
+<span id="cb168-12"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb168-13"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-13" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb168-14"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-14" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb168-15"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-15" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb168-16"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb168-17"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-17" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb168-18"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-18" aria-hidden="true" tabindex="-1"></a><span class="in">penguins &lt;- read_csv("https://raw.githubusercontent.com/rfortherestofus/r-without-statistics/main/data/penguins-2008.csv")</span></span>
+<span id="cb168-19"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-19" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb168-20"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb168-21"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-21" aria-hidden="true" tabindex="-1"></a>We are writing a report about the **Palmer Penguins**. These penguins are *really* amazing. There are three species:</span>
+<span id="cb168-22"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb168-23"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Adelie</span>
+<span id="cb168-24"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-24" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Gentoo</span>
+<span id="cb168-25"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-25" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Chinstrap</span>
+<span id="cb168-26"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb168-27"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-27" aria-hidden="true" tabindex="-1"></a><span class="fu">## Bill Length</span></span>
+<span id="cb168-28"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb168-29"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-29" aria-hidden="true" tabindex="-1"></a>We can make a histogram to see the distribution of bill lengths.</span>
+<span id="cb168-30"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb168-31"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-31" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb168-32"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-32" aria-hidden="true" tabindex="-1"></a><span class="in">penguins %&gt;% </span></span>
+<span id="cb168-33"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-33" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x = bill_length_mm)) +</span></span>
+<span id="cb168-34"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-34" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_histogram() +</span></span>
+<span id="cb168-35"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-35" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb168-36"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-36" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb168-37"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb168-38"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-38" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb168-39"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-39" aria-hidden="true" tabindex="-1"></a><span class="in">average_bill_length &lt;- penguins %&gt;% </span></span>
+<span id="cb168-40"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-40" aria-hidden="true" tabindex="-1"></a><span class="in">  summarize(avg_bill_length = mean(bill_length_mm,</span></span>
+<span id="cb168-41"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-41" aria-hidden="true" tabindex="-1"></a><span class="in">                                   na.rm = TRUE)) %&gt;% </span></span>
+<span id="cb168-42"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-42" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(avg_bill_length)</span></span>
+<span id="cb168-43"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-43" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb168-44"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb168-45"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb168-45" aria-hidden="true" tabindex="-1"></a>The chart shows the distribution of bill lengths. The average bill length is <span class="in">`r average_bill_length`</span> millimeters.</span></code></pre></div>
+<p>When we render this, we get an HTML file with our slides, seen in Figure <a href="#fig:TODO"><strong>??</strong></a> below.</p>
+<p>TODO: Add screenshot</p>
+<p>Overall, the output looks similar to the default <code>xaringan</code> slides we made. However, remember how we had to manually add three dashes to make slides with <code>xaringan</code>? With Quarto, any first- or second-level headers make new slides (you can also use three dashes to make a slide break).</p>
+<p>Quarto slides also make it possible to incrementally reveal content. Bulleted and numbered lists can be made to incrementally reveal by default by adjusting the YAML. See here how I add <code>incremental: true</code> to the YAML.</p>
+<div class="sourceCode" id="cb169"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb169-1"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb169-2"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb169-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Penguins Report"</span></span>
+<span id="cb169-3"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb169-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "David Keyes"</span></span>
+<span id="cb169-4"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb169-4" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> </span></span>
+<span id="cb169-5"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb169-5" aria-hidden="true" tabindex="-1"></a><span class="co">  revealjs:</span></span>
+<span id="cb169-6"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb169-6" aria-hidden="true" tabindex="-1"></a><span class="co">      incremental: true</span></span>
+<span id="cb169-7"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb169-7" aria-hidden="true" tabindex="-1"></a><span class="an">execute:</span><span class="co"> </span></span>
+<span id="cb169-8"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb169-8" aria-hidden="true" tabindex="-1"></a><span class="co">  echo: false</span></span>
+<span id="cb169-9"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb169-9" aria-hidden="true" tabindex="-1"></a><span class="co">  warning: false</span></span>
+<span id="cb169-10"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb169-10" aria-hidden="true" tabindex="-1"></a><span class="co">  message: false</span></span>
+<span id="cb169-11"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb169-11" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code></pre></div>
+<p>When I do this, the content in all lists in my presentation will be revealed one item at a time. You can also set just some lists to incrementally reveal using this format:</p>
+<div class="sourceCode" id="cb170"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb170-1"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb170-1" aria-hidden="true" tabindex="-1"></a>::: {.incremental}</span>
+<span id="cb170-2"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb170-2" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Adelie</span>
+<span id="cb170-3"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb170-3" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Gentoo</span>
+<span id="cb170-4"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb170-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Chinstrap</span>
+<span id="cb170-5"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb170-5" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div>
+<p>This pattern using <code>:::</code> to start and end a section creates a section in the resulting HTML file known as a <code>&lt;div&gt;</code>. The HTML <code>&lt;div&gt;</code> tag allows you to define properties within that section. In the code above, adding <code>{.incremental}</code> sets a custom CSS class that makes the list reveal incrementally.</p>
+<p>We see a similar pattern when creating columns in Quarto slides. Let’s say we want to create a slide with content in two columns, as in Figure <a href="#fig:TODO"><strong>??</strong></a>.</p>
+<p>TODO: Add screenshot.</p>
+<p>The code below is what I used to create the two-column slide. You’ll see the <code>:::</code> as well as <code>::::</code>. This creates nested divs. We first have a <code>columns</code> class, which tells the HTML that all content within the <code>::::</code> should be laid out as columns. Then, we use <code>::: {.column width="50%"}</code> to start a div that takes up half of the width of the slide. With both <code>::::</code> and <code>:::</code>, we have to also have a matching closing <code>::::</code> and <code>:::</code> to indicate the end of the section.</p>
+<div class="sourceCode" id="cb171"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb171-1"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb171-1" aria-hidden="true" tabindex="-1"></a>:::: {.columns}</span>
+<span id="cb171-2"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb171-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb171-3"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb171-3" aria-hidden="true" tabindex="-1"></a>::: {.column width="50%"}</span>
+<span id="cb171-4"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb171-4" aria-hidden="true" tabindex="-1"></a>Adelie</span>
+<span id="cb171-5"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb171-5" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb171-6"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb171-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb171-7"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb171-7" aria-hidden="true" tabindex="-1"></a>::: {.column width="50%"}</span>
+<span id="cb171-8"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb171-8" aria-hidden="true" tabindex="-1"></a>Gentoo</span>
+<span id="cb171-9"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb171-9" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb171-10"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb171-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb171-11"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb171-11" aria-hidden="true" tabindex="-1"></a>::::</span></code></pre></div>
+<p>With <code>xaringan</code> we were also able to easily center content on our slides by surrounding it with <code>.center[]</code>. Doing the same thing in Quarto is slightly more complicated. Quarto has no built-in CSS class to center content so we need to define it ourselves. I begin by creating a CSS code chunk and creating a custom class called <code>center-slide</code>. Using a bit of CSS, I tell it to center align all content (despite it saying <code>text-align</code> you’ll see that it also aligns images).</p>
+<div class="sourceCode" id="cb172"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb172-1"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb172-1" aria-hidden="true" tabindex="-1"></a>```{css}</span>
+<span id="cb172-2"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb172-2" aria-hidden="true" tabindex="-1"></a><span class="fu">.center-slide</span> {</span>
+<span id="cb172-3"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb172-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">text-align</span>: <span class="dv">center</span><span class="op">;</span></span>
+<span id="cb172-4"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb172-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb172-5"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb172-5" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div>
+<p>I then apply the new <code>center-slide</code> class by putting it next to the title of the slide as follows.</p>
+<div class="sourceCode" id="cb173"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb173-1"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb173-1" aria-hidden="true" tabindex="-1"></a>## Bill Length {<span class="fu">.center-slide</span>}</span></code></pre></div>
+<p>With our custom CSS applied, the slide now has all of its content centered, as seen in Figure <a href="#fig:TODO"><strong>??</strong></a>.</p>
+<p>TODO: Add screenshot</p>
+<p>Working in <code>xaringan</code> we added a background image to one of our slides. We can do the same in Quarto by applying the <code>background-image</code> attribute to a slide as follows.</p>
+<div class="sourceCode" id="cb174"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb174-1"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb174-1" aria-hidden="true" tabindex="-1"></a>## Penguins {background-image="penguins<span class="fu">.jpg</span>"}</span></code></pre></div>
+<p>This will add a slide with the text Penguins in front of an image of penguins, as seen in Figure <a href="#fig:TODO"><strong>??</strong></a>.</p>
+<p>TODO: Add screenshot</p>
+<p>We’ve started making some changes to the look-and-feel of our Quarto slides. The sky is the limit in terms of further customizations. As with <code>xaringan</code>, there are two main ways to customize your slides:</p>
+<ol style="list-style-type: decimal">
+<li>Using existing themes</li>
+<li>Changing the CSS</li>
+</ol>
+<p>Themes are the easiest way to change what your slides look like. Quarto has many themes you can apply by adding their name to your YAML as follows:</p>
+<div class="sourceCode" id="cb175"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb175-1"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb175-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb175-2"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb175-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Penguins Reports"</span></span>
+<span id="cb175-3"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb175-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb175-4"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb175-4" aria-hidden="true" tabindex="-1"></a><span class="co">  revealjs: </span></span>
+<span id="cb175-5"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb175-5" aria-hidden="true" tabindex="-1"></a><span class="co">    theme: dark</span></span>
+<span id="cb175-6"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb175-6" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code></pre></div>
+<p>Using this theme will change from the default light theme to a dark theme, as seen in Figure <a href="#fig:TODO"><strong>??</strong></a>.</p>
+<p>TODO: Add screenshot</p>
+<p>To see the full list of available themes, go to <a href="https://quarto.org/docs/presentations/revealjs/themes.html" class="uri">https://quarto.org/docs/presentations/revealjs/themes.html</a>.</p>
+<p>You can also write custom CSS to change your slides further. Quarto uses a type of CSS called Sass. The most important practical implication of using Sass is that we can use variables in our CSS. There are a number of variables that we can target to make changes to our slides. If you recall how the <code>xaringanthemer</code> package allowed us to target things like <code>header_h2_font_size</code> and <code>header_color</code>, using pre-existing variables with Sass will feel very similar.</p>
+<p>To start, I’ll create a Sass file called <code>theme.scss</code> and add two sections to it as follows:</p>
+<div class="sourceCode" id="cb176"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb176-1"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="co">/*-- scss:defaults --*/</span></span>
+<span id="cb176-2"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb176-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb176-3"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb176-3" aria-hidden="true" tabindex="-1"></a><span class="co">/*-- scss:rules --*/</span></span></code></pre></div>
+<p>In the <code>scss:defaults</code> section, we can use the Quarto Sass variables. For example, to change the color and size of second-level headers, I would add this code:</p>
+<div class="sourceCode" id="cb177"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb177-1"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="co">/*-- scss:defaults --*/</span></span>
+<span id="cb177-2"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb177-2" aria-hidden="true" tabindex="-1"></a>$presentation-heading-color<span class="in">: "red</span>"</span>
+<span id="cb177-3"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb177-3" aria-hidden="true" tabindex="-1"></a>$presentation-h2-font-size<span class="in">: 50px;</span></span>
+<span id="cb177-4"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb177-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb177-5"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb177-5" aria-hidden="true" tabindex="-1"></a><span class="co">/*-- scss:rules --*/</span></span></code></pre></div>
+<p>To apply these tweaks to my slides, I need to adjust my YAML to tell Quarto use my custom <code>theme.scss</code> file. I do this as follows:</p>
+<div class="sourceCode" id="cb178"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb178-1"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb178-2"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb178-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Penguins Reports"</span></span>
+<span id="cb178-3"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb178-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb178-4"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb178-4" aria-hidden="true" tabindex="-1"></a><span class="co">  revealjs: </span></span>
+<span id="cb178-5"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb178-5" aria-hidden="true" tabindex="-1"></a><span class="co">    theme: theme.scss</span></span>
+<span id="cb178-6"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb178-6" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code></pre></div>
+<p>Figure <a href="#fig:TODO"><strong>??</strong></a> shows the changes applied to my slides.</p>
+<p>TODO: Add screenshot</p>
+<p>The <code>scss:defaults</code> is for using available variables (the full list of variables is available at <a href="https://quarto.org/docs/presentations/revealjs/themes.html#sass-variables" class="uri">https://quarto.org/docs/presentations/revealjs/themes.html#sass-variables</a>). The <code>sass:rules</code> is where you would add additional tweaks that can’t be done by targeting variables. For example, I could take my code from above to center all of the content in a slide and add it to the <code>scss:defaults</code> section.</p>
+<div class="sourceCode" id="cb179"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb179-1"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="co">/*-- scss:defaults --*/</span></span>
+<span id="cb179-2"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb179-2" aria-hidden="true" tabindex="-1"></a>$presentation-heading-color<span class="in">: red</span>;</span>
+<span id="cb179-3"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb179-3" aria-hidden="true" tabindex="-1"></a>$presentation-h2-font-size<span class="in">: 100px;</span></span>
+<span id="cb179-4"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb179-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb179-5"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb179-5" aria-hidden="true" tabindex="-1"></a><span class="co">/*-- scss:rules --*/</span></span>
+<span id="cb179-6"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb179-6" aria-hidden="true" tabindex="-1"></a><span class="fu">.center-slide</span> {</span>
+<span id="cb179-7"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb179-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">text-align</span>: <span class="dv">center</span><span class="op">;</span></span>
+<span id="cb179-8"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb179-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Because rendered Quarto slides are HTML documents, you can tweak them however you’d like with custom CSS. What’s more, because our slides use reveal.js under the hood, all of the features built into that Javascript library work in Quarto. There are easy ways to add transitions, animations, interactive content, and much more. The demo Quarto presentation, available at <a href="https://quarto.org/docs/presentations/revealjs/demo/" class="uri">https://quarto.org/docs/presentations/revealjs/demo/</a>, shows many of these features in action.</p>
+</div>
+<div id="websites" class="section level3 unnumbered">
+<h3>Websites<a class="anchor" aria-label="anchor" href="#websites"><i class="fas fa-link"></i></a>
+</h3>
+<p>Quarto can also make websites. In the same way that we were able to make slides without an external package like <code>xaringan</code>, we can also make websites without an external package like <code>distill</code>. To create a Quarto website, go to File &gt; New Project. Then select New Project and you’ll be presented with the menu in Figure <a href="#fig:TODO"><strong>??</strong></a>.</p>
+<p>TODO: Add screenshot</p>
+<p>Select Quarto website and you’ll be prompted to choose a directory to place it in. Keep the default Engine (Knitr), check Create a git repository (this will only show up if you have already installed git) and leave everything else unchecked. Your screen should look like Figure <a href="#fig:TODO"><strong>??</strong></a>.</p>
+<p>TODO: Add screenshot</p>
+<p>Once you hit the Create Project button, you’ll see a series of files created. There is an <code>index.qmd</code> and <code>about.qmd</code> file as well as a <code>_quarto.yml</code> and <code>styles.css</code> file. These files should sound familiar if you read Chapter <a href="websites-chapter.html#websites-chapter">10</a> on making websites with the <code>distill</code> package. The <code>.qmd</code> files are where we’ll add content; the <code>_quarto.yml</code> file is where we’ll set options for the website as a whole; and the <code>styles.css</code> file is where we’ll add CSS to customize the visual appearance of our website.</p>
+<div id="building-our-website" class="section level4 unnumbered">
+<h4>Building our Website<a class="anchor" aria-label="anchor" href="#building-our-website"><i class="fas fa-link"></i></a>
+</h4>
+<p>Let’s start with the <code>.qmd</code> files. If you open <code>index.qmd</code> or <code>about.qmd</code> and you’ll see some default content. I’m going to delete the default content from the <code>index.qmd</code> and replace it with the content from website we made in Chapter <a href="websites-chapter.html#websites-chapter">10</a>. The only element I have removed is the <code>layout = "l-page"</code> that we used to make a wider layout for the map (we’ll discuss how to make different layouts in Quarto below).</p>
+<div class="sourceCode" id="cb180"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb180-1"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb180-2"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-2" aria-hidden="true" tabindex="-1"></a><span class="in"># Load packages</span></span>
+<span id="cb180-3"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb180-4"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-4" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb180-5"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-5" aria-hidden="true" tabindex="-1"></a><span class="in">library(janitor)</span></span>
+<span id="cb180-6"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-6" aria-hidden="true" tabindex="-1"></a><span class="in">library(tigris)</span></span>
+<span id="cb180-7"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-7" aria-hidden="true" tabindex="-1"></a><span class="in">library(gt)</span></span>
+<span id="cb180-8"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-8" aria-hidden="true" tabindex="-1"></a><span class="in">library(lubridate)</span></span>
+<span id="cb180-9"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-9" aria-hidden="true" tabindex="-1"></a><span class="in">library(reactable)</span></span>
+<span id="cb180-10"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb180-11"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb180-12"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-12" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb180-13"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-13" aria-hidden="true" tabindex="-1"></a><span class="in"># Import data</span></span>
+<span id="cb180-14"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb180-15"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-15" aria-hidden="true" tabindex="-1"></a><span class="in">us_states &lt;- states(cb = TRUE, </span></span>
+<span id="cb180-16"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-16" aria-hidden="true" tabindex="-1"></a><span class="in">                    resolution = "20m",</span></span>
+<span id="cb180-17"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-17" aria-hidden="true" tabindex="-1"></a><span class="in">                    progress_bar = FALSE) %&gt;%</span></span>
+<span id="cb180-18"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-18" aria-hidden="true" tabindex="-1"></a><span class="in">  shift_geometry() %&gt;% </span></span>
+<span id="cb180-19"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-19" aria-hidden="true" tabindex="-1"></a><span class="in">  clean_names() %&gt;% </span></span>
+<span id="cb180-20"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-20" aria-hidden="true" tabindex="-1"></a><span class="in">  select(geoid, name) %&gt;% </span></span>
+<span id="cb180-21"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-21" aria-hidden="true" tabindex="-1"></a><span class="in">  rename(state = name) %&gt;% </span></span>
+<span id="cb180-22"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-22" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(state %in% state.name)</span></span>
+<span id="cb180-23"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb180-24"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-24" aria-hidden="true" tabindex="-1"></a><span class="in">covid_data &lt;- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/rolling-averages/us-states.csv") %&gt;% </span></span>
+<span id="cb180-25"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-25" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(state %in% state.name) %&gt;% </span></span>
+<span id="cb180-26"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-26" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(geoid = str_remove(geoid, "USA-")) </span></span>
+<span id="cb180-27"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb180-28"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-28" aria-hidden="true" tabindex="-1"></a><span class="in">most_recent_day &lt;- covid_data %&gt;% </span></span>
+<span id="cb180-29"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-29" aria-hidden="true" tabindex="-1"></a><span class="in">  slice_max(order_by = date,</span></span>
+<span id="cb180-30"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-30" aria-hidden="true" tabindex="-1"></a><span class="in">            n = 1) %&gt;% </span></span>
+<span id="cb180-31"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-31" aria-hidden="true" tabindex="-1"></a><span class="in">  distinct(date) %&gt;% </span></span>
+<span id="cb180-32"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-32" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(date_nice_format = str_glue("{month(date, label = TRUE, abbr = FALSE)} {day(date)}, {year(date)}")) %&gt;% </span></span>
+<span id="cb180-33"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-33" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(date_nice_format)</span></span>
+<span id="cb180-34"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-34" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb180-35"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb180-36"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-36" aria-hidden="true" tabindex="-1"></a><span class="fu"># COVID Death Rates as of `r most_recent_day`</span></span>
+<span id="cb180-37"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb180-38"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-38" aria-hidden="true" tabindex="-1"></a>This table shows COVID death rates per 100,000 people in four states states.</span>
+<span id="cb180-39"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb180-40"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb180-41"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-41" aria-hidden="true" tabindex="-1"></a><span class="in"># Make table</span></span>
+<span id="cb180-42"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb180-43"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-43" aria-hidden="true" tabindex="-1"></a><span class="in">covid_data %&gt;% </span></span>
+<span id="cb180-44"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-44" aria-hidden="true" tabindex="-1"></a><span class="in">  slice_max(order_by = date,</span></span>
+<span id="cb180-45"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-45" aria-hidden="true" tabindex="-1"></a><span class="in">            n = 1) %&gt;%</span></span>
+<span id="cb180-46"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-46" aria-hidden="true" tabindex="-1"></a><span class="in">  select(state, deaths_avg_per_100k) %&gt;% </span></span>
+<span id="cb180-47"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-47" aria-hidden="true" tabindex="-1"></a><span class="in">  arrange(state) %&gt;% </span></span>
+<span id="cb180-48"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-48" aria-hidden="true" tabindex="-1"></a><span class="in">  set_names("State", "Death rate") %&gt;% </span></span>
+<span id="cb180-49"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-49" aria-hidden="true" tabindex="-1"></a><span class="in">  reactable()</span></span>
+<span id="cb180-50"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-50" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb180-51"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb180-52"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-52" aria-hidden="true" tabindex="-1"></a>We can see this same death rate data for all states on a map.</span>
+<span id="cb180-53"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb180-54"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-54" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb180-55"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-55" aria-hidden="true" tabindex="-1"></a><span class="in"># Make map</span></span>
+<span id="cb180-56"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb180-57"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-57" aria-hidden="true" tabindex="-1"></a><span class="in">most_recent &lt;- us_states %&gt;% </span></span>
+<span id="cb180-58"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-58" aria-hidden="true" tabindex="-1"></a><span class="in">  left_join(covid_data, by = "state") %&gt;% </span></span>
+<span id="cb180-59"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-59" aria-hidden="true" tabindex="-1"></a><span class="in">  slice_max(order_by = date,</span></span>
+<span id="cb180-60"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-60" aria-hidden="true" tabindex="-1"></a><span class="in">            n = 1) </span></span>
+<span id="cb180-61"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb180-62"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-62" aria-hidden="true" tabindex="-1"></a><span class="in">most_recent %&gt;% </span></span>
+<span id="cb180-63"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-63" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(fill = deaths_avg_per_100k)) +</span></span>
+<span id="cb180-64"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-64" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_sf() +</span></span>
+<span id="cb180-65"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-65" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_fill_viridis_c(option = "rocket") +</span></span>
+<span id="cb180-66"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-66" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(fill = "Deaths per\n100,000 people") +</span></span>
+<span id="cb180-67"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-67" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_void()</span></span>
+<span id="cb180-68"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-68" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb180-69"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb180-70"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-70" aria-hidden="true" tabindex="-1"></a><span class="fu"># COVID Death Rates Over Time</span></span>
+<span id="cb180-71"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb180-72"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-72" aria-hidden="true" tabindex="-1"></a>The following chart shows COVID death rates from the start of COVID in early 2020 until <span class="in">`r most_recent_day`</span>.</span>
+<span id="cb180-73"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb180-74"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-74" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb180-75"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-75" aria-hidden="true" tabindex="-1"></a><span class="in"># Make chart</span></span>
+<span id="cb180-76"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb180-77"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-77" aria-hidden="true" tabindex="-1"></a><span class="in">library(plotly)</span></span>
+<span id="cb180-78"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb180-79"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-79" aria-hidden="true" tabindex="-1"></a><span class="in">covid_chart &lt;- covid_data %&gt;% </span></span>
+<span id="cb180-80"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-80" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(state %in% c("Alabama",</span></span>
+<span id="cb180-81"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-81" aria-hidden="true" tabindex="-1"></a><span class="in">                      "Alaska",</span></span>
+<span id="cb180-82"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-82" aria-hidden="true" tabindex="-1"></a><span class="in">                      "Arizona",</span></span>
+<span id="cb180-83"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-83" aria-hidden="true" tabindex="-1"></a><span class="in">                      "Arkansas")) %&gt;% </span></span>
+<span id="cb180-84"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-84" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x = date,</span></span>
+<span id="cb180-85"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-85" aria-hidden="true" tabindex="-1"></a><span class="in">             y = deaths_avg_per_100k,</span></span>
+<span id="cb180-86"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-86" aria-hidden="true" tabindex="-1"></a><span class="in">             group = state,</span></span>
+<span id="cb180-87"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-87" aria-hidden="true" tabindex="-1"></a><span class="in">             fill = deaths_avg_per_100k)) +</span></span>
+<span id="cb180-88"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-88" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_col() +</span></span>
+<span id="cb180-89"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-89" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_fill_viridis_c(option = "rocket") +</span></span>
+<span id="cb180-90"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-90" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal() +</span></span>
+<span id="cb180-91"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-91" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(title = "Deaths per 100,000 people over time") +</span></span>
+<span id="cb180-92"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-92" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(legend.position = "none",</span></span>
+<span id="cb180-93"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-93" aria-hidden="true" tabindex="-1"></a><span class="in">        plot.title.position = "plot",</span></span>
+<span id="cb180-94"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-94" aria-hidden="true" tabindex="-1"></a><span class="in">        plot.title = element_text(face = "bold"),</span></span>
+<span id="cb180-95"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-95" aria-hidden="true" tabindex="-1"></a><span class="in">        panel.grid.minor = element_blank(),</span></span>
+<span id="cb180-96"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-96" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.title = element_blank()) +</span></span>
+<span id="cb180-97"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-97" aria-hidden="true" tabindex="-1"></a><span class="in">  facet_wrap(~state,</span></span>
+<span id="cb180-98"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-98" aria-hidden="true" tabindex="-1"></a><span class="in">             nrow = 2)</span></span>
+<span id="cb180-99"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb180-100"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb180-101"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-101" aria-hidden="true" tabindex="-1"></a><span class="in">ggplotly(covid_chart)</span></span>
+<span id="cb180-102"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb180-102" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<p>At this point, I could render the <code>index.qmd</code> file individually, but I know I want to render the entire website so let’s do that. You can build a Quarto website just as you did a <code>distill</code> website. Look for the Build tab in the top right of RStudio and click the button that says Render Website. The rendered website should now appear in the Viewer pane on the bottom right panel of RStudio. If you go to the Files pane on the same panel you will also see that a <em>site</em> folder has been created. If you go into this folder you will see all of the content in your rendered site. I’ll open the <code>index.html</code> file in my web browser. You can see the website in Figure <a href="#fig:TODO"><strong>??</strong></a>.</p>
+<p>TODO: Add screenshot</p>
+<p>As you can see, there are a lot of warnings and messages that we don’t want to show. In R Markdown we removed these in our <code>setup</code> code chunk, but with Quarto we do it in the YAML. I could add this code to the <code>index.qmd</code> YAML, as we did when making a presentation, to remove all code, warnings, and messages from the output:</p>
+<div class="sourceCode" id="cb181"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb181-1"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="an">execute:</span><span class="co"> </span></span>
+<span id="cb181-2"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb181-2" aria-hidden="true" tabindex="-1"></a>  echo: false</span>
+<span id="cb181-3"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb181-3" aria-hidden="true" tabindex="-1"></a>  warning: false</span>
+<span id="cb181-4"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb181-4" aria-hidden="true" tabindex="-1"></a>  message: false</span></code></pre></div>
+<p>However, doing this will only make changes to that one file.</p>
+</div>
+<div id="using-the-_quarto.yml-file-to-set-options-for-the-website" class="section level4 unnumbered">
+<h4>Using the <code>_quarto.yml</code> file to Set Options for the Website<a class="anchor" aria-label="anchor" href="#using-the-_quarto.yml-file-to-set-options-for-the-website"><i class="fas fa-link"></i></a>
+</h4>
+<p>With <code>distill</code> we used the <code>_site.yml</code> file to make changes to all files in our website. In With Quarto, we use the <code>_quarto.yml</code> file for the same purpose. If open the <code>_quarto.yml</code> file, we see three sections:</p>
+<ol style="list-style-type: decimal">
+<li>The top sets the project type (in this case, a website).</li>
+<li>The middle section is where we set the title of the website as a whole and determine the options for our navigation bar.</li>
+<li>The bottom section deals with the appearance.</li>
+</ol>
+<div class="sourceCode" id="cb182"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb182-1"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb182-1" aria-hidden="true" tabindex="-1"></a><span class="fu">project</span><span class="kw">:</span></span>
+<span id="cb182-2"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb182-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> website</span></span>
+<span id="cb182-3"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb182-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb182-4"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb182-4" aria-hidden="true" tabindex="-1"></a><span class="fu">website</span><span class="kw">:</span></span>
+<span id="cb182-5"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb182-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"covid-website-quarto"</span></span>
+<span id="cb182-6"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb182-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">navbar</span><span class="kw">:</span></span>
+<span id="cb182-7"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb182-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">left</span><span class="kw">:</span></span>
+<span id="cb182-8"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb182-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">href</span><span class="kw">:</span><span class="at"> index.qmd</span></span>
+<span id="cb182-9"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb182-9" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">text</span><span class="kw">:</span><span class="at"> Home</span></span>
+<span id="cb182-10"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb182-10" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> about.qmd</span></span>
+<span id="cb182-11"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb182-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb182-12"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb182-12" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb182-13"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb182-13" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
+<span id="cb182-14"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb182-14" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> cosmo</span></span>
+<span id="cb182-15"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb182-15" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">css</span><span class="kw">:</span><span class="at"> styles.css</span></span>
+<span id="cb182-16"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb182-16" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code></pre></div>
+<p>Let’s start from the bottom. To remove code, warnings, and messages for all pages in our website, add the portion of the YAML to the <code>_quarto.yml</code> file.</p>
+<div class="sourceCode" id="cb183"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb183-1"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb183-2"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb183-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
+<span id="cb183-3"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb183-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> cosmo</span></span>
+<span id="cb183-4"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb183-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">css</span><span class="kw">:</span><span class="at"> styles.css</span></span>
+<span id="cb183-5"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb183-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb183-6"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb183-6" aria-hidden="true" tabindex="-1"></a><span class="fu">execute</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb183-7"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb183-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">echo</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb183-8"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb183-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">warning</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb183-9"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb183-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">message</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span></code></pre></div>
+<p>If I now build the website again, I will see it, as in Figure <a href="#fig:TODO"><strong>??</strong></a>, with just the content I want to show.</p>
+<p>TODO: Add screenshot</p>
+<p>You can add any additional options that you would add to a single <code>.qmd</code> file to this section of the <code>_quarto.yml</code> file and it will apply them across all pages of your website.</p>
+<p>The other parts of this section of the <code>_quarto.yml</code> file deal with the appearance of rendered files. The line <code>theme: cosmo</code> tells Quarto use the cosmo theme. There are many themes available (the full list is available at <a href="https://quarto.org/docs/output-formats/html-themes.html" class="uri">https://quarto.org/docs/output-formats/html-themes.html</a>) and I can choose a different one to show how it changes the output.</p>
+<div class="sourceCode" id="cb184"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb184-1"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb184-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb184-2"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb184-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
+<span id="cb184-3"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb184-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> minty</span></span>
+<span id="cb184-4"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb184-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">css</span><span class="kw">:</span><span class="at"> styles.css</span></span>
+<span id="cb184-5"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb184-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code></pre></div>
+<p>This change results in changes to the colors and fonts on the website, as seen in Figure <a href="#fig:TODO"><strong>??</strong></a>.</p>
+<p>TODO: Add screenshot</p>
+<p>In addition to using pre-built themes, you can also customize your website with CSS. The <code>css: styles.css</code> section in the <code>_quarto.yml</code> file indicates that Quarto will use any CSS in the <code>styles.css</code> file when rendering. For example, I can add this to the <code>styles.css</code> to make first-level headers 50 pixels.</p>
+<div class="sourceCode" id="cb185"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb185-1"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb185-1" aria-hidden="true" tabindex="-1"></a><span class="at">h1 {</span></span>
+<span id="cb185-2"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb185-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">font-size</span><span class="kw">:</span><span class="at"> 50px;</span></span>
+<span id="cb185-3"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb185-3" aria-hidden="true" tabindex="-1"></a><span class="at">}</span></span></code></pre></div>
+<p>The re-rendered <code>index.html</code>, seen in Figure <a href="#fig:TODO"><strong>??</strong></a>, shows the large headings.</p>
+<p>TODO: Add screenshot</p>
+<p>An alternative approach to customizing your website is to use Sass variables. The process for using Sass variables in a <code>.scss</code> file is identical to that laid out above. For example, I can create a file called <code>styles.scss</code> and add a line like this to change the body background to be the same light green as the top navigation bar.</p>
+<div class="sourceCode" id="cb186"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb186-1"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb186-1" aria-hidden="true" tabindex="-1"></a><span class="at">/*-- scss:defaults --*/</span></span>
+<span id="cb186-2"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb186-2" aria-hidden="true" tabindex="-1"></a><span class="fu">$body-bg</span><span class="kw">:</span><span class="co"> #78c2ad;</span></span></code></pre></div>
+<p>To get Quarto to use this <code>styles.scss</code> file, I adjust the <code>theme</code> line as follows.</p>
+<div class="sourceCode" id="cb187"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb187-1"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb187-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb187-2"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb187-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
+<span id="cb187-3"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb187-3" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">minty</span><span class="kw">,</span><span class="at"> styles.scss</span><span class="kw">]</span></span>
+<span id="cb187-4"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb187-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">css</span><span class="kw">:</span><span class="at"> styles.css</span></span>
+<span id="cb187-5"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb187-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code></pre></div>
+<p>The syntax <code>theme: [minty, styles.scss]</code> tells Quarto to use the minty theme and then make any additional tweaks based on the <code>styles.scss</code> file. If I render my website again, I can see the light green background throughout. Figure <a href="#fig:TODO"><strong>??</strong></a> shows the current version.</p>
+<p>TODO: Add screenshot</p>
+<p>Note that when you add a <code>.SCSS</code> file, the tweaks made in your CSS file are no longer applied. If you wanted to use those, you’d need to add them to the <code>styles.scss</code> file.</p>
+<p>The line <code>toc: true</code> creates a table of contents on the side of rendered HTML files, as seen in Figure <a href="#fig:TODO"><strong>??</strong></a> below.</p>
+<p>TODO: Add screenshot</p>
+<p>You can remove it by changing <code>true</code> to <code>false</code>. This section of the <code>_quarto.yml</code> file is where you would add any additional options, such as figure height.</p>
+<p>The middle section of the <code>_quarto.yml</code> file deals with the title of the website as a whole as well as its navigation. I can change the title by adjusting that line. The <code>navbar</code> section functions nearly identically to how it did in Chapter <a href="websites-chapter.html#websites-chapter">10</a> when working with <code>distill</code>. The <code>href</code> is where you list the file you want to link to. The optional <code>text</code> line is where you manually specify the text that should show up for that link. Here are a couple changes to the default <code>_quarto.yml</code> to change the website title and the text for the About page link.</p>
+<div class="sourceCode" id="cb188"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb188-1"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb188-1" aria-hidden="true" tabindex="-1"></a><span class="fu">website</span><span class="kw">:</span></span>
+<span id="cb188-2"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb188-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Quarto COVID Website"</span></span>
+<span id="cb188-3"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb188-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">navbar</span><span class="kw">:</span></span>
+<span id="cb188-4"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb188-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">left</span><span class="kw">:</span></span>
+<span id="cb188-5"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb188-5" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">href</span><span class="kw">:</span><span class="at"> index.qmd</span></span>
+<span id="cb188-6"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb188-6" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">text</span><span class="kw">:</span><span class="at"> Home</span></span>
+<span id="cb188-7"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb188-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">href</span><span class="kw">:</span><span class="at"> about.qmd</span></span>
+<span id="cb188-8"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb188-8" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">text</span><span class="kw">:</span><span class="at"> About this Website</span></span></code></pre></div>
+<p>Finally, we come to the top section of the <code>_quarto.yml</code>. This is the most straightforward. The line <code>type: website</code> indicates that the current project is a website. You could make additions here (for example, you could add the line <code>output_dir: website</code> to have the website render in the <code>website</code> directory rather than the default <code>_site</code> directory), but that’s not necessary.</p>
+</div>
+<div id="layouts" class="section level4" number="11.0.0.1">
+<h4>
+<span class="header-section-number">11.0.0.1</span> Layouts<a class="anchor" aria-label="anchor" href="#layouts"><i class="fas fa-link"></i></a>
+</h4>
+<p>When we made our website with <code>distill</code> we used <code>layout = "l-page"</code> to make the map wider. We can accomplish the same thing with Quarto, though the syntax is slightly different. With Quarto, you can adjust the width of the output using the <code>:::</code> syntax we saw above to add HTML <code>&lt;div&gt;</code> tags. To make the map larger on our Quarto website, we add <code>:::{.column-screen-inset}</code> at the beginning and <code>:::</code> at the end of the code block that makes it.</p>
+<div class="sourceCode" id="cb189"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb189-1"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb189-1" aria-hidden="true" tabindex="-1"></a>:::{.column-screen-inset}</span>
+<span id="cb189-2"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb189-2" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb189-3"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb189-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| out-width: 100%</span></span>
+<span id="cb189-4"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb189-4" aria-hidden="true" tabindex="-1"></a><span class="in"># Make map</span></span>
+<span id="cb189-5"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb189-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb189-6"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb189-6" aria-hidden="true" tabindex="-1"></a><span class="in">most_recent &lt;- us_states %&gt;% </span></span>
+<span id="cb189-7"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb189-7" aria-hidden="true" tabindex="-1"></a><span class="in">  left_join(covid_data, by = "state") %&gt;% </span></span>
+<span id="cb189-8"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb189-8" aria-hidden="true" tabindex="-1"></a><span class="in">  slice_max(order_by = date,</span></span>
+<span id="cb189-9"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb189-9" aria-hidden="true" tabindex="-1"></a><span class="in">            n = 1) </span></span>
+<span id="cb189-10"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb189-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb189-11"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb189-11" aria-hidden="true" tabindex="-1"></a><span class="in">most_recent %&gt;% </span></span>
+<span id="cb189-12"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb189-12" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(fill = deaths_avg_per_100k)) +</span></span>
+<span id="cb189-13"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb189-13" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_sf() +</span></span>
+<span id="cb189-14"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb189-14" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_fill_viridis_c(option = "rocket") +</span></span>
+<span id="cb189-15"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb189-15" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(fill = "Deaths per\n100,000 people") +</span></span>
+<span id="cb189-16"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb189-16" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_void()</span></span>
+<span id="cb189-17"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb189-17" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb189-18"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb189-18" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div>
+<p>Figure <a href="#fig:TODO"><strong>??</strong></a> shows the wider map.</p>
+<p>TODO: Add screenshot</p>
+<p>You may have noticed that I also added the line <code>#| out-width: 100%</code> in the code chunk. This is because we need to specify that the map should take up all of the available width. Without this line, the map would only take up a portion of the available width. There are a number of different output widths you can use (the full list is available at <a href="https://quarto.org/docs/authoring/article-layout.html" class="uri">https://quarto.org/docs/authoring/article-layout.html</a>).</p>
+</div>
+<div id="hosting-your-quarto-website" class="section level4 unnumbered">
+<h4>Hosting Your Quarto Website<a class="anchor" aria-label="anchor" href="#hosting-your-quarto-website"><i class="fas fa-link"></i></a>
+</h4>
+<p>Once we finished making our <code>distill</code> website in Chapter <a href="websites-chapter.html#websites-chapter">10</a>, we talked about hosting it using GitHub Pages. You can do the same thing with a Quarto website. Recall that GitHub Pages requires you to publish your website based on the files in the root of your repository or in the <code>docs</code> folder. I’ll do the latter by changing my <code>_quarto.yml</code> file so that the site outputs in the <code>docs</code> folder. To do this, I add a line to the top section of the <code>_quarto.yml</code> file.</p>
+<div class="sourceCode" id="cb190"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb190-1"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="fu">project</span><span class="kw">:</span></span>
+<span id="cb190-2"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb190-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> website</span></span>
+<span id="cb190-3"><a href="embracing-quarto-the-next-generation-tool-for-reproducible-reporting.html#cb190-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">output-dir</span><span class="kw">:</span><span class="at"> docs</span></span></code></pre></div>
+<p>Now, when I render my site, the HTML and other files show up in the <code>docs</code> directory. At this point, I can push my repository to GitHub, adjust the GitHub Pages settings as I did in Chapter <a href="websites-chapter.html#websites-chapter">10</a> and I will be given a URL where my Quarto website will live.</p>
+<p>In addition to using GitHub Pages, Quarto has a free service called Quarto Pub that makes it straightforward to get your materials online. Especially if you are not a GitHub user, this is a great option to share your work. To show you how Quarto Pub works, let me publish the website we just made to it. To get started, look for the Terminal tab on the bottom left panel of RStudio. Click it and at the prompt enter the text <code>quarto publish</code>. Doing so will bring up a list of ways you can publish your website. See Figure <a href="#fig:TODO"><strong>??</strong></a> below.</p>
+<p>TODO: Add screenshot</p>
+<p>Press enter to select Quarto Pub. You’ll then be asked to authorize. Type Y to do so, which will take you to quartopub.com. Sign up for an account (or sign in if you already have one). You should see a screen like Figure <a href="#fig:TODO"><strong>??</strong></a>, indicating that you have successfully signed in and authorized RStudio to connect with Quarto Pub.</p>
+<p>TODO: Add screenshot</p>
+<p>From there, you can return to RStudio. You’ll be prompted to select a name for your website on Quarto Pub. The easiest thing is to select the same name as your project (in my case, that’s <code>covid-website-quarto</code>). Enter the name and hit enter. The site will then be published and you will be taken to the site, as seen in Figure <a href="#fig:TODO"><strong>??</strong></a>.</p>
+<p>TODO: Add screenshot</p>
+<p>When you make updates to your site, you can republish to Quarto Pub using the same technique. Quarto Pub is probably the easiest way to publish your HTML files made with Quarto.</p>
+</div>
+</div>
+</div>
+<div id="conclusion-should-you-use-r-markdown-or-quarto" class="section level2 unnumbered">
+<h2>Conclusion: Should You Use R Markdown or Quarto?<a class="anchor" aria-label="anchor" href="#conclusion-should-you-use-r-markdown-or-quarto"><i class="fas fa-link"></i></a>
+</h2>
+<p>As you’ve seen throughout this chapter, we can do everything we did with R Markdown in Quarto as well. You’re probably wondering at this point whether you should use R Markdown or Quarto. It’s a big question, and one many in the R community are thinking about.</p>
+<p>The first thing to know is that R Markdown is not going away. If you already use R Markdown, you don’t need to switch. As of the writing of this book, I still use R Markdown for most of my work. If you have developed a workflow that uses R Markdown, by all means stick with it.</p>
+<p>If you are new to R and have never used R Markdown or Quarto, you may be a good candidate to start with Quarto. The developers of R Markdown have promised to continue its development, but have also said that features they develop for Quarto in the future may not be backported to R Markdown. So, if you’re starting from scratch, my recommendation is to start with Quarto.</p>
+<p>My strongest recommendation, though, is to use either R Markdown or Quarto as opposed to the multitool workflow described in Chapter <a href="rmarkdown-chapter.html#rmarkdown-chapter">7</a>. Either R Markdown or Quarto will help you work more efficiently and avoid inevitable errors that come from manual copying and pasting between tools. As you’ve seen throughout this chapter, the differences between R Markdown and Quarto are relatively small and moving between them is not overly complicated. The biggest impact you can have, though, is from switching away from a multitool workflow to a single-tool workflow.</p>
+
+</div>
+</div>
+
+
+
+<div class="chapter-nav">
+<div class="prev"><a href="websites-chapter.html"><span class="header-section-number">10</span> Make Websites to Share Results Online</a></div>
+<div class="next"><a href="accessing-data-chapter.html"><span class="header-section-number">12</span> Accessing Data</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#embracing-quarto-the-next-generation-tool-for-reproducible-reporting"><span class="header-section-number">11</span> Embracing Quarto, the Next-Generation Tool for Reproducible Reporting</a></li>
+<li><a class="nav-link" href="#getting-started-with-quarto">Getting Started with Quarto</a></li>
+<li><a class="nav-link" href="#comparing-r-markdown-and-quarto">Comparing R Markdown and Quarto</a></li>
+<li>
+<a class="nav-link" href="#making-different-types-of-outputs-with-quarto">Making Different Types of Outputs with Quarto</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#parameterized-reporting-with-quarto">Parameterized Reporting with Quarto</a></li>
+<li><a class="nav-link" href="#presentations">Presentations</a></li>
+<li><a class="nav-link" href="#websites">Websites</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#conclusion-should-you-use-r-markdown-or-quarto">Conclusion: Should You Use R Markdown or Quarto?</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/rfortherestofus/r-without-statistics/blob/master/quarto.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/rfortherestofus/r-without-statistics/edit/master/quarto.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+</div>
+  
+
+  
+
+</div>
+ <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>R Without Statistics</strong>" was written by David Keyes. </p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>

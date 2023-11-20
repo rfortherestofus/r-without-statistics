@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 6 Writing Reports in R Markdown | R Without Statistics</title>
+<meta name="author" content="David Keyes">
+<meta name="description" content="Imagine this: You’ve collected surveys about customer satisfaction with your new product. Now you’re ready to analyze the data and write up your results. Your workflow looks something like this:...">
+<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta property="og:title" content="Chapter 6 Writing Reports in R Markdown | R Without Statistics">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://book.rwithoutstatistics.com/rmarkdown-chapter.html">
+<meta property="og:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
+<meta property="og:description" content="Imagine this: You’ve collected surveys about customer satisfaction with your new product. Now you’re ready to analyze the data and write up your results. Your workflow looks something like this:...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 6 Writing Reports in R Markdown | R Without Statistics">
+<meta name="twitter:description" content="Imagine this: You’ve collected surveys about customer satisfaction with your new product. Now you’re ready to analyze the data and write up your results. Your workflow looks something like this:...">
+<meta name="twitter:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">R Without Statistics</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">About the Book</a></li>
+<li class="book-part">Introduction</li>
+<li><a class="" href="introduction.html">Introduction</a></li>
+<li><a class="" href="howto-chapter.html"><span class="header-section-number">1</span> An R Programming Crash Course</a></li>
+<li class="book-part">Part 1: Visualizations</li>
+<li><a class="" href="data-viz-chapter.html"><span class="header-section-number">2</span> Principles of Data Visualization</a></li>
+<li><a class="" href="custom-theme-chapter.html"><span class="header-section-number">3</span> Making Your Own Theme</a></li>
+<li><a class="" href="maps-chapter.html"><span class="header-section-number">4</span> Creating Maps</a></li>
+<li><a class="" href="tables-chapter.html"><span class="header-section-number">5</span> Crafting High-Quality Tables</a></li>
+<li class="book-part">Part 2: Reports, Presentations, and Websites</li>
+<li><a class="active" href="rmarkdown-chapter.html"><span class="header-section-number">6</span> Writing Reports in R Markdown</a></li>
+<li><a class="" href="parameterized-reports-chapter.html"><span class="header-section-number">7</span> Using Parameters to Automate Reports</a></li>
+<li><a class="" href="presentations-chapter.html"><span class="header-section-number">8</span> Making Slides Presentations with xaringan</a></li>
+<li><a class="" href="websites-chapter.html"><span class="header-section-number">9</span> Make Websites to Share Results Online</a></li>
+<li><a class="" href="quarto-chapter.html"><span class="header-section-number">10</span> Reproducible Reporting with Quarto</a></li>
+<li class="book-part">Part 3: Automation and Collaboration</li>
+<li><a class="" href="accessing-data-chapter.html"><span class="header-section-number">11</span> Accessing Data</a></li>
+<li><a class="" href="packages-chapter.html"><span class="header-section-number">12</span> Creating Your Own R Packages</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/rfortherestofus/r-without-statistics">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="rmarkdown-chapter" class="section level1" number="6">
+<h1>
+<span class="header-section-number">6</span> Writing Reports in R Markdown<a class="anchor" aria-label="anchor" href="#rmarkdown-chapter"><i class="fas fa-link"></i></a>
+</h1>
+<p>Imagine this: You’ve collected surveys about customer satisfaction with your new product. Now you’re ready to analyze the data and write up your results. Your workflow looks something like this:</p>
+<ol style="list-style-type: decimal">
+<li>Download your data from Google Sheets and import it into a statistical analysis tool like SPSS.</li>
+<li>Use SPSS to clean and analyze your data.</li>
+<li>Export summaries of your data as Excel spreadsheets.</li>
+<li>Use Excel to make some charts.</li>
+<li>Write your report in Word, pasting in your charts from Excel along the way.</li>
+</ol>
+<p>Sound familiar? If so, you’re not alone. Many people use this workflow for data analysis. But what happens when, the next month, new surveys roll in, and you have to redo your report? Yup, back through steps one through five. This multi-tool process might work for one-time project, but let’s be honest: Few projects are really one-time. For example, you might realize you forgot to include a couple of surveys in your original analysis or catch a mistake.</p>
+<p>R Markdown combines data analysis, data visualization, and other R code with narrative text to create a document that can be exported to many formats, including Word, PDF, and HTML, to share with non-R users. When you use a single tool, your workflow becomes way more efficient. If you need to recreate that January customer satisfaction report in February, you can rerun your code to produce a new document with the newest data, and to fix an error in your analysis, you can simply adjust your code.</p>
+<p>In this chapter, we’ll break down the pieces of an R Markdown document, then talk about some potential pitfalls and best practices. You’ll learn how to work with YAML metadata, R code chunks, and Markdown-formatted text, create in-line R code that can change the report’s text dynamically, and run the document’s code in various ways.</p>
+<div id="how-r-markdown-works" class="section level2 unnumbered">
+<h2>How R Markdown Works<a class="anchor" aria-label="anchor" href="#how-r-markdown-works"><i class="fas fa-link"></i></a>
+</h2>
+<p>To create an R Markdown document in RStudio, go to <strong>File</strong> &gt; <strong>New File</strong> &gt; <strong>R Markdown</strong>. Choose a title, author, and date, as well as your default output format (HTML, PDF, or Word). These values can be changed later. Click <strong>OK</strong>, and RStudio will create an R Markdown document with some placeholder content, as shown in Figure <a href="rmarkdown-chapter.html#fig:default-rmd-content">6.1</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:default-rmd-content"></span>
+<img src="assets/default-rmd-content.png" alt="The placeholder content in a new R Markdown document" width="100%"><p class="caption">
+Figure 6.1: The placeholder content in a new R Markdown document
+</p>
+</div>
+<p>Delete this content and replace it with your own. As an example, let’s create a report about penguins using data from the <code>palmerpenguins</code> package. I’ve separated the data by year, and we’ll use just the 2007 data. Add the following content to add to your R Markdown document:</p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb103-1"><a href="rmarkdown-chapter.html#cb103-1" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb103-2"><a href="rmarkdown-chapter.html#cb103-2" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Penguins Report"</span></span>
+<span id="cb103-3"><a href="rmarkdown-chapter.html#cb103-3" tabindex="-1"></a><span class="an">author:</span><span class="co"> "David"</span></span>
+<span id="cb103-4"><a href="rmarkdown-chapter.html#cb103-4" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2024-01-12"</span></span>
+<span id="cb103-5"><a href="rmarkdown-chapter.html#cb103-5" tabindex="-1"></a><span class="an">output:</span><span class="co"> word_document</span></span>
+<span id="cb103-6"><a href="rmarkdown-chapter.html#cb103-6" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb103-7"><a href="rmarkdown-chapter.html#cb103-7" tabindex="-1"></a>  </span>
+<span id="cb103-8"><a href="rmarkdown-chapter.html#cb103-8" tabindex="-1"></a><span class="in">```{r setup, include = FALSE}</span></span>
+<span id="cb103-9"><a href="rmarkdown-chapter.html#cb103-9" tabindex="-1"></a><span class="in">knitr::opts_chunk$set(</span></span>
+<span id="cb103-10"><a href="rmarkdown-chapter.html#cb103-10" tabindex="-1"></a><span class="in">  include = TRUE,</span></span>
+<span id="cb103-11"><a href="rmarkdown-chapter.html#cb103-11" tabindex="-1"></a><span class="in">  echo = FALSE,</span></span>
+<span id="cb103-12"><a href="rmarkdown-chapter.html#cb103-12" tabindex="-1"></a><span class="in">  message = FALSE,</span></span>
+<span id="cb103-13"><a href="rmarkdown-chapter.html#cb103-13" tabindex="-1"></a><span class="in">  warning = FALSE</span></span>
+<span id="cb103-14"><a href="rmarkdown-chapter.html#cb103-14" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb103-15"><a href="rmarkdown-chapter.html#cb103-15" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb103-16"><a href="rmarkdown-chapter.html#cb103-16" tabindex="-1"></a></span>
+<span id="cb103-17"><a href="rmarkdown-chapter.html#cb103-17" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb103-18"><a href="rmarkdown-chapter.html#cb103-18" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb103-19"><a href="rmarkdown-chapter.html#cb103-19" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb103-20"><a href="rmarkdown-chapter.html#cb103-20" tabindex="-1"></a></span>
+<span id="cb103-21"><a href="rmarkdown-chapter.html#cb103-21" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb103-22"><a href="rmarkdown-chapter.html#cb103-22" tabindex="-1"></a><span class="in">penguins &lt;- read_csv("https://raw.githubusercontent.com/rfortherestofus/r-without-statistics/main/data/penguins-2007.csv")</span></span>
+<span id="cb103-23"><a href="rmarkdown-chapter.html#cb103-23" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb103-24"><a href="rmarkdown-chapter.html#cb103-24" tabindex="-1"></a></span>
+<span id="cb103-25"><a href="rmarkdown-chapter.html#cb103-25" tabindex="-1"></a><span class="fu"># Introduction</span></span>
+<span id="cb103-26"><a href="rmarkdown-chapter.html#cb103-26" tabindex="-1"></a></span>
+<span id="cb103-27"><a href="rmarkdown-chapter.html#cb103-27" tabindex="-1"></a>We are writing a report about the **Palmer Penguins**. These penguins are *really* amazing. There are three species:</span>
+<span id="cb103-28"><a href="rmarkdown-chapter.html#cb103-28" tabindex="-1"></a></span>
+<span id="cb103-29"><a href="rmarkdown-chapter.html#cb103-29" tabindex="-1"></a><span class="ss">- </span>Adelie</span>
+<span id="cb103-30"><a href="rmarkdown-chapter.html#cb103-30" tabindex="-1"></a><span class="ss">- </span>Gentoo</span>
+<span id="cb103-31"><a href="rmarkdown-chapter.html#cb103-31" tabindex="-1"></a><span class="ss">- </span>Chinstrap</span>
+<span id="cb103-32"><a href="rmarkdown-chapter.html#cb103-32" tabindex="-1"></a></span>
+<span id="cb103-33"><a href="rmarkdown-chapter.html#cb103-33" tabindex="-1"></a><span class="fu">## Bill Length</span></span>
+<span id="cb103-34"><a href="rmarkdown-chapter.html#cb103-34" tabindex="-1"></a></span>
+<span id="cb103-35"><a href="rmarkdown-chapter.html#cb103-35" tabindex="-1"></a>We can make a histogram to see the distribution of bill lengths.</span>
+<span id="cb103-36"><a href="rmarkdown-chapter.html#cb103-36" tabindex="-1"></a></span>
+<span id="cb103-37"><a href="rmarkdown-chapter.html#cb103-37" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb103-38"><a href="rmarkdown-chapter.html#cb103-38" tabindex="-1"></a><span class="in">penguins %&gt;%</span></span>
+<span id="cb103-39"><a href="rmarkdown-chapter.html#cb103-39" tabindex="-1"></a><span class="in">  ggplot(aes(x = bill_length_mm)) +</span></span>
+<span id="cb103-40"><a href="rmarkdown-chapter.html#cb103-40" tabindex="-1"></a><span class="in">  geom_histogram() +</span></span>
+<span id="cb103-41"><a href="rmarkdown-chapter.html#cb103-41" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb103-42"><a href="rmarkdown-chapter.html#cb103-42" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb103-43"><a href="rmarkdown-chapter.html#cb103-43" tabindex="-1"></a></span>
+<span id="cb103-44"><a href="rmarkdown-chapter.html#cb103-44" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb103-45"><a href="rmarkdown-chapter.html#cb103-45" tabindex="-1"></a><span class="in">average_bill_length &lt;- penguins %&gt;%</span></span>
+<span id="cb103-46"><a href="rmarkdown-chapter.html#cb103-46" tabindex="-1"></a><span class="in">  summarize(avg_bill_length = mean(</span></span>
+<span id="cb103-47"><a href="rmarkdown-chapter.html#cb103-47" tabindex="-1"></a><span class="in">    bill_length_mm,</span></span>
+<span id="cb103-48"><a href="rmarkdown-chapter.html#cb103-48" tabindex="-1"></a><span class="in">    na.rm = TRUE</span></span>
+<span id="cb103-49"><a href="rmarkdown-chapter.html#cb103-49" tabindex="-1"></a><span class="in">  )) %&gt;%</span></span>
+<span id="cb103-50"><a href="rmarkdown-chapter.html#cb103-50" tabindex="-1"></a><span class="in">  pull(avg_bill_length)</span></span>
+<span id="cb103-51"><a href="rmarkdown-chapter.html#cb103-51" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb103-52"><a href="rmarkdown-chapter.html#cb103-52" tabindex="-1"></a></span>
+<span id="cb103-53"><a href="rmarkdown-chapter.html#cb103-53" tabindex="-1"></a>The chart shows the distribution of bill lengths. The average bill length is <span class="in">`r average_bill_length`</span> millimeters.</span></code></pre></div>
+<p>This document contains several sections, each of which we will discuss below. First, though, let’s skip to the finish line by doing what’s called <em>knitting</em> our document (also known as rendering, or in plain English, exporting). The <strong>Knit</strong> button at the top of RStudio converts the R Markdown document into whatever format we selected upon creating it (Figure <a href="rmarkdown-chapter.html#fig:knit-button">6.2</a>).</p>
+<div class="figure">
+<span style="display:block;" id="fig:knit-button"></span>
+<img src="assets/knit-button.png" alt="The knit button in RStudio" width="100%"><p class="caption">
+Figure 6.2: The knit button in RStudio
+</p>
+</div>
+<p>We’ve set the output format to be Word (see the <code>output_format: word_document</code> line), so you should now have a Word document. Some features not visible in R Markdown should appear in Word, including the histogram. This is because the R Markdown document doesn’t directly include this plot. Rather, it includes the code needed to produce the plot when knitted.</p>
+<p>It may seem convoluted to constantly knit R Markdown documents to Word, but this workflow allows us to update our reports at any point with new code or data. This ability is known as <em>reproducibility</em>, and it is central to the value of R Markdown.</p>
+</div>
+<div id="document-structure" class="section level2 unnumbered">
+<h2>Document Structure<a class="anchor" aria-label="anchor" href="#document-structure"><i class="fas fa-link"></i></a>
+</h2>
+<p>All R Markdown documents have three main pieces: one YAML section, multiple R code chunks, and sections of Markdown text. Figure <a href="rmarkdown-chapter.html#fig:rmarkdown-pieces">6.3</a> shows these parts of an R Markdown document.</p>
+<div class="figure">
+<span style="display:block;" id="fig:rmarkdown-pieces"></span>
+<img src="assets/rmarkdown-pieces.png" alt="All pieces of an R Markdown document" width="100%"><p class="caption">
+Figure 6.3: All pieces of an R Markdown document
+</p>
+</div>
+<p>Let’s discuss these pieces one at a time.</p>
+<div id="the-yaml-metadata" class="section level3 unnumbered">
+<h3>The YAML Metadata<a class="anchor" aria-label="anchor" href="#the-yaml-metadata"><i class="fas fa-link"></i></a>
+</h3>
+<p>The YAML section is the very beginning of an R Markdown document. The name YAML comes from the recursive acronym <em>YAML ain’t markup language</em>, whose meaning isn’t important for our purposes. Three dashes indicate its beginning and end, and the text inside of it contains metadata about the R Markdown document. Here is my YAML:</p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb104-1"><a href="rmarkdown-chapter.html#cb104-1" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb104-2"><a href="rmarkdown-chapter.html#cb104-2" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Penguins Report"</span></span>
+<span id="cb104-3"><a href="rmarkdown-chapter.html#cb104-3" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span><span class="st">"David Keyes"</span></span>
+<span id="cb104-4"><a href="rmarkdown-chapter.html#cb104-4" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> </span><span class="st">"2024-01-12"</span></span>
+<span id="cb104-5"><a href="rmarkdown-chapter.html#cb104-5" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span><span class="at"> word_document</span></span>
+<span id="cb104-6"><a href="rmarkdown-chapter.html#cb104-6" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
+<p>As you can see, it provides the title, author, date, and output format. All elements of the YAML are given in <code>key: value</code> syntax, where each key is a label for a piece of metadata (for example, the title) followed by a value in quotes.</p>
+</div>
+<div id="the-code-chunks" class="section level3 unnumbered">
+<h3>The Code Chunks<a class="anchor" aria-label="anchor" href="#the-code-chunks"><i class="fas fa-link"></i></a>
+</h3>
+<p>R Markdown documents have a different structure from the R script files you might be familiar with (those with the <em>.R</em> extension). R script files treat all content as code unless you comment out a line by putting a pound sign (<code>#</code>) in front of it. In the following code, the first line is a comment while the second line is code.</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb105-1"><a href="rmarkdown-chapter.html#cb105-1" tabindex="-1"></a>```{r}</span>
+<span id="cb105-2"><a href="rmarkdown-chapter.html#cb105-2" tabindex="-1"></a># Import our data</span>
+<span id="cb105-3"><a href="rmarkdown-chapter.html#cb105-3" tabindex="-1"></a>data &lt;- read_csv("data.csv")</span>
+<span id="cb105-4"><a href="rmarkdown-chapter.html#cb105-4" tabindex="-1"></a>```</span></code></pre></div>
+<p>In R Markdown, the situation is reversed. Everything after the YAML is treated as text unless we specify otherwise by creating what are known as code chunks. These start with three back ticks (```), followed by the lowercase letter <em>r</em> surrounded by curly brackets ( <code><a href="https://rdrr.io/r/base/Paren.html">{}</a></code> ). Another three back ticks indicate the end of the code chunk:</p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb106-1"><a href="rmarkdown-chapter.html#cb106-1" tabindex="-1"></a>```{r}</span>
+<span id="cb106-2"><a href="rmarkdown-chapter.html#cb106-2" tabindex="-1"></a>library(tidyverse)</span>
+<span id="cb106-3"><a href="rmarkdown-chapter.html#cb106-3" tabindex="-1"></a>```</span></code></pre></div>
+<p>If you’re working in RStudio, code chunks should have a light gray background.</p>
+<p>R Markdown treats anything in the code chunk as R code when we knit. For example, this code chunk will produce a histogram in the final Word document.</p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb107-1"><a href="rmarkdown-chapter.html#cb107-1" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb107-2"><a href="rmarkdown-chapter.html#cb107-2" tabindex="-1"></a><span class="in">penguins %&gt;%</span></span>
+<span id="cb107-3"><a href="rmarkdown-chapter.html#cb107-3" tabindex="-1"></a><span class="in">  ggplot(aes(x = bill_length_mm)) +</span></span>
+<span id="cb107-4"><a href="rmarkdown-chapter.html#cb107-4" tabindex="-1"></a><span class="in">  geom_histogram() +</span></span>
+<span id="cb107-5"><a href="rmarkdown-chapter.html#cb107-5" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb107-6"><a href="rmarkdown-chapter.html#cb107-6" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<p>The histogram can be seen in Figure <a href="rmarkdown-chapter.html#fig:simple-histogram">6.4</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:simple-histogram"></span>
+<img src="rmarkdown_files/figure-html/simple-histogram-1.png" alt="A simple histogram" width="100%"><p class="caption">
+Figure 6.4: A simple histogram
+</p>
+</div>
+<p>A special code chunk at the top of each R Markdown document, known as the setup code chunk, gives instructions for what should happen when knitting a document. It contains the following code chunk options:</p>
+<p><code>echo</code>
+Do you want to show the code itself in the knitted document?</p>
+<p><code>include</code>
+Do you want to show the output of the code chunk?</p>
+<p><code>message</code>
+Do you want to include any messages that code might generate? For example, this message shows up when you run library(tidyverse):</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb108-1"><a href="rmarkdown-chapter.html#cb108-1" tabindex="-1"></a>── Attaching core tidyverse packages ───── tidyverse 1.3.2.9000 ──</span>
+<span id="cb108-2"><a href="rmarkdown-chapter.html#cb108-2" tabindex="-1"></a>✔ dplyr     1.0.10     ✔ readr     2.1.3 </span>
+<span id="cb108-3"><a href="rmarkdown-chapter.html#cb108-3" tabindex="-1"></a>✔ forcats   0.5.2      ✔ stringr   1.5.0 </span>
+<span id="cb108-4"><a href="rmarkdown-chapter.html#cb108-4" tabindex="-1"></a>✔ ggplot2   3.4.0      ✔ tibble    3.1.8 </span>
+<span id="cb108-5"><a href="rmarkdown-chapter.html#cb108-5" tabindex="-1"></a>✔ lubridate 1.9.0      ✔ tidyr     1.2.1 </span>
+<span id="cb108-6"><a href="rmarkdown-chapter.html#cb108-6" tabindex="-1"></a>✔ purrr     1.0.1      </span>
+<span id="cb108-7"><a href="rmarkdown-chapter.html#cb108-7" tabindex="-1"></a>── Conflicts───── tidyverse_conflicts() ──</span>
+<span id="cb108-8"><a href="rmarkdown-chapter.html#cb108-8" tabindex="-1"></a>✖ dplyr::filter() masks stats::filter()</span>
+<span id="cb108-9"><a href="rmarkdown-chapter.html#cb108-9" tabindex="-1"></a>✖ dplyr::lag()    masks stats::lag()</span></code></pre></div>
+<p><code>warning</code>
+Do you want to include any messages that the code might generate? For example, here is the message you get when creating a histogram using <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code>:</p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb109-1"><a href="rmarkdown-chapter.html#cb109-1" tabindex="-1"></a>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></code></pre></div>
+<p>In cases where you’re using R Markdown to generate a report for a non-R user, you likely want to hide the code, messages, and warnings but show the output (which would include any visualizations you generate). To do this, create a <code>setup</code> code chunk that looks like this:</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb110-1"><a href="rmarkdown-chapter.html#cb110-1" tabindex="-1"></a><span class="in">```{r setup, include = FALSE}</span></span>
+<span id="cb110-2"><a href="rmarkdown-chapter.html#cb110-2" tabindex="-1"></a><span class="in">knitr::opts_chunk$set(</span></span>
+<span id="cb110-3"><a href="rmarkdown-chapter.html#cb110-3" tabindex="-1"></a><span class="in">  include = TRUE,</span></span>
+<span id="cb110-4"><a href="rmarkdown-chapter.html#cb110-4" tabindex="-1"></a><span class="in">  echo = FALSE,</span></span>
+<span id="cb110-5"><a href="rmarkdown-chapter.html#cb110-5" tabindex="-1"></a><span class="in">  message = FALSE,</span></span>
+<span id="cb110-6"><a href="rmarkdown-chapter.html#cb110-6" tabindex="-1"></a><span class="in">  warning = FALSE</span></span>
+<span id="cb110-7"><a href="rmarkdown-chapter.html#cb110-7" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb110-8"><a href="rmarkdown-chapter.html#cb110-8" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<p>The <code>include = FALSE</code> option on the first line applies to the setup code chunk itself. It tells R Markdown to not include the output of the setup code chunk when knitting. The options within <code>knitr::opts_chunk$set()</code> apply to all future code chunks. However, you can also override these global code chunk options on individual chunks. If I wanted my Word document to show both the plot itself and the code used to make it, I could set <code>echo = TRUE</code> for that code chunk only:</p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb111-1"><a href="rmarkdown-chapter.html#cb111-1" tabindex="-1"></a><span class="in">```{r echo = TRUE}</span></span>
+<span id="cb111-2"><a href="rmarkdown-chapter.html#cb111-2" tabindex="-1"></a><span class="in">penguins %&gt;%</span></span>
+<span id="cb111-3"><a href="rmarkdown-chapter.html#cb111-3" tabindex="-1"></a><span class="in">  ggplot(aes(x = bill_length_mm)) +</span></span>
+<span id="cb111-4"><a href="rmarkdown-chapter.html#cb111-4" tabindex="-1"></a><span class="in">  geom_histogram() +</span></span>
+<span id="cb111-5"><a href="rmarkdown-chapter.html#cb111-5" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb111-6"><a href="rmarkdown-chapter.html#cb111-6" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<p>Because <code>include</code> is already set to <code>TRUE</code> within <code>knitr::opts_chunk$set()</code> in the setup code chunk, I don’t need to specify it again.</p>
+</div>
+<div id="markdown-text" class="section level3 unnumbered">
+<h3>Markdown Text<a class="anchor" aria-label="anchor" href="#markdown-text"><i class="fas fa-link"></i></a>
+</h3>
+<p>Markdown is a way to style plain text. If you were writing directly in Word, you could just press the B button to make text bold, for example, but R doesn’t have such a button. If you want your knitted Word document to include bold text, you need to use Markdown indicate this style in the document.</p>
+<p>Markdown text sections (which have a white background in R Studio) will be converted into formatted text in the Word document after knitting. Figure <a href="rmarkdown-chapter.html#fig:markdown-text-to-word">6.5</a> highlights the equivalent sections in our R Markdown and Word documents.</p>
+<div class="figure">
+<span style="display:block;" id="fig:markdown-text-to-word"></span>
+<img src="assets/markdown-text-to-word.png" alt="Markdown text in R Markdown and its equivalent in a knitted Word document" width="100%"><p class="caption">
+Figure 6.5: Markdown text in R Markdown and its equivalent in a knitted Word document
+</p>
+</div>
+<p>As you can see, the text <code># Introduction</code> in R Markdown gets converted to a first-level heading, while <code>## Bill Length</code> becomes a second-level heading. By adding hashes, you can create up to six levels of headings. In RStudio, headings are easy to find because they show up in blue.</p>
+<p>Text without anything before it becomes body text in Word. To create italic text, add single asterisks around it (*like this*). To make text bold, use double asterisks (**as shown here**).</p>
+<p>You can make bulleted lists by placing a dash at the beginning of a line and adding your text after it:</p>
+<div class="sourceCode" id="cb112"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb112-1"><a href="rmarkdown-chapter.html#cb112-1" tabindex="-1"></a><span class="ss">- </span>Adelie</span>
+<span id="cb112-2"><a href="rmarkdown-chapter.html#cb112-2" tabindex="-1"></a><span class="ss">- </span>Gentoo</span>
+<span id="cb112-3"><a href="rmarkdown-chapter.html#cb112-3" tabindex="-1"></a><span class="ss">- </span>Chinstrap</span></code></pre></div>
+<p>To make ordered lists, replace the dashes with numbers. You can either number each line consecutively, or as I’ve done below, repeat 1. In the knitted document, the proper numbers will automatically generate.</p>
+<pre><code>1. Adelie
+1. Gentoo
+1. Chinstrap</code></pre>
+<p>Formatting text in Markdown might seem more complicated than doing so in Word. But if we want to switch from a multi-tool workflow to a reproducible R Markdown-based workflow, we need to remove all manual actions from the process so we can easily repeat it in the future.</p>
+</div>
+<div id="inline-r-code" class="section level3 unnumbered">
+<h3>Inline R Code<a class="anchor" aria-label="anchor" href="#inline-r-code"><i class="fas fa-link"></i></a>
+</h3>
+<p>R Markdown documents can also include little bits of code within Markdown text. To see how this inline code works, take a look at the following sentence of the R Markdown document:</p>
+<div class="sourceCode" id="cb114"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb114-1"><a href="rmarkdown-chapter.html#cb114-1" tabindex="-1"></a>The average bill length is <span class="in">`r average_bill_length`</span> millimeters.</span></code></pre></div>
+<p>Inline R code begins with a backtick and the lowercase letter r and ends with another backtick. In this example, the code tells R to print the value of the variable <code>average_bill_length</code>, which we’ve defined as follows in the code chunk above the inline code:</p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb115-1"><a href="rmarkdown-chapter.html#cb115-1" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb115-2"><a href="rmarkdown-chapter.html#cb115-2" tabindex="-1"></a><span class="in">average_bill_length &lt;- penguins %&gt;%</span></span>
+<span id="cb115-3"><a href="rmarkdown-chapter.html#cb115-3" tabindex="-1"></a><span class="in">  summarize(avg_bill_length = mean(</span></span>
+<span id="cb115-4"><a href="rmarkdown-chapter.html#cb115-4" tabindex="-1"></a><span class="in">    bill_length_mm,</span></span>
+<span id="cb115-5"><a href="rmarkdown-chapter.html#cb115-5" tabindex="-1"></a><span class="in">    na.rm = TRUE</span></span>
+<span id="cb115-6"><a href="rmarkdown-chapter.html#cb115-6" tabindex="-1"></a><span class="in">  )) %&gt;%</span></span>
+<span id="cb115-7"><a href="rmarkdown-chapter.html#cb115-7" tabindex="-1"></a><span class="in">  pull(avg_bill_length)</span></span>
+<span id="cb115-8"><a href="rmarkdown-chapter.html#cb115-8" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<p>This code calculates the average bill length and saves it as <code>average_bill_length</code>. Having created this variable, we can then use it in the inline code. As a result, the Word document includes the sentence “The average bill length is 43.9219298.”</p>
+<p>One benefit of using inline R code is that you avoid having to copy and paste values, which is error-prone. Inline R code also makes it possible to automatically calculate values on the fly whenever we re-knit the R Markdown document with new data. To show you how this works, let’s make a new report using data from 2008. To do this, we need to change only one line, the one that reads the data:</p>
+<div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">penguins</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/rfortherestofus/r-without-statistics/main/data/penguins-2008.csv"</span><span class="op">)</span></span></code></pre></div>
+<p>Now that we’ve switched <em>penguins-2007.csv</em> to <em>penguins-2008.csv</em>, we can re-knit the report and produce a new Word document, complete with updated results. Figure <a href="rmarkdown-chapter.html#fig:penguins-report-2008">6.6</a> shows the new document.</p>
+<div class="figure">
+<span style="display:block;" id="fig:penguins-report-2008"></span>
+<img src="assets/penguins-report-2008.png" alt="The knitted Word document with 2008 data" width="100%"><p class="caption">
+Figure 6.6: The knitted Word document with 2008 data
+</p>
+</div>
+<p>The new histogram is based on the 2008 data, as is the average bill length of 43.5412281. These values update automatically, because every time we hit knit, the code is rerun, regenerating plots and recalculating values. As long as the data we use has a consistent structure, updating a report requires just a click of the knit button.</p>
+</div>
+<div id="running-code-chunks-interactively" class="section level3 unnumbered">
+<h3>Running Code Chunks Interactively<a class="anchor" aria-label="anchor" href="#running-code-chunks-interactively"><i class="fas fa-link"></i></a>
+</h3>
+<p>You can run the code in an R Markdown document in two ways. The first way is by knitting the entire document. The second way is to run code chunks manually (also known as <em>interactively</em>) by hitting the little green play button at the top-right of a code chunk. The down arrow next to the green play button will run all code until that point. You can see these buttons in Figure <a href="rmarkdown-chapter.html#fig:code-chunk-buttons-annotated">6.7</a>.</p>
+<div class="figure">
+<span style="display:block;" id="fig:code-chunk-buttons-annotated"></span>
+<img src="assets/code-chunk-buttons-annotated.png" alt="The buttons on code chunks in RStudio" width="100%"><p class="caption">
+Figure 6.7: The buttons on code chunks in RStudio
+</p>
+</div>
+<p>You can also use <strong>CMD-ENTER</strong> on Mac and <strong>CTRL-ENTER</strong> on Windows to run sections of code, as in an R script file. Running code interactively is a good way to test that portions of code work before you knit the entire document.</p>
+<p>The one downside to running code interactively is that you can sometimes make mistakes that cause your R Markdown document to fail to knit. That is because, in order to knit, an R Markdown document must contain all the code it uses. If you are working interactively and, say, load data from a separate file, you will be unable to knit your document. When working in R Markdown, always keep all code within a single document.</p>
+<p>The code must also appear in the right order. An R Markdown document that looks like this, for example, will give you an error if you try to knit it:</p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb117-1"><a href="rmarkdown-chapter.html#cb117-1" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb117-2"><a href="rmarkdown-chapter.html#cb117-2" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Penguins Report"</span></span>
+<span id="cb117-3"><a href="rmarkdown-chapter.html#cb117-3" tabindex="-1"></a><span class="an">author:</span><span class="co"> "David Keyes"</span></span>
+<span id="cb117-4"><a href="rmarkdown-chapter.html#cb117-4" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2024-01-12"</span></span>
+<span id="cb117-5"><a href="rmarkdown-chapter.html#cb117-5" tabindex="-1"></a><span class="an">output:</span><span class="co"> word_document</span></span>
+<span id="cb117-6"><a href="rmarkdown-chapter.html#cb117-6" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb117-7"><a href="rmarkdown-chapter.html#cb117-7" tabindex="-1"></a></span>
+<span id="cb117-8"><a href="rmarkdown-chapter.html#cb117-8" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
+<span id="cb117-9"><a href="rmarkdown-chapter.html#cb117-9" tabindex="-1"></a><span class="in">knitr::opts_chunk$set(</span></span>
+<span id="cb117-10"><a href="rmarkdown-chapter.html#cb117-10" tabindex="-1"></a><span class="in">  include = TRUE,</span></span>
+<span id="cb117-11"><a href="rmarkdown-chapter.html#cb117-11" tabindex="-1"></a><span class="in">  echo = FALSE,</span></span>
+<span id="cb117-12"><a href="rmarkdown-chapter.html#cb117-12" tabindex="-1"></a><span class="in">  message = FALSE,</span></span>
+<span id="cb117-13"><a href="rmarkdown-chapter.html#cb117-13" tabindex="-1"></a><span class="in">  warning = FALSE</span></span>
+<span id="cb117-14"><a href="rmarkdown-chapter.html#cb117-14" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb117-15"><a href="rmarkdown-chapter.html#cb117-15" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb117-16"><a href="rmarkdown-chapter.html#cb117-16" tabindex="-1"></a></span>
+<span id="cb117-17"><a href="rmarkdown-chapter.html#cb117-17" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb117-18"><a href="rmarkdown-chapter.html#cb117-18" tabindex="-1"></a><span class="in">penguins &lt;- read_csv("https://raw.githubusercontent.com/rfortherestofus/r-without-statistics/main/data/penguins-2008.csv")</span></span>
+<span id="cb117-19"><a href="rmarkdown-chapter.html#cb117-19" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb117-20"><a href="rmarkdown-chapter.html#cb117-20" tabindex="-1"></a></span>
+<span id="cb117-21"><a href="rmarkdown-chapter.html#cb117-21" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb117-22"><a href="rmarkdown-chapter.html#cb117-22" tabindex="-1"></a><span class="in">penguins %&gt;%</span></span>
+<span id="cb117-23"><a href="rmarkdown-chapter.html#cb117-23" tabindex="-1"></a><span class="in">  ggplot(aes(x = bill_length_mm)) +</span></span>
+<span id="cb117-24"><a href="rmarkdown-chapter.html#cb117-24" tabindex="-1"></a><span class="in">  geom_histogram() +</span></span>
+<span id="cb117-25"><a href="rmarkdown-chapter.html#cb117-25" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb117-26"><a href="rmarkdown-chapter.html#cb117-26" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb117-27"><a href="rmarkdown-chapter.html#cb117-27" tabindex="-1"></a></span>
+<span id="cb117-28"><a href="rmarkdown-chapter.html#cb117-28" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb117-29"><a href="rmarkdown-chapter.html#cb117-29" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb117-30"><a href="rmarkdown-chapter.html#cb117-30" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<p>This error happens because you are attempting to use <code>tidyverse</code> functions like <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code>, as well as various ggplot functions, before you load the <code>tidyverse</code> package.</p>
+<p>Alison Hill, one of the most prolific R Markdown educators, tells her students to knit early and often. This practice makes it easier to isolate issues that make knitting fail. Hill describes her typical R Markdown workflow as spending 75 percent of her time working on a new document and 25 percent of her time knitting to check that the R Markdown document works</p>
+</div>
+</div>
+<div id="quarto" class="section level2 unnumbered">
+<h2>Quarto<a class="anchor" aria-label="anchor" href="#quarto"><i class="fas fa-link"></i></a>
+</h2>
+<p>In 2022, Posit released a publishing tool similar to R Markdown. Known as Quarto, this tool takes what R Markdown has done for R and extends it to other languages, including Python, Julia, and Observable JS. As I write this book, Quarto is gaining traction. Luckily, the concepts you’ve learned in this chapter apply to Quarto as well. Quarto documents have a YAML section, code chunks, and Markdown text. You can export Quarto documents to HTML, PDF, and Word. However, R Markdown and Quarto documents have some syntactic differences. We’ll explore these differences further in Chapter <a href="quarto-chapter.html#quarto-chapter">10</a>.</p>
+</div>
+<div id="conclusion-3" class="section level2 unnumbered">
+<h2>Conclusion<a class="anchor" aria-label="anchor" href="#conclusion-3"><i class="fas fa-link"></i></a>
+</h2>
+<p>We started this chapter by considering a report that needs to be regenerated monthly. Using R Markdown, we can reproduce this report every month without changing our code. Even if we lost the final Word document, we could quickly recreate it.</p>
+<p>Best of all, working with R Markdown makes it possible to do in seconds tasks that would have previously taken hours. In a world where making a single report requires three tools and five steps, you may not want to work on it. As a research scientist who used R Markdown regularly, Alison Hill says it enabled her to work on reports before she had received all of the data. She could write code that worked with partial data and rerun it with the final data at any time.</p>
+<p>In this chapter, we’ve just scratched the surface of what R Markdown can do. The next chapter will show you how to use it to instantly generate hundreds of reports. Magic indeed!</p>
+</div>
+<div id="learn-more-5" class="section level2 unnumbered">
+<h2>Learn More<a class="anchor" aria-label="anchor" href="#learn-more-5"><i class="fas fa-link"></i></a>
+</h2>
+<p>The following resources are great general guides for using R Markdown:</p>
+<p><em>R Markdown: The Definitive Guide</em> by Yihui Xie, J. J. Allaire, and Garrett Grolemund (CRC Press, 2019), <a href="https://bookdown.org/yihui/rmarkdown/" class="uri">https://bookdown.org/yihui/rmarkdown/</a></p>
+<p><em>R Markdown Cookbook</em> by Yihui Xie, Christophe Dervieux, Emily Riederer (CRC Press, 2021), <a href="https://bookdown.org/yihui/rmarkdown-cookbook/" class="uri">https://bookdown.org/yihui/rmarkdown-cookbook/</a></p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="tables-chapter.html"><span class="header-section-number">5</span> Crafting High-Quality Tables</a></div>
+<div class="next"><a href="parameterized-reports-chapter.html"><span class="header-section-number">7</span> Using Parameters to Automate Reports</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#rmarkdown-chapter"><span class="header-section-number">6</span> Writing Reports in R Markdown</a></li>
+<li><a class="nav-link" href="#how-r-markdown-works">How R Markdown Works</a></li>
+<li>
+<a class="nav-link" href="#document-structure">Document Structure</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#the-yaml-metadata">The YAML Metadata</a></li>
+<li><a class="nav-link" href="#the-code-chunks">The Code Chunks</a></li>
+<li><a class="nav-link" href="#markdown-text">Markdown Text</a></li>
+<li><a class="nav-link" href="#inline-r-code">Inline R Code</a></li>
+<li><a class="nav-link" href="#running-code-chunks-interactively">Running Code Chunks Interactively</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#quarto">Quarto</a></li>
+<li><a class="nav-link" href="#conclusion-3">Conclusion</a></li>
+<li><a class="nav-link" href="#learn-more-5">Learn More</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/rfortherestofus/r-without-statistics/blob/master/rmarkdown.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/rfortherestofus/r-without-statistics/edit/master/rmarkdown.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>R Without Statistics</strong>" was written by David Keyes. </p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>
