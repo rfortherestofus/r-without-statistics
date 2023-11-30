@@ -1,7 +1,7 @@
 ---
-title: "Penguins Report"
-author: "David Keyes"
-date: "2024-01-12"
+title: Penguins Report
+author: David Keyes
+date: 2024-01-12
 output: word_document
 ---
 
@@ -20,7 +20,6 @@ library(tidyverse)
 penguins <- read_csv("https://raw.githubusercontent.com/rfortherestofus/r-without-statistics/main/data/penguins-2008.csv")
 ```
 
-
 # Introduction
 
 We are writing a report about the **Palmer Penguins**. These penguins are *really* amazing. There are three species:
@@ -28,8 +27,6 @@ We are writing a report about the **Palmer Penguins**. These penguins are *reall
 - Adelie
 - Gentoo
 - Chinstrap
-
----
 
 ## Bill Length
 

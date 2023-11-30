@@ -48,7 +48,7 @@ params:
 state: "Alabama"
 ---
   
-  ```{r setup, include=FALSE}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   echo = FALSE,
   warning = FALSE,
@@ -69,13 +69,15 @@ library(scales)
 cases <- tibble(state.name) %>%
   rbind(state.name = "District of Columbia") %>%
   left_join(
-    read_csv("united_states_covid19_cases_deaths_and_testing_by_state.csv",
+    read_csv(
+      "united_states_covid19_cases_deaths_and_testing_by_state.csv",
       skip = 2
     ),
     by = c("state.name" = "State/Territory")
   ) %>%
   select(
-    total_cases = `Total Cases`, state.name,
+    total_cases = `Total Cases`,
+    state.name,
     cases_per_100000 = `Case Rate per 100000`
   ) %>%
   mutate(cases_per_100000 = parse_number(cases_per_100000)) %>%
