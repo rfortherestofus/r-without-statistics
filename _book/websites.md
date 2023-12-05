@@ -11,9 +11,10 @@ Built entirely in R, this website uses charts, maps, tables, and text to summari
 
 
 
-\begin{figure}
-\includegraphics[width=1\linewidth]{assets/westchester-website} \caption{A screenshot of the Westchester COVID-19 website}(\#fig:westchester-website-screenshot)
-\end{figure}
+<div class="figure">
+<img src="assets/westchester-website.png" alt="A screenshot of the Westchester COVID-19 website" width="100%" />
+<p class="caption">(\#fig:westchester-website-screenshot)A screenshot of the Westchester COVID-19 website</p>
+</div>
 
 
 
@@ -27,9 +28,10 @@ To create a `distill` website, install the package using `install.packages("dist
 
 
 
-\begin{figure}
-\includegraphics[width=1\linewidth]{assets/new-distill-website} \caption{Giving your distill website a name}(\#fig:new-distill-website)
-\end{figure}
+<div class="figure">
+<img src="assets/new-distill-website.png" alt="Giving your distill website a name" width="100%" />
+<p class="caption">(\#fig:new-distill-website)Giving your distill website a name</p>
+</div>
 
 
 
@@ -59,9 +61,10 @@ The description argument specifies the text that should go below the title of ea
 
 
 
-\begin{figure}
-\includegraphics[width=1\linewidth]{assets/website-description} \caption{The default website description}(\#fig:website-description)
-\end{figure}
+<div class="figure">
+<img src="assets/website-description.png" alt="The default website description" width="100%" />
+<p class="caption">(\#fig:website-description)The default website description</p>
+</div>
 
 
 
@@ -97,9 +100,10 @@ Next, the `navbar` section defines the website’s navigation. Ours appears on t
 
 
 
-\begin{figure}
-\includegraphics[width=1\linewidth]{assets/navbar} \caption{The website navigation bar}(\#fig:navbar)
-\end{figure}
+<div class="figure">
+<img src="assets/navbar.png" alt="The website navigation bar" width="100%" />
+<p class="caption">(\#fig:navbar)The website navigation bar</p>
+</div>
 
 
 
@@ -115,9 +119,10 @@ These options will render all R Markdown documents and add the top navigation ba
 
 
 
-\begin{figure}
-\includegraphics[width=1\linewidth]{assets/covid-website-default-content} \caption{The COVID website with default content}(\#fig:covid-website-default-content)
-\end{figure}
+<div class="figure">
+<img src="assets/covid-website-default-content.png" alt="The COVID website with default content" width="100%" />
+<p class="caption">(\#fig:covid-website-default-content)The COVID website with default content</p>
+</div>
 
 
 
@@ -252,9 +257,11 @@ site: distill::distill_website
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE,
-                      warning = FALSE,
-                      message = FALSE)
+knitr::opts_chunk$set(
+  echo = FALSE,
+  warning = FALSE,
+  message = FALSE
+)
 ```
 
 ```{r}
@@ -277,24 +284,28 @@ Next, we create a new code chunk to import and clean our data:
 ```{r}
 # Import data
 
-us_states <- states(cb = TRUE, 
-                    resolution = "20m",
-                    progress_bar = FALSE) %>%
-  shift_geometry() %>% 
-  clean_names() %>% 
-  select(geoid, name) %>% 
-  rename(state = name) %>% 
+us_states <- states(
+  cb = TRUE,
+  resolution = "20m",
+  progress_bar = FALSE
+) %>%
+  shift_geometry() %>%
+  clean_names() %>%
+  select(geoid, name) %>%
+  rename(state = name) %>%
   filter(state %in% state.name)
 
-covid_data <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/rolling-averages/us-states.csv") %>% 
-  filter(state %in% state.name) %>% 
-  mutate(geoid = str_remove(geoid, "USA-")) 
+covid_data <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/rolling-averages/us-states.csv") %>%
+  filter(state %in% state.name) %>%
+  mutate(geoid = str_remove(geoid, "USA-"))
 
-most_recent_day <- covid_data %>% 
-  slice_max(order_by = date,
-            n = 1) %>% 
-  distinct(date) %>% 
-  mutate(date_nice_format = str_glue("{month(date, label = TRUE, abbr = FALSE)} {day(date)}, {year(date)}")) %>% 
+most_recent_day <- covid_data %>%
+  slice_max(
+    order_by = date,
+    n = 1
+  ) %>%
+  distinct(date) %>%
+  mutate(date_nice_format = str_glue("{month(date, label = TRUE, abbr = FALSE)} {day(date)}, {year(date)}")) %>%
   pull(date_nice_format)
 ```
 
@@ -308,17 +319,21 @@ We also create a variable called `most_recent_day`, which we later reference in 
 
 ````markdown
 ```{r}
-covid_data %>% 
-  filter(state %in% c("Alabama",
-                      "Alaska",
-                      "Arizona",
-                      "Arkansas")) %>% 
-  slice_max(order_by = date,
-            n = 1) %>% 
-  select(state, deaths_avg_per_100k) %>% 
-  arrange(state) %>% 
-  set_names("State", "Death rate") %>% 
-  gt() %>% 
+covid_data %>%
+  filter(state %in% c(
+    "Alabama",
+    "Alaska",
+    "Arizona",
+    "Arkansas"
+  )) %>%
+  slice_max(
+    order_by = date,
+    n = 1
+  ) %>%
+  select(state, deaths_avg_per_100k) %>%
+  arrange(state) %>%
+  set_names("State", "Death rate") %>%
+  gt() %>%
   tab_style(
     style = cell_text(weight = "bold"),
     locations = cells_column_labels()
@@ -333,13 +348,14 @@ This table resembles the code we discussed in Chapter \@ref(tables-chapter). Nex
 We can see this same death rate data for all states on a map.
 
 ```{r}
+most_recent <- us_states %>%
+  left_join(covid_data, by = "state") %>%
+  slice_max(
+    order_by = date,
+    n = 1
+  )
 
-most_recent <- us_states %>% 
-  left_join(covid_data, by = "state") %>% 
-  slice_max(order_by = date,
-            n = 1) 
-
-most_recent %>% 
+most_recent %>%
   ggplot(aes(fill = deaths_avg_per_100k)) +
   geom_sf() +
   scale_fill_viridis_c(option = "rocket") +
@@ -357,27 +373,34 @@ Finally, we make a chart that shows COVID death rates over time in the four stat
 The following chart shows COVID death rates from the start of COVID in early 2020 until `r most_recent_day`.
 
 ```{r}
-
-covid_data %>% 
-  filter(state %in% c("Alabama",
-                      "Alaska",
-                      "Arizona",
-                      "Arkansas")) %>% 
-  ggplot(aes(x = date,
-             y = deaths_avg_per_100k,
-             group = state,
-             fill = deaths_avg_per_100k)) +
+covid_data %>%
+  filter(state %in% c(
+    "Alabama",
+    "Alaska",
+    "Arizona",
+    "Arkansas"
+  )) %>%
+  ggplot(aes(
+    x = date,
+    y = deaths_avg_per_100k,
+    group = state,
+    fill = deaths_avg_per_100k
+  )) +
   geom_col() +
   scale_fill_viridis_c(option = "rocket") +
   theme_minimal() +
   labs(title = "Deaths per 100,000 people over time") +
-  theme(legend.position = "none",
-        plot.title.position = "plot",
-        plot.title = element_text(face = "bold"),
-        panel.grid.minor = element_blank(),
-        axis.title = element_blank()) +
-  facet_wrap(~state,
-             nrow = 2)
+  theme(
+    legend.position = "none",
+    plot.title.position = "plot",
+    plot.title = element_text(face = "bold"),
+    panel.grid.minor = element_blank(),
+    axis.title = element_blank()
+  ) +
+  facet_wrap(
+    ~state,
+    nrow = 2
+  )
 ```
 ````
 
@@ -385,9 +408,10 @@ Figure \@ref(fig:covid-website-static-page) shows what the website’s home page
 
 
 
-\begin{figure}
-\includegraphics[width=1\linewidth]{assets/covid-website-static-page} \caption{The COVID website with a table, map, and chart}(\#fig:covid-website-static-page)
-\end{figure}
+<div class="figure">
+<img src="assets/covid-website-static-page.png" alt="The COVID website with a table, map, and chart" width="100%" />
+<p class="caption">(\#fig:covid-website-static-page)The COVID website with a table, map, and chart</p>
+</div>
 
 
 
@@ -412,9 +436,10 @@ The static content we’ve added to the website so far has none of the interacti
 
 
 
-\begin{figure}
-\includegraphics[width=1\linewidth]{assets/westchester-website-tooltip} \caption{Interactive tooltips showing new cases by day}(\#fig:westchester-website-tooltip)
-\end{figure}
+<div class="figure">
+<img src="assets/westchester-website-tooltip.png" alt="Interactive tooltips showing new cases by day" width="100%" />
+<p class="caption">(\#fig:westchester-website-tooltip)Interactive tooltips showing new cases by day</p>
+</div>
 
 
 
@@ -422,9 +447,10 @@ Herman also makes interactive tables with the `DT` package, allowing the user to
 
 
 
-\begin{figure}
-\includegraphics[width=1\linewidth]{assets/dt-table} \caption{An interactive table made with the DT package}(\#fig:dt-table)
-\end{figure}
+<div class="figure">
+<img src="assets/dt-table.png" alt="An interactive table made with the DT package" width="100%" />
+<p class="caption">(\#fig:dt-table)An interactive table made with the DT package</p>
+</div>
 
 
 
@@ -438,12 +464,14 @@ Remember how we included only four states in the table in to keep it from gettin
 ```r
 library(reactable)
 
-covid_data %>% 
-  slice_max(order_by = date,
-            n = 1) %>% 
-  select(state, deaths_avg_per_100k) %>% 
-  arrange(state) %>% 
-  set_names("State", "Death rate") %>% 
+covid_data %>%
+  slice_max(
+    order_by = date,
+    n = 1
+  ) %>%
+  select(state, deaths_avg_per_100k) %>%
+  arrange(state) %>%
+  set_names("State", "Death rate") %>%
   reactable()
 ```
 
@@ -451,9 +479,10 @@ The reactable package shows 10 rows by default and adds pagination, as shown in 
 
 
 
-\begin{figure}
-\includegraphics[width=1\linewidth]{assets/covid-website-reactable} \caption{An interactive table built with reactable}(\#fig:covid-website-reactable)
-\end{figure}
+<div class="figure">
+<img src="assets/covid-website-reactable.png" alt="An interactive table built with reactable" width="100%" />
+<p class="caption">(\#fig:covid-website-reactable)An interactive table built with reactable</p>
+</div>
 
 
 
@@ -467,26 +496,34 @@ Let’s also give the website’s chart some interactivity using `plotly`, which
 ```r
 library(plotly)
 
-covid_chart <- covid_data %>% 
-  filter(state %in% c("Alabama",
-                      "Alaska",
-                      "Arizona",
-                      "Arkansas")) %>% 
-  ggplot(aes(x = date,
-             y = deaths_avg_per_100k,
-             group = state,
-             fill = deaths_avg_per_100k)) +
+covid_chart <- covid_data %>%
+  filter(state %in% c(
+    "Alabama",
+    "Alaska",
+    "Arizona",
+    "Arkansas"
+  )) %>%
+  ggplot(aes(
+    x = date,
+    y = deaths_avg_per_100k,
+    group = state,
+    fill = deaths_avg_per_100k
+  )) +
   geom_col() +
   scale_fill_viridis_c(option = "rocket") +
   theme_minimal() +
   labs(title = "Deaths per 100,000 people over time") +
-  theme(legend.position = "none",
-        plot.title.position = "plot",
-        plot.title = element_text(face = "bold"),
-        panel.grid.minor = element_blank(),
-        axis.title = element_blank()) +
-  facet_wrap(~state,
-             nrow = 2)
+  theme(
+    legend.position = "none",
+    plot.title.position = "plot",
+    plot.title = element_text(face = "bold"),
+    panel.grid.minor = element_blank(),
+    axis.title = element_blank()
+  ) +
+  facet_wrap(
+    ~state,
+    nrow = 2
+  )
 
 
 ggplotly(covid_chart)
@@ -496,9 +533,10 @@ The code to make the chart is identical to the chart code shown earlier in this 
 
 
 
-\begin{figure}
-\includegraphics[width=1\linewidth]{assets/covid-website-messy-tooltips} \caption{Messy tooltips on our COVID death rates graph}(\#fig:covid-website-messy-tooltips)
-\end{figure}
+<div class="figure">
+<img src="assets/covid-website-messy-tooltips.png" alt="Messy tooltips on our COVID death rates graph" width="100%" />
+<p class="caption">(\#fig:covid-website-messy-tooltips)Messy tooltips on our COVID death rates graph</p>
+</div>
 
 
 
@@ -506,33 +544,43 @@ To make the tooltip more informative, we can create a single variable containing
 
 
 ```r
-covid_chart <- covid_data %>% 
-  filter(state %in% c("Alabama",
-                      "Alaska",
-                      "Arizona",
-                      "Arkansas")) %>% 
-    mutate(date_nice_format = str_glue("{month(date, label = TRUE, abbr = FALSE)} {day(date)}, {year(date)}")) %>% 
-  mutate(tooltip_text = str_glue("{state}<br>{date_nice_format}<br>{deaths_avg_per_100k} per 100,000 people")) %>% 
-  ggplot(aes(x = date,
-             y = deaths_avg_per_100k,
-             group = state,
-             text = tooltip_text,
-             fill = deaths_avg_per_100k)) +
+covid_chart <- covid_data %>%
+  filter(state %in% c(
+    "Alabama",
+    "Alaska",
+    "Arizona",
+    "Arkansas"
+  )) %>%
+  mutate(date_nice_format = str_glue("{month(date, label = TRUE, abbr = FALSE)} {day(date)}, {year(date)}")) %>%
+  mutate(tooltip_text = str_glue("{state}<br>{date_nice_format}<br>{deaths_avg_per_100k} per 100,000 people")) %>%
+  ggplot(aes(
+    x = date,
+    y = deaths_avg_per_100k,
+    group = state,
+    text = tooltip_text,
+    fill = deaths_avg_per_100k
+  )) +
   geom_col() +
   scale_fill_viridis_c(option = "rocket") +
   theme_minimal() +
   labs(title = "Deaths per 100,000 people over time") +
-  theme(legend.position = "none",
-        plot.title.position = "plot",
-        plot.title = element_text(face = "bold"),
-        panel.grid.minor = element_blank(),
-        axis.title = element_blank()) +
-  facet_wrap(~state,
-             nrow = 2)
+  theme(
+    legend.position = "none",
+    plot.title.position = "plot",
+    plot.title = element_text(face = "bold"),
+    panel.grid.minor = element_blank(),
+    axis.title = element_blank()
+  ) +
+  facet_wrap(
+    ~state,
+    nrow = 2
+  )
 
 
-ggplotly(covid_chart,
-         tooltip = "tooltip_text")
+ggplotly(
+  covid_chart,
+  tooltip = "tooltip_text"
+)
 ```
 
 We begin by creating a `date_nice_format` variable that produces dates in the more readable *January 1, 2023* format instead of *2023-01-01*. We then combine this value with the state and death rate variables, saving the result as *tooltip_text*. Next, we add a new aesthetic property in the *ggplot()* function. On its own, this doesn’t do anything until we pass the new property to the *ggplotly()* function.
@@ -541,9 +589,10 @@ Figure \@ref(fig:covid-website-tooltip) shows what our new tooltip looks like: t
 
 
 
-\begin{figure}
-\includegraphics[width=1\linewidth]{assets/covid-website-tooltip} \caption{Easy to read interactive tooltips on the COVID death rate chart}(\#fig:covid-website-tooltip)
-\end{figure}
+<div class="figure">
+<img src="assets/covid-website-tooltip.png" alt="Easy to read interactive tooltips on the COVID death rate chart" width="100%" />
+<p class="caption">(\#fig:covid-website-tooltip)Easy to read interactive tooltips on the COVID death rate chart</p>
+</div>
 
 
 
@@ -570,9 +619,11 @@ library(rdrop2)
 render_site()
 
 # Upload to Dropbox
-website_files <- dir_ls(path = "docs",
-                        type = "file",
-                        recurse = TRUE)
+website_files <- dir_ls(
+  path = "docs",
+  type = "file",
+  recurse = TRUE
+)
 
 walk(website_files, drop_upload, path = "COVID Website")
 ```
@@ -587,9 +638,10 @@ Here’s how GitHub Pages works. Most of the time, when you look at a file on Gi
 
 
 
-\begin{figure}
-\includegraphics[width=1\linewidth]{assets/gh-pages} \caption{Setting up GitHub Pages}(\#fig:gh-pages)
-\end{figure}
+<div class="figure">
+<img src="assets/gh-pages.png" alt="Setting up GitHub Pages" width="100%" />
+<p class="caption">(\#fig:gh-pages)Setting up GitHub Pages</p>
+</div>
 
 
 

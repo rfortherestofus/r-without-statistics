@@ -1,7 +1,7 @@
 --- 
 title: "R Without Statistics"
 author: "David Keyes"
-# date: "2023-11-30"
+# date: "2023-12-01"
 site: bookdown::bookdown_site
 documentclass: book
 url: https://book.rwithoutstatistics.com
