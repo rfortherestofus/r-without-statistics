@@ -26,19 +26,18 @@ We first import the data with the `read_csv()` function before creating the `sho
 library(tidyverse)
 library(fs)
 
-
 penguins <- read_csv("https://data.rwithoutstatistics.com/penguins-2007.csv")
 
 show_in_excel_penguins <- function() {
-  
   csv_file <- str_glue("{tempfile()}.csv")
-  
-  write_csv(x = penguins,
-            file = csv_file,
-            na = "")
-  
+
+  write_csv(
+    x = penguins,
+    file = csv_file,
+    na = ""
+  )
+
   file_show(path = csv_file)
-  
 }
 ```
 
@@ -79,9 +78,11 @@ To make such a function, we need to add arguments. Below is a slightly simplifie
 ```{r echo = TRUE}
 show_in_excel <- function(data) {
   csv_file <- str_glue("{tempfile()}.csv")
-  write_csv(x = data,
-            file = csv_file,
-            na = "")
+  write_csv(
+    x = data,
+    file = csv_file,
+    na = ""
+  )
   file_show(path = csv_file)
 }
 ```
@@ -105,8 +106,8 @@ show_in_excel(data = covid_data)
 You can also use this function at the end of a pipeline. This code filters the `covid_data` data frame to include only data from California before opening it in Excel:
 
 ```{r echo = TRUE, eval = FALSE}
-covid_data %>% 
-  filter(state == "California") %>% 
+covid_data %>%
+  filter(state == "California") %>%
   show_in_excel()
 ```
 
@@ -124,7 +125,6 @@ A first version of this function might look like this:
 library(tidycensus)
 
 get_acs_race_ethnicity <- function() {
-  
   race_ethnicity_data <-
     get_acs(
       geography = "state",
@@ -139,9 +139,8 @@ get_acs_race_ethnicity <- function() {
         "Hispanic/Latino" = "B03002_012"
       )
     )
-  
+
   race_ethnicity_data
-  
 }
 ```
 
@@ -163,7 +162,6 @@ We could improve this function in a few ways. For example, you might want the re
 
 ```{r echo = TRUE}
 get_acs_race_ethnicity <- function(clean_variable_names = FALSE) {
-  
   race_ethnicity_data <-
     get_acs(
       geography = "state",
@@ -178,14 +176,12 @@ get_acs_race_ethnicity <- function(clean_variable_names = FALSE) {
         "Hispanic/Latino" = "B03002_012"
       )
     )
-  
+
   if (clean_variable_names == TRUE) {
     race_ethnicity_data <- clean_names(race_ethnicity_data)
-    
   }
-  
+
   race_ethnicity_data
-  
 }
 ```
 
@@ -212,9 +208,10 @@ The function we created retrieves population data at the state level by passing 
 Your first thought about how to modify our function might involve adding an additional argument for the level of data to retrieve. We could edit the first two lines of the function as follows to add a `my_geography` argument and then use it in the `get_acs()` function:
 
 ```{r echo = TRUE}
-get_acs_race_ethnicity <- function(clean_variable_names = FALSE,
-                                   my_geography) {
-  
+get_acs_race_ethnicity <- function(
+  clean_variable_names = FALSE,
+  my_geography
+) {
   race_ethnicity_data <-
     get_acs(
       geography = my_geography,
@@ -229,14 +226,12 @@ get_acs_race_ethnicity <- function(clean_variable_names = FALSE,
         "Hispanic/Latino" = "B03002_012"
       )
     )
-  
+
   if (clean_variable_names == TRUE) {
     race_ethnicity_data <- clean_names(race_ethnicity_data)
-    
   }
-  
+
   race_ethnicity_data
-  
 }
 ```
 
@@ -245,9 +240,10 @@ But what if I also want to select the year for which to retrieve data? Well, we 
 The `...` syntax allows us to avoid doing so. By placing `...` in the `get_acs_race_ethnicity()` function, we can automatically pass any arguments listed there to the `get_acs()` function by including `...` there as well:
 
 ```{r echo = TRUE}
-get_acs_race_ethnicity <- function(clean_variable_names = FALSE,
-                                   ...) {
-  
+get_acs_race_ethnicity <- function(
+  clean_variable_names = FALSE,
+  ...
+) {
   race_ethnicity_data <-
     get_acs(
       ...,
@@ -262,14 +258,12 @@ get_acs_race_ethnicity <- function(clean_variable_names = FALSE,
         "Hispanic/Latino" = "B03002_012"
       )
     )
-  
+
   if (clean_variable_names == TRUE) {
     race_ethnicity_data <- clean_names(race_ethnicity_data)
-    
   }
-  
+
   race_ethnicity_data
-  
 }
 ```
 
@@ -294,16 +288,20 @@ get_acs_race_ethnicity(geography = "state")
 You could also run the function with the `geometry = TRUE` argument to return geospatial data alongside demographic data:
 
 ```{r eval = FALSE, echo = TRUE}
-get_acs_race_ethnicity(geography = "county",
-                       geometry = TRUE)
+get_acs_race_ethnicity(
+  geography = "county",
+  geometry = TRUE
+)
 ```
 
 The function should return data like the following:
 
 ```{r}
-get_acs_race_ethnicity(geography = "state",
-                       geometry = TRUE,
-                       progress_bar = FALSE)
+get_acs_race_ethnicity(
+  geography = "state",
+  geometry = TRUE,
+  progress_bar = FALSE
+)
 ```
 
 The `...` syntax allows you to create your own function and pass it the arguments of another function without repeating all of that function’s arguments in your own code. This approach gives you flexibility while keeping your code concise.
@@ -446,27 +444,29 @@ clean_names get_acs
 This is because we were using functions without saying what package they came from. The `clean_names()` function comes from the `janitor` package, and `get_acs()` comes from `tidycensus`, so we need to add these package names before each function:
 
 ```{r echo = TRUE, eval = FALSE}
-get_acs_race_ethnicity <- function(clean_variable_names = FALSE,
-                                   ...) {
-  
-  race_ethnicity_data <- tidycensus::get_acs(...,
-                                             variables = c("White" = "B03002_003",
-                                                           "Black/African American" = "B03002_004",
-                                                           "American Indian/Alaska Native" = "B03002_005",
-                                                           "Asian" = "B03002_006",
-                                                           "Native Hawaiian/Pacific Islander" = "B03002_007",
-                                                           "Other race" = "B03002_008",
-                                                           "Multi-Race" = "B03002_009",
-                                                           "Hispanic/Latino" = "B03002_012")) 
-  
+get_acs_race_ethnicity <- function(
+  clean_variable_names = FALSE,
+  ...
+) {
+  race_ethnicity_data <- tidycensus::get_acs(
+    ...,
+    variables = c(
+      "White" = "B03002_003",
+      "Black/African American" = "B03002_004",
+      "American Indian/Alaska Native" = "B03002_005",
+      "Asian" = "B03002_006",
+      "Native Hawaiian/Pacific Islander" = "B03002_007",
+      "Other race" = "B03002_008",
+      "Multi-Race" = "B03002_009",
+      "Hispanic/Latino" = "B03002_012"
+    )
+  )
+
   if (clean_variable_names == TRUE) {
-    
     race_ethnicity_data <- janitor::clean_names(race_ethnicity_data)
-    
   }
-  
+
   race_ethnicity_data
-  
 }
 ```
 
@@ -648,4 +648,3 @@ R was invented in 1993 as a tool for statistics, and in the years since then, it
 As you’ve seen in this book, R is great for making visualizations. You can use it to create high-quality graphics and maps, make your own theme to keep your visuals consistent and on-brand, and generate tables that look good and communicate well. Using R Markdown or Quarto, you can create reports, presentations, and websites. And best of all, these documents are all reproducible, meaning that updating them is as easy as rerunning your code. Finally, you’ve seen that R can help you to automate how you access data, as well as assist you in collaborating with others through functions and packages that you make.
 
 If R was new to you when you started this book, you should now feel inspired to use it. If you are an experienced R user, this book should have shown you ways to use R that you hadn’t previously considered. No matter your background, you should understand how to use R like a pro, and without any statistics.
-
