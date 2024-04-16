@@ -1,0 +1,83 @@
+[[redirects]]
+  from = "/index.html"
+  to = "https://book.rfortherestofus.com/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/introduction.html"
+  to = "https://book.rfortherestofus.com/introduction.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/howto-chapter.html"
+  to = "https://book.rfortherestofus.com/crash-course.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/data-viz-chapter.html"
+  to = "https://book.rfortherestofus.com/data-viz.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/custom-theme-chapter.html"
+  to = "https://book.rfortherestofus.com/themes.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/maps-chapter.html"
+  to = "https://book.rfortherestofus.com/maps.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tables-chapter.html"
+  to = "https://book.rfortherestofus.com/tables.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/rmarkdown-chapter.html"
+  to = "https://book.rfortherestofus.com/rmarkdown.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/parameterized-reports-chapter.html"
+  to = "https://book.rfortherestofus.com/parameterized-reporting.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/presentations-chapter.html"
+  to = "https://book.rfortherestofus.com/presentations.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/websites-chapter.html"
+  to = "https://book.rfortherestofus.com/websites.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/quarto.html"
+  to = "https://book.rfortherestofus.com/quarto.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/accessing-data-chapter.html"
+  to = "https://book.rfortherestofus.com/accessing-data.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/packages-chapter.html"
+  to = "https://book.rfortherestofus.com/packages.html"
+  status = 301
+  force = true
