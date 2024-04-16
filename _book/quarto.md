@@ -123,8 +123,13 @@ Another difference you’re likely to see if you switch from R Markdown to Quart
 library(palmerpenguins)
 library(tidyverse)
 
-ggplot(penguins, aes(x = bill_length_mm,
-                     y = bill_depth_mm)) +
+ggplot(
+  penguins,
+  aes(
+    x = bill_length_mm,
+    y = bill_depth_mm
+  )
+) +
   geom_point()
 ```
 ````
@@ -175,11 +180,16 @@ library(scales)
 ```{r}
 cases <- tibble(state.name) %>%
   rbind(state.name = "District of Columbia") %>%
-  left_join(read_csv("https://data.rwithoutstatistics.com/united_states_covid19_cases_deaths_and_testing_by_state.csv", skip = 2),
-            by = c("state.name" = "State/Territory")) %>%
-  select(total_cases = `Total Cases`, state.name,
-         cases_per_100000 = `Case Rate per 100000`) %>%
-  mutate(cases_per_100000 = parse_number(cases_per_100000)) %>% 
+  left_join(
+    read_csv("https://data.rwithoutstatistics.com/united_states_covid19_cases_deaths_and_testing_by_state.csv", skip = 2),
+    by = c("state.name" = "State/Territory")
+  ) %>%
+  select(
+    total_cases = `Total Cases`,
+    state.name,
+    cases_per_100000 = `Case Rate per 100000`
+  ) %>%
+  mutate(cases_per_100000 = parse_number(cases_per_100000)) %>%
   mutate(case_rank = rank(-cases_per_100000, ties.method = "min"))
 ```
 
@@ -187,12 +197,12 @@ cases <- tibble(state.name) %>%
 state_text <- if_else(params$state == "District of Columbia", str_glue("the District of Columbia"), str_glue("state of {params$state}"))
 
 state_cases_per_100000 <- cases %>%
-  filter(state.name == params$state) %>% 
-  pull(cases_per_100000) %>% 
+  filter(state.name == params$state) %>%
+  pull(cases_per_100000) %>%
   comma()
 
 state_cases_rank <- cases %>%
-  filter(state.name == params$state) %>% 
+  filter(state.name == params$state) %>%
   pull(case_rank)
 ```
 
@@ -203,17 +213,21 @@ In `r state_text`, there were `r state_cases_per_100000` cases per 100,000 peopl
 
 set_urbn_defaults(style = "print")
 
-cases %>% 
-  mutate(highlight_state = if_else(state.name == params$state, "Y", "N")) %>% 
-  mutate(state.name = fct_reorder(state.name, cases_per_100000)) %>% 
-  ggplot(aes(x = cases_per_100000,
-             y = state.name,
-             fill = highlight_state)) +
+cases %>%
+  mutate(highlight_state = if_else(state.name == params$state, "Y", "N")) %>%
+  mutate(state.name = fct_reorder(state.name, cases_per_100000)) %>%
+  ggplot(aes(
+    x = cases_per_100000,
+    y = state.name,
+    fill = highlight_state
+  )) +
   geom_col() +
   scale_x_continuous(labels = comma_format()) +
   theme(legend.position = "none") +
-  labs(y = NULL,
-       x = "Cases per 100,000")
+  labs(
+    y = NULL,
+    x = "Cases per 100,000"
+  )
 ```
 ````
 
@@ -296,16 +310,18 @@ We are writing a report about the **Palmer Penguins**. These penguins are *reall
 We can make a histogram to see the distribution of bill lengths.
 
 ```{r}
-penguins %>% 
+penguins %>%
   ggplot(aes(x = bill_length_mm)) +
   geom_histogram() +
   theme_minimal()
 ```
 
 ```{r}
-average_bill_length <- penguins %>% 
-  summarize(avg_bill_length = mean(bill_length_mm,
-                                   na.rm = TRUE)) %>% 
+average_bill_length <- penguins %>%
+  summarize(avg_bill_length = mean(
+    bill_length_mm,
+    na.rm = TRUE
+  )) %>%
   pull(avg_bill_length)
 ```
 
@@ -366,7 +382,7 @@ The following code created this two-column slide:
 
 ::: {.column width="50%"}
 ```{r}
-penguins %>% 
+penguins %>%
   ggplot(aes(x = bill_length_mm)) +
   geom_histogram() +
   theme_minimal()
@@ -376,7 +392,7 @@ penguins %>%
 
 ::: {.column width="50%"}
 ```{r}
-penguins %>% 
+penguins %>%
   ggplot(aes(x = bill_depth_mm)) +
   geom_histogram() +
   theme_minimal()
@@ -539,24 +555,28 @@ library(reactable)
 ```{r}
 # Import data
 
-us_states <- states(cb = TRUE, 
-                    resolution = "20m",
-                    progress_bar = FALSE) %>%
-  shift_geometry() %>% 
-  clean_names() %>% 
-  select(geoid, name) %>% 
-  rename(state = name) %>% 
+us_states <- states(
+  cb = TRUE,
+  resolution = "20m",
+  progress_bar = FALSE
+) %>%
+  shift_geometry() %>%
+  clean_names() %>%
+  select(geoid, name) %>%
+  rename(state = name) %>%
   filter(state %in% state.name)
 
-covid_data <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/rolling-averages/us-states.csv") %>% 
-  filter(state %in% state.name) %>% 
-  mutate(geoid = str_remove(geoid, "USA-")) 
+covid_data <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/rolling-averages/us-states.csv") %>%
+  filter(state %in% state.name) %>%
+  mutate(geoid = str_remove(geoid, "USA-"))
 
-most_recent_day <- covid_data %>% 
-  slice_max(order_by = date,
-            n = 1) %>% 
-  distinct(date) %>% 
-  mutate(date_nice_format = str_glue("{month(date, label = TRUE, abbr = FALSE)} {day(date)}, {year(date)}")) %>% 
+most_recent_day <- covid_data %>%
+  slice_max(
+    order_by = date,
+    n = 1
+  ) %>%
+  distinct(date) %>%
+  mutate(date_nice_format = str_glue("{month(date, label = TRUE, abbr = FALSE)} {day(date)}, {year(date)}")) %>%
   pull(date_nice_format)
 ```
 
@@ -567,12 +587,14 @@ This table shows COVID death rates per 100,000 people in four states states.
 ```{r}
 # Make table
 
-covid_data %>% 
-  slice_max(order_by = date,
-            n = 1) %>%
-  select(state, deaths_avg_per_100k) %>% 
-  arrange(state) %>% 
-  set_names("State", "Death rate") %>% 
+covid_data %>%
+  slice_max(
+    order_by = date,
+    n = 1
+  ) %>%
+  select(state, deaths_avg_per_100k) %>%
+  arrange(state) %>%
+  set_names("State", "Death rate") %>%
   reactable()
 ```
 
@@ -581,12 +603,14 @@ We can see this same death rate data for all states on a map.
 ```{r}
 # Make map
 
-most_recent <- us_states %>% 
-  left_join(covid_data, by = "state") %>% 
-  slice_max(order_by = date,
-            n = 1) 
+most_recent <- us_states %>%
+  left_join(covid_data, by = "state") %>%
+  slice_max(
+    order_by = date,
+    n = 1
+  )
 
-most_recent %>% 
+most_recent %>%
   ggplot(aes(fill = deaths_avg_per_100k)) +
   geom_sf() +
   scale_fill_viridis_c(option = "rocket") +
@@ -603,26 +627,34 @@ The following chart shows COVID death rates from the start of COVID in early 202
 
 library(plotly)
 
-covid_chart <- covid_data %>% 
-  filter(state %in% c("Alabama",
-                      "Alaska",
-                      "Arizona",
-                      "Arkansas")) %>% 
-  ggplot(aes(x = date,
-             y = deaths_avg_per_100k,
-             group = state,
-             fill = deaths_avg_per_100k)) +
+covid_chart <- covid_data %>%
+  filter(state %in% c(
+    "Alabama",
+    "Alaska",
+    "Arizona",
+    "Arkansas"
+  )) %>%
+  ggplot(aes(
+    x = date,
+    y = deaths_avg_per_100k,
+    group = state,
+    fill = deaths_avg_per_100k
+  )) +
   geom_col() +
   scale_fill_viridis_c(option = "rocket") +
   theme_minimal() +
   labs(title = "Deaths per 100,000 people over time") +
-  theme(legend.position = "none",
-        plot.title.position = "plot",
-        plot.title = element_text(face = "bold"),
-        panel.grid.minor = element_blank(),
-        axis.title = element_blank()) +
-  facet_wrap(~state,
-             nrow = 2)
+  theme(
+    legend.position = "none",
+    plot.title.position = "plot",
+    plot.title = element_text(face = "bold"),
+    panel.grid.minor = element_blank(),
+    axis.title = element_blank()
+  ) +
+  facet_wrap(
+    ~state,
+    nrow = 2
+  )
 
 
 ggplotly(covid_chart)
@@ -820,12 +852,14 @@ When we made a website with `distill`, we used the line `layout = "l-page"` to w
 #| out-width: 100%
 # Make map
 
-most_recent <- us_states %>% 
-  left_join(covid_data, by = "state") %>% 
-  slice_max(order_by = date,
-            n = 1) 
+most_recent <- us_states %>%
+  left_join(covid_data, by = "state") %>%
+  slice_max(
+    order_by = date,
+    n = 1
+  )
 
-most_recent %>% 
+most_recent %>%
   ggplot(aes(fill = deaths_avg_per_100k)) +
   geom_sf() +
   scale_fill_viridis_c(option = "rocket") +
@@ -886,5 +920,3 @@ Consult the following resources to learn the fundamentals of Quarto:
 *Get Started with Quarto*, workshop materials by Tom Mock (2022), https://jthomasmock.github.io/quarto-in-two-hours/
 
 *From R Markdown to Quarto*, workshop materials by Andrew Bray, Rebecca Barter, Silvia Canelón, Christophe Dervieu, Devin Pastor, and Tatsu Shigeta (2022), https://rstudio-conf-2022.github.io/rmd-to-quarto/
-
-

@@ -11,10 +11,9 @@ Built entirely in R, this website uses charts, maps, tables, and text to summari
 
 
 
-<div class="figure">
-<img src="assets/westchester-website.png" alt="A screenshot of the Westchester COVID-19 website" width="100%" />
-<p class="caption">(\#fig:westchester-website-screenshot)A screenshot of the Westchester COVID-19 website</p>
-</div>
+\begin{figure}
+\includegraphics[width=1\linewidth]{assets/westchester-website} \caption{A screenshot of the Westchester COVID-19 website}(\#fig:westchester-website-screenshot)
+\end{figure}
 
 
 
@@ -28,10 +27,9 @@ To create a `distill` website, install the package using `install.packages("dist
 
 
 
-<div class="figure">
-<img src="assets/new-distill-website.png" alt="Giving your distill website a name" width="100%" />
-<p class="caption">(\#fig:new-distill-website)Giving your distill website a name</p>
-</div>
+\begin{figure}
+\includegraphics[width=1\linewidth]{assets/new-distill-website} \caption{Giving your distill website a name}(\#fig:new-distill-website)
+\end{figure}
 
 
 
@@ -61,10 +59,9 @@ The description argument specifies the text that should go below the title of ea
 
 
 
-<div class="figure">
-<img src="assets/website-description.png" alt="The default website description" width="100%" />
-<p class="caption">(\#fig:website-description)The default website description</p>
-</div>
+\begin{figure}
+\includegraphics[width=1\linewidth]{assets/website-description} \caption{The default website description}(\#fig:website-description)
+\end{figure}
 
 
 
@@ -100,10 +97,9 @@ Next, the `navbar` section defines the website’s navigation. Ours appears on t
 
 
 
-<div class="figure">
-<img src="assets/navbar.png" alt="The website navigation bar" width="100%" />
-<p class="caption">(\#fig:navbar)The website navigation bar</p>
-</div>
+\begin{figure}
+\includegraphics[width=1\linewidth]{assets/navbar} \caption{The website navigation bar}(\#fig:navbar)
+\end{figure}
 
 
 
@@ -119,10 +115,9 @@ These options will render all R Markdown documents and add the top navigation ba
 
 
 
-<div class="figure">
-<img src="assets/covid-website-default-content.png" alt="The COVID website with default content" width="100%" />
-<p class="caption">(\#fig:covid-website-default-content)The COVID website with default content</p>
-</div>
+\begin{figure}
+\includegraphics[width=1\linewidth]{assets/covid-website-default-content} \caption{The COVID website with default content}(\#fig:covid-website-default-content)
+\end{figure}
 
 
 
@@ -299,7 +294,7 @@ covid_data <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/
   filter(state %in% state.name) %>%
   mutate(geoid = str_remove(geoid, "USA-"))
 
-most_recent_day <- covid_data %>%
+last_day <- covid_data %>%
   slice_max(
     order_by = date,
     n = 1
@@ -309,12 +304,12 @@ most_recent_day <- covid_data %>%
   pull(date_nice_format)
 ```
 
-# COVID Death Rates as of `r most_recent_day`
+# COVID Death Rates as of `r last_day`
 
 This table shows COVID death rates per 100,000 people in four states states.
 ````
 
-We also create a variable called `most_recent_day`, which we later reference in a text section. Using inline R code, this header now displays the current date. We then make a table that shows the death rates per 100,000 people in four states (as using all states would create too large a table): 
+We also create a variable called `last_day`, which we later reference in a text section. Using inline R code, this header now displays the current date. We then make a table that shows the death rates per 100,000 people in four states (as using all states would create too large a table): 
 
 
 ````markdown
@@ -370,7 +365,7 @@ Finally, we make a chart that shows COVID death rates over time in the four stat
 ````markdown
 # COVID Death Rates Over Time
 
-The following chart shows COVID death rates from the start of COVID in early 2020 until `r most_recent_day`.
+The following chart shows COVID death rates from the start of COVID in early 2020 until `r last_day`.
 
 ```{r}
 covid_data %>%
@@ -408,10 +403,9 @@ Figure \@ref(fig:covid-website-static-page) shows what the website’s home page
 
 
 
-<div class="figure">
-<img src="assets/covid-website-static-page.png" alt="The COVID website with a table, map, and chart" width="100%" />
-<p class="caption">(\#fig:covid-website-static-page)The COVID website with a table, map, and chart</p>
-</div>
+\begin{figure}
+\includegraphics[width=1\linewidth]{assets/covid-website-static-page} \caption{The COVID website with a table, map, and chart}(\#fig:covid-website-static-page)
+\end{figure}
 
 
 
@@ -436,10 +430,9 @@ The static content we’ve added to the website so far has none of the interacti
 
 
 
-<div class="figure">
-<img src="assets/westchester-website-tooltip.png" alt="Interactive tooltips showing new cases by day" width="100%" />
-<p class="caption">(\#fig:westchester-website-tooltip)Interactive tooltips showing new cases by day</p>
-</div>
+\begin{figure}
+\includegraphics[width=1\linewidth]{assets/westchester-website-tooltip} \caption{Interactive tooltips showing new cases by day}(\#fig:westchester-website-tooltip)
+\end{figure}
 
 
 
@@ -447,10 +440,9 @@ Herman also makes interactive tables with the `DT` package, allowing the user to
 
 
 
-<div class="figure">
-<img src="assets/dt-table.png" alt="An interactive table made with the DT package" width="100%" />
-<p class="caption">(\#fig:dt-table)An interactive table made with the DT package</p>
-</div>
+\begin{figure}
+\includegraphics[width=1\linewidth]{assets/dt-table} \caption{An interactive table made with the DT package}(\#fig:dt-table)
+\end{figure}
 
 
 
@@ -479,10 +471,9 @@ The reactable package shows 10 rows by default and adds pagination, as shown in 
 
 
 
-<div class="figure">
-<img src="assets/covid-website-reactable.png" alt="An interactive table built with reactable" width="100%" />
-<p class="caption">(\#fig:covid-website-reactable)An interactive table built with reactable</p>
-</div>
+\begin{figure}
+\includegraphics[width=1\linewidth]{assets/covid-website-reactable} \caption{An interactive table built with reactable}(\#fig:covid-website-reactable)
+\end{figure}
 
 
 
@@ -525,7 +516,6 @@ covid_chart <- covid_data %>%
     nrow = 2
   )
 
-
 ggplotly(covid_chart)
 ```
 
@@ -533,10 +523,9 @@ The code to make the chart is identical to the chart code shown earlier in this 
 
 
 
-<div class="figure">
-<img src="assets/covid-website-messy-tooltips.png" alt="Messy tooltips on our COVID death rates graph" width="100%" />
-<p class="caption">(\#fig:covid-website-messy-tooltips)Messy tooltips on our COVID death rates graph</p>
-</div>
+\begin{figure}
+\includegraphics[width=1\linewidth]{assets/covid-website-messy-tooltips} \caption{Messy tooltips on our COVID death rates graph}(\#fig:covid-website-messy-tooltips)
+\end{figure}
 
 
 
@@ -589,10 +578,9 @@ Figure \@ref(fig:covid-website-tooltip) shows what our new tooltip looks like: t
 
 
 
-<div class="figure">
-<img src="assets/covid-website-tooltip.png" alt="Easy to read interactive tooltips on the COVID death rate chart" width="100%" />
-<p class="caption">(\#fig:covid-website-tooltip)Easy to read interactive tooltips on the COVID death rate chart</p>
-</div>
+\begin{figure}
+\includegraphics[width=1\linewidth]{assets/covid-website-tooltip} \caption{Easy to read interactive tooltips on the COVID death rate chart}(\#fig:covid-website-tooltip)
+\end{figure}
 
 
 
@@ -638,10 +626,9 @@ Here’s how GitHub Pages works. Most of the time, when you look at a file on Gi
 
 
 
-<div class="figure">
-<img src="assets/gh-pages.png" alt="Setting up GitHub Pages" width="100%" />
-<p class="caption">(\#fig:gh-pages)Setting up GitHub Pages</p>
-</div>
+\begin{figure}
+\includegraphics[width=1\linewidth]{assets/gh-pages} \caption{Setting up GitHub Pages}(\#fig:gh-pages)
+\end{figure}
 
 
 

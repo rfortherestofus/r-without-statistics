@@ -23,19 +23,18 @@ We first import the data with the `read_csv()` function before creating the `sho
 library(tidyverse)
 library(fs)
 
-
 penguins <- read_csv("https://data.rwithoutstatistics.com/penguins-2007.csv")
 
 show_in_excel_penguins <- function() {
-  
   csv_file <- str_glue("{tempfile()}.csv")
-  
-  write_csv(x = penguins,
-            file = csv_file,
-            na = "")
-  
+
+  write_csv(
+    x = penguins,
+    file = csv_file,
+    na = ""
+  )
+
   file_show(path = csv_file)
-  
 }
 ```
 
@@ -73,9 +72,11 @@ To make such a function, we need to add arguments. Below is a slightly simplifie
 ```r
 show_in_excel <- function(data) {
   csv_file <- str_glue("{tempfile()}.csv")
-  write_csv(x = data,
-            file = csv_file,
-            na = "")
+  write_csv(
+    x = data,
+    file = csv_file,
+    na = ""
+  )
   file_show(path = csv_file)
 }
 ```
@@ -102,8 +103,8 @@ You can also use this function at the end of a pipeline. This code filters the `
 
 
 ```r
-covid_data %>% 
-  filter(state == "California") %>% 
+covid_data %>%
+  filter(state == "California") %>%
   show_in_excel()
 ```
 
@@ -122,7 +123,6 @@ A first version of this function might look like this:
 library(tidycensus)
 
 get_acs_race_ethnicity <- function() {
-  
   race_ethnicity_data <-
     get_acs(
       geography = "state",
@@ -137,9 +137,8 @@ get_acs_race_ethnicity <- function() {
         "Hispanic/Latino" = "B03002_012"
       )
     )
-  
+
   race_ethnicity_data
-  
 }
 ```
 
@@ -159,16 +158,16 @@ Doing so should return data with easy-to-read race and ethnicity group names:
 #> # A tibble: 416 x 5
 #>    GEOID NAME    variable                     estimate   moe
 #>    <chr> <chr>   <chr>                           <dbl> <dbl>
-#>  1 01    Alabama White                         3241003  2076
-#>  2 01    Alabama Black/African American        1316314  3018
-#>  3 01    Alabama American Indian/Alaska Nati~    17417   941
-#>  4 01    Alabama Asian                           69331  1559
-#>  5 01    Alabama Native Hawaiian/Pacific Isl~     1594   376
-#>  6 01    Alabama Other race                      12504  1867
-#>  7 01    Alabama Multi-Race                     114853  3835
-#>  8 01    Alabama Hispanic/Latino                224659   413
-#>  9 02    Alaska  White                          434515  1067
-#> 10 02    Alaska  Black/African American          22787   769
+#>  1 01    Alabama White                         3247262  2133
+#>  2 01    Alabama Black/African American        1318388  3585
+#>  3 01    Alabama American Indian/Alaska Nati~    14864   868
+#>  4 01    Alabama Asian                           69099  1113
+#>  5 01    Alabama Native Hawaiian/Pacific Isl~     1557   303
+#>  6 01    Alabama Other race                      14724  1851
+#>  7 01    Alabama Multi-Race                     129791  3724
+#>  8 01    Alabama Hispanic/Latino                232407   199
+#>  9 02    Alaska  White                          428802  1173
+#> 10 02    Alaska  Black/African American          22400   935
 #> # i 406 more rows
 ```
 
@@ -177,7 +176,6 @@ We could improve this function in a few ways. For example, you might want the re
 
 ```r
 get_acs_race_ethnicity <- function(clean_variable_names = FALSE) {
-  
   race_ethnicity_data <-
     get_acs(
       geography = "state",
@@ -192,14 +190,12 @@ get_acs_race_ethnicity <- function(clean_variable_names = FALSE) {
         "Hispanic/Latino" = "B03002_012"
       )
     )
-  
+
   if (clean_variable_names == TRUE) {
     race_ethnicity_data <- clean_names(race_ethnicity_data)
-    
   }
-  
+
   race_ethnicity_data
-  
 }
 ```
 
@@ -219,16 +215,16 @@ This function call should return data with consistent variable names:
 #> # A tibble: 416 x 5
 #>    geoid name    variable                     estimate   moe
 #>    <chr> <chr>   <chr>                           <dbl> <dbl>
-#>  1 01    Alabama White                         3241003  2076
-#>  2 01    Alabama Black/African American        1316314  3018
-#>  3 01    Alabama American Indian/Alaska Nati~    17417   941
-#>  4 01    Alabama Asian                           69331  1559
-#>  5 01    Alabama Native Hawaiian/Pacific Isl~     1594   376
-#>  6 01    Alabama Other race                      12504  1867
-#>  7 01    Alabama Multi-Race                     114853  3835
-#>  8 01    Alabama Hispanic/Latino                224659   413
-#>  9 02    Alaska  White                          434515  1067
-#> 10 02    Alaska  Black/African American          22787   769
+#>  1 01    Alabama White                         3247262  2133
+#>  2 01    Alabama Black/African American        1318388  3585
+#>  3 01    Alabama American Indian/Alaska Nati~    14864   868
+#>  4 01    Alabama Asian                           69099  1113
+#>  5 01    Alabama Native Hawaiian/Pacific Isl~     1557   303
+#>  6 01    Alabama Other race                      14724  1851
+#>  7 01    Alabama Multi-Race                     129791  3724
+#>  8 01    Alabama Hispanic/Latino                232407   199
+#>  9 02    Alaska  White                          428802  1173
+#> 10 02    Alaska  Black/African American          22400   935
 #> # i 406 more rows
 ```
 
@@ -242,9 +238,10 @@ Your first thought about how to modify our function might involve adding an addi
 
 
 ```r
-get_acs_race_ethnicity <- function(clean_variable_names = FALSE,
-                                   my_geography) {
-  
+get_acs_race_ethnicity <- function(
+  clean_variable_names = FALSE,
+  my_geography
+) {
   race_ethnicity_data <-
     get_acs(
       geography = my_geography,
@@ -259,14 +256,12 @@ get_acs_race_ethnicity <- function(clean_variable_names = FALSE,
         "Hispanic/Latino" = "B03002_012"
       )
     )
-  
+
   if (clean_variable_names == TRUE) {
     race_ethnicity_data <- clean_names(race_ethnicity_data)
-    
   }
-  
+
   race_ethnicity_data
-  
 }
 ```
 
@@ -276,9 +271,10 @@ The `...` syntax allows us to avoid doing so. By placing `...` in the `get_acs_r
 
 
 ```r
-get_acs_race_ethnicity <- function(clean_variable_names = FALSE,
-                                   ...) {
-  
+get_acs_race_ethnicity <- function(
+  clean_variable_names = FALSE,
+  ...
+) {
   race_ethnicity_data <-
     get_acs(
       ...,
@@ -293,14 +289,12 @@ get_acs_race_ethnicity <- function(clean_variable_names = FALSE,
         "Hispanic/Latino" = "B03002_012"
       )
     )
-  
+
   if (clean_variable_names == TRUE) {
     race_ethnicity_data <- clean_names(race_ethnicity_data)
-    
   }
-  
+
   race_ethnicity_data
-  
 }
 ```
 
@@ -318,16 +312,16 @@ This should return the following:
 #> # A tibble: 416 x 5
 #>    GEOID NAME    variable                     estimate   moe
 #>    <chr> <chr>   <chr>                           <dbl> <dbl>
-#>  1 01    Alabama White                         3241003  2076
-#>  2 01    Alabama Black/African American        1316314  3018
-#>  3 01    Alabama American Indian/Alaska Nati~    17417   941
-#>  4 01    Alabama Asian                           69331  1559
-#>  5 01    Alabama Native Hawaiian/Pacific Isl~     1594   376
-#>  6 01    Alabama Other race                      12504  1867
-#>  7 01    Alabama Multi-Race                     114853  3835
-#>  8 01    Alabama Hispanic/Latino                224659   413
-#>  9 02    Alaska  White                          434515  1067
-#> 10 02    Alaska  Black/African American          22787   769
+#>  1 01    Alabama White                         3247262  2133
+#>  2 01    Alabama Black/African American        1318388  3585
+#>  3 01    Alabama American Indian/Alaska Nati~    14864   868
+#>  4 01    Alabama Asian                           69099  1113
+#>  5 01    Alabama Native Hawaiian/Pacific Isl~     1557   303
+#>  6 01    Alabama Other race                      14724  1851
+#>  7 01    Alabama Multi-Race                     129791  3724
+#>  8 01    Alabama Hispanic/Latino                232407   199
+#>  9 02    Alaska  White                          428802  1173
+#> 10 02    Alaska  Black/African American          22400   935
 #> # i 406 more rows
 ```
 
@@ -342,8 +336,10 @@ You could also run the function with the `geometry = TRUE` argument to return ge
 
 
 ```r
-get_acs_race_ethnicity(geography = "county",
-                       geometry = TRUE)
+get_acs_race_ethnicity(
+  geography = "county",
+  geometry = TRUE
+)
 ```
 
 The function should return data like the following:
@@ -353,31 +349,31 @@ The function should return data like the following:
 #> Simple feature collection with 416 features and 5 fields
 #> Geometry type: MULTIPOLYGON
 #> Dimension:     XY
-#> Bounding box:  xmin: -179.1489 ymin: 17.88328 xmax: 179.7785 ymax: 71.36516
+#> Bounding box:  xmin: -179.1467 ymin: 17.88328 xmax: 179.7785 ymax: 71.38782
 #> Geodetic CRS:  NAD83
 #> First 10 features:
-#>    GEOID    NAME                         variable estimate
-#> 1     56 Wyoming                            White   478508
-#> 2     56 Wyoming           Black/African American     4811
-#> 3     56 Wyoming    American Indian/Alaska Native    11330
-#> 4     56 Wyoming                            Asian     4907
-#> 5     56 Wyoming Native Hawaiian/Pacific Islander      397
-#> 6     56 Wyoming                       Other race     1582
-#> 7     56 Wyoming                       Multi-Race    15921
-#> 8     56 Wyoming                  Hispanic/Latino    59185
-#> 9     02  Alaska                            White   434515
-#> 10    02  Alaska           Black/African American    22787
-#>     moe                       geometry
-#> 1   959 MULTIPOLYGON (((-111.0546 4...
-#> 2   544 MULTIPOLYGON (((-111.0546 4...
-#> 3   458 MULTIPOLYGON (((-111.0546 4...
-#> 4   409 MULTIPOLYGON (((-111.0546 4...
-#> 5   158 MULTIPOLYGON (((-111.0546 4...
-#> 6   545 MULTIPOLYGON (((-111.0546 4...
-#> 7  1098 MULTIPOLYGON (((-111.0546 4...
-#> 8   167 MULTIPOLYGON (((-111.0546 4...
-#> 9  1067 MULTIPOLYGON (((179.4825 51...
-#> 10  769 MULTIPOLYGON (((179.4825 51...
+#>    GEOID         NAME                         variable
+#> 1     35   New Mexico                            White
+#> 2     35   New Mexico           Black/African American
+#> 3     35   New Mexico    American Indian/Alaska Native
+#> 4     35   New Mexico                            Asian
+#> 5     35   New Mexico Native Hawaiian/Pacific Islander
+#> 6     35   New Mexico                       Other race
+#> 7     35   New Mexico                       Multi-Race
+#> 8     35   New Mexico                  Hispanic/Latino
+#> 9     46 South Dakota                            White
+#> 10    46 South Dakota           Black/African American
+#>    estimate  moe                       geometry
+#> 1    752424 1849 MULTIPOLYGON (((-109.0502 3...
+#> 2     37996 1116 MULTIPOLYGON (((-109.0502 3...
+#> 3    178608 1339 MULTIPOLYGON (((-109.0502 3...
+#> 4     32214  868 MULTIPOLYGON (((-109.0502 3...
+#> 5      1117  190 MULTIPOLYGON (((-109.0502 3...
+#> 6      7680  967 MULTIPOLYGON (((-109.0502 3...
+#> 7     50798 2565 MULTIPOLYGON (((-109.0502 3...
+#> 8   1051626   NA MULTIPOLYGON (((-109.0502 3...
+#> 9    718056  978 MULTIPOLYGON (((-104.0579 4...
+#> 10    19172  805 MULTIPOLYGON (((-104.0579 4...
 ```
 
 The `...` syntax allows you to create your own function and pass it the arguments of another function without repeating all of that function’s arguments in your own code. This approach gives you flexibility while keeping your code concise.
@@ -520,27 +516,29 @@ This is because we were using functions without saying what package they came fr
 
 
 ```r
-get_acs_race_ethnicity <- function(clean_variable_names = FALSE,
-                                   ...) {
-  
-  race_ethnicity_data <- tidycensus::get_acs(...,
-                                             variables = c("White" = "B03002_003",
-                                                           "Black/African American" = "B03002_004",
-                                                           "American Indian/Alaska Native" = "B03002_005",
-                                                           "Asian" = "B03002_006",
-                                                           "Native Hawaiian/Pacific Islander" = "B03002_007",
-                                                           "Other race" = "B03002_008",
-                                                           "Multi-Race" = "B03002_009",
-                                                           "Hispanic/Latino" = "B03002_012")) 
-  
+get_acs_race_ethnicity <- function(
+  clean_variable_names = FALSE,
+  ...
+) {
+  race_ethnicity_data <- tidycensus::get_acs(
+    ...,
+    variables = c(
+      "White" = "B03002_003",
+      "Black/African American" = "B03002_004",
+      "American Indian/Alaska Native" = "B03002_005",
+      "Asian" = "B03002_006",
+      "Native Hawaiian/Pacific Islander" = "B03002_007",
+      "Other race" = "B03002_008",
+      "Multi-Race" = "B03002_009",
+      "Hispanic/Latino" = "B03002_012"
+    )
+  )
+
   if (clean_variable_names == TRUE) {
-    
     race_ethnicity_data <- janitor::clean_names(race_ethnicity_data)
-    
   }
-  
+
   race_ethnicity_data
-  
 }
 ```
 
@@ -722,4 +720,3 @@ R was invented in 1993 as a tool for statistics, and in the years since then, it
 As you’ve seen in this book, R is great for making visualizations. You can use it to create high-quality graphics and maps, make your own theme to keep your visuals consistent and on-brand, and generate tables that look good and communicate well. Using R Markdown or Quarto, you can create reports, presentations, and websites. And best of all, these documents are all reproducible, meaning that updating them is as easy as rerunning your code. Finally, you’ve seen that R can help you to automate how you access data, as well as assist you in collaborating with others through functions and packages that you make.
 
 If R was new to you when you started this book, you should now feel inspired to use it. If you are an experienced R user, this book should have shown you ways to use R that you hadn’t previously considered. No matter your background, you should understand how to use R like a pro, and without any statistics.
-

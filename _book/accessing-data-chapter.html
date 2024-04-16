@@ -7,7 +7,7 @@
 <title>Chapter 11 Accessing Data | R Without Statistics</title>
 <meta name="author" content="David Keyes">
 <meta name="description" content="So far, we’ve imported data into projects from CSV files. Many online datasets allow you to export data as a CSV, but before you do so, you should look for packages to automate your data access....">
-<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta name="generator" content="bookdown 0.37 with bs4_book()">
 <meta property="og:title" content="Chapter 11 Accessing Data | R Without Statistics">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://book.rwithoutstatistics.com/accessing-data-chapter.html">
@@ -19,7 +19,7 @@
 <meta name="twitter:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.7.0/transition.js"></script><script src="libs/bs3compat-0.7.0/tabs.js"></script><script src="libs/bs3compat-0.7.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
@@ -114,7 +114,7 @@ Figure 11.2: The video game data in Google Sheets
 <div class="sourceCode" id="cb197"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">survey_data_raw</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span><span class="va">survey_data_raw</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>The <code><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse()</a></code> function, which creates one output row per variable, shows that we’ve indeed imported the data directly from Google Sheets:</p>
 <pre><code>#&gt; Rows: 5
@@ -136,22 +136,24 @@ Figure 11.2: The video game data in Google Sheets
 <span id="cb199-4"><a href="accessing-data-chapter.html#cb199-4" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb199-5"><a href="accessing-data-chapter.html#cb199-5" tabindex="-1"></a></span>
 <span id="cb199-6"><a href="accessing-data-chapter.html#cb199-6" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
-<span id="cb199-7"><a href="accessing-data-chapter.html#cb199-7" tabindex="-1"></a><span class="in">knitr::opts_chunk$set(echo = FALSE,</span></span>
-<span id="cb199-8"><a href="accessing-data-chapter.html#cb199-8" tabindex="-1"></a><span class="in">                      warning = FALSE,</span></span>
-<span id="cb199-9"><a href="accessing-data-chapter.html#cb199-9" tabindex="-1"></a><span class="in">                      message = FALSE)</span></span>
-<span id="cb199-10"><a href="accessing-data-chapter.html#cb199-10" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb199-11"><a href="accessing-data-chapter.html#cb199-11" tabindex="-1"></a></span>
-<span id="cb199-12"><a href="accessing-data-chapter.html#cb199-12" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb199-13"><a href="accessing-data-chapter.html#cb199-13" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
-<span id="cb199-14"><a href="accessing-data-chapter.html#cb199-14" tabindex="-1"></a><span class="in">library(janitor)</span></span>
-<span id="cb199-15"><a href="accessing-data-chapter.html#cb199-15" tabindex="-1"></a><span class="in">library(googlesheets4)</span></span>
-<span id="cb199-16"><a href="accessing-data-chapter.html#cb199-16" tabindex="-1"></a><span class="in">library(gt)</span></span>
-<span id="cb199-17"><a href="accessing-data-chapter.html#cb199-17" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb199-18"><a href="accessing-data-chapter.html#cb199-18" tabindex="-1"></a></span>
-<span id="cb199-19"><a href="accessing-data-chapter.html#cb199-19" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb199-20"><a href="accessing-data-chapter.html#cb199-20" tabindex="-1"></a><span class="in"># Import data from Google Sheets</span></span>
-<span id="cb199-21"><a href="accessing-data-chapter.html#cb199-21" tabindex="-1"></a><span class="in">survey_data_raw &lt;- read_sheet("https://docs.google.com/spreadsheets/d/1AR0_RcFBg8wdiY4Cj-k8vRypp_txh27MyZuiRdqScog/edit?usp=sharing")</span></span>
-<span id="cb199-22"><a href="accessing-data-chapter.html#cb199-22" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<span id="cb199-7"><a href="accessing-data-chapter.html#cb199-7" tabindex="-1"></a><span class="in">knitr::opts_chunk$set(</span></span>
+<span id="cb199-8"><a href="accessing-data-chapter.html#cb199-8" tabindex="-1"></a><span class="in">  echo = FALSE,</span></span>
+<span id="cb199-9"><a href="accessing-data-chapter.html#cb199-9" tabindex="-1"></a><span class="in">  warning = FALSE,</span></span>
+<span id="cb199-10"><a href="accessing-data-chapter.html#cb199-10" tabindex="-1"></a><span class="in">  message = FALSE</span></span>
+<span id="cb199-11"><a href="accessing-data-chapter.html#cb199-11" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb199-12"><a href="accessing-data-chapter.html#cb199-12" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb199-13"><a href="accessing-data-chapter.html#cb199-13" tabindex="-1"></a></span>
+<span id="cb199-14"><a href="accessing-data-chapter.html#cb199-14" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb199-15"><a href="accessing-data-chapter.html#cb199-15" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb199-16"><a href="accessing-data-chapter.html#cb199-16" tabindex="-1"></a><span class="in">library(janitor)</span></span>
+<span id="cb199-17"><a href="accessing-data-chapter.html#cb199-17" tabindex="-1"></a><span class="in">library(googlesheets4)</span></span>
+<span id="cb199-18"><a href="accessing-data-chapter.html#cb199-18" tabindex="-1"></a><span class="in">library(gt)</span></span>
+<span id="cb199-19"><a href="accessing-data-chapter.html#cb199-19" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb199-20"><a href="accessing-data-chapter.html#cb199-20" tabindex="-1"></a></span>
+<span id="cb199-21"><a href="accessing-data-chapter.html#cb199-21" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb199-22"><a href="accessing-data-chapter.html#cb199-22" tabindex="-1"></a><span class="in"># Import data from Google Sheets</span></span>
+<span id="cb199-23"><a href="accessing-data-chapter.html#cb199-23" tabindex="-1"></a><span class="in">survey_data_raw &lt;- read_sheet("https://docs.google.com/spreadsheets/d/1AR0_RcFBg8wdiY4Cj-k8vRypp_txh27MyZuiRdqScog/edit?usp=sharing")</span></span>
+<span id="cb199-24"><a href="accessing-data-chapter.html#cb199-24" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <p>The R Markdown document resembles those discussed in previous chapters except for the way we’re importing the data. Because we’re bringing it in directly from Google Sheets, there’s no risk of, say, accidentally reading in the wrong CSV. Automating this step reduces the risk of error.</p>
 <p>The next code chunk cleans the <code>survey_data_raw</code> object, saving the result as <code>survey_data_clean</code>:</p>
 <div class="sourceCode" id="cb200"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb200-1"><a href="accessing-data-chapter.html#cb200-1" tabindex="-1"></a><span class="in">```{r}</span></span>
@@ -159,13 +161,15 @@ Figure 11.2: The video game data in Google Sheets
 <span id="cb200-3"><a href="accessing-data-chapter.html#cb200-3" tabindex="-1"></a><span class="in">survey_data_clean &lt;- survey_data_raw %&gt;%</span></span>
 <span id="cb200-4"><a href="accessing-data-chapter.html#cb200-4" tabindex="-1"></a><span class="in">  clean_names() %&gt;%</span></span>
 <span id="cb200-5"><a href="accessing-data-chapter.html#cb200-5" tabindex="-1"></a><span class="in">  mutate(participant_id = as.character(row_number())) %&gt;%</span></span>
-<span id="cb200-6"><a href="accessing-data-chapter.html#cb200-6" tabindex="-1"></a><span class="in">  rename(age = how_old_are_you,</span></span>
-<span id="cb200-7"><a href="accessing-data-chapter.html#cb200-7" tabindex="-1"></a><span class="in">         like_games = do_you_like_to_play_video_games,</span></span>
-<span id="cb200-8"><a href="accessing-data-chapter.html#cb200-8" tabindex="-1"></a><span class="in">         game_types = what_kind_of_games_do_you_like,</span></span>
-<span id="cb200-9"><a href="accessing-data-chapter.html#cb200-9" tabindex="-1"></a><span class="in">         favorite_game = whats_your_favorite_game) %&gt;%</span></span>
-<span id="cb200-10"><a href="accessing-data-chapter.html#cb200-10" tabindex="-1"></a><span class="in">  relocate(participant_id, .before = age) %&gt;%</span></span>
-<span id="cb200-11"><a href="accessing-data-chapter.html#cb200-11" tabindex="-1"></a><span class="in">  mutate(age = factor(age, levels = c("Under 18", "18-24", "25-34", "35-44", "45-54", "55-64", "Over 65")))</span></span>
-<span id="cb200-12"><a href="accessing-data-chapter.html#cb200-12" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<span id="cb200-6"><a href="accessing-data-chapter.html#cb200-6" tabindex="-1"></a><span class="in">  rename(</span></span>
+<span id="cb200-7"><a href="accessing-data-chapter.html#cb200-7" tabindex="-1"></a><span class="in">    age = how_old_are_you,</span></span>
+<span id="cb200-8"><a href="accessing-data-chapter.html#cb200-8" tabindex="-1"></a><span class="in">    like_games = do_you_like_to_play_video_games,</span></span>
+<span id="cb200-9"><a href="accessing-data-chapter.html#cb200-9" tabindex="-1"></a><span class="in">    game_types = what_kind_of_games_do_you_like,</span></span>
+<span id="cb200-10"><a href="accessing-data-chapter.html#cb200-10" tabindex="-1"></a><span class="in">    favorite_game = whats_your_favorite_game</span></span>
+<span id="cb200-11"><a href="accessing-data-chapter.html#cb200-11" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
+<span id="cb200-12"><a href="accessing-data-chapter.html#cb200-12" tabindex="-1"></a><span class="in">  relocate(participant_id, .before = age) %&gt;%</span></span>
+<span id="cb200-13"><a href="accessing-data-chapter.html#cb200-13" tabindex="-1"></a><span class="in">  mutate(age = factor(age, levels = c("Under 18", "18-24", "25-34", "35-44", "45-54", "55-64", "Over 65")))</span></span>
+<span id="cb200-14"><a href="accessing-data-chapter.html#cb200-14" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <p>Here, we use the <code>clean_names()</code> function from the <code>janitor</code> package to make the variable names easier to work with. We then add a <code>participant_id</code> variable using the <code><a href="https://dplyr.tidyverse.org/reference/row_number.html">row_number()</a></code> function, which adds a consecutively increasing number to each row. (I also make it a character using the <code><a href="https://rdrr.io/r/base/character.html">as.character()</a></code> function.) Next, I change several variable names with <code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code> before finally using <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> to make the <code>age</code> variable into a data structure known as a <em>factor</em>; doing so will make sure the <code>age</code> variable shows up in the right order in our charts. I then use <code><a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate()</a></code> to put <code>participant_id</code> before the <code>age</code> variable. We can now take a look at our <code>survey_data_clean</code> data frame using the <code><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse()</a></code> function again:</p>
 <pre><code>#&gt; Rows: 5
 #&gt; Columns: 6
@@ -186,25 +190,25 @@ Figure 11.2: The video game data in Google Sheets
 <span id="cb202-8"><a href="accessing-data-chapter.html#cb202-8" tabindex="-1"></a>We received responses from <span class="in">`r number_of_respondents`</span> respondents. Their ages are below.</span>
 <span id="cb202-9"><a href="accessing-data-chapter.html#cb202-9" tabindex="-1"></a></span>
 <span id="cb202-10"><a href="accessing-data-chapter.html#cb202-10" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb202-11"><a href="accessing-data-chapter.html#cb202-11" tabindex="-1"></a><span class="in">survey_data_clean %&gt;% </span></span>
-<span id="cb202-12"><a href="accessing-data-chapter.html#cb202-12" tabindex="-1"></a><span class="in">  select(participant_id, age) %&gt;% </span></span>
-<span id="cb202-13"><a href="accessing-data-chapter.html#cb202-13" tabindex="-1"></a><span class="in">  gt() %&gt;% </span></span>
+<span id="cb202-11"><a href="accessing-data-chapter.html#cb202-11" tabindex="-1"></a><span class="in">survey_data_clean %&gt;%</span></span>
+<span id="cb202-12"><a href="accessing-data-chapter.html#cb202-12" tabindex="-1"></a><span class="in">  select(participant_id, age) %&gt;%</span></span>
+<span id="cb202-13"><a href="accessing-data-chapter.html#cb202-13" tabindex="-1"></a><span class="in">  gt() %&gt;%</span></span>
 <span id="cb202-14"><a href="accessing-data-chapter.html#cb202-14" tabindex="-1"></a><span class="in">  cols_label(</span></span>
 <span id="cb202-15"><a href="accessing-data-chapter.html#cb202-15" tabindex="-1"></a><span class="in">    participant_id = "Participant ID",</span></span>
 <span id="cb202-16"><a href="accessing-data-chapter.html#cb202-16" tabindex="-1"></a><span class="in">    age = "Age"</span></span>
-<span id="cb202-17"><a href="accessing-data-chapter.html#cb202-17" tabindex="-1"></a><span class="in">  ) %&gt;% </span></span>
+<span id="cb202-17"><a href="accessing-data-chapter.html#cb202-17" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
 <span id="cb202-18"><a href="accessing-data-chapter.html#cb202-18" tabindex="-1"></a><span class="in">  tab_style(</span></span>
 <span id="cb202-19"><a href="accessing-data-chapter.html#cb202-19" tabindex="-1"></a><span class="in">    style = cell_text(weight = "bold"),</span></span>
 <span id="cb202-20"><a href="accessing-data-chapter.html#cb202-20" tabindex="-1"></a><span class="in">    locations = cells_column_labels()</span></span>
-<span id="cb202-21"><a href="accessing-data-chapter.html#cb202-21" tabindex="-1"></a><span class="in">  ) %&gt;% </span></span>
+<span id="cb202-21"><a href="accessing-data-chapter.html#cb202-21" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
 <span id="cb202-22"><a href="accessing-data-chapter.html#cb202-22" tabindex="-1"></a><span class="in">  cols_align(</span></span>
 <span id="cb202-23"><a href="accessing-data-chapter.html#cb202-23" tabindex="-1"></a><span class="in">    align = "left",</span></span>
 <span id="cb202-24"><a href="accessing-data-chapter.html#cb202-24" tabindex="-1"></a><span class="in">    columns = everything()</span></span>
-<span id="cb202-25"><a href="accessing-data-chapter.html#cb202-25" tabindex="-1"></a><span class="in">  ) %&gt;% </span></span>
+<span id="cb202-25"><a href="accessing-data-chapter.html#cb202-25" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
 <span id="cb202-26"><a href="accessing-data-chapter.html#cb202-26" tabindex="-1"></a><span class="in">  cols_width(</span></span>
 <span id="cb202-27"><a href="accessing-data-chapter.html#cb202-27" tabindex="-1"></a><span class="in">    participant_id ~ px(200),</span></span>
 <span id="cb202-28"><a href="accessing-data-chapter.html#cb202-28" tabindex="-1"></a><span class="in">    age ~ px(700)</span></span>
-<span id="cb202-29"><a href="accessing-data-chapter.html#cb202-29" tabindex="-1"></a><span class="in">  ) </span></span>
+<span id="cb202-29"><a href="accessing-data-chapter.html#cb202-29" tabindex="-1"></a><span class="in">  )</span></span>
 <span id="cb202-30"><a href="accessing-data-chapter.html#cb202-30" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb202-31"><a href="accessing-data-chapter.html#cb202-31" tabindex="-1"></a></span>
 <span id="cb202-32"><a href="accessing-data-chapter.html#cb202-32" tabindex="-1"></a><span class="fu"># Video Games</span></span>
@@ -213,26 +217,34 @@ Figure 11.2: The video game data in Google Sheets
 <span id="cb202-35"><a href="accessing-data-chapter.html#cb202-35" tabindex="-1"></a></span>
 <span id="cb202-36"><a href="accessing-data-chapter.html#cb202-36" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb202-37"><a href="accessing-data-chapter.html#cb202-37" tabindex="-1"></a><span class="in">survey_data_clean %&gt;%</span></span>
-<span id="cb202-38"><a href="accessing-data-chapter.html#cb202-38" tabindex="-1"></a><span class="in">  count(like_games) %&gt;% </span></span>
-<span id="cb202-39"><a href="accessing-data-chapter.html#cb202-39" tabindex="-1"></a><span class="in">  ggplot(aes(x = like_games,</span></span>
-<span id="cb202-40"><a href="accessing-data-chapter.html#cb202-40" tabindex="-1"></a><span class="in">             y = n,</span></span>
-<span id="cb202-41"><a href="accessing-data-chapter.html#cb202-41" tabindex="-1"></a><span class="in">             fill = like_games)) +</span></span>
-<span id="cb202-42"><a href="accessing-data-chapter.html#cb202-42" tabindex="-1"></a><span class="in">  geom_col() +</span></span>
-<span id="cb202-43"><a href="accessing-data-chapter.html#cb202-43" tabindex="-1"></a><span class="in">  scale_fill_manual(values = c(</span></span>
-<span id="cb202-44"><a href="accessing-data-chapter.html#cb202-44" tabindex="-1"></a><span class="in">    "No" = "#6cabdd",</span></span>
-<span id="cb202-45"><a href="accessing-data-chapter.html#cb202-45" tabindex="-1"></a><span class="in">    "Yes" = "#ff7400"</span></span>
-<span id="cb202-46"><a href="accessing-data-chapter.html#cb202-46" tabindex="-1"></a><span class="in">  )) +</span></span>
-<span id="cb202-47"><a href="accessing-data-chapter.html#cb202-47" tabindex="-1"></a><span class="in">  labs(title = "How Many People Like Video Games?", </span></span>
-<span id="cb202-48"><a href="accessing-data-chapter.html#cb202-48" tabindex="-1"></a><span class="in">       x = NULL,</span></span>
-<span id="cb202-49"><a href="accessing-data-chapter.html#cb202-49" tabindex="-1"></a><span class="in">       y = "Number of Participants") +</span></span>
-<span id="cb202-50"><a href="accessing-data-chapter.html#cb202-50" tabindex="-1"></a><span class="in">  theme_minimal(base_size = 16) +</span></span>
-<span id="cb202-51"><a href="accessing-data-chapter.html#cb202-51" tabindex="-1"></a><span class="in">  theme(legend.position = "none",</span></span>
-<span id="cb202-52"><a href="accessing-data-chapter.html#cb202-52" tabindex="-1"></a><span class="in">        panel.grid.minor = element_blank(),</span></span>
-<span id="cb202-53"><a href="accessing-data-chapter.html#cb202-53" tabindex="-1"></a><span class="in">        panel.grid.major.x = element_blank(),</span></span>
-<span id="cb202-54"><a href="accessing-data-chapter.html#cb202-54" tabindex="-1"></a><span class="in">        axis.title.y = element_blank(),</span></span>
-<span id="cb202-55"><a href="accessing-data-chapter.html#cb202-55" tabindex="-1"></a><span class="in">        plot.title = element_text(face = "bold",</span></span>
-<span id="cb202-56"><a href="accessing-data-chapter.html#cb202-56" tabindex="-1"></a><span class="in">                                  hjust = 0.5))</span></span>
-<span id="cb202-57"><a href="accessing-data-chapter.html#cb202-57" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<span id="cb202-38"><a href="accessing-data-chapter.html#cb202-38" tabindex="-1"></a><span class="in">  count(like_games) %&gt;%</span></span>
+<span id="cb202-39"><a href="accessing-data-chapter.html#cb202-39" tabindex="-1"></a><span class="in">  ggplot(aes(</span></span>
+<span id="cb202-40"><a href="accessing-data-chapter.html#cb202-40" tabindex="-1"></a><span class="in">    x = like_games,</span></span>
+<span id="cb202-41"><a href="accessing-data-chapter.html#cb202-41" tabindex="-1"></a><span class="in">    y = n,</span></span>
+<span id="cb202-42"><a href="accessing-data-chapter.html#cb202-42" tabindex="-1"></a><span class="in">    fill = like_games</span></span>
+<span id="cb202-43"><a href="accessing-data-chapter.html#cb202-43" tabindex="-1"></a><span class="in">  )) +</span></span>
+<span id="cb202-44"><a href="accessing-data-chapter.html#cb202-44" tabindex="-1"></a><span class="in">  geom_col() +</span></span>
+<span id="cb202-45"><a href="accessing-data-chapter.html#cb202-45" tabindex="-1"></a><span class="in">  scale_fill_manual(values = c(</span></span>
+<span id="cb202-46"><a href="accessing-data-chapter.html#cb202-46" tabindex="-1"></a><span class="in">    "No" = "#6cabdd",</span></span>
+<span id="cb202-47"><a href="accessing-data-chapter.html#cb202-47" tabindex="-1"></a><span class="in">    "Yes" = "#ff7400"</span></span>
+<span id="cb202-48"><a href="accessing-data-chapter.html#cb202-48" tabindex="-1"></a><span class="in">  )) +</span></span>
+<span id="cb202-49"><a href="accessing-data-chapter.html#cb202-49" tabindex="-1"></a><span class="in">  labs(</span></span>
+<span id="cb202-50"><a href="accessing-data-chapter.html#cb202-50" tabindex="-1"></a><span class="in">    title = "How Many People Like Video Games?",</span></span>
+<span id="cb202-51"><a href="accessing-data-chapter.html#cb202-51" tabindex="-1"></a><span class="in">    x = NULL,</span></span>
+<span id="cb202-52"><a href="accessing-data-chapter.html#cb202-52" tabindex="-1"></a><span class="in">    y = "Number of Participants"</span></span>
+<span id="cb202-53"><a href="accessing-data-chapter.html#cb202-53" tabindex="-1"></a><span class="in">  ) +</span></span>
+<span id="cb202-54"><a href="accessing-data-chapter.html#cb202-54" tabindex="-1"></a><span class="in">  theme_minimal(base_size = 16) +</span></span>
+<span id="cb202-55"><a href="accessing-data-chapter.html#cb202-55" tabindex="-1"></a><span class="in">  theme(</span></span>
+<span id="cb202-56"><a href="accessing-data-chapter.html#cb202-56" tabindex="-1"></a><span class="in">    legend.position = "none",</span></span>
+<span id="cb202-57"><a href="accessing-data-chapter.html#cb202-57" tabindex="-1"></a><span class="in">    panel.grid.minor = element_blank(),</span></span>
+<span id="cb202-58"><a href="accessing-data-chapter.html#cb202-58" tabindex="-1"></a><span class="in">    panel.grid.major.x = element_blank(),</span></span>
+<span id="cb202-59"><a href="accessing-data-chapter.html#cb202-59" tabindex="-1"></a><span class="in">    axis.title.y = element_blank(),</span></span>
+<span id="cb202-60"><a href="accessing-data-chapter.html#cb202-60" tabindex="-1"></a><span class="in">    plot.title = element_text(</span></span>
+<span id="cb202-61"><a href="accessing-data-chapter.html#cb202-61" tabindex="-1"></a><span class="in">      face = "bold",</span></span>
+<span id="cb202-62"><a href="accessing-data-chapter.html#cb202-62" tabindex="-1"></a><span class="in">      hjust = 0.5</span></span>
+<span id="cb202-63"><a href="accessing-data-chapter.html#cb202-63" tabindex="-1"></a><span class="in">    )</span></span>
+<span id="cb202-64"><a href="accessing-data-chapter.html#cb202-64" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb202-65"><a href="accessing-data-chapter.html#cb202-65" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <p>These sections calculate the number of survey respondents, then put this in the text using inline R code; create a table that shows the respondents broken down by age group; and generate a graph that shows how many respondents like video games. Figure <a href="accessing-data-chapter.html#fig:video-game-report">11.3</a> shows the resulting report.</p>
 <div class="figure">
 <span style="display:block;" id="fig:video-game-report"></span>
@@ -248,8 +260,10 @@ Figure 11.3: The rendered video game report
 <p>In the previous sections, we read the data of the entire Google Sheet. It is, however, possible to import only a section of a Sheet. For example, the survey data we imported includes a <code>timestamp</code> column. This variable is added automatically whenever someone submits a Google Form that pipes data into a Google Sheet, but we don’t use it in our analysis, so we could get rid of it.</p>
 <p>To do this, use the <code>range</code> argument in the <code><a href="https://googlesheets4.tidyverse.org/reference/range_read.html">read_sheet()</a></code> function when importing the data. This argument lets us specify a range of data to bring. It uses the syntax you may have used to select columns in Google Sheets. In this example, I use <code>range = "Sheet1!B:E"</code> to import columns B through E (but not A, which contains the timestamp) before adding <code><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse()</a></code>.</p>
 <div class="sourceCode" id="cb203"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://googlesheets4.tidyverse.org/reference/range_read.html">read_sheet</a></span><span class="op">(</span><span class="st">"https://docs.google.com/spreadsheets/d/1AR0_RcFBg8wdiY4Cj-k8vRypp_txh27MyZuiRdqScog/edit?usp=sharing"</span>,</span>
-<span>           range <span class="op">=</span> <span class="st">"Sheet1!B:E"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://googlesheets4.tidyverse.org/reference/range_read.html">read_sheet</a></span><span class="op">(</span></span>
+<span>  <span class="st">"https://docs.google.com/spreadsheets/d/1AR0_RcFBg8wdiY4Cj-k8vRypp_txh27MyZuiRdqScog/edit?usp=sharing"</span>,</span>
+<span>  range <span class="op">=</span> <span class="st">"Sheet1!B:E"</span></span>
+<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>Running this code produces output without the <code>timestamp</code> variable:</p>
 <pre><code>#&gt; Rows: 5
@@ -284,9 +298,11 @@ Figure 11.3: The rendered video game report
 </h3>
 <p>The Census Bureau puts out many datasets, several of which you can access using dedicated <code>tidycensus</code> functions. Let’s access data from the 2020 Decennial Census about the Asian population in each state using the <code><a href="https://walker-data.com/tidycensus/reference/get_decennial.html">get_decennial()</a></code> function with three arguments:</p>
 <div class="sourceCode" id="cb206"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_decennial.html">get_decennial</a></span><span class="op">(</span>geography <span class="op">=</span> <span class="st">"state"</span>, </span>
-<span>              variables <span class="op">=</span> <span class="st">"P1_006N"</span>,</span>
-<span>              year <span class="op">=</span> <span class="fl">2020</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_decennial.html">get_decennial</a></span><span class="op">(</span></span>
+<span>  geography <span class="op">=</span> <span class="st">"state"</span>,</span>
+<span>  variables <span class="op">=</span> <span class="st">"P1_006N"</span>,</span>
+<span>  year <span class="op">=</span> <span class="fl">2020</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>The geography argument tells <code><a href="https://walker-data.com/tidycensus/reference/get_decennial.html">get_decennial()</a></code> to access data at the state level. In addition to the 50 states, it will return for the District of Columbia and Puerto Rico. There are many other geographies, including county, census tract, and more. The <code>variables</code> argument specifies the variable or variables we want to access. Here, <code>P2_002N</code> is the variable name for the total Asian population. We’ll discuss how to identify other variables you may want to use in the next section. Lastly, <code>year</code> specifies the year from which we want to access data. We’re using data from the 2020 Census.</p>
 <p>Running this code returns the following:</p>
 <pre><code>#&gt; # A tibble: 52 × 4
@@ -310,8 +326,10 @@ Figure 11.3: The rendered video game report
 <p>To pass a specific variable to <code><a href="https://walker-data.com/tidycensus/reference/get_decennial.html">get_decennial()</a></code>, you have to first look it up. Let’s say we want to calculate the Asian population as a percentage of all people in each state. To do that, we’d first need to retrieve the variable for the state’s total population.</p>
 <p>The <code>tidycensus</code> package has a function called <code><a href="https://walker-data.com/tidycensus/reference/load_variables.html">load_variables()</a></code> that shows all of the variables from a Decennial Census. Run it with the <code>year</code> argument set to 2020 and <code>dataset</code> set to <code>pl</code>. This should pull data from so-called redistricting summary data files, which public law 94-171 requires the census to produce every 10 years:</p>
 <div class="sourceCode" id="cb208"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://walker-data.com/tidycensus/reference/load_variables.html">load_variables</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2020</span>, </span>
-<span>               dataset <span class="op">=</span> <span class="st">"pl"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://walker-data.com/tidycensus/reference/load_variables.html">load_variables</a></span><span class="op">(</span></span>
+<span>  year <span class="op">=</span> <span class="fl">2020</span>,</span>
+<span>  dataset <span class="op">=</span> <span class="st">"pl"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>Running this code returns the name, label (a description), and concept (a category) of all variables available to us:</p>
 <pre><code>#&gt; # A tibble: 301 × 3
 #&gt;    name    label                                     concept
@@ -334,9 +352,11 @@ Figure 11.3: The rendered video game report
 </h4>
 <p>Now that we know which variables we need, we can use the <code><a href="https://walker-data.com/tidycensus/reference/get_decennial.html">get_decennial()</a></code> function again with two variables at once:</p>
 <div class="sourceCode" id="cb210"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_decennial.html">get_decennial</a></span><span class="op">(</span>geography <span class="op">=</span> <span class="st">"state"</span>, </span>
-<span>              variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"P1_001N"</span>, <span class="st">"P1_006N"</span><span class="op">)</span>,</span>
-<span>              year <span class="op">=</span> <span class="fl">2020</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_decennial.html">get_decennial</a></span><span class="op">(</span></span>
+<span>  geography <span class="op">=</span> <span class="st">"state"</span>,</span>
+<span>  variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"P1_001N"</span>, <span class="st">"P1_006N"</span><span class="op">)</span>,</span>
+<span>  year <span class="op">=</span> <span class="fl">2020</span></span>
+<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">NAME</span><span class="op">)</span></span></code></pre></div>
 <p>We add <code>arrange(NAME)</code> after <code><a href="https://walker-data.com/tidycensus/reference/get_decennial.html">get_decennial()</a></code> so that the results are sorted by state name, allowing us to see that we have both variables for each state:</p>
 <pre><code>#&gt; # A tibble: 104 × 4
@@ -355,10 +375,14 @@ Figure 11.3: The rendered video game report
 #&gt; # ℹ 94 more rows</code></pre>
 <p>If you’re working with multiple census variables, however, you might have trouble remembering what names like <code>P1_001N</code> and <code>P1_006N</code> mean. Fortunately, we can adjust the code in the call to <code><a href="https://walker-data.com/tidycensus/reference/get_decennial.html">get_decennial()</a></code> to give these variables more meaningful names using the following syntax:</p>
 <div class="sourceCode" id="cb212"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_decennial.html">get_decennial</a></span><span class="op">(</span>geography <span class="op">=</span> <span class="st">"state"</span>, </span>
-<span>              variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>total_population <span class="op">=</span> <span class="st">"P1_001N"</span>, </span>
-<span>                            asian_population <span class="op">=</span> <span class="st">"P1_006N"</span><span class="op">)</span>,</span>
-<span>              year <span class="op">=</span> <span class="fl">2020</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_decennial.html">get_decennial</a></span><span class="op">(</span></span>
+<span>  geography <span class="op">=</span> <span class="st">"state"</span>,</span>
+<span>  variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
+<span>    total_population <span class="op">=</span> <span class="st">"P1_001N"</span>,</span>
+<span>    asian_population <span class="op">=</span> <span class="st">"P1_006N"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  year <span class="op">=</span> <span class="fl">2020</span></span>
+<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">NAME</span><span class="op">)</span></span></code></pre></div>
 <p>Within the <code>variables</code> argument, we give the name we want our variables to have, followed by the equal sign and the original variable name. We can rename multiple variables by putting them within the <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> function, as I’ve done here. It should now be much easier to see which variables we’re working with:</p>
 <pre><code>#&gt; # A tibble: 104 × 4
@@ -383,14 +407,18 @@ Figure 11.3: The rendered video game report
 </h3>
 <p>Now we have the data we need to calculate the Asian population in each state as a percentage of the total. To do this, we add a few things to the code from the previous section:</p>
 <div class="sourceCode" id="cb214"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_decennial.html">get_decennial</a></span><span class="op">(</span>geography <span class="op">=</span> <span class="st">"state"</span>, </span>
-<span>              variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>total_population <span class="op">=</span> <span class="st">"P1_001N"</span>, </span>
-<span>                            asian_population <span class="op">=</span> <span class="st">"P1_006N"</span><span class="op">)</span>,</span>
-<span>              year <span class="op">=</span> <span class="fl">2020</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">NAME</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">NAME</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>pct <span class="op">=</span> <span class="va">value</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_decennial.html">get_decennial</a></span><span class="op">(</span></span>
+<span>  geography <span class="op">=</span> <span class="st">"state"</span>,</span>
+<span>  variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
+<span>    total_population <span class="op">=</span> <span class="st">"P1_001N"</span>,</span>
+<span>    asian_population <span class="op">=</span> <span class="st">"P1_006N"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  year <span class="op">=</span> <span class="fl">2020</span></span>
+<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">NAME</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">NAME</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>pct <span class="op">=</span> <span class="va">value</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">variable</span> <span class="op">==</span> <span class="st">"asian_population"</span><span class="op">)</span></span></code></pre></div>
 <p>We use <code>group_by(NAME)</code> to create one group for each state because we want to calculate the Asian population percentage in each state (not for the entire United States). We then use <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> to calculate each percentage, taking the value in each row and dividing it by the <code>total_population</code> and <code>asian_population</code> rows for each state. We use <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup()</a></code> to remove the state-level grouping. We use <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> to show only the Asian population percentage.</p>
 <p>When we run this code, we see both the Asian population and the Asian population as a percentage of the total population in each state:</p>
@@ -414,10 +442,12 @@ Figure 11.3: The rendered video game report
 </h4>
 <p>Kyle Walker knew that calculating summaries like we’ve just done would be a common use case for <code>tidycensus</code>. To calculate, say, the Asian population as a percentage of the whole, you need to have a numerator (the Asian population) and denominator (the total population). So, to simplify things, he gives us the <code>summary_var</code> argument that we can use within <code><a href="https://walker-data.com/tidycensus/reference/get_decennial.html">get_decennial()</a></code> to import the total population as a separate variable. Instead of putting <code>P1_001N</code> (total population) in the <code>variables</code> argument, we can use it with the <code>summary_var</code> argument as follows.</p>
 <div class="sourceCode" id="cb216"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_decennial.html">get_decennial</a></span><span class="op">(</span>geography <span class="op">=</span> <span class="st">"state"</span>, </span>
-<span>              variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>asian_population <span class="op">=</span> <span class="st">"P1_006N"</span><span class="op">)</span>,</span>
-<span>              summary_var <span class="op">=</span> <span class="st">"P1_001N"</span>,</span>
-<span>              year <span class="op">=</span> <span class="fl">2020</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_decennial.html">get_decennial</a></span><span class="op">(</span></span>
+<span>  geography <span class="op">=</span> <span class="st">"state"</span>,</span>
+<span>  variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>asian_population <span class="op">=</span> <span class="st">"P1_006N"</span><span class="op">)</span>,</span>
+<span>  summary_var <span class="op">=</span> <span class="st">"P1_001N"</span>,</span>
+<span>  year <span class="op">=</span> <span class="fl">2020</span></span>
+<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">NAME</span><span class="op">)</span></span></code></pre></div>
 <p>This returns a nearly identical data frame to what we got earlier, except that the total population is now a separate variable, rather than additional rows for each state:</p>
 <pre><code>#&gt; # A tibble: 52 × 5
@@ -436,12 +466,14 @@ Figure 11.3: The rendered video game report
 #&gt; # ℹ 42 more rows</code></pre>
 <p>With our data in this new format, we can calculate the Asian population as a percentage of the whole by dividing the <code>value</code> variable by the <code>summary_value</code> variable. Then we drop the <code>summary_value</code> variable because we no longer need it after doing our calculation:</p>
 <div class="sourceCode" id="cb218"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_decennial.html">get_decennial</a></span><span class="op">(</span>geography <span class="op">=</span> <span class="st">"state"</span>, </span>
-<span>              variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>asian_population <span class="op">=</span> <span class="st">"P1_006N"</span><span class="op">)</span>,</span>
-<span>              summary_var <span class="op">=</span> <span class="st">"P1_001N"</span>,</span>
-<span>              year <span class="op">=</span> <span class="fl">2020</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">NAME</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>pct <span class="op">=</span> <span class="va">value</span> <span class="op">/</span> <span class="va">summary_value</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_decennial.html">get_decennial</a></span><span class="op">(</span></span>
+<span>  geography <span class="op">=</span> <span class="st">"state"</span>,</span>
+<span>  variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>asian_population <span class="op">=</span> <span class="st">"P1_006N"</span><span class="op">)</span>,</span>
+<span>  summary_var <span class="op">=</span> <span class="st">"P1_001N"</span>,</span>
+<span>  year <span class="op">=</span> <span class="fl">2020</span></span>
+<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">NAME</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>pct <span class="op">=</span> <span class="va">value</span> <span class="op">/</span> <span class="va">summary_value</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">summary_value</span><span class="op">)</span></span></code></pre></div>
 <p>The resulting output is identical to the output of the previous section:</p>
 <pre><code>#&gt; # A tibble: 52 × 6
@@ -466,9 +498,11 @@ Figure 11.3: The rendered video game report
 <p>Once you’ve accessed data using the <code>tidycensus</code> package, you can do whatever you want with it. Let’s practice analyzing and visualizing survey data using the American Community Survey. This survey, which is conducted every year, differs from the decennial Census in two major ways: It is given to a sample of people rather than the entire population, and it includes a wider range of questions.</p>
 <p>Despite these differences, we can access data from the American Community Survey in a manner nearly identical to how we access Decennial Census data. Instead of <code><a href="https://walker-data.com/tidycensus/reference/get_decennial.html">get_decennial()</a></code>, we use the function <code><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs()</a></code>, but the arguments we pass to these functions are the same. In the following example, I’ve identified a variable I’m interested in (<code>B01002_001</code>, which shows the median age) and use it to get this data for each state:</p>
 <div class="sourceCode" id="cb220"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs</a></span><span class="op">(</span>geography <span class="op">=</span> <span class="st">"state"</span>,</span>
-<span>        variables <span class="op">=</span> <span class="st">"B01002_001"</span>,</span>
-<span>        year <span class="op">=</span> <span class="fl">2020</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs</a></span><span class="op">(</span></span>
+<span>  geography <span class="op">=</span> <span class="st">"state"</span>,</span>
+<span>  variables <span class="op">=</span> <span class="st">"B01002_001"</span>,</span>
+<span>  year <span class="op">=</span> <span class="fl">2020</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>Here is what the output looks like:</p>
 <pre><code>#&gt; # A tibble: 52 × 5
 #&gt;    GEOID NAME                 variable   estimate   moe
@@ -492,11 +526,15 @@ Figure 11.3: The rendered video game report
 </h4>
 <p>Here is how we could take the data on median age and pipe it into ggplot to create a bar chart:</p>
 <div class="sourceCode" id="cb222"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs</a></span><span class="op">(</span>geography <span class="op">=</span> <span class="st">"state"</span>,</span>
-<span>        variables <span class="op">=</span> <span class="st">"B01002_001"</span>,</span>
-<span>        year <span class="op">=</span> <span class="fl">2020</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">estimate</span>,</span>
-<span>             y <span class="op">=</span> <span class="va">NAME</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs</a></span><span class="op">(</span></span>
+<span>  geography <span class="op">=</span> <span class="st">"state"</span>,</span>
+<span>  variables <span class="op">=</span> <span class="st">"B01002_001"</span>,</span>
+<span>  year <span class="op">=</span> <span class="fl">2020</span></span>
+<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="va">estimate</span>,</span>
+<span>    y <span class="op">=</span> <span class="va">NAME</span></span>
+<span>  <span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>We import data with the <code><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs()</a></code> function and then pipe this directly into ggplot. We put states (which use the variable <code>NAME</code>) on the y axis and median age (<code>estimate</code>) on the x axis. A simple <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col()</a></code> creates the bar chart, shown in Figure <a href="accessing-data-chapter.html#fig:median-age-chart">11.4</a>.</p>
 <div class="figure">
@@ -512,10 +550,12 @@ Figure 11.4: A bar chart showing the median age in each state
 </h4>
 <p>Kyle Walker, the creator of <code>tidycensus</code>, also created the <code>tigris</code> package for working with geospatial data. As a result, these packages are tightly integrated. Within the <code><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs()</a></code> function, you can set the <code>geometry</code> argument to <code>TRUE</code> to receive both demographic data from the Census Bureau and geospatial data from <code>tigris</code>:</p>
 <div class="sourceCode" id="cb223"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs</a></span><span class="op">(</span>geography <span class="op">=</span> <span class="st">"state"</span>,</span>
-<span>        variables <span class="op">=</span> <span class="st">"B01002_001"</span>,</span>
-<span>        year <span class="op">=</span> <span class="fl">2020</span>,</span>
-<span>        geometry <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> </span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs</a></span><span class="op">(</span></span>
+<span>  geography <span class="op">=</span> <span class="st">"state"</span>,</span>
+<span>  variables <span class="op">=</span> <span class="st">"B01002_001"</span>,</span>
+<span>  year <span class="op">=</span> <span class="fl">2020</span>,</span>
+<span>  geometry <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>If we take a look at the resulting data, we can see that it has the metadata and <code>geometry</code> column of the simple features objects that we saw in Chapter <a href="maps-chapter.html#maps-chapter">4</a>.</p>
 <pre><code>#&gt; Simple feature collection with 52 features and 5 fields
 #&gt; Geometry type: MULTIPOLYGON
@@ -547,10 +587,12 @@ Figure 11.4: A bar chart showing the median age in each state
 #&gt; 10 MULTIPOLYGON (((-109.0603 3...</code></pre>
 <p>We can see that the geometry type is MULTIPOLYGON, which you learned about in Chapter <a href="maps-chapter.html#maps-chapter">4</a>. We can pipe this data into ggplot to make a map with the following code:</p>
 <div class="sourceCode" id="cb225"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs</a></span><span class="op">(</span>geography <span class="op">=</span> <span class="st">"state"</span>,</span>
-<span>        variables <span class="op">=</span> <span class="st">"B01002_001"</span>,</span>
-<span>        year <span class="op">=</span> <span class="fl">2020</span>,</span>
-<span>        geometry <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs</a></span><span class="op">(</span></span>
+<span>  geography <span class="op">=</span> <span class="st">"state"</span>,</span>
+<span>  variables <span class="op">=</span> <span class="st">"B01002_001"</span>,</span>
+<span>  year <span class="op">=</span> <span class="fl">2020</span>,</span>
+<span>  geometry <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">estimate</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">scale_fill_viridis_c</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -566,11 +608,13 @@ Figure 11.5: A hard-to-read map showing median age by state
 <div class="sourceCode" id="cb226"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/walkerke/tigris">tigris</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs</a></span><span class="op">(</span>geography <span class="op">=</span> <span class="st">"state"</span>,</span>
-<span>        variables <span class="op">=</span> <span class="st">"B01002_001"</span>,</span>
-<span>        year <span class="op">=</span> <span class="fl">2020</span>,</span>
-<span>        geometry <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/tigris/man/shift_geometry.html">shift_geometry</a></span><span class="op">(</span>preserve_area <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span><span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs</a></span><span class="op">(</span></span>
+<span>  geography <span class="op">=</span> <span class="st">"state"</span>,</span>
+<span>  variables <span class="op">=</span> <span class="st">"B01002_001"</span>,</span>
+<span>  year <span class="op">=</span> <span class="fl">2020</span>,</span>
+<span>  geometry <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/tigris/man/shift_geometry.html">shift_geometry</a></span><span class="op">(</span>preserve_area <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">estimate</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">scale_fill_viridis_c</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>

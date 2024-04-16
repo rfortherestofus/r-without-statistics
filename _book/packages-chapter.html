@@ -7,7 +7,7 @@
 <title>Chapter 12 Creating Your Own R Packages | R Without Statistics</title>
 <meta name="author" content="David Keyes">
 <meta name="description" content="This chapter discusses how to make your own R functions and packages. You’ll learn how to define your own functions, including the parameters they should accept. Then you’ll create a package, add...">
-<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta name="generator" content="bookdown 0.37 with bs4_book()">
 <meta property="og:title" content="Chapter 12 Creating Your Own R Packages | R Without Statistics">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://book.rwithoutstatistics.com/packages-chapter.html">
@@ -19,7 +19,7 @@
 <meta name="twitter:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.7.0/transition.js"></script><script src="libs/bs3compat-0.7.0/tabs.js"></script><script src="libs/bs3compat-0.7.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
@@ -91,19 +91,18 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://fs.r-lib.org">fs</a></span><span class="op">)</span></span>
 <span></span>
-<span></span>
 <span><span class="va">penguins</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"https://data.rwithoutstatistics.com/penguins-2007.csv"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">show_in_excel_penguins</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  </span>
 <span>  <span class="va">csv_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue</a></span><span class="op">(</span><span class="st">"{tempfile()}.csv"</span><span class="op">)</span></span>
-<span>  </span>
-<span>  <span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">penguins</span>,</span>
-<span>            file <span class="op">=</span> <span class="va">csv_file</span>,</span>
-<span>            na <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span>
-<span>  </span>
+<span></span>
+<span>  <span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="va">penguins</span>,</span>
+<span>    file <span class="op">=</span> <span class="va">csv_file</span>,</span>
+<span>    na <span class="op">=</span> <span class="st">""</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
 <span>  <span class="fu"><a href="https://fs.r-lib.org/reference/file_show.html">file_show</a></span><span class="op">(</span>path <span class="op">=</span> <span class="va">csv_file</span><span class="op">)</span></span>
-<span>  </span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>We load the <code>tidyverse</code> and <code>fs</code> packages. We’ll use <code>tidyverse</code> to create a filename for the CSV file and save it. The fs package will enable us to open the CSV file in Excel (or whichever program your computer uses to open CSV files by default).</p>
 <p>We give the function a name, then use the assignment operator (<code>&lt;-</code>) and <code>function()</code> to specify that <code>show_in_excel_penguins</code> is not a variable name but a function name. The open curly bracket (<code>{</code>) at the end of the line indicates the start of the function body, where the meat of the function can be found. In our case, the body does three things:</p>
@@ -130,9 +129,11 @@ Figure 12.1: The function we created in the global environment
 <div class="sourceCode" id="cb228"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">show_in_excel</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">csv_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue</a></span><span class="op">(</span><span class="st">"{tempfile()}.csv"</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">data</span>,</span>
-<span>            file <span class="op">=</span> <span class="va">csv_file</span>,</span>
-<span>            na <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="va">data</span>,</span>
+<span>    file <span class="op">=</span> <span class="va">csv_file</span>,</span>
+<span>    na <span class="op">=</span> <span class="st">""</span></span>
+<span>  <span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://fs.r-lib.org/reference/file_show.html">file_show</a></span><span class="op">(</span>path <span class="op">=</span> <span class="va">csv_file</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>Notice that the first line now says <code>function(data)</code>. Items listed within the parentheses of our function definition are arguments. If you look further down, you’ll see another change. Within <code><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv()</a></code>, instead of <code>x = penguins</code>, we now use the line <code>x = data</code>. This allows us to use the function with any data, not just <code>penguins</code>.</p>
@@ -146,8 +147,8 @@ Figure 12.1: The function we created in the global environment
 <span><span class="fu">show_in_excel</span><span class="op">(</span>data <span class="op">=</span> <span class="va">covid_data</span><span class="op">)</span></span></code></pre></div>
 <p>You can also use this function at the end of a pipeline. This code filters the <code>covid_data</code> data frame to include only data from California before opening it in Excel:</p>
 <div class="sourceCode" id="cb231"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">covid_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">state</span> <span class="op">==</span> <span class="st">"California"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="va">covid_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">state</span> <span class="op">==</span> <span class="st">"California"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">show_in_excel</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>Bruno Rodrigues could have copied the code within the <code>show_in_excel()</code> function and re-run it every time he wanted to view his data in Excel. But, by creating a function, he was able to write the code just once and then run it as many times as necessary.</p>
 </div>
@@ -162,7 +163,6 @@ Figure 12.1: The function we created in the global environment
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://walker-data.com/tidycensus/">tidycensus</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">get_acs_race_ethnicity</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  </span>
 <span>  <span class="va">race_ethnicity_data</span> <span class="op">&lt;-</span></span>
 <span>    <span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs</a></span><span class="op">(</span></span>
 <span>      geography <span class="op">=</span> <span class="st">"state"</span>,</span>
@@ -177,9 +177,8 @@ Figure 12.1: The function we created in the global environment
 <span>        <span class="st">"Hispanic/Latino"</span> <span class="op">=</span> <span class="st">"B03002_012"</span></span>
 <span>      <span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
-<span>  </span>
+<span></span>
 <span>  <span class="va">race_ethnicity_data</span></span>
-<span>  </span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>Within the function’s body, we call the <code><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs()</a></code> function from <code>tidycensus</code> to retrieve population data at the state level. But instead of returning the function’s default output, we relabel the hard-to-remember variable names to human-readable names, such as White and Black/African American. Next, we save these names as an object called <code>race_ethnicity_data</code>. Lastly, we use this object to return that data when the function is run.</p>
 <p>We can run this function by entering the following:</p>
@@ -189,21 +188,20 @@ Figure 12.1: The function we created in the global environment
 <pre><code>#&gt; # A tibble: 416 × 5
 #&gt;    GEOID NAME    variable                     estimate   moe
 #&gt;    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;                           &lt;dbl&gt; &lt;dbl&gt;
-#&gt;  1 01    Alabama White                         3241003  2076
-#&gt;  2 01    Alabama Black/African American        1316314  3018
-#&gt;  3 01    Alabama American Indian/Alaska Nati…    17417   941
-#&gt;  4 01    Alabama Asian                           69331  1559
-#&gt;  5 01    Alabama Native Hawaiian/Pacific Isl…     1594   376
-#&gt;  6 01    Alabama Other race                      12504  1867
-#&gt;  7 01    Alabama Multi-Race                     114853  3835
-#&gt;  8 01    Alabama Hispanic/Latino                224659   413
-#&gt;  9 02    Alaska  White                          434515  1067
-#&gt; 10 02    Alaska  Black/African American          22787   769
+#&gt;  1 01    Alabama White                         3247262  2133
+#&gt;  2 01    Alabama Black/African American        1318388  3585
+#&gt;  3 01    Alabama American Indian/Alaska Nati…    14864   868
+#&gt;  4 01    Alabama Asian                           69099  1113
+#&gt;  5 01    Alabama Native Hawaiian/Pacific Isl…     1557   303
+#&gt;  6 01    Alabama Other race                      14724  1851
+#&gt;  7 01    Alabama Multi-Race                     129791  3724
+#&gt;  8 01    Alabama Hispanic/Latino                232407   199
+#&gt;  9 02    Alaska  White                          428802  1173
+#&gt; 10 02    Alaska  Black/African American          22400   935
 #&gt; # ℹ 406 more rows</code></pre>
 <p>We could improve this function in a few ways. For example, you might want the resulting variables names to follow a consistent syntax. To do this, you could use the <code>clean_names()</code> function from the janitor package, which formats all variable names using <em>snake case</em> (in which all words are lowercase and separated by underscores). In snake case, the variable name <code>GEOID</code> would become geoid. However, you might also want to leave yourself the option of keeping the original variable names. We can accomplish this by adding an argument to the function:</p>
 <div class="sourceCode" id="cb235"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">get_acs_race_ethnicity</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">clean_variable_names</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  </span>
 <span>  <span class="va">race_ethnicity_data</span> <span class="op">&lt;-</span></span>
 <span>    <span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs</a></span><span class="op">(</span></span>
 <span>      geography <span class="op">=</span> <span class="st">"state"</span>,</span>
@@ -218,14 +216,12 @@ Figure 12.1: The function we created in the global environment
 <span>        <span class="st">"Hispanic/Latino"</span> <span class="op">=</span> <span class="st">"B03002_012"</span></span>
 <span>      <span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
-<span>  </span>
+<span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="va">clean_variable_names</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="va">race_ethnicity_data</span> <span class="op">&lt;-</span> <span class="fu">clean_names</span><span class="op">(</span><span class="va">race_ethnicity_data</span><span class="op">)</span></span>
-<span>    </span>
 <span>  <span class="op">}</span></span>
-<span>  </span>
+<span></span>
 <span>  <span class="va">race_ethnicity_data</span></span>
-<span>  </span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>We add the <code>clean_variable_names</code> argument to the function and specify that it should be <code>FALSE</code> by default. Then, in the function body, we set up an <code>if</code> statement. If the argument is <code>TRUE</code>, we run a line that overwrites the variable names with versions formatted in snake case. If the argument is <code>FALSE</code>, we leave the variable names unchanged.</p>
 <p>If you run the function, nothing should change, because our new argument is set to <code>FALSE</code> by default. Try setting <code>clean_variable_names</code> to <code>TRUE</code> as follows:</p>
@@ -235,16 +231,16 @@ Figure 12.1: The function we created in the global environment
 <pre><code>#&gt; # A tibble: 416 × 5
 #&gt;    geoid name    variable                     estimate   moe
 #&gt;    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;                           &lt;dbl&gt; &lt;dbl&gt;
-#&gt;  1 01    Alabama White                         3241003  2076
-#&gt;  2 01    Alabama Black/African American        1316314  3018
-#&gt;  3 01    Alabama American Indian/Alaska Nati…    17417   941
-#&gt;  4 01    Alabama Asian                           69331  1559
-#&gt;  5 01    Alabama Native Hawaiian/Pacific Isl…     1594   376
-#&gt;  6 01    Alabama Other race                      12504  1867
-#&gt;  7 01    Alabama Multi-Race                     114853  3835
-#&gt;  8 01    Alabama Hispanic/Latino                224659   413
-#&gt;  9 02    Alaska  White                          434515  1067
-#&gt; 10 02    Alaska  Black/African American          22787   769
+#&gt;  1 01    Alabama White                         3247262  2133
+#&gt;  2 01    Alabama Black/African American        1318388  3585
+#&gt;  3 01    Alabama American Indian/Alaska Nati…    14864   868
+#&gt;  4 01    Alabama Asian                           69099  1113
+#&gt;  5 01    Alabama Native Hawaiian/Pacific Isl…     1557   303
+#&gt;  6 01    Alabama Other race                      14724  1851
+#&gt;  7 01    Alabama Multi-Race                     129791  3724
+#&gt;  8 01    Alabama Hispanic/Latino                232407   199
+#&gt;  9 02    Alaska  White                          428802  1173
+#&gt; 10 02    Alaska  Black/African American          22400   935
 #&gt; # ℹ 406 more rows</code></pre>
 <p>Now that you’ve seen how to add arguments to two separate functions, let’s explore how to pass arguments from one function to another.</p>
 <div id="using-...-to-pass-arguments-to-another-function" class="section level3 unnumbered">
@@ -253,9 +249,10 @@ Figure 12.1: The function we created in the global environment
 <p>The function we created retrieves population data at the state level by passing the <code>geography = "state"</code> argument to the <code><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs()</a></code> function. But what if we wanted to obtain county-level data, or else data about census tracts? We could do so using <code><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs()</a></code>, but we’ve written the <code>get_acs_race_ethnicity()</code> function in a way that isn’t flexible enough to allow this.</p>
 <p>Your first thought about how to modify our function might involve adding an additional argument for the level of data to retrieve. We could edit the first two lines of the function as follows to add a <code>my_geography</code> argument and then use it in the <code><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs()</a></code> function:</p>
 <div class="sourceCode" id="cb238"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">get_acs_race_ethnicity</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">clean_variable_names</span> <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>                                   <span class="va">my_geography</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  </span>
+<code class="sourceCode R"><span><span class="va">get_acs_race_ethnicity</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span></span>
+<span>  <span class="va">clean_variable_names</span> <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">my_geography</span></span>
+<span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">race_ethnicity_data</span> <span class="op">&lt;-</span></span>
 <span>    <span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs</a></span><span class="op">(</span></span>
 <span>      geography <span class="op">=</span> <span class="va">my_geography</span>,</span>
@@ -270,21 +267,20 @@ Figure 12.1: The function we created in the global environment
 <span>        <span class="st">"Hispanic/Latino"</span> <span class="op">=</span> <span class="st">"B03002_012"</span></span>
 <span>      <span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
-<span>  </span>
+<span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="va">clean_variable_names</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="va">race_ethnicity_data</span> <span class="op">&lt;-</span> <span class="fu">clean_names</span><span class="op">(</span><span class="va">race_ethnicity_data</span><span class="op">)</span></span>
-<span>    </span>
 <span>  <span class="op">}</span></span>
-<span>  </span>
+<span></span>
 <span>  <span class="va">race_ethnicity_data</span></span>
-<span>  </span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>But what if I also want to select the year for which to retrieve data? Well, we could add an argument for that as well. However, as you saw in Chapter <a href="accessing-data-chapter.html#accessing-data-chapter">11</a>, the <code><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs()</a></code> function has many arguments, and repeating them all in our code would become cumbersome.</p>
 <p>The <code>...</code> syntax allows us to avoid doing so. By placing <code>...</code> in the <code>get_acs_race_ethnicity()</code> function, we can automatically pass any arguments listed there to the <code><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs()</a></code> function by including <code>...</code> there as well:</p>
 <div class="sourceCode" id="cb239"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">get_acs_race_ethnicity</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">clean_variable_names</span> <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>                                   <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  </span>
+<code class="sourceCode R"><span><span class="va">get_acs_race_ethnicity</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span></span>
+<span>  <span class="va">clean_variable_names</span> <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">race_ethnicity_data</span> <span class="op">&lt;-</span></span>
 <span>    <span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs</a></span><span class="op">(</span></span>
 <span>      <span class="va">...</span>,</span>
@@ -299,14 +295,12 @@ Figure 12.1: The function we created in the global environment
 <span>        <span class="st">"Hispanic/Latino"</span> <span class="op">=</span> <span class="st">"B03002_012"</span></span>
 <span>      <span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
-<span>  </span>
+<span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="va">clean_variable_names</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="va">race_ethnicity_data</span> <span class="op">&lt;-</span> <span class="fu">clean_names</span><span class="op">(</span><span class="va">race_ethnicity_data</span><span class="op">)</span></span>
-<span>    </span>
 <span>  <span class="op">}</span></span>
-<span>  </span>
+<span></span>
 <span>  <span class="va">race_ethnicity_data</span></span>
-<span>  </span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>Try running this function by passing it the <code>geography</code> argument set to <code>"state"</code>:</p>
 <div class="sourceCode" id="cb240"><pre class="downlit sourceCode r">
@@ -315,53 +309,55 @@ Figure 12.1: The function we created in the global environment
 <pre><code>#&gt; # A tibble: 416 × 5
 #&gt;    GEOID NAME    variable                     estimate   moe
 #&gt;    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;                           &lt;dbl&gt; &lt;dbl&gt;
-#&gt;  1 01    Alabama White                         3241003  2076
-#&gt;  2 01    Alabama Black/African American        1316314  3018
-#&gt;  3 01    Alabama American Indian/Alaska Nati…    17417   941
-#&gt;  4 01    Alabama Asian                           69331  1559
-#&gt;  5 01    Alabama Native Hawaiian/Pacific Isl…     1594   376
-#&gt;  6 01    Alabama Other race                      12504  1867
-#&gt;  7 01    Alabama Multi-Race                     114853  3835
-#&gt;  8 01    Alabama Hispanic/Latino                224659   413
-#&gt;  9 02    Alaska  White                          434515  1067
-#&gt; 10 02    Alaska  Black/African American          22787   769
+#&gt;  1 01    Alabama White                         3247262  2133
+#&gt;  2 01    Alabama Black/African American        1318388  3585
+#&gt;  3 01    Alabama American Indian/Alaska Nati…    14864   868
+#&gt;  4 01    Alabama Asian                           69099  1113
+#&gt;  5 01    Alabama Native Hawaiian/Pacific Isl…     1557   303
+#&gt;  6 01    Alabama Other race                      14724  1851
+#&gt;  7 01    Alabama Multi-Race                     129791  3724
+#&gt;  8 01    Alabama Hispanic/Latino                232407   199
+#&gt;  9 02    Alaska  White                          428802  1173
+#&gt; 10 02    Alaska  Black/African American          22400   935
 #&gt; # ℹ 406 more rows</code></pre>
 <p>Alternatively, you could change the value of the argument to get data by county:</p>
 <div class="sourceCode" id="cb242"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">get_acs_race_ethnicity</span><span class="op">(</span>geography <span class="op">=</span> <span class="st">"state"</span><span class="op">)</span></span></code></pre></div>
 <p>You could also run the function with the <code>geometry = TRUE</code> argument to return geospatial data alongside demographic data:</p>
 <div class="sourceCode" id="cb243"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">get_acs_race_ethnicity</span><span class="op">(</span>geography <span class="op">=</span> <span class="st">"county"</span>,</span>
-<span>                       geometry <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">get_acs_race_ethnicity</span><span class="op">(</span></span>
+<span>  geography <span class="op">=</span> <span class="st">"county"</span>,</span>
+<span>  geometry <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>The function should return data like the following:</p>
 <pre><code>#&gt; Simple feature collection with 416 features and 5 fields
 #&gt; Geometry type: MULTIPOLYGON
 #&gt; Dimension:     XY
-#&gt; Bounding box:  xmin: -179.1489 ymin: 17.88328 xmax: 179.7785 ymax: 71.36516
+#&gt; Bounding box:  xmin: -179.1467 ymin: 17.88328 xmax: 179.7785 ymax: 71.38782
 #&gt; Geodetic CRS:  NAD83
 #&gt; First 10 features:
-#&gt;    GEOID    NAME                         variable estimate
-#&gt; 1     56 Wyoming                            White   478508
-#&gt; 2     56 Wyoming           Black/African American     4811
-#&gt; 3     56 Wyoming    American Indian/Alaska Native    11330
-#&gt; 4     56 Wyoming                            Asian     4907
-#&gt; 5     56 Wyoming Native Hawaiian/Pacific Islander      397
-#&gt; 6     56 Wyoming                       Other race     1582
-#&gt; 7     56 Wyoming                       Multi-Race    15921
-#&gt; 8     56 Wyoming                  Hispanic/Latino    59185
-#&gt; 9     02  Alaska                            White   434515
-#&gt; 10    02  Alaska           Black/African American    22787
-#&gt;     moe                       geometry
-#&gt; 1   959 MULTIPOLYGON (((-111.0546 4...
-#&gt; 2   544 MULTIPOLYGON (((-111.0546 4...
-#&gt; 3   458 MULTIPOLYGON (((-111.0546 4...
-#&gt; 4   409 MULTIPOLYGON (((-111.0546 4...
-#&gt; 5   158 MULTIPOLYGON (((-111.0546 4...
-#&gt; 6   545 MULTIPOLYGON (((-111.0546 4...
-#&gt; 7  1098 MULTIPOLYGON (((-111.0546 4...
-#&gt; 8   167 MULTIPOLYGON (((-111.0546 4...
-#&gt; 9  1067 MULTIPOLYGON (((179.4825 51...
-#&gt; 10  769 MULTIPOLYGON (((179.4825 51...</code></pre>
+#&gt;    GEOID         NAME                         variable
+#&gt; 1     35   New Mexico                            White
+#&gt; 2     35   New Mexico           Black/African American
+#&gt; 3     35   New Mexico    American Indian/Alaska Native
+#&gt; 4     35   New Mexico                            Asian
+#&gt; 5     35   New Mexico Native Hawaiian/Pacific Islander
+#&gt; 6     35   New Mexico                       Other race
+#&gt; 7     35   New Mexico                       Multi-Race
+#&gt; 8     35   New Mexico                  Hispanic/Latino
+#&gt; 9     46 South Dakota                            White
+#&gt; 10    46 South Dakota           Black/African American
+#&gt;    estimate  moe                       geometry
+#&gt; 1    752424 1849 MULTIPOLYGON (((-109.0502 3...
+#&gt; 2     37996 1116 MULTIPOLYGON (((-109.0502 3...
+#&gt; 3    178608 1339 MULTIPOLYGON (((-109.0502 3...
+#&gt; 4     32214  868 MULTIPOLYGON (((-109.0502 3...
+#&gt; 5      1117  190 MULTIPOLYGON (((-109.0502 3...
+#&gt; 6      7680  967 MULTIPOLYGON (((-109.0502 3...
+#&gt; 7     50798 2565 MULTIPOLYGON (((-109.0502 3...
+#&gt; 8   1051626   NA MULTIPOLYGON (((-109.0502 3...
+#&gt; 9    718056  978 MULTIPOLYGON (((-104.0579 4...
+#&gt; 10    19172  805 MULTIPOLYGON (((-104.0579 4...</code></pre>
 <p>The <code>...</code> syntax allows you to create your own function and pass it the arguments of another function without repeating all of that function’s arguments in your own code. This approach gives you flexibility while keeping your code concise.</p>
 <p>Now that we’ve discussed how to make functions, you’ll learn how to put them into a package.</p>
 </div>
@@ -466,27 +462,29 @@ Imports:
 clean_names get_acs</code></pre>
 <p>This is because we were using functions without saying what package they came from. The <code>clean_names()</code> function comes from the <code>janitor</code> package, and <code><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs()</a></code> comes from <code>tidycensus</code>, so we need to add these package names before each function:</p>
 <div class="sourceCode" id="cb253"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">get_acs_race_ethnicity</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">clean_variable_names</span> <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>                                   <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  </span>
-<span>  <span class="va">race_ethnicity_data</span> <span class="op">&lt;-</span> <span class="fu">tidycensus</span><span class="fu">::</span><span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs</a></span><span class="op">(</span><span class="va">...</span>,</span>
-<span>                                             variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"White"</span> <span class="op">=</span> <span class="st">"B03002_003"</span>,</span>
-<span>                                                           <span class="st">"Black/African American"</span> <span class="op">=</span> <span class="st">"B03002_004"</span>,</span>
-<span>                                                           <span class="st">"American Indian/Alaska Native"</span> <span class="op">=</span> <span class="st">"B03002_005"</span>,</span>
-<span>                                                           <span class="st">"Asian"</span> <span class="op">=</span> <span class="st">"B03002_006"</span>,</span>
-<span>                                                           <span class="st">"Native Hawaiian/Pacific Islander"</span> <span class="op">=</span> <span class="st">"B03002_007"</span>,</span>
-<span>                                                           <span class="st">"Other race"</span> <span class="op">=</span> <span class="st">"B03002_008"</span>,</span>
-<span>                                                           <span class="st">"Multi-Race"</span> <span class="op">=</span> <span class="st">"B03002_009"</span>,</span>
-<span>                                                           <span class="st">"Hispanic/Latino"</span> <span class="op">=</span> <span class="st">"B03002_012"</span><span class="op">)</span><span class="op">)</span> </span>
-<span>  </span>
+<code class="sourceCode R"><span><span class="va">get_acs_race_ethnicity</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span></span>
+<span>  <span class="va">clean_variable_names</span> <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">race_ethnicity_data</span> <span class="op">&lt;-</span> <span class="fu">tidycensus</span><span class="fu">::</span><span class="fu"><a href="https://walker-data.com/tidycensus/reference/get_acs.html">get_acs</a></span><span class="op">(</span></span>
+<span>    <span class="va">...</span>,</span>
+<span>    variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
+<span>      <span class="st">"White"</span> <span class="op">=</span> <span class="st">"B03002_003"</span>,</span>
+<span>      <span class="st">"Black/African American"</span> <span class="op">=</span> <span class="st">"B03002_004"</span>,</span>
+<span>      <span class="st">"American Indian/Alaska Native"</span> <span class="op">=</span> <span class="st">"B03002_005"</span>,</span>
+<span>      <span class="st">"Asian"</span> <span class="op">=</span> <span class="st">"B03002_006"</span>,</span>
+<span>      <span class="st">"Native Hawaiian/Pacific Islander"</span> <span class="op">=</span> <span class="st">"B03002_007"</span>,</span>
+<span>      <span class="st">"Other race"</span> <span class="op">=</span> <span class="st">"B03002_008"</span>,</span>
+<span>      <span class="st">"Multi-Race"</span> <span class="op">=</span> <span class="st">"B03002_009"</span>,</span>
+<span>      <span class="st">"Hispanic/Latino"</span> <span class="op">=</span> <span class="st">"B03002_012"</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="va">clean_variable_names</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    </span>
 <span>    <span class="va">race_ethnicity_data</span> <span class="op">&lt;-</span> <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/clean_names.html">clean_names</a></span><span class="op">(</span><span class="va">race_ethnicity_data</span><span class="op">)</span></span>
-<span>    </span>
 <span>  <span class="op">}</span></span>
-<span>  </span>
+<span></span>
 <span>  <span class="va">race_ethnicity_data</span></span>
-<span>  </span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>Now that we’ve specified which packages the functions come from, we can run <code><a href="https://devtools.r-lib.org/reference/check.html">devtools::check()</a></code> again. When you do so, you should see that the notes have gone away:</p>
 <pre><code>❯ checking DESCRIPTION meta-information ... WARNING

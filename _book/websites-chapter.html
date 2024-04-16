@@ -4,22 +4,22 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 10 Make Websites to Share Results Online | R Without Statistics</title>
+<title>Chapter 9 Make Websites to Share Results Online | R Without Statistics</title>
 <meta name="author" content="David Keyes">
 <meta name="description" content="In the summer of 2020, Matt Herman’s family moved from Brooklyn to Westchester County, New York. It was early in the COVID pandemic, and Herman was shocked that the county published little data...">
 <meta name="generator" content="bookdown 0.37 with bs4_book()">
-<meta property="og:title" content="Chapter 10 Make Websites to Share Results Online | R Without Statistics">
+<meta property="og:title" content="Chapter 9 Make Websites to Share Results Online | R Without Statistics">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://book.rwithoutstatistics.com/websites-chapter.html">
 <meta property="og:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
 <meta property="og:description" content="In the summer of 2020, Matt Herman’s family moved from Brooklyn to Westchester County, New York. It was early in the COVID pandemic, and Herman was shocked that the county published little data...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 10 Make Websites to Share Results Online | R Without Statistics">
+<meta name="twitter:title" content="Chapter 9 Make Websites to Share Results Online | R Without Statistics">
 <meta name="twitter:description" content="In the summer of 2020, Matt Herman’s family moved from Brooklyn to Westchester County, New York. It was early in the COVID pandemic, and Herman was shocked that the county published little data...">
 <meta name="twitter:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.6.1/transition.js"></script><script src="libs/bs3compat-0.6.1/tabs.js"></script><script src="libs/bs3compat-0.6.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.7.0/transition.js"></script><script src="libs/bs3compat-0.7.0/tabs.js"></script><script src="libs/bs3compat-0.7.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
@@ -45,36 +45,55 @@
 </form>
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled"><li><a class="" href="index.html"><span class="header-section-number">Chapter 10</span> Make Websites to Share Results Online</a></li></ul>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">About the Book</a></li>
+<li class="book-part">Introduction</li>
+<li><a class="" href="introduction.html">Introduction</a></li>
+<li><a class="" href="howto-chapter.html"><span class="header-section-number">1</span> An R Programming Crash Course</a></li>
+<li class="book-part">Part 1: Visualizations</li>
+<li><a class="" href="data-viz-chapter.html"><span class="header-section-number">2</span> Principles of Data Visualization</a></li>
+<li><a class="" href="custom-theme-chapter.html"><span class="header-section-number">3</span> Making Your Own Theme</a></li>
+<li><a class="" href="maps-chapter.html"><span class="header-section-number">4</span> Creating Maps</a></li>
+<li><a class="" href="tables-chapter.html"><span class="header-section-number">5</span> Crafting High-Quality Tables</a></li>
+<li class="book-part">Part 2: Reports, Presentations, and Websites</li>
+<li><a class="" href="rmarkdown-chapter.html"><span class="header-section-number">6</span> Writing Reports in R Markdown</a></li>
+<li><a class="" href="parameterized-reports-chapter.html"><span class="header-section-number">7</span> Using Parameters to Automate Reports</a></li>
+<li><a class="" href="presentations-chapter.html"><span class="header-section-number">8</span> Making Slides Presentations with xaringan</a></li>
+<li><a class="active" href="websites-chapter.html"><span class="header-section-number">9</span> Make Websites to Share Results Online</a></li>
+<li><a class="" href="quarto-chapter.html"><span class="header-section-number">10</span> Reproducible Reporting with Quarto</a></li>
+<li class="book-part">Part 3: Automation and Collaboration</li>
+<li><a class="" href="accessing-data-chapter.html"><span class="header-section-number">11</span> Accessing Data</a></li>
+<li><a class="" href="packages-chapter.html"><span class="header-section-number">12</span> Creating Your Own R Packages</a></li>
+</ul>
 
         <div class="book-extra">
           <p><a id="book-repo" href="https://github.com/rfortherestofus/r-without-statistics">View book source <i class="fab fa-github"></i></a></p>
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="websites-chapter" class="section level1" number="10">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="websites-chapter" class="section level1" number="9">
 <h1>
-<span class="header-section-number">10</span> Make Websites to Share Results Online<a class="anchor" aria-label="anchor" href="#websites-chapter"><i class="fas fa-link"></i></a>
+<span class="header-section-number">9</span> Make Websites to Share Results Online<a class="anchor" aria-label="anchor" href="#websites-chapter"><i class="fas fa-link"></i></a>
 </h1>
 <p>In the summer of 2020, Matt Herman’s family moved from Brooklyn to Westchester County, New York. It was early in the COVID pandemic, and Herman was shocked that the county published little data about infection rates. Vaccines weren’t yet available, and daily choices like whether to take children to the park depended on access to good data.</p>
 <p>Matt Herman wasn’t just any person with an interest in COVID data. He was also, at the time, Deputy Director of the ChildStat Data Unit in the Office of Research and Analytics at the New York City Administration for Children’s Services. This handful of a title meant he was skilled at working with data, enabling him to create the COVID resource he needed: the Westchester COVID-19 Tracking website.</p>
-<p>Built entirely in R, this website uses charts, maps, tables, and text to summarize the latest COVID data for Westchester County. The website, available at <a href="https://westchester-covid.mattherman.info/" class="uri">https://westchester-covid.mattherman.info/</a>, is no longer consistently updated, but Figure <a href="websites-chapter.html#fig:westchester-website-screenshot">10.1</a> shows a screenshot of it.</p>
+<p>Built entirely in R, this website uses charts, maps, tables, and text to summarize the latest COVID data for Westchester County. The website, available at <a href="https://westchester-covid.mattherman.info/" class="uri">https://westchester-covid.mattherman.info/</a>, is no longer consistently updated, but Figure <a href="websites-chapter.html#fig:westchester-website-screenshot">9.1</a> shows a screenshot of it.</p>
 <div class="figure">
 <span style="display:block;" id="fig:westchester-website-screenshot"></span>
 <img src="assets/westchester-website.png" alt="A screenshot of the Westchester COVID-19 website" width="100%"><p class="caption">
-Figure 10.1: A screenshot of the Westchester COVID-19 website
+Figure 9.1: A screenshot of the Westchester COVID-19 website
 </p>
 </div>
 <p>To make this website, Herman wrote a set of R Markdown files and strung them together with the <code>distill</code> package. This chapter explains the basics of the package by walking through the creation of a simple website. You’ll learn how to produce different page layouts, navigation menus, and interactive graphics, then explore strategies for hosting your website.</p>
 <div id="creating-a-new-distill-project" class="section level2 unnumbered">
 <h2>Creating a New <code>distill</code> Project<a class="anchor" aria-label="anchor" href="#creating-a-new-distill-project"><i class="fas fa-link"></i></a>
 </h2>
-<p>In Chapter <a href="presentations-chapter.html#presentations-chapter">9</a>, you created a slideshow presentation by knitting an R Markdown document to a single HTML file. A website is merely a collection of HTML files. The <code>distill</code> package enables us to use multiple R Markdown documents to create several HTML files, then connect them with a navigation menu and more.</p>
-<p>To create a <code>distill</code> website, install the package using <code>install.packages("distill")</code>. Then start a project in R Studio by navigating to <strong>File</strong> &gt; <strong>New Project</strong> &gt; <strong>New Directory</strong> and selecting <strong>Distill Website</strong> as the project type. This should take you to the menu in Figure <a href="websites-chapter.html#fig:new-distill-website">10.2</a>.</p>
+<p>In Chapter <a href="presentations-chapter.html#presentations-chapter">8</a>, you created a slideshow presentation by knitting an R Markdown document to a single HTML file. A website is merely a collection of HTML files. The <code>distill</code> package enables us to use multiple R Markdown documents to create several HTML files, then connect them with a navigation menu and more.</p>
+<p>To create a <code>distill</code> website, install the package using <code>install.packages("distill")</code>. Then start a project in R Studio by navigating to <strong>File</strong> &gt; <strong>New Project</strong> &gt; <strong>New Directory</strong> and selecting <strong>Distill Website</strong> as the project type. This should take you to the menu in Figure <a href="websites-chapter.html#fig:new-distill-website">9.2</a>.</p>
 <div class="figure">
 <span style="display:block;" id="fig:new-distill-website"></span>
 <img src="assets/new-distill-website.png" alt="Giving your distill website a name" width="100%"><p class="caption">
-Figure 10.2: Giving your distill website a name
+Figure 9.2: Giving your distill website a name
 </p>
 </div>
 <p>Specify the directory and subdirectory where your project will live on your computer, then give your website a title. The Configure for GitHub Pages option provides an easy way to get your website online, and we’ll discuss how it works below. Select it if you’d like to use this deployment option.</p>
@@ -88,46 +107,46 @@ Figure 10.2: Giving your distill website a name
 </h3>
 <p>Each R Markdown file represents a page of the website. By default, distill creates a Home page (<em>index.Rmd</em>) and an About page (<em>about.Rmd</em>) containing placeholder content. If you wanted to generate additional pages, you would simply add new R Markdown files, then add them to the *_site.yml* file (discussed in the next section).</p>
 <p>If you open the <em>index.Rmd</em> file, you’ll notice that the YAML contains two arguments not present in the R Markdown documents from previous chapters: <code>description</code> and <code>site</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb1-1"><a href="websites-chapter.html#cb1-1" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="websites-chapter.html#cb1-2" tabindex="-1"></a><span class="an">title:</span><span class="co"> "COVID Website"</span></span>
-<span id="cb1-3"><a href="websites-chapter.html#cb1-3" tabindex="-1"></a><span class="an">description:</span><span class="co"> |</span></span>
-<span id="cb1-4"><a href="websites-chapter.html#cb1-4" tabindex="-1"></a><span class="co">  Welcome to the website. I hope you enjoy it!</span></span>
-<span id="cb1-5"><a href="websites-chapter.html#cb1-5" tabindex="-1"></a><span class="an">site:</span><span class="co"> distill::distill_website</span></span>
-<span id="cb1-6"><a href="websites-chapter.html#cb1-6" tabindex="-1"></a><span class="co">---</span></span></code></pre></div>
-<p>The description argument specifies the text that should go below the title of each page, as shown in Figure <a href="websites-chapter.html#fig:website-description">10.3</a>.</p>
+<div class="sourceCode" id="cb150"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb150-1"><a href="websites-chapter.html#cb150-1" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb150-2"><a href="websites-chapter.html#cb150-2" tabindex="-1"></a><span class="an">title:</span><span class="co"> "COVID Website"</span></span>
+<span id="cb150-3"><a href="websites-chapter.html#cb150-3" tabindex="-1"></a><span class="an">description:</span><span class="co"> |</span></span>
+<span id="cb150-4"><a href="websites-chapter.html#cb150-4" tabindex="-1"></a><span class="co">  Welcome to the website. I hope you enjoy it!</span></span>
+<span id="cb150-5"><a href="websites-chapter.html#cb150-5" tabindex="-1"></a><span class="an">site:</span><span class="co"> distill::distill_website</span></span>
+<span id="cb150-6"><a href="websites-chapter.html#cb150-6" tabindex="-1"></a><span class="co">---</span></span></code></pre></div>
+<p>The description argument specifies the text that should go below the title of each page, as shown in Figure <a href="websites-chapter.html#fig:website-description">9.3</a>.</p>
 <div class="figure">
 <span style="display:block;" id="fig:website-description"></span>
 <img src="assets/website-description.png" alt="The default website description" width="100%"><p class="caption">
-Figure 10.3: The default website description
+Figure 9.3: The default website description
 </p>
 </div>
 <p>The <code>site: distill::distill_website</code> line identifies the root page of a <code>distill</code> website. This means that when we knit the document, R Markdown knows to create a website, rather than an individual HTML file, and that the website should display this page first. Other pages of the website don’t require this line. As long as they are listed in the *_site.yml* file, they will be added to the site.</p>
 <p>You’ll notice we’re also missing an argument we’ve seen in other R Markdown documents: <code>output</code>, which specifies the output format to use while knitting. The reason we don’t have this argument here is that we specify the output for the entire website in the *_site.yml* file.</p>
 </div>
-<div id="the-_site.yml-file--" class="section level3" number="10.0.1">
+<div id="the-_site.yml-file--" class="section level3" number="9.0.1">
 <h3>
-<span class="header-section-number">10.0.1</span> The _site.yml File {-}<a class="anchor" aria-label="anchor" href="#the-_site.yml-file--"><i class="fas fa-link"></i></a>
+<span class="header-section-number">9.0.1</span> The _site.yml File {-}<a class="anchor" aria-label="anchor" href="#the-_site.yml-file--"><i class="fas fa-link"></i></a>
 </h3>
 <p>The *_site.yml* file tells R which R Markdown documents make up the website, what the knitted files should look like, what the website should be called, and more. If you open it, you should see the following code.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb2-1"><a href="websites-chapter.html#cb2-1" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">"covid-website"</span></span>
-<span id="cb2-2"><a href="websites-chapter.html#cb2-2" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"COVID Website"</span></span>
-<span id="cb2-3"><a href="websites-chapter.html#cb2-3" tabindex="-1"></a><span class="fu">description</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb2-4"><a href="websites-chapter.html#cb2-4" tabindex="-1"></a>  COVID Website</span>
-<span id="cb2-5"><a href="websites-chapter.html#cb2-5" tabindex="-1"></a><span class="fu">output_dir</span><span class="kw">:</span><span class="at"> </span><span class="st">"docs"</span></span>
-<span id="cb2-6"><a href="websites-chapter.html#cb2-6" tabindex="-1"></a><span class="fu">navbar</span><span class="kw">:</span></span>
-<span id="cb2-7"><a href="websites-chapter.html#cb2-7" tabindex="-1"></a><span class="at">  </span><span class="fu">right</span><span class="kw">:</span></span>
-<span id="cb2-8"><a href="websites-chapter.html#cb2-8" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">text</span><span class="kw">:</span><span class="at"> </span><span class="st">"Home"</span></span>
-<span id="cb2-9"><a href="websites-chapter.html#cb2-9" tabindex="-1"></a><span class="at">      </span><span class="fu">href</span><span class="kw">:</span><span class="at"> index.html</span></span>
-<span id="cb2-10"><a href="websites-chapter.html#cb2-10" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">text</span><span class="kw">:</span><span class="at"> </span><span class="st">"About"</span></span>
-<span id="cb2-11"><a href="websites-chapter.html#cb2-11" tabindex="-1"></a><span class="at">      </span><span class="fu">href</span><span class="kw">:</span><span class="at"> about.html</span></span>
-<span id="cb2-12"><a href="websites-chapter.html#cb2-12" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span><span class="at"> distill::distill_article</span></span></code></pre></div>
+<div class="sourceCode" id="cb151"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb151-1"><a href="websites-chapter.html#cb151-1" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">"covid-website"</span></span>
+<span id="cb151-2"><a href="websites-chapter.html#cb151-2" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"COVID Website"</span></span>
+<span id="cb151-3"><a href="websites-chapter.html#cb151-3" tabindex="-1"></a><span class="fu">description</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb151-4"><a href="websites-chapter.html#cb151-4" tabindex="-1"></a>  COVID Website</span>
+<span id="cb151-5"><a href="websites-chapter.html#cb151-5" tabindex="-1"></a><span class="fu">output_dir</span><span class="kw">:</span><span class="at"> </span><span class="st">"docs"</span></span>
+<span id="cb151-6"><a href="websites-chapter.html#cb151-6" tabindex="-1"></a><span class="fu">navbar</span><span class="kw">:</span></span>
+<span id="cb151-7"><a href="websites-chapter.html#cb151-7" tabindex="-1"></a><span class="at">  </span><span class="fu">right</span><span class="kw">:</span></span>
+<span id="cb151-8"><a href="websites-chapter.html#cb151-8" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">text</span><span class="kw">:</span><span class="at"> </span><span class="st">"Home"</span></span>
+<span id="cb151-9"><a href="websites-chapter.html#cb151-9" tabindex="-1"></a><span class="at">      </span><span class="fu">href</span><span class="kw">:</span><span class="at"> index.html</span></span>
+<span id="cb151-10"><a href="websites-chapter.html#cb151-10" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">text</span><span class="kw">:</span><span class="at"> </span><span class="st">"About"</span></span>
+<span id="cb151-11"><a href="websites-chapter.html#cb151-11" tabindex="-1"></a><span class="at">      </span><span class="fu">href</span><span class="kw">:</span><span class="at"> about.html</span></span>
+<span id="cb151-12"><a href="websites-chapter.html#cb151-12" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span><span class="at"> distill::distill_article</span></span></code></pre></div>
 <p>The <code>name</code> argument determines the URL for your website. By default, this should be the name of the directory in which your <code>distill</code> project lives. The <code>title</code> argument creates the title for the entire website and shows up in the top left of the navigation bar by default. The <code>description</code> argument provides what’s known as a <em>meta description</em>, which will show up on Google search results as a couple of lines to give the user an overview of the website content.</p>
 <p>The <code>output_dir</code> argument determines where the rendered HTML files live when we generate the website. You should see the <em>.docs</em> directory listed here if you selected the Configure for GitHub Pages option. However, you can change the output directory to any folder you choose.</p>
-<p>Next, the <code>navbar</code> section defines the website’s navigation. Ours appears on the right side of the header, but swapping the <code>right</code> parameter for <code>left</code> would switch its position. It includes links to the site’s two pages: Home and About, as shown in Figure <a href="websites-chapter.html#fig:navbar">10.4</a>.</p>
+<p>Next, the <code>navbar</code> section defines the website’s navigation. Ours appears on the right side of the header, but swapping the <code>right</code> parameter for <code>left</code> would switch its position. It includes links to the site’s two pages: Home and About, as shown in Figure <a href="websites-chapter.html#fig:navbar">9.4</a>.</p>
 <div class="figure">
 <span style="display:block;" id="fig:navbar"></span>
 <img src="assets/navbar.png" alt="The website navigation bar" width="100%"><p class="caption">
-Figure 10.4: The website navigation bar
+Figure 9.4: The website navigation bar
 </p>
 </div>
 <p>Within the <code>navbar</code> code, the <code>text</code> argument determines what text shows up in the menu. (Try, for example, changing “About” to “About this Website.”) The <code>href</code> argument determines which HTML file the text in the navigation bar links to. If you want to include additional pages on your menu, you’ll need to add both the <code>text</code> and <code>href</code> parameters.</p>
@@ -138,11 +157,11 @@ Figure 10.4: The website navigation bar
 <h2>Building the Site<a class="anchor" aria-label="anchor" href="#building-the-site"><i class="fas fa-link"></i></a>
 </h2>
 <p>We explored the project’s files but haven’t yet used these to create the website. There are three ways to do this. First, you can click the Build Website button in the Build tab of RStudio’s top-right pane. Second, you can run <code><a href="https://pkgs.rstudio.com/rmarkdown/reference/render_site.html">rmarkdown::render_site()</a></code> in the console or in an R script file. Third, you can use the keyboard shortcut <strong>Command + Shift + B</strong> on macOS and <strong>Ctrl + Shift + B</strong> on Windows.</p>
-<p>These options will render all R Markdown documents and add the top navigation bar to them with the options specified in the *_site.yml* file. To find the rendered files, look in the output directory you specified (for us, that was docs). Open the <em>index.html</em> file and you’ll find your website, which should look like Figure <a href="websites-chapter.html#fig:covid-website-default-content">10.5</a>.</p>
+<p>These options will render all R Markdown documents and add the top navigation bar to them with the options specified in the *_site.yml* file. To find the rendered files, look in the output directory you specified (for us, that was docs). Open the <em>index.html</em> file and you’ll find your website, which should look like Figure <a href="websites-chapter.html#fig:covid-website-default-content">9.5</a>.</p>
 <div class="figure">
 <span style="display:block;" id="fig:covid-website-default-content"></span>
 <img src="assets/covid-website-default-content.png" alt="The COVID website with default content" width="100%"><p class="caption">
-Figure 10.5: The COVID website with default content
+Figure 9.5: The COVID website with default content
 </p>
 </div>
 <p>You can open any other HTML file as well to see its rendered version.</p>
@@ -151,244 +170,244 @@ Figure 10.5: The COVID website with default content
 <h2>Applying Custom CSS with <code>create_theme()</code><a class="anchor" aria-label="anchor" href="#applying-custom-css-with-create_theme"><i class="fas fa-link"></i></a>
 </h2>
 <p>Websites made with distill tend to look similar, but you can change this design using custom CSS. The distill package even provides a function to simplify the process. Running this distill::create_theme() function in the console should create a file called theme.css, shown here:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="websites-chapter.html#cb3-1" tabindex="-1"></a><span class="co">/* base variables */</span></span>
-<span id="cb3-2"><a href="websites-chapter.html#cb3-2" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="websites-chapter.html#cb3-3" tabindex="-1"></a><span class="co">/* Edit the CSS properties in this file to create a custom</span></span>
-<span id="cb3-4"><a href="websites-chapter.html#cb3-4" tabindex="-1"></a><span class="co">   Distill theme. Only edit values in the right column</span></span>
-<span id="cb3-5"><a href="websites-chapter.html#cb3-5" tabindex="-1"></a><span class="co">   for each row; values shown are the CSS defaults.</span></span>
-<span id="cb3-6"><a href="websites-chapter.html#cb3-6" tabindex="-1"></a><span class="co">   To return any property to the default,</span></span>
-<span id="cb3-7"><a href="websites-chapter.html#cb3-7" tabindex="-1"></a><span class="co">   you may set its value to: unset</span></span>
-<span id="cb3-8"><a href="websites-chapter.html#cb3-8" tabindex="-1"></a><span class="co">   All rows must end with a semi-colon.                      */</span></span>
-<span id="cb3-9"><a href="websites-chapter.html#cb3-9" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="websites-chapter.html#cb3-10" tabindex="-1"></a><span class="co">/* Optional: embed custom fonts here with `@import`          */</span></span>
-<span id="cb3-11"><a href="websites-chapter.html#cb3-11" tabindex="-1"></a><span class="co">/* This must remain at the top of this file.                 */</span></span>
-<span id="cb3-12"><a href="websites-chapter.html#cb3-12" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="websites-chapter.html#cb3-13" tabindex="-1"></a>html {</span>
-<span id="cb3-14"><a href="websites-chapter.html#cb3-14" tabindex="-1"></a>  <span class="co">/*-- Main font sizes --*/</span></span>
-<span id="cb3-15"><a href="websites-chapter.html#cb3-15" tabindex="-1"></a>  <span class="va">--title-size</span>:      <span class="dv">50</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb3-16"><a href="websites-chapter.html#cb3-16" tabindex="-1"></a>  <span class="va">--body-size</span>:       <span class="dv">1.06</span><span class="dt">rem</span><span class="op">;</span></span>
-<span id="cb3-17"><a href="websites-chapter.html#cb3-17" tabindex="-1"></a>  <span class="va">--code-size</span>:       <span class="dv">14</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb3-18"><a href="websites-chapter.html#cb3-18" tabindex="-1"></a>  <span class="va">--aside-size</span>:      <span class="dv">12</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb3-19"><a href="websites-chapter.html#cb3-19" tabindex="-1"></a>  <span class="va">--fig-cap-size</span>:    <span class="dv">13</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb3-20"><a href="websites-chapter.html#cb3-20" tabindex="-1"></a>  <span class="co">/*-- Main font colors --*/</span></span>
-<span id="cb3-21"><a href="websites-chapter.html#cb3-21" tabindex="-1"></a>  <span class="va">--title-color</span>:     <span class="cn">#000000</span><span class="op">;</span></span>
-<span id="cb3-22"><a href="websites-chapter.html#cb3-22" tabindex="-1"></a>  <span class="va">--header-color</span>:    <span class="fu">rgba(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0.8</span><span class="fu">)</span><span class="op">;</span></span>
-<span id="cb3-23"><a href="websites-chapter.html#cb3-23" tabindex="-1"></a>  <span class="va">--body-color</span>:      <span class="fu">rgba(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0.8</span><span class="fu">)</span><span class="op">;</span></span>
-<span id="cb3-24"><a href="websites-chapter.html#cb3-24" tabindex="-1"></a>  <span class="va">--aside-color</span>:     <span class="fu">rgba(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0.6</span><span class="fu">)</span><span class="op">;</span></span>
-<span id="cb3-25"><a href="websites-chapter.html#cb3-25" tabindex="-1"></a>  <span class="va">--fig-cap-color</span>:   <span class="fu">rgba(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0.6</span><span class="fu">)</span><span class="op">;</span></span>
-<span id="cb3-26"><a href="websites-chapter.html#cb3-26" tabindex="-1"></a>  <span class="co">/*-- Specify custom fonts ~~~ must be imported above   --*/</span></span>
-<span id="cb3-27"><a href="websites-chapter.html#cb3-27" tabindex="-1"></a>  <span class="va">--heading-font</span>:    <span class="dv">sans-serif</span><span class="op">;</span></span>
-<span id="cb3-28"><a href="websites-chapter.html#cb3-28" tabindex="-1"></a>  <span class="va">--mono-font</span>:       <span class="dv">monospace</span><span class="op">;</span></span>
-<span id="cb3-29"><a href="websites-chapter.html#cb3-29" tabindex="-1"></a>  <span class="va">--body-font</span>:       <span class="dv">sans-serif</span><span class="op">;</span></span>
-<span id="cb3-30"><a href="websites-chapter.html#cb3-30" tabindex="-1"></a>  <span class="va">--navbar-font</span>:     <span class="dv">sans-serif</span><span class="op">;</span>  <span class="co">/* websites + blogs only */</span></span>
-<span id="cb3-31"><a href="websites-chapter.html#cb3-31" tabindex="-1"></a>}</span>
-<span id="cb3-32"><a href="websites-chapter.html#cb3-32" tabindex="-1"></a></span>
-<span id="cb3-33"><a href="websites-chapter.html#cb3-33" tabindex="-1"></a><span class="co">/*-- ARTICLE METADATA --*/</span></span>
-<span id="cb3-34"><a href="websites-chapter.html#cb3-34" tabindex="-1"></a>d-byline {</span>
-<span id="cb3-35"><a href="websites-chapter.html#cb3-35" tabindex="-1"></a>  <span class="va">--heading-size</span>:    <span class="dv">0.6</span><span class="dt">rem</span><span class="op">;</span></span>
-<span id="cb3-36"><a href="websites-chapter.html#cb3-36" tabindex="-1"></a>  <span class="va">--heading-color</span>:   <span class="fu">rgba(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0.5</span><span class="fu">)</span><span class="op">;</span></span>
-<span id="cb3-37"><a href="websites-chapter.html#cb3-37" tabindex="-1"></a>  <span class="va">--body-size</span>:       <span class="dv">0.8</span><span class="dt">rem</span><span class="op">;</span></span>
-<span id="cb3-38"><a href="websites-chapter.html#cb3-38" tabindex="-1"></a>  <span class="va">--body-color</span>:      <span class="fu">rgba(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0.8</span><span class="fu">)</span><span class="op">;</span></span>
-<span id="cb3-39"><a href="websites-chapter.html#cb3-39" tabindex="-1"></a>}</span>
-<span id="cb3-40"><a href="websites-chapter.html#cb3-40" tabindex="-1"></a></span>
-<span id="cb3-41"><a href="websites-chapter.html#cb3-41" tabindex="-1"></a><span class="co">/*-- ARTICLE TABLE OF CONTENTS --*/</span></span>
-<span id="cb3-42"><a href="websites-chapter.html#cb3-42" tabindex="-1"></a><span class="fu">.d-contents</span> {</span>
-<span id="cb3-43"><a href="websites-chapter.html#cb3-43" tabindex="-1"></a>  <span class="va">--heading-size</span>:    <span class="dv">18</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb3-44"><a href="websites-chapter.html#cb3-44" tabindex="-1"></a>  <span class="va">--contents-size</span>:   <span class="dv">13</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb3-45"><a href="websites-chapter.html#cb3-45" tabindex="-1"></a>}</span>
-<span id="cb3-46"><a href="websites-chapter.html#cb3-46" tabindex="-1"></a></span>
-<span id="cb3-47"><a href="websites-chapter.html#cb3-47" tabindex="-1"></a><span class="co">/*-- ARTICLE APPENDIX --*/</span></span>
-<span id="cb3-48"><a href="websites-chapter.html#cb3-48" tabindex="-1"></a>d-appendix {</span>
-<span id="cb3-49"><a href="websites-chapter.html#cb3-49" tabindex="-1"></a>  <span class="va">--heading-size</span>:    <span class="dv">15</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb3-50"><a href="websites-chapter.html#cb3-50" tabindex="-1"></a>  <span class="va">--heading-color</span>:   <span class="fu">rgba(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0.65</span><span class="fu">)</span><span class="op">;</span></span>
-<span id="cb3-51"><a href="websites-chapter.html#cb3-51" tabindex="-1"></a>  <span class="va">--text-size</span>:       <span class="dv">0.8</span><span class="dt">em</span><span class="op">;</span></span>
-<span id="cb3-52"><a href="websites-chapter.html#cb3-52" tabindex="-1"></a>  <span class="va">--text-color</span>:      <span class="fu">rgba(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0.5</span><span class="fu">)</span><span class="op">;</span></span>
-<span id="cb3-53"><a href="websites-chapter.html#cb3-53" tabindex="-1"></a>}</span>
-<span id="cb3-54"><a href="websites-chapter.html#cb3-54" tabindex="-1"></a></span>
-<span id="cb3-55"><a href="websites-chapter.html#cb3-55" tabindex="-1"></a><span class="co">/*-- WEBSITE HEADER + FOOTER --*/</span></span>
-<span id="cb3-56"><a href="websites-chapter.html#cb3-56" tabindex="-1"></a><span class="co">/* These properties only apply to Distill sites and blogs  */</span></span>
-<span id="cb3-57"><a href="websites-chapter.html#cb3-57" tabindex="-1"></a></span>
-<span id="cb3-58"><a href="websites-chapter.html#cb3-58" tabindex="-1"></a><span class="fu">.distill-site-header</span> {</span>
-<span id="cb3-59"><a href="websites-chapter.html#cb3-59" tabindex="-1"></a>  <span class="va">--title-size</span>:       <span class="dv">18</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb3-60"><a href="websites-chapter.html#cb3-60" tabindex="-1"></a>  <span class="va">--text-color</span>:       <span class="fu">rgba(</span><span class="dv">255</span><span class="op">,</span> <span class="dv">255</span><span class="op">,</span> <span class="dv">255</span><span class="op">,</span> <span class="dv">0.8</span><span class="fu">)</span><span class="op">;</span></span>
-<span id="cb3-61"><a href="websites-chapter.html#cb3-61" tabindex="-1"></a>  <span class="va">--text-size</span>:        <span class="dv">15</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb3-62"><a href="websites-chapter.html#cb3-62" tabindex="-1"></a>  <span class="va">--hover-color</span>:      <span class="cn">white</span><span class="op">;</span></span>
-<span id="cb3-63"><a href="websites-chapter.html#cb3-63" tabindex="-1"></a>  <span class="va">--bkgd-color</span>:       <span class="cn">#0F2E3D</span><span class="op">;</span></span>
-<span id="cb3-64"><a href="websites-chapter.html#cb3-64" tabindex="-1"></a>}</span>
-<span id="cb3-65"><a href="websites-chapter.html#cb3-65" tabindex="-1"></a></span>
-<span id="cb3-66"><a href="websites-chapter.html#cb3-66" tabindex="-1"></a><span class="fu">.distill-site-footer</span> {</span>
-<span id="cb3-67"><a href="websites-chapter.html#cb3-67" tabindex="-1"></a>  <span class="va">--text-color</span>:       <span class="fu">rgba(</span><span class="dv">255</span><span class="op">,</span> <span class="dv">255</span><span class="op">,</span> <span class="dv">255</span><span class="op">,</span> <span class="dv">0.8</span><span class="fu">)</span><span class="op">;</span></span>
-<span id="cb3-68"><a href="websites-chapter.html#cb3-68" tabindex="-1"></a>  <span class="va">--text-size</span>:        <span class="dv">15</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb3-69"><a href="websites-chapter.html#cb3-69" tabindex="-1"></a>  <span class="va">--hover-color</span>:      <span class="cn">white</span><span class="op">;</span></span>
-<span id="cb3-70"><a href="websites-chapter.html#cb3-70" tabindex="-1"></a>  <span class="va">--bkgd-color</span>:       <span class="cn">#0F2E3D</span><span class="op">;</span></span>
-<span id="cb3-71"><a href="websites-chapter.html#cb3-71" tabindex="-1"></a>}</span>
-<span id="cb3-72"><a href="websites-chapter.html#cb3-72" tabindex="-1"></a></span>
-<span id="cb3-73"><a href="websites-chapter.html#cb3-73" tabindex="-1"></a><span class="co">/*-- Additional custom styles --*/</span></span>
-<span id="cb3-74"><a href="websites-chapter.html#cb3-74" tabindex="-1"></a><span class="co">/* Add any additional CSS rules below                      */</span></span></code></pre></div>
+<div class="sourceCode" id="cb152"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb152-1"><a href="websites-chapter.html#cb152-1" tabindex="-1"></a><span class="co">/* base variables */</span></span>
+<span id="cb152-2"><a href="websites-chapter.html#cb152-2" tabindex="-1"></a></span>
+<span id="cb152-3"><a href="websites-chapter.html#cb152-3" tabindex="-1"></a><span class="co">/* Edit the CSS properties in this file to create a custom</span></span>
+<span id="cb152-4"><a href="websites-chapter.html#cb152-4" tabindex="-1"></a><span class="co">   Distill theme. Only edit values in the right column</span></span>
+<span id="cb152-5"><a href="websites-chapter.html#cb152-5" tabindex="-1"></a><span class="co">   for each row; values shown are the CSS defaults.</span></span>
+<span id="cb152-6"><a href="websites-chapter.html#cb152-6" tabindex="-1"></a><span class="co">   To return any property to the default,</span></span>
+<span id="cb152-7"><a href="websites-chapter.html#cb152-7" tabindex="-1"></a><span class="co">   you may set its value to: unset</span></span>
+<span id="cb152-8"><a href="websites-chapter.html#cb152-8" tabindex="-1"></a><span class="co">   All rows must end with a semi-colon.                      */</span></span>
+<span id="cb152-9"><a href="websites-chapter.html#cb152-9" tabindex="-1"></a></span>
+<span id="cb152-10"><a href="websites-chapter.html#cb152-10" tabindex="-1"></a><span class="co">/* Optional: embed custom fonts here with `@import`          */</span></span>
+<span id="cb152-11"><a href="websites-chapter.html#cb152-11" tabindex="-1"></a><span class="co">/* This must remain at the top of this file.                 */</span></span>
+<span id="cb152-12"><a href="websites-chapter.html#cb152-12" tabindex="-1"></a></span>
+<span id="cb152-13"><a href="websites-chapter.html#cb152-13" tabindex="-1"></a>html {</span>
+<span id="cb152-14"><a href="websites-chapter.html#cb152-14" tabindex="-1"></a>  <span class="co">/*-- Main font sizes --*/</span></span>
+<span id="cb152-15"><a href="websites-chapter.html#cb152-15" tabindex="-1"></a>  <span class="va">--title-size</span>:      <span class="dv">50</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb152-16"><a href="websites-chapter.html#cb152-16" tabindex="-1"></a>  <span class="va">--body-size</span>:       <span class="dv">1.06</span><span class="dt">rem</span><span class="op">;</span></span>
+<span id="cb152-17"><a href="websites-chapter.html#cb152-17" tabindex="-1"></a>  <span class="va">--code-size</span>:       <span class="dv">14</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb152-18"><a href="websites-chapter.html#cb152-18" tabindex="-1"></a>  <span class="va">--aside-size</span>:      <span class="dv">12</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb152-19"><a href="websites-chapter.html#cb152-19" tabindex="-1"></a>  <span class="va">--fig-cap-size</span>:    <span class="dv">13</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb152-20"><a href="websites-chapter.html#cb152-20" tabindex="-1"></a>  <span class="co">/*-- Main font colors --*/</span></span>
+<span id="cb152-21"><a href="websites-chapter.html#cb152-21" tabindex="-1"></a>  <span class="va">--title-color</span>:     <span class="cn">#000000</span><span class="op">;</span></span>
+<span id="cb152-22"><a href="websites-chapter.html#cb152-22" tabindex="-1"></a>  <span class="va">--header-color</span>:    <span class="fu">rgba(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0.8</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb152-23"><a href="websites-chapter.html#cb152-23" tabindex="-1"></a>  <span class="va">--body-color</span>:      <span class="fu">rgba(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0.8</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb152-24"><a href="websites-chapter.html#cb152-24" tabindex="-1"></a>  <span class="va">--aside-color</span>:     <span class="fu">rgba(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0.6</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb152-25"><a href="websites-chapter.html#cb152-25" tabindex="-1"></a>  <span class="va">--fig-cap-color</span>:   <span class="fu">rgba(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0.6</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb152-26"><a href="websites-chapter.html#cb152-26" tabindex="-1"></a>  <span class="co">/*-- Specify custom fonts ~~~ must be imported above   --*/</span></span>
+<span id="cb152-27"><a href="websites-chapter.html#cb152-27" tabindex="-1"></a>  <span class="va">--heading-font</span>:    <span class="dv">sans-serif</span><span class="op">;</span></span>
+<span id="cb152-28"><a href="websites-chapter.html#cb152-28" tabindex="-1"></a>  <span class="va">--mono-font</span>:       <span class="dv">monospace</span><span class="op">;</span></span>
+<span id="cb152-29"><a href="websites-chapter.html#cb152-29" tabindex="-1"></a>  <span class="va">--body-font</span>:       <span class="dv">sans-serif</span><span class="op">;</span></span>
+<span id="cb152-30"><a href="websites-chapter.html#cb152-30" tabindex="-1"></a>  <span class="va">--navbar-font</span>:     <span class="dv">sans-serif</span><span class="op">;</span>  <span class="co">/* websites + blogs only */</span></span>
+<span id="cb152-31"><a href="websites-chapter.html#cb152-31" tabindex="-1"></a>}</span>
+<span id="cb152-32"><a href="websites-chapter.html#cb152-32" tabindex="-1"></a></span>
+<span id="cb152-33"><a href="websites-chapter.html#cb152-33" tabindex="-1"></a><span class="co">/*-- ARTICLE METADATA --*/</span></span>
+<span id="cb152-34"><a href="websites-chapter.html#cb152-34" tabindex="-1"></a>d-byline {</span>
+<span id="cb152-35"><a href="websites-chapter.html#cb152-35" tabindex="-1"></a>  <span class="va">--heading-size</span>:    <span class="dv">0.6</span><span class="dt">rem</span><span class="op">;</span></span>
+<span id="cb152-36"><a href="websites-chapter.html#cb152-36" tabindex="-1"></a>  <span class="va">--heading-color</span>:   <span class="fu">rgba(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0.5</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb152-37"><a href="websites-chapter.html#cb152-37" tabindex="-1"></a>  <span class="va">--body-size</span>:       <span class="dv">0.8</span><span class="dt">rem</span><span class="op">;</span></span>
+<span id="cb152-38"><a href="websites-chapter.html#cb152-38" tabindex="-1"></a>  <span class="va">--body-color</span>:      <span class="fu">rgba(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0.8</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb152-39"><a href="websites-chapter.html#cb152-39" tabindex="-1"></a>}</span>
+<span id="cb152-40"><a href="websites-chapter.html#cb152-40" tabindex="-1"></a></span>
+<span id="cb152-41"><a href="websites-chapter.html#cb152-41" tabindex="-1"></a><span class="co">/*-- ARTICLE TABLE OF CONTENTS --*/</span></span>
+<span id="cb152-42"><a href="websites-chapter.html#cb152-42" tabindex="-1"></a><span class="fu">.d-contents</span> {</span>
+<span id="cb152-43"><a href="websites-chapter.html#cb152-43" tabindex="-1"></a>  <span class="va">--heading-size</span>:    <span class="dv">18</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb152-44"><a href="websites-chapter.html#cb152-44" tabindex="-1"></a>  <span class="va">--contents-size</span>:   <span class="dv">13</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb152-45"><a href="websites-chapter.html#cb152-45" tabindex="-1"></a>}</span>
+<span id="cb152-46"><a href="websites-chapter.html#cb152-46" tabindex="-1"></a></span>
+<span id="cb152-47"><a href="websites-chapter.html#cb152-47" tabindex="-1"></a><span class="co">/*-- ARTICLE APPENDIX --*/</span></span>
+<span id="cb152-48"><a href="websites-chapter.html#cb152-48" tabindex="-1"></a>d-appendix {</span>
+<span id="cb152-49"><a href="websites-chapter.html#cb152-49" tabindex="-1"></a>  <span class="va">--heading-size</span>:    <span class="dv">15</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb152-50"><a href="websites-chapter.html#cb152-50" tabindex="-1"></a>  <span class="va">--heading-color</span>:   <span class="fu">rgba(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0.65</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb152-51"><a href="websites-chapter.html#cb152-51" tabindex="-1"></a>  <span class="va">--text-size</span>:       <span class="dv">0.8</span><span class="dt">em</span><span class="op">;</span></span>
+<span id="cb152-52"><a href="websites-chapter.html#cb152-52" tabindex="-1"></a>  <span class="va">--text-color</span>:      <span class="fu">rgba(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0.5</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb152-53"><a href="websites-chapter.html#cb152-53" tabindex="-1"></a>}</span>
+<span id="cb152-54"><a href="websites-chapter.html#cb152-54" tabindex="-1"></a></span>
+<span id="cb152-55"><a href="websites-chapter.html#cb152-55" tabindex="-1"></a><span class="co">/*-- WEBSITE HEADER + FOOTER --*/</span></span>
+<span id="cb152-56"><a href="websites-chapter.html#cb152-56" tabindex="-1"></a><span class="co">/* These properties only apply to Distill sites and blogs  */</span></span>
+<span id="cb152-57"><a href="websites-chapter.html#cb152-57" tabindex="-1"></a></span>
+<span id="cb152-58"><a href="websites-chapter.html#cb152-58" tabindex="-1"></a><span class="fu">.distill-site-header</span> {</span>
+<span id="cb152-59"><a href="websites-chapter.html#cb152-59" tabindex="-1"></a>  <span class="va">--title-size</span>:       <span class="dv">18</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb152-60"><a href="websites-chapter.html#cb152-60" tabindex="-1"></a>  <span class="va">--text-color</span>:       <span class="fu">rgba(</span><span class="dv">255</span><span class="op">,</span> <span class="dv">255</span><span class="op">,</span> <span class="dv">255</span><span class="op">,</span> <span class="dv">0.8</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb152-61"><a href="websites-chapter.html#cb152-61" tabindex="-1"></a>  <span class="va">--text-size</span>:        <span class="dv">15</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb152-62"><a href="websites-chapter.html#cb152-62" tabindex="-1"></a>  <span class="va">--hover-color</span>:      <span class="cn">white</span><span class="op">;</span></span>
+<span id="cb152-63"><a href="websites-chapter.html#cb152-63" tabindex="-1"></a>  <span class="va">--bkgd-color</span>:       <span class="cn">#0F2E3D</span><span class="op">;</span></span>
+<span id="cb152-64"><a href="websites-chapter.html#cb152-64" tabindex="-1"></a>}</span>
+<span id="cb152-65"><a href="websites-chapter.html#cb152-65" tabindex="-1"></a></span>
+<span id="cb152-66"><a href="websites-chapter.html#cb152-66" tabindex="-1"></a><span class="fu">.distill-site-footer</span> {</span>
+<span id="cb152-67"><a href="websites-chapter.html#cb152-67" tabindex="-1"></a>  <span class="va">--text-color</span>:       <span class="fu">rgba(</span><span class="dv">255</span><span class="op">,</span> <span class="dv">255</span><span class="op">,</span> <span class="dv">255</span><span class="op">,</span> <span class="dv">0.8</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb152-68"><a href="websites-chapter.html#cb152-68" tabindex="-1"></a>  <span class="va">--text-size</span>:        <span class="dv">15</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb152-69"><a href="websites-chapter.html#cb152-69" tabindex="-1"></a>  <span class="va">--hover-color</span>:      <span class="cn">white</span><span class="op">;</span></span>
+<span id="cb152-70"><a href="websites-chapter.html#cb152-70" tabindex="-1"></a>  <span class="va">--bkgd-color</span>:       <span class="cn">#0F2E3D</span><span class="op">;</span></span>
+<span id="cb152-71"><a href="websites-chapter.html#cb152-71" tabindex="-1"></a>}</span>
+<span id="cb152-72"><a href="websites-chapter.html#cb152-72" tabindex="-1"></a></span>
+<span id="cb152-73"><a href="websites-chapter.html#cb152-73" tabindex="-1"></a><span class="co">/*-- Additional custom styles --*/</span></span>
+<span id="cb152-74"><a href="websites-chapter.html#cb152-74" tabindex="-1"></a><span class="co">/* Add any additional CSS rules below                      */</span></span></code></pre></div>
 <p>Within that file is a set of what are known as <em>CSS variables</em>. Most of them have names that clearly show their purpose, and you can alter their default values to whatever you’d like. For example, the following changes to the site’s header make the title and text size larger and the background color a light blue:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb4-1"><a href="websites-chapter.html#cb4-1" tabindex="-1"></a>.distill-site-header {</span>
-<span id="cb4-2"><a href="websites-chapter.html#cb4-2" tabindex="-1"></a>  --title-size:       28px;</span>
-<span id="cb4-3"><a href="websites-chapter.html#cb4-3" tabindex="-1"></a>  --text-color:       rgba(255, 255, 255, 0.8);</span>
-<span id="cb4-4"><a href="websites-chapter.html#cb4-4" tabindex="-1"></a>  --text-size:        20px;</span>
-<span id="cb4-5"><a href="websites-chapter.html#cb4-5" tabindex="-1"></a>  --hover-color:      white;</span>
-<span id="cb4-6"><a href="websites-chapter.html#cb4-6" tabindex="-1"></a>  --bkgd-color:       #6cabdd;</span>
-<span id="cb4-7"><a href="websites-chapter.html#cb4-7" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb153"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb153-1"><a href="websites-chapter.html#cb153-1" tabindex="-1"></a>.distill-site-header {</span>
+<span id="cb153-2"><a href="websites-chapter.html#cb153-2" tabindex="-1"></a>  --title-size:       28px;</span>
+<span id="cb153-3"><a href="websites-chapter.html#cb153-3" tabindex="-1"></a>  --text-color:       rgba(255, 255, 255, 0.8);</span>
+<span id="cb153-4"><a href="websites-chapter.html#cb153-4" tabindex="-1"></a>  --text-size:        20px;</span>
+<span id="cb153-5"><a href="websites-chapter.html#cb153-5" tabindex="-1"></a>  --hover-color:      white;</span>
+<span id="cb153-6"><a href="websites-chapter.html#cb153-6" tabindex="-1"></a>  --bkgd-color:       #6cabdd;</span>
+<span id="cb153-7"><a href="websites-chapter.html#cb153-7" tabindex="-1"></a>}</span></code></pre></div>
 <p>Before we can see these changes, we need to tell <code>distill</code> to use this custom CSS when rendering by adding a line to the *_site.yml* file:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb5-1"><a href="websites-chapter.html#cb5-1" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">"covid-website"</span></span>
-<span id="cb5-2"><a href="websites-chapter.html#cb5-2" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"COVID Website"</span></span>
-<span id="cb5-3"><a href="websites-chapter.html#cb5-3" tabindex="-1"></a><span class="fu">description</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb5-4"><a href="websites-chapter.html#cb5-4" tabindex="-1"></a>  COVID Website</span>
-<span id="cb5-5"><a href="websites-chapter.html#cb5-5" tabindex="-1"></a><span class="fu">theme</span><span class="kw">:</span><span class="at"> theme.css</span></span>
-<span id="cb5-6"><a href="websites-chapter.html#cb5-6" tabindex="-1"></a><span class="fu">output_dir</span><span class="kw">:</span><span class="at"> </span><span class="st">"docs"</span></span>
-<span id="cb5-7"><a href="websites-chapter.html#cb5-7" tabindex="-1"></a><span class="fu">navbar</span><span class="kw">:</span></span>
-<span id="cb5-8"><a href="websites-chapter.html#cb5-8" tabindex="-1"></a><span class="at">  </span><span class="fu">right</span><span class="kw">:</span></span>
-<span id="cb5-9"><a href="websites-chapter.html#cb5-9" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">text</span><span class="kw">:</span><span class="at"> </span><span class="st">"Home"</span></span>
-<span id="cb5-10"><a href="websites-chapter.html#cb5-10" tabindex="-1"></a><span class="at">      </span><span class="fu">href</span><span class="kw">:</span><span class="at"> index.html</span></span>
-<span id="cb5-11"><a href="websites-chapter.html#cb5-11" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">text</span><span class="kw">:</span><span class="at"> </span><span class="st">"About"</span></span>
-<span id="cb5-12"><a href="websites-chapter.html#cb5-12" tabindex="-1"></a><span class="at">      </span><span class="fu">href</span><span class="kw">:</span><span class="at"> about.html</span></span>
-<span id="cb5-13"><a href="websites-chapter.html#cb5-13" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span><span class="at"> distill::distill_article</span></span></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb154-1"><a href="websites-chapter.html#cb154-1" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">"covid-website"</span></span>
+<span id="cb154-2"><a href="websites-chapter.html#cb154-2" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"COVID Website"</span></span>
+<span id="cb154-3"><a href="websites-chapter.html#cb154-3" tabindex="-1"></a><span class="fu">description</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb154-4"><a href="websites-chapter.html#cb154-4" tabindex="-1"></a>  COVID Website</span>
+<span id="cb154-5"><a href="websites-chapter.html#cb154-5" tabindex="-1"></a><span class="fu">theme</span><span class="kw">:</span><span class="at"> theme.css</span></span>
+<span id="cb154-6"><a href="websites-chapter.html#cb154-6" tabindex="-1"></a><span class="fu">output_dir</span><span class="kw">:</span><span class="at"> </span><span class="st">"docs"</span></span>
+<span id="cb154-7"><a href="websites-chapter.html#cb154-7" tabindex="-1"></a><span class="fu">navbar</span><span class="kw">:</span></span>
+<span id="cb154-8"><a href="websites-chapter.html#cb154-8" tabindex="-1"></a><span class="at">  </span><span class="fu">right</span><span class="kw">:</span></span>
+<span id="cb154-9"><a href="websites-chapter.html#cb154-9" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">text</span><span class="kw">:</span><span class="at"> </span><span class="st">"Home"</span></span>
+<span id="cb154-10"><a href="websites-chapter.html#cb154-10" tabindex="-1"></a><span class="at">      </span><span class="fu">href</span><span class="kw">:</span><span class="at"> index.html</span></span>
+<span id="cb154-11"><a href="websites-chapter.html#cb154-11" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">text</span><span class="kw">:</span><span class="at"> </span><span class="st">"About"</span></span>
+<span id="cb154-12"><a href="websites-chapter.html#cb154-12" tabindex="-1"></a><span class="at">      </span><span class="fu">href</span><span class="kw">:</span><span class="at"> about.html</span></span>
+<span id="cb154-13"><a href="websites-chapter.html#cb154-13" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span><span class="at"> distill::distill_article</span></span></code></pre></div>
 <p>Now we can generate the site again. As you can see in the <em>theme.css</em> file, there are a lot of CSS variables we can change to tweak the appearance of the website. Playing around with them and rebuilding your site is a great way to figure out what does what.</p>
 </div>
 <div id="working-with-website-content" class="section level2 unnumbered">
 <h2>Working with Website Content<a class="anchor" aria-label="anchor" href="#working-with-website-content"><i class="fas fa-link"></i></a>
 </h2>
 <p>Using <code>distill</code>, we can alter the size of the website’s content or even make it interactive. To first add content to a page on the website, create Markdown text and code chunks in the page’s R Markdown document. For example, let’s replace the contents of <em>index.Rmd</em> with the following code to make a table, a map, and a chart appear on the website’s Home page. Here is the start of the file:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb6-1"><a href="websites-chapter.html#cb6-1" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb6-2"><a href="websites-chapter.html#cb6-2" tabindex="-1"></a><span class="an">title:</span><span class="co"> "COVID Website"</span></span>
-<span id="cb6-3"><a href="websites-chapter.html#cb6-3" tabindex="-1"></a><span class="an">description:</span><span class="co"> "Information about COVID rates in the United States over time"</span></span>
-<span id="cb6-4"><a href="websites-chapter.html#cb6-4" tabindex="-1"></a><span class="an">site:</span><span class="co"> distill::distill_website</span></span>
-<span id="cb6-5"><a href="websites-chapter.html#cb6-5" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb6-6"><a href="websites-chapter.html#cb6-6" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="websites-chapter.html#cb6-7" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
-<span id="cb6-8"><a href="websites-chapter.html#cb6-8" tabindex="-1"></a><span class="in">knitr::opts_chunk$set(</span></span>
-<span id="cb6-9"><a href="websites-chapter.html#cb6-9" tabindex="-1"></a><span class="in">  echo = FALSE,</span></span>
-<span id="cb6-10"><a href="websites-chapter.html#cb6-10" tabindex="-1"></a><span class="in">  warning = FALSE,</span></span>
-<span id="cb6-11"><a href="websites-chapter.html#cb6-11" tabindex="-1"></a><span class="in">  message = FALSE</span></span>
-<span id="cb6-12"><a href="websites-chapter.html#cb6-12" tabindex="-1"></a><span class="in">)</span></span>
-<span id="cb6-13"><a href="websites-chapter.html#cb6-13" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-14"><a href="websites-chapter.html#cb6-14" tabindex="-1"></a></span>
-<span id="cb6-15"><a href="websites-chapter.html#cb6-15" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb6-16"><a href="websites-chapter.html#cb6-16" tabindex="-1"></a><span class="in"># Load packages</span></span>
-<span id="cb6-17"><a href="websites-chapter.html#cb6-17" tabindex="-1"></a></span>
-<span id="cb6-18"><a href="websites-chapter.html#cb6-18" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
-<span id="cb6-19"><a href="websites-chapter.html#cb6-19" tabindex="-1"></a><span class="in">library(janitor)</span></span>
-<span id="cb6-20"><a href="websites-chapter.html#cb6-20" tabindex="-1"></a><span class="in">library(tigris)</span></span>
-<span id="cb6-21"><a href="websites-chapter.html#cb6-21" tabindex="-1"></a><span class="in">library(gt)</span></span>
-<span id="cb6-22"><a href="websites-chapter.html#cb6-22" tabindex="-1"></a><span class="in">library(lubridate)</span></span>
-<span id="cb6-23"><a href="websites-chapter.html#cb6-23" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb155-1"><a href="websites-chapter.html#cb155-1" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb155-2"><a href="websites-chapter.html#cb155-2" tabindex="-1"></a><span class="an">title:</span><span class="co"> "COVID Website"</span></span>
+<span id="cb155-3"><a href="websites-chapter.html#cb155-3" tabindex="-1"></a><span class="an">description:</span><span class="co"> "Information about COVID rates in the United States over time"</span></span>
+<span id="cb155-4"><a href="websites-chapter.html#cb155-4" tabindex="-1"></a><span class="an">site:</span><span class="co"> distill::distill_website</span></span>
+<span id="cb155-5"><a href="websites-chapter.html#cb155-5" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb155-6"><a href="websites-chapter.html#cb155-6" tabindex="-1"></a></span>
+<span id="cb155-7"><a href="websites-chapter.html#cb155-7" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
+<span id="cb155-8"><a href="websites-chapter.html#cb155-8" tabindex="-1"></a><span class="in">knitr::opts_chunk$set(</span></span>
+<span id="cb155-9"><a href="websites-chapter.html#cb155-9" tabindex="-1"></a><span class="in">  echo = FALSE,</span></span>
+<span id="cb155-10"><a href="websites-chapter.html#cb155-10" tabindex="-1"></a><span class="in">  warning = FALSE,</span></span>
+<span id="cb155-11"><a href="websites-chapter.html#cb155-11" tabindex="-1"></a><span class="in">  message = FALSE</span></span>
+<span id="cb155-12"><a href="websites-chapter.html#cb155-12" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb155-13"><a href="websites-chapter.html#cb155-13" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb155-14"><a href="websites-chapter.html#cb155-14" tabindex="-1"></a></span>
+<span id="cb155-15"><a href="websites-chapter.html#cb155-15" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb155-16"><a href="websites-chapter.html#cb155-16" tabindex="-1"></a><span class="in"># Load packages</span></span>
+<span id="cb155-17"><a href="websites-chapter.html#cb155-17" tabindex="-1"></a></span>
+<span id="cb155-18"><a href="websites-chapter.html#cb155-18" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb155-19"><a href="websites-chapter.html#cb155-19" tabindex="-1"></a><span class="in">library(janitor)</span></span>
+<span id="cb155-20"><a href="websites-chapter.html#cb155-20" tabindex="-1"></a><span class="in">library(tigris)</span></span>
+<span id="cb155-21"><a href="websites-chapter.html#cb155-21" tabindex="-1"></a><span class="in">library(gt)</span></span>
+<span id="cb155-22"><a href="websites-chapter.html#cb155-22" tabindex="-1"></a><span class="in">library(lubridate)</span></span>
+<span id="cb155-23"><a href="websites-chapter.html#cb155-23" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <p>After the YAML and <code>setup</code> code chunk, we load several packages, most of which you’ve seen in previous chapters: <code>tidyverse</code> for data import, manipulation, and plotting (with ggplot); <code>janitor</code> for its <code>clean_names()</code> function, which makes our variable names easier to work with; <code>tigris</code> to import geospatial data about states; gt for making nice tables; and <code>lubridate</code> to work with dates.</p>
 <p>Next, we create a new code chunk to import and clean our data:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb7-1"><a href="websites-chapter.html#cb7-1" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb7-2"><a href="websites-chapter.html#cb7-2" tabindex="-1"></a><span class="in"># Import data</span></span>
-<span id="cb7-3"><a href="websites-chapter.html#cb7-3" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="websites-chapter.html#cb7-4" tabindex="-1"></a><span class="in">us_states &lt;- states(</span></span>
-<span id="cb7-5"><a href="websites-chapter.html#cb7-5" tabindex="-1"></a><span class="in">  cb = TRUE,</span></span>
-<span id="cb7-6"><a href="websites-chapter.html#cb7-6" tabindex="-1"></a><span class="in">  resolution = "20m",</span></span>
-<span id="cb7-7"><a href="websites-chapter.html#cb7-7" tabindex="-1"></a><span class="in">  progress_bar = FALSE</span></span>
-<span id="cb7-8"><a href="websites-chapter.html#cb7-8" tabindex="-1"></a><span class="in">) %&gt;%</span></span>
-<span id="cb7-9"><a href="websites-chapter.html#cb7-9" tabindex="-1"></a><span class="in">  shift_geometry() %&gt;%</span></span>
-<span id="cb7-10"><a href="websites-chapter.html#cb7-10" tabindex="-1"></a><span class="in">  clean_names() %&gt;%</span></span>
-<span id="cb7-11"><a href="websites-chapter.html#cb7-11" tabindex="-1"></a><span class="in">  select(geoid, name) %&gt;%</span></span>
-<span id="cb7-12"><a href="websites-chapter.html#cb7-12" tabindex="-1"></a><span class="in">  rename(state = name) %&gt;%</span></span>
-<span id="cb7-13"><a href="websites-chapter.html#cb7-13" tabindex="-1"></a><span class="in">  filter(state %in% state.name)</span></span>
-<span id="cb7-14"><a href="websites-chapter.html#cb7-14" tabindex="-1"></a></span>
-<span id="cb7-15"><a href="websites-chapter.html#cb7-15" tabindex="-1"></a><span class="in">covid_data &lt;- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/rolling-averages/us-states.csv") %&gt;%</span></span>
-<span id="cb7-16"><a href="websites-chapter.html#cb7-16" tabindex="-1"></a><span class="in">  filter(state %in% state.name) %&gt;%</span></span>
-<span id="cb7-17"><a href="websites-chapter.html#cb7-17" tabindex="-1"></a><span class="in">  mutate(geoid = str_remove(geoid, "USA-"))</span></span>
-<span id="cb7-18"><a href="websites-chapter.html#cb7-18" tabindex="-1"></a></span>
-<span id="cb7-19"><a href="websites-chapter.html#cb7-19" tabindex="-1"></a><span class="in">most_recent_day &lt;- covid_data %&gt;%</span></span>
-<span id="cb7-20"><a href="websites-chapter.html#cb7-20" tabindex="-1"></a><span class="in">  slice_max(</span></span>
-<span id="cb7-21"><a href="websites-chapter.html#cb7-21" tabindex="-1"></a><span class="in">    order_by = date,</span></span>
-<span id="cb7-22"><a href="websites-chapter.html#cb7-22" tabindex="-1"></a><span class="in">    n = 1</span></span>
-<span id="cb7-23"><a href="websites-chapter.html#cb7-23" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
-<span id="cb7-24"><a href="websites-chapter.html#cb7-24" tabindex="-1"></a><span class="in">  distinct(date) %&gt;%</span></span>
-<span id="cb7-25"><a href="websites-chapter.html#cb7-25" tabindex="-1"></a><span class="in">  mutate(date_nice_format = str_glue("{month(date, label = TRUE, abbr = FALSE)} {day(date)}, {year(date)}")) %&gt;%</span></span>
-<span id="cb7-26"><a href="websites-chapter.html#cb7-26" tabindex="-1"></a><span class="in">  pull(date_nice_format)</span></span>
-<span id="cb7-27"><a href="websites-chapter.html#cb7-27" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb7-28"><a href="websites-chapter.html#cb7-28" tabindex="-1"></a></span>
-<span id="cb7-29"><a href="websites-chapter.html#cb7-29" tabindex="-1"></a><span class="fu"># COVID Death Rates as of `r most_recent_day`</span></span>
-<span id="cb7-30"><a href="websites-chapter.html#cb7-30" tabindex="-1"></a></span>
-<span id="cb7-31"><a href="websites-chapter.html#cb7-31" tabindex="-1"></a>This table shows COVID death rates per 100,000 people in four states states.</span></code></pre></div>
-<p>We also create a variable called <code>most_recent_day</code>, which we later reference in a text section. Using inline R code, this header now displays the current date. We then make a table that shows the death rates per 100,000 people in four states (as using all states would create too large a table):</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb8-1"><a href="websites-chapter.html#cb8-1" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-2"><a href="websites-chapter.html#cb8-2" tabindex="-1"></a><span class="in">covid_data %&gt;%</span></span>
-<span id="cb8-3"><a href="websites-chapter.html#cb8-3" tabindex="-1"></a><span class="in">  filter(state %in% c(</span></span>
-<span id="cb8-4"><a href="websites-chapter.html#cb8-4" tabindex="-1"></a><span class="in">    "Alabama",</span></span>
-<span id="cb8-5"><a href="websites-chapter.html#cb8-5" tabindex="-1"></a><span class="in">    "Alaska",</span></span>
-<span id="cb8-6"><a href="websites-chapter.html#cb8-6" tabindex="-1"></a><span class="in">    "Arizona",</span></span>
-<span id="cb8-7"><a href="websites-chapter.html#cb8-7" tabindex="-1"></a><span class="in">    "Arkansas"</span></span>
-<span id="cb8-8"><a href="websites-chapter.html#cb8-8" tabindex="-1"></a><span class="in">  )) %&gt;%</span></span>
-<span id="cb8-9"><a href="websites-chapter.html#cb8-9" tabindex="-1"></a><span class="in">  slice_max(</span></span>
-<span id="cb8-10"><a href="websites-chapter.html#cb8-10" tabindex="-1"></a><span class="in">    order_by = date,</span></span>
-<span id="cb8-11"><a href="websites-chapter.html#cb8-11" tabindex="-1"></a><span class="in">    n = 1</span></span>
-<span id="cb8-12"><a href="websites-chapter.html#cb8-12" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
-<span id="cb8-13"><a href="websites-chapter.html#cb8-13" tabindex="-1"></a><span class="in">  select(state, deaths_avg_per_100k) %&gt;%</span></span>
-<span id="cb8-14"><a href="websites-chapter.html#cb8-14" tabindex="-1"></a><span class="in">  arrange(state) %&gt;%</span></span>
-<span id="cb8-15"><a href="websites-chapter.html#cb8-15" tabindex="-1"></a><span class="in">  set_names("State", "Death rate") %&gt;%</span></span>
-<span id="cb8-16"><a href="websites-chapter.html#cb8-16" tabindex="-1"></a><span class="in">  gt() %&gt;%</span></span>
-<span id="cb8-17"><a href="websites-chapter.html#cb8-17" tabindex="-1"></a><span class="in">  tab_style(</span></span>
-<span id="cb8-18"><a href="websites-chapter.html#cb8-18" tabindex="-1"></a><span class="in">    style = cell_text(weight = "bold"),</span></span>
-<span id="cb8-19"><a href="websites-chapter.html#cb8-19" tabindex="-1"></a><span class="in">    locations = cells_column_labels()</span></span>
-<span id="cb8-20"><a href="websites-chapter.html#cb8-20" tabindex="-1"></a><span class="in">  )</span></span>
-<span id="cb8-21"><a href="websites-chapter.html#cb8-21" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
-<p>This table resembles the code we discussed in Chapter <a href="tables-chapter.html#tables-chapter">6</a>. Next, we make a map of this data for all states using techniques covered in Chapter <a href="maps-chapter.html#maps-chapter">5</a>:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb9-1"><a href="websites-chapter.html#cb9-1" tabindex="-1"></a>We can see this same death rate data for all states on a map.</span>
-<span id="cb9-2"><a href="websites-chapter.html#cb9-2" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="websites-chapter.html#cb9-3" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-4"><a href="websites-chapter.html#cb9-4" tabindex="-1"></a><span class="in">most_recent &lt;- us_states %&gt;%</span></span>
-<span id="cb9-5"><a href="websites-chapter.html#cb9-5" tabindex="-1"></a><span class="in">  left_join(covid_data, by = "state") %&gt;%</span></span>
-<span id="cb9-6"><a href="websites-chapter.html#cb9-6" tabindex="-1"></a><span class="in">  slice_max(</span></span>
-<span id="cb9-7"><a href="websites-chapter.html#cb9-7" tabindex="-1"></a><span class="in">    order_by = date,</span></span>
-<span id="cb9-8"><a href="websites-chapter.html#cb9-8" tabindex="-1"></a><span class="in">    n = 1</span></span>
-<span id="cb9-9"><a href="websites-chapter.html#cb9-9" tabindex="-1"></a><span class="in">  )</span></span>
-<span id="cb9-10"><a href="websites-chapter.html#cb9-10" tabindex="-1"></a></span>
-<span id="cb9-11"><a href="websites-chapter.html#cb9-11" tabindex="-1"></a><span class="in">most_recent %&gt;%</span></span>
-<span id="cb9-12"><a href="websites-chapter.html#cb9-12" tabindex="-1"></a><span class="in">  ggplot(aes(fill = deaths_avg_per_100k)) +</span></span>
-<span id="cb9-13"><a href="websites-chapter.html#cb9-13" tabindex="-1"></a><span class="in">  geom_sf() +</span></span>
-<span id="cb9-14"><a href="websites-chapter.html#cb9-14" tabindex="-1"></a><span class="in">  scale_fill_viridis_c(option = "rocket") +</span></span>
-<span id="cb9-15"><a href="websites-chapter.html#cb9-15" tabindex="-1"></a><span class="in">  labs(fill = "Deaths per\n100,000 people") +</span></span>
-<span id="cb9-16"><a href="websites-chapter.html#cb9-16" tabindex="-1"></a><span class="in">  theme_void()</span></span>
-<span id="cb9-17"><a href="websites-chapter.html#cb9-17" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb156-1"><a href="websites-chapter.html#cb156-1" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb156-2"><a href="websites-chapter.html#cb156-2" tabindex="-1"></a><span class="in"># Import data</span></span>
+<span id="cb156-3"><a href="websites-chapter.html#cb156-3" tabindex="-1"></a></span>
+<span id="cb156-4"><a href="websites-chapter.html#cb156-4" tabindex="-1"></a><span class="in">us_states &lt;- states(</span></span>
+<span id="cb156-5"><a href="websites-chapter.html#cb156-5" tabindex="-1"></a><span class="in">  cb = TRUE,</span></span>
+<span id="cb156-6"><a href="websites-chapter.html#cb156-6" tabindex="-1"></a><span class="in">  resolution = "20m",</span></span>
+<span id="cb156-7"><a href="websites-chapter.html#cb156-7" tabindex="-1"></a><span class="in">  progress_bar = FALSE</span></span>
+<span id="cb156-8"><a href="websites-chapter.html#cb156-8" tabindex="-1"></a><span class="in">) %&gt;%</span></span>
+<span id="cb156-9"><a href="websites-chapter.html#cb156-9" tabindex="-1"></a><span class="in">  shift_geometry() %&gt;%</span></span>
+<span id="cb156-10"><a href="websites-chapter.html#cb156-10" tabindex="-1"></a><span class="in">  clean_names() %&gt;%</span></span>
+<span id="cb156-11"><a href="websites-chapter.html#cb156-11" tabindex="-1"></a><span class="in">  select(geoid, name) %&gt;%</span></span>
+<span id="cb156-12"><a href="websites-chapter.html#cb156-12" tabindex="-1"></a><span class="in">  rename(state = name) %&gt;%</span></span>
+<span id="cb156-13"><a href="websites-chapter.html#cb156-13" tabindex="-1"></a><span class="in">  filter(state %in% state.name)</span></span>
+<span id="cb156-14"><a href="websites-chapter.html#cb156-14" tabindex="-1"></a></span>
+<span id="cb156-15"><a href="websites-chapter.html#cb156-15" tabindex="-1"></a><span class="in">covid_data &lt;- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/rolling-averages/us-states.csv") %&gt;%</span></span>
+<span id="cb156-16"><a href="websites-chapter.html#cb156-16" tabindex="-1"></a><span class="in">  filter(state %in% state.name) %&gt;%</span></span>
+<span id="cb156-17"><a href="websites-chapter.html#cb156-17" tabindex="-1"></a><span class="in">  mutate(geoid = str_remove(geoid, "USA-"))</span></span>
+<span id="cb156-18"><a href="websites-chapter.html#cb156-18" tabindex="-1"></a></span>
+<span id="cb156-19"><a href="websites-chapter.html#cb156-19" tabindex="-1"></a><span class="in">last_day &lt;- covid_data %&gt;%</span></span>
+<span id="cb156-20"><a href="websites-chapter.html#cb156-20" tabindex="-1"></a><span class="in">  slice_max(</span></span>
+<span id="cb156-21"><a href="websites-chapter.html#cb156-21" tabindex="-1"></a><span class="in">    order_by = date,</span></span>
+<span id="cb156-22"><a href="websites-chapter.html#cb156-22" tabindex="-1"></a><span class="in">    n = 1</span></span>
+<span id="cb156-23"><a href="websites-chapter.html#cb156-23" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
+<span id="cb156-24"><a href="websites-chapter.html#cb156-24" tabindex="-1"></a><span class="in">  distinct(date) %&gt;%</span></span>
+<span id="cb156-25"><a href="websites-chapter.html#cb156-25" tabindex="-1"></a><span class="in">  mutate(date_nice_format = str_glue("{month(date, label = TRUE, abbr = FALSE)} {day(date)}, {year(date)}")) %&gt;%</span></span>
+<span id="cb156-26"><a href="websites-chapter.html#cb156-26" tabindex="-1"></a><span class="in">  pull(date_nice_format)</span></span>
+<span id="cb156-27"><a href="websites-chapter.html#cb156-27" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb156-28"><a href="websites-chapter.html#cb156-28" tabindex="-1"></a></span>
+<span id="cb156-29"><a href="websites-chapter.html#cb156-29" tabindex="-1"></a><span class="fu"># COVID Death Rates as of `r last_day`</span></span>
+<span id="cb156-30"><a href="websites-chapter.html#cb156-30" tabindex="-1"></a></span>
+<span id="cb156-31"><a href="websites-chapter.html#cb156-31" tabindex="-1"></a>This table shows COVID death rates per 100,000 people in four states states.</span></code></pre></div>
+<p>We also create a variable called <code>last_day</code>, which we later reference in a text section. Using inline R code, this header now displays the current date. We then make a table that shows the death rates per 100,000 people in four states (as using all states would create too large a table):</p>
+<div class="sourceCode" id="cb157"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb157-1"><a href="websites-chapter.html#cb157-1" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb157-2"><a href="websites-chapter.html#cb157-2" tabindex="-1"></a><span class="in">covid_data %&gt;%</span></span>
+<span id="cb157-3"><a href="websites-chapter.html#cb157-3" tabindex="-1"></a><span class="in">  filter(state %in% c(</span></span>
+<span id="cb157-4"><a href="websites-chapter.html#cb157-4" tabindex="-1"></a><span class="in">    "Alabama",</span></span>
+<span id="cb157-5"><a href="websites-chapter.html#cb157-5" tabindex="-1"></a><span class="in">    "Alaska",</span></span>
+<span id="cb157-6"><a href="websites-chapter.html#cb157-6" tabindex="-1"></a><span class="in">    "Arizona",</span></span>
+<span id="cb157-7"><a href="websites-chapter.html#cb157-7" tabindex="-1"></a><span class="in">    "Arkansas"</span></span>
+<span id="cb157-8"><a href="websites-chapter.html#cb157-8" tabindex="-1"></a><span class="in">  )) %&gt;%</span></span>
+<span id="cb157-9"><a href="websites-chapter.html#cb157-9" tabindex="-1"></a><span class="in">  slice_max(</span></span>
+<span id="cb157-10"><a href="websites-chapter.html#cb157-10" tabindex="-1"></a><span class="in">    order_by = date,</span></span>
+<span id="cb157-11"><a href="websites-chapter.html#cb157-11" tabindex="-1"></a><span class="in">    n = 1</span></span>
+<span id="cb157-12"><a href="websites-chapter.html#cb157-12" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
+<span id="cb157-13"><a href="websites-chapter.html#cb157-13" tabindex="-1"></a><span class="in">  select(state, deaths_avg_per_100k) %&gt;%</span></span>
+<span id="cb157-14"><a href="websites-chapter.html#cb157-14" tabindex="-1"></a><span class="in">  arrange(state) %&gt;%</span></span>
+<span id="cb157-15"><a href="websites-chapter.html#cb157-15" tabindex="-1"></a><span class="in">  set_names("State", "Death rate") %&gt;%</span></span>
+<span id="cb157-16"><a href="websites-chapter.html#cb157-16" tabindex="-1"></a><span class="in">  gt() %&gt;%</span></span>
+<span id="cb157-17"><a href="websites-chapter.html#cb157-17" tabindex="-1"></a><span class="in">  tab_style(</span></span>
+<span id="cb157-18"><a href="websites-chapter.html#cb157-18" tabindex="-1"></a><span class="in">    style = cell_text(weight = "bold"),</span></span>
+<span id="cb157-19"><a href="websites-chapter.html#cb157-19" tabindex="-1"></a><span class="in">    locations = cells_column_labels()</span></span>
+<span id="cb157-20"><a href="websites-chapter.html#cb157-20" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb157-21"><a href="websites-chapter.html#cb157-21" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<p>This table resembles the code we discussed in Chapter <a href="tables-chapter.html#tables-chapter">5</a>. Next, we make a map of this data for all states using techniques covered in Chapter <a href="maps-chapter.html#maps-chapter">4</a>:</p>
+<div class="sourceCode" id="cb158"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb158-1"><a href="websites-chapter.html#cb158-1" tabindex="-1"></a>We can see this same death rate data for all states on a map.</span>
+<span id="cb158-2"><a href="websites-chapter.html#cb158-2" tabindex="-1"></a></span>
+<span id="cb158-3"><a href="websites-chapter.html#cb158-3" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb158-4"><a href="websites-chapter.html#cb158-4" tabindex="-1"></a><span class="in">most_recent &lt;- us_states %&gt;%</span></span>
+<span id="cb158-5"><a href="websites-chapter.html#cb158-5" tabindex="-1"></a><span class="in">  left_join(covid_data, by = "state") %&gt;%</span></span>
+<span id="cb158-6"><a href="websites-chapter.html#cb158-6" tabindex="-1"></a><span class="in">  slice_max(</span></span>
+<span id="cb158-7"><a href="websites-chapter.html#cb158-7" tabindex="-1"></a><span class="in">    order_by = date,</span></span>
+<span id="cb158-8"><a href="websites-chapter.html#cb158-8" tabindex="-1"></a><span class="in">    n = 1</span></span>
+<span id="cb158-9"><a href="websites-chapter.html#cb158-9" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb158-10"><a href="websites-chapter.html#cb158-10" tabindex="-1"></a></span>
+<span id="cb158-11"><a href="websites-chapter.html#cb158-11" tabindex="-1"></a><span class="in">most_recent %&gt;%</span></span>
+<span id="cb158-12"><a href="websites-chapter.html#cb158-12" tabindex="-1"></a><span class="in">  ggplot(aes(fill = deaths_avg_per_100k)) +</span></span>
+<span id="cb158-13"><a href="websites-chapter.html#cb158-13" tabindex="-1"></a><span class="in">  geom_sf() +</span></span>
+<span id="cb158-14"><a href="websites-chapter.html#cb158-14" tabindex="-1"></a><span class="in">  scale_fill_viridis_c(option = "rocket") +</span></span>
+<span id="cb158-15"><a href="websites-chapter.html#cb158-15" tabindex="-1"></a><span class="in">  labs(fill = "Deaths per\n100,000 people") +</span></span>
+<span id="cb158-16"><a href="websites-chapter.html#cb158-16" tabindex="-1"></a><span class="in">  theme_void()</span></span>
+<span id="cb158-17"><a href="websites-chapter.html#cb158-17" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <p>Finally, we make a chart that shows COVID death rates over time in the four states from the table:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb10-1"><a href="websites-chapter.html#cb10-1" tabindex="-1"></a><span class="fu"># COVID Death Rates Over Time</span></span>
-<span id="cb10-2"><a href="websites-chapter.html#cb10-2" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="websites-chapter.html#cb10-3" tabindex="-1"></a>The following chart shows COVID death rates from the start of COVID in early 2020 until <span class="in">`r most_recent_day`</span>.</span>
-<span id="cb10-4"><a href="websites-chapter.html#cb10-4" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="websites-chapter.html#cb10-5" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-6"><a href="websites-chapter.html#cb10-6" tabindex="-1"></a><span class="in">covid_data %&gt;%</span></span>
-<span id="cb10-7"><a href="websites-chapter.html#cb10-7" tabindex="-1"></a><span class="in">  filter(state %in% c(</span></span>
-<span id="cb10-8"><a href="websites-chapter.html#cb10-8" tabindex="-1"></a><span class="in">    "Alabama",</span></span>
-<span id="cb10-9"><a href="websites-chapter.html#cb10-9" tabindex="-1"></a><span class="in">    "Alaska",</span></span>
-<span id="cb10-10"><a href="websites-chapter.html#cb10-10" tabindex="-1"></a><span class="in">    "Arizona",</span></span>
-<span id="cb10-11"><a href="websites-chapter.html#cb10-11" tabindex="-1"></a><span class="in">    "Arkansas"</span></span>
-<span id="cb10-12"><a href="websites-chapter.html#cb10-12" tabindex="-1"></a><span class="in">  )) %&gt;%</span></span>
-<span id="cb10-13"><a href="websites-chapter.html#cb10-13" tabindex="-1"></a><span class="in">  ggplot(aes(</span></span>
-<span id="cb10-14"><a href="websites-chapter.html#cb10-14" tabindex="-1"></a><span class="in">    x = date,</span></span>
-<span id="cb10-15"><a href="websites-chapter.html#cb10-15" tabindex="-1"></a><span class="in">    y = deaths_avg_per_100k,</span></span>
-<span id="cb10-16"><a href="websites-chapter.html#cb10-16" tabindex="-1"></a><span class="in">    group = state,</span></span>
-<span id="cb10-17"><a href="websites-chapter.html#cb10-17" tabindex="-1"></a><span class="in">    fill = deaths_avg_per_100k</span></span>
-<span id="cb10-18"><a href="websites-chapter.html#cb10-18" tabindex="-1"></a><span class="in">  )) +</span></span>
-<span id="cb10-19"><a href="websites-chapter.html#cb10-19" tabindex="-1"></a><span class="in">  geom_col() +</span></span>
-<span id="cb10-20"><a href="websites-chapter.html#cb10-20" tabindex="-1"></a><span class="in">  scale_fill_viridis_c(option = "rocket") +</span></span>
-<span id="cb10-21"><a href="websites-chapter.html#cb10-21" tabindex="-1"></a><span class="in">  theme_minimal() +</span></span>
-<span id="cb10-22"><a href="websites-chapter.html#cb10-22" tabindex="-1"></a><span class="in">  labs(title = "Deaths per 100,000 people over time") +</span></span>
-<span id="cb10-23"><a href="websites-chapter.html#cb10-23" tabindex="-1"></a><span class="in">  theme(</span></span>
-<span id="cb10-24"><a href="websites-chapter.html#cb10-24" tabindex="-1"></a><span class="in">    legend.position = "none",</span></span>
-<span id="cb10-25"><a href="websites-chapter.html#cb10-25" tabindex="-1"></a><span class="in">    plot.title.position = "plot",</span></span>
-<span id="cb10-26"><a href="websites-chapter.html#cb10-26" tabindex="-1"></a><span class="in">    plot.title = element_text(face = "bold"),</span></span>
-<span id="cb10-27"><a href="websites-chapter.html#cb10-27" tabindex="-1"></a><span class="in">    panel.grid.minor = element_blank(),</span></span>
-<span id="cb10-28"><a href="websites-chapter.html#cb10-28" tabindex="-1"></a><span class="in">    axis.title = element_blank()</span></span>
-<span id="cb10-29"><a href="websites-chapter.html#cb10-29" tabindex="-1"></a><span class="in">  ) +</span></span>
-<span id="cb10-30"><a href="websites-chapter.html#cb10-30" tabindex="-1"></a><span class="in">  facet_wrap(</span></span>
-<span id="cb10-31"><a href="websites-chapter.html#cb10-31" tabindex="-1"></a><span class="in">    ~state,</span></span>
-<span id="cb10-32"><a href="websites-chapter.html#cb10-32" tabindex="-1"></a><span class="in">    nrow = 2</span></span>
-<span id="cb10-33"><a href="websites-chapter.html#cb10-33" tabindex="-1"></a><span class="in">  )</span></span>
-<span id="cb10-34"><a href="websites-chapter.html#cb10-34" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
-<p>Figure <a href="websites-chapter.html#fig:covid-website-static-page">10.6</a> shows what the website’s home page now looks like.</p>
+<div class="sourceCode" id="cb159"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb159-1"><a href="websites-chapter.html#cb159-1" tabindex="-1"></a><span class="fu"># COVID Death Rates Over Time</span></span>
+<span id="cb159-2"><a href="websites-chapter.html#cb159-2" tabindex="-1"></a></span>
+<span id="cb159-3"><a href="websites-chapter.html#cb159-3" tabindex="-1"></a>The following chart shows COVID death rates from the start of COVID in early 2020 until <span class="in">`r last_day`</span>.</span>
+<span id="cb159-4"><a href="websites-chapter.html#cb159-4" tabindex="-1"></a></span>
+<span id="cb159-5"><a href="websites-chapter.html#cb159-5" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb159-6"><a href="websites-chapter.html#cb159-6" tabindex="-1"></a><span class="in">covid_data %&gt;%</span></span>
+<span id="cb159-7"><a href="websites-chapter.html#cb159-7" tabindex="-1"></a><span class="in">  filter(state %in% c(</span></span>
+<span id="cb159-8"><a href="websites-chapter.html#cb159-8" tabindex="-1"></a><span class="in">    "Alabama",</span></span>
+<span id="cb159-9"><a href="websites-chapter.html#cb159-9" tabindex="-1"></a><span class="in">    "Alaska",</span></span>
+<span id="cb159-10"><a href="websites-chapter.html#cb159-10" tabindex="-1"></a><span class="in">    "Arizona",</span></span>
+<span id="cb159-11"><a href="websites-chapter.html#cb159-11" tabindex="-1"></a><span class="in">    "Arkansas"</span></span>
+<span id="cb159-12"><a href="websites-chapter.html#cb159-12" tabindex="-1"></a><span class="in">  )) %&gt;%</span></span>
+<span id="cb159-13"><a href="websites-chapter.html#cb159-13" tabindex="-1"></a><span class="in">  ggplot(aes(</span></span>
+<span id="cb159-14"><a href="websites-chapter.html#cb159-14" tabindex="-1"></a><span class="in">    x = date,</span></span>
+<span id="cb159-15"><a href="websites-chapter.html#cb159-15" tabindex="-1"></a><span class="in">    y = deaths_avg_per_100k,</span></span>
+<span id="cb159-16"><a href="websites-chapter.html#cb159-16" tabindex="-1"></a><span class="in">    group = state,</span></span>
+<span id="cb159-17"><a href="websites-chapter.html#cb159-17" tabindex="-1"></a><span class="in">    fill = deaths_avg_per_100k</span></span>
+<span id="cb159-18"><a href="websites-chapter.html#cb159-18" tabindex="-1"></a><span class="in">  )) +</span></span>
+<span id="cb159-19"><a href="websites-chapter.html#cb159-19" tabindex="-1"></a><span class="in">  geom_col() +</span></span>
+<span id="cb159-20"><a href="websites-chapter.html#cb159-20" tabindex="-1"></a><span class="in">  scale_fill_viridis_c(option = "rocket") +</span></span>
+<span id="cb159-21"><a href="websites-chapter.html#cb159-21" tabindex="-1"></a><span class="in">  theme_minimal() +</span></span>
+<span id="cb159-22"><a href="websites-chapter.html#cb159-22" tabindex="-1"></a><span class="in">  labs(title = "Deaths per 100,000 people over time") +</span></span>
+<span id="cb159-23"><a href="websites-chapter.html#cb159-23" tabindex="-1"></a><span class="in">  theme(</span></span>
+<span id="cb159-24"><a href="websites-chapter.html#cb159-24" tabindex="-1"></a><span class="in">    legend.position = "none",</span></span>
+<span id="cb159-25"><a href="websites-chapter.html#cb159-25" tabindex="-1"></a><span class="in">    plot.title.position = "plot",</span></span>
+<span id="cb159-26"><a href="websites-chapter.html#cb159-26" tabindex="-1"></a><span class="in">    plot.title = element_text(face = "bold"),</span></span>
+<span id="cb159-27"><a href="websites-chapter.html#cb159-27" tabindex="-1"></a><span class="in">    panel.grid.minor = element_blank(),</span></span>
+<span id="cb159-28"><a href="websites-chapter.html#cb159-28" tabindex="-1"></a><span class="in">    axis.title = element_blank()</span></span>
+<span id="cb159-29"><a href="websites-chapter.html#cb159-29" tabindex="-1"></a><span class="in">  ) +</span></span>
+<span id="cb159-30"><a href="websites-chapter.html#cb159-30" tabindex="-1"></a><span class="in">  facet_wrap(</span></span>
+<span id="cb159-31"><a href="websites-chapter.html#cb159-31" tabindex="-1"></a><span class="in">    ~state,</span></span>
+<span id="cb159-32"><a href="websites-chapter.html#cb159-32" tabindex="-1"></a><span class="in">    nrow = 2</span></span>
+<span id="cb159-33"><a href="websites-chapter.html#cb159-33" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb159-34"><a href="websites-chapter.html#cb159-34" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<p>Figure <a href="websites-chapter.html#fig:covid-website-static-page">9.6</a> shows what the website’s home page now looks like.</p>
 <div class="figure">
 <span style="display:block;" id="fig:covid-website-static-page"></span>
 <img src="assets/covid-website-static-page.png" alt="The COVID website with a table, map, and chart" width="100%"><p class="caption">
-Figure 10.6: The COVID website with a table, map, and chart
+Figure 9.6: The COVID website with a table, map, and chart
 </p>
 </div>
 <p>Now that we have some content, we can tweak it. For example, because many states are quite small, especially in the northeast, it’s a bit challenging to see them. Let’s make the entire map bigger.</p>
@@ -398,24 +417,24 @@ Figure 10.6: The COVID website with a table, map, and chart
 </h2>
 <p>One nice feature of <code>distill</code> is the ability to make the output of certain code chunks larger. It has four layouts that you can apply to a code chunk to widen its output: <code>l-body-outset</code> (creates output that is a bit wider than default), <code>l-page</code> (creates output that is wider still), <code>l-screen</code> (creates full-screen output), and <code>l-screen-inset</code> (creates full-screen output with a bit of a buffer).</p>
 <p>Apply <code>l-screen-inset</code> to the map by modifying the first line of its code chunk as follows:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb11-1"><a href="websites-chapter.html#cb11-1" tabindex="-1"></a><span class="in">```{r layout = "l-screen-inset"}</span></span></code></pre></div>
+<div class="sourceCode" id="cb160"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb160-1"><a href="websites-chapter.html#cb160-1" tabindex="-1"></a><span class="in">```{r layout = "l-screen-inset"}</span></span></code></pre></div>
 <p>Doing this makes our map wider and taller, and as a result, much easier to read.</p>
 </div>
 <div id="making-the-content-interactive" class="section level2 unnumbered">
 <h2>Making the Content Interactive<a class="anchor" aria-label="anchor" href="#making-the-content-interactive"><i class="fas fa-link"></i></a>
 </h2>
-<p>The static content we’ve added to the website so far has none of the interactivity common in websites, which can use JavaScript to respond to user behavior. If you have limited familiarity with HTML and JavaScript, you can use R packages like <code>distill</code>, <code>plotly</code>, and <code>DT</code>, which wrap JavaScript libraries, to add interactivity to your website. Matt Herman uses interactive graphics and maps on his Westchester County COVID website. Figure <a href="websites-chapter.html#fig:westchester-website-tooltip">10.7</a>, for example, shows a tooltip that allows the user to see results for any single day.</p>
+<p>The static content we’ve added to the website so far has none of the interactivity common in websites, which can use JavaScript to respond to user behavior. If you have limited familiarity with HTML and JavaScript, you can use R packages like <code>distill</code>, <code>plotly</code>, and <code>DT</code>, which wrap JavaScript libraries, to add interactivity to your website. Matt Herman uses interactive graphics and maps on his Westchester County COVID website. Figure <a href="websites-chapter.html#fig:westchester-website-tooltip">9.7</a>, for example, shows a tooltip that allows the user to see results for any single day.</p>
 <div class="figure">
 <span style="display:block;" id="fig:westchester-website-tooltip"></span>
 <img src="assets/westchester-website-tooltip.png" alt="Interactive tooltips showing new cases by day" width="100%"><p class="caption">
-Figure 10.7: Interactive tooltips showing new cases by day
+Figure 9.7: Interactive tooltips showing new cases by day
 </p>
 </div>
-<p>Herman also makes interactive tables with the <code>DT</code> package, allowing the user to scroll through the data and sort the values by clicking any of the variables in the heading. Figure <a href="websites-chapter.html#fig:dt-table">10.8</a> shows the table.</p>
+<p>Herman also makes interactive tables with the <code>DT</code> package, allowing the user to scroll through the data and sort the values by clicking any of the variables in the heading. Figure <a href="websites-chapter.html#fig:dt-table">9.8</a> shows the table.</p>
 <div class="figure">
 <span style="display:block;" id="fig:dt-table"></span>
 <img src="assets/dt-table.png" alt="An interactive table made with the DT package" width="100%"><p class="caption">
-Figure 10.8: An interactive table made with the DT package
+Figure 9.8: An interactive table made with the DT package
 </p>
 </div>
 <p>Let’s add some interactivity to our national COVID website. We’ll begin by making our table interactive.</p>
@@ -423,23 +442,23 @@ Figure 10.8: An interactive table made with the DT package
 <h3>Adding Pagination to a Table with <code>reactable</code><a class="anchor" aria-label="anchor" href="#adding-pagination-to-a-table-with-reactable"><i class="fas fa-link"></i></a>
 </h3>
 <p>Remember how we included only four states in the table in to keep it from getting super long? By creating an interactive table, we can avoid this. The <code>reactable</code> package is a great option for interactive tables. You can install it with <code>install.packages("reactable")</code>. If we swap out the gt package code we used to make our static table with the <code><a href="https://glin.github.io/reactable/reference/reactable.html">reactable()</a></code> function, we can show all states:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb161"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://glin.github.io/reactable/">reactable</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">covid_data</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">slice_max</span><span class="op">(</span></span>
+<span><span class="va">covid_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span></span>
 <span>    order_by <span class="op">=</span> <span class="va">date</span>,</span>
 <span>    n <span class="op">=</span> <span class="fl">1</span></span>
-<span>  <span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="va">state</span>, <span class="va">deaths_avg_per_100k</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">arrange</span><span class="op">(</span><span class="va">state</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">set_names</span><span class="op">(</span><span class="st">"State"</span>, <span class="st">"Death rate"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">state</span>, <span class="va">deaths_avg_per_100k</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">state</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rlang.r-lib.org/reference/set_names.html">set_names</a></span><span class="op">(</span><span class="st">"State"</span>, <span class="st">"Death rate"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://glin.github.io/reactable/reference/reactable.html">reactable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>The reactable package shows 10 rows by default and adds pagination, as shown in Figure <a href="websites-chapter.html#fig:covid-website-reactable">10.9</a>.</p>
+<p>The reactable package shows 10 rows by default and adds pagination, as shown in Figure <a href="websites-chapter.html#fig:covid-website-reactable">9.9</a>.</p>
 <div class="figure">
 <span style="display:block;" id="fig:covid-website-reactable"></span>
 <img src="assets/covid-website-reactable.png" alt="An interactive table built with reactable" width="100%"><p class="caption">
-Figure 10.9: An interactive table built with reactable
+Figure 9.9: An interactive table built with reactable
 </p>
 </div>
 <p>The <code><a href="https://glin.github.io/reactable/reference/reactable.html">reactable()</a></code> function also enables sorting by default. Although we used the <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code> function in our code to sort the data by state name, users can click the “Death rate” column to sort values using that variable.</p>
@@ -448,7 +467,7 @@ Figure 10.9: An interactive table built with reactable
 <h3>Creating a Hovering Tooltip with Plotly<a class="anchor" aria-label="anchor" href="#creating-a-hovering-tooltip-with-plotly"><i class="fas fa-link"></i></a>
 </h3>
 <p>Let’s also give the website’s chart some interactivity using <code>plotly</code>, which has the following basic workflow. First, create a plot with ggplot and save it as an object. Then, pass it to the <code><a href="https://rdrr.io/pkg/plotly/man/ggplotly.html">ggplotly()</a></code> function, which turns it into an interactive plot. In the following code, which assumes you have installed the <code>plotly</code> package using <code>install.packages("plotly")</code>, we apply it to the chart showing COVID death rates over time:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb162"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://plotly-r.com">plotly</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">covid_chart</span> <span class="op">&lt;-</span> <span class="va">covid_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -480,17 +499,16 @@ Figure 10.9: An interactive table built with reactable
 <span>    nrow <span class="op">=</span> <span class="fl">2</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
-<span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/plotly/man/ggplotly.html">ggplotly</a></span><span class="op">(</span><span class="va">covid_chart</span><span class="op">)</span></span></code></pre></div>
-<p>The code to make the chart is identical to the chart code shown earlier in this chapter. The only difference is that we save our chart as an object called <code>covid_chart</code> and then run <code>ggplotly(covid_chart)</code>. This code produces an interactive chart that shows the data for a particular day when a user hovers over it. But the tooltip that users see when hovering, shown in Figure <a href="websites-chapter.html#fig:covid-website-messy-tooltips">10.10</a>, is cluttered and overwhelming because the <code><a href="https://rdrr.io/pkg/plotly/man/ggplotly.html">ggplotly()</a></code> function shows all data by default.</p>
+<p>The code to make the chart is identical to the chart code shown earlier in this chapter. The only difference is that we save our chart as an object called <code>covid_chart</code> and then run <code>ggplotly(covid_chart)</code>. This code produces an interactive chart that shows the data for a particular day when a user hovers over it. But the tooltip that users see when hovering, shown in Figure <a href="websites-chapter.html#fig:covid-website-messy-tooltips">9.10</a>, is cluttered and overwhelming because the <code><a href="https://rdrr.io/pkg/plotly/man/ggplotly.html">ggplotly()</a></code> function shows all data by default.</p>
 <div class="figure">
 <span style="display:block;" id="fig:covid-website-messy-tooltips"></span>
 <img src="assets/covid-website-messy-tooltips.png" alt="Messy tooltips on our COVID death rates graph" width="100%"><p class="caption">
-Figure 10.10: Messy tooltips on our COVID death rates graph
+Figure 9.10: Messy tooltips on our COVID death rates graph
 </p>
 </div>
 <p>To make the tooltip more informative, we can create a single variable containing the data we want to display and then tell <code><a href="https://rdrr.io/pkg/plotly/man/ggplotly.html">ggplotly()</a></code> to use this:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb163"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">covid_chart</span> <span class="op">&lt;-</span> <span class="va">covid_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">state</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
 <span>    <span class="st">"Alabama"</span>,</span>
@@ -498,8 +516,8 @@ Figure 10.10: Messy tooltips on our COVID death rates graph
 <span>    <span class="st">"Arizona"</span>,</span>
 <span>    <span class="st">"Arkansas"</span></span>
 <span>  <span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>date_nice_format <span class="op">=</span> <span class="fu">str_glue</span><span class="op">(</span><span class="st">"{month(date, label = TRUE, abbr = FALSE)} {day(date)}, {year(date)}"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>tooltip_text <span class="op">=</span> <span class="fu">str_glue</span><span class="op">(</span><span class="st">"{state}&lt;br&gt;{date_nice_format}&lt;br&gt;{deaths_avg_per_100k} per 100,000 people"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>date_nice_format <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue</a></span><span class="op">(</span><span class="st">"{month(date, label = TRUE, abbr = FALSE)} {day(date)}, {year(date)}"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>tooltip_text <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue</a></span><span class="op">(</span><span class="st">"{state}&lt;br&gt;{date_nice_format}&lt;br&gt;{deaths_avg_per_100k} per 100,000 people"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span></span>
 <span>    x <span class="op">=</span> <span class="va">date</span>,</span>
 <span>    y <span class="op">=</span> <span class="va">deaths_avg_per_100k</span>,</span>
@@ -529,11 +547,11 @@ Figure 10.10: Messy tooltips on our COVID death rates graph
 <span>  tooltip <span class="op">=</span> <span class="st">"tooltip_text"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>We begin by creating a <code>date_nice_format</code> variable that produces dates in the more readable <em>January 1, 2023</em> format instead of <em>2023-01-01</em>. We then combine this value with the state and death rate variables, saving the result as <em>tooltip_text</em>. Next, we add a new aesthetic property in the <em>ggplot()</em> function. On its own, this doesn’t do anything until we pass the new property to the <em>ggplotly()</em> function.</p>
-<p>Figure <a href="websites-chapter.html#fig:covid-website-tooltip">10.11</a> shows what our new tooltip looks like: the name of the state, a nicely formatted date, and the death rate for that day.</p>
+<p>Figure <a href="websites-chapter.html#fig:covid-website-tooltip">9.11</a> shows what our new tooltip looks like: the name of the state, a nicely formatted date, and the death rate for that day.</p>
 <div class="figure">
 <span style="display:block;" id="fig:covid-website-tooltip"></span>
 <img src="assets/covid-website-tooltip.png" alt="Easy to read interactive tooltips on the COVID death rate chart" width="100%"><p class="caption">
-Figure 10.11: Easy to read interactive tooltips on the COVID death rate chart
+Figure 9.11: Easy to read interactive tooltips on the COVID death rate chart
 </p>
 </div>
 <p>Adding interactivity is a great way to take advantage of the medium of a website. Users who might feel overwhelmed looking at the static chart can explore the interactive version, hovering to see a summary of the results on any single day.</p>
@@ -548,7 +566,7 @@ Figure 10.11: Easy to read interactive tooltips on the COVID death rate chart
 </h3>
 <p>A better approach is to put your entire <code>docs</code> folder in a place where others can see it. This could be an internal network, Dropbox, Google Drive, Box, or something similar. Hosting the files in this way is simple to implement and allows you to give access to only those you want to see your website.</p>
 <p>You can even automate the process of copying your <code>docs</code> folder to various online file-sharing sites using R packages: the <code>rdrop2</code> package works with Dropbox, <code>googledrive</code> works with Google Drive, and <code>boxr</code> works with Box. For example, code like the following would automatically upload the project to Dropbox:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb164"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/rmarkdown">rmarkdown</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://fs.r-lib.org">fs</a></span><span class="op">)</span></span>
@@ -571,11 +589,11 @@ Figure 10.11: Easy to read interactive tooltips on the COVID death rate chart
 <h3>Using GitHub Pages<a class="anchor" aria-label="anchor" href="#using-github-pages"><i class="fas fa-link"></i></a>
 </h3>
 <p>The more complicated yet powerful solution is to use a static hosting service like GitHub Pages. This service deploys the website to a URL you’ve set up each time you commit your code to GitHub. Learning to use GitHub is an investment (the book <em>Happy Git and GitHub for the useR</em> by Jenny Bryan is a great resource), but being able to host your website for free makes it worth the time and effort.</p>
-<p>Here’s how GitHub Pages works. Most of the time, when you look at a file on GitHub, you see its underlying source code, so if you looked at an HTML file, you’d see only the HTML code. GitHub Pages, on the other hand, shows you the rendered HTML files. To host your website on GitHub Pages, you’ll need to first push your code to GitHub. Once you have a repository set up there, go to it, then go to the Settings tab, which should look like Figure <a href="websites-chapter.html#fig:gh-pages">10.12</a>.</p>
+<p>Here’s how GitHub Pages works. Most of the time, when you look at a file on GitHub, you see its underlying source code, so if you looked at an HTML file, you’d see only the HTML code. GitHub Pages, on the other hand, shows you the rendered HTML files. To host your website on GitHub Pages, you’ll need to first push your code to GitHub. Once you have a repository set up there, go to it, then go to the Settings tab, which should look like Figure <a href="websites-chapter.html#fig:gh-pages">9.12</a>.</p>
 <div class="figure">
 <span style="display:block;" id="fig:gh-pages"></span>
 <img src="assets/gh-pages.png" alt="Setting up GitHub Pages" width="100%"><p class="caption">
-Figure 10.12: Setting up GitHub Pages
+Figure 9.12: Setting up GitHub Pages
 </p>
 </div>
 <p>Now choose how you want GitHub to deploy the raw HTML. The easiest approach is to keep the default source by selecting Deploy from a branch, then selecting your default branch (usually <em>main</em> or <em>master</em>). Next, select the directory containing the HTML files you want to be rendered. If you configured your website for GitHub pages at the beginning of this chapter, they should be in docs. Click save and wait a few minutes. GitHub should then show a URL where our website now lives.</p>
@@ -606,15 +624,43 @@ Figure 10.12: Setting up GitHub Pages
 </div>
 </div>
   <div class="chapter-nav">
-<div class="empty"></div>
-<div class="empty"></div>
+<div class="prev"><a href="presentations-chapter.html"><span class="header-section-number">8</span> Making Slides Presentations with xaringan</a></div>
+<div class="next"><a href="quarto-chapter.html"><span class="header-section-number">10</span> Reproducible Reporting with Quarto</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <div id="book-on-this-page"></div>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#websites-chapter"><span class="header-section-number">9</span> Make Websites to Share Results Online</a></li>
+<li><a class="nav-link" href="#creating-a-new-distill-project">Creating a New distill Project</a></li>
+<li>
+<a class="nav-link" href="#the-project-files">The Project Files</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#the-r-markdown-documents">The R Markdown Documents</a></li>
+<li><a class="nav-link" href="#the-_site.yml-file--"><span class="header-section-number">9.0.1</span> The _site.yml File {-}</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#building-the-site">Building the Site</a></li>
+<li><a class="nav-link" href="#applying-custom-css-with-create_theme">Applying Custom CSS with create_theme()</a></li>
+<li><a class="nav-link" href="#working-with-website-content">Working with Website Content</a></li>
+<li><a class="nav-link" href="#applying-distill-layouts">Applying distill Layouts</a></li>
+<li>
+<a class="nav-link" href="#making-the-content-interactive">Making the Content Interactive</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#adding-pagination-to-a-table-with-reactable">Adding Pagination to a Table with reactable</a></li>
+<li><a class="nav-link" href="#creating-a-hovering-tooltip-with-plotly">Creating a Hovering Tooltip with Plotly</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#hosting-the-website">Hosting the Website</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#in-the-cloud">In the Cloud</a></li>
+<li><a class="nav-link" href="#using-github-pages">Using GitHub Pages</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#conclusion-5">Conclusion</a></li>
+<li><a class="nav-link" href="#learn-more-8">Learn More</a></li>
+</ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-          
+<li><a id="book-source" href="https://github.com/rfortherestofus/r-without-statistics/blob/master/websites.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/rfortherestofus/r-without-statistics/edit/master/websites.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>

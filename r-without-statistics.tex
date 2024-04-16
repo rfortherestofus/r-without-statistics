@@ -3807,7 +3807,7 @@ Let's begin by creating a report template for one state. To do this, I've taken 
 \AnnotationTok{state:}\CommentTok{ "Alabama"}
 \CommentTok{{-}{-}{-}}
   
-  \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r setup, include=FALSE\}}
+\InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r setup, include=FALSE\}}
 \InformationTok{knitr::opts\_chunk$set(}
 \InformationTok{  echo = FALSE,}
 \InformationTok{  warning = FALSE,}
@@ -3818,7 +3818,6 @@ Let's begin by creating a report template for one state. To do this, I've taken 
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r\}}
 \InformationTok{library(tidyverse)}
 \InformationTok{library(urbnthemes)}
-\InformationTok{library(here)}
 \InformationTok{library(scales)}
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
 
@@ -3828,13 +3827,15 @@ Let's begin by creating a report template for one state. To do this, I've taken 
 \InformationTok{cases \textless{}{-} tibble(state.name) \%\textgreater{}\%}
 \InformationTok{  rbind(state.name = "District of Columbia") \%\textgreater{}\%}
 \InformationTok{  left\_join(}
-\InformationTok{    read\_csv("united\_states\_covid19\_cases\_deaths\_and\_testing\_by\_state.csv",}
+\InformationTok{    read\_csv(}
+\InformationTok{      "united\_states\_covid19\_cases\_deaths\_and\_testing\_by\_state.csv",}
 \InformationTok{      skip = 2}
 \InformationTok{    ),}
 \InformationTok{    by = c("state.name" = "State/Territory")}
 \InformationTok{  ) \%\textgreater{}\%}
 \InformationTok{  select(}
-\InformationTok{    total\_cases = \textasciigrave{}Total Cases\textasciigrave{}, state.name,}
+\InformationTok{    total\_cases = \textasciigrave{}Total Cases\textasciigrave{},}
+\InformationTok{    state.name,}
 \InformationTok{    cases\_per\_100000 = \textasciigrave{}Case Rate per 100000\textasciigrave{}}
 \InformationTok{  ) \%\textgreater{}\%}
 \InformationTok{  mutate(cases\_per\_100000 = parse\_number(cases\_per\_100000)) \%\textgreater{}\%}
@@ -4930,9 +4931,11 @@ Using \texttt{distill}, we can alter the size of the website's content or even m
 \CommentTok{{-}{-}{-}}
 
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r setup, include=FALSE\}}
-\InformationTok{knitr::opts\_chunk$set(echo = FALSE,}
-\InformationTok{                      warning = FALSE,}
-\InformationTok{                      message = FALSE)}
+\InformationTok{knitr::opts\_chunk$set(}
+\InformationTok{  echo = FALSE,}
+\InformationTok{  warning = FALSE,}
+\InformationTok{  message = FALSE}
+\InformationTok{)}
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
 
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r\}}
@@ -4956,49 +4959,57 @@ Next, we create a new code chunk to import and clean our data:
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r\}}
 \InformationTok{\# Import data}
 
-\InformationTok{us\_states \textless{}{-} states(cb = TRUE, }
-\InformationTok{                    resolution = "20m",}
-\InformationTok{                    progress\_bar = FALSE) \%\textgreater{}\%}
-\InformationTok{  shift\_geometry() \%\textgreater{}\% }
-\InformationTok{  clean\_names() \%\textgreater{}\% }
-\InformationTok{  select(geoid, name) \%\textgreater{}\% }
-\InformationTok{  rename(state = name) \%\textgreater{}\% }
+\InformationTok{us\_states \textless{}{-} states(}
+\InformationTok{  cb = TRUE,}
+\InformationTok{  resolution = "20m",}
+\InformationTok{  progress\_bar = FALSE}
+\InformationTok{) \%\textgreater{}\%}
+\InformationTok{  shift\_geometry() \%\textgreater{}\%}
+\InformationTok{  clean\_names() \%\textgreater{}\%}
+\InformationTok{  select(geoid, name) \%\textgreater{}\%}
+\InformationTok{  rename(state = name) \%\textgreater{}\%}
 \InformationTok{  filter(state \%in\% state.name)}
 
-\InformationTok{covid\_data \textless{}{-} read\_csv("https://raw.githubusercontent.com/nytimes/covid{-}19{-}data/master/rolling{-}averages/us{-}states.csv") \%\textgreater{}\% }
-\InformationTok{  filter(state \%in\% state.name) \%\textgreater{}\% }
-\InformationTok{  mutate(geoid = str\_remove(geoid, "USA{-}")) }
+\InformationTok{covid\_data \textless{}{-} read\_csv("https://raw.githubusercontent.com/nytimes/covid{-}19{-}data/master/rolling{-}averages/us{-}states.csv") \%\textgreater{}\%}
+\InformationTok{  filter(state \%in\% state.name) \%\textgreater{}\%}
+\InformationTok{  mutate(geoid = str\_remove(geoid, "USA{-}"))}
 
-\InformationTok{most\_recent\_day \textless{}{-} covid\_data \%\textgreater{}\% }
-\InformationTok{  slice\_max(order\_by = date,}
-\InformationTok{            n = 1) \%\textgreater{}\% }
-\InformationTok{  distinct(date) \%\textgreater{}\% }
-\InformationTok{  mutate(date\_nice\_format = str\_glue("\{month(date, label = TRUE, abbr = FALSE)\} \{day(date)\}, \{year(date)\}")) \%\textgreater{}\% }
+\InformationTok{last\_day \textless{}{-} covid\_data \%\textgreater{}\%}
+\InformationTok{  slice\_max(}
+\InformationTok{    order\_by = date,}
+\InformationTok{    n = 1}
+\InformationTok{  ) \%\textgreater{}\%}
+\InformationTok{  distinct(date) \%\textgreater{}\%}
+\InformationTok{  mutate(date\_nice\_format = str\_glue("\{month(date, label = TRUE, abbr = FALSE)\} \{day(date)\}, \{year(date)\}")) \%\textgreater{}\%}
 \InformationTok{  pull(date\_nice\_format)}
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
 
-\FunctionTok{\# COVID Death Rates as of \textasciigrave{}r most\_recent\_day\textasciigrave{}}
+\FunctionTok{\# COVID Death Rates as of \textasciigrave{}r last\_day\textasciigrave{}}
 
 \NormalTok{This table shows COVID death rates per 100,000 people in four states states.}
 \end{Highlighting}
 \end{Shaded}
 
-We also create a variable called \texttt{most\_recent\_day}, which we later reference in a text section. Using inline R code, this header now displays the current date. We then make a table that shows the death rates per 100,000 people in four states (as using all states would create too large a table):
+We also create a variable called \texttt{last\_day}, which we later reference in a text section. Using inline R code, this header now displays the current date. We then make a table that shows the death rates per 100,000 people in four states (as using all states would create too large a table):
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r\}}
-\InformationTok{covid\_data \%\textgreater{}\% }
-\InformationTok{  filter(state \%in\% c("Alabama",}
-\InformationTok{                      "Alaska",}
-\InformationTok{                      "Arizona",}
-\InformationTok{                      "Arkansas")) \%\textgreater{}\% }
-\InformationTok{  slice\_max(order\_by = date,}
-\InformationTok{            n = 1) \%\textgreater{}\% }
-\InformationTok{  select(state, deaths\_avg\_per\_100k) \%\textgreater{}\% }
-\InformationTok{  arrange(state) \%\textgreater{}\% }
-\InformationTok{  set\_names("State", "Death rate") \%\textgreater{}\% }
-\InformationTok{  gt() \%\textgreater{}\% }
+\InformationTok{covid\_data \%\textgreater{}\%}
+\InformationTok{  filter(state \%in\% c(}
+\InformationTok{    "Alabama",}
+\InformationTok{    "Alaska",}
+\InformationTok{    "Arizona",}
+\InformationTok{    "Arkansas"}
+\InformationTok{  )) \%\textgreater{}\%}
+\InformationTok{  slice\_max(}
+\InformationTok{    order\_by = date,}
+\InformationTok{    n = 1}
+\InformationTok{  ) \%\textgreater{}\%}
+\InformationTok{  select(state, deaths\_avg\_per\_100k) \%\textgreater{}\%}
+\InformationTok{  arrange(state) \%\textgreater{}\%}
+\InformationTok{  set\_names("State", "Death rate") \%\textgreater{}\%}
+\InformationTok{  gt() \%\textgreater{}\%}
 \InformationTok{  tab\_style(}
 \InformationTok{    style = cell\_text(weight = "bold"),}
 \InformationTok{    locations = cells\_column\_labels()}
@@ -5014,13 +5025,14 @@ This table resembles the code we discussed in Chapter \ref{tables-chapter}. Next
 \NormalTok{We can see this same death rate data for all states on a map.}
 
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r\}}
+\InformationTok{most\_recent \textless{}{-} us\_states \%\textgreater{}\%}
+\InformationTok{  left\_join(covid\_data, by = "state") \%\textgreater{}\%}
+\InformationTok{  slice\_max(}
+\InformationTok{    order\_by = date,}
+\InformationTok{    n = 1}
+\InformationTok{  )}
 
-\InformationTok{most\_recent \textless{}{-} us\_states \%\textgreater{}\% }
-\InformationTok{  left\_join(covid\_data, by = "state") \%\textgreater{}\% }
-\InformationTok{  slice\_max(order\_by = date,}
-\InformationTok{            n = 1) }
-
-\InformationTok{most\_recent \%\textgreater{}\% }
+\InformationTok{most\_recent \%\textgreater{}\%}
 \InformationTok{  ggplot(aes(fill = deaths\_avg\_per\_100k)) +}
 \InformationTok{  geom\_sf() +}
 \InformationTok{  scale\_fill\_viridis\_c(option = "rocket") +}
@@ -5036,30 +5048,37 @@ Finally, we make a chart that shows COVID death rates over time in the four stat
 \begin{Highlighting}[]
 \FunctionTok{\# COVID Death Rates Over Time}
 
-\NormalTok{The following chart shows COVID death rates from the start of COVID in early 2020 until }\InformationTok{\textasciigrave{}r most\_recent\_day\textasciigrave{}}\NormalTok{.}
+\NormalTok{The following chart shows COVID death rates from the start of COVID in early 2020 until }\InformationTok{\textasciigrave{}r last\_day\textasciigrave{}}\NormalTok{.}
 
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r\}}
-
-\InformationTok{covid\_data \%\textgreater{}\% }
-\InformationTok{  filter(state \%in\% c("Alabama",}
-\InformationTok{                      "Alaska",}
-\InformationTok{                      "Arizona",}
-\InformationTok{                      "Arkansas")) \%\textgreater{}\% }
-\InformationTok{  ggplot(aes(x = date,}
-\InformationTok{             y = deaths\_avg\_per\_100k,}
-\InformationTok{             group = state,}
-\InformationTok{             fill = deaths\_avg\_per\_100k)) +}
+\InformationTok{covid\_data \%\textgreater{}\%}
+\InformationTok{  filter(state \%in\% c(}
+\InformationTok{    "Alabama",}
+\InformationTok{    "Alaska",}
+\InformationTok{    "Arizona",}
+\InformationTok{    "Arkansas"}
+\InformationTok{  )) \%\textgreater{}\%}
+\InformationTok{  ggplot(aes(}
+\InformationTok{    x = date,}
+\InformationTok{    y = deaths\_avg\_per\_100k,}
+\InformationTok{    group = state,}
+\InformationTok{    fill = deaths\_avg\_per\_100k}
+\InformationTok{  )) +}
 \InformationTok{  geom\_col() +}
 \InformationTok{  scale\_fill\_viridis\_c(option = "rocket") +}
 \InformationTok{  theme\_minimal() +}
 \InformationTok{  labs(title = "Deaths per 100,000 people over time") +}
-\InformationTok{  theme(legend.position = "none",}
-\InformationTok{        plot.title.position = "plot",}
-\InformationTok{        plot.title = element\_text(face = "bold"),}
-\InformationTok{        panel.grid.minor = element\_blank(),}
-\InformationTok{        axis.title = element\_blank()) +}
-\InformationTok{  facet\_wrap(\textasciitilde{}state,}
-\InformationTok{             nrow = 2)}
+\InformationTok{  theme(}
+\InformationTok{    legend.position = "none",}
+\InformationTok{    plot.title.position = "plot",}
+\InformationTok{    plot.title = element\_text(face = "bold"),}
+\InformationTok{    panel.grid.minor = element\_blank(),}
+\InformationTok{    axis.title = element\_blank()}
+\InformationTok{  ) +}
+\InformationTok{  facet\_wrap(}
+\InformationTok{    \textasciitilde{}state,}
+\InformationTok{    nrow = 2}
+\InformationTok{  )}
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
 \end{Highlighting}
 \end{Shaded}
@@ -5116,12 +5135,14 @@ Remember how we included only four states in the table in to keep it from gettin
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(reactable)}
 
-\NormalTok{covid\_data }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{slice\_max}\NormalTok{(}\AttributeTok{order\_by =}\NormalTok{ date,}
-            \AttributeTok{n =} \DecValTok{1}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{select}\NormalTok{(state, deaths\_avg\_per\_100k) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{arrange}\NormalTok{(state) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{set\_names}\NormalTok{(}\StringTok{"State"}\NormalTok{, }\StringTok{"Death rate"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{covid\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{slice\_max}\NormalTok{(}
+    \AttributeTok{order\_by =}\NormalTok{ date,}
+    \AttributeTok{n =} \DecValTok{1}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(state, deaths\_avg\_per\_100k) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(state) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_names}\NormalTok{(}\StringTok{"State"}\NormalTok{, }\StringTok{"Death rate"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{reactable}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
@@ -5144,27 +5165,34 @@ Let's also give the website's chart some interactivity using \texttt{plotly}, wh
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(plotly)}
 
-\NormalTok{covid\_chart }\OtherTok{\textless{}{-}}\NormalTok{ covid\_data }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{filter}\NormalTok{(state }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"Alabama"}\NormalTok{,}
-                      \StringTok{"Alaska"}\NormalTok{,}
-                      \StringTok{"Arizona"}\NormalTok{,}
-                      \StringTok{"Arkansas"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ date,}
-             \AttributeTok{y =}\NormalTok{ deaths\_avg\_per\_100k,}
-             \AttributeTok{group =}\NormalTok{ state,}
-             \AttributeTok{fill =}\NormalTok{ deaths\_avg\_per\_100k)) }\SpecialCharTok{+}
+\NormalTok{covid\_chart }\OtherTok{\textless{}{-}}\NormalTok{ covid\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(state }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}
+    \StringTok{"Alabama"}\NormalTok{,}
+    \StringTok{"Alaska"}\NormalTok{,}
+    \StringTok{"Arizona"}\NormalTok{,}
+    \StringTok{"Arkansas"}
+\NormalTok{  )) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}
+    \AttributeTok{x =}\NormalTok{ date,}
+    \AttributeTok{y =}\NormalTok{ deaths\_avg\_per\_100k,}
+    \AttributeTok{group =}\NormalTok{ state,}
+    \AttributeTok{fill =}\NormalTok{ deaths\_avg\_per\_100k}
+\NormalTok{  )) }\SpecialCharTok{+}
   \FunctionTok{geom\_col}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{scale\_fill\_viridis\_c}\NormalTok{(}\AttributeTok{option =} \StringTok{"rocket"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Deaths per 100,000 people over time"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{,}
-        \AttributeTok{plot.title.position =} \StringTok{"plot"}\NormalTok{,}
-        \AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{),}
-        \AttributeTok{panel.grid.minor =} \FunctionTok{element\_blank}\NormalTok{(),}
-        \AttributeTok{axis.title =} \FunctionTok{element\_blank}\NormalTok{()) }\SpecialCharTok{+}
-  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{state,}
-             \AttributeTok{nrow =} \DecValTok{2}\NormalTok{)}
-
+  \FunctionTok{theme}\NormalTok{(}
+    \AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{,}
+    \AttributeTok{plot.title.position =} \StringTok{"plot"}\NormalTok{,}
+    \AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{),}
+    \AttributeTok{panel.grid.minor =} \FunctionTok{element\_blank}\NormalTok{(),}
+    \AttributeTok{axis.title =} \FunctionTok{element\_blank}\NormalTok{()}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}
+    \SpecialCharTok{\textasciitilde{}}\NormalTok{state,}
+    \AttributeTok{nrow =} \DecValTok{2}
+\NormalTok{  )}
 
 \FunctionTok{ggplotly}\NormalTok{(covid\_chart)}
 \end{Highlighting}
@@ -5180,33 +5208,43 @@ To make the tooltip more informative, we can create a single variable containing
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{covid\_chart }\OtherTok{\textless{}{-}}\NormalTok{ covid\_data }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{filter}\NormalTok{(state }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"Alabama"}\NormalTok{,}
-                      \StringTok{"Alaska"}\NormalTok{,}
-                      \StringTok{"Arizona"}\NormalTok{,}
-                      \StringTok{"Arkansas"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
-    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{date\_nice\_format =} \FunctionTok{str\_glue}\NormalTok{(}\StringTok{"\{month(date, label = TRUE, abbr = FALSE)\} \{day(date)\}, \{year(date)\}"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{tooltip\_text =} \FunctionTok{str\_glue}\NormalTok{(}\StringTok{"\{state\}\textless{}br\textgreater{}\{date\_nice\_format\}\textless{}br\textgreater{}\{deaths\_avg\_per\_100k\} per 100,000 people"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ date,}
-             \AttributeTok{y =}\NormalTok{ deaths\_avg\_per\_100k,}
-             \AttributeTok{group =}\NormalTok{ state,}
-             \AttributeTok{text =}\NormalTok{ tooltip\_text,}
-             \AttributeTok{fill =}\NormalTok{ deaths\_avg\_per\_100k)) }\SpecialCharTok{+}
+\NormalTok{covid\_chart }\OtherTok{\textless{}{-}}\NormalTok{ covid\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(state }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}
+    \StringTok{"Alabama"}\NormalTok{,}
+    \StringTok{"Alaska"}\NormalTok{,}
+    \StringTok{"Arizona"}\NormalTok{,}
+    \StringTok{"Arkansas"}
+\NormalTok{  )) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{date\_nice\_format =} \FunctionTok{str\_glue}\NormalTok{(}\StringTok{"\{month(date, label = TRUE, abbr = FALSE)\} \{day(date)\}, \{year(date)\}"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{tooltip\_text =} \FunctionTok{str\_glue}\NormalTok{(}\StringTok{"\{state\}\textless{}br\textgreater{}\{date\_nice\_format\}\textless{}br\textgreater{}\{deaths\_avg\_per\_100k\} per 100,000 people"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}
+    \AttributeTok{x =}\NormalTok{ date,}
+    \AttributeTok{y =}\NormalTok{ deaths\_avg\_per\_100k,}
+    \AttributeTok{group =}\NormalTok{ state,}
+    \AttributeTok{text =}\NormalTok{ tooltip\_text,}
+    \AttributeTok{fill =}\NormalTok{ deaths\_avg\_per\_100k}
+\NormalTok{  )) }\SpecialCharTok{+}
   \FunctionTok{geom\_col}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{scale\_fill\_viridis\_c}\NormalTok{(}\AttributeTok{option =} \StringTok{"rocket"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Deaths per 100,000 people over time"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{,}
-        \AttributeTok{plot.title.position =} \StringTok{"plot"}\NormalTok{,}
-        \AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{),}
-        \AttributeTok{panel.grid.minor =} \FunctionTok{element\_blank}\NormalTok{(),}
-        \AttributeTok{axis.title =} \FunctionTok{element\_blank}\NormalTok{()) }\SpecialCharTok{+}
-  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{state,}
-             \AttributeTok{nrow =} \DecValTok{2}\NormalTok{)}
+  \FunctionTok{theme}\NormalTok{(}
+    \AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{,}
+    \AttributeTok{plot.title.position =} \StringTok{"plot"}\NormalTok{,}
+    \AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{),}
+    \AttributeTok{panel.grid.minor =} \FunctionTok{element\_blank}\NormalTok{(),}
+    \AttributeTok{axis.title =} \FunctionTok{element\_blank}\NormalTok{()}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}
+    \SpecialCharTok{\textasciitilde{}}\NormalTok{state,}
+    \AttributeTok{nrow =} \DecValTok{2}
+\NormalTok{  )}
 
 
-\FunctionTok{ggplotly}\NormalTok{(covid\_chart,}
-         \AttributeTok{tooltip =} \StringTok{"tooltip\_text"}\NormalTok{)}
+\FunctionTok{ggplotly}\NormalTok{(}
+\NormalTok{  covid\_chart,}
+  \AttributeTok{tooltip =} \StringTok{"tooltip\_text"}
+\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5245,9 +5283,11 @@ You can even automate the process of copying your \texttt{docs} folder to variou
 \FunctionTok{render\_site}\NormalTok{()}
 
 \CommentTok{\# Upload to Dropbox}
-\NormalTok{website\_files }\OtherTok{\textless{}{-}} \FunctionTok{dir\_ls}\NormalTok{(}\AttributeTok{path =} \StringTok{"docs"}\NormalTok{,}
-                        \AttributeTok{type =} \StringTok{"file"}\NormalTok{,}
-                        \AttributeTok{recurse =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{website\_files }\OtherTok{\textless{}{-}} \FunctionTok{dir\_ls}\NormalTok{(}
+  \AttributeTok{path =} \StringTok{"docs"}\NormalTok{,}
+  \AttributeTok{type =} \StringTok{"file"}\NormalTok{,}
+  \AttributeTok{recurse =} \ConstantTok{TRUE}
+\NormalTok{)}
 
 \FunctionTok{walk}\NormalTok{(website\_files, drop\_upload, }\AttributeTok{path =} \StringTok{"COVID Website"}\NormalTok{)}
 \end{Highlighting}
@@ -5439,8 +5479,13 @@ Another difference you're likely to see if you switch from R Markdown to Quarto 
 \InformationTok{library(palmerpenguins)}
 \InformationTok{library(tidyverse)}
 
-\InformationTok{ggplot(penguins, aes(x = bill\_length\_mm,}
-\InformationTok{                     y = bill\_depth\_mm)) +}
+\InformationTok{ggplot(}
+\InformationTok{  penguins,}
+\InformationTok{  aes(}
+\InformationTok{    x = bill\_length\_mm,}
+\InformationTok{    y = bill\_depth\_mm}
+\InformationTok{  )}
+\InformationTok{) +}
 \InformationTok{  geom\_point()}
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
 \end{Highlighting}
@@ -5491,11 +5536,16 @@ Now that you've learned how Quarto works, let's make a few different documents w
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r\}}
 \InformationTok{cases \textless{}{-} tibble(state.name) \%\textgreater{}\%}
 \InformationTok{  rbind(state.name = "District of Columbia") \%\textgreater{}\%}
-\InformationTok{  left\_join(read\_csv("https://data.rwithoutstatistics.com/united\_states\_covid19\_cases\_deaths\_and\_testing\_by\_state.csv", skip = 2),}
-\InformationTok{            by = c("state.name" = "State/Territory")) \%\textgreater{}\%}
-\InformationTok{  select(total\_cases = \textasciigrave{}Total Cases\textasciigrave{}, state.name,}
-\InformationTok{         cases\_per\_100000 = \textasciigrave{}Case Rate per 100000\textasciigrave{}) \%\textgreater{}\%}
-\InformationTok{  mutate(cases\_per\_100000 = parse\_number(cases\_per\_100000)) \%\textgreater{}\% }
+\InformationTok{  left\_join(}
+\InformationTok{    read\_csv("https://data.rwithoutstatistics.com/united\_states\_covid19\_cases\_deaths\_and\_testing\_by\_state.csv", skip = 2),}
+\InformationTok{    by = c("state.name" = "State/Territory")}
+\InformationTok{  ) \%\textgreater{}\%}
+\InformationTok{  select(}
+\InformationTok{    total\_cases = \textasciigrave{}Total Cases\textasciigrave{},}
+\InformationTok{    state.name,}
+\InformationTok{    cases\_per\_100000 = \textasciigrave{}Case Rate per 100000\textasciigrave{}}
+\InformationTok{  ) \%\textgreater{}\%}
+\InformationTok{  mutate(cases\_per\_100000 = parse\_number(cases\_per\_100000)) \%\textgreater{}\%}
 \InformationTok{  mutate(case\_rank = rank({-}cases\_per\_100000, ties.method = "min"))}
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
 
@@ -5503,12 +5553,12 @@ Now that you've learned how Quarto works, let's make a few different documents w
 \InformationTok{state\_text \textless{}{-} if\_else(params$state == "District of Columbia", str\_glue("the District of Columbia"), str\_glue("state of \{params$state\}"))}
 
 \InformationTok{state\_cases\_per\_100000 \textless{}{-} cases \%\textgreater{}\%}
-\InformationTok{  filter(state.name == params$state) \%\textgreater{}\% }
-\InformationTok{  pull(cases\_per\_100000) \%\textgreater{}\% }
+\InformationTok{  filter(state.name == params$state) \%\textgreater{}\%}
+\InformationTok{  pull(cases\_per\_100000) \%\textgreater{}\%}
 \InformationTok{  comma()}
 
 \InformationTok{state\_cases\_rank \textless{}{-} cases \%\textgreater{}\%}
-\InformationTok{  filter(state.name == params$state) \%\textgreater{}\% }
+\InformationTok{  filter(state.name == params$state) \%\textgreater{}\%}
 \InformationTok{  pull(case\_rank)}
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
 
@@ -5519,17 +5569,21 @@ Now that you've learned how Quarto works, let's make a few different documents w
 
 \InformationTok{set\_urbn\_defaults(style = "print")}
 
-\InformationTok{cases \%\textgreater{}\% }
-\InformationTok{  mutate(highlight\_state = if\_else(state.name == params$state, "Y", "N")) \%\textgreater{}\% }
-\InformationTok{  mutate(state.name = fct\_reorder(state.name, cases\_per\_100000)) \%\textgreater{}\% }
-\InformationTok{  ggplot(aes(x = cases\_per\_100000,}
-\InformationTok{             y = state.name,}
-\InformationTok{             fill = highlight\_state)) +}
+\InformationTok{cases \%\textgreater{}\%}
+\InformationTok{  mutate(highlight\_state = if\_else(state.name == params$state, "Y", "N")) \%\textgreater{}\%}
+\InformationTok{  mutate(state.name = fct\_reorder(state.name, cases\_per\_100000)) \%\textgreater{}\%}
+\InformationTok{  ggplot(aes(}
+\InformationTok{    x = cases\_per\_100000,}
+\InformationTok{    y = state.name,}
+\InformationTok{    fill = highlight\_state}
+\InformationTok{  )) +}
 \InformationTok{  geom\_col() +}
 \InformationTok{  scale\_x\_continuous(labels = comma\_format()) +}
 \InformationTok{  theme(legend.position = "none") +}
-\InformationTok{  labs(y = NULL,}
-\InformationTok{       x = "Cases per 100,000")}
+\InformationTok{  labs(}
+\InformationTok{    y = NULL,}
+\InformationTok{    x = "Cases per 100,000"}
+\InformationTok{  )}
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
 \end{Highlighting}
 \end{Shaded}
@@ -5612,16 +5666,18 @@ The slides we'll make use the \texttt{reveal.js} JavaScript library under the ho
 \NormalTok{We can make a histogram to see the distribution of bill lengths.}
 
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r\}}
-\InformationTok{penguins \%\textgreater{}\% }
+\InformationTok{penguins \%\textgreater{}\%}
 \InformationTok{  ggplot(aes(x = bill\_length\_mm)) +}
 \InformationTok{  geom\_histogram() +}
 \InformationTok{  theme\_minimal()}
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
 
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r\}}
-\InformationTok{average\_bill\_length \textless{}{-} penguins \%\textgreater{}\% }
-\InformationTok{  summarize(avg\_bill\_length = mean(bill\_length\_mm,}
-\InformationTok{                                   na.rm = TRUE)) \%\textgreater{}\% }
+\InformationTok{average\_bill\_length \textless{}{-} penguins \%\textgreater{}\%}
+\InformationTok{  summarize(avg\_bill\_length = mean(}
+\InformationTok{    bill\_length\_mm,}
+\InformationTok{    na.rm = TRUE}
+\InformationTok{  )) \%\textgreater{}\%}
 \InformationTok{  pull(avg\_bill\_length)}
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
 
@@ -5687,7 +5743,7 @@ The following code created this two-column slide:
 
 \NormalTok{::: \{.column width="50\%"\}}
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r\}}
-\InformationTok{penguins \%\textgreater{}\% }
+\InformationTok{penguins \%\textgreater{}\%}
 \InformationTok{  ggplot(aes(x = bill\_length\_mm)) +}
 \InformationTok{  geom\_histogram() +}
 \InformationTok{  theme\_minimal()}
@@ -5697,7 +5753,7 @@ The following code created this two-column slide:
 
 \NormalTok{::: \{.column width="50\%"\}}
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r\}}
-\InformationTok{penguins \%\textgreater{}\% }
+\InformationTok{penguins \%\textgreater{}\%}
 \InformationTok{  ggplot(aes(x = bill\_depth\_mm)) +}
 \InformationTok{  geom\_histogram() +}
 \InformationTok{  theme\_minimal()}
@@ -5862,24 +5918,28 @@ Let's start by modifying the \emph{.qmd} files. Open the home page file, \emph{i
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r\}}
 \InformationTok{\# Import data}
 
-\InformationTok{us\_states \textless{}{-} states(cb = TRUE, }
-\InformationTok{                    resolution = "20m",}
-\InformationTok{                    progress\_bar = FALSE) \%\textgreater{}\%}
-\InformationTok{  shift\_geometry() \%\textgreater{}\% }
-\InformationTok{  clean\_names() \%\textgreater{}\% }
-\InformationTok{  select(geoid, name) \%\textgreater{}\% }
-\InformationTok{  rename(state = name) \%\textgreater{}\% }
+\InformationTok{us\_states \textless{}{-} states(}
+\InformationTok{  cb = TRUE,}
+\InformationTok{  resolution = "20m",}
+\InformationTok{  progress\_bar = FALSE}
+\InformationTok{) \%\textgreater{}\%}
+\InformationTok{  shift\_geometry() \%\textgreater{}\%}
+\InformationTok{  clean\_names() \%\textgreater{}\%}
+\InformationTok{  select(geoid, name) \%\textgreater{}\%}
+\InformationTok{  rename(state = name) \%\textgreater{}\%}
 \InformationTok{  filter(state \%in\% state.name)}
 
-\InformationTok{covid\_data \textless{}{-} read\_csv("https://raw.githubusercontent.com/nytimes/covid{-}19{-}data/master/rolling{-}averages/us{-}states.csv") \%\textgreater{}\% }
-\InformationTok{  filter(state \%in\% state.name) \%\textgreater{}\% }
-\InformationTok{  mutate(geoid = str\_remove(geoid, "USA{-}")) }
+\InformationTok{covid\_data \textless{}{-} read\_csv("https://raw.githubusercontent.com/nytimes/covid{-}19{-}data/master/rolling{-}averages/us{-}states.csv") \%\textgreater{}\%}
+\InformationTok{  filter(state \%in\% state.name) \%\textgreater{}\%}
+\InformationTok{  mutate(geoid = str\_remove(geoid, "USA{-}"))}
 
-\InformationTok{most\_recent\_day \textless{}{-} covid\_data \%\textgreater{}\% }
-\InformationTok{  slice\_max(order\_by = date,}
-\InformationTok{            n = 1) \%\textgreater{}\% }
-\InformationTok{  distinct(date) \%\textgreater{}\% }
-\InformationTok{  mutate(date\_nice\_format = str\_glue("\{month(date, label = TRUE, abbr = FALSE)\} \{day(date)\}, \{year(date)\}")) \%\textgreater{}\% }
+\InformationTok{most\_recent\_day \textless{}{-} covid\_data \%\textgreater{}\%}
+\InformationTok{  slice\_max(}
+\InformationTok{    order\_by = date,}
+\InformationTok{    n = 1}
+\InformationTok{  ) \%\textgreater{}\%}
+\InformationTok{  distinct(date) \%\textgreater{}\%}
+\InformationTok{  mutate(date\_nice\_format = str\_glue("\{month(date, label = TRUE, abbr = FALSE)\} \{day(date)\}, \{year(date)\}")) \%\textgreater{}\%}
 \InformationTok{  pull(date\_nice\_format)}
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
 
@@ -5890,12 +5950,14 @@ Let's start by modifying the \emph{.qmd} files. Open the home page file, \emph{i
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r\}}
 \InformationTok{\# Make table}
 
-\InformationTok{covid\_data \%\textgreater{}\% }
-\InformationTok{  slice\_max(order\_by = date,}
-\InformationTok{            n = 1) \%\textgreater{}\%}
-\InformationTok{  select(state, deaths\_avg\_per\_100k) \%\textgreater{}\% }
-\InformationTok{  arrange(state) \%\textgreater{}\% }
-\InformationTok{  set\_names("State", "Death rate") \%\textgreater{}\% }
+\InformationTok{covid\_data \%\textgreater{}\%}
+\InformationTok{  slice\_max(}
+\InformationTok{    order\_by = date,}
+\InformationTok{    n = 1}
+\InformationTok{  ) \%\textgreater{}\%}
+\InformationTok{  select(state, deaths\_avg\_per\_100k) \%\textgreater{}\%}
+\InformationTok{  arrange(state) \%\textgreater{}\%}
+\InformationTok{  set\_names("State", "Death rate") \%\textgreater{}\%}
 \InformationTok{  reactable()}
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
 
@@ -5904,12 +5966,14 @@ Let's start by modifying the \emph{.qmd} files. Open the home page file, \emph{i
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r\}}
 \InformationTok{\# Make map}
 
-\InformationTok{most\_recent \textless{}{-} us\_states \%\textgreater{}\% }
-\InformationTok{  left\_join(covid\_data, by = "state") \%\textgreater{}\% }
-\InformationTok{  slice\_max(order\_by = date,}
-\InformationTok{            n = 1) }
+\InformationTok{most\_recent \textless{}{-} us\_states \%\textgreater{}\%}
+\InformationTok{  left\_join(covid\_data, by = "state") \%\textgreater{}\%}
+\InformationTok{  slice\_max(}
+\InformationTok{    order\_by = date,}
+\InformationTok{    n = 1}
+\InformationTok{  )}
 
-\InformationTok{most\_recent \%\textgreater{}\% }
+\InformationTok{most\_recent \%\textgreater{}\%}
 \InformationTok{  ggplot(aes(fill = deaths\_avg\_per\_100k)) +}
 \InformationTok{  geom\_sf() +}
 \InformationTok{  scale\_fill\_viridis\_c(option = "rocket") +}
@@ -5926,26 +5990,34 @@ Let's start by modifying the \emph{.qmd} files. Open the home page file, \emph{i
 
 \InformationTok{library(plotly)}
 
-\InformationTok{covid\_chart \textless{}{-} covid\_data \%\textgreater{}\% }
-\InformationTok{  filter(state \%in\% c("Alabama",}
-\InformationTok{                      "Alaska",}
-\InformationTok{                      "Arizona",}
-\InformationTok{                      "Arkansas")) \%\textgreater{}\% }
-\InformationTok{  ggplot(aes(x = date,}
-\InformationTok{             y = deaths\_avg\_per\_100k,}
-\InformationTok{             group = state,}
-\InformationTok{             fill = deaths\_avg\_per\_100k)) +}
+\InformationTok{covid\_chart \textless{}{-} covid\_data \%\textgreater{}\%}
+\InformationTok{  filter(state \%in\% c(}
+\InformationTok{    "Alabama",}
+\InformationTok{    "Alaska",}
+\InformationTok{    "Arizona",}
+\InformationTok{    "Arkansas"}
+\InformationTok{  )) \%\textgreater{}\%}
+\InformationTok{  ggplot(aes(}
+\InformationTok{    x = date,}
+\InformationTok{    y = deaths\_avg\_per\_100k,}
+\InformationTok{    group = state,}
+\InformationTok{    fill = deaths\_avg\_per\_100k}
+\InformationTok{  )) +}
 \InformationTok{  geom\_col() +}
 \InformationTok{  scale\_fill\_viridis\_c(option = "rocket") +}
 \InformationTok{  theme\_minimal() +}
 \InformationTok{  labs(title = "Deaths per 100,000 people over time") +}
-\InformationTok{  theme(legend.position = "none",}
-\InformationTok{        plot.title.position = "plot",}
-\InformationTok{        plot.title = element\_text(face = "bold"),}
-\InformationTok{        panel.grid.minor = element\_blank(),}
-\InformationTok{        axis.title = element\_blank()) +}
-\InformationTok{  facet\_wrap(\textasciitilde{}state,}
-\InformationTok{             nrow = 2)}
+\InformationTok{  theme(}
+\InformationTok{    legend.position = "none",}
+\InformationTok{    plot.title.position = "plot",}
+\InformationTok{    plot.title = element\_text(face = "bold"),}
+\InformationTok{    panel.grid.minor = element\_blank(),}
+\InformationTok{    axis.title = element\_blank()}
+\InformationTok{  ) +}
+\InformationTok{  facet\_wrap(}
+\InformationTok{    \textasciitilde{}state,}
+\InformationTok{    nrow = 2}
+\InformationTok{  )}
 
 
 \InformationTok{ggplotly(covid\_chart)}
@@ -6135,12 +6207,14 @@ When we made a website with \texttt{distill}, we used the line \texttt{layout\ =
 \InformationTok{\#| out{-}width: 100\%}
 \InformationTok{\# Make map}
 
-\InformationTok{most\_recent \textless{}{-} us\_states \%\textgreater{}\% }
-\InformationTok{  left\_join(covid\_data, by = "state") \%\textgreater{}\% }
-\InformationTok{  slice\_max(order\_by = date,}
-\InformationTok{            n = 1) }
+\InformationTok{most\_recent \textless{}{-} us\_states \%\textgreater{}\%}
+\InformationTok{  left\_join(covid\_data, by = "state") \%\textgreater{}\%}
+\InformationTok{  slice\_max(}
+\InformationTok{    order\_by = date,}
+\InformationTok{    n = 1}
+\InformationTok{  )}
 
-\InformationTok{most\_recent \%\textgreater{}\% }
+\InformationTok{most\_recent \%\textgreater{}\%}
 \InformationTok{  ggplot(aes(fill = deaths\_avg\_per\_100k)) +}
 \InformationTok{  geom\_sf() +}
 \InformationTok{  scale\_fill\_viridis\_c(option = "rocket") +}
@@ -6262,7 +6336,7 @@ Take a look at the \texttt{survey\_data\_raw} object to confirm that the data wa
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(tidyverse)}
 
-\NormalTok{survey\_data\_raw }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{survey\_data\_raw }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{glimpse}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
@@ -6295,9 +6369,11 @@ The following code is taken from an R Markdown report that Meghan Harris made to
 \CommentTok{{-}{-}{-}}
 
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r setup, include=FALSE\}}
-\InformationTok{knitr::opts\_chunk$set(echo = FALSE,}
-\InformationTok{                      warning = FALSE,}
-\InformationTok{                      message = FALSE)}
+\InformationTok{knitr::opts\_chunk$set(}
+\InformationTok{  echo = FALSE,}
+\InformationTok{  warning = FALSE,}
+\InformationTok{  message = FALSE}
+\InformationTok{)}
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
 
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r\}}
@@ -6325,10 +6401,12 @@ The next code chunk cleans the \texttt{survey\_data\_raw} object, saving the res
 \InformationTok{survey\_data\_clean \textless{}{-} survey\_data\_raw \%\textgreater{}\%}
 \InformationTok{  clean\_names() \%\textgreater{}\%}
 \InformationTok{  mutate(participant\_id = as.character(row\_number())) \%\textgreater{}\%}
-\InformationTok{  rename(age = how\_old\_are\_you,}
-\InformationTok{         like\_games = do\_you\_like\_to\_play\_video\_games,}
-\InformationTok{         game\_types = what\_kind\_of\_games\_do\_you\_like,}
-\InformationTok{         favorite\_game = whats\_your\_favorite\_game) \%\textgreater{}\%}
+\InformationTok{  rename(}
+\InformationTok{    age = how\_old\_are\_you,}
+\InformationTok{    like\_games = do\_you\_like\_to\_play\_video\_games,}
+\InformationTok{    game\_types = what\_kind\_of\_games\_do\_you\_like,}
+\InformationTok{    favorite\_game = whats\_your\_favorite\_game}
+\InformationTok{  ) \%\textgreater{}\%}
 \InformationTok{  relocate(participant\_id, .before = age) \%\textgreater{}\%}
 \InformationTok{  mutate(age = factor(age, levels = c("Under 18", "18{-}24", "25{-}34", "35{-}44", "45{-}54", "55{-}64", "Over 65")))}
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
@@ -6362,25 +6440,25 @@ The rest of the report uses this data to highlight a variety of statistics:
 \NormalTok{We received responses from }\InformationTok{\textasciigrave{}r number\_of\_respondents\textasciigrave{}}\NormalTok{ respondents. Their ages are below.}
 
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r\}}
-\InformationTok{survey\_data\_clean \%\textgreater{}\% }
-\InformationTok{  select(participant\_id, age) \%\textgreater{}\% }
-\InformationTok{  gt() \%\textgreater{}\% }
+\InformationTok{survey\_data\_clean \%\textgreater{}\%}
+\InformationTok{  select(participant\_id, age) \%\textgreater{}\%}
+\InformationTok{  gt() \%\textgreater{}\%}
 \InformationTok{  cols\_label(}
 \InformationTok{    participant\_id = "Participant ID",}
 \InformationTok{    age = "Age"}
-\InformationTok{  ) \%\textgreater{}\% }
+\InformationTok{  ) \%\textgreater{}\%}
 \InformationTok{  tab\_style(}
 \InformationTok{    style = cell\_text(weight = "bold"),}
 \InformationTok{    locations = cells\_column\_labels()}
-\InformationTok{  ) \%\textgreater{}\% }
+\InformationTok{  ) \%\textgreater{}\%}
 \InformationTok{  cols\_align(}
 \InformationTok{    align = "left",}
 \InformationTok{    columns = everything()}
-\InformationTok{  ) \%\textgreater{}\% }
+\InformationTok{  ) \%\textgreater{}\%}
 \InformationTok{  cols\_width(}
 \InformationTok{    participant\_id \textasciitilde{} px(200),}
 \InformationTok{    age \textasciitilde{} px(700)}
-\InformationTok{  ) }
+\InformationTok{  )}
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
 
 \FunctionTok{\# Video Games}
@@ -6389,25 +6467,33 @@ The rest of the report uses this data to highlight a variety of statistics:
 
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r\}}
 \InformationTok{survey\_data\_clean \%\textgreater{}\%}
-\InformationTok{  count(like\_games) \%\textgreater{}\% }
-\InformationTok{  ggplot(aes(x = like\_games,}
-\InformationTok{             y = n,}
-\InformationTok{             fill = like\_games)) +}
+\InformationTok{  count(like\_games) \%\textgreater{}\%}
+\InformationTok{  ggplot(aes(}
+\InformationTok{    x = like\_games,}
+\InformationTok{    y = n,}
+\InformationTok{    fill = like\_games}
+\InformationTok{  )) +}
 \InformationTok{  geom\_col() +}
 \InformationTok{  scale\_fill\_manual(values = c(}
 \InformationTok{    "No" = "\#6cabdd",}
 \InformationTok{    "Yes" = "\#ff7400"}
 \InformationTok{  )) +}
-\InformationTok{  labs(title = "How Many People Like Video Games?", }
-\InformationTok{       x = NULL,}
-\InformationTok{       y = "Number of Participants") +}
+\InformationTok{  labs(}
+\InformationTok{    title = "How Many People Like Video Games?",}
+\InformationTok{    x = NULL,}
+\InformationTok{    y = "Number of Participants"}
+\InformationTok{  ) +}
 \InformationTok{  theme\_minimal(base\_size = 16) +}
-\InformationTok{  theme(legend.position = "none",}
-\InformationTok{        panel.grid.minor = element\_blank(),}
-\InformationTok{        panel.grid.major.x = element\_blank(),}
-\InformationTok{        axis.title.y = element\_blank(),}
-\InformationTok{        plot.title = element\_text(face = "bold",}
-\InformationTok{                                  hjust = 0.5))}
+\InformationTok{  theme(}
+\InformationTok{    legend.position = "none",}
+\InformationTok{    panel.grid.minor = element\_blank(),}
+\InformationTok{    panel.grid.major.x = element\_blank(),}
+\InformationTok{    axis.title.y = element\_blank(),}
+\InformationTok{    plot.title = element\_text(}
+\InformationTok{      face = "bold",}
+\InformationTok{      hjust = 0.5}
+\InformationTok{    )}
+\InformationTok{  )}
 \InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
 \end{Highlighting}
 \end{Shaded}
@@ -6430,8 +6516,10 @@ To do this, use the \texttt{range} argument in the \texttt{read\_sheet()} functi
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{read\_sheet}\NormalTok{(}\StringTok{"https://docs.google.com/spreadsheets/d/1AR0\_RcFBg8wdiY4Cj{-}k8vRypp\_txh27MyZuiRdqScog/edit?usp=sharing"}\NormalTok{,}
-           \AttributeTok{range =} \StringTok{"Sheet1!B:E"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\FunctionTok{read\_sheet}\NormalTok{(}
+  \StringTok{"https://docs.google.com/spreadsheets/d/1AR0\_RcFBg8wdiY4Cj{-}k8vRypp\_txh27MyZuiRdqScog/edit?usp=sharing"}\NormalTok{,}
+  \AttributeTok{range =} \StringTok{"Sheet1!B:E"}
+\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{glimpse}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
@@ -6487,9 +6575,11 @@ The Census Bureau puts out many datasets, several of which you can access using 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{get\_decennial}\NormalTok{(}\AttributeTok{geography =} \StringTok{"state"}\NormalTok{, }
-              \AttributeTok{variables =} \StringTok{"P1\_006N"}\NormalTok{,}
-              \AttributeTok{year =} \DecValTok{2020}\NormalTok{)}
+\FunctionTok{get\_decennial}\NormalTok{(}
+  \AttributeTok{geography =} \StringTok{"state"}\NormalTok{,}
+  \AttributeTok{variables =} \StringTok{"P1\_006N"}\NormalTok{,}
+  \AttributeTok{year =} \DecValTok{2020}
+\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6526,8 +6616,10 @@ The \texttt{tidycensus} package has a function called \texttt{load\_variables()}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{load\_variables}\NormalTok{(}\AttributeTok{year =} \DecValTok{2020}\NormalTok{, }
-               \AttributeTok{dataset =} \StringTok{"pl"}\NormalTok{)}
+\FunctionTok{load\_variables}\NormalTok{(}
+  \AttributeTok{year =} \DecValTok{2020}\NormalTok{,}
+  \AttributeTok{dataset =} \StringTok{"pl"}
+\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6560,9 +6652,11 @@ Now that we know which variables we need, we can use the \texttt{get\_decennial(
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{get\_decennial}\NormalTok{(}\AttributeTok{geography =} \StringTok{"state"}\NormalTok{, }
-              \AttributeTok{variables =} \FunctionTok{c}\NormalTok{(}\StringTok{"P1\_001N"}\NormalTok{, }\StringTok{"P1\_006N"}\NormalTok{),}
-              \AttributeTok{year =} \DecValTok{2020}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\FunctionTok{get\_decennial}\NormalTok{(}
+  \AttributeTok{geography =} \StringTok{"state"}\NormalTok{,}
+  \AttributeTok{variables =} \FunctionTok{c}\NormalTok{(}\StringTok{"P1\_001N"}\NormalTok{, }\StringTok{"P1\_006N"}\NormalTok{),}
+  \AttributeTok{year =} \DecValTok{2020}
+\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{arrange}\NormalTok{(NAME)}
 \end{Highlighting}
 \end{Shaded}
@@ -6590,10 +6684,14 @@ If you're working with multiple census variables, however, you might have troubl
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{get\_decennial}\NormalTok{(}\AttributeTok{geography =} \StringTok{"state"}\NormalTok{, }
-              \AttributeTok{variables =} \FunctionTok{c}\NormalTok{(}\AttributeTok{total\_population =} \StringTok{"P1\_001N"}\NormalTok{, }
-                            \AttributeTok{asian\_population =} \StringTok{"P1\_006N"}\NormalTok{),}
-              \AttributeTok{year =} \DecValTok{2020}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\FunctionTok{get\_decennial}\NormalTok{(}
+  \AttributeTok{geography =} \StringTok{"state"}\NormalTok{,}
+  \AttributeTok{variables =} \FunctionTok{c}\NormalTok{(}
+    \AttributeTok{total\_population =} \StringTok{"P1\_001N"}\NormalTok{,}
+    \AttributeTok{asian\_population =} \StringTok{"P1\_006N"}
+\NormalTok{  ),}
+  \AttributeTok{year =} \DecValTok{2020}
+\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{arrange}\NormalTok{(NAME)}
 \end{Highlighting}
 \end{Shaded}
@@ -6627,14 +6725,18 @@ Now we have the data we need to calculate the Asian population in each state as 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{get\_decennial}\NormalTok{(}\AttributeTok{geography =} \StringTok{"state"}\NormalTok{, }
-              \AttributeTok{variables =} \FunctionTok{c}\NormalTok{(}\AttributeTok{total\_population =} \StringTok{"P1\_001N"}\NormalTok{, }
-                            \AttributeTok{asian\_population =} \StringTok{"P1\_006N"}\NormalTok{),}
-              \AttributeTok{year =} \DecValTok{2020}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{arrange}\NormalTok{(NAME) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{group\_by}\NormalTok{(NAME) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{pct =}\NormalTok{ value }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(value)) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ungroup}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+\FunctionTok{get\_decennial}\NormalTok{(}
+  \AttributeTok{geography =} \StringTok{"state"}\NormalTok{,}
+  \AttributeTok{variables =} \FunctionTok{c}\NormalTok{(}
+    \AttributeTok{total\_population =} \StringTok{"P1\_001N"}\NormalTok{,}
+    \AttributeTok{asian\_population =} \StringTok{"P1\_006N"}
+\NormalTok{  ),}
+  \AttributeTok{year =} \DecValTok{2020}
+\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(NAME) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(NAME) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{pct =}\NormalTok{ value }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(value)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ungroup}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{filter}\NormalTok{(variable }\SpecialCharTok{==} \StringTok{"asian\_population"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -6670,10 +6772,12 @@ Kyle Walker knew that calculating summaries like we've just done would be a comm
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{get\_decennial}\NormalTok{(}\AttributeTok{geography =} \StringTok{"state"}\NormalTok{, }
-              \AttributeTok{variables =} \FunctionTok{c}\NormalTok{(}\AttributeTok{asian\_population =} \StringTok{"P1\_006N"}\NormalTok{),}
-              \AttributeTok{summary\_var =} \StringTok{"P1\_001N"}\NormalTok{,}
-              \AttributeTok{year =} \DecValTok{2020}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\FunctionTok{get\_decennial}\NormalTok{(}
+  \AttributeTok{geography =} \StringTok{"state"}\NormalTok{,}
+  \AttributeTok{variables =} \FunctionTok{c}\NormalTok{(}\AttributeTok{asian\_population =} \StringTok{"P1\_006N"}\NormalTok{),}
+  \AttributeTok{summary\_var =} \StringTok{"P1\_001N"}\NormalTok{,}
+  \AttributeTok{year =} \DecValTok{2020}
+\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{arrange}\NormalTok{(NAME)}
 \end{Highlighting}
 \end{Shaded}
@@ -6701,12 +6805,14 @@ With our data in this new format, we can calculate the Asian population as a per
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{get\_decennial}\NormalTok{(}\AttributeTok{geography =} \StringTok{"state"}\NormalTok{, }
-              \AttributeTok{variables =} \FunctionTok{c}\NormalTok{(}\AttributeTok{asian\_population =} \StringTok{"P1\_006N"}\NormalTok{),}
-              \AttributeTok{summary\_var =} \StringTok{"P1\_001N"}\NormalTok{,}
-              \AttributeTok{year =} \DecValTok{2020}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{arrange}\NormalTok{(NAME) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{pct =}\NormalTok{ value }\SpecialCharTok{/}\NormalTok{ summary\_value) }\SpecialCharTok{\%\textgreater{}\%} 
+\FunctionTok{get\_decennial}\NormalTok{(}
+  \AttributeTok{geography =} \StringTok{"state"}\NormalTok{,}
+  \AttributeTok{variables =} \FunctionTok{c}\NormalTok{(}\AttributeTok{asian\_population =} \StringTok{"P1\_006N"}\NormalTok{),}
+  \AttributeTok{summary\_var =} \StringTok{"P1\_001N"}\NormalTok{,}
+  \AttributeTok{year =} \DecValTok{2020}
+\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(NAME) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{pct =}\NormalTok{ value }\SpecialCharTok{/}\NormalTok{ summary\_value) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{summary\_value)}
 \end{Highlighting}
 \end{Shaded}
@@ -6742,9 +6848,11 @@ Despite these differences, we can access data from the American Community Survey
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{get\_acs}\NormalTok{(}\AttributeTok{geography =} \StringTok{"state"}\NormalTok{,}
-        \AttributeTok{variables =} \StringTok{"B01002\_001"}\NormalTok{,}
-        \AttributeTok{year =} \DecValTok{2020}\NormalTok{)}
+\FunctionTok{get\_acs}\NormalTok{(}
+  \AttributeTok{geography =} \StringTok{"state"}\NormalTok{,}
+  \AttributeTok{variables =} \StringTok{"B01002\_001"}\NormalTok{,}
+  \AttributeTok{year =} \DecValTok{2020}
+\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6779,11 +6887,15 @@ Here is how we could take the data on median age and pipe it into ggplot to crea
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{get\_acs}\NormalTok{(}\AttributeTok{geography =} \StringTok{"state"}\NormalTok{,}
-        \AttributeTok{variables =} \StringTok{"B01002\_001"}\NormalTok{,}
-        \AttributeTok{year =} \DecValTok{2020}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ estimate,}
-             \AttributeTok{y =}\NormalTok{ NAME)) }\SpecialCharTok{+}
+\FunctionTok{get\_acs}\NormalTok{(}
+  \AttributeTok{geography =} \StringTok{"state"}\NormalTok{,}
+  \AttributeTok{variables =} \StringTok{"B01002\_001"}\NormalTok{,}
+  \AttributeTok{year =} \DecValTok{2020}
+\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}
+    \AttributeTok{x =}\NormalTok{ estimate,}
+    \AttributeTok{y =}\NormalTok{ NAME}
+\NormalTok{  )) }\SpecialCharTok{+}
   \FunctionTok{geom\_col}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
@@ -6804,10 +6916,12 @@ Kyle Walker, the creator of \texttt{tidycensus}, also created the \texttt{tigris
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{get\_acs}\NormalTok{(}\AttributeTok{geography =} \StringTok{"state"}\NormalTok{,}
-        \AttributeTok{variables =} \StringTok{"B01002\_001"}\NormalTok{,}
-        \AttributeTok{year =} \DecValTok{2020}\NormalTok{,}
-        \AttributeTok{geometry =} \ConstantTok{TRUE}\NormalTok{) }
+\FunctionTok{get\_acs}\NormalTok{(}
+  \AttributeTok{geography =} \StringTok{"state"}\NormalTok{,}
+  \AttributeTok{variables =} \StringTok{"B01002\_001"}\NormalTok{,}
+  \AttributeTok{year =} \DecValTok{2020}\NormalTok{,}
+  \AttributeTok{geometry =} \ConstantTok{TRUE}
+\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -6848,10 +6962,12 @@ We can see that the geometry type is MULTIPOLYGON, which you learned about in Ch
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{get\_acs}\NormalTok{(}\AttributeTok{geography =} \StringTok{"state"}\NormalTok{,}
-        \AttributeTok{variables =} \StringTok{"B01002\_001"}\NormalTok{,}
-        \AttributeTok{year =} \DecValTok{2020}\NormalTok{,}
-        \AttributeTok{geometry =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\FunctionTok{get\_acs}\NormalTok{(}
+  \AttributeTok{geography =} \StringTok{"state"}\NormalTok{,}
+  \AttributeTok{variables =} \StringTok{"B01002\_001"}\NormalTok{,}
+  \AttributeTok{year =} \DecValTok{2020}\NormalTok{,}
+  \AttributeTok{geometry =} \ConstantTok{TRUE}
+\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{fill =}\NormalTok{ estimate)) }\SpecialCharTok{+}
   \FunctionTok{geom\_sf}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{scale\_fill\_viridis\_c}\NormalTok{()}
@@ -6872,11 +6988,13 @@ To fix these problems, load the tigris package, then use the \texttt{shift\_geom
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(tigris)}
 
-\FunctionTok{get\_acs}\NormalTok{(}\AttributeTok{geography =} \StringTok{"state"}\NormalTok{,}
-        \AttributeTok{variables =} \StringTok{"B01002\_001"}\NormalTok{,}
-        \AttributeTok{year =} \DecValTok{2020}\NormalTok{,}
-        \AttributeTok{geometry =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{shift\_geometry}\NormalTok{(}\AttributeTok{preserve\_area =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\FunctionTok{get\_acs}\NormalTok{(}
+  \AttributeTok{geography =} \StringTok{"state"}\NormalTok{,}
+  \AttributeTok{variables =} \StringTok{"B01002\_001"}\NormalTok{,}
+  \AttributeTok{year =} \DecValTok{2020}\NormalTok{,}
+  \AttributeTok{geometry =} \ConstantTok{TRUE}
+\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{shift\_geometry}\NormalTok{(}\AttributeTok{preserve\_area =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{fill =}\NormalTok{ estimate)) }\SpecialCharTok{+}
   \FunctionTok{geom\_sf}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{scale\_fill\_viridis\_c}\NormalTok{()}
@@ -6929,19 +7047,18 @@ We first import the data with the \texttt{read\_csv()} function before creating 
 \FunctionTok{library}\NormalTok{(tidyverse)}
 \FunctionTok{library}\NormalTok{(fs)}
 
-
 \NormalTok{penguins }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"https://data.rwithoutstatistics.com/penguins{-}2007.csv"}\NormalTok{)}
 
 \NormalTok{show\_in\_excel\_penguins }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{() \{}
-  
 \NormalTok{  csv\_file }\OtherTok{\textless{}{-}} \FunctionTok{str\_glue}\NormalTok{(}\StringTok{"\{tempfile()\}.csv"}\NormalTok{)}
-  
-  \FunctionTok{write\_csv}\NormalTok{(}\AttributeTok{x =}\NormalTok{ penguins,}
-            \AttributeTok{file =}\NormalTok{ csv\_file,}
-            \AttributeTok{na =} \StringTok{""}\NormalTok{)}
-  
+
+  \FunctionTok{write\_csv}\NormalTok{(}
+    \AttributeTok{x =}\NormalTok{ penguins,}
+    \AttributeTok{file =}\NormalTok{ csv\_file,}
+    \AttributeTok{na =} \StringTok{""}
+\NormalTok{  )}
+
   \FunctionTok{file\_show}\NormalTok{(}\AttributeTok{path =}\NormalTok{ csv\_file)}
-  
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
@@ -6982,9 +7099,11 @@ To make such a function, we need to add arguments. Below is a slightly simplifie
 \begin{Highlighting}[]
 \NormalTok{show\_in\_excel }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(data) \{}
 \NormalTok{  csv\_file }\OtherTok{\textless{}{-}} \FunctionTok{str\_glue}\NormalTok{(}\StringTok{"\{tempfile()\}.csv"}\NormalTok{)}
-  \FunctionTok{write\_csv}\NormalTok{(}\AttributeTok{x =}\NormalTok{ data,}
-            \AttributeTok{file =}\NormalTok{ csv\_file,}
-            \AttributeTok{na =} \StringTok{""}\NormalTok{)}
+  \FunctionTok{write\_csv}\NormalTok{(}
+    \AttributeTok{x =}\NormalTok{ data,}
+    \AttributeTok{file =}\NormalTok{ csv\_file,}
+    \AttributeTok{na =} \StringTok{""}
+\NormalTok{  )}
   \FunctionTok{file\_show}\NormalTok{(}\AttributeTok{path =}\NormalTok{ csv\_file)}
 \NormalTok{\}}
 \end{Highlighting}
@@ -7014,8 +7133,8 @@ You can also use this function at the end of a pipeline. This code filters the \
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{covid\_data }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{filter}\NormalTok{(state }\SpecialCharTok{==} \StringTok{"California"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{covid\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(state }\SpecialCharTok{==} \StringTok{"California"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{show\_in\_excel}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
@@ -7037,7 +7156,6 @@ A first version of this function might look like this:
 \FunctionTok{library}\NormalTok{(tidycensus)}
 
 \NormalTok{get\_acs\_race\_ethnicity }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{() \{}
-  
 \NormalTok{  race\_ethnicity\_data }\OtherTok{\textless{}{-}}
     \FunctionTok{get\_acs}\NormalTok{(}
       \AttributeTok{geography =} \StringTok{"state"}\NormalTok{,}
@@ -7052,9 +7170,8 @@ A first version of this function might look like this:
         \StringTok{"Hispanic/Latino"} \OtherTok{=} \StringTok{"B03002\_012"}
 \NormalTok{      )}
 \NormalTok{    )}
-  
+
 \NormalTok{  race\_ethnicity\_data}
-  
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
@@ -7075,16 +7192,16 @@ Doing so should return data with easy-to-read race and ethnicity group names:
 #> # A tibble: 416 x 5
 #>    GEOID NAME    variable                     estimate   moe
 #>    <chr> <chr>   <chr>                           <dbl> <dbl>
-#>  1 01    Alabama White                         3241003  2076
-#>  2 01    Alabama Black/African American        1316314  3018
-#>  3 01    Alabama American Indian/Alaska Nati~    17417   941
-#>  4 01    Alabama Asian                           69331  1559
-#>  5 01    Alabama Native Hawaiian/Pacific Isl~     1594   376
-#>  6 01    Alabama Other race                      12504  1867
-#>  7 01    Alabama Multi-Race                     114853  3835
-#>  8 01    Alabama Hispanic/Latino                224659   413
-#>  9 02    Alaska  White                          434515  1067
-#> 10 02    Alaska  Black/African American          22787   769
+#>  1 01    Alabama White                         3247262  2133
+#>  2 01    Alabama Black/African American        1318388  3585
+#>  3 01    Alabama American Indian/Alaska Nati~    14864   868
+#>  4 01    Alabama Asian                           69099  1113
+#>  5 01    Alabama Native Hawaiian/Pacific Isl~     1557   303
+#>  6 01    Alabama Other race                      14724  1851
+#>  7 01    Alabama Multi-Race                     129791  3724
+#>  8 01    Alabama Hispanic/Latino                232407   199
+#>  9 02    Alaska  White                          428802  1173
+#> 10 02    Alaska  Black/African American          22400   935
 #> # i 406 more rows
 \end{verbatim}
 
@@ -7093,7 +7210,6 @@ We could improve this function in a few ways. For example, you might want the re
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{get\_acs\_race\_ethnicity }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}\AttributeTok{clean\_variable\_names =} \ConstantTok{FALSE}\NormalTok{) \{}
-  
 \NormalTok{  race\_ethnicity\_data }\OtherTok{\textless{}{-}}
     \FunctionTok{get\_acs}\NormalTok{(}
       \AttributeTok{geography =} \StringTok{"state"}\NormalTok{,}
@@ -7108,14 +7224,12 @@ We could improve this function in a few ways. For example, you might want the re
         \StringTok{"Hispanic/Latino"} \OtherTok{=} \StringTok{"B03002\_012"}
 \NormalTok{      )}
 \NormalTok{    )}
-  
+
   \ControlFlowTok{if}\NormalTok{ (clean\_variable\_names }\SpecialCharTok{==} \ConstantTok{TRUE}\NormalTok{) \{}
 \NormalTok{    race\_ethnicity\_data }\OtherTok{\textless{}{-}} \FunctionTok{clean\_names}\NormalTok{(race\_ethnicity\_data)}
-    
 \NormalTok{  \}}
-  
+
 \NormalTok{  race\_ethnicity\_data}
-  
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
@@ -7136,16 +7250,16 @@ This function call should return data with consistent variable names:
 #> # A tibble: 416 x 5
 #>    geoid name    variable                     estimate   moe
 #>    <chr> <chr>   <chr>                           <dbl> <dbl>
-#>  1 01    Alabama White                         3241003  2076
-#>  2 01    Alabama Black/African American        1316314  3018
-#>  3 01    Alabama American Indian/Alaska Nati~    17417   941
-#>  4 01    Alabama Asian                           69331  1559
-#>  5 01    Alabama Native Hawaiian/Pacific Isl~     1594   376
-#>  6 01    Alabama Other race                      12504  1867
-#>  7 01    Alabama Multi-Race                     114853  3835
-#>  8 01    Alabama Hispanic/Latino                224659   413
-#>  9 02    Alaska  White                          434515  1067
-#> 10 02    Alaska  Black/African American          22787   769
+#>  1 01    Alabama White                         3247262  2133
+#>  2 01    Alabama Black/African American        1318388  3585
+#>  3 01    Alabama American Indian/Alaska Nati~    14864   868
+#>  4 01    Alabama Asian                           69099  1113
+#>  5 01    Alabama Native Hawaiian/Pacific Isl~     1557   303
+#>  6 01    Alabama Other race                      14724  1851
+#>  7 01    Alabama Multi-Race                     129791  3724
+#>  8 01    Alabama Hispanic/Latino                232407   199
+#>  9 02    Alaska  White                          428802  1173
+#> 10 02    Alaska  Black/African American          22400   935
 #> # i 406 more rows
 \end{verbatim}
 
@@ -7161,9 +7275,10 @@ Your first thought about how to modify our function might involve adding an addi
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{get\_acs\_race\_ethnicity }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}\AttributeTok{clean\_variable\_names =} \ConstantTok{FALSE}\NormalTok{,}
-\NormalTok{                                   my\_geography) \{}
-  
+\NormalTok{get\_acs\_race\_ethnicity }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}
+  \AttributeTok{clean\_variable\_names =} \ConstantTok{FALSE}\NormalTok{,}
+\NormalTok{  my\_geography}
+\NormalTok{) \{}
 \NormalTok{  race\_ethnicity\_data }\OtherTok{\textless{}{-}}
     \FunctionTok{get\_acs}\NormalTok{(}
       \AttributeTok{geography =}\NormalTok{ my\_geography,}
@@ -7178,14 +7293,12 @@ Your first thought about how to modify our function might involve adding an addi
         \StringTok{"Hispanic/Latino"} \OtherTok{=} \StringTok{"B03002\_012"}
 \NormalTok{      )}
 \NormalTok{    )}
-  
+
   \ControlFlowTok{if}\NormalTok{ (clean\_variable\_names }\SpecialCharTok{==} \ConstantTok{TRUE}\NormalTok{) \{}
 \NormalTok{    race\_ethnicity\_data }\OtherTok{\textless{}{-}} \FunctionTok{clean\_names}\NormalTok{(race\_ethnicity\_data)}
-    
 \NormalTok{  \}}
-  
+
 \NormalTok{  race\_ethnicity\_data}
-  
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
@@ -7196,9 +7309,10 @@ The \texttt{...} syntax allows us to avoid doing so. By placing \texttt{...} in 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{get\_acs\_race\_ethnicity }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}\AttributeTok{clean\_variable\_names =} \ConstantTok{FALSE}\NormalTok{,}
-\NormalTok{                                   ...) \{}
-  
+\NormalTok{get\_acs\_race\_ethnicity }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}
+  \AttributeTok{clean\_variable\_names =} \ConstantTok{FALSE}\NormalTok{,}
+\NormalTok{  ...}
+\NormalTok{) \{}
 \NormalTok{  race\_ethnicity\_data }\OtherTok{\textless{}{-}}
     \FunctionTok{get\_acs}\NormalTok{(}
 \NormalTok{      ...,}
@@ -7213,14 +7327,12 @@ The \texttt{...} syntax allows us to avoid doing so. By placing \texttt{...} in 
         \StringTok{"Hispanic/Latino"} \OtherTok{=} \StringTok{"B03002\_012"}
 \NormalTok{      )}
 \NormalTok{    )}
-  
+
   \ControlFlowTok{if}\NormalTok{ (clean\_variable\_names }\SpecialCharTok{==} \ConstantTok{TRUE}\NormalTok{) \{}
 \NormalTok{    race\_ethnicity\_data }\OtherTok{\textless{}{-}} \FunctionTok{clean\_names}\NormalTok{(race\_ethnicity\_data)}
-    
 \NormalTok{  \}}
-  
+
 \NormalTok{  race\_ethnicity\_data}
-  
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
@@ -7239,16 +7351,16 @@ This should return the following:
 #> # A tibble: 416 x 5
 #>    GEOID NAME    variable                     estimate   moe
 #>    <chr> <chr>   <chr>                           <dbl> <dbl>
-#>  1 01    Alabama White                         3241003  2076
-#>  2 01    Alabama Black/African American        1316314  3018
-#>  3 01    Alabama American Indian/Alaska Nati~    17417   941
-#>  4 01    Alabama Asian                           69331  1559
-#>  5 01    Alabama Native Hawaiian/Pacific Isl~     1594   376
-#>  6 01    Alabama Other race                      12504  1867
-#>  7 01    Alabama Multi-Race                     114853  3835
-#>  8 01    Alabama Hispanic/Latino                224659   413
-#>  9 02    Alaska  White                          434515  1067
-#> 10 02    Alaska  Black/African American          22787   769
+#>  1 01    Alabama White                         3247262  2133
+#>  2 01    Alabama Black/African American        1318388  3585
+#>  3 01    Alabama American Indian/Alaska Nati~    14864   868
+#>  4 01    Alabama Asian                           69099  1113
+#>  5 01    Alabama Native Hawaiian/Pacific Isl~     1557   303
+#>  6 01    Alabama Other race                      14724  1851
+#>  7 01    Alabama Multi-Race                     129791  3724
+#>  8 01    Alabama Hispanic/Latino                232407   199
+#>  9 02    Alaska  White                          428802  1173
+#> 10 02    Alaska  Black/African American          22400   935
 #> # i 406 more rows
 \end{verbatim}
 
@@ -7264,8 +7376,10 @@ You could also run the function with the \texttt{geometry\ =\ TRUE} argument to 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{get\_acs\_race\_ethnicity}\NormalTok{(}\AttributeTok{geography =} \StringTok{"county"}\NormalTok{,}
-                       \AttributeTok{geometry =} \ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{get\_acs\_race\_ethnicity}\NormalTok{(}
+  \AttributeTok{geography =} \StringTok{"county"}\NormalTok{,}
+  \AttributeTok{geometry =} \ConstantTok{TRUE}
+\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -7275,31 +7389,31 @@ The function should return data like the following:
 #> Simple feature collection with 416 features and 5 fields
 #> Geometry type: MULTIPOLYGON
 #> Dimension:     XY
-#> Bounding box:  xmin: -179.1489 ymin: 17.88328 xmax: 179.7785 ymax: 71.36516
+#> Bounding box:  xmin: -179.1467 ymin: 17.88328 xmax: 179.7785 ymax: 71.38782
 #> Geodetic CRS:  NAD83
 #> First 10 features:
-#>    GEOID    NAME                         variable estimate
-#> 1     56 Wyoming                            White   478508
-#> 2     56 Wyoming           Black/African American     4811
-#> 3     56 Wyoming    American Indian/Alaska Native    11330
-#> 4     56 Wyoming                            Asian     4907
-#> 5     56 Wyoming Native Hawaiian/Pacific Islander      397
-#> 6     56 Wyoming                       Other race     1582
-#> 7     56 Wyoming                       Multi-Race    15921
-#> 8     56 Wyoming                  Hispanic/Latino    59185
-#> 9     02  Alaska                            White   434515
-#> 10    02  Alaska           Black/African American    22787
-#>     moe                       geometry
-#> 1   959 MULTIPOLYGON (((-111.0546 4...
-#> 2   544 MULTIPOLYGON (((-111.0546 4...
-#> 3   458 MULTIPOLYGON (((-111.0546 4...
-#> 4   409 MULTIPOLYGON (((-111.0546 4...
-#> 5   158 MULTIPOLYGON (((-111.0546 4...
-#> 6   545 MULTIPOLYGON (((-111.0546 4...
-#> 7  1098 MULTIPOLYGON (((-111.0546 4...
-#> 8   167 MULTIPOLYGON (((-111.0546 4...
-#> 9  1067 MULTIPOLYGON (((179.4825 51...
-#> 10  769 MULTIPOLYGON (((179.4825 51...
+#>    GEOID         NAME                         variable
+#> 1     35   New Mexico                            White
+#> 2     35   New Mexico           Black/African American
+#> 3     35   New Mexico    American Indian/Alaska Native
+#> 4     35   New Mexico                            Asian
+#> 5     35   New Mexico Native Hawaiian/Pacific Islander
+#> 6     35   New Mexico                       Other race
+#> 7     35   New Mexico                       Multi-Race
+#> 8     35   New Mexico                  Hispanic/Latino
+#> 9     46 South Dakota                            White
+#> 10    46 South Dakota           Black/African American
+#>    estimate  moe                       geometry
+#> 1    752424 1849 MULTIPOLYGON (((-109.0502 3...
+#> 2     37996 1116 MULTIPOLYGON (((-109.0502 3...
+#> 3    178608 1339 MULTIPOLYGON (((-109.0502 3...
+#> 4     32214  868 MULTIPOLYGON (((-109.0502 3...
+#> 5      1117  190 MULTIPOLYGON (((-109.0502 3...
+#> 6      7680  967 MULTIPOLYGON (((-109.0502 3...
+#> 7     50798 2565 MULTIPOLYGON (((-109.0502 3...
+#> 8   1051626   NA MULTIPOLYGON (((-109.0502 3...
+#> 9    718056  978 MULTIPOLYGON (((-104.0579 4...
+#> 10    19172  805 MULTIPOLYGON (((-104.0579 4...
 \end{verbatim}
 
 The \texttt{...} syntax allows you to create your own function and pass it the arguments of another function without repeating all of that function's arguments in your own code. This approach gives you flexibility while keeping your code concise.
@@ -7453,27 +7567,29 @@ This is because we were using functions without saying what package they came fr
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{get\_acs\_race\_ethnicity }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}\AttributeTok{clean\_variable\_names =} \ConstantTok{FALSE}\NormalTok{,}
-\NormalTok{                                   ...) \{}
-  
-\NormalTok{  race\_ethnicity\_data }\OtherTok{\textless{}{-}}\NormalTok{ tidycensus}\SpecialCharTok{::}\FunctionTok{get\_acs}\NormalTok{(...,}
-                                             \AttributeTok{variables =} \FunctionTok{c}\NormalTok{(}\StringTok{"White"} \OtherTok{=} \StringTok{"B03002\_003"}\NormalTok{,}
-                                                           \StringTok{"Black/African American"} \OtherTok{=} \StringTok{"B03002\_004"}\NormalTok{,}
-                                                           \StringTok{"American Indian/Alaska Native"} \OtherTok{=} \StringTok{"B03002\_005"}\NormalTok{,}
-                                                           \StringTok{"Asian"} \OtherTok{=} \StringTok{"B03002\_006"}\NormalTok{,}
-                                                           \StringTok{"Native Hawaiian/Pacific Islander"} \OtherTok{=} \StringTok{"B03002\_007"}\NormalTok{,}
-                                                           \StringTok{"Other race"} \OtherTok{=} \StringTok{"B03002\_008"}\NormalTok{,}
-                                                           \StringTok{"Multi{-}Race"} \OtherTok{=} \StringTok{"B03002\_009"}\NormalTok{,}
-                                                           \StringTok{"Hispanic/Latino"} \OtherTok{=} \StringTok{"B03002\_012"}\NormalTok{)) }
-  
+\NormalTok{get\_acs\_race\_ethnicity }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}
+  \AttributeTok{clean\_variable\_names =} \ConstantTok{FALSE}\NormalTok{,}
+\NormalTok{  ...}
+\NormalTok{) \{}
+\NormalTok{  race\_ethnicity\_data }\OtherTok{\textless{}{-}}\NormalTok{ tidycensus}\SpecialCharTok{::}\FunctionTok{get\_acs}\NormalTok{(}
+\NormalTok{    ...,}
+    \AttributeTok{variables =} \FunctionTok{c}\NormalTok{(}
+      \StringTok{"White"} \OtherTok{=} \StringTok{"B03002\_003"}\NormalTok{,}
+      \StringTok{"Black/African American"} \OtherTok{=} \StringTok{"B03002\_004"}\NormalTok{,}
+      \StringTok{"American Indian/Alaska Native"} \OtherTok{=} \StringTok{"B03002\_005"}\NormalTok{,}
+      \StringTok{"Asian"} \OtherTok{=} \StringTok{"B03002\_006"}\NormalTok{,}
+      \StringTok{"Native Hawaiian/Pacific Islander"} \OtherTok{=} \StringTok{"B03002\_007"}\NormalTok{,}
+      \StringTok{"Other race"} \OtherTok{=} \StringTok{"B03002\_008"}\NormalTok{,}
+      \StringTok{"Multi{-}Race"} \OtherTok{=} \StringTok{"B03002\_009"}\NormalTok{,}
+      \StringTok{"Hispanic/Latino"} \OtherTok{=} \StringTok{"B03002\_012"}
+\NormalTok{    )}
+\NormalTok{  )}
+
   \ControlFlowTok{if}\NormalTok{ (clean\_variable\_names }\SpecialCharTok{==} \ConstantTok{TRUE}\NormalTok{) \{}
-    
 \NormalTok{    race\_ethnicity\_data }\OtherTok{\textless{}{-}}\NormalTok{ janitor}\SpecialCharTok{::}\FunctionTok{clean\_names}\NormalTok{(race\_ethnicity\_data)}
-    
 \NormalTok{  \}}
-  
+
 \NormalTok{  race\_ethnicity\_data}
-  
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}

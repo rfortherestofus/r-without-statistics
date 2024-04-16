@@ -17,10 +17,9 @@ For example, staff at the Urban Institute, a think tank based in Washington, DC,
 
 
 
-<div class="figure">
-<img src="assets/state-fiscal-briefs.png" alt="Figure 1-1	An excerpt from the state fiscal briefs" width="100%" />
-<p class="caption">(\#fig:state-fiscal-briefs)Figure 1-1	An excerpt from the state fiscal briefs</p>
-</div>
+\begin{figure}
+\includegraphics[width=1\linewidth]{assets/state-fiscal-briefs} \caption{Figure 1-1	An excerpt from the state fiscal briefs}(\#fig:state-fiscal-briefs)
+\end{figure}
 
 
 
@@ -62,7 +61,6 @@ knitr::opts_chunk$set(
 ```{r}
 library(tidyverse)
 library(urbnthemes)
-# library(here)
 library(scales)
 ```
 
@@ -127,7 +125,7 @@ The text and charts in the report come from the `cases` data frame, shown here:
 
 
 ```
-#> # A tibble: 51 × 4
+#> # A tibble: 51 x 4
 #>    total_cases state.name  cases_per_100000 case_rank
 #>    <chr>       <chr>                  <dbl>     <int>
 #>  1 1302945     Alabama                26573        18
@@ -140,17 +138,16 @@ The text and charts in the report come from the `cases` data frame, shown here:
 #>  8 264376      Delaware               27150        13
 #>  9 5965411     Florida                27775        11
 #> 10 2521664     Georgia                23750        35
-#> # ℹ 41 more rows
+#> # i 41 more rows
 ```
 
 If we knit this document, we end up with a simple HTML document, seen in Figure \@ref(fig:alabama-covid-report).
 
 
 
-<div class="figure">
-<img src="assets/alabama-covid-report.png" alt="A screenshot of the Alabama COVID report" width="100%" />
-<p class="caption">(\#fig:alabama-covid-report)A screenshot of the Alabama COVID report</p>
-</div>
+\begin{figure}
+\includegraphics[width=1\linewidth]{assets/alabama-covid-report} \caption{A screenshot of the Alabama COVID report}(\#fig:alabama-covid-report)
+\end{figure}
 
 
 
@@ -226,7 +223,7 @@ This code creates a variable called `highlight_state`. Within the `cases` data f
 
 
 ```
-#> # A tibble: 51 × 2
+#> # A tibble: 51 x 2
 #>    state.name  highlight_state
 #>    <chr>       <chr>          
 #>  1 Alabama     Y              
@@ -239,17 +236,16 @@ This code creates a variable called `highlight_state`. Within the `cases` data f
 #>  8 Delaware    N              
 #>  9 Florida     N              
 #> 10 Georgia     N              
-#> # ℹ 41 more rows
+#> # i 41 more rows
 ```
 
 Later, the ggplot code uses the highlight_state variable for the bar chart’s fill aesthetic, highlighting the state in params$state in yellow and coloring the other states blue. Figure \@ref(fig:alabama-covid-chart) shows the chart with Alabama highlighted.
 
 
 
-<div class="figure">
-<img src="assets/alabama-covid-chart.png" alt="A bar chart showing Alabama highlighted" width="100%" />
-<p class="caption">(\#fig:alabama-covid-chart)A bar chart showing Alabama highlighted</p>
-</div>
+\begin{figure}
+\includegraphics[width=1\linewidth]{assets/alabama-covid-chart} \caption{A bar chart showing Alabama highlighted}(\#fig:alabama-covid-chart)
+\end{figure}
 
 
 
@@ -338,30 +334,29 @@ The `params` variable is the most complicated of the three. It is what’s known
 
 
 ```
-#> # A tibble: 51 × 3
+#> # A tibble: 51 x 3
 #>    input                         output_file    params      
 #>    <chr>                         <glue>         <list>      
 #>  1 urban-covid-budget-report.Rmd Alabama.html   <named list>
 #>  2 urban-covid-budget-report.Rmd Alaska.html    <named list>
 #>  3 urban-covid-budget-report.Rmd Arizona.html   <named list>
 #>  4 urban-covid-budget-report.Rmd Arkansas.html  <named list>
-#>  5 urban-covid-budget-report.Rmd California.ht… <named list>
+#>  5 urban-covid-budget-report.Rmd California.ht~ <named list>
 #>  6 urban-covid-budget-report.Rmd Colorado.html  <named list>
-#>  7 urban-covid-budget-report.Rmd Connecticut.h… <named list>
+#>  7 urban-covid-budget-report.Rmd Connecticut.h~ <named list>
 #>  8 urban-covid-budget-report.Rmd Delaware.html  <named list>
 #>  9 urban-covid-budget-report.Rmd Florida.html   <named list>
 #> 10 urban-covid-budget-report.Rmd Georgia.html   <named list>
-#> # ℹ 41 more rows
+#> # i 41 more rows
 ```
 
 The params variable shows up as <named list>, but if you open the tibble in the RStudio viewer by clicking reports in your Environment tab, you can see the output more clearly (Figure \@ref(fig:params-named-list)).
 
 
 
-<div class="figure">
-<img src="assets/params-named-list.png" alt="The named list column shown in the RStudio viewer" width="100%" />
-<p class="caption">(\#fig:params-named-list)The named list column shown in the RStudio viewer</p>
-</div>
+\begin{figure}
+\includegraphics[width=1\linewidth]{assets/params-named-list} \caption{The named list column shown in the RStudio viewer}(\#fig:params-named-list)
+\end{figure}
 
 
 

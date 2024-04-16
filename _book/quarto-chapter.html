@@ -7,7 +7,7 @@
 <title>Chapter 10 Reproducible Reporting with Quarto | R Without Statistics</title>
 <meta name="author" content="David Keyes">
 <meta name="description" content="Quarto, the next-generation version of R Markdown, offers a few advantages over R Markdown. First, the syntax it uses across output types is more consistent. As you’ve seen in this book, R...">
-<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta name="generator" content="bookdown 0.37 with bs4_book()">
 <meta property="og:title" content="Chapter 10 Reproducible Reporting with Quarto | R Without Statistics">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://book.rwithoutstatistics.com/quarto-chapter.html">
@@ -19,7 +19,7 @@
 <meta name="twitter:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.7.0/transition.js"></script><script src="libs/bs3compat-0.7.0/tabs.js"></script><script src="libs/bs3compat-0.7.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
@@ -166,10 +166,15 @@ execute:
 <span id="cb170-4"><a href="quarto-chapter.html#cb170-4" tabindex="-1"></a><span class="in">library(palmerpenguins)</span></span>
 <span id="cb170-5"><a href="quarto-chapter.html#cb170-5" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
 <span id="cb170-6"><a href="quarto-chapter.html#cb170-6" tabindex="-1"></a></span>
-<span id="cb170-7"><a href="quarto-chapter.html#cb170-7" tabindex="-1"></a><span class="in">ggplot(penguins, aes(x = bill_length_mm,</span></span>
-<span id="cb170-8"><a href="quarto-chapter.html#cb170-8" tabindex="-1"></a><span class="in">                     y = bill_depth_mm)) +</span></span>
-<span id="cb170-9"><a href="quarto-chapter.html#cb170-9" tabindex="-1"></a><span class="in">  geom_point()</span></span>
-<span id="cb170-10"><a href="quarto-chapter.html#cb170-10" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<span id="cb170-7"><a href="quarto-chapter.html#cb170-7" tabindex="-1"></a><span class="in">ggplot(</span></span>
+<span id="cb170-8"><a href="quarto-chapter.html#cb170-8" tabindex="-1"></a><span class="in">  penguins,</span></span>
+<span id="cb170-9"><a href="quarto-chapter.html#cb170-9" tabindex="-1"></a><span class="in">  aes(</span></span>
+<span id="cb170-10"><a href="quarto-chapter.html#cb170-10" tabindex="-1"></a><span class="in">    x = bill_length_mm,</span></span>
+<span id="cb170-11"><a href="quarto-chapter.html#cb170-11" tabindex="-1"></a><span class="in">    y = bill_depth_mm</span></span>
+<span id="cb170-12"><a href="quarto-chapter.html#cb170-12" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb170-13"><a href="quarto-chapter.html#cb170-13" tabindex="-1"></a><span class="in">) +</span></span>
+<span id="cb170-14"><a href="quarto-chapter.html#cb170-14" tabindex="-1"></a><span class="in">  geom_point()</span></span>
+<span id="cb170-15"><a href="quarto-chapter.html#cb170-15" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <p>Helpfully for those of us coming from R Markdown, <code>fig.height</code> and similar options with periods in them will continue to work if you forget to make the switch. A list of all code chunk options can be found on the Quarto website at <a href="https://quarto.org/docs/reference/cells/cells-knitr.html" class="uri">https://quarto.org/docs/reference/cells/cells-knitr.html</a>.</p>
 </div>
 <div id="the-render-button" class="section level3 unnumbered">
@@ -212,46 +217,55 @@ Figure 10.2: The Render button
 <span id="cb171-21"><a href="quarto-chapter.html#cb171-21" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb171-22"><a href="quarto-chapter.html#cb171-22" tabindex="-1"></a><span class="in">cases &lt;- tibble(state.name) %&gt;%</span></span>
 <span id="cb171-23"><a href="quarto-chapter.html#cb171-23" tabindex="-1"></a><span class="in">  rbind(state.name = "District of Columbia") %&gt;%</span></span>
-<span id="cb171-24"><a href="quarto-chapter.html#cb171-24" tabindex="-1"></a><span class="in">  left_join(read_csv("https://data.rwithoutstatistics.com/united_states_covid19_cases_deaths_and_testing_by_state.csv", skip = 2),</span></span>
-<span id="cb171-25"><a href="quarto-chapter.html#cb171-25" tabindex="-1"></a><span class="in">            by = c("state.name" = "State/Territory")) %&gt;%</span></span>
-<span id="cb171-26"><a href="quarto-chapter.html#cb171-26" tabindex="-1"></a><span class="in">  select(total_cases = `Total Cases`, state.name,</span></span>
-<span id="cb171-27"><a href="quarto-chapter.html#cb171-27" tabindex="-1"></a><span class="in">         cases_per_100000 = `Case Rate per 100000`) %&gt;%</span></span>
-<span id="cb171-28"><a href="quarto-chapter.html#cb171-28" tabindex="-1"></a><span class="in">  mutate(cases_per_100000 = parse_number(cases_per_100000)) %&gt;% </span></span>
-<span id="cb171-29"><a href="quarto-chapter.html#cb171-29" tabindex="-1"></a><span class="in">  mutate(case_rank = rank(-cases_per_100000, ties.method = "min"))</span></span>
-<span id="cb171-30"><a href="quarto-chapter.html#cb171-30" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb171-31"><a href="quarto-chapter.html#cb171-31" tabindex="-1"></a></span>
-<span id="cb171-32"><a href="quarto-chapter.html#cb171-32" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb171-33"><a href="quarto-chapter.html#cb171-33" tabindex="-1"></a><span class="in">state_text &lt;- if_else(params$state == "District of Columbia", str_glue("the District of Columbia"), str_glue("state of {params$state}"))</span></span>
-<span id="cb171-34"><a href="quarto-chapter.html#cb171-34" tabindex="-1"></a></span>
-<span id="cb171-35"><a href="quarto-chapter.html#cb171-35" tabindex="-1"></a><span class="in">state_cases_per_100000 &lt;- cases %&gt;%</span></span>
-<span id="cb171-36"><a href="quarto-chapter.html#cb171-36" tabindex="-1"></a><span class="in">  filter(state.name == params$state) %&gt;% </span></span>
-<span id="cb171-37"><a href="quarto-chapter.html#cb171-37" tabindex="-1"></a><span class="in">  pull(cases_per_100000) %&gt;% </span></span>
-<span id="cb171-38"><a href="quarto-chapter.html#cb171-38" tabindex="-1"></a><span class="in">  comma()</span></span>
+<span id="cb171-24"><a href="quarto-chapter.html#cb171-24" tabindex="-1"></a><span class="in">  left_join(</span></span>
+<span id="cb171-25"><a href="quarto-chapter.html#cb171-25" tabindex="-1"></a><span class="in">    read_csv("https://data.rwithoutstatistics.com/united_states_covid19_cases_deaths_and_testing_by_state.csv", skip = 2),</span></span>
+<span id="cb171-26"><a href="quarto-chapter.html#cb171-26" tabindex="-1"></a><span class="in">    by = c("state.name" = "State/Territory")</span></span>
+<span id="cb171-27"><a href="quarto-chapter.html#cb171-27" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
+<span id="cb171-28"><a href="quarto-chapter.html#cb171-28" tabindex="-1"></a><span class="in">  select(</span></span>
+<span id="cb171-29"><a href="quarto-chapter.html#cb171-29" tabindex="-1"></a><span class="in">    total_cases = `Total Cases`,</span></span>
+<span id="cb171-30"><a href="quarto-chapter.html#cb171-30" tabindex="-1"></a><span class="in">    state.name,</span></span>
+<span id="cb171-31"><a href="quarto-chapter.html#cb171-31" tabindex="-1"></a><span class="in">    cases_per_100000 = `Case Rate per 100000`</span></span>
+<span id="cb171-32"><a href="quarto-chapter.html#cb171-32" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
+<span id="cb171-33"><a href="quarto-chapter.html#cb171-33" tabindex="-1"></a><span class="in">  mutate(cases_per_100000 = parse_number(cases_per_100000)) %&gt;%</span></span>
+<span id="cb171-34"><a href="quarto-chapter.html#cb171-34" tabindex="-1"></a><span class="in">  mutate(case_rank = rank(-cases_per_100000, ties.method = "min"))</span></span>
+<span id="cb171-35"><a href="quarto-chapter.html#cb171-35" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb171-36"><a href="quarto-chapter.html#cb171-36" tabindex="-1"></a></span>
+<span id="cb171-37"><a href="quarto-chapter.html#cb171-37" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb171-38"><a href="quarto-chapter.html#cb171-38" tabindex="-1"></a><span class="in">state_text &lt;- if_else(params$state == "District of Columbia", str_glue("the District of Columbia"), str_glue("state of {params$state}"))</span></span>
 <span id="cb171-39"><a href="quarto-chapter.html#cb171-39" tabindex="-1"></a></span>
-<span id="cb171-40"><a href="quarto-chapter.html#cb171-40" tabindex="-1"></a><span class="in">state_cases_rank &lt;- cases %&gt;%</span></span>
-<span id="cb171-41"><a href="quarto-chapter.html#cb171-41" tabindex="-1"></a><span class="in">  filter(state.name == params$state) %&gt;% </span></span>
-<span id="cb171-42"><a href="quarto-chapter.html#cb171-42" tabindex="-1"></a><span class="in">  pull(case_rank)</span></span>
-<span id="cb171-43"><a href="quarto-chapter.html#cb171-43" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb171-40"><a href="quarto-chapter.html#cb171-40" tabindex="-1"></a><span class="in">state_cases_per_100000 &lt;- cases %&gt;%</span></span>
+<span id="cb171-41"><a href="quarto-chapter.html#cb171-41" tabindex="-1"></a><span class="in">  filter(state.name == params$state) %&gt;%</span></span>
+<span id="cb171-42"><a href="quarto-chapter.html#cb171-42" tabindex="-1"></a><span class="in">  pull(cases_per_100000) %&gt;%</span></span>
+<span id="cb171-43"><a href="quarto-chapter.html#cb171-43" tabindex="-1"></a><span class="in">  comma()</span></span>
 <span id="cb171-44"><a href="quarto-chapter.html#cb171-44" tabindex="-1"></a></span>
-<span id="cb171-45"><a href="quarto-chapter.html#cb171-45" tabindex="-1"></a>In <span class="in">`r state_text`</span>, there were <span class="in">`r state_cases_per_100000`</span> cases per 100,000 people in the last seven days. This puts <span class="in">`r params$state`</span> at number <span class="in">`r state_cases_rank`</span> of 50 states and the District of Columbia. </span>
-<span id="cb171-46"><a href="quarto-chapter.html#cb171-46" tabindex="-1"></a></span>
-<span id="cb171-47"><a href="quarto-chapter.html#cb171-47" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb171-48"><a href="quarto-chapter.html#cb171-48" tabindex="-1"></a><span class="in">#| fig-height: 8</span></span>
+<span id="cb171-45"><a href="quarto-chapter.html#cb171-45" tabindex="-1"></a><span class="in">state_cases_rank &lt;- cases %&gt;%</span></span>
+<span id="cb171-46"><a href="quarto-chapter.html#cb171-46" tabindex="-1"></a><span class="in">  filter(state.name == params$state) %&gt;%</span></span>
+<span id="cb171-47"><a href="quarto-chapter.html#cb171-47" tabindex="-1"></a><span class="in">  pull(case_rank)</span></span>
+<span id="cb171-48"><a href="quarto-chapter.html#cb171-48" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb171-49"><a href="quarto-chapter.html#cb171-49" tabindex="-1"></a></span>
-<span id="cb171-50"><a href="quarto-chapter.html#cb171-50" tabindex="-1"></a><span class="in">set_urbn_defaults(style = "print")</span></span>
+<span id="cb171-50"><a href="quarto-chapter.html#cb171-50" tabindex="-1"></a>In <span class="in">`r state_text`</span>, there were <span class="in">`r state_cases_per_100000`</span> cases per 100,000 people in the last seven days. This puts <span class="in">`r params$state`</span> at number <span class="in">`r state_cases_rank`</span> of 50 states and the District of Columbia. </span>
 <span id="cb171-51"><a href="quarto-chapter.html#cb171-51" tabindex="-1"></a></span>
-<span id="cb171-52"><a href="quarto-chapter.html#cb171-52" tabindex="-1"></a><span class="in">cases %&gt;% </span></span>
-<span id="cb171-53"><a href="quarto-chapter.html#cb171-53" tabindex="-1"></a><span class="in">  mutate(highlight_state = if_else(state.name == params$state, "Y", "N")) %&gt;% </span></span>
-<span id="cb171-54"><a href="quarto-chapter.html#cb171-54" tabindex="-1"></a><span class="in">  mutate(state.name = fct_reorder(state.name, cases_per_100000)) %&gt;% </span></span>
-<span id="cb171-55"><a href="quarto-chapter.html#cb171-55" tabindex="-1"></a><span class="in">  ggplot(aes(x = cases_per_100000,</span></span>
-<span id="cb171-56"><a href="quarto-chapter.html#cb171-56" tabindex="-1"></a><span class="in">             y = state.name,</span></span>
-<span id="cb171-57"><a href="quarto-chapter.html#cb171-57" tabindex="-1"></a><span class="in">             fill = highlight_state)) +</span></span>
-<span id="cb171-58"><a href="quarto-chapter.html#cb171-58" tabindex="-1"></a><span class="in">  geom_col() +</span></span>
-<span id="cb171-59"><a href="quarto-chapter.html#cb171-59" tabindex="-1"></a><span class="in">  scale_x_continuous(labels = comma_format()) +</span></span>
-<span id="cb171-60"><a href="quarto-chapter.html#cb171-60" tabindex="-1"></a><span class="in">  theme(legend.position = "none") +</span></span>
-<span id="cb171-61"><a href="quarto-chapter.html#cb171-61" tabindex="-1"></a><span class="in">  labs(y = NULL,</span></span>
-<span id="cb171-62"><a href="quarto-chapter.html#cb171-62" tabindex="-1"></a><span class="in">       x = "Cases per 100,000")</span></span>
-<span id="cb171-63"><a href="quarto-chapter.html#cb171-63" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<span id="cb171-52"><a href="quarto-chapter.html#cb171-52" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb171-53"><a href="quarto-chapter.html#cb171-53" tabindex="-1"></a><span class="in">#| fig-height: 8</span></span>
+<span id="cb171-54"><a href="quarto-chapter.html#cb171-54" tabindex="-1"></a></span>
+<span id="cb171-55"><a href="quarto-chapter.html#cb171-55" tabindex="-1"></a><span class="in">set_urbn_defaults(style = "print")</span></span>
+<span id="cb171-56"><a href="quarto-chapter.html#cb171-56" tabindex="-1"></a></span>
+<span id="cb171-57"><a href="quarto-chapter.html#cb171-57" tabindex="-1"></a><span class="in">cases %&gt;%</span></span>
+<span id="cb171-58"><a href="quarto-chapter.html#cb171-58" tabindex="-1"></a><span class="in">  mutate(highlight_state = if_else(state.name == params$state, "Y", "N")) %&gt;%</span></span>
+<span id="cb171-59"><a href="quarto-chapter.html#cb171-59" tabindex="-1"></a><span class="in">  mutate(state.name = fct_reorder(state.name, cases_per_100000)) %&gt;%</span></span>
+<span id="cb171-60"><a href="quarto-chapter.html#cb171-60" tabindex="-1"></a><span class="in">  ggplot(aes(</span></span>
+<span id="cb171-61"><a href="quarto-chapter.html#cb171-61" tabindex="-1"></a><span class="in">    x = cases_per_100000,</span></span>
+<span id="cb171-62"><a href="quarto-chapter.html#cb171-62" tabindex="-1"></a><span class="in">    y = state.name,</span></span>
+<span id="cb171-63"><a href="quarto-chapter.html#cb171-63" tabindex="-1"></a><span class="in">    fill = highlight_state</span></span>
+<span id="cb171-64"><a href="quarto-chapter.html#cb171-64" tabindex="-1"></a><span class="in">  )) +</span></span>
+<span id="cb171-65"><a href="quarto-chapter.html#cb171-65" tabindex="-1"></a><span class="in">  geom_col() +</span></span>
+<span id="cb171-66"><a href="quarto-chapter.html#cb171-66" tabindex="-1"></a><span class="in">  scale_x_continuous(labels = comma_format()) +</span></span>
+<span id="cb171-67"><a href="quarto-chapter.html#cb171-67" tabindex="-1"></a><span class="in">  theme(legend.position = "none") +</span></span>
+<span id="cb171-68"><a href="quarto-chapter.html#cb171-68" tabindex="-1"></a><span class="in">  labs(</span></span>
+<span id="cb171-69"><a href="quarto-chapter.html#cb171-69" tabindex="-1"></a><span class="in">    y = NULL,</span></span>
+<span id="cb171-70"><a href="quarto-chapter.html#cb171-70" tabindex="-1"></a><span class="in">    x = "Cases per 100,000"</span></span>
+<span id="cb171-71"><a href="quarto-chapter.html#cb171-71" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb171-72"><a href="quarto-chapter.html#cb171-72" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <p>In this code, we’ve switched <code>output: html_document</code> to <code>format: html</code> in the YAML, We’ve also removed the <code>setup</code> code chunk and put the options that were there in the YAML. Lastly, we’ve switched the <code>fig.height</code> option in the last code chunk to <code>fig-height</code> and used the hash pipe to label it as an option.</p>
 <p>Next, to create one report for each state, we must tweak the render.R script file we used to make parameterized reports in Chapter <a href="parameterized-reports-chapter.html#parameterized-reports-chapter">7</a>:</p>
 <div class="sourceCode" id="cb172"><pre class="downlit sourceCode r">
@@ -320,20 +334,22 @@ Figure 10.3: The RStudio menu to make a new Quarto presentation
 <span id="cb173-29"><a href="quarto-chapter.html#cb173-29" tabindex="-1"></a>We can make a histogram to see the distribution of bill lengths.</span>
 <span id="cb173-30"><a href="quarto-chapter.html#cb173-30" tabindex="-1"></a></span>
 <span id="cb173-31"><a href="quarto-chapter.html#cb173-31" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb173-32"><a href="quarto-chapter.html#cb173-32" tabindex="-1"></a><span class="in">penguins %&gt;% </span></span>
+<span id="cb173-32"><a href="quarto-chapter.html#cb173-32" tabindex="-1"></a><span class="in">penguins %&gt;%</span></span>
 <span id="cb173-33"><a href="quarto-chapter.html#cb173-33" tabindex="-1"></a><span class="in">  ggplot(aes(x = bill_length_mm)) +</span></span>
 <span id="cb173-34"><a href="quarto-chapter.html#cb173-34" tabindex="-1"></a><span class="in">  geom_histogram() +</span></span>
 <span id="cb173-35"><a href="quarto-chapter.html#cb173-35" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
 <span id="cb173-36"><a href="quarto-chapter.html#cb173-36" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb173-37"><a href="quarto-chapter.html#cb173-37" tabindex="-1"></a></span>
 <span id="cb173-38"><a href="quarto-chapter.html#cb173-38" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb173-39"><a href="quarto-chapter.html#cb173-39" tabindex="-1"></a><span class="in">average_bill_length &lt;- penguins %&gt;% </span></span>
-<span id="cb173-40"><a href="quarto-chapter.html#cb173-40" tabindex="-1"></a><span class="in">  summarize(avg_bill_length = mean(bill_length_mm,</span></span>
-<span id="cb173-41"><a href="quarto-chapter.html#cb173-41" tabindex="-1"></a><span class="in">                                   na.rm = TRUE)) %&gt;% </span></span>
-<span id="cb173-42"><a href="quarto-chapter.html#cb173-42" tabindex="-1"></a><span class="in">  pull(avg_bill_length)</span></span>
-<span id="cb173-43"><a href="quarto-chapter.html#cb173-43" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb173-44"><a href="quarto-chapter.html#cb173-44" tabindex="-1"></a></span>
-<span id="cb173-45"><a href="quarto-chapter.html#cb173-45" tabindex="-1"></a>The chart shows the distribution of bill lengths. The average bill length is <span class="in">`r average_bill_length`</span> millimeters.</span></code></pre></div>
+<span id="cb173-39"><a href="quarto-chapter.html#cb173-39" tabindex="-1"></a><span class="in">average_bill_length &lt;- penguins %&gt;%</span></span>
+<span id="cb173-40"><a href="quarto-chapter.html#cb173-40" tabindex="-1"></a><span class="in">  summarize(avg_bill_length = mean(</span></span>
+<span id="cb173-41"><a href="quarto-chapter.html#cb173-41" tabindex="-1"></a><span class="in">    bill_length_mm,</span></span>
+<span id="cb173-42"><a href="quarto-chapter.html#cb173-42" tabindex="-1"></a><span class="in">    na.rm = TRUE</span></span>
+<span id="cb173-43"><a href="quarto-chapter.html#cb173-43" tabindex="-1"></a><span class="in">  )) %&gt;%</span></span>
+<span id="cb173-44"><a href="quarto-chapter.html#cb173-44" tabindex="-1"></a><span class="in">  pull(avg_bill_length)</span></span>
+<span id="cb173-45"><a href="quarto-chapter.html#cb173-45" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb173-46"><a href="quarto-chapter.html#cb173-46" tabindex="-1"></a></span>
+<span id="cb173-47"><a href="quarto-chapter.html#cb173-47" tabindex="-1"></a>The chart shows the distribution of bill lengths. The average bill length is <span class="in">`r average_bill_length`</span> millimeters.</span></code></pre></div>
 <p>In the YAML, we set <code>format: revealjs</code> to make a presentation and add several global code chunk options in the <code>execute</code> section. We remove the three dashes used to make slide breaks, because in Quarto, first- or second-level headings make new slides (though you can use three dashes to manually add slide breaks). When you render this code, you should get an HTML file with your slides. The output should look similar to the default <code>xaringan</code> slides we made.</p>
 <div id="incrementally-revealing-content-1" class="section level4 unnumbered">
 <h4>Incrementally Revealing Content<a class="anchor" aria-label="anchor" href="#incrementally-revealing-content-1"><i class="fas fa-link"></i></a>
@@ -375,7 +391,7 @@ Figure 10.4: A slide with two columns
 <span id="cb176-2"><a href="quarto-chapter.html#cb176-2" tabindex="-1"></a></span>
 <span id="cb176-3"><a href="quarto-chapter.html#cb176-3" tabindex="-1"></a>::: {.column width="50%"}</span>
 <span id="cb176-4"><a href="quarto-chapter.html#cb176-4" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb176-5"><a href="quarto-chapter.html#cb176-5" tabindex="-1"></a><span class="in">penguins %&gt;% </span></span>
+<span id="cb176-5"><a href="quarto-chapter.html#cb176-5" tabindex="-1"></a><span class="in">penguins %&gt;%</span></span>
 <span id="cb176-6"><a href="quarto-chapter.html#cb176-6" tabindex="-1"></a><span class="in">  ggplot(aes(x = bill_length_mm)) +</span></span>
 <span id="cb176-7"><a href="quarto-chapter.html#cb176-7" tabindex="-1"></a><span class="in">  geom_histogram() +</span></span>
 <span id="cb176-8"><a href="quarto-chapter.html#cb176-8" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
@@ -385,7 +401,7 @@ Figure 10.4: A slide with two columns
 <span id="cb176-12"><a href="quarto-chapter.html#cb176-12" tabindex="-1"></a></span>
 <span id="cb176-13"><a href="quarto-chapter.html#cb176-13" tabindex="-1"></a>::: {.column width="50%"}</span>
 <span id="cb176-14"><a href="quarto-chapter.html#cb176-14" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb176-15"><a href="quarto-chapter.html#cb176-15" tabindex="-1"></a><span class="in">penguins %&gt;% </span></span>
+<span id="cb176-15"><a href="quarto-chapter.html#cb176-15" tabindex="-1"></a><span class="in">penguins %&gt;%</span></span>
 <span id="cb176-16"><a href="quarto-chapter.html#cb176-16" tabindex="-1"></a><span class="in">  ggplot(aes(x = bill_depth_mm)) +</span></span>
 <span id="cb176-17"><a href="quarto-chapter.html#cb176-17" tabindex="-1"></a><span class="in">  geom_histogram() +</span></span>
 <span id="cb176-18"><a href="quarto-chapter.html#cb176-18" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
@@ -492,94 +508,110 @@ Figure 10.7: The RStudio menu to create a Quarto website
 <span id="cb185-12"><a href="quarto-chapter.html#cb185-12" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb185-13"><a href="quarto-chapter.html#cb185-13" tabindex="-1"></a><span class="in"># Import data</span></span>
 <span id="cb185-14"><a href="quarto-chapter.html#cb185-14" tabindex="-1"></a></span>
-<span id="cb185-15"><a href="quarto-chapter.html#cb185-15" tabindex="-1"></a><span class="in">us_states &lt;- states(cb = TRUE, </span></span>
-<span id="cb185-16"><a href="quarto-chapter.html#cb185-16" tabindex="-1"></a><span class="in">                    resolution = "20m",</span></span>
-<span id="cb185-17"><a href="quarto-chapter.html#cb185-17" tabindex="-1"></a><span class="in">                    progress_bar = FALSE) %&gt;%</span></span>
-<span id="cb185-18"><a href="quarto-chapter.html#cb185-18" tabindex="-1"></a><span class="in">  shift_geometry() %&gt;% </span></span>
-<span id="cb185-19"><a href="quarto-chapter.html#cb185-19" tabindex="-1"></a><span class="in">  clean_names() %&gt;% </span></span>
-<span id="cb185-20"><a href="quarto-chapter.html#cb185-20" tabindex="-1"></a><span class="in">  select(geoid, name) %&gt;% </span></span>
-<span id="cb185-21"><a href="quarto-chapter.html#cb185-21" tabindex="-1"></a><span class="in">  rename(state = name) %&gt;% </span></span>
-<span id="cb185-22"><a href="quarto-chapter.html#cb185-22" tabindex="-1"></a><span class="in">  filter(state %in% state.name)</span></span>
-<span id="cb185-23"><a href="quarto-chapter.html#cb185-23" tabindex="-1"></a></span>
-<span id="cb185-24"><a href="quarto-chapter.html#cb185-24" tabindex="-1"></a><span class="in">covid_data &lt;- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/rolling-averages/us-states.csv") %&gt;% </span></span>
-<span id="cb185-25"><a href="quarto-chapter.html#cb185-25" tabindex="-1"></a><span class="in">  filter(state %in% state.name) %&gt;% </span></span>
-<span id="cb185-26"><a href="quarto-chapter.html#cb185-26" tabindex="-1"></a><span class="in">  mutate(geoid = str_remove(geoid, "USA-")) </span></span>
-<span id="cb185-27"><a href="quarto-chapter.html#cb185-27" tabindex="-1"></a></span>
-<span id="cb185-28"><a href="quarto-chapter.html#cb185-28" tabindex="-1"></a><span class="in">most_recent_day &lt;- covid_data %&gt;% </span></span>
-<span id="cb185-29"><a href="quarto-chapter.html#cb185-29" tabindex="-1"></a><span class="in">  slice_max(order_by = date,</span></span>
-<span id="cb185-30"><a href="quarto-chapter.html#cb185-30" tabindex="-1"></a><span class="in">            n = 1) %&gt;% </span></span>
-<span id="cb185-31"><a href="quarto-chapter.html#cb185-31" tabindex="-1"></a><span class="in">  distinct(date) %&gt;% </span></span>
-<span id="cb185-32"><a href="quarto-chapter.html#cb185-32" tabindex="-1"></a><span class="in">  mutate(date_nice_format = str_glue("{month(date, label = TRUE, abbr = FALSE)} {day(date)}, {year(date)}")) %&gt;% </span></span>
-<span id="cb185-33"><a href="quarto-chapter.html#cb185-33" tabindex="-1"></a><span class="in">  pull(date_nice_format)</span></span>
-<span id="cb185-34"><a href="quarto-chapter.html#cb185-34" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb185-35"><a href="quarto-chapter.html#cb185-35" tabindex="-1"></a></span>
-<span id="cb185-36"><a href="quarto-chapter.html#cb185-36" tabindex="-1"></a><span class="fu"># COVID Death Rates as of `r most_recent_day`</span></span>
-<span id="cb185-37"><a href="quarto-chapter.html#cb185-37" tabindex="-1"></a></span>
-<span id="cb185-38"><a href="quarto-chapter.html#cb185-38" tabindex="-1"></a>This table shows COVID death rates per 100,000 people in four states states.</span>
+<span id="cb185-15"><a href="quarto-chapter.html#cb185-15" tabindex="-1"></a><span class="in">us_states &lt;- states(</span></span>
+<span id="cb185-16"><a href="quarto-chapter.html#cb185-16" tabindex="-1"></a><span class="in">  cb = TRUE,</span></span>
+<span id="cb185-17"><a href="quarto-chapter.html#cb185-17" tabindex="-1"></a><span class="in">  resolution = "20m",</span></span>
+<span id="cb185-18"><a href="quarto-chapter.html#cb185-18" tabindex="-1"></a><span class="in">  progress_bar = FALSE</span></span>
+<span id="cb185-19"><a href="quarto-chapter.html#cb185-19" tabindex="-1"></a><span class="in">) %&gt;%</span></span>
+<span id="cb185-20"><a href="quarto-chapter.html#cb185-20" tabindex="-1"></a><span class="in">  shift_geometry() %&gt;%</span></span>
+<span id="cb185-21"><a href="quarto-chapter.html#cb185-21" tabindex="-1"></a><span class="in">  clean_names() %&gt;%</span></span>
+<span id="cb185-22"><a href="quarto-chapter.html#cb185-22" tabindex="-1"></a><span class="in">  select(geoid, name) %&gt;%</span></span>
+<span id="cb185-23"><a href="quarto-chapter.html#cb185-23" tabindex="-1"></a><span class="in">  rename(state = name) %&gt;%</span></span>
+<span id="cb185-24"><a href="quarto-chapter.html#cb185-24" tabindex="-1"></a><span class="in">  filter(state %in% state.name)</span></span>
+<span id="cb185-25"><a href="quarto-chapter.html#cb185-25" tabindex="-1"></a></span>
+<span id="cb185-26"><a href="quarto-chapter.html#cb185-26" tabindex="-1"></a><span class="in">covid_data &lt;- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/rolling-averages/us-states.csv") %&gt;%</span></span>
+<span id="cb185-27"><a href="quarto-chapter.html#cb185-27" tabindex="-1"></a><span class="in">  filter(state %in% state.name) %&gt;%</span></span>
+<span id="cb185-28"><a href="quarto-chapter.html#cb185-28" tabindex="-1"></a><span class="in">  mutate(geoid = str_remove(geoid, "USA-"))</span></span>
+<span id="cb185-29"><a href="quarto-chapter.html#cb185-29" tabindex="-1"></a></span>
+<span id="cb185-30"><a href="quarto-chapter.html#cb185-30" tabindex="-1"></a><span class="in">most_recent_day &lt;- covid_data %&gt;%</span></span>
+<span id="cb185-31"><a href="quarto-chapter.html#cb185-31" tabindex="-1"></a><span class="in">  slice_max(</span></span>
+<span id="cb185-32"><a href="quarto-chapter.html#cb185-32" tabindex="-1"></a><span class="in">    order_by = date,</span></span>
+<span id="cb185-33"><a href="quarto-chapter.html#cb185-33" tabindex="-1"></a><span class="in">    n = 1</span></span>
+<span id="cb185-34"><a href="quarto-chapter.html#cb185-34" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
+<span id="cb185-35"><a href="quarto-chapter.html#cb185-35" tabindex="-1"></a><span class="in">  distinct(date) %&gt;%</span></span>
+<span id="cb185-36"><a href="quarto-chapter.html#cb185-36" tabindex="-1"></a><span class="in">  mutate(date_nice_format = str_glue("{month(date, label = TRUE, abbr = FALSE)} {day(date)}, {year(date)}")) %&gt;%</span></span>
+<span id="cb185-37"><a href="quarto-chapter.html#cb185-37" tabindex="-1"></a><span class="in">  pull(date_nice_format)</span></span>
+<span id="cb185-38"><a href="quarto-chapter.html#cb185-38" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb185-39"><a href="quarto-chapter.html#cb185-39" tabindex="-1"></a></span>
-<span id="cb185-40"><a href="quarto-chapter.html#cb185-40" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb185-41"><a href="quarto-chapter.html#cb185-41" tabindex="-1"></a><span class="in"># Make table</span></span>
-<span id="cb185-42"><a href="quarto-chapter.html#cb185-42" tabindex="-1"></a></span>
-<span id="cb185-43"><a href="quarto-chapter.html#cb185-43" tabindex="-1"></a><span class="in">covid_data %&gt;% </span></span>
-<span id="cb185-44"><a href="quarto-chapter.html#cb185-44" tabindex="-1"></a><span class="in">  slice_max(order_by = date,</span></span>
-<span id="cb185-45"><a href="quarto-chapter.html#cb185-45" tabindex="-1"></a><span class="in">            n = 1) %&gt;%</span></span>
-<span id="cb185-46"><a href="quarto-chapter.html#cb185-46" tabindex="-1"></a><span class="in">  select(state, deaths_avg_per_100k) %&gt;% </span></span>
-<span id="cb185-47"><a href="quarto-chapter.html#cb185-47" tabindex="-1"></a><span class="in">  arrange(state) %&gt;% </span></span>
-<span id="cb185-48"><a href="quarto-chapter.html#cb185-48" tabindex="-1"></a><span class="in">  set_names("State", "Death rate") %&gt;% </span></span>
-<span id="cb185-49"><a href="quarto-chapter.html#cb185-49" tabindex="-1"></a><span class="in">  reactable()</span></span>
-<span id="cb185-50"><a href="quarto-chapter.html#cb185-50" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb185-51"><a href="quarto-chapter.html#cb185-51" tabindex="-1"></a></span>
-<span id="cb185-52"><a href="quarto-chapter.html#cb185-52" tabindex="-1"></a>We can see this same death rate data for all states on a map.</span>
-<span id="cb185-53"><a href="quarto-chapter.html#cb185-53" tabindex="-1"></a></span>
-<span id="cb185-54"><a href="quarto-chapter.html#cb185-54" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb185-55"><a href="quarto-chapter.html#cb185-55" tabindex="-1"></a><span class="in"># Make map</span></span>
-<span id="cb185-56"><a href="quarto-chapter.html#cb185-56" tabindex="-1"></a></span>
-<span id="cb185-57"><a href="quarto-chapter.html#cb185-57" tabindex="-1"></a><span class="in">most_recent &lt;- us_states %&gt;% </span></span>
-<span id="cb185-58"><a href="quarto-chapter.html#cb185-58" tabindex="-1"></a><span class="in">  left_join(covid_data, by = "state") %&gt;% </span></span>
-<span id="cb185-59"><a href="quarto-chapter.html#cb185-59" tabindex="-1"></a><span class="in">  slice_max(order_by = date,</span></span>
-<span id="cb185-60"><a href="quarto-chapter.html#cb185-60" tabindex="-1"></a><span class="in">            n = 1) </span></span>
-<span id="cb185-61"><a href="quarto-chapter.html#cb185-61" tabindex="-1"></a></span>
-<span id="cb185-62"><a href="quarto-chapter.html#cb185-62" tabindex="-1"></a><span class="in">most_recent %&gt;% </span></span>
-<span id="cb185-63"><a href="quarto-chapter.html#cb185-63" tabindex="-1"></a><span class="in">  ggplot(aes(fill = deaths_avg_per_100k)) +</span></span>
-<span id="cb185-64"><a href="quarto-chapter.html#cb185-64" tabindex="-1"></a><span class="in">  geom_sf() +</span></span>
-<span id="cb185-65"><a href="quarto-chapter.html#cb185-65" tabindex="-1"></a><span class="in">  scale_fill_viridis_c(option = "rocket") +</span></span>
-<span id="cb185-66"><a href="quarto-chapter.html#cb185-66" tabindex="-1"></a><span class="in">  labs(fill = "Deaths per\n100,000 people") +</span></span>
-<span id="cb185-67"><a href="quarto-chapter.html#cb185-67" tabindex="-1"></a><span class="in">  theme_void()</span></span>
-<span id="cb185-68"><a href="quarto-chapter.html#cb185-68" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb185-40"><a href="quarto-chapter.html#cb185-40" tabindex="-1"></a><span class="fu"># COVID Death Rates as of `r most_recent_day`</span></span>
+<span id="cb185-41"><a href="quarto-chapter.html#cb185-41" tabindex="-1"></a></span>
+<span id="cb185-42"><a href="quarto-chapter.html#cb185-42" tabindex="-1"></a>This table shows COVID death rates per 100,000 people in four states states.</span>
+<span id="cb185-43"><a href="quarto-chapter.html#cb185-43" tabindex="-1"></a></span>
+<span id="cb185-44"><a href="quarto-chapter.html#cb185-44" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb185-45"><a href="quarto-chapter.html#cb185-45" tabindex="-1"></a><span class="in"># Make table</span></span>
+<span id="cb185-46"><a href="quarto-chapter.html#cb185-46" tabindex="-1"></a></span>
+<span id="cb185-47"><a href="quarto-chapter.html#cb185-47" tabindex="-1"></a><span class="in">covid_data %&gt;%</span></span>
+<span id="cb185-48"><a href="quarto-chapter.html#cb185-48" tabindex="-1"></a><span class="in">  slice_max(</span></span>
+<span id="cb185-49"><a href="quarto-chapter.html#cb185-49" tabindex="-1"></a><span class="in">    order_by = date,</span></span>
+<span id="cb185-50"><a href="quarto-chapter.html#cb185-50" tabindex="-1"></a><span class="in">    n = 1</span></span>
+<span id="cb185-51"><a href="quarto-chapter.html#cb185-51" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
+<span id="cb185-52"><a href="quarto-chapter.html#cb185-52" tabindex="-1"></a><span class="in">  select(state, deaths_avg_per_100k) %&gt;%</span></span>
+<span id="cb185-53"><a href="quarto-chapter.html#cb185-53" tabindex="-1"></a><span class="in">  arrange(state) %&gt;%</span></span>
+<span id="cb185-54"><a href="quarto-chapter.html#cb185-54" tabindex="-1"></a><span class="in">  set_names("State", "Death rate") %&gt;%</span></span>
+<span id="cb185-55"><a href="quarto-chapter.html#cb185-55" tabindex="-1"></a><span class="in">  reactable()</span></span>
+<span id="cb185-56"><a href="quarto-chapter.html#cb185-56" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb185-57"><a href="quarto-chapter.html#cb185-57" tabindex="-1"></a></span>
+<span id="cb185-58"><a href="quarto-chapter.html#cb185-58" tabindex="-1"></a>We can see this same death rate data for all states on a map.</span>
+<span id="cb185-59"><a href="quarto-chapter.html#cb185-59" tabindex="-1"></a></span>
+<span id="cb185-60"><a href="quarto-chapter.html#cb185-60" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb185-61"><a href="quarto-chapter.html#cb185-61" tabindex="-1"></a><span class="in"># Make map</span></span>
+<span id="cb185-62"><a href="quarto-chapter.html#cb185-62" tabindex="-1"></a></span>
+<span id="cb185-63"><a href="quarto-chapter.html#cb185-63" tabindex="-1"></a><span class="in">most_recent &lt;- us_states %&gt;%</span></span>
+<span id="cb185-64"><a href="quarto-chapter.html#cb185-64" tabindex="-1"></a><span class="in">  left_join(covid_data, by = "state") %&gt;%</span></span>
+<span id="cb185-65"><a href="quarto-chapter.html#cb185-65" tabindex="-1"></a><span class="in">  slice_max(</span></span>
+<span id="cb185-66"><a href="quarto-chapter.html#cb185-66" tabindex="-1"></a><span class="in">    order_by = date,</span></span>
+<span id="cb185-67"><a href="quarto-chapter.html#cb185-67" tabindex="-1"></a><span class="in">    n = 1</span></span>
+<span id="cb185-68"><a href="quarto-chapter.html#cb185-68" tabindex="-1"></a><span class="in">  )</span></span>
 <span id="cb185-69"><a href="quarto-chapter.html#cb185-69" tabindex="-1"></a></span>
-<span id="cb185-70"><a href="quarto-chapter.html#cb185-70" tabindex="-1"></a><span class="fu"># COVID Death Rates Over Time</span></span>
-<span id="cb185-71"><a href="quarto-chapter.html#cb185-71" tabindex="-1"></a></span>
-<span id="cb185-72"><a href="quarto-chapter.html#cb185-72" tabindex="-1"></a>The following chart shows COVID death rates from the start of COVID in early 2020 until <span class="in">`r most_recent_day`</span>.</span>
-<span id="cb185-73"><a href="quarto-chapter.html#cb185-73" tabindex="-1"></a></span>
-<span id="cb185-74"><a href="quarto-chapter.html#cb185-74" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb185-75"><a href="quarto-chapter.html#cb185-75" tabindex="-1"></a><span class="in"># Make chart</span></span>
-<span id="cb185-76"><a href="quarto-chapter.html#cb185-76" tabindex="-1"></a></span>
-<span id="cb185-77"><a href="quarto-chapter.html#cb185-77" tabindex="-1"></a><span class="in">library(plotly)</span></span>
-<span id="cb185-78"><a href="quarto-chapter.html#cb185-78" tabindex="-1"></a></span>
-<span id="cb185-79"><a href="quarto-chapter.html#cb185-79" tabindex="-1"></a><span class="in">covid_chart &lt;- covid_data %&gt;% </span></span>
-<span id="cb185-80"><a href="quarto-chapter.html#cb185-80" tabindex="-1"></a><span class="in">  filter(state %in% c("Alabama",</span></span>
-<span id="cb185-81"><a href="quarto-chapter.html#cb185-81" tabindex="-1"></a><span class="in">                      "Alaska",</span></span>
-<span id="cb185-82"><a href="quarto-chapter.html#cb185-82" tabindex="-1"></a><span class="in">                      "Arizona",</span></span>
-<span id="cb185-83"><a href="quarto-chapter.html#cb185-83" tabindex="-1"></a><span class="in">                      "Arkansas")) %&gt;% </span></span>
-<span id="cb185-84"><a href="quarto-chapter.html#cb185-84" tabindex="-1"></a><span class="in">  ggplot(aes(x = date,</span></span>
-<span id="cb185-85"><a href="quarto-chapter.html#cb185-85" tabindex="-1"></a><span class="in">             y = deaths_avg_per_100k,</span></span>
-<span id="cb185-86"><a href="quarto-chapter.html#cb185-86" tabindex="-1"></a><span class="in">             group = state,</span></span>
-<span id="cb185-87"><a href="quarto-chapter.html#cb185-87" tabindex="-1"></a><span class="in">             fill = deaths_avg_per_100k)) +</span></span>
-<span id="cb185-88"><a href="quarto-chapter.html#cb185-88" tabindex="-1"></a><span class="in">  geom_col() +</span></span>
-<span id="cb185-89"><a href="quarto-chapter.html#cb185-89" tabindex="-1"></a><span class="in">  scale_fill_viridis_c(option = "rocket") +</span></span>
-<span id="cb185-90"><a href="quarto-chapter.html#cb185-90" tabindex="-1"></a><span class="in">  theme_minimal() +</span></span>
-<span id="cb185-91"><a href="quarto-chapter.html#cb185-91" tabindex="-1"></a><span class="in">  labs(title = "Deaths per 100,000 people over time") +</span></span>
-<span id="cb185-92"><a href="quarto-chapter.html#cb185-92" tabindex="-1"></a><span class="in">  theme(legend.position = "none",</span></span>
-<span id="cb185-93"><a href="quarto-chapter.html#cb185-93" tabindex="-1"></a><span class="in">        plot.title.position = "plot",</span></span>
-<span id="cb185-94"><a href="quarto-chapter.html#cb185-94" tabindex="-1"></a><span class="in">        plot.title = element_text(face = "bold"),</span></span>
-<span id="cb185-95"><a href="quarto-chapter.html#cb185-95" tabindex="-1"></a><span class="in">        panel.grid.minor = element_blank(),</span></span>
-<span id="cb185-96"><a href="quarto-chapter.html#cb185-96" tabindex="-1"></a><span class="in">        axis.title = element_blank()) +</span></span>
-<span id="cb185-97"><a href="quarto-chapter.html#cb185-97" tabindex="-1"></a><span class="in">  facet_wrap(~state,</span></span>
-<span id="cb185-98"><a href="quarto-chapter.html#cb185-98" tabindex="-1"></a><span class="in">             nrow = 2)</span></span>
-<span id="cb185-99"><a href="quarto-chapter.html#cb185-99" tabindex="-1"></a></span>
-<span id="cb185-100"><a href="quarto-chapter.html#cb185-100" tabindex="-1"></a></span>
-<span id="cb185-101"><a href="quarto-chapter.html#cb185-101" tabindex="-1"></a><span class="in">ggplotly(covid_chart)</span></span>
-<span id="cb185-102"><a href="quarto-chapter.html#cb185-102" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<span id="cb185-70"><a href="quarto-chapter.html#cb185-70" tabindex="-1"></a><span class="in">most_recent %&gt;%</span></span>
+<span id="cb185-71"><a href="quarto-chapter.html#cb185-71" tabindex="-1"></a><span class="in">  ggplot(aes(fill = deaths_avg_per_100k)) +</span></span>
+<span id="cb185-72"><a href="quarto-chapter.html#cb185-72" tabindex="-1"></a><span class="in">  geom_sf() +</span></span>
+<span id="cb185-73"><a href="quarto-chapter.html#cb185-73" tabindex="-1"></a><span class="in">  scale_fill_viridis_c(option = "rocket") +</span></span>
+<span id="cb185-74"><a href="quarto-chapter.html#cb185-74" tabindex="-1"></a><span class="in">  labs(fill = "Deaths per\n100,000 people") +</span></span>
+<span id="cb185-75"><a href="quarto-chapter.html#cb185-75" tabindex="-1"></a><span class="in">  theme_void()</span></span>
+<span id="cb185-76"><a href="quarto-chapter.html#cb185-76" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb185-77"><a href="quarto-chapter.html#cb185-77" tabindex="-1"></a></span>
+<span id="cb185-78"><a href="quarto-chapter.html#cb185-78" tabindex="-1"></a><span class="fu"># COVID Death Rates Over Time</span></span>
+<span id="cb185-79"><a href="quarto-chapter.html#cb185-79" tabindex="-1"></a></span>
+<span id="cb185-80"><a href="quarto-chapter.html#cb185-80" tabindex="-1"></a>The following chart shows COVID death rates from the start of COVID in early 2020 until <span class="in">`r most_recent_day`</span>.</span>
+<span id="cb185-81"><a href="quarto-chapter.html#cb185-81" tabindex="-1"></a></span>
+<span id="cb185-82"><a href="quarto-chapter.html#cb185-82" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb185-83"><a href="quarto-chapter.html#cb185-83" tabindex="-1"></a><span class="in"># Make chart</span></span>
+<span id="cb185-84"><a href="quarto-chapter.html#cb185-84" tabindex="-1"></a></span>
+<span id="cb185-85"><a href="quarto-chapter.html#cb185-85" tabindex="-1"></a><span class="in">library(plotly)</span></span>
+<span id="cb185-86"><a href="quarto-chapter.html#cb185-86" tabindex="-1"></a></span>
+<span id="cb185-87"><a href="quarto-chapter.html#cb185-87" tabindex="-1"></a><span class="in">covid_chart &lt;- covid_data %&gt;%</span></span>
+<span id="cb185-88"><a href="quarto-chapter.html#cb185-88" tabindex="-1"></a><span class="in">  filter(state %in% c(</span></span>
+<span id="cb185-89"><a href="quarto-chapter.html#cb185-89" tabindex="-1"></a><span class="in">    "Alabama",</span></span>
+<span id="cb185-90"><a href="quarto-chapter.html#cb185-90" tabindex="-1"></a><span class="in">    "Alaska",</span></span>
+<span id="cb185-91"><a href="quarto-chapter.html#cb185-91" tabindex="-1"></a><span class="in">    "Arizona",</span></span>
+<span id="cb185-92"><a href="quarto-chapter.html#cb185-92" tabindex="-1"></a><span class="in">    "Arkansas"</span></span>
+<span id="cb185-93"><a href="quarto-chapter.html#cb185-93" tabindex="-1"></a><span class="in">  )) %&gt;%</span></span>
+<span id="cb185-94"><a href="quarto-chapter.html#cb185-94" tabindex="-1"></a><span class="in">  ggplot(aes(</span></span>
+<span id="cb185-95"><a href="quarto-chapter.html#cb185-95" tabindex="-1"></a><span class="in">    x = date,</span></span>
+<span id="cb185-96"><a href="quarto-chapter.html#cb185-96" tabindex="-1"></a><span class="in">    y = deaths_avg_per_100k,</span></span>
+<span id="cb185-97"><a href="quarto-chapter.html#cb185-97" tabindex="-1"></a><span class="in">    group = state,</span></span>
+<span id="cb185-98"><a href="quarto-chapter.html#cb185-98" tabindex="-1"></a><span class="in">    fill = deaths_avg_per_100k</span></span>
+<span id="cb185-99"><a href="quarto-chapter.html#cb185-99" tabindex="-1"></a><span class="in">  )) +</span></span>
+<span id="cb185-100"><a href="quarto-chapter.html#cb185-100" tabindex="-1"></a><span class="in">  geom_col() +</span></span>
+<span id="cb185-101"><a href="quarto-chapter.html#cb185-101" tabindex="-1"></a><span class="in">  scale_fill_viridis_c(option = "rocket") +</span></span>
+<span id="cb185-102"><a href="quarto-chapter.html#cb185-102" tabindex="-1"></a><span class="in">  theme_minimal() +</span></span>
+<span id="cb185-103"><a href="quarto-chapter.html#cb185-103" tabindex="-1"></a><span class="in">  labs(title = "Deaths per 100,000 people over time") +</span></span>
+<span id="cb185-104"><a href="quarto-chapter.html#cb185-104" tabindex="-1"></a><span class="in">  theme(</span></span>
+<span id="cb185-105"><a href="quarto-chapter.html#cb185-105" tabindex="-1"></a><span class="in">    legend.position = "none",</span></span>
+<span id="cb185-106"><a href="quarto-chapter.html#cb185-106" tabindex="-1"></a><span class="in">    plot.title.position = "plot",</span></span>
+<span id="cb185-107"><a href="quarto-chapter.html#cb185-107" tabindex="-1"></a><span class="in">    plot.title = element_text(face = "bold"),</span></span>
+<span id="cb185-108"><a href="quarto-chapter.html#cb185-108" tabindex="-1"></a><span class="in">    panel.grid.minor = element_blank(),</span></span>
+<span id="cb185-109"><a href="quarto-chapter.html#cb185-109" tabindex="-1"></a><span class="in">    axis.title = element_blank()</span></span>
+<span id="cb185-110"><a href="quarto-chapter.html#cb185-110" tabindex="-1"></a><span class="in">  ) +</span></span>
+<span id="cb185-111"><a href="quarto-chapter.html#cb185-111" tabindex="-1"></a><span class="in">  facet_wrap(</span></span>
+<span id="cb185-112"><a href="quarto-chapter.html#cb185-112" tabindex="-1"></a><span class="in">    ~state,</span></span>
+<span id="cb185-113"><a href="quarto-chapter.html#cb185-113" tabindex="-1"></a><span class="in">    nrow = 2</span></span>
+<span id="cb185-114"><a href="quarto-chapter.html#cb185-114" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb185-115"><a href="quarto-chapter.html#cb185-115" tabindex="-1"></a></span>
+<span id="cb185-116"><a href="quarto-chapter.html#cb185-116" tabindex="-1"></a></span>
+<span id="cb185-117"><a href="quarto-chapter.html#cb185-117" tabindex="-1"></a><span class="in">ggplotly(covid_chart)</span></span>
+<span id="cb185-118"><a href="quarto-chapter.html#cb185-118" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <p>To render a Quarto website, look for the Build tab in the top right of RStudio and click <strong>Render Website</strong>. The rendered website should now appear in the Viewer pane on the bottom-right panel of RStudio. If you navigate to the Files pane on the same panel, you should also see that a _site folder has been created to hold the content of the rendered site. Try opening the <em>index.html</em> file in your web browser. You should see the website in Figure <a href="quarto-chapter.html#fig:covid-website-messages">10.8</a>.</p>
 <div class="figure">
 <span style="display:block;" id="fig:covid-website-messages"></span>
@@ -711,19 +743,21 @@ Figure 10.13: The website with changes to the navigation bar
 <span id="cb194-3"><a href="quarto-chapter.html#cb194-3" tabindex="-1"></a><span class="in">#| out-width: 100%</span></span>
 <span id="cb194-4"><a href="quarto-chapter.html#cb194-4" tabindex="-1"></a><span class="in"># Make map</span></span>
 <span id="cb194-5"><a href="quarto-chapter.html#cb194-5" tabindex="-1"></a></span>
-<span id="cb194-6"><a href="quarto-chapter.html#cb194-6" tabindex="-1"></a><span class="in">most_recent &lt;- us_states %&gt;% </span></span>
-<span id="cb194-7"><a href="quarto-chapter.html#cb194-7" tabindex="-1"></a><span class="in">  left_join(covid_data, by = "state") %&gt;% </span></span>
-<span id="cb194-8"><a href="quarto-chapter.html#cb194-8" tabindex="-1"></a><span class="in">  slice_max(order_by = date,</span></span>
-<span id="cb194-9"><a href="quarto-chapter.html#cb194-9" tabindex="-1"></a><span class="in">            n = 1) </span></span>
-<span id="cb194-10"><a href="quarto-chapter.html#cb194-10" tabindex="-1"></a></span>
-<span id="cb194-11"><a href="quarto-chapter.html#cb194-11" tabindex="-1"></a><span class="in">most_recent %&gt;% </span></span>
-<span id="cb194-12"><a href="quarto-chapter.html#cb194-12" tabindex="-1"></a><span class="in">  ggplot(aes(fill = deaths_avg_per_100k)) +</span></span>
-<span id="cb194-13"><a href="quarto-chapter.html#cb194-13" tabindex="-1"></a><span class="in">  geom_sf() +</span></span>
-<span id="cb194-14"><a href="quarto-chapter.html#cb194-14" tabindex="-1"></a><span class="in">  scale_fill_viridis_c(option = "rocket") +</span></span>
-<span id="cb194-15"><a href="quarto-chapter.html#cb194-15" tabindex="-1"></a><span class="in">  labs(fill = "Deaths per\n100,000 people") +</span></span>
-<span id="cb194-16"><a href="quarto-chapter.html#cb194-16" tabindex="-1"></a><span class="in">  theme_void()</span></span>
-<span id="cb194-17"><a href="quarto-chapter.html#cb194-17" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb194-18"><a href="quarto-chapter.html#cb194-18" tabindex="-1"></a>:::</span></code></pre></div>
+<span id="cb194-6"><a href="quarto-chapter.html#cb194-6" tabindex="-1"></a><span class="in">most_recent &lt;- us_states %&gt;%</span></span>
+<span id="cb194-7"><a href="quarto-chapter.html#cb194-7" tabindex="-1"></a><span class="in">  left_join(covid_data, by = "state") %&gt;%</span></span>
+<span id="cb194-8"><a href="quarto-chapter.html#cb194-8" tabindex="-1"></a><span class="in">  slice_max(</span></span>
+<span id="cb194-9"><a href="quarto-chapter.html#cb194-9" tabindex="-1"></a><span class="in">    order_by = date,</span></span>
+<span id="cb194-10"><a href="quarto-chapter.html#cb194-10" tabindex="-1"></a><span class="in">    n = 1</span></span>
+<span id="cb194-11"><a href="quarto-chapter.html#cb194-11" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb194-12"><a href="quarto-chapter.html#cb194-12" tabindex="-1"></a></span>
+<span id="cb194-13"><a href="quarto-chapter.html#cb194-13" tabindex="-1"></a><span class="in">most_recent %&gt;%</span></span>
+<span id="cb194-14"><a href="quarto-chapter.html#cb194-14" tabindex="-1"></a><span class="in">  ggplot(aes(fill = deaths_avg_per_100k)) +</span></span>
+<span id="cb194-15"><a href="quarto-chapter.html#cb194-15" tabindex="-1"></a><span class="in">  geom_sf() +</span></span>
+<span id="cb194-16"><a href="quarto-chapter.html#cb194-16" tabindex="-1"></a><span class="in">  scale_fill_viridis_c(option = "rocket") +</span></span>
+<span id="cb194-17"><a href="quarto-chapter.html#cb194-17" tabindex="-1"></a><span class="in">  labs(fill = "Deaths per\n100,000 people") +</span></span>
+<span id="cb194-18"><a href="quarto-chapter.html#cb194-18" tabindex="-1"></a><span class="in">  theme_void()</span></span>
+<span id="cb194-19"><a href="quarto-chapter.html#cb194-19" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb194-20"><a href="quarto-chapter.html#cb194-20" tabindex="-1"></a>:::</span></code></pre></div>
 <p>We add <code>:::{.column-screen-inset}</code> to the beginning of the code chunk that makes the map and <code>:::</code> to the end of the code chunk. We also add the line <code>#| out-width: 100%</code> in the code chunk. This is because we need to specify that the map should take up all of the available width. Without this line, the map would take up only a portion of the window. There are a number of different output widths you can use. The full list is available at <a href="https://quarto.org/docs/authoring/article-layout.html" class="uri">https://quarto.org/docs/authoring/article-layout.html</a>.</p>
 </div>
 <div id="hosting-your-website-on-github-pages-and-quarto-pub" class="section level4 unnumbered">
