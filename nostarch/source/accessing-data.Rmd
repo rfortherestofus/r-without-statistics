@@ -76,14 +76,14 @@ Take a look at the `survey_data_raw` object to confirm that the data was importe
 ```{r eval = FALSE, echo = TRUE}
 library(tidyverse)
 
-survey_data_raw %>% 
+survey_data_raw %>%
   glimpse()
 ```
 
 The `glimpse()` function, which creates one output row per variable, shows that we’ve indeed imported the data directly from Google Sheets:
 
 ```{r}
-survey_data_raw %>% 
+survey_data_raw %>%
   glimpse()
 ```
 
@@ -100,9 +100,11 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE,
-                      warning = FALSE,
-                      message = FALSE)
+knitr::opts_chunk$set(
+  echo = FALSE,
+  warning = FALSE,
+  message = FALSE
+)
 ```
 
 
@@ -129,10 +131,12 @@ The next code chunk cleans the `survey_data_raw` object, saving the result as `s
 survey_data_clean <- survey_data_raw %>%
   clean_names() %>%
   mutate(participant_id = as.character(row_number())) %>%
-  rename(age = how_old_are_you,
-         like_games = do_you_like_to_play_video_games,
-         game_types = what_kind_of_games_do_you_like,
-         favorite_game = whats_your_favorite_game) %>%
+  rename(
+    age = how_old_are_you,
+    like_games = do_you_like_to_play_video_games,
+    game_types = what_kind_of_games_do_you_like,
+    favorite_game = whats_your_favorite_game
+  ) %>%
   relocate(participant_id, .before = age) %>%
   mutate(age = factor(age, levels = c("Under 18", "18-24", "25-34", "35-44", "45-54", "55-64", "Over 65")))
 ```
@@ -144,14 +148,16 @@ Here, we use the `clean_names()` function from the `janitor` package to make the
 survey_data_clean <- survey_data_raw %>%
   clean_names() %>%
   mutate(participant_id = as.character(row_number())) %>%
-  rename(age = how_old_are_you,
-         like_games = do_you_like_to_play_video_games,
-         game_types = what_kind_of_games_do_you_like,
-         favorite_game = whats_your_favorite_game) %>%
+  rename(
+    age = how_old_are_you,
+    like_games = do_you_like_to_play_video_games,
+    game_types = what_kind_of_games_do_you_like,
+    favorite_game = whats_your_favorite_game
+  ) %>%
   relocate(participant_id, .before = age) %>%
   mutate(age = factor(age, levels = c("Under 18", "18-24", "25-34", "35-44", "45-54", "55-64", "Over 65")))
 
-survey_data_clean %>% 
+survey_data_clean %>%
   glimpse()
 ```
 The rest of the report uses this data to highlight a variety of statistics:
@@ -167,25 +173,25 @@ number_of_respondents <- nrow(survey_data_clean)
 We received responses from `r number_of_respondents` respondents. Their ages are below.
 
 ```{r}
-survey_data_clean %>% 
-  select(participant_id, age) %>% 
-  gt() %>% 
+survey_data_clean %>%
+  select(participant_id, age) %>%
+  gt() %>%
   cols_label(
     participant_id = "Participant ID",
     age = "Age"
-  ) %>% 
+  ) %>%
   tab_style(
     style = cell_text(weight = "bold"),
     locations = cells_column_labels()
-  ) %>% 
+  ) %>%
   cols_align(
     align = "left",
     columns = everything()
-  ) %>% 
+  ) %>%
   cols_width(
     participant_id ~ px(200),
     age ~ px(700)
-  ) 
+  )
 ```
 
 # Video Games
@@ -194,25 +200,33 @@ We asked if respondents liked video games. Their responses are below.
 
 ```{r}
 survey_data_clean %>%
-  count(like_games) %>% 
-  ggplot(aes(x = like_games,
-             y = n,
-             fill = like_games)) +
+  count(like_games) %>%
+  ggplot(aes(
+    x = like_games,
+    y = n,
+    fill = like_games
+  )) +
   geom_col() +
   scale_fill_manual(values = c(
     "No" = "#6cabdd",
     "Yes" = "#ff7400"
   )) +
-  labs(title = "How Many People Like Video Games?", 
-       x = NULL,
-       y = "Number of Participants") +
+  labs(
+    title = "How Many People Like Video Games?",
+    x = NULL,
+    y = "Number of Participants"
+  ) +
   theme_minimal(base_size = 16) +
-  theme(legend.position = "none",
-        panel.grid.minor = element_blank(),
-        panel.grid.major.x = element_blank(),
-        axis.title.y = element_blank(),
-        plot.title = element_text(face = "bold",
-                                  hjust = 0.5))
+  theme(
+    legend.position = "none",
+    panel.grid.minor = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.title.y = element_blank(),
+    plot.title = element_text(
+      face = "bold",
+      hjust = 0.5
+    )
+  )
 ```
 ````
 
@@ -239,16 +253,20 @@ In the previous sections, we read the data of the entire Google Sheet. It is, ho
 To do this, use the `range` argument in the `read_sheet()` function when importing the data. This argument lets us specify a range of data to bring. It uses the syntax you may have used to select columns in Google Sheets. In this example, I use `range = "Sheet1!B:E"` to import columns B through E (but not A, which contains the timestamp) before adding `glimpse()`.
 
 ```{r eval = FALSE, echo = TRUE}
-read_sheet("https://docs.google.com/spreadsheets/d/1AR0_RcFBg8wdiY4Cj-k8vRypp_txh27MyZuiRdqScog/edit?usp=sharing",
-           range = "Sheet1!B:E") %>% 
+read_sheet(
+  "https://docs.google.com/spreadsheets/d/1AR0_RcFBg8wdiY4Cj-k8vRypp_txh27MyZuiRdqScog/edit?usp=sharing",
+  range = "Sheet1!B:E"
+) %>%
   glimpse()
 ```
 
 Running this code produces output without the `timestamp` variable:
 
 ```{r}
-read_sheet("https://docs.google.com/spreadsheets/d/1AR0_RcFBg8wdiY4Cj-k8vRypp_txh27MyZuiRdqScog/edit?usp=sharing",
-           range = "Sheet1!B:E") %>% 
+read_sheet(
+  "https://docs.google.com/spreadsheets/d/1AR0_RcFBg8wdiY4Cj-k8vRypp_txh27MyZuiRdqScog/edit?usp=sharing",
+  range = "Sheet1!B:E"
+) %>%
   glimpse()
 ```
 
@@ -283,9 +301,11 @@ Now you can use `tidycensus` to access data. The most common of these are the De
 The Census Bureau puts out many datasets, several of which you can access using dedicated `tidycensus` functions. Let’s access data from the 2020 Decennial Census about the Asian population in each state using the `get_decennial()` function with three arguments:
 
 ```{r eval = FALSE, echo = TRUE}
-get_decennial(geography = "state", 
-              variables = "P1_006N",
-              year = 2020)
+get_decennial(
+  geography = "state",
+  variables = "P1_006N",
+  year = 2020
+)
 ```
 
 The geography argument tells `get_decennial()` to access data at the state level. In addition to the 50 states, it will return for the District of Columbia and Puerto Rico. There are many other geographies, including county, census tract, and more. The `variables` argument specifies the variable or variables we want to access. Here, `P2_002N` is the variable name for the total Asian population. We’ll discuss how to identify other variables you may want to use in the next section. Lastly, `year` specifies the year from which we want to access data. We’re using data from the 2020 Census.
@@ -293,9 +313,11 @@ The geography argument tells `get_decennial()` to access data at the state level
 Running this code returns the following:
 
 ```{r}
-get_decennial(geography = "state", 
-              variables = "P1_006N",
-              year = 2020)
+get_decennial(
+  geography = "state",
+  variables = "P1_006N",
+  year = 2020
+)
 ```
 
 The resulting data frame has four variables. `GEOID` is the geographic identifier given by the Census Bureau for the state. Each state has a geographic identifier, as do all counties, census tracts, and other geographies. `NAME` is the name of each state, and `variable` is the name of the variable we passed to the `get_decennial()` function. Lastly, `value` is the numeric value for the state and variable in each row. In this case, it represents the total Asian population in each state.
@@ -308,15 +330,19 @@ The `tidycensus` package has a function called `load_variables()` that shows all
 
 
 ```{r eval = FALSE, echo = TRUE}
-load_variables(year = 2020, 
-               dataset = "pl")
+load_variables(
+  year = 2020,
+  dataset = "pl"
+)
 ```
 
 Running this code returns the name, label (a description), and concept (a category) of all variables available to us:
 
 ```{r}
-load_variables(year = 2020, 
-               dataset = "pl")
+load_variables(
+  year = 2020,
+  dataset = "pl"
+)
 ```
 
 By looking at this list, you can see that the variable `P1_001N` gives us the total population.
@@ -326,38 +352,50 @@ By looking at this list, you can see that the variable `P1_001N` gives us the to
 Now that we know which variables we need, we can use the `get_decennial()` function again with two variables at once:
 
 ```{r eval = FALSE, echo = TRUE}
-get_decennial(geography = "state", 
-              variables = c("P1_001N", "P1_006N"),
-              year = 2020) %>% 
+get_decennial(
+  geography = "state",
+  variables = c("P1_001N", "P1_006N"),
+  year = 2020
+) %>%
   arrange(NAME)
 ```
 
 We add `arrange(NAME)` after `get_decennial()` so that the results are sorted by state name, allowing us to see that we have both variables for each state:
 
 ```{r}
-get_decennial(geography = "state", 
-              variables = c("P1_001N", "P1_006N"),
-              year = 2020) %>% 
+get_decennial(
+  geography = "state",
+  variables = c("P1_001N", "P1_006N"),
+  year = 2020
+) %>%
   arrange(NAME)
 ```
 
 If you’re working with multiple census variables, however, you might have trouble remembering what names like `P1_001N` and `P1_006N` mean. Fortunately, we can adjust the code in the call to `get_decennial()` to give these variables more meaningful names using the following syntax:
 
 ```{r eval = FALSE, echo = TRUE}
-get_decennial(geography = "state", 
-              variables = c(total_population = "P1_001N", 
-                            asian_population = "P1_006N"),
-              year = 2020) %>% 
+get_decennial(
+  geography = "state",
+  variables = c(
+    total_population = "P1_001N",
+    asian_population = "P1_006N"
+  ),
+  year = 2020
+) %>%
   arrange(NAME)
 ```
 
 Within the `variables` argument, we give the name we want our variables to have, followed by the equal sign and the original variable name. We can rename multiple variables by putting them within the `c()` function, as I’ve done here. It should now be much easier to see which variables we’re working with:
 
 ```{r}
-get_decennial(geography = "state", 
-              variables = c(total_population = "P1_001N", 
-                            asian_population = "P1_006N"),
-              year = 2020) %>% 
+get_decennial(
+  geography = "state",
+  variables = c(
+    total_population = "P1_001N",
+    asian_population = "P1_006N"
+  ),
+  year = 2020
+) %>%
   arrange(NAME)
 ```
 
@@ -368,14 +406,18 @@ Instead of `P1_001N` and `P1_006N`, we have `total_population` and `asian_popula
 Now we have the data we need to calculate the Asian population in each state as a percentage of the total. To do this, we add a few things to the code from the previous section:
 
 ```{r echo = TRUE, eval = FALSE}
-get_decennial(geography = "state", 
-              variables = c(total_population = "P1_001N", 
-                            asian_population = "P1_006N"),
-              year = 2020) %>% 
-  arrange(NAME) %>% 
-  group_by(NAME) %>% 
-  mutate(pct = value / sum(value)) %>% 
-  ungroup() %>% 
+get_decennial(
+  geography = "state",
+  variables = c(
+    total_population = "P1_001N",
+    asian_population = "P1_006N"
+  ),
+  year = 2020
+) %>%
+  arrange(NAME) %>%
+  group_by(NAME) %>%
+  mutate(pct = value / sum(value)) %>%
+  ungroup() %>%
   filter(variable == "asian_population")
 ```
 
@@ -384,15 +426,19 @@ We use `group_by(NAME)` to create one group for each state because we want to ca
 When we run this code, we see both the Asian population and the Asian population as a percentage of the total population in each state:
 
 ```{r}
-get_decennial(geography = "state", 
-              variables = c(total_population = "P1_001N", 
-                            asian_population = "P1_006N"),
-              year = 2020) %>% 
-  arrange(NAME) %>% 
-  group_by(NAME) %>% 
-  mutate(pct = value / sum(value)) %>% 
-  ungroup() %>% 
-  filter(variable == "asian_population") 
+get_decennial(
+  geography = "state",
+  variables = c(
+    total_population = "P1_001N",
+    asian_population = "P1_006N"
+  ),
+  year = 2020
+) %>%
+  arrange(NAME) %>%
+  group_by(NAME) %>%
+  mutate(pct = value / sum(value)) %>%
+  ungroup() %>%
+  filter(variable == "asian_population")
 ```
 
 This is one way to calculate the Asian population as a percentage of the total population in each state, but it’s not the only way.
@@ -402,43 +448,51 @@ This is one way to calculate the Asian population as a percentage of the total p
 Kyle Walker knew that calculating summaries like we’ve just done would be a common use case for `tidycensus`. To calculate, say, the Asian population as a percentage of the whole, you need to have a numerator (the Asian population) and denominator (the total population). So, to simplify things, he gives us the `summary_var` argument that we can use within `get_decennial()` to import the total population as a separate variable. Instead of putting `P1_001N` (total population) in the `variables` argument, we can use it with the `summary_var` argument as follows.
 
 ```{r eval = FALSE, echo = TRUE}
-get_decennial(geography = "state", 
-              variables = c(asian_population = "P1_006N"),
-              summary_var = "P1_001N",
-              year = 2020) %>% 
+get_decennial(
+  geography = "state",
+  variables = c(asian_population = "P1_006N"),
+  summary_var = "P1_001N",
+  year = 2020
+) %>%
   arrange(NAME)
 ```
 
 This returns a nearly identical data frame to what we got earlier, except that the total population is now a separate variable, rather than additional rows for each state:
 
 ```{r}
-get_decennial(geography = "state", 
-              variables = c(asian_population = "P1_006N"),
-              summary_var = "P1_001N",
-              year = 2020) %>% 
+get_decennial(
+  geography = "state",
+  variables = c(asian_population = "P1_006N"),
+  summary_var = "P1_001N",
+  year = 2020
+) %>%
   arrange(NAME)
 ```
 
 With our data in this new format, we can calculate the Asian population as a percentage of the whole by dividing the `value` variable by the `summary_value` variable. Then we drop the `summary_value` variable because we no longer need it after doing our calculation:
 
 ```{r eval = FALSE, echo = TRUE}
-get_decennial(geography = "state", 
-              variables = c(asian_population = "P1_006N"),
-              summary_var = "P1_001N",
-              year = 2020) %>% 
-  arrange(NAME) %>% 
-  mutate(pct = value / summary_value) %>% 
+get_decennial(
+  geography = "state",
+  variables = c(asian_population = "P1_006N"),
+  summary_var = "P1_001N",
+  year = 2020
+) %>%
+  arrange(NAME) %>%
+  mutate(pct = value / summary_value) %>%
   select(-summary_value)
 ```
 
 The resulting output is identical to the output of the previous section:
 
 ```{r}
-get_decennial(geography = "state", 
-              variables = c(asian_population = "P1_006N"),
-              summary_var = "P1_001N",
-              year = 2020) %>% 
-  arrange(NAME) %>% 
+get_decennial(
+  geography = "state",
+  variables = c(asian_population = "P1_006N"),
+  summary_var = "P1_001N",
+  year = 2020
+) %>%
+  arrange(NAME) %>%
   mutate(pct = value / summary_value)
 ```
 
@@ -451,17 +505,21 @@ Once you’ve accessed data using the `tidycensus` package, you can do whatever 
 Despite these differences, we can access data from the American Community Survey in a manner nearly identical to how we access Decennial Census data. Instead of `get_decennial()`, we use the function `get_acs()`, but the arguments we pass to these functions are the same. In the following example, I’ve identified a variable I’m interested in (`B01002_001`, which shows the median age) and use it to get this data for each state:
 
 ```{r eval = FALSE, echo = TRUE}
-get_acs(geography = "state",
-        variables = "B01002_001",
-        year = 2020)
+get_acs(
+  geography = "state",
+  variables = "B01002_001",
+  year = 2020
+)
 ```
 
 Here is what the output looks like:
 
 ```{r}
-get_acs(geography = "state",
-        variables = "B01002_001",
-        year = 2020)
+get_acs(
+  geography = "state",
+  variables = "B01002_001",
+  year = 2020
+)
 ```
 
 You should notice two differences in the output from `get_acs()` compared to that from `get_decennial()`. First, instead of the value column, `get_acs()` produces a column called `estimate`. It also produces an additional column called `moe`, for the margin of error. We see these changes because the American Community Survey is given to a sample of the population. As a result, we must extrapolate values from that sample to the population as a whole, and with such an estimate comes a margin of error. 
@@ -473,11 +531,15 @@ In the state-level data, the margins of error are relatively low, but if you get
 Here is how we could take the data on median age and pipe it into ggplot to create a bar chart: 
 
 ```{r eval = FALSE, echo = TRUE}
-get_acs(geography = "state",
-        variables = "B01002_001",
-        year = 2020) %>% 
-  ggplot(aes(x = estimate,
-             y = NAME)) +
+get_acs(
+  geography = "state",
+  variables = "B01002_001",
+  year = 2020
+) %>%
+  ggplot(aes(
+    x = estimate,
+    y = NAME
+  )) +
   geom_col()
 ```
 
@@ -488,11 +550,15 @@ print_nostarch_file_name()
 ```
 
 ```{r median-age-chart, fig.height = 6, fig.cap = "A bar chart showing the median age in each state"}
-get_acs(geography = "state",
-        variables = "B01002_001",
-        year = 2020) %>% 
-  ggplot(aes(x = estimate,
-             y = NAME)) +
+get_acs(
+  geography = "state",
+  variables = "B01002_001",
+  year = 2020
+) %>%
+  ggplot(aes(
+    x = estimate,
+    y = NAME
+  )) +
   geom_col()
 ```
 
@@ -507,28 +573,34 @@ This chart is nothing special, but the fact that it takes just six lines of code
 Kyle Walker, the creator of `tidycensus`, also created the `tigris` package for working with geospatial data. As a result, these packages are tightly integrated. Within the `get_acs()` function, you can set the `geometry` argument to `TRUE` to receive both demographic data from the Census Bureau and geospatial data from `tigris`:
 
 ```{r eval = FALSE, echo = TRUE}
-get_acs(geography = "state",
-        variables = "B01002_001",
-        year = 2020,
-        geometry = TRUE) 
+get_acs(
+  geography = "state",
+  variables = "B01002_001",
+  year = 2020,
+  geometry = TRUE
+)
 ```
 
 If we take a look at the resulting data, we can see that it has the metadata and `geometry` column of the simple features objects that we saw in Chapter \@ref(maps-chapter).
 
 ```{r}
-get_acs(geography = "state",
-        variables = "B01002_001",
-        year = 2020,
-        geometry = TRUE) 
+get_acs(
+  geography = "state",
+  variables = "B01002_001",
+  year = 2020,
+  geometry = TRUE
+)
 ```
 
 We can see that the geometry type is MULTIPOLYGON, which you learned about in Chapter \@ref(maps-chapter). We can pipe this data into ggplot to make a map with the following code:
 
 ```{r eval = FALSE, echo = TRUE}
-get_acs(geography = "state",
-        variables = "B01002_001",
-        year = 2020,
-        geometry = TRUE) %>% 
+get_acs(
+  geography = "state",
+  variables = "B01002_001",
+  year = 2020,
+  geometry = TRUE
+) %>%
   ggplot(aes(fill = estimate)) +
   geom_sf() +
   scale_fill_viridis_c()
@@ -543,10 +615,12 @@ print_nostarch_file_name()
 ```
 
 ```{r median-age-map-bad, fig.cap = "A hard-to-read map showing median age by state"}
-get_acs(geography = "state",
-        variables = "B01002_001",
-        year = 2020,
-        geometry = TRUE) %>% 
+get_acs(
+  geography = "state",
+  variables = "B01002_001",
+  year = 2020,
+  geometry = TRUE
+) %>%
   ggplot(aes(fill = estimate)) +
   geom_sf() +
   scale_fill_viridis_c()
@@ -561,11 +635,13 @@ To fix these problems, load the tigris package, then use the `shift_geometry()` 
 ```{r eval = FALSE, echo = TRUE}
 library(tigris)
 
-get_acs(geography = "state",
-        variables = "B01002_001",
-        year = 2020,
-        geometry = TRUE) %>% 
-  shift_geometry(preserve_area = FALSE) %>% 
+get_acs(
+  geography = "state",
+  variables = "B01002_001",
+  year = 2020,
+  geometry = TRUE
+) %>%
+  shift_geometry(preserve_area = FALSE) %>%
   ggplot(aes(fill = estimate)) +
   geom_sf() +
   scale_fill_viridis_c()
@@ -578,11 +654,13 @@ print_nostarch_file_name()
 ```
 
 ```{r median-age-map-good, fig.cap = "An easier-to-read map showing median age by state"}
-get_acs(geography = "state",
-        variables = "B01002_001",
-        year = 2020,
-        geometry = TRUE) %>% 
-  shift_geometry(preserve_area = FALSE) %>% 
+get_acs(
+  geography = "state",
+  variables = "B01002_001",
+  year = 2020,
+  geometry = TRUE
+) %>%
+  shift_geometry(preserve_area = FALSE) %>%
   ggplot(aes(fill = estimate)) +
   geom_sf() +
   scale_fill_viridis_c()

@@ -75,6 +75,9 @@ dm_perc_cat_hubs <-
   mutate(max_week = max(week)) %>% ## for var
   ungroup() %>%
   filter(percentage > 0)
+
+dm_perc_cat_hubs |> 
+  jsonlite::write_json(path = "data/dm_perc_cat_hubs.json")
 ```
 
 

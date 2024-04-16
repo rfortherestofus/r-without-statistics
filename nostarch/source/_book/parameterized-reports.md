@@ -59,7 +59,6 @@ knitr::opts_chunk$set(
 ```{r}
 library(tidyverse)
 library(urbnthemes)
-library(here)
 library(scales)
 ```
 
