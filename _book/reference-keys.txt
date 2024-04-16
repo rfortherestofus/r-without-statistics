@@ -26,3 +26,7 @@ the-_site.yml-file--
 quarto-chapter
 accessing-data-chapter
 packages-chapter
+fig:state-fiscal-briefs
+fig:alabama-covid-report
+fig:alabama-covid-chart
+fig:params-named-list

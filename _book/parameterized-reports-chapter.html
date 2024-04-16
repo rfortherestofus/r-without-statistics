@@ -4,22 +4,22 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 7 Using Parameters to Automate Reports | R Without Statistics</title>
+<title>Chapter 8 Using Parameters to Automate Reports | R Without Statistics</title>
 <meta name="author" content="David Keyes">
 <meta name="description" content="Parameterized reporting is a technique that uses R Markdown to make multiple reports simultaneously. Using parameterized reporting, you can follow the same process to make 3,000 reports as you did...">
-<meta name="generator" content="bookdown 0.35 with bs4_book()">
-<meta property="og:title" content="Chapter 7 Using Parameters to Automate Reports | R Without Statistics">
+<meta name="generator" content="bookdown 0.37 with bs4_book()">
+<meta property="og:title" content="Chapter 8 Using Parameters to Automate Reports | R Without Statistics">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://book.rwithoutstatistics.com/parameterized-reports-chapter.html">
 <meta property="og:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
 <meta property="og:description" content="Parameterized reporting is a technique that uses R Markdown to make multiple reports simultaneously. Using parameterized reporting, you can follow the same process to make 3,000 reports as you did...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 7 Using Parameters to Automate Reports | R Without Statistics">
+<meta name="twitter:title" content="Chapter 8 Using Parameters to Automate Reports | R Without Statistics">
 <meta name="twitter:description" content="Parameterized reporting is a technique that uses R Markdown to make multiple reports simultaneously. Using parameterized reporting, you can follow the same process to make 3,000 reports as you did...">
 <meta name="twitter:image" content="https://book.rwithoutstatistics.com/mock-cover.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.6.1/transition.js"></script><script src="libs/bs3compat-0.6.1/tabs.js"></script><script src="libs/bs3compat-0.6.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
@@ -45,49 +45,30 @@
 </form>
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">About the Book</a></li>
-<li class="book-part">Introduction</li>
-<li><a class="" href="introduction.html">Introduction</a></li>
-<li><a class="" href="howto-chapter.html"><span class="header-section-number">1</span> An R Programming Crash Course</a></li>
-<li class="book-part">Part 1: Visualizations</li>
-<li><a class="" href="data-viz-chapter.html"><span class="header-section-number">2</span> Principles of Data Visualization</a></li>
-<li><a class="" href="custom-theme-chapter.html"><span class="header-section-number">3</span> Making Your Own Theme</a></li>
-<li><a class="" href="maps-chapter.html"><span class="header-section-number">4</span> Creating Maps</a></li>
-<li><a class="" href="tables-chapter.html"><span class="header-section-number">5</span> Crafting High-Quality Tables</a></li>
-<li class="book-part">Part 2: Reports, Presentations, and Websites</li>
-<li><a class="" href="rmarkdown-chapter.html"><span class="header-section-number">6</span> Writing Reports in R Markdown</a></li>
-<li><a class="active" href="parameterized-reports-chapter.html"><span class="header-section-number">7</span> Using Parameters to Automate Reports</a></li>
-<li><a class="" href="presentations-chapter.html"><span class="header-section-number">8</span> Making Slides Presentations with xaringan</a></li>
-<li><a class="" href="websites-chapter.html"><span class="header-section-number">9</span> Make Websites to Share Results Online</a></li>
-<li><a class="" href="quarto-chapter.html"><span class="header-section-number">10</span> Reproducible Reporting with Quarto</a></li>
-<li class="book-part">Part 3: Automation and Collaboration</li>
-<li><a class="" href="accessing-data-chapter.html"><span class="header-section-number">11</span> Accessing Data</a></li>
-<li><a class="" href="packages-chapter.html"><span class="header-section-number">12</span> Creating Your Own R Packages</a></li>
-</ul>
+        <ul class="book-toc list-unstyled"><li><a class="" href="index.html"><span class="header-section-number">Chapter 8</span> Using Parameters to Automate Reports</a></li></ul>
 
         <div class="book-extra">
           <p><a id="book-repo" href="https://github.com/rfortherestofus/r-without-statistics">View book source <i class="fab fa-github"></i></a></p>
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="parameterized-reports-chapter" class="section level1" number="7">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="parameterized-reports-chapter" class="section level1" number="8">
 <h1>
-<span class="header-section-number">7</span> Using Parameters to Automate Reports<a class="anchor" aria-label="anchor" href="#parameterized-reports-chapter"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8</span> Using Parameters to Automate Reports<a class="anchor" aria-label="anchor" href="#parameterized-reports-chapter"><i class="fas fa-link"></i></a>
 </h1>
 <p><em>Parameterized reporting</em> is a technique that uses R Markdown to make multiple reports simultaneously. Using parameterized reporting, you can follow the same process to make 3,000 reports as you did to make one report. The technique also makes your work more accurate, as it avoids copy-and-paste errors.</p>
-<p>For example, staff at the Urban Institute, a think tank based in Washington, DC, used parameterized reporting to develop fiscal briefs for all US states, as well as the District of Columbia. Each report required extensive text and multiple charts, so creating them by hand wasn’t feasible. Instead, employees Safia Sayed, Livia Mucciolo, and Aaron Williams automated the process. Their 51 beautiful reports appeared on the Urban Institute website. A snippet is shown in Figure <a href="parameterized-reports-chapter.html#fig:state-fiscal-briefs">7.1</a>.</p>
+<p>For example, staff at the Urban Institute, a think tank based in Washington, DC, used parameterized reporting to develop fiscal briefs for all US states, as well as the District of Columbia. Each report required extensive text and multiple charts, so creating them by hand wasn’t feasible. Instead, employees Safia Sayed, Livia Mucciolo, and Aaron Williams automated the process. Their 51 beautiful reports appeared on the Urban Institute website. A snippet is shown in Figure <a href="parameterized-reports-chapter.html#fig:state-fiscal-briefs">8.1</a>.</p>
 <div class="figure">
 <span style="display:block;" id="fig:state-fiscal-briefs"></span>
 <img src="assets/state-fiscal-briefs.png" alt="Figure 1-1   An excerpt from the state fiscal briefs" width="100%"><p class="caption">
-Figure 7.1: Figure 1-1 An excerpt from the state fiscal briefs
+Figure 8.1: Figure 1-1 An excerpt from the state fiscal briefs
 </p>
 </div>
 <p>This chapter explains what parameterized reporting is, then works through a simplified version of the code that the Urban Institute used.</p>
 <div id="how-parameterized-reporting-works" class="section level2 unnumbered">
 <h2>How Parameterized Reporting Works<a class="anchor" aria-label="anchor" href="#how-parameterized-reporting-works"><i class="fas fa-link"></i></a>
 </h2>
-<p>If you’ve ever had to make multiple reports at the same time, you know what a drag it can be, especially if you’re using the multi-tool workflow described in Chapter <a href="rmarkdown-chapter.html#rmarkdown-chapter">6</a>. Making just one report can take a long time. Take that work and multiply it by 10, 20, or, in the case of the team at the Urban Institute, 51, and it can start to feel overwhelming. Parameterized reporting can generate thousands of reports at once using the following workflow:</p>
+<p>If you’ve ever had to make multiple reports at the same time, you know what a drag it can be, especially if you’re using the multi-tool workflow described in Chapter <a href="rmarkdown-chapter.html#rmarkdown-chapter">7</a>. Making just one report can take a long time. Take that work and multiply it by 10, 20, or, in the case of the team at the Urban Institute, 51, and it can start to feel overwhelming. Parameterized reporting can generate thousands of reports at once using the following workflow:</p>
 <ol style="list-style-type: decimal">
 <li><p>Make a report template in R Markdown</p></li>
 <li><p>Add a parameter (for example, one representing US states) in the YAML of your R Markdown document to represent the values that will change between reports</p></li>
@@ -96,81 +77,83 @@ Figure 7.1: Figure 1-1 An excerpt from the state fiscal briefs
 <li><p>Run this script for all states</p></li>
 </ol>
 <p>Let’s begin by creating a report template for one state. To do this, I’ve taken the code that the Urban Institute staff used to make their state fiscal briefs and simplified it significantly. Instead of focusing on fiscal data, I’ve used data you may be more familiar with: COVID-19 rates from mid-2022. Here is the R Markdown document:</p>
-<div class="sourceCode" id="cb118"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb118-1"><a href="parameterized-reports-chapter.html#cb118-1" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb118-2"><a href="parameterized-reports-chapter.html#cb118-2" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Urban Institute COVID Report"</span></span>
-<span id="cb118-3"><a href="parameterized-reports-chapter.html#cb118-3" tabindex="-1"></a><span class="an">output:</span><span class="co"> html_document</span></span>
-<span id="cb118-4"><a href="parameterized-reports-chapter.html#cb118-4" tabindex="-1"></a><span class="an">params:</span></span>
-<span id="cb118-5"><a href="parameterized-reports-chapter.html#cb118-5" tabindex="-1"></a><span class="an">state:</span><span class="co"> "Alabama"</span></span>
-<span id="cb118-6"><a href="parameterized-reports-chapter.html#cb118-6" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb118-7"><a href="parameterized-reports-chapter.html#cb118-7" tabindex="-1"></a>  </span>
-<span id="cb118-8"><a href="parameterized-reports-chapter.html#cb118-8" tabindex="-1"></a>  <span class="in">```{r setup, include=FALSE}</span></span>
-<span id="cb118-9"><a href="parameterized-reports-chapter.html#cb118-9" tabindex="-1"></a><span class="in">knitr::opts_chunk$set(</span></span>
-<span id="cb118-10"><a href="parameterized-reports-chapter.html#cb118-10" tabindex="-1"></a><span class="in">  echo = FALSE,</span></span>
-<span id="cb118-11"><a href="parameterized-reports-chapter.html#cb118-11" tabindex="-1"></a><span class="in">  warning = FALSE,</span></span>
-<span id="cb118-12"><a href="parameterized-reports-chapter.html#cb118-12" tabindex="-1"></a><span class="in">  message = FALSE</span></span>
-<span id="cb118-13"><a href="parameterized-reports-chapter.html#cb118-13" tabindex="-1"></a><span class="in">)</span></span>
-<span id="cb118-14"><a href="parameterized-reports-chapter.html#cb118-14" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb118-15"><a href="parameterized-reports-chapter.html#cb118-15" tabindex="-1"></a></span>
-<span id="cb118-16"><a href="parameterized-reports-chapter.html#cb118-16" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb118-17"><a href="parameterized-reports-chapter.html#cb118-17" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
-<span id="cb118-18"><a href="parameterized-reports-chapter.html#cb118-18" tabindex="-1"></a><span class="in">library(urbnthemes)</span></span>
-<span id="cb118-19"><a href="parameterized-reports-chapter.html#cb118-19" tabindex="-1"></a><span class="in">library(here)</span></span>
-<span id="cb118-20"><a href="parameterized-reports-chapter.html#cb118-20" tabindex="-1"></a><span class="in">library(scales)</span></span>
-<span id="cb118-21"><a href="parameterized-reports-chapter.html#cb118-21" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb118-22"><a href="parameterized-reports-chapter.html#cb118-22" tabindex="-1"></a></span>
-<span id="cb118-23"><a href="parameterized-reports-chapter.html#cb118-23" tabindex="-1"></a><span class="fu"># `r params$state`</span></span>
-<span id="cb118-24"><a href="parameterized-reports-chapter.html#cb118-24" tabindex="-1"></a></span>
-<span id="cb118-25"><a href="parameterized-reports-chapter.html#cb118-25" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb118-26"><a href="parameterized-reports-chapter.html#cb118-26" tabindex="-1"></a><span class="in">cases &lt;- tibble(state.name) %&gt;%</span></span>
-<span id="cb118-27"><a href="parameterized-reports-chapter.html#cb118-27" tabindex="-1"></a><span class="in">  rbind(state.name = "District of Columbia") %&gt;%</span></span>
-<span id="cb118-28"><a href="parameterized-reports-chapter.html#cb118-28" tabindex="-1"></a><span class="in">  left_join(</span></span>
-<span id="cb118-29"><a href="parameterized-reports-chapter.html#cb118-29" tabindex="-1"></a><span class="in">    read_csv("united_states_covid19_cases_deaths_and_testing_by_state.csv",</span></span>
-<span id="cb118-30"><a href="parameterized-reports-chapter.html#cb118-30" tabindex="-1"></a><span class="in">      skip = 2</span></span>
-<span id="cb118-31"><a href="parameterized-reports-chapter.html#cb118-31" tabindex="-1"></a><span class="in">    ),</span></span>
-<span id="cb118-32"><a href="parameterized-reports-chapter.html#cb118-32" tabindex="-1"></a><span class="in">    by = c("state.name" = "State/Territory")</span></span>
-<span id="cb118-33"><a href="parameterized-reports-chapter.html#cb118-33" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
-<span id="cb118-34"><a href="parameterized-reports-chapter.html#cb118-34" tabindex="-1"></a><span class="in">  select(</span></span>
-<span id="cb118-35"><a href="parameterized-reports-chapter.html#cb118-35" tabindex="-1"></a><span class="in">    total_cases = `Total Cases`, state.name,</span></span>
-<span id="cb118-36"><a href="parameterized-reports-chapter.html#cb118-36" tabindex="-1"></a><span class="in">    cases_per_100000 = `Case Rate per 100000`</span></span>
-<span id="cb118-37"><a href="parameterized-reports-chapter.html#cb118-37" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
-<span id="cb118-38"><a href="parameterized-reports-chapter.html#cb118-38" tabindex="-1"></a><span class="in">  mutate(cases_per_100000 = parse_number(cases_per_100000)) %&gt;%</span></span>
-<span id="cb118-39"><a href="parameterized-reports-chapter.html#cb118-39" tabindex="-1"></a><span class="in">  mutate(case_rank = rank(-cases_per_100000, ties.method = "min"))</span></span>
-<span id="cb118-40"><a href="parameterized-reports-chapter.html#cb118-40" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb118-41"><a href="parameterized-reports-chapter.html#cb118-41" tabindex="-1"></a></span>
-<span id="cb118-42"><a href="parameterized-reports-chapter.html#cb118-42" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb118-43"><a href="parameterized-reports-chapter.html#cb118-43" tabindex="-1"></a><span class="in">state_text &lt;- if_else(params$state == "District of Columbia", str_glue("the District of Columbia"), str_glue("state of {params$state}"))</span></span>
-<span id="cb118-44"><a href="parameterized-reports-chapter.html#cb118-44" tabindex="-1"></a></span>
-<span id="cb118-45"><a href="parameterized-reports-chapter.html#cb118-45" tabindex="-1"></a><span class="in">state_cases_per_100000 &lt;- cases %&gt;%</span></span>
-<span id="cb118-46"><a href="parameterized-reports-chapter.html#cb118-46" tabindex="-1"></a><span class="in">  filter(state.name == params$state) %&gt;%</span></span>
-<span id="cb118-47"><a href="parameterized-reports-chapter.html#cb118-47" tabindex="-1"></a><span class="in">  pull(cases_per_100000) %&gt;%</span></span>
-<span id="cb118-48"><a href="parameterized-reports-chapter.html#cb118-48" tabindex="-1"></a><span class="in">  comma()</span></span>
-<span id="cb118-49"><a href="parameterized-reports-chapter.html#cb118-49" tabindex="-1"></a></span>
-<span id="cb118-50"><a href="parameterized-reports-chapter.html#cb118-50" tabindex="-1"></a><span class="in">state_cases_rank &lt;- cases %&gt;%</span></span>
-<span id="cb118-51"><a href="parameterized-reports-chapter.html#cb118-51" tabindex="-1"></a><span class="in">  filter(state.name == params$state) %&gt;%</span></span>
-<span id="cb118-52"><a href="parameterized-reports-chapter.html#cb118-52" tabindex="-1"></a><span class="in">  pull(case_rank)</span></span>
-<span id="cb118-53"><a href="parameterized-reports-chapter.html#cb118-53" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb118-54"><a href="parameterized-reports-chapter.html#cb118-54" tabindex="-1"></a></span>
-<span id="cb118-55"><a href="parameterized-reports-chapter.html#cb118-55" tabindex="-1"></a>In <span class="in">`r state_text`</span>, there were <span class="in">`r state_cases_per_100000`</span> cases per 100,000 people in the last seven days. This puts <span class="in">`r params$state`</span> at number <span class="in">`r state_cases_rank`</span> of 50 states and the District of Columbia. </span>
-<span id="cb118-56"><a href="parameterized-reports-chapter.html#cb118-56" tabindex="-1"></a></span>
-<span id="cb118-57"><a href="parameterized-reports-chapter.html#cb118-57" tabindex="-1"></a><span class="in">```{r fig.height = 8}</span></span>
-<span id="cb118-58"><a href="parameterized-reports-chapter.html#cb118-58" tabindex="-1"></a><span class="in">set_urbn_defaults(style = "print")</span></span>
-<span id="cb118-59"><a href="parameterized-reports-chapter.html#cb118-59" tabindex="-1"></a></span>
-<span id="cb118-60"><a href="parameterized-reports-chapter.html#cb118-60" tabindex="-1"></a><span class="in">cases %&gt;%</span></span>
-<span id="cb118-61"><a href="parameterized-reports-chapter.html#cb118-61" tabindex="-1"></a><span class="in">  mutate(highlight_state = if_else(state.name == params$state, "Y", "N")) %&gt;%</span></span>
-<span id="cb118-62"><a href="parameterized-reports-chapter.html#cb118-62" tabindex="-1"></a><span class="in">  mutate(state.name = fct_reorder(state.name, cases_per_100000)) %&gt;%</span></span>
-<span id="cb118-63"><a href="parameterized-reports-chapter.html#cb118-63" tabindex="-1"></a><span class="in">  ggplot(aes(</span></span>
-<span id="cb118-64"><a href="parameterized-reports-chapter.html#cb118-64" tabindex="-1"></a><span class="in">    x = cases_per_100000,</span></span>
-<span id="cb118-65"><a href="parameterized-reports-chapter.html#cb118-65" tabindex="-1"></a><span class="in">    y = state.name,</span></span>
-<span id="cb118-66"><a href="parameterized-reports-chapter.html#cb118-66" tabindex="-1"></a><span class="in">    fill = highlight_state</span></span>
-<span id="cb118-67"><a href="parameterized-reports-chapter.html#cb118-67" tabindex="-1"></a><span class="in">  )) +</span></span>
-<span id="cb118-68"><a href="parameterized-reports-chapter.html#cb118-68" tabindex="-1"></a><span class="in">  geom_col() +</span></span>
-<span id="cb118-69"><a href="parameterized-reports-chapter.html#cb118-69" tabindex="-1"></a><span class="in">  scale_x_continuous(labels = comma_format()) +</span></span>
-<span id="cb118-70"><a href="parameterized-reports-chapter.html#cb118-70" tabindex="-1"></a><span class="in">  theme(legend.position = "none") +</span></span>
-<span id="cb118-71"><a href="parameterized-reports-chapter.html#cb118-71" tabindex="-1"></a><span class="in">  labs(</span></span>
-<span id="cb118-72"><a href="parameterized-reports-chapter.html#cb118-72" tabindex="-1"></a><span class="in">    y = NULL,</span></span>
-<span id="cb118-73"><a href="parameterized-reports-chapter.html#cb118-73" tabindex="-1"></a><span class="in">    x = "Cases per 100,000"</span></span>
-<span id="cb118-74"><a href="parameterized-reports-chapter.html#cb118-74" tabindex="-1"></a><span class="in">  )</span></span>
-<span id="cb118-75"><a href="parameterized-reports-chapter.html#cb118-75" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb1-1"><a href="parameterized-reports-chapter.html#cb1-1" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="parameterized-reports-chapter.html#cb1-2" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Urban Institute COVID Report"</span></span>
+<span id="cb1-3"><a href="parameterized-reports-chapter.html#cb1-3" tabindex="-1"></a><span class="an">output:</span><span class="co"> html_document</span></span>
+<span id="cb1-4"><a href="parameterized-reports-chapter.html#cb1-4" tabindex="-1"></a><span class="an">params:</span></span>
+<span id="cb1-5"><a href="parameterized-reports-chapter.html#cb1-5" tabindex="-1"></a><span class="an">state:</span><span class="co"> "Alabama"</span></span>
+<span id="cb1-6"><a href="parameterized-reports-chapter.html#cb1-6" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-7"><a href="parameterized-reports-chapter.html#cb1-7" tabindex="-1"></a>  </span>
+<span id="cb1-8"><a href="parameterized-reports-chapter.html#cb1-8" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
+<span id="cb1-9"><a href="parameterized-reports-chapter.html#cb1-9" tabindex="-1"></a><span class="in">knitr::opts_chunk$set(</span></span>
+<span id="cb1-10"><a href="parameterized-reports-chapter.html#cb1-10" tabindex="-1"></a><span class="in">  echo = FALSE,</span></span>
+<span id="cb1-11"><a href="parameterized-reports-chapter.html#cb1-11" tabindex="-1"></a><span class="in">  warning = FALSE,</span></span>
+<span id="cb1-12"><a href="parameterized-reports-chapter.html#cb1-12" tabindex="-1"></a><span class="in">  message = FALSE</span></span>
+<span id="cb1-13"><a href="parameterized-reports-chapter.html#cb1-13" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb1-14"><a href="parameterized-reports-chapter.html#cb1-14" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-15"><a href="parameterized-reports-chapter.html#cb1-15" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="parameterized-reports-chapter.html#cb1-16" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-17"><a href="parameterized-reports-chapter.html#cb1-17" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb1-18"><a href="parameterized-reports-chapter.html#cb1-18" tabindex="-1"></a><span class="in">library(urbnthemes)</span></span>
+<span id="cb1-19"><a href="parameterized-reports-chapter.html#cb1-19" tabindex="-1"></a><span class="in"># library(here)</span></span>
+<span id="cb1-20"><a href="parameterized-reports-chapter.html#cb1-20" tabindex="-1"></a><span class="in">library(scales)</span></span>
+<span id="cb1-21"><a href="parameterized-reports-chapter.html#cb1-21" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-22"><a href="parameterized-reports-chapter.html#cb1-22" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="parameterized-reports-chapter.html#cb1-23" tabindex="-1"></a><span class="fu"># `r params$state`</span></span>
+<span id="cb1-24"><a href="parameterized-reports-chapter.html#cb1-24" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="parameterized-reports-chapter.html#cb1-25" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-26"><a href="parameterized-reports-chapter.html#cb1-26" tabindex="-1"></a><span class="in">cases &lt;- tibble(state.name) %&gt;%</span></span>
+<span id="cb1-27"><a href="parameterized-reports-chapter.html#cb1-27" tabindex="-1"></a><span class="in">  rbind(state.name = "District of Columbia") %&gt;%</span></span>
+<span id="cb1-28"><a href="parameterized-reports-chapter.html#cb1-28" tabindex="-1"></a><span class="in">  left_join(</span></span>
+<span id="cb1-29"><a href="parameterized-reports-chapter.html#cb1-29" tabindex="-1"></a><span class="in">    read_csv(</span></span>
+<span id="cb1-30"><a href="parameterized-reports-chapter.html#cb1-30" tabindex="-1"></a><span class="in">      "united_states_covid19_cases_deaths_and_testing_by_state.csv",</span></span>
+<span id="cb1-31"><a href="parameterized-reports-chapter.html#cb1-31" tabindex="-1"></a><span class="in">      skip = 2</span></span>
+<span id="cb1-32"><a href="parameterized-reports-chapter.html#cb1-32" tabindex="-1"></a><span class="in">    ),</span></span>
+<span id="cb1-33"><a href="parameterized-reports-chapter.html#cb1-33" tabindex="-1"></a><span class="in">    by = c("state.name" = "State/Territory")</span></span>
+<span id="cb1-34"><a href="parameterized-reports-chapter.html#cb1-34" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
+<span id="cb1-35"><a href="parameterized-reports-chapter.html#cb1-35" tabindex="-1"></a><span class="in">  select(</span></span>
+<span id="cb1-36"><a href="parameterized-reports-chapter.html#cb1-36" tabindex="-1"></a><span class="in">    total_cases = `Total Cases`,</span></span>
+<span id="cb1-37"><a href="parameterized-reports-chapter.html#cb1-37" tabindex="-1"></a><span class="in">    state.name,</span></span>
+<span id="cb1-38"><a href="parameterized-reports-chapter.html#cb1-38" tabindex="-1"></a><span class="in">    cases_per_100000 = `Case Rate per 100000`</span></span>
+<span id="cb1-39"><a href="parameterized-reports-chapter.html#cb1-39" tabindex="-1"></a><span class="in">  ) %&gt;%</span></span>
+<span id="cb1-40"><a href="parameterized-reports-chapter.html#cb1-40" tabindex="-1"></a><span class="in">  mutate(cases_per_100000 = parse_number(cases_per_100000)) %&gt;%</span></span>
+<span id="cb1-41"><a href="parameterized-reports-chapter.html#cb1-41" tabindex="-1"></a><span class="in">  mutate(case_rank = rank(-cases_per_100000, ties.method = "min"))</span></span>
+<span id="cb1-42"><a href="parameterized-reports-chapter.html#cb1-42" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-43"><a href="parameterized-reports-chapter.html#cb1-43" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="parameterized-reports-chapter.html#cb1-44" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-45"><a href="parameterized-reports-chapter.html#cb1-45" tabindex="-1"></a><span class="in">state_text &lt;- if_else(params$state == "District of Columbia", str_glue("the District of Columbia"), str_glue("state of {params$state}"))</span></span>
+<span id="cb1-46"><a href="parameterized-reports-chapter.html#cb1-46" tabindex="-1"></a></span>
+<span id="cb1-47"><a href="parameterized-reports-chapter.html#cb1-47" tabindex="-1"></a><span class="in">state_cases_per_100000 &lt;- cases %&gt;%</span></span>
+<span id="cb1-48"><a href="parameterized-reports-chapter.html#cb1-48" tabindex="-1"></a><span class="in">  filter(state.name == params$state) %&gt;%</span></span>
+<span id="cb1-49"><a href="parameterized-reports-chapter.html#cb1-49" tabindex="-1"></a><span class="in">  pull(cases_per_100000) %&gt;%</span></span>
+<span id="cb1-50"><a href="parameterized-reports-chapter.html#cb1-50" tabindex="-1"></a><span class="in">  comma()</span></span>
+<span id="cb1-51"><a href="parameterized-reports-chapter.html#cb1-51" tabindex="-1"></a></span>
+<span id="cb1-52"><a href="parameterized-reports-chapter.html#cb1-52" tabindex="-1"></a><span class="in">state_cases_rank &lt;- cases %&gt;%</span></span>
+<span id="cb1-53"><a href="parameterized-reports-chapter.html#cb1-53" tabindex="-1"></a><span class="in">  filter(state.name == params$state) %&gt;%</span></span>
+<span id="cb1-54"><a href="parameterized-reports-chapter.html#cb1-54" tabindex="-1"></a><span class="in">  pull(case_rank)</span></span>
+<span id="cb1-55"><a href="parameterized-reports-chapter.html#cb1-55" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-56"><a href="parameterized-reports-chapter.html#cb1-56" tabindex="-1"></a></span>
+<span id="cb1-57"><a href="parameterized-reports-chapter.html#cb1-57" tabindex="-1"></a>In <span class="in">`r state_text`</span>, there were <span class="in">`r state_cases_per_100000`</span> cases per 100,000 people in the last seven days. This puts <span class="in">`r params$state`</span> at number <span class="in">`r state_cases_rank`</span> of 50 states and the District of Columbia. </span>
+<span id="cb1-58"><a href="parameterized-reports-chapter.html#cb1-58" tabindex="-1"></a></span>
+<span id="cb1-59"><a href="parameterized-reports-chapter.html#cb1-59" tabindex="-1"></a><span class="in">```{r fig.height = 8}</span></span>
+<span id="cb1-60"><a href="parameterized-reports-chapter.html#cb1-60" tabindex="-1"></a><span class="in">set_urbn_defaults(style = "print")</span></span>
+<span id="cb1-61"><a href="parameterized-reports-chapter.html#cb1-61" tabindex="-1"></a></span>
+<span id="cb1-62"><a href="parameterized-reports-chapter.html#cb1-62" tabindex="-1"></a><span class="in">cases %&gt;%</span></span>
+<span id="cb1-63"><a href="parameterized-reports-chapter.html#cb1-63" tabindex="-1"></a><span class="in">  mutate(highlight_state = if_else(state.name == params$state, "Y", "N")) %&gt;%</span></span>
+<span id="cb1-64"><a href="parameterized-reports-chapter.html#cb1-64" tabindex="-1"></a><span class="in">  mutate(state.name = fct_reorder(state.name, cases_per_100000)) %&gt;%</span></span>
+<span id="cb1-65"><a href="parameterized-reports-chapter.html#cb1-65" tabindex="-1"></a><span class="in">  ggplot(aes(</span></span>
+<span id="cb1-66"><a href="parameterized-reports-chapter.html#cb1-66" tabindex="-1"></a><span class="in">    x = cases_per_100000,</span></span>
+<span id="cb1-67"><a href="parameterized-reports-chapter.html#cb1-67" tabindex="-1"></a><span class="in">    y = state.name,</span></span>
+<span id="cb1-68"><a href="parameterized-reports-chapter.html#cb1-68" tabindex="-1"></a><span class="in">    fill = highlight_state</span></span>
+<span id="cb1-69"><a href="parameterized-reports-chapter.html#cb1-69" tabindex="-1"></a><span class="in">  )) +</span></span>
+<span id="cb1-70"><a href="parameterized-reports-chapter.html#cb1-70" tabindex="-1"></a><span class="in">  geom_col() +</span></span>
+<span id="cb1-71"><a href="parameterized-reports-chapter.html#cb1-71" tabindex="-1"></a><span class="in">  scale_x_continuous(labels = comma_format()) +</span></span>
+<span id="cb1-72"><a href="parameterized-reports-chapter.html#cb1-72" tabindex="-1"></a><span class="in">  theme(legend.position = "none") +</span></span>
+<span id="cb1-73"><a href="parameterized-reports-chapter.html#cb1-73" tabindex="-1"></a><span class="in">  labs(</span></span>
+<span id="cb1-74"><a href="parameterized-reports-chapter.html#cb1-74" tabindex="-1"></a><span class="in">    y = NULL,</span></span>
+<span id="cb1-75"><a href="parameterized-reports-chapter.html#cb1-75" tabindex="-1"></a><span class="in">    x = "Cases per 100,000"</span></span>
+<span id="cb1-76"><a href="parameterized-reports-chapter.html#cb1-76" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb1-77"><a href="parameterized-reports-chapter.html#cb1-77" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <p>The text and charts in the report come from the <code>cases</code> data frame, shown here:</p>
 <pre><code>#&gt; # A tibble: 51 × 4
 #&gt;    total_cases state.name  cases_per_100000 case_rank
@@ -186,31 +169,31 @@ Figure 7.1: Figure 1-1 An excerpt from the state fiscal briefs
 #&gt;  9 5965411     Florida                27775        11
 #&gt; 10 2521664     Georgia                23750        35
 #&gt; # ℹ 41 more rows</code></pre>
-<p>If we knit this document, we end up with a simple HTML document, seen in Figure <a href="parameterized-reports-chapter.html#fig:alabama-covid-report">7.2</a>.</p>
+<p>If we knit this document, we end up with a simple HTML document, seen in Figure <a href="parameterized-reports-chapter.html#fig:alabama-covid-report">8.2</a>.</p>
 <div class="figure">
 <span style="display:block;" id="fig:alabama-covid-report"></span>
 <img src="assets/alabama-covid-report.png" alt="A screenshot of the Alabama COVID report" width="100%"><p class="caption">
-Figure 7.2: A screenshot of the Alabama COVID report
+Figure 8.2: A screenshot of the Alabama COVID report
 </p>
 </div>
-<p>The R Markdown document’s YAML, R code chunks, inline code, and Markdown text should look familiar if you’ve read Chapter <a href="rmarkdown-chapter.html#rmarkdown-chapter">6</a>.</p>
+<p>The R Markdown document’s YAML, R code chunks, inline code, and Markdown text should look familiar if you’ve read Chapter <a href="rmarkdown-chapter.html#rmarkdown-chapter">7</a>.</p>
 <div id="using-parameters" class="section level3 unnumbered">
 <h3>Using Parameters<a class="anchor" aria-label="anchor" href="#using-parameters"><i class="fas fa-link"></i></a>
 </h3>
 <p>In R Markdown, <em>parameters</em> are variables that we set in the YAML to allow us to create multiple reports. Take a look at these two lines in the YAML:</p>
-<div class="sourceCode" id="cb120"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb120-1"><a href="parameterized-reports-chapter.html#cb120-1" tabindex="-1"></a><span class="an">params:</span></span>
-<span id="cb120-2"><a href="parameterized-reports-chapter.html#cb120-2" tabindex="-1"></a>  state: "Alabama"</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb3-1"><a href="parameterized-reports-chapter.html#cb3-1" tabindex="-1"></a><span class="an">params:</span></span>
+<span id="cb3-2"><a href="parameterized-reports-chapter.html#cb3-2" tabindex="-1"></a>  state: "Alabama"</span></code></pre></div>
 <p>This code defines a variable, in this case state. We can then use this variable throughout the rest of the R Markdown document using this syntax: params$variable_name, replacing variable_name with state or any name you set in the YAML. For example, take a look at this inline R code:</p>
-<div class="sourceCode" id="cb121"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb121-1"><a href="parameterized-reports-chapter.html#cb121-1" tabindex="-1"></a><span class="fu"># `r params$state`</span></span></code></pre></div>
-<p>Any instance of <code>params$state</code> will be converted to “Alabama” when we knit it. The line shown here becomes the first-level heading visible in Figure <a href="parameterized-reports-chapter.html#fig:alabama-covid-report">7.2</a>. This parameter shows up again in the following code:</p>
-<div class="sourceCode" id="cb122"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb122-1"><a href="parameterized-reports-chapter.html#cb122-1" tabindex="-1"></a>In <span class="in">`r state_text`</span>, there were <span class="in">`r state_cases_per_100000`</span> cases per 100,000 people in the last seven days. This puts <span class="in">`r params$state`</span> at number <span class="in">`r state_cases_rank`</span> of 50 states and the District of Columbia. </span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb4-1"><a href="parameterized-reports-chapter.html#cb4-1" tabindex="-1"></a><span class="fu"># `r params$state`</span></span></code></pre></div>
+<p>Any instance of <code>params$state</code> will be converted to “Alabama” when we knit it. The line shown here becomes the first-level heading visible in Figure <a href="parameterized-reports-chapter.html#fig:alabama-covid-report">8.2</a>. This parameter shows up again in the following code:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb5-1"><a href="parameterized-reports-chapter.html#cb5-1" tabindex="-1"></a>In <span class="in">`r state_text`</span>, there were <span class="in">`r state_cases_per_100000`</span> cases per 100,000 people in the last seven days. This puts <span class="in">`r params$state`</span> at number <span class="in">`r state_cases_rank`</span> of 50 states and the District of Columbia. </span></code></pre></div>
 <p>When we knit the document, we see the following text:</p>
 <blockquote>
 <p>In the state of Alabama, there were 26,573 cases per 100,000 people in the last seven days. This puts Alabama at number 18 of 50 states and the District of Columbia.</p>
 </blockquote>
 <p>This text is automatically generated. The inline R code <code>`r state_text`</code> prints the value of the variable <code>state_text</code>. And <code>state_text</code> is determined by this <code><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else()</a></code> statement:</p>
-<div class="sourceCode" id="cb123"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">state_text</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">params</span><span class="op">$</span><span class="va">state</span> <span class="op">==</span> <span class="st">"District of Columbia"</span>, <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue</a></span><span class="op">(</span><span class="st">"the District of Columbia"</span><span class="op">)</span>, <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue</a></span><span class="op">(</span><span class="st">"state of {params$state}"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">state_text</span> <span class="op">&lt;-</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">params</span><span class="op">$</span><span class="va">state</span> <span class="op">==</span> <span class="st">"District of Columbia"</span>, <span class="fu">str_glue</span><span class="op">(</span><span class="st">"the District of Columbia"</span><span class="op">)</span>, <span class="fu">str_glue</span><span class="op">(</span><span class="st">"state of {params$state}"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>If the value of <code>params$states</code> is the District of Columbia, this code makes state_text equal to “the District of Columbia”. If <code>params$state</code> does not equal District of Columbia, then <code>state_text</code> gets the value “state of”, followed by the state name. This allows us to put <code>state_text</code> in a sentence and have it work no matter whether our state parameter is a state or the District of Columbia.</p>
 </div>
 </div>
@@ -218,23 +201,23 @@ Figure 7.2: A screenshot of the Alabama COVID report
 <h2>Generating Numbers with Parameters<a class="anchor" aria-label="anchor" href="#generating-numbers-with-parameters"><i class="fas fa-link"></i></a>
 </h2>
 <p>We can also use parameters to generate numeric values to include in the text. For example, we calculate the values of the <code>state_cases_per_100000</code> and <code>state_cases_rank</code> variables dynamically using the <code>state</code> parameter, as shown here:</p>
-<div class="sourceCode" id="cb124"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">state_cases_per_100000</span> <span class="op">&lt;-</span> <span class="va">cases</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">state.name</span> <span class="op">==</span> <span class="va">params</span><span class="op">$</span><span class="va">state</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">cases_per_100000</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">state_cases_per_100000</span> <span class="op">&lt;-</span> <span class="va">cases</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">state.name</span> <span class="op">==</span> <span class="va">params</span><span class="op">$</span><span class="va">state</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">pull</span><span class="op">(</span><span class="va">cases_per_100000</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">comma</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">state_cases_rank</span> <span class="op">&lt;-</span> <span class="va">cases</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">state.name</span> <span class="op">==</span> <span class="va">params</span><span class="op">$</span><span class="va">state</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">case_rank</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">state_cases_rank</span> <span class="op">&lt;-</span> <span class="va">cases</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">state.name</span> <span class="op">==</span> <span class="va">params</span><span class="op">$</span><span class="va">state</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">pull</span><span class="op">(</span><span class="va">case_rank</span><span class="op">)</span></span></code></pre></div>
 <p>We filter the <code>cases</code> data frame (which contains data for all states) to keep just the data for the state in <code>params$state</code>. We then use the <code><a href="https://dplyr.tidyverse.org/reference/pull.html">pull()</a></code> function to get a single value from that data, and format it with the <code>comma()</code> function from the scales package to make <code>state_cases_per_100000</code> show up as 26,573 (rather than 26573) before putting these variables into the inline R code.</p>
 <div id="creating-visualizations-based-on-parameters" class="section level3 unnumbered">
 <h3>Creating Visualizations Based on Parameters<a class="anchor" aria-label="anchor" href="#creating-visualizations-based-on-parameters"><i class="fas fa-link"></i></a>
 </h3>
 <p>We can see the parameter used in other places as well, such as to highlight a state in the report’s bar chart. To see how we accomplish this, take a look at the following section from the last code chunk:</p>
-<div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">cases</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>highlight_state <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">state.name</span> <span class="op">==</span> <span class="va">params</span><span class="op">$</span><span class="va">state</span>, <span class="st">"Y"</span>, <span class="st">"N"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">cases</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>highlight_state <span class="op">=</span> <span class="fu">if_else</span><span class="op">(</span><span class="va">state.name</span> <span class="op">==</span> <span class="va">params</span><span class="op">$</span><span class="va">state</span>, <span class="st">"Y"</span>, <span class="st">"N"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>This code creates a variable called <code>highlight_state</code>. Within the <code>cases</code> data frame, we check whether <code>state.name</code> is equal to <code>params$state</code>. If it is, <code>highlight_state</code> gets the value <code>Y</code>. If not, it gets <code>N</code>. Here is what the relevant columns in the data look like after we run these two lines:</p>
 <pre><code>#&gt; # A tibble: 51 × 2
 #&gt;    state.name  highlight_state
@@ -250,11 +233,11 @@ Figure 7.2: A screenshot of the Alabama COVID report
 #&gt;  9 Florida     N              
 #&gt; 10 Georgia     N              
 #&gt; # ℹ 41 more rows</code></pre>
-<p>Later, the ggplot code uses the highlight_state variable for the bar chart’s fill aesthetic, highlighting the state in params$state in yellow and coloring the other states blue. Figure <a href="parameterized-reports-chapter.html#fig:alabama-covid-chart">7.3</a> shows the chart with Alabama highlighted.</p>
+<p>Later, the ggplot code uses the highlight_state variable for the bar chart’s fill aesthetic, highlighting the state in params$state in yellow and coloring the other states blue. Figure <a href="parameterized-reports-chapter.html#fig:alabama-covid-chart">8.3</a> shows the chart with Alabama highlighted.</p>
 <div class="figure">
 <span style="display:block;" id="fig:alabama-covid-chart"></span>
 <img src="assets/alabama-covid-chart.png" alt="A bar chart showing Alabama highlighted" width="100%"><p class="caption">
-Figure 7.3: A bar chart showing Alabama highlighted
+Figure 8.3: A bar chart showing Alabama highlighted
 </p>
 </div>
 <p>You’ve seen how setting a parameter in the YAML gives us the ability to dynamically generate text and charts in the knitted report. But we’ve only generated one report so far. How can we create all 51 reports? Your first thought might be to manually update the YAML by changing the parameter’s value from Alabama to, say, Alaska, then knitting the document again. While you could follow this process for all states, it would be tedious, and we’re trying to avoid tedium. Let’s automate the report generation instead.</p>
@@ -268,7 +251,7 @@ Figure 7.3: A bar chart showing Alabama highlighted
 <h3>Knitting the Document Using Code<a class="anchor" aria-label="anchor" href="#knitting-the-document-using-code"><i class="fas fa-link"></i></a>
 </h3>
 <p>Our script needs the ability to knit an R Markdown document. While you’ve seen how to do this using the Knit button, you can do the same thing with code. Load the <code>rmarkdown</code> package and then use its <code><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html">render()</a></code> function, as shown here:</p>
-<div class="sourceCode" id="cb127"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/rmarkdown">rmarkdown</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html">render</a></span><span class="op">(</span></span>
@@ -282,10 +265,10 @@ Figure 7.3: A bar chart showing Alabama highlighted
 <h4>Creating a Tibble with Parameter Data<a class="anchor" aria-label="anchor" href="#creating-a-tibble-with-parameter-data"><i class="fas fa-link"></i></a>
 </h4>
 <p>Let’s write code that generates all reports for us automatically. First, we must create a <em>vector</em> (in colloquial terms, a list of items) of all state names and the District of Columbia. To do this, we’ll use the built-in dataset <em>state.name</em>, which has all 50 state names in a vector:</p>
-<div class="sourceCode" id="cb128"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">state</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span><span class="va">state.name</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="st">"District of Columbia"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">state.name</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">state</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span><span class="va">state.name</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="st">"District of Columbia"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">pull</span><span class="op">(</span><span class="va">state.name</span><span class="op">)</span></span></code></pre></div>
 <p>We turn it into a tibble and then use the <code><a href="https://rdrr.io/r/base/cbind.html">rbind()</a></code> function to add the District of Columbia to the list. Finally, we use the <code><a href="https://dplyr.tidyverse.org/reference/pull.html">pull()</a></code> function to get one single column and save this as <code>state</code>. Here is what the <code>state</code> vector looks like:</p>
 <pre><code>#&gt;  [1] "Alabama"              "Alaska"              
 #&gt;  [3] "Arizona"              "Arkansas"            
@@ -314,11 +297,11 @@ Figure 7.3: A bar chart showing Alabama highlighted
 #&gt; [49] "Wisconsin"            "Wyoming"             
 #&gt; [51] "District of Columbia"</code></pre>
 <p>Rather than use <code><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html">render()</a></code> with the <code>input</code> and <code>output_file</code> arguments, as we did earlier, we can pass it the <code>params</code> argument to give it parameters to use when knitting. Let’s create a tibble with the information needed to render all 51 reports and save it as an object called <code>reports</code>, which we’ll pass to the <code><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html">render()</a></code> function:</p>
-<div class="sourceCode" id="cb130"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">reports</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">reports</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span></span>
 <span>  input <span class="op">=</span> <span class="st">"urban-covid-budget-report.Rmd"</span>,</span>
-<span>  output_file <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue</a></span><span class="op">(</span><span class="st">"{state}.html"</span><span class="op">)</span>,</span>
-<span>  params <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">state</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>state <span class="op">=</span> <span class="va">.</span><span class="op">)</span><span class="op">)</span></span>
+<span>  output_file <span class="op">=</span> <span class="fu">str_glue</span><span class="op">(</span><span class="st">"{state}.html"</span><span class="op">)</span>,</span>
+<span>  params <span class="op">=</span> <span class="fu">map</span><span class="op">(</span><span class="va">state</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>state <span class="op">=</span> <span class="va">.</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>This code generates a tibble with 51 rows and three variables. In all rows, we set the <code>input</code> variable to the name of the R Markdown document. We set the value of <code>output_file</code> with <code><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue()</a></code> to be equal to the name of the state, followed by .html (for example, <em>Alabama.html</em>).</p>
 <p>The <code>params</code> variable is the most complicated of the three. It is what’s known as a named list. This data structure puts the data in the <code>state: state_name</code> format needed for the R Markdown document’s YAML. We use the <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> function from the purrr package to create the named list, telling R to set the value of each row as <code>state = "Alabama"</code>, then <code>state =  "Alaska"</code>, and so on, for all states. If you look at the <code>reports</code> tibble, you can see these variables:</p>
@@ -336,20 +319,20 @@ Figure 7.3: A bar chart showing Alabama highlighted
 #&gt;  9 urban-covid-budget-report.Rmd Florida.html   &lt;named list&gt;
 #&gt; 10 urban-covid-budget-report.Rmd Georgia.html   &lt;named list&gt;
 #&gt; # ℹ 41 more rows</code></pre>
-<p>The params variable shows up as <named list>, but if you open the tibble in the RStudio viewer by clicking reports in your Environment tab, you can see the output more clearly (Figure <a href="parameterized-reports-chapter.html#fig:params-named-list">7.4</a>).</named></p>
+<p>The params variable shows up as <named list>, but if you open the tibble in the RStudio viewer by clicking reports in your Environment tab, you can see the output more clearly (Figure <a href="parameterized-reports-chapter.html#fig:params-named-list">8.4</a>).</named></p>
 <div class="figure">
 <span style="display:block;" id="fig:params-named-list"></span>
 <img src="assets/params-named-list.png" alt="The named list column shown in the RStudio viewer" width="100%"><p class="caption">
-Figure 7.4: The named list column shown in the RStudio viewer
+Figure 8.4: The named list column shown in the RStudio viewer
 </p>
 </div>
 <p>This view allows us to see the named list in the <code>params</code> variable, with the <code>state</code> variable equal to the name of each state.</p>
 <p>Once we’ve created the <code>reports</code> tibble, we’re ready to render the reports. The code to do so is only one line long:</p>
-<div class="sourceCode" id="cb132"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://purrr.tidyverse.org/reference/pmap.html">pwalk</a></span><span class="op">(</span><span class="va">reports</span>, <span class="va">render</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">pwalk</span><span class="op">(</span><span class="va">reports</span>, <span class="va">render</span><span class="op">)</span></span></code></pre></div>
 <p>We use the <code><a href="https://purrr.tidyverse.org/reference/pmap.html">pwalk()</a></code> function from the <code>purrr</code> package. This function has two arguments: a data frame or tibble (<code>reports</code>, in our case), and a function that runs for each row of this tibble, (<code><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html">render()</a></code>). Note that we do not include open and closing parentheses when passing this function name to <code><a href="https://purrr.tidyverse.org/reference/pmap.html">pwalk()</a></code>.</p>
 <p>Running this code runs the <code><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html">render()</a></code> function for each row in reports, passing in the values for <code>input</code>, <code>output_file</code>, and <code>params.</code> It is the equivalent of entering code like the following to run the <code><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html">render()</a></code> function for each of the 51 states:</p>
-<div class="sourceCode" id="cb133"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html">render</a></span><span class="op">(</span></span>
 <span>  input <span class="op">=</span> <span class="st">"urban-covid-budget-report.Rmd"</span>,</span>
 <span>  output_file <span class="op">=</span> <span class="st">"Alabama.html"</span>,</span>
@@ -368,7 +351,7 @@ Figure 7.4: The named list column shown in the RStudio viewer
 <span>  params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>state <span class="op">=</span> <span class="st">"Arizona"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Here is what the full R script file looks like:</p>
-<div class="sourceCode" id="cb134"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load packages</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/rmarkdown">rmarkdown</a></span><span class="op">)</span></span>
@@ -417,30 +400,15 @@ Figure 7.4: The named list column shown in the RStudio viewer
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="rmarkdown-chapter.html"><span class="header-section-number">6</span> Writing Reports in R Markdown</a></div>
-<div class="next"><a href="presentations-chapter.html"><span class="header-section-number">8</span> Making Slides Presentations with xaringan</a></div>
+<div class="empty"></div>
+<div class="empty"></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#parameterized-reports-chapter"><span class="header-section-number">7</span> Using Parameters to Automate Reports</a></li>
-<li>
-<a class="nav-link" href="#how-parameterized-reporting-works">How Parameterized Reporting Works</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#using-parameters">Using Parameters</a></li></ul>
-</li>
-<li>
-<a class="nav-link" href="#generating-numbers-with-parameters">Generating Numbers with Parameters</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#creating-visualizations-based-on-parameters">Creating Visualizations Based on Parameters</a></li></ul>
-</li>
-<li>
-<a class="nav-link" href="#creating-an-r-script">Creating an R Script</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#knitting-the-document-using-code">Knitting the Document Using Code</a></li></ul>
-</li>
-<li><a class="nav-link" href="#best-practices">Best Practices</a></li>
-<li><a class="nav-link" href="#conclusion-4">Conclusion</a></li>
-<li><a class="nav-link" href="#learn-more-6">Learn More</a></li>
-</ul>
+      <div id="book-on-this-page"></div>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/rfortherestofus/r-without-statistics/blob/master/parameterized-reports.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/rfortherestofus/r-without-statistics/edit/master/parameterized-reports.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+          
         </ul>
 </div>
     </nav>
